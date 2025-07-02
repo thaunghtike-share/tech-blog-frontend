@@ -87,8 +87,7 @@ export function MinimalFooter() {
 
         {/* Bottom */}
         <div className="border-t border-blue-500/30 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-blue-200 font-light text-sm">© 2025 LearnDevOps. All rights reserved.</p>
-          <p className="text-blue-200 font-light text-sm mt-4 md:mt-0">Made with care for the learning community.</p>
+          <p className="text-white font-light text-sm">© 2025 LearnDevOps. All rights reserved.</p>
         </div>
       </div>
     </footer>
