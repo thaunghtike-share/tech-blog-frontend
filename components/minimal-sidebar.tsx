@@ -90,62 +90,62 @@ export function MinimalSidebar() {
   return (
     <div className="space-y-12">
       {/* Reading Stats */}
-      <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-8 rounded-2xl border border-orange-100/50 backdrop-blur-sm">
-        <h3 className="text-xl font-light mb-6 flex items-center">
-          <BookOpen className="h-5 w-5 mr-2 text-orange-400" />
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-200 shadow-sm">
+        <h3 className="text-xl font-light mb-6 flex items-center text-gray-900">
+          <BookOpen className="h-5 w-5 mr-2 text-blue-600" />
           Reading Stats
         </h3>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-2xl font-light text-slate-900">{readingStats.totalArticles}</div>
-            <div className="text-xs text-orange-600 font-light">Articles</div>
+            <div className="text-2xl font-light text-gray-900">{readingStats.totalArticles}</div>
+            <div className="text-xs text-blue-600 font-light">Articles</div>
           </div>
           <div>
-            <div className="text-2xl font-light text-slate-900">{readingStats.totalReaders}</div>
-            <div className="text-xs text-orange-600 font-light">Readers</div>
+            <div className="text-2xl font-light text-gray-900">{readingStats.totalReaders}</div>
+            <div className="text-xs text-blue-600 font-light">Readers</div>
           </div>
           <div>
-            <div className="text-2xl font-light text-slate-900 flex items-center justify-center">
+            <div className="text-2xl font-light text-gray-900 flex items-center justify-center">
               <Clock className="h-4 w-4 mr-1" />
               {readingStats.avgReadTime}
             </div>
-            <div className="text-xs text-orange-600 font-light">Avg Read</div>
+            <div className="text-xs text-blue-600 font-light">Avg Read</div>
           </div>
         </div>
       </div>
 
       {/* Newsletter */}
-      <Card className="border-0 bg-gradient-to-br from-purple-600 to-blue-600 text-white shadow-xl">
+      <Card className="border-0 bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
         <CardContent className="p-8">
           <h3 className="text-xl font-light mb-4">Weekly Insights</h3>
-          <p className="text-purple-100 mb-6 font-light leading-relaxed">
+          <p className="text-blue-100 mb-6 font-light leading-relaxed">
             Join 2,500+ developers getting curated articles on programming, design, and career growth.
           </p>
           <div className="space-y-3">
             <Input
               type="email"
               placeholder="your@email.com"
-              className="border-0 bg-white/20 text-white placeholder-purple-200 focus:bg-white/30 backdrop-blur-sm"
+              className="border-0 bg-white/20 text-white placeholder-blue-200 focus:bg-white/30 backdrop-blur-sm"
             />
-            <Button className="w-full bg-white text-purple-600 hover:bg-gray-100 font-light">Subscribe</Button>
+            <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 font-medium">Subscribe</Button>
           </div>
-          <p className="text-xs text-purple-200 mt-4 font-light">No spam. Unsubscribe anytime.</p>
+          <p className="text-xs text-blue-200 mt-4 font-light">No spam. Unsubscribe anytime.</p>
         </CardContent>
       </Card>
 
-      {/* Categories - Now using API data with safety checks */}
-      <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/50">
-        <h3 className="text-xl font-light mb-6">Categories</h3>
+      {/* Categories - Clean white theme */}
+      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+        <h3 className="text-xl font-light mb-6 text-gray-900">Categories</h3>
 
         {categoriesLoading ? (
           <div className="space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="animate-pulse flex items-center justify-between py-2">
                 <div className="flex items-center">
-                  <div className="w-4 h-4 bg-gray-200 rounded mr-3"></div>
-                  <div className="w-20 h-4 bg-gray-200 rounded"></div>
+                  <div className="w-4 h-4 bg-blue-200 rounded mr-3"></div>
+                  <div className="w-20 h-4 bg-blue-200 rounded"></div>
                 </div>
-                <div className="w-4 h-4 bg-gray-200 rounded"></div>
+                <div className="w-4 h-4 bg-blue-200 rounded"></div>
               </div>
             ))}
           </div>
@@ -161,7 +161,7 @@ export function MinimalSidebar() {
           </div>
         ) : !Array.isArray(categories) || categories.length === 0 ? (
           <div className="text-center py-4">
-            <p className="text-slate-500 text-sm">No categories available</p>
+            <p className="text-gray-500 text-sm">No categories available</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -171,15 +171,15 @@ export function MinimalSidebar() {
                 <Link
                   key={category.id}
                   href={`/category/${category.id}`}
-                  className="flex items-center justify-between py-2 border-b border-slate-200/50 last:border-b-0 hover:bg-slate-50/50 rounded-lg px-2 transition-colors group"
+                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0 hover:bg-blue-50 rounded-lg px-2 transition-colors group"
                 >
                   <div className="flex items-center">
-                    <Icon className="h-4 w-4 mr-3 text-slate-400 group-hover:text-emerald-600 transition-colors" />
-                    <span className="text-slate-600 font-light group-hover:text-emerald-600 transition-colors">
+                    <Icon className="h-4 w-4 mr-3 text-gray-500 group-hover:text-blue-600 transition-colors" />
+                    <span className="text-gray-700 font-light group-hover:text-blue-600 transition-colors">
                       {category.name || "Unknown Category"}
                     </span>
                   </div>
-                  <span className="text-xs text-stone-400 group-hover:text-emerald-600 transition-colors">→</span>
+                  <span className="text-xs text-gray-400 group-hover:text-blue-600 transition-colors">→</span>
                 </Link>
               )
             })}
@@ -188,18 +188,18 @@ export function MinimalSidebar() {
       </div>
 
       {/* Featured Authors */}
-      <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-6 border border-rose-100/50">
-        <h3 className="text-xl font-light mb-6">Featured Authors</h3>
+      <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 border border-gray-200 shadow-sm">
+        <h3 className="text-xl font-light mb-6 text-gray-900">Featured Authors</h3>
         <div className="space-y-6">
           {featuredAuthors.map((author) => (
             <div key={author.name} className="group cursor-pointer">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-slate-600 font-light group-hover:text-rose-600 transition-colors">
+                <span className="text-gray-700 font-light group-hover:text-blue-600 transition-colors">
                   {author.name}
                 </span>
-                <span className="text-xs text-rose-400">{author.posts}</span>
+                <span className="text-xs text-blue-600">{author.posts}</span>
               </div>
-              <p className="text-xs text-rose-500 font-light">{author.specialty}</p>
+              <p className="text-xs text-gray-500 font-light">{author.specialty}</p>
             </div>
           ))}
         </div>

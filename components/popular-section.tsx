@@ -37,27 +37,27 @@ const popularPosts = [
 
 export function PopularSection() {
   return (
-    <section className="mt-24 pt-16 border-t border-slate-200">
+    <section className="mt-24 pt-16 border-t border-gray-200">
       <div className="flex items-center mb-12">
-        <TrendingUp className="h-6 w-6 mr-3 text-stone-400" />
-        <h2 className="text-3xl font-light text-slate-900">Most Popular</h2>
+        <TrendingUp className="h-6 w-6 mr-3 text-blue-600" />
+        <h2 className="text-3xl font-light text-gray-900">Most Popular</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {popularPosts.map((post, index) => (
           <Link key={post.id} href={`/post/${post.id}`} className="group">
-            <div className="flex items-start space-x-4 p-6 hover:bg-stone-50 rounded-lg transition-colors">
-              <span className="text-2xl font-light text-stone-300 group-hover:text-emerald-600 transition-colors">
+            <div className="flex items-start space-x-4 p-6 hover:bg-blue-50 rounded-lg transition-colors">
+              <span className="text-2xl font-light text-gray-400 group-hover:text-blue-600 transition-colors">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="flex-1">
-                <Badge variant="outline" className="text-xs mb-3">
+                <Badge variant="outline" className="text-xs mb-3 bg-blue-50 text-blue-700 border-blue-200">
                   {post.category}
                 </Badge>
-                <h3 className="font-light text-slate-900 group-hover:text-emerald-600 transition-colors leading-tight mb-2">
+                <h3 className="font-light text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-2">
                   {post.title}
                 </h3>
-                <p className="text-sm text-stone-400 font-light">{post.views} views</p>
+                <p className="text-sm text-gray-500 font-light">{post.views} views</p>
               </div>
             </div>
           </Link>

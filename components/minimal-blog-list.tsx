@@ -202,24 +202,24 @@ export function MinimalBlogList() {
     return (
       <div className="space-y-16">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+          <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
         </div>
         <div className="space-y-12">
           {[1, 2, 3].map((i) => (
             <div key={i} className="animate-pulse">
               <div className="flex items-start space-x-4 mb-4">
-                <div className="w-8 h-4 bg-slate-200 rounded"></div>
-                <div className="w-20 h-6 bg-slate-200 rounded"></div>
+                <div className="w-8 h-4 bg-blue-200 rounded"></div>
+                <div className="w-20 h-6 bg-blue-200 rounded"></div>
               </div>
-              <div className="w-3/4 h-8 bg-slate-200 rounded mb-4"></div>
-              <div className="w-full h-4 bg-slate-200 rounded mb-2"></div>
-              <div className="w-2/3 h-4 bg-slate-200 rounded mb-6"></div>
+              <div className="w-3/4 h-8 bg-blue-200 rounded mb-4"></div>
+              <div className="w-full h-4 bg-blue-200 rounded mb-2"></div>
+              <div className="w-2/3 h-4 bg-blue-200 rounded mb-6"></div>
               <div className="flex space-x-6">
-                <div className="w-24 h-4 bg-slate-200 rounded"></div>
-                <div className="w-32 h-4 bg-slate-200 rounded"></div>
-                <div className="w-16 h-4 bg-slate-200 rounded"></div>
+                <div className="w-24 h-4 bg-blue-200 rounded"></div>
+                <div className="w-32 h-4 bg-blue-200 rounded"></div>
+                <div className="w-16 h-4 bg-blue-200 rounded"></div>
               </div>
-              <div className="mt-8 h-px bg-slate-200"></div>
+              <div className="mt-8 h-px bg-blue-200"></div>
             </div>
           ))}
         </div>
@@ -231,13 +231,13 @@ export function MinimalBlogList() {
     return (
       <div className="space-y-16">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+          <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
         </div>
         <div className="text-center py-12 bg-red-50 rounded-lg border border-red-200">
           <div className="text-red-500 mb-4 text-2xl">⚠️</div>
           <h3 className="text-lg font-semibold text-red-700 mb-2">Unable to load articles</h3>
           <p className="text-red-600 mb-4">{error}</p>
-          <div className="text-sm text-red-500 mb-4">
+          <div className="text-sm text-red-600 mb-4">
             <p>
               Make sure your Django server is running on:{" "}
               <code className="bg-red-100 px-2 py-1 rounded">http://localhost:8000</code>
@@ -249,7 +249,7 @@ export function MinimalBlogList() {
           </div>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
           >
             Try Again
           </button>
@@ -262,11 +262,11 @@ export function MinimalBlogList() {
     return (
       <div className="space-y-16">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+          <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
         </div>
         <div className="text-center py-12">
-          <div className="text-slate-400 mb-4 text-4xl">📝</div>
-          <p className="text-slate-600">No articles found. Check back soon!</p>
+          <div className="text-gray-400 mb-4 text-4xl">📝</div>
+          <p className="text-gray-600">No articles found. Check back soon!</p>
         </div>
       </div>
     )
@@ -275,7 +275,7 @@ export function MinimalBlogList() {
   return (
     <div className="space-y-16">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+        <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
         <span className="text-sm text-gray-500">{articles.length} articles</span>
       </div>
 
@@ -283,29 +283,29 @@ export function MinimalBlogList() {
         {articles.map((article, index) => (
           <article key={article.id} className="group">
             <div className="flex items-start space-x-4 mb-4">
-              <span className="text-sm text-stone-400 font-mono mt-1">{String(index + 1).padStart(2, "0")}</span>
-              <Badge variant="outline" className="text-xs">
+              <span className="text-sm text-gray-400 font-mono mt-1">{String(index + 1).padStart(2, "0")}</span>
+              <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
                 {getCategoryName(article.category)}
               </Badge>
               {getTagNames(article.tags)
                 .slice(0, 2)
                 .map((tagName, tagIndex) => (
-                  <Badge key={tagIndex} variant="secondary" className="text-xs">
+                  <Badge key={tagIndex} variant="secondary" className="text-xs bg-indigo-50 text-indigo-700">
                     {tagName}
                   </Badge>
                 ))}
             </div>
 
             <Link href={`/articles/${article.id}`} className="block">
-              <h3 className="text-2xl font-light text-slate-900 mb-4 group-hover:text-emerald-600 transition-colors leading-tight">
+              <h3 className="text-2xl font-light text-gray-900 mb-4 group-hover:text-blue-600 transition-colors leading-tight">
                 {article.title || "Untitled Article"}
               </h3>
-              <p className="text-slate-600 text-lg leading-relaxed mb-6 font-light">
+              <p className="text-gray-600 text-lg leading-relaxed mb-6 font-light">
                 {truncateContent(article.content)}
               </p>
             </Link>
 
-            <div className="flex items-center text-sm text-stone-400 space-x-6">
+            <div className="flex items-center text-sm text-gray-500 space-x-6">
               <div className="flex items-center">
                 <User className="h-4 w-4 mr-1" />
                 <span className="font-light">{getAuthorName(article.author)}</span>
@@ -320,13 +320,10 @@ export function MinimalBlogList() {
               </div>
             </div>
 
-            <div className="mt-8 h-px bg-slate-200"></div>
+            <div className="mt-8 h-px bg-gray-200"></div>
           </article>
         ))}
       </div>
     </div>
   )
 }
-
-// Make sure to export as default as well
-export default MinimalBlogList
