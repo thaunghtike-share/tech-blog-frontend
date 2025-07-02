@@ -29,18 +29,16 @@ export default function HomePage() {
                       <div className="h-16 w-16 text-white text-4xl">👨‍💻</div>
                     </div>
                     <h3 className="text-2xl font-light text-gray-900 mb-2">Thaung Htike Oo</h3>
-                    <p className="text-blue-600 font-medium mb-4">DevOps Engineer & Cloud Architect</p>
+                    <p className="text-blue-600 font-medium mb-4">Senior DevOps Engineer</p>
                     <div className="flex items-center justify-center text-gray-600 mb-6">
                       <span className="text-blue-500 mr-2">📍</span>
-                      Myanmar
+                      Yangon, Myanmar
                     </div>
                   </div>
 
                   <div className="mb-8">
                     <p className="text-gray-600 font-light leading-relaxed text-sm">
-                      Passionate DevOps Engineer with 5+ years of experience in cloud infrastructure, automation, and
-                      CI/CD pipelines. I love sharing knowledge about modern DevOps practices, containerization, and
-                      cloud technologies.
+                      DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.
                     </p>
                   </div>
 
@@ -59,20 +57,36 @@ export default function HomePage() {
               <div className="lg:col-span-2">
                 <h3 className="text-2xl font-light mb-8 flex items-center text-gray-900">💼 Work Experience</h3>
                 <div className="space-y-8">
+
                   <div className="border-0 bg-white shadow-sm hover:shadow-md transition-shadow rounded-2xl p-8">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                       <div>
                         <h4 className="text-xl font-medium text-gray-900 mb-1">Senior DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-2">Tech Solutions Co.</p>
+                        <p className="text-blue-600 font-medium mb-2">Maharbawga Company Ltd</p>
                       </div>
                       <div className="text-right">
-                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 2022 - Present</div>
-                        <div className="flex items-center text-sm text-gray-500">📍 Remote</div>
+                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 November 2024 - Present</div>
+                        <div className="flex items-center text-sm text-gray-500">📍 Yangon, Myanmar</div>
                       </div>
                     </div>
                     <p className="text-gray-600 font-light leading-relaxed">
-                      Leading cloud infrastructure projects and implementing CI/CD pipelines for enterprise
-                      applications. Specialized in AWS, Kubernetes, and automation tools.
+                      Led Azure infrastructure migration to Terraform using dynamic patterns to manage resources like VMs, NSGs, NICs, public IPs, and AKS clusters. Built reusable Terraform modules and implemented CI/CD pipelines with GitHub Actions and ArgoCD. Managed AKS clusters with Azure AD and CNI (overlay) integration. Optimized NAT gateway and network setups while supporting ML workloads alongside developers and data scientists.
+                    </p>
+                  </div>
+
+                  <div className="border-0 bg-white shadow-sm hover:shadow-md transition-shadow rounded-2xl p-8">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                      <div>
+                        <h4 className="text-xl font-medium text-gray-900 mb-1">Senior DevOps Engineer</h4>
+                        <p className="text-blue-600 font-medium mb-2">Dinger Company Ltd</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 June 2022 - August 2024</div>
+                        <div className="flex items-center text-sm text-gray-500">📍 Yangon, Myanmar</div>
+                      </div>
+                    </div>
+                    <p className="text-gray-600 font-light leading-relaxed">
+                      Designed and maintained AKS/EKS infrastructure with GitHub Actions, ArgoCD, and Istio. Released the MTB Pay wallet in 2024 and optimized cloud architecture for cost and performance. Set up automated CI/CD pipelines, service mesh, and system monitoring using Prometheus, Grafana, and Loki.
                     </p>
                   </div>
 
@@ -80,16 +94,15 @@ export default function HomePage() {
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                       <div>
                         <h4 className="text-xl font-medium text-gray-900 mb-1">DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-2">Digital Innovation Ltd.</p>
+                        <p className="text-blue-600 font-medium mb-2">OpsZero</p>
                       </div>
                       <div className="text-right">
-                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 2020 - 2022</div>
-                        <div className="flex items-center text-sm text-gray-500">📍 Yangon, Myanmar</div>
+                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 December 2021 - June 2023</div>
+                        <div className="flex items-center text-sm text-gray-500">📍 Remote</div>
                       </div>
                     </div>
                     <p className="text-gray-600 font-light leading-relaxed">
-                      Designed scalable cloud infrastructure and automated deployment processes for microservices
-                      architecture. Focused on monitoring, logging, and containerization.
+                      Automated AWS infrastructure using Terraform and managed EKS clusters for scaling containerized apps. Built CI/CD pipelines with GitHub Actions and GitLab CI. Wrote Python/Django features, automated tasks using Bash, and secured secrets using Vault and Packer.
                     </p>
                   </div>
 
@@ -97,18 +110,18 @@ export default function HomePage() {
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                       <div>
                         <h4 className="text-xl font-medium text-gray-900 mb-1">Junior DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-2">StartupTech</p>
+                        <p className="text-blue-600 font-medium mb-2">Frontiir (Myanmar Net)</p>
                       </div>
                       <div className="text-right">
-                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 2019 - 2020</div>
+                        <div className="flex items-center text-sm text-gray-500 mb-1">📅 December 2020 - December 2021</div>
                         <div className="flex items-center text-sm text-gray-500">📍 Yangon, Myanmar</div>
                       </div>
                     </div>
                     <p className="text-gray-600 font-light leading-relaxed">
-                      Maintained Linux servers and assisted in cloud migration projects. Gained hands-on experience with
-                      AWS services and infrastructure automation.
+                      Developed CI/CD pipelines using GitHub and GitLab. Managed hybrid Kubernetes clusters, integrated ArgoCD for GitOps, and monitored systems with Grafana, Elasticsearch, and Loki. Automated deployment workflows using Ansible and Bash scripts.
                     </p>
                   </div>
+
                 </div>
               </div>
             </div>

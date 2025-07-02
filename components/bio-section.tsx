@@ -1,38 +1,53 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { User, MapPin, Calendar, Briefcase, Download, ExternalLink } from "lucide-react"
+import {
+  User,
+  MapPin,
+  Calendar,
+  Briefcase,
+  Download,
+  ExternalLink,
+} from "lucide-react"
 
 const personalInfo = {
   name: "Thaung Htike Oo",
-  title: "DevOps Engineer & Cloud Architect",
-  location: "Myanmar",
-  bio: "Passionate DevOps Engineer with 5+ years of experience in cloud infrastructure, automation, and CI/CD pipelines. I love sharing knowledge about modern DevOps practices, containerization, and cloud technologies. Through this blog, I aim to help fellow engineers navigate the ever-evolving world of DevOps and build scalable, reliable systems.",
+  title: "Senior DevOps Engineer",
+  location: "Yangon, Myanmar",
+  bio: "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.",
 }
 
 const workExperience = [
   {
-    company: "Tech Solutions Co.",
+    company: "Maharbawga Company Ltd",
     position: "Senior DevOps Engineer",
-    duration: "2022 - Present",
+    duration: "November 2024 - Present",
+    location: "Yangon, Myanmar",
+    description:
+      "Led Azure infrastructure migration to Terraform using dynamic for_each patterns to manage resources like VMs, NSGs, NICs, public IPs, and AKS clusters. Built reusable Terraform modules and implemented CI/CD pipelines with GitHub Actions and ArgoCD. Managed AKS clusters with Azure AD and CNI (overlay) integration. Optimized NAT gateway and network setups while supporting ML workloads alongside developers and data scientists.",
+  },
+  {
+    company: "Dinger Company Ltd",
+    position: "Senior DevOps Engineer",
+    duration: "June 2022 - August 2024",
+    location: "Yangon, Myanmar",
+    description:
+      "Designed and maintained AKS/EKS infrastructure with GitHub Actions, ArgoCD, and Istio. Released the MTB Pay wallet in 2024 and optimized cloud architecture for cost and performance. Set up automated CI/CD pipelines, service mesh, and system monitoring using Prometheus, Grafana, and Loki.",
+  },
+  {
+    company: "OpsZero",
+    position: "DevOps Engineer",
+    duration: "December 2021 - June 2023",
     location: "Remote",
     description:
-      "Leading cloud infrastructure projects and implementing CI/CD pipelines for enterprise applications. Specialized in AWS, Kubernetes, and automation tools.",
+      "Automated AWS infrastructure using Terraform and managed EKS clusters for scaling containerized apps. Built CI/CD pipelines with GitHub Actions and GitLab CI. Wrote Python/Django features, automated tasks using Bash, and secured secrets using Vault and Packer.",
   },
   {
-    company: "Digital Innovation Ltd.",
-    position: "DevOps Engineer",
-    duration: "2020 - 2022",
-    location: "Yangon, Myanmar",
-    description:
-      "Designed scalable cloud infrastructure and automated deployment processes for microservices architecture. Focused on monitoring, logging, and containerization.",
-  },
-  {
-    company: "StartupTech",
+    company: "Frontiir (Myanmar Net)",
     position: "Junior DevOps Engineer",
-    duration: "2019 - 2020",
+    duration: "December 2020 - December 2021",
     location: "Yangon, Myanmar",
     description:
-      "Maintained Linux servers and assisted in cloud migration projects. Gained hands-on experience with AWS services and infrastructure automation.",
+      "Developed CI/CD pipelines using GitHub and GitLab. Managed hybrid Kubernetes clusters, integrated ArgoCD for GitOps, and monitored systems with Grafana, Elasticsearch, and Loki. Automated deployment workflows using Ansible and Bash scripts.",
   },
 ]
 
