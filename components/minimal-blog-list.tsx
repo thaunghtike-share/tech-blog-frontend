@@ -56,7 +56,17 @@ export function MinimalBlogList() {
         }
         const articlesData = await articlesResponse.json()
         console.log("Articles fetched successfully:", articlesData)
-        setArticles(articlesData)
+
+        // Ensure articlesData is an array
+        if (Array.isArray(articlesData)) {
+          setArticles(articlesData)
+        } else if (articlesData && Array.isArray(articlesData.results)) {
+          // Handle paginated response
+          setArticles(articlesData.results)
+        } else {
+          console.error("Unexpected articles data format:", articlesData)
+          setArticles([])
+        }
         setLoading(false)
 
         // Then fetch supporting data (optional - won't break if they fail)
@@ -64,33 +74,60 @@ export function MinimalBlogList() {
           const authorsResponse = await fetch(`${API_BASE_URL}/authors/`)
           if (authorsResponse.ok) {
             const authorsData = await authorsResponse.json()
-            setAuthors(authorsData)
             console.log("Authors fetched:", authorsData)
+            // Ensure authorsData is an array
+            if (Array.isArray(authorsData)) {
+              setAuthors(authorsData)
+            } else if (authorsData && Array.isArray(authorsData.results)) {
+              setAuthors(authorsData.results)
+            } else {
+              console.log("Authors data is not an array:", authorsData)
+              setAuthors([])
+            }
           }
         } catch (err) {
           console.log("Authors API not available:", err)
+          setAuthors([])
         }
 
         try {
           const tagsResponse = await fetch(`${API_BASE_URL}/tags/`)
           if (tagsResponse.ok) {
             const tagsData = await tagsResponse.json()
-            setTags(tagsData)
             console.log("Tags fetched:", tagsData)
+            // Ensure tagsData is an array
+            if (Array.isArray(tagsData)) {
+              setTags(tagsData)
+            } else if (tagsData && Array.isArray(tagsData.results)) {
+              setTags(tagsData.results)
+            } else {
+              console.log("Tags data is not an array:", tagsData)
+              setTags([])
+            }
           }
         } catch (err) {
           console.log("Tags API not available:", err)
+          setTags([])
         }
 
         try {
           const categoriesResponse = await fetch(`${API_BASE_URL}/categories/`)
           if (categoriesResponse.ok) {
             const categoriesData = await categoriesResponse.json()
-            setCategories(categoriesData)
             console.log("Categories fetched:", categoriesData)
+            // Ensure categoriesData is an array
+            if (Array.isArray(categoriesData)) {
+              setCategories(categoriesData)
+            } else if (categoriesData && Array.isArray(categoriesData.results)) {
+              setCategories(categoriesData.results)
+            } else {
+              console.log("Categories data is not an array:", categoriesData)
+              setCategories([])
+            }
           }
         } catch (err) {
           console.log("Categories API not available:", err)
+          setCategories([])
         }
       } catch (err) {
         console.error("Error fetching articles:", err)
@@ -102,13 +139,19 @@ export function MinimalBlogList() {
     fetchData()
   }, [])
 
-  // Helper functions
+  // Helper functions with array safety checks
   const getAuthorName = (authorId: number) => {
+    if (!Array.isArray(authors) || authors.length === 0) {
+      return `Author ${authorId}`
+    }
     const author = authors.find((a) => a.id === authorId)
     return author?.name || author?.username || `Author ${authorId}`
   }
 
   const getTagNames = (tagIds: number[]) => {
+    if (!Array.isArray(tags) || tags.length === 0 || !Array.isArray(tagIds)) {
+      return []
+    }
     return tagIds.map((id) => {
       const tag = tags.find((t) => t.id === id)
       return tag?.name || `Tag ${id}`
@@ -117,20 +160,30 @@ export function MinimalBlogList() {
 
   const getCategoryName = (categoryId: number | null) => {
     if (!categoryId) return "General"
+    if (!Array.isArray(categories) || categories.length === 0) {
+      return "General"
+    }
     const category = categories.find((c) => c.id === categoryId)
     return category?.name || "General"
   }
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
+    try {
+      const date = new Date(dateString)
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    } catch (error) {
+      return "Unknown date"
+    }
   }
 
   const calculateReadTime = (content: string) => {
+    if (!content || typeof content !== "string") {
+      return "1 min"
+    }
     const wordsPerMinute = 200
     const wordCount = content.split(" ").length
     const readTime = Math.ceil(wordCount / wordsPerMinute)
@@ -138,6 +191,9 @@ export function MinimalBlogList() {
   }
 
   const truncateContent = (content: string, maxLength = 150) => {
+    if (!content || typeof content !== "string") {
+      return "No content available"
+    }
     if (content.length <= maxLength) return content
     return content.substring(0, maxLength) + "..."
   }
@@ -202,7 +258,7 @@ export function MinimalBlogList() {
     )
   }
 
-  if (articles.length === 0) {
+  if (!Array.isArray(articles) || articles.length === 0) {
     return (
       <div className="space-y-16">
         <div className="flex items-center justify-between">
@@ -242,7 +298,7 @@ export function MinimalBlogList() {
 
             <Link href={`/articles/${article.id}`} className="block">
               <h3 className="text-2xl font-light text-slate-900 mb-4 group-hover:text-emerald-600 transition-colors leading-tight">
-                {article.title}
+                {article.title || "Untitled Article"}
               </h3>
               <p className="text-slate-600 text-lg leading-relaxed mb-6 font-light">
                 {truncateContent(article.content)}

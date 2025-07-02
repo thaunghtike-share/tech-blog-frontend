@@ -62,7 +62,17 @@ export function MinimalSidebar() {
 
         const data = await response.json()
         console.log("Sidebar categories fetched successfully:", data)
-        setCategories(data)
+
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setCategories(data)
+        } else if (data && Array.isArray(data.results)) {
+          // Handle paginated response
+          setCategories(data.results)
+        } else {
+          console.error("Unexpected categories data format:", data)
+          setCategories([])
+        }
         setCategoriesError(null)
       } catch (err) {
         console.error("Error fetching sidebar categories:", err)
@@ -123,7 +133,7 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Categories - Now using API data */}
+      {/* Categories - Now using API data with safety checks */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/50">
         <h3 className="text-xl font-light mb-6">Categories</h3>
 
@@ -149,7 +159,7 @@ export function MinimalSidebar() {
               Try again
             </button>
           </div>
-        ) : categories.length === 0 ? (
+        ) : !Array.isArray(categories) || categories.length === 0 ? (
           <div className="text-center py-4">
             <p className="text-slate-500 text-sm">No categories available</p>
           </div>
@@ -166,7 +176,7 @@ export function MinimalSidebar() {
                   <div className="flex items-center">
                     <Icon className="h-4 w-4 mr-3 text-slate-400 group-hover:text-emerald-600 transition-colors" />
                     <span className="text-slate-600 font-light group-hover:text-emerald-600 transition-colors">
-                      {category.name}
+                      {category.name || "Unknown Category"}
                     </span>
                   </div>
                   <span className="text-xs text-stone-400 group-hover:text-emerald-600 transition-colors">→</span>
