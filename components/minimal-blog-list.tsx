@@ -1,86 +1,266 @@
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock } from "lucide-react"
-import Link from "next/link"
+"use client"
 
-const posts = [
-  {
-    id: 1,
-    title: "The Art of Clean Code: Writing Maintainable Software",
-    excerpt:
-      "Explore the principles and practices that make code not just functional, but beautiful and maintainable for years to come.",
-    author: "Sarah Chen",
-    date: "December 15, 2024",
-    readTime: "12 min",
-    category: "Programming",
-  },
-  {
-    id: 2,
-    title: "Designing for Accessibility: A Complete Guide",
-    excerpt:
-      "Learn how to create inclusive digital experiences that work for everyone, regardless of their abilities or circumstances.",
-    author: "Marcus Johnson",
-    date: "December 12, 2024",
-    readTime: "8 min",
-    category: "Design",
-  },
-  {
-    id: 3,
-    title: "The Psychology of Learning: How Memory Works",
-    excerpt:
-      "Understanding how our brains process and retain information can dramatically improve how we learn new skills.",
-    author: "Dr. Emily Watson",
-    date: "December 10, 2024",
-    readTime: "15 min",
-    category: "Learning",
-  },
-  {
-    id: 4,
-    title: "Modern CSS: Grid, Flexbox, and Beyond",
-    excerpt:
-      "Master the latest CSS layout techniques and create responsive designs that work beautifully across all devices.",
-    author: "Alex Rodriguez",
-    date: "December 8, 2024",
-    readTime: "10 min",
-    category: "CSS",
-  },
-]
+import { Badge } from "@/components/ui/badge"
+import { Calendar, Clock, User } from "lucide-react"
+import Link from "next/link"
+import { useState, useEffect } from "react"
+
+// Types for your API data
+interface Article {
+  id: number
+  title: string
+  content: string
+  published_at: string
+  category: number | null
+  tags: number[]
+  author: number
+}
+
+interface Author {
+  id: number
+  name: string
+  username?: string
+}
+
+interface Tag {
+  id: number
+  name: string
+}
+
+interface Category {
+  id: number
+  name: string
+}
 
 export function MinimalBlogList() {
+  const [articles, setArticles] = useState<Article[]>([])
+  const [authors, setAuthors] = useState<Author[]>([])
+  const [tags, setTags] = useState<Tag[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Your Django API URL
+  const API_BASE_URL = "http://localhost:8000/api"
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        console.log("Fetching articles from:", `${API_BASE_URL}/articles/`)
+
+        // First, fetch articles (most important)
+        const articlesResponse = await fetch(`${API_BASE_URL}/articles/`)
+        if (!articlesResponse.ok) {
+          throw new Error(`Articles API returned ${articlesResponse.status}: ${articlesResponse.statusText}`)
+        }
+        const articlesData = await articlesResponse.json()
+        console.log("Articles fetched successfully:", articlesData)
+        setArticles(articlesData)
+        setLoading(false)
+
+        // Then fetch supporting data (optional - won't break if they fail)
+        try {
+          const authorsResponse = await fetch(`${API_BASE_URL}/authors/`)
+          if (authorsResponse.ok) {
+            const authorsData = await authorsResponse.json()
+            setAuthors(authorsData)
+            console.log("Authors fetched:", authorsData)
+          }
+        } catch (err) {
+          console.log("Authors API not available:", err)
+        }
+
+        try {
+          const tagsResponse = await fetch(`${API_BASE_URL}/tags/`)
+          if (tagsResponse.ok) {
+            const tagsData = await tagsResponse.json()
+            setTags(tagsData)
+            console.log("Tags fetched:", tagsData)
+          }
+        } catch (err) {
+          console.log("Tags API not available:", err)
+        }
+
+        try {
+          const categoriesResponse = await fetch(`${API_BASE_URL}/categories/`)
+          if (categoriesResponse.ok) {
+            const categoriesData = await categoriesResponse.json()
+            setCategories(categoriesData)
+            console.log("Categories fetched:", categoriesData)
+          }
+        } catch (err) {
+          console.log("Categories API not available:", err)
+        }
+      } catch (err) {
+        console.error("Error fetching articles:", err)
+        setError(err instanceof Error ? err.message : "Failed to fetch articles")
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Helper functions
+  const getAuthorName = (authorId: number) => {
+    const author = authors.find((a) => a.id === authorId)
+    return author?.name || author?.username || `Author ${authorId}`
+  }
+
+  const getTagNames = (tagIds: number[]) => {
+    return tagIds.map((id) => {
+      const tag = tags.find((t) => t.id === id)
+      return tag?.name || `Tag ${id}`
+    })
+  }
+
+  const getCategoryName = (categoryId: number | null) => {
+    if (!categoryId) return "General"
+    const category = categories.find((c) => c.id === categoryId)
+    return category?.name || "General"
+  }
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  }
+
+  const calculateReadTime = (content: string) => {
+    const wordsPerMinute = 200
+    const wordCount = content.split(" ").length
+    const readTime = Math.ceil(wordCount / wordsPerMinute)
+    return `${readTime} min`
+  }
+
+  const truncateContent = (content: string, maxLength = 150) => {
+    if (content.length <= maxLength) return content
+    return content.substring(0, maxLength) + "..."
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-16">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+        </div>
+        <div className="space-y-12">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="animate-pulse">
+              <div className="flex items-start space-x-4 mb-4">
+                <div className="w-8 h-4 bg-slate-200 rounded"></div>
+                <div className="w-20 h-6 bg-slate-200 rounded"></div>
+              </div>
+              <div className="w-3/4 h-8 bg-slate-200 rounded mb-4"></div>
+              <div className="w-full h-4 bg-slate-200 rounded mb-2"></div>
+              <div className="w-2/3 h-4 bg-slate-200 rounded mb-6"></div>
+              <div className="flex space-x-6">
+                <div className="w-24 h-4 bg-slate-200 rounded"></div>
+                <div className="w-32 h-4 bg-slate-200 rounded"></div>
+                <div className="w-16 h-4 bg-slate-200 rounded"></div>
+              </div>
+              <div className="mt-8 h-px bg-slate-200"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-16">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+        </div>
+        <div className="text-center py-12 bg-red-50 rounded-lg border border-red-200">
+          <div className="text-red-500 mb-4 text-2xl">⚠️</div>
+          <h3 className="text-lg font-semibold text-red-700 mb-2">Unable to load articles</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <div className="text-sm text-red-500 mb-4">
+            <p>
+              Make sure your Django server is running on:{" "}
+              <code className="bg-red-100 px-2 py-1 rounded">http://localhost:8000</code>
+            </p>
+            <p>
+              And CORS is configured to allow:{" "}
+              <code className="bg-red-100 px-2 py-1 rounded">http://localhost:3000</code>
+            </p>
+          </div>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (articles.length === 0) {
+    return (
+      <div className="space-y-16">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
+        </div>
+        <div className="text-center py-12">
+          <div className="text-slate-400 mb-4 text-4xl">📝</div>
+          <p className="text-slate-600">No articles found. Check back soon!</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-16">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-light text-slate-900">Latest Articles</h2>
-        <Link href="/all" className="text-sm text-gray-500 hover:text-black transition-colors">
-          View All →
-        </Link>
+        <span className="text-sm text-gray-500">{articles.length} articles</span>
       </div>
 
       <div className="space-y-12">
-        {posts.map((post, index) => (
-          <article key={post.id} className="group">
+        {articles.map((article, index) => (
+          <article key={article.id} className="group">
             <div className="flex items-start space-x-4 mb-4">
               <span className="text-sm text-stone-400 font-mono mt-1">{String(index + 1).padStart(2, "0")}</span>
               <Badge variant="outline" className="text-xs">
-                {post.category}
+                {getCategoryName(article.category)}
               </Badge>
+              {getTagNames(article.tags)
+                .slice(0, 2)
+                .map((tagName, tagIndex) => (
+                  <Badge key={tagIndex} variant="secondary" className="text-xs">
+                    {tagName}
+                  </Badge>
+                ))}
             </div>
 
-            <Link href={`/post/${post.id}`} className="block">
+            <Link href={`/articles/${article.id}`} className="block">
               <h3 className="text-2xl font-light text-slate-900 mb-4 group-hover:text-emerald-600 transition-colors leading-tight">
-                {post.title}
+                {article.title}
               </h3>
-              <p className="text-slate-600 text-lg leading-relaxed mb-6 font-light">{post.excerpt}</p>
+              <p className="text-slate-600 text-lg leading-relaxed mb-6 font-light">
+                {truncateContent(article.content)}
+              </p>
             </Link>
 
             <div className="flex items-center text-sm text-stone-400 space-x-6">
-              <span className="font-light">{post.author}</span>
+              <div className="flex items-center">
+                <User className="h-4 w-4 mr-1" />
+                <span className="font-light">{getAuthorName(article.author)}</span>
+              </div>
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-1" />
-                {post.date}
+                {formatDate(article.published_at)}
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-1" />
-                {post.readTime}
+                {calculateReadTime(article.content)}
               </div>
             </div>
 
@@ -91,3 +271,6 @@ export function MinimalBlogList() {
     </div>
   )
 }
+
+// Make sure to export as default as well
+export default MinimalBlogList

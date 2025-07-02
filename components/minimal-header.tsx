@@ -12,7 +12,7 @@ export function MinimalHeader() {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
+            <Link href="/articles" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
               Articles
             </Link>
             <Link href="/topics" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
