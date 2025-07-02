@@ -20,65 +20,92 @@ import {
 
 const personalInfo = {
   name: "Thaung Htike Oo",
-  title: "DevOps Engineer & Cloud Architect",
-  location: "Myanmar",
-  email: "thaunghtike@example.com", // Update with your actual email
-  phone: "+95 9xxxxxxxxx", // Update with your actual phone
+  title: "Senior DevOps Engineer",
+  location: "Yangon | Myanmar",
+  email: "thaunghtike.tho1234@gmail.com", // Update with your actual email
+  phone: "+959952492359", // Update with your actual phone
   summary:
-    "Passionate DevOps Engineer with 5+ years of experience in cloud infrastructure, automation, and CI/CD pipelines. Specialized in AWS, Docker, Kubernetes, and modern DevOps practices. I believe in the power of automation, continuous learning, and sharing knowledge with the community.",
+    "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices."
 }
 
 const workExperience = [
+{
+  company: "Maharbawga Company Ltd",
+  position: "Senior DevOps Engineer",
+  duration: "November 2024 - Present",
+  location: "Yangon, Myanmar",
+  responsibilities: [
+    "Migrated monolithic applications to microservices architecture",
+    "Led the migration of complex Azure infrastructure into Terraform, using dynamic for_each patterns to manage VMs, NSGs, NICs, public IPs, and AKS clusters.",
+    "Managed and maintained AKS clusters with multiple node pools, integrated with Azure AD authentication and Azure CNI (overlay) networking.",
+    "Built reusable Terraform modules to streamline provisioning of scalable Kubernetes infrastructure and associated cloud components.",
+    "Implemented CI/CD pipelines for AKS and VM-based applications using GitHub Actions and ArgoCD, ensuring reliable and automated deployments.",
+    "Optimized network configurations and NAT gateway associations to ensure secure and cost-effective cloud infrastructure.",
+    "Refactored legacy resources into modular, declarative infrastructure-as-code to enable consistency and version control.",
+    "Worked closely with developers and data scientists to align infrastructure with application and machine learning needs."
+  ],
+  technologies: [
+    "Azure", "AKS", "Terraform", "Kubernetes", "ArgoCD", "GitHub Actions",
+    "Azure CNI", "Linux", "Prometheus", "Grafana"
+  ],
+  },
   {
-    company: "Tech Solutions Co.",
+    company: "Dinger Company Ltd",
     position: "Senior DevOps Engineer",
-    duration: "2022 - Present",
+    duration: "June 2022 - August 2024",
+    location: "Yangon, Myanmar",
+    responsibilities: [
+      "Managed cloud infrastructure using tools such as EKS, AKS, GitHub Actions, ArgoCD,Grafana, Istio, and Loki",
+      "Successfully released the MTB Pay wallet in August 2024.",
+      "Designed and implemented cloud infrastructure from ground up, including CI/CD pipelines for deployment on AKS",
+      "Managed cloud cost optimization and infrastructure performance tuning for efficiency.",
+      "Deployed and maintained Kubernetes clusters using AKS and EKS to manage containerizedapplications.",
+      "Created and managed GitHub Actions and ArgoCD for automated deployments.",
+      "Monitored and analyzed system performance using Grafana and Prometheus.",
+      "Implemented service mesh (Istio) for better traffic control and security management."
+    ],
+    technologies: ["AWS", "AKS", "Kubernetes", "Terraform", "Github Actions", "Python"],
+  },
+  {
+    company: "OpsZero",
+    position: "DevOps Engineer",
+    duration: "December 2021 - June 2023",
     location: "Remote",
     responsibilities: [
-      "Led migration of legacy applications to AWS cloud infrastructure",
-      "Implemented CI/CD pipelines using Jenkins and GitLab CI",
-      "Managed Kubernetes clusters serving 1M+ daily users",
-      "Reduced deployment time by 80% through automation",
-      "Mentored junior engineers on DevOps best practices",
+      "Developed Python Django models for improving application performance and functionality.",
+      "Handled container management using Amazon EKS for scaling and deployment.",
+      "Wrote Terraform scripts as code for automating cloud resource provisioning and management.",
+      "Developed CI/CD workflows using GitHub Actions and GitLab CI for deployment processes.",
+      "Developed Bash scripts to automate system tasks and simplify manual processes.",
+      "Used HashiCorp Vault for secure management of sensitive data and Packer for creating machine images.",
+      "Managed infrastructure on AWS with cost-effective scaling and performance improvements.",
     ],
-    technologies: ["AWS", "Kubernetes", "Docker", "Jenkins", "Terraform", "Python"],
+    technologies: ["Azure", "AWS", "Terraform", "CICD", "Grafana", "Django"],
   },
   {
-    company: "Digital Innovation Ltd.",
-    position: "DevOps Engineer",
-    duration: "2020 - 2022",
-    location: "Yangon, Myanmar",
-    responsibilities: [
-      "Designed and maintained scalable cloud infrastructure",
-      "Automated deployment processes for microservices architecture",
-      "Implemented monitoring and logging solutions using ELK stack",
-      "Collaborated with development teams on containerization",
-      "Reduced infrastructure costs by 40% through optimization",
-    ],
-    technologies: ["Docker", "AWS", "Ansible", "Prometheus", "Grafana", "ELK Stack"],
-  },
-  {
-    company: "StartupTech",
+    company: "Frontiir (Myanmar Net)",
     position: "Junior DevOps Engineer",
-    duration: "2019 - 2020",
+    duration: "December 2020 - December 2021",
     location: "Yangon, Myanmar",
     responsibilities: [
-      "Maintained Linux servers and database systems",
-      "Implemented backup and disaster recovery procedures",
-      "Assisted in cloud migration projects",
-      "Provided technical support for development teams",
-      "Automated routine maintenance tasks using shell scripts",
+      "Developed and managed CI/CD pipelines using GitHub and GitLab to automate application deployments",
+      "Managed on-premise and cloud-based Kubernetes clusters to support containerized applications",
+      "Used Bash scripting to automate tasks and for system management.",
+      "Automated infrastructure tasks with Ansible for consistent and fast deployments.",
+      "Integrated ArgoCD for GitOps-based continuous delivery, improving deployment speed and reliability.",
+      "Monitored application health and performance using Grafana and Elasticsearch, and identified and resolved any issues.",
+      "Centralized logging solutions with Loki for log aggregation and analysis across services."
     ],
-    technologies: ["Linux", "MySQL", "Git", "AWS EC2", "Nginx", "Bash"],
+    technologies: ["Linux", "ArgoCD", "Git", "AWS", "Bash", "Monitoring", "Kubernetes", "Grafana", "Loki"],
   },
 ]
 
 const education = [
   {
-    degree: "Bachelor of Computer Science",
-    institution: "University of Computer Studies, Yangon",
-    duration: "2015 - 2019",
-    details: "Specialized in Software Engineering and System Administration. Graduated with honors.",
+    degree: "B.C.Tech",
+    institution: "University of Information Technology, Yangon",
+    duration: "2015 - 2020",
+    details: "Specialized in Communication and Networking. Graduated with honors.",
     gpa: "3.8/4.0",
   },
 ]
@@ -87,65 +114,65 @@ const certifications = [
   {
     name: "AWS Certified Solutions Architect - Associate",
     issuer: "Amazon Web Services",
-    year: "2023",
-    credentialId: "AWS-SAA-123456",
-    validUntil: "2026",
+    year: "2022",
+    credentialId: "AWS-SAA",
+    validUntil: "expired",
   },
   {
     name: "Certified Kubernetes Administrator (CKA)",
     issuer: "Cloud Native Computing Foundation",
     year: "2022",
-    credentialId: "CKA-789012",
-    validUntil: "2025",
-  },
-  {
-    name: "Docker Certified Associate",
-    issuer: "Docker Inc.",
-    year: "2021",
-    credentialId: "DCA-345678",
-    validUntil: "2024",
+    credentialId: "CKA",
+    validUntil: "expired",
   },
   {
     name: "HashiCorp Certified: Terraform Associate",
     issuer: "HashiCorp",
     year: "2023",
-    credentialId: "HC-TA-901234",
-    validUntil: "2025",
+    credentialId: "HCP-TF",
+    validUntil: "expired",
+  },
+    {
+    name: "Azure Fundamentals Az-900",
+    issuer: "Microsoft",
+    year: "2023",
+    credentialId: "Az-900",
+    validUntil: "expired",
   },
 ]
 
 const skills = {
   "Cloud Platforms": ["AWS", "Azure", "Google Cloud Platform"],
-  Containerization: ["Docker", "Kubernetes", "OpenShift", "Podman"],
-  "CI/CD Tools": ["Jenkins", "GitLab CI", "GitHub Actions", "Azure DevOps", "CircleCI"],
+  Containerization: ["Docker", "Kubernetes", "OpenShift"],
+  "CI/CD Tools": ["GitLab CI", "GitHub Actions", "Azure DevOps", "CircleCI", "ArgoCD", "Jenkins"],
   "Infrastructure as Code": ["Terraform", "CloudFormation", "Ansible", "Pulumi"],
   Monitoring: ["Prometheus", "Grafana", "ELK Stack", "CloudWatch", "Datadog"],
-  Programming: ["Python", "Bash", "Go", "JavaScript", "YAML"],
+  Programming: ["Python", "Node", "Nest JS"],
   Databases: ["MySQL", "PostgreSQL", "MongoDB", "Redis", "DynamoDB"],
-  "Operating Systems": ["Linux (Ubuntu, CentOS)", "Windows Server"],
-  "Version Control": ["Git", "GitHub", "GitLab", "Bitbucket"],
+  "Operating Systems": ["Linux", "Mac", "Windows Server"],
+  "Version Control": ["Git", "GitHub", "GitLab"],
   Security: ["AWS IAM", "Vault", "SSL/TLS", "Security Scanning"],
 }
 
 const projects = [
   {
-    name: "Multi-Cloud Infrastructure Migration",
-    description: "Led the migration of a monolithic application to microservices across AWS and Azure",
-    technologies: ["AWS", "Azure", "Kubernetes", "Terraform"],
-    impact: "Reduced infrastructure costs by 45% and improved scalability",
+    name: "Monolithic to Cloud-Native Architecture Migration",
+    description: "Led the end-to-end migration of legacy monolithic applications to modern microservices architecture at both Dinger and Maharbawga Co., Ltd. This included containerization, infrastructure redesign, and implementing CI/CD pipelines.",
+    technologies: ["AWS", "Azure", "Kubernetes", "Terraform", "GitHub Actions", "ArgoCD"],
+    impact: "Improved deployment speed by 60%, enhanced system scalability and fault tolerance, and reduced infrastructure and maintenance costs by over 45%."
   },
   {
-    name: "CI/CD Pipeline Automation",
-    description: "Built comprehensive CI/CD pipelines for 20+ applications",
-    technologies: ["Jenkins", "Docker", "Kubernetes", "GitLab"],
-    impact: "Reduced deployment time from 4 hours to 15 minutes",
+    name: "MTB Pay Wallet Release",
+    description: "Played a key role in the successful release of the MTB Pay wallet, contributing to infrastructure design, automation, and deployment processes.",
+    technologies: ["AWS", "Azure", "Kubernetes", "Terraform", "GitHub Actions", "ArgoCD"],
+    impact: "Enabled smooth and reliable product launch with improved deployment efficiency and system stability."
   },
-  {
-    name: "Monitoring & Alerting System",
-    description: "Implemented centralized monitoring for entire infrastructure",
-    technologies: ["Prometheus", "Grafana", "ELK Stack", "PagerDuty"],
-    impact: "Improved incident response time by 70%",
-  },
+{
+    name: "Freelance DevOps Engineer",
+    description: "Worked as a freelance DevOps engineer on Upwork, delivering infrastructure automation with Terraform, Kubernetes setup, and backend improvements in Python/Django.",
+    technologies: ["Terraform", "Kubernetes", "AWS", "Azure", "Packer", "Grafana", "Prometheus", "CICD"],
+    impact: "Helped clients accelerate infrastructure setup and backend delivery through automation and containerization.",
+  }
 ]
 
 export default function AboutPage() {
