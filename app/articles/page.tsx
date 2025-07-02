@@ -15,8 +15,8 @@ export default function ArticlesPage() {
             All <span className="font-semibold text-emerald-600">Articles</span>
           </h1>
           <p className="text-base text-slate-600 font-light max-w-lg mx-auto leading-relaxed">
-            Explore our complete collection of programming, design, and career growth articles. Find exactly what you're
-            looking for.
+            Explore our complete collection of DevOps, AI/ML, MLOps, and cloud infrastructure articles. Master the tools
+            and practices that power modern software delivery.
           </p>
         </div>
       </section>
@@ -30,10 +30,11 @@ export default function ArticlesPage() {
               <div className="flex items-center space-x-4">
                 <select className="bg-white/50 border border-white/50 rounded-lg px-3 py-2 text-sm">
                   <option>All Categories</option>
-                  <option>Programming</option>
-                  <option>Design</option>
-                  <option>Learning</option>
-                  <option>Career</option>
+                  <option>DevOps</option>
+                  <option>AI/ML</option>
+                  <option>MLOps</option>
+                  <option>Cloud</option>
+                  <option>Automation</option>
                 </select>
                 <select className="bg-white/50 border border-white/50 rounded-lg px-3 py-2 text-sm">
                   <option>Latest</option>

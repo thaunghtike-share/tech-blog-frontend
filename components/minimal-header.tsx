@@ -8,15 +8,21 @@ export function MinimalHeader() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="text-2xl font-light tracking-wide">
-            Learn<span className="font-semibold">Blog</span>
+            Learn<span className="font-semibold">DevOps</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/articles" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
+            <Link href="/" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
+              Home
+            </Link>
+            <Link href="/articles" className="text-slate-900 font-medium hover:text-emerald-600 transition-colors">
               Articles
             </Link>
-            <Link href="/topics" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
-              Topics
+            <Link href="/categories" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
+              Categories
+            </Link>
+            <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
+              Contact
             </Link>
             <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors font-light">
               About

@@ -1,15 +1,23 @@
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { BookOpen, Clock } from "lucide-react"
+import { BookOpen, Clock, Server, Brain, Cloud, Cog, BarChart3, Shield, Code, Database, Globe, Zap } from "lucide-react"
+import { useState, useEffect } from "react"
+import Link from "next/link"
 
-const topics = ["Programming", "Design", "Learning", "Productivity", "Career", "Technology"]
+// Types for your API data
+interface Category {
+  id: number
+  name: string
+}
 
 const featuredAuthors = [
-  { name: "Sarah Chen", posts: 24, specialty: "React & Frontend" },
-  { name: "Marcus Johnson", posts: 18, specialty: "UI/UX Design" },
-  { name: "Dr. Emily Watson", posts: 12, specialty: "Learning Science" },
-  { name: "Alex Rodriguez", posts: 15, specialty: "Backend & APIs" },
+  { name: "Sarah Chen", posts: 24, specialty: "Kubernetes & DevOps" },
+  { name: "Marcus Johnson", posts: 18, specialty: "Machine Learning" },
+  { name: "Dr. Emily Watson", posts: 12, specialty: "MLOps & Data Science" },
+  { name: "Alex Rodriguez", posts: 15, specialty: "Cloud Architecture" },
 ]
 
 const readingStats = {
@@ -18,7 +26,57 @@ const readingStats = {
   avgReadTime: "8 min",
 }
 
+// Icon mapping for different categories
+const getCategoryIcon = (categoryName: string) => {
+  const name = categoryName.toLowerCase()
+  if (name.includes("devops")) return Server
+  if (name.includes("python")) return Code
+  if (name.includes("ai") || name.includes("ml")) return Brain
+  if (name.includes("cloud")) return Cloud
+  if (name.includes("automation")) return Cog
+  if (name.includes("monitoring")) return BarChart3
+  if (name.includes("security")) return Shield
+  if (name.includes("database")) return Database
+  if (name.includes("web")) return Globe
+  return Zap // Default icon
+}
+
 export function MinimalSidebar() {
+  const [categories, setCategories] = useState<Category[]>([])
+  const [categoriesLoading, setCategoriesLoading] = useState(true)
+  const [categoriesError, setCategoriesError] = useState<string | null>(null)
+
+  // Your Django API URL
+  const API_BASE_URL = "http://localhost:8000/api"
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setCategoriesLoading(true)
+        console.log("Fetching categories for sidebar from:", `${API_BASE_URL}/categories`)
+
+        const response = await fetch(`${API_BASE_URL}/categories`)
+        if (!response.ok) {
+          throw new Error(`Categories API returned ${response.status}: ${response.statusText}`)
+        }
+
+        const data = await response.json()
+        console.log("Sidebar categories fetched successfully:", data)
+        setCategories(data)
+        setCategoriesError(null)
+      } catch (err) {
+        console.error("Error fetching sidebar categories:", err)
+        setCategoriesError(err instanceof Error ? err.message : "Failed to fetch categories")
+        // Fallback to empty array instead of hardcoded data
+        setCategories([])
+      } finally {
+        setCategoriesLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
+
   return (
     <div className="space-y-12">
       {/* Reading Stats */}
@@ -65,22 +123,58 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Topics */}
+      {/* Categories - Now using API data */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/50">
-        <h3 className="text-xl font-light mb-6">Topics</h3>
-        <div className="space-y-3">
-          {topics.map((topic) => (
-            <div
-              key={topic}
-              className="flex items-center justify-between py-2 border-b border-slate-200/50 last:border-b-0"
+        <h3 className="text-xl font-light mb-6">Categories</h3>
+
+        {categoriesLoading ? (
+          <div className="space-y-3">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="animate-pulse flex items-center justify-between py-2">
+                <div className="flex items-center">
+                  <div className="w-4 h-4 bg-gray-200 rounded mr-3"></div>
+                  <div className="w-20 h-4 bg-gray-200 rounded"></div>
+                </div>
+                <div className="w-4 h-4 bg-gray-200 rounded"></div>
+              </div>
+            ))}
+          </div>
+        ) : categoriesError ? (
+          <div className="text-center py-4">
+            <p className="text-red-500 text-sm mb-2">Failed to load categories</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="text-xs text-red-600 hover:text-red-700 underline"
             >
-              <span className="text-slate-600 font-light hover:text-emerald-600 cursor-pointer transition-colors">
-                {topic}
-              </span>
-              <span className="text-xs text-stone-400">→</span>
-            </div>
-          ))}
-        </div>
+              Try again
+            </button>
+          </div>
+        ) : categories.length === 0 ? (
+          <div className="text-center py-4">
+            <p className="text-slate-500 text-sm">No categories available</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {categories.map((category) => {
+              const Icon = getCategoryIcon(category.name)
+              return (
+                <Link
+                  key={category.id}
+                  href={`/category/${category.id}`}
+                  className="flex items-center justify-between py-2 border-b border-slate-200/50 last:border-b-0 hover:bg-slate-50/50 rounded-lg px-2 transition-colors group"
+                >
+                  <div className="flex items-center">
+                    <Icon className="h-4 w-4 mr-3 text-slate-400 group-hover:text-emerald-600 transition-colors" />
+                    <span className="text-slate-600 font-light group-hover:text-emerald-600 transition-colors">
+                      {category.name}
+                    </span>
+                  </div>
+                  <span className="text-xs text-stone-400 group-hover:text-emerald-600 transition-colors">→</span>
+                </Link>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       {/* Featured Authors */}

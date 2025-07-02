@@ -8,11 +8,11 @@ export function MinimalFooter() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link href="/" className="text-2xl font-light tracking-wide mb-6 block">
-              Learn<span className="font-semibold">Blog</span>
+              Learn<span className="font-semibold">DevOps</span>
             </Link>
             <p className="text-slate-600 font-light leading-relaxed mb-8 max-w-md">
-              Thoughtful articles on programming, design, and personal development. Written by experts, curated for
-              learners who value quality over quantity.
+              Expert insights on DevOps, AI/ML, MLOps, and cloud technologies. Written by practitioners, curated for
+              engineers building the future of software delivery.
             </p>
             <div className="flex space-x-6">
               <Link href="/twitter" className="text-stone-400 hover:text-slate-900 transition-colors">
@@ -40,8 +40,8 @@ export function MinimalFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/topics" className="text-slate-600 hover:text-emerald-600 transition-colors font-light">
-                  Topics
+                <Link href="/categories" className="text-slate-600 hover:text-emerald-600 transition-colors font-light">
+                  Categories
                 </Link>
               </li>
               <li>
@@ -87,7 +87,7 @@ export function MinimalFooter() {
 
         {/* Bottom */}
         <div className="border-t border-stone-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-stone-400 font-light text-sm">© 2024 LearnBlog. All rights reserved.</p>
+          <p className="text-stone-400 font-light text-sm">© 2025 LearnDevOpsNow. All rights reserved.</p>
           <p className="text-stone-400 font-light text-sm mt-4 md:mt-0">Made with care for the learning community.</p>
         </div>
       </div>
