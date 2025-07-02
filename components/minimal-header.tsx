@@ -11,7 +11,7 @@ export function MinimalHeader() {
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
 
-  const API_BASE_URL = "http://localhost:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
     const fetchResults = async () => {

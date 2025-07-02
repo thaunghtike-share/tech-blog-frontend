@@ -47,7 +47,7 @@ export function MinimalSidebar() {
   const [categoriesError, setCategoriesError] = useState<string | null>(null)
 
   // Your Django API URL
-  const API_BASE_URL = "http://localhost:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
     const fetchCategories = async () => {
