@@ -2,7 +2,6 @@
 
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalFooter } from "@/components/minimal-footer"
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Server,
@@ -110,7 +109,7 @@ export default function CategoriesPage() {
             const colors = getCategoryColors(category.name)
 
             return (
-              <Link key={category.id} href={`/category/${category.id}`}>
+              <Link key={category.id} href={`/categories/${category.id}`}>
                 <Card className="group hover:shadow-xl transition-all duration-300 border-0 overflow-hidden">
                   <div className={`h-2 bg-gradient-to-r ${colors.color}`}></div>
                   <CardContent
