@@ -32,7 +32,11 @@ interface Category {
   name: string
 }
 
-export function MinimalBlogList() {
+interface MinimalBlogListProps {
+  searchQuery?: string
+}
+
+export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [articles, setArticles] = useState<Article[]>([])
   const [authors, setAuthors] = useState<Author[]>([])
   const [tags, setTags] = useState<Tag[]>([])
@@ -47,46 +51,43 @@ export function MinimalBlogList() {
     const fetchData = async () => {
       try {
         setLoading(true)
-        console.log("Fetching articles from:", `${API_BASE_URL}/articles/`)
+        setError(null)
 
-        // First, fetch articles (most important)
-        const articlesResponse = await fetch(`${API_BASE_URL}/articles/`)
+        let url = `${API_BASE_URL}/articles/`
+        if (searchQuery && searchQuery.trim() !== "") {
+          url += `?search=${encodeURIComponent(searchQuery.trim())}`
+        }
+        console.log("Fetching articles from:", url)
+
+        const articlesResponse = await fetch(url)
         if (!articlesResponse.ok) {
           throw new Error(`Articles API returned ${articlesResponse.status}: ${articlesResponse.statusText}`)
         }
         const articlesData = await articlesResponse.json()
-        console.log("Articles fetched successfully:", articlesData)
 
-        // Ensure articlesData is an array
         if (Array.isArray(articlesData)) {
           setArticles(articlesData)
         } else if (articlesData && Array.isArray(articlesData.results)) {
-          // Handle paginated response
           setArticles(articlesData.results)
         } else {
-          console.error("Unexpected articles data format:", articlesData)
           setArticles([])
         }
         setLoading(false)
 
-        // Then fetch supporting data (optional - won't break if they fail)
+        // Then fetch supporting data (authors, tags, categories) - optional
         try {
           const authorsResponse = await fetch(`${API_BASE_URL}/authors/`)
           if (authorsResponse.ok) {
             const authorsData = await authorsResponse.json()
-            console.log("Authors fetched:", authorsData)
-            // Ensure authorsData is an array
             if (Array.isArray(authorsData)) {
               setAuthors(authorsData)
             } else if (authorsData && Array.isArray(authorsData.results)) {
               setAuthors(authorsData.results)
             } else {
-              console.log("Authors data is not an array:", authorsData)
               setAuthors([])
             }
           }
-        } catch (err) {
-          console.log("Authors API not available:", err)
+        } catch {
           setAuthors([])
         }
 
@@ -94,19 +95,15 @@ export function MinimalBlogList() {
           const tagsResponse = await fetch(`${API_BASE_URL}/tags/`)
           if (tagsResponse.ok) {
             const tagsData = await tagsResponse.json()
-            console.log("Tags fetched:", tagsData)
-            // Ensure tagsData is an array
             if (Array.isArray(tagsData)) {
               setTags(tagsData)
             } else if (tagsData && Array.isArray(tagsData.results)) {
               setTags(tagsData.results)
             } else {
-              console.log("Tags data is not an array:", tagsData)
               setTags([])
             }
           }
-        } catch (err) {
-          console.log("Tags API not available:", err)
+        } catch {
           setTags([])
         }
 
@@ -114,19 +111,15 @@ export function MinimalBlogList() {
           const categoriesResponse = await fetch(`${API_BASE_URL}/categories/`)
           if (categoriesResponse.ok) {
             const categoriesData = await categoriesResponse.json()
-            console.log("Categories fetched:", categoriesData)
-            // Ensure categoriesData is an array
             if (Array.isArray(categoriesData)) {
               setCategories(categoriesData)
             } else if (categoriesData && Array.isArray(categoriesData.results)) {
               setCategories(categoriesData.results)
             } else {
-              console.log("Categories data is not an array:", categoriesData)
               setCategories([])
             }
           }
-        } catch (err) {
-          console.log("Categories API not available:", err)
+        } catch {
           setCategories([])
         }
       } catch (err) {
@@ -137,7 +130,7 @@ export function MinimalBlogList() {
     }
 
     fetchData()
-  }, [])
+  }, [searchQuery])
 
   // Helper functions with array safety checks
   const getAuthorName = (authorId: number) => {

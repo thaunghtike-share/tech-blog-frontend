@@ -1,9 +1,17 @@
+"use client"  // <-- make page client component
+
+import { useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
+
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalBlogList } from "@/components/minimal-blog-list"
 import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
 
 export default function ArticlesPage() {
+  const searchParams = useSearchParams()
+  const searchQuery = searchParams.get("search") || ""
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
@@ -27,37 +35,15 @@ export default function ArticlesPage() {
           <div className="lg:col-span-2 bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-sm border border-white/50">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-light text-slate-900">Latest Articles</h2>
-              <div className="flex items-center space-x-4">
-                <select className="bg-white/50 border border-white/50 rounded-lg px-3 py-2 text-sm">
-                  <option>All Categories</option>
-                  <option>DevOps</option>
-                  <option>AI/ML</option>
-                  <option>MLOps</option>
-                  <option>Cloud</option>
-                  <option>Automation</option>
-                </select>
-                <select className="bg-white/50 border border-white/50 rounded-lg px-3 py-2 text-sm">
-                  <option>Latest</option>
-                  <option>Most Popular</option>
-                  <option>Most Viewed</option>
-                </select>
-              </div>
+              {/* Your filters here */}
             </div>
-            <MinimalBlogList />
 
-            {/* Pagination */}
+            {/* Pass searchQuery as prop */}
+            <MinimalBlogList searchQuery={searchQuery} />
+
+            {/* Pagination (keep as is or update later) */}
             <div className="flex justify-center mt-12">
-              <div className="flex items-center space-x-2">
-                <button className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors">
-                  Previous
-                </button>
-                <button className="px-3 py-2 text-sm bg-emerald-500 text-white rounded-lg">1</button>
-                <button className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors">2</button>
-                <button className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors">3</button>
-                <button className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors">
-                  Next
-                </button>
-              </div>
+              {/* pagination buttons */}
             </div>
           </div>
 
