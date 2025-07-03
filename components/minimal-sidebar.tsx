@@ -17,12 +17,13 @@ interface Tag {
   name: string
 }
 
-const featuredAuthors = [
-  { name: "Sarah Chen", posts: 24, specialty: "Kubernetes & DevOps" },
-  { name: "Marcus Johnson", posts: 18, specialty: "Machine Learning" },
-  { name: "Dr. Emily Watson", posts: 12, specialty: "MLOps & Data Science" },
-  { name: "Alex Rodriguez", posts: 15, specialty: "Cloud Architecture" },
-]
+interface FeaturedAuthor {
+  id: number
+  name: string
+  bio: string
+  avatar: string
+  featured: boolean
+}
 
 const getCategoryIconWithColor = (categoryName: string): [React.ComponentType<React.SVGProps<SVGSVGElement>>, string] => {
   const name = categoryName.toLowerCase()
@@ -46,6 +47,10 @@ export function MinimalSidebar() {
   const [tags, setTags] = useState<Tag[]>([])
   const [tagsLoading, setTagsLoading] = useState(true)
   const [tagsError, setTagsError] = useState<string | null>(null)
+
+  const [featuredAuthors, setFeaturedAuthors] = useState<FeaturedAuthor[]>([])
+  const [featuredLoading, setFeaturedLoading] = useState(true)
+  const [featuredError, setFeaturedError] = useState<string | null>(null)
 
   const [showAllCategories, setShowAllCategories] = useState(false)
 
@@ -88,8 +93,27 @@ export function MinimalSidebar() {
       }
     }
 
+    const fetchFeaturedAuthors = async () => {
+      try {
+        setFeaturedLoading(true)
+        const response = await fetch(`${API_BASE_URL}/authors/?featured=true`)
+        if (!response.ok) throw new Error(`Error: ${response.statusText}`)
+        const data = await response.json()
+        if (data && Array.isArray(data.results)) setFeaturedAuthors(data.results)
+        else if (Array.isArray(data)) setFeaturedAuthors(data)
+        else setFeaturedAuthors([])
+        setFeaturedError(null)
+      } catch (err) {
+        setFeaturedError("Failed to fetch featured authors")
+        setFeaturedAuthors([])
+      } finally {
+        setFeaturedLoading(false)
+      }
+    }
+
     fetchCategories()
     fetchTags()
+    fetchFeaturedAuthors()
   }, [])
 
   return (
@@ -222,19 +246,41 @@ export function MinimalSidebar() {
       {/* Featured Authors Section */}
       <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 border border-gray-200 shadow-sm">
         <h3 className="text-xl font-light mb-6 text-gray-900">Featured Authors</h3>
-        <div className="space-y-6">
-          {featuredAuthors.map((author) => (
-            <div key={author.name} className="group cursor-pointer">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-gray-700 font-light group-hover:text-blue-600 transition-colors">
-                  {author.name}
-                </span>
-                <span className="text-xs text-blue-600">{author.posts}</span>
+
+        {featuredLoading ? (
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="animate-pulse h-5 w-full bg-gray-300 rounded"></div>
+            ))}
+          </div>
+        ) : featuredError ? (
+          <div className="text-center py-4">
+            <p className="text-red-500 text-sm mb-2">{featuredError}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="text-xs text-red-600 hover:text-red-700 underline"
+            >
+              Try again
+            </button>
+          </div>
+        ) : featuredAuthors.length === 0 ? (
+          <p className="text-gray-500 text-sm">No featured authors found.</p>
+        ) : (
+          <div className="space-y-6">
+            {featuredAuthors.map((author) => (
+              <div key={author.id} className="group cursor-pointer">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-gray-700 font-light group-hover:text-blue-600 transition-colors">
+                    {author.name}
+                  </span>
+                </div>
+                {author.bio && (
+                  <p className="text-xs text-gray-500 font-light">{author.bio}</p>
+                )}
               </div>
-              <p className="text-xs text-gray-500 font-light">{author.specialty}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
