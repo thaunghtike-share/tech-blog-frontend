@@ -5,6 +5,21 @@ import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
 
 export default function HomePage() {
+  const skills = [
+    "Terraform",
+    "Kubernetes",
+    "Packer",
+    "Cloud",
+    "CICD",
+    "Automation",
+    "NestJS",
+    "Django",
+    "Monitoring",
+    "Istio",
+    "ArgoCD",
+    "MLflow",
+  ]
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <MinimalHeader />
@@ -18,6 +33,7 @@ export default function HomePage() {
             <MinimalSidebar />
           </div>
         </div>
+
         <div className="bg-gradient-to-r from-white/80 to-blue-50/80 rounded-2xl p-8 mt-16 backdrop-blur-sm border border-blue-100">
           <section className="mt-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -30,6 +46,15 @@ export default function HomePage() {
                     </div>
                     <h3 className="text-2xl font-light text-gray-900 mb-2">Thaung Htike Oo</h3>
                     <p className="text-blue-600 font-medium mb-4">Senior DevOps Engineer</p>
+                    <div className="flex items-center justify-center text-gray-600">
+                      <span className="text-blue-500 mr-2">📧</span>
+                      <a
+                        href="mailto:thaunghtikeoo.tho1234@gmail.com"
+                        className="hover:underline"
+                      >
+                        thaunghtikeoo.tho1234@gmail.com
+                      </a>
+                    </div>
                     <div className="flex items-center justify-center text-gray-600 mb-6">
                       <span className="text-blue-500 mr-2">📍</span>
                       Yangon, Myanmar
@@ -38,7 +63,8 @@ export default function HomePage() {
 
                   <div className="mb-8">
                     <p className="text-gray-600 font-light leading-relaxed text-sm">
-                        DevOps Engineer with 5+ years of experience building and automating cloud-native and on-prem infrastructure. Skilled in CI/CD pipelines, Kubernetes, Docker, Terraform, and Ansible. Experienced with Azure and AWS, focused on reliability and scalability. Currently exploring AI/MLOps to streamline ML workflows and deployment. Passionate about connecting software engineering, data science, and infrastructure through automation.                    </p>
+                      DevOps Engineer with 5+ years of experience building and automating cloud-native and on-prem infrastructure. Skilled in CI/CD pipelines, Kubernetes, Docker, Terraform, and Ansible. Experienced with Azure and AWS, focused on reliability and scalability. Currently exploring AI/MLOps to streamline ML workflows and deployment. Passionate about connecting software engineering, data science, and infrastructure through automation.
+                    </p>
                   </div>
 
                   <div className="space-y-3">
@@ -53,7 +79,6 @@ export default function HomePage() {
               <div className="lg:col-span-2">
                 <h3 className="text-2xl font-light mb-8 flex items-center text-gray-900">💼 Work Experience</h3>
                 <div className="space-y-6">
-
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                       <div>
@@ -117,7 +142,21 @@ export default function HomePage() {
                       Developed CI/CD pipelines using GitHub/GitLab. Managed hybrid Kubernetes clusters, integrated ArgoCD, and monitored with Grafana and Elasticsearch. Automated deployments with Ansible and Bash.
                     </p>
                   </div>
+                </div>
 
+                {/* Technical Skills */}
+                <div className="mt-16">
+                  <h3 className="text-2xl font-light mb-6 text-gray-900">🛠️ Technical Skills</h3>
+                  <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm font-medium">
+                    {skills.map((skill) => (
+                      <li
+                        key={skill}
+                        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full px-5 py-2 text-center shadow-md hover:from-indigo-600 hover:to-blue-500 cursor-default transition-colors"
+                      >
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
