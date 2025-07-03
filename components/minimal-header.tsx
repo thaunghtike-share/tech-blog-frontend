@@ -12,8 +12,9 @@ export function MinimalHeader() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const [resourcesOpen, setResourcesOpen] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
+  // New hover states for dropdowns
+  const [isArticlesOpen, setIsArticlesOpen] = useState(false)
+  const [isServicesOpen, setIsServicesOpen] = useState(false)
 
   const API_BASE_URL = "http://192.168.1.131:8000/api"
 
@@ -72,42 +73,54 @@ export function MinimalHeader() {
               Home
             </Link>
 
-            {/* Resources Dropdown */}
+            {/* Articles Dropdown */}
             <div
-              className="relative group"
-              onMouseEnter={() => setResourcesOpen(true)}
-              onMouseLeave={() => setResourcesOpen(false)}
+              className="relative"
+              onMouseEnter={() => setIsArticlesOpen(true)}
+              onMouseLeave={() => setIsArticlesOpen(false)}
             >
-              <Link
-                href="/articles"
-                className="flex items-center text-gray-700 hover:text-blue-600 transition-colors font-semibold"
+              <button
+                className="flex items-center text-gray-700 hover:text-blue-600 font-semibold cursor-pointer focus:outline-none"
+                aria-expanded={isArticlesOpen}
+                aria-haspopup="true"
               >
-                Resources <ChevronDown className="ml-1 w-4 h-4" />
-              </Link>
-              {resourcesOpen && (
-                <div className="absolute mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Articles</Link>
-                  <Link href="/categories" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Categories</Link>
-                  <Link href="/tags" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Tags</Link>
-                  <Link href="/authors" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Authors</Link>
+                Articles <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+
+              {isArticlesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                  <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
+                    All Articles
+                  </Link>
+                  <Link href="/categories" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
+                    Categories
+                  </Link>
+                  <Link href="/tags" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
+                    Tags
+                  </Link>
+                  <Link href="/authors" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
+                    Authors
+                  </Link>
                 </div>
               )}
             </div>
 
             {/* Services Dropdown */}
             <div
-              className="relative group"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
+              className="relative"
+              onMouseEnter={() => setIsServicesOpen(true)}
+              onMouseLeave={() => setIsServicesOpen(false)}
             >
-              <Link
-                href="/services"
-                className="flex items-center text-gray-900 hover:text-blue-600 transition-colors font-bold"
+              <button
+                className="flex items-center text-gray-900 hover:text-blue-600 font-bold cursor-pointer focus:outline-none"
+                aria-expanded={isServicesOpen}
+                aria-haspopup="true"
               >
                 Services <ChevronDown className="ml-1 w-4 h-4" />
-              </Link>
-              {servicesOpen && (
-                <div className="absolute mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+              </button>
+
+              {isServicesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
                   <Link href="/services/devops-as-a-service" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
                     DevOps as a Service
                   </Link>
