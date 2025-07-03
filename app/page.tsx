@@ -37,23 +37,23 @@ export default function HomePage() {
                     <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                       <div className="h-16 w-16 text-white text-4xl">👨‍💻</div>
                     </div>
-                    <h3 className="text-2xl font-light text-gray-900 mb-2">Thaung Htike Oo</h3>
-                    <p className="text-blue-600 font-medium mb-2">Senior DevOps Engineer</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Thaung Htike Oo</h3>
+                    <p className="text-blue-600 font-semibold mb-2">Senior DevOps Engineer</p>
                     <div className="flex items-center justify-center text-gray-600 mb-2">
                       <span className="text-blue-500 mr-2">📧</span>
-                      <a href="mailto:thaunghtikeoo.tho1234@gmail.com" className="hover:underline">
+                      <a href="mailto:thaunghtikeoo.tho1234@gmail.com" className="hover:underline font-medium">
                         thaunghtikeoo.tho1234@gmail.com
                       </a>
                     </div>
                     <div className="flex items-center justify-center text-gray-600">
                       <span className="text-blue-500 mr-2">📍</span>
-                      Yangon, Myanmar
+                      <span className="font-medium">Yangon, Myanmar</span>
                     </div>
                   </div>
 
                   <div className="mb-8">
                     <p className="text-gray-600 font-light leading-relaxed text-sm">
-                      DevOps Engineer with 5+ years of experience building and automating cloud-native and on-prem infrastructure.
+                      <strong className="text-gray-800 font-medium">DevOps Engineer</strong> with 5+ years of experience building and automating cloud-native and on-prem infrastructure.
                       Skilled in CI/CD pipelines, Kubernetes, Docker, Terraform, and Ansible. Experienced with Azure and AWS,
                       focused on reliability and scalability. Currently exploring AI/MLOps to streamline ML workflows and deployment.
                       Passionate about connecting software engineering, data science, and infrastructure through automation.
@@ -61,7 +61,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="space-y-3">
-                    <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white py-3 px-4 rounded-lg font-medium transition-colors">
+                    <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors">
                       📥 Download CV
                     </button>
                   </div>
@@ -70,16 +70,16 @@ export default function HomePage() {
 
               {/* Work Experience */}
               <div className="lg:col-span-2">
-                <h3 className="text-2xl font-light mb-8 text-gray-900">💼 Work Experience</h3>
+                <h3 className="text-2xl font-bold mb-8 text-gray-900">💼 Work Experience</h3>
                 <div className="space-y-6">
                   {/* Maharbawga */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex flex-col md:flex-row justify-between mb-3">
                       <div>
-                        <h4 className="text-xl font-medium text-gray-900 mb-1">Senior DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-1">Maharbawga Company Ltd</p>
+                        <h4 className="text-xl font-semibold text-gray-900 mb-1">Senior DevOps Engineer</h4>
+                        <p className="text-blue-600 font-semibold mb-1">Maharbawga Company Ltd</p>
                       </div>
-                      <div className="text-sm text-gray-500 text-right">
+                      <div className="text-sm text-gray-600 text-right font-medium">
                         <div>📅 Nov 2024 – Present</div>
                         <div>📍 Yangon, Myanmar</div>
                       </div>
@@ -95,10 +95,10 @@ export default function HomePage() {
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex flex-col md:flex-row justify-between mb-3">
                       <div>
-                        <h4 className="text-xl font-medium text-gray-900 mb-1">Senior DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-1">Dinger Company Ltd</p>
+                        <h4 className="text-xl font-semibold text-gray-900 mb-1">Senior DevOps Engineer</h4>
+                        <p className="text-blue-600 font-semibold mb-1">Dinger Company Ltd</p>
                       </div>
-                      <div className="text-sm text-gray-500 text-right">
+                      <div className="text-sm text-gray-600 text-right font-medium">
                         <div>📅 Jun 2022 – Aug 2024</div>
                         <div>📍 Yangon, Myanmar</div>
                       </div>
@@ -113,10 +113,10 @@ export default function HomePage() {
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex flex-col md:flex-row justify-between mb-3">
                       <div>
-                        <h4 className="text-xl font-medium text-gray-900 mb-1">DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-1">OpsZero</p>
+                        <h4 className="text-xl font-semibold text-gray-900 mb-1">DevOps Engineer</h4>
+                        <p className="text-blue-600 font-semibold mb-1">OpsZero</p>
                       </div>
-                      <div className="text-sm text-gray-500 text-right">
+                      <div className="text-sm text-gray-600 text-right font-medium">
                         <div>📅 Dec 2021 – Jun 2023</div>
                         <div>📍 Remote</div>
                       </div>
@@ -131,10 +131,10 @@ export default function HomePage() {
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex flex-col md:flex-row justify-between mb-3">
                       <div>
-                        <h4 className="text-xl font-medium text-gray-900 mb-1">Junior DevOps Engineer</h4>
-                        <p className="text-blue-600 font-medium mb-1">Frontiir (Myanmar Net)</p>
+                        <h4 className="text-xl font-semibold text-gray-900 mb-1">Junior DevOps Engineer</h4>
+                        <p className="text-blue-600 font-semibold mb-1">Frontiir (Myanmar Net)</p>
                       </div>
-                      <div className="text-sm text-gray-500 text-right">
+                      <div className="text-sm text-gray-600 text-right font-medium">
                         <div>📅 Dec 2020 – Dec 2021</div>
                         <div>📍 Yangon, Myanmar</div>
                       </div>
@@ -148,7 +148,7 @@ export default function HomePage() {
 
                 {/* Technical Skills */}
                 <div className="mt-16">
-                  <h3 className="text-2xl font-light mb-6 text-gray-900">🛠️ Technical Skills</h3>
+                  <h3 className="text-2xl font-bold mb-6 text-gray-900">🛠️ Technical Skills</h3>
                   <div className="flex flex-col lg:flex-row lg:space-x-12 space-y-8 lg:space-y-0">
                     {Object.entries(skillCategories).map(([category, items]) => {
                       const icon =

@@ -8,7 +8,7 @@ export function MinimalFooter() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand & Description */}
           <div>
-            <Link href="/" className="text-2xl font-light tracking-wide mb-6 block">
+            <Link href="/" className="text-2xl font-bold tracking-wide mb-6 block">
               Learn
               <span className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
                 DevOps

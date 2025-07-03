@@ -59,16 +59,16 @@ export function MinimalHeader() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20 relative">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-light tracking-wide text-gray-900">
+          <Link href="/" className="text-2xl font-bold tracking-wide text-gray-900">
             Learn
-            <span className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+            <span className="font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
               DevOps
             </span>
           </Link>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
+            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
               Home
             </Link>
 
@@ -80,16 +80,16 @@ export function MinimalHeader() {
             >
               <Link
                 href="/articles"
-                className="flex items-center text-gray-600 hover:text-blue-600 transition-colors font-light"
+                className="flex items-center text-gray-700 hover:text-blue-600 transition-colors font-semibold"
               >
                 Resources <ChevronDown className="ml-1 w-4 h-4" />
               </Link>
               {resourcesOpen && (
                 <div className="absolute mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Articles</Link>
-                  <Link href="/categories" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Categories</Link>
-                  <Link href="/tags" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Tags</Link>
-                  <Link href="/authors" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Authors</Link>
+                  <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Articles</Link>
+                  <Link href="/categories" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Categories</Link>
+                  <Link href="/tags" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Tags</Link>
+                  <Link href="/authors" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">Authors</Link>
                 </div>
               )}
             </div>
@@ -102,32 +102,32 @@ export function MinimalHeader() {
             >
               <Link
                 href="/services"
-                className="flex items-center text-gray-900 hover:text-blue-600 transition-colors font-medium"
+                className="flex items-center text-gray-900 hover:text-blue-600 transition-colors font-bold"
               >
                 Services <ChevronDown className="ml-1 w-4 h-4" />
               </Link>
               {servicesOpen && (
                 <div className="absolute mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/services/devops-as-a-service" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                  <Link href="/services/devops-as-a-service" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
                     DevOps as a Service
                   </Link>
-                  <Link href="/services/cloud-migration" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                  <Link href="/services/cloud-migration" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
                     Monolithic to Cloud-Native Migration
                   </Link>
-                  <Link href="/services/infra-as-code" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                  <Link href="/services/infra-as-code" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
                     Infrastructure as Code (IaC)
                   </Link>
-                  <Link href="/services/consulting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                  <Link href="/services/consulting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
                     DevOps Consulting
                   </Link>
                 </div>
               )}
             </div>
 
-            <Link href="/contact" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
+            <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
               Contact
             </Link>
-            <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
+            <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
               About
             </Link>
           </nav>
@@ -191,7 +191,7 @@ export function MinimalHeader() {
           </div>
 
           {/* Subscribe Button */}
-          <Button className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-normal text-sm px-6 py-2 rounded-md shadow-lg">
+          <Button className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold text-sm px-6 py-2 rounded-md shadow-lg">
             Subscribe
           </Button>
         </div>
