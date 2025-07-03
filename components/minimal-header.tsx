@@ -10,6 +10,7 @@ export function MinimalHeader() {
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const API_BASE_URL = "http://192.168.1.131:8000/api"
 
@@ -17,17 +18,26 @@ export function MinimalHeader() {
     const fetchResults = async () => {
       if (searchQuery.trim().length < 2) {
         setSearchResults([])
+        setError(null)
         return
       }
 
       setLoading(true)
+      setError(null)
+
       try {
-        const res = await fetch(`${API_BASE_URL}/articles/?search=${encodeURIComponent(searchQuery)}`)
+        const res = await fetch(
+          `${API_BASE_URL}/articles/?search=${encodeURIComponent(searchQuery)}`
+        )
+        if (!res.ok) {
+          throw new Error(`Error fetching results: ${res.statusText}`)
+        }
         const data = await res.json()
         setSearchResults(Array.isArray(data.results) ? data.results : data)
-      } catch (err) {
+      } catch (err: any) {
         console.error("Search error:", err)
         setSearchResults([])
+        setError("Failed to fetch results. Please try again.")
       } finally {
         setLoading(false)
       }
@@ -43,6 +53,7 @@ export function MinimalHeader() {
   const handleClear = () => {
     setSearchQuery("")
     setSearchResults([])
+    setError(null)
   }
 
   return (
@@ -50,15 +61,28 @@ export function MinimalHeader() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20 relative">
           <Link href="/" className="text-2xl font-light tracking-wide text-gray-900">
-            Learn<span className="font-semibold text-green-600">DevOps</span>
+            Learn
+            <span className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+              DevOps
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors font-light">Home</Link>
-            <Link href="/articles" className="text-gray-900 font-medium hover:text-blue-600 transition-colors">Articles</Link>
-            <Link href="/categories" className="text-gray-600 hover:text-blue-600 transition-colors font-light">Categories</Link>
-            <Link href="/contact" className="text-gray-600 hover:text-blue-600 transition-colors font-light">Contact</Link>
-            <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors font-light">About</Link>
+            <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
+              Home
+            </Link>
+            <Link href="/articles" className="text-gray-600 font-light hover:text-blue-600 transition-colors">
+              Articles
+            </Link>
+            <Link href="/categories" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
+              Categories
+            </Link>
+            <Link href="/contact" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
+              Contact
+            </Link>
+            <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
+              About
+            </Link>
           </nav>
 
           {/* Search Box */}
@@ -69,13 +93,39 @@ export function MinimalHeader() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10"
+              aria-label="Search articles"
             />
+            {loading && (
+              <div className="absolute top-2 right-8 animate-spin">
+                <svg
+                  className="w-5 h-5 text-blue-600"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+              </div>
+            )}
             {searchQuery && (
               <Button
                 size="icon"
                 variant="ghost"
                 onClick={handleClear}
                 className="absolute top-1 right-1 text-gray-500 hover:text-red-500"
+                aria-label="Clear search input"
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -98,16 +148,22 @@ export function MinimalHeader() {
             )}
 
             {/* No matches */}
-            {searchQuery && !loading && searchResults.length === 0 && (
+            {searchQuery && !loading && searchResults.length === 0 && !error && (
               <div className="absolute z-50 w-full mt-2 bg-white shadow-md border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-500">
                 No articles found
+              </div>
+            )}
+
+            {/* Error message */}
+            {error && (
+              <div className="absolute z-50 w-full mt-2 bg-red-100 text-red-700 shadow-md border border-red-300 rounded-lg px-4 py-2 text-sm">
+                {error}
               </div>
             )}
           </div>
 
           <Button
-            variant="outline"
-            className="hidden sm:inline-flex bg-white hover:bg-blue-50 border-blue-200 backdrop-blur-sm text-gray-700 hover:text-blue-600"
+            className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-normal text-sm px-6 py-2 rounded-md shadow-lg"
           >
             Subscribe
           </Button>
