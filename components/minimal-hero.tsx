@@ -11,7 +11,7 @@ export function MinimalHero() {
         </div>
         
         <h2 className="text-xl md:text-3xl font-light text-slate-900 mb-3 tracking-wide">
-          Thaung Htike Oo - <span className="font-medium text-blue-600">Learn DevOps Now</span>
+          <span className="font-tight text-black-700"> Thaung Htike Oo - </span> <span className="font-medium text-blue-600">Learn DevOps Now</span>
         </h2>
 
         <p className="text-sm md:text-base text-slate-700 font-light max-w-xl mx-auto leading-relaxed mb-6">
