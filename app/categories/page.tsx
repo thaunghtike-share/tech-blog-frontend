@@ -93,10 +93,10 @@ export default function CategoriesPage() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
 
-      <section className="py-16 border-b border-white/50">
+      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-light text-slate-900 mb-4">
-            Explore <span className="font-semibold text-emerald-600">Categories</span>
+          <h1 className="text-xl md:text-3xl font-light text-slate-900 mb-3 tracking-wide">
+            <span className="font-tight text-black-700">Explore </span><span className="font-medium text-blue-600">Categories</span>
           </h1>
           <p className="text-slate-600">Found {categories.length} categories</p>
         </div>

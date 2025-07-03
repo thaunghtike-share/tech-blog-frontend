@@ -181,10 +181,10 @@ export default function AboutPage() {
       <MinimalHeader />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-violet-100/80 via-sky-100/80 to-emerald-100/80 py-16 border-b border-white/50">
+      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-light text-slate-900 mb-4 leading-relaxed">
-            About <span className="font-semibold text-emerald-600">Me</span>
+            <span className="font-tight text-black-700">About </span><span className="font-medium text-blue-600">Me</span>
           </h1>
           <p className="text-base text-slate-600 font-light max-w-lg mx-auto leading-relaxed">
             DevOps Engineer passionate about cloud infrastructure, automation, and sharing knowledge with the community.

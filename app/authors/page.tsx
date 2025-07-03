@@ -48,17 +48,16 @@ export default function AuthorsPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50">
       <MinimalHeader />
 
-      <section className="bg-gradient-to-r from-violet-100/80 via-sky-100/80 to-emerald-100/80 py-16 border-b border-white/50">
+      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-light text-slate-900 mb-4 leading-relaxed">
-            Our <span className="font-semibold text-emerald-600">Authors</span>
+            <span className="font-tight text-black-700">Our </span><span className="font-medium text-blue-600">Authors</span>
           </h1>
           <p className="text-base text-slate-600 font-light max-w-lg mx-auto leading-relaxed">
-            Meet the passionate authors sharing knowledge about DevOps, Cloud, AI, and more.
-          </p>
+            Discover in-depth articles and expertise from passionate authors who are pioneering advancements in DevOps, cloud computing, AI, and cutting-edge infrastructure technologies          </p>
         </div>
       </section>
 
