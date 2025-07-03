@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, X } from "lucide-react"
+import { ChevronDown, X } from "lucide-react"
 import Link from "next/link"
 
 export function MinimalHeader() {
@@ -11,6 +11,9 @@ export function MinimalHeader() {
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const [resourcesOpen, setResourcesOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
 
   const API_BASE_URL = "http://192.168.1.131:8000/api"
 
@@ -26,16 +29,11 @@ export function MinimalHeader() {
       setError(null)
 
       try {
-        const res = await fetch(
-          `${API_BASE_URL}/articles/?search=${encodeURIComponent(searchQuery)}`
-        )
-        if (!res.ok) {
-          throw new Error(`Error fetching results: ${res.statusText}`)
-        }
+        const res = await fetch(`${API_BASE_URL}/articles/?search=${encodeURIComponent(searchQuery)}`)
+        if (!res.ok) throw new Error(`Error fetching results: ${res.statusText}`)
         const data = await res.json()
         setSearchResults(Array.isArray(data.results) ? data.results : data)
       } catch (err: any) {
-        console.error("Search error:", err)
         setSearchResults([])
         setError("Failed to fetch results. Please try again.")
       } finally {
@@ -45,7 +43,7 @@ export function MinimalHeader() {
 
     const delayDebounce = setTimeout(() => {
       fetchResults()
-    }, 300) // debounce
+    }, 300)
 
     return () => clearTimeout(delayDebounce)
   }, [searchQuery])
@@ -60,6 +58,7 @@ export function MinimalHeader() {
     <header className="bg-white/95 backdrop-blur-md border-b border-blue-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20 relative">
+          {/* Logo */}
           <Link href="/" className="text-2xl font-light tracking-wide text-gray-900">
             Learn
             <span className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
@@ -67,16 +66,64 @@ export function MinimalHeader() {
             </span>
           </Link>
 
+          {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
               Home
             </Link>
-            <Link href="/articles" className="text-gray-600 font-light hover:text-blue-600 transition-colors">
-              Articles
-            </Link>
-            <Link href="/categories" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
-              Categories
-            </Link>
+
+            {/* Resources Dropdown */}
+            <div
+              className="relative group"
+              onMouseEnter={() => setResourcesOpen(true)}
+              onMouseLeave={() => setResourcesOpen(false)}
+            >
+              <Link
+                href="/articles"
+                className="flex items-center text-gray-600 hover:text-blue-600 transition-colors font-light"
+              >
+                Resources <ChevronDown className="ml-1 w-4 h-4" />
+              </Link>
+              {resourcesOpen && (
+                <div className="absolute mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                  <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Articles</Link>
+                  <Link href="/categories" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Categories</Link>
+                  <Link href="/tags" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Tags</Link>
+                  <Link href="/authors" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Authors</Link>
+                </div>
+              )}
+            </div>
+
+            {/* Services Dropdown */}
+            <div
+              className="relative group"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <Link
+                href="/services"
+                className="flex items-center text-gray-900 hover:text-blue-600 transition-colors font-medium"
+              >
+                Services <ChevronDown className="ml-1 w-4 h-4" />
+              </Link>
+              {servicesOpen && (
+                <div className="absolute mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                  <Link href="/services/devops-as-a-service" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                    DevOps as a Service
+                  </Link>
+                  <Link href="/services/cloud-migration" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                    Monolithic to Cloud-Native Migration
+                  </Link>
+                  <Link href="/services/infra-as-code" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                    Infrastructure as Code (IaC)
+                  </Link>
+                  <Link href="/services/consulting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
+                    DevOps Consulting
+                  </Link>
+                </div>
+              )}
+            </div>
+
             <Link href="/contact" className="text-gray-600 hover:text-blue-600 transition-colors font-light">
               Contact
             </Link>
@@ -85,7 +132,7 @@ export function MinimalHeader() {
             </Link>
           </nav>
 
-          {/* Search Box */}
+          {/* Search */}
           <div className="relative w-64">
             <Input
               type="text"
@@ -97,25 +144,9 @@ export function MinimalHeader() {
             />
             {loading && (
               <div className="absolute top-2 right-8 animate-spin">
-                <svg
-                  className="w-5 h-5 text-blue-600"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
+                <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                 </svg>
               </div>
             )}
@@ -131,7 +162,6 @@ export function MinimalHeader() {
               </Button>
             )}
 
-            {/* Dropdown */}
             {searchQuery && searchResults.length > 0 && (
               <div className="absolute z-50 w-full mt-2 bg-white shadow-lg border border-gray-200 rounded-lg max-h-60 overflow-y-auto">
                 {searchResults.map((article) => (
@@ -147,14 +177,12 @@ export function MinimalHeader() {
               </div>
             )}
 
-            {/* No matches */}
             {searchQuery && !loading && searchResults.length === 0 && !error && (
               <div className="absolute z-50 w-full mt-2 bg-white shadow-md border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-500">
                 No articles found
               </div>
             )}
 
-            {/* Error message */}
             {error && (
               <div className="absolute z-50 w-full mt-2 bg-red-100 text-red-700 shadow-md border border-red-300 rounded-lg px-4 py-2 text-sm">
                 {error}
@@ -162,9 +190,8 @@ export function MinimalHeader() {
             )}
           </div>
 
-          <Button
-            className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-normal text-sm px-6 py-2 rounded-md shadow-lg"
-          >
+          {/* Subscribe Button */}
+          <Button className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-normal text-sm px-6 py-2 rounded-md shadow-lg">
             Subscribe
           </Button>
         </div>
