@@ -5,6 +5,7 @@ import Link from "next/link"
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { Card, CardContent } from "@/components/ui/card"
+import { Linkedin } from "lucide-react"
 
 interface Author {
   id: number
@@ -14,6 +15,7 @@ interface Author {
   featured: boolean
   job_title: string
   company: string
+  linkedin?: string
 }
 
 const API_BASE_URL = "http://192.168.1.131:8000/api"
@@ -54,10 +56,12 @@ export default function AuthorsPage() {
       <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-light text-slate-900 mb-4 leading-relaxed">
-            <span className="font-tight text-black-700">Our </span><span className="font-medium text-blue-600">Authors</span>
+            <span className="font-tight text-black-700">Our </span>
+            <span className="font-medium text-blue-600">Authors</span>
           </h1>
           <p className="text-base text-slate-600 font-light max-w-lg mx-auto leading-relaxed">
-            Discover in-depth articles and expertise from passionate authors who are pioneering advancements in DevOps, cloud computing, AI, and cutting-edge infrastructure technologies          </p>
+            Discover in-depth articles and expertise from passionate authors who are pioneering advancements in DevOps, cloud computing, AI, and cutting-edge infrastructure technologies
+          </p>
         </div>
       </section>
 
@@ -72,7 +76,6 @@ export default function AuthorsPage() {
                 setError(null)
                 setLoading(true)
                 setAuthors([])
-                // re-fetch authors
                 fetch(`${API_BASE_URL}/authors`)
                   .then((res) => res.json())
                   .then((data) => {
@@ -112,7 +115,21 @@ export default function AuthorsPage() {
                     {author.job_title} at {author.company}
                   </p>
                   {author.bio && (
-                    <p className="text-center text-gray-500 text-sm line-clamp-3">{author.bio}</p>
+                    <p className="text-center text-gray-500 text-sm">
+                      {author.bio}
+                    </p>
+                  )}
+                  {author.linkedin && (
+                    <a
+                      href={author.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center space-x-1 text-blue-600 hover:underline text-sm font-medium"
+                      aria-label={`Connect with ${author.name} on LinkedIn`}
+                    >
+                      <Linkedin className="w-4 h-4" />
+                      <span>Connect Me</span>
+                    </a>
                   )}
                 </CardContent>
               </Card>

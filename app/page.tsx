@@ -174,7 +174,10 @@ export default function HomePage() {
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {skills.map(skill => (
-                              <span key={skill} className="text-xs bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full px-3 py-1 shadow-sm">
+                              <span
+                                key={skill}
+                                className="text-xs bg-gray-200 text-gray-800 rounded-full px-3 py-1 shadow-sm border border-gray-300 hover:bg-gray-300 cursor-default"
+                              >
                                 {skill}
                               </span>
                             ))}

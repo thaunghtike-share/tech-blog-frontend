@@ -126,7 +126,7 @@ export default function CategoriesPage() {
                     <p className="text-slate-600 font-light leading-relaxed mb-6">
                       Explore articles and tutorials related to {category.name.toLowerCase()}.
                     </p>
-                    <div className="text-emerald-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
+                    <div className="text-blue-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
                       View articles →
                     </div>
                   </CardContent>
