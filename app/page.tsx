@@ -17,7 +17,7 @@ export default function HomePage() {
       <MinimalHeader />
       <MinimalHero />
 
-      <main className="max-w-7xl mx-auto px-4 py-16">
+      <main className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-blue-100">
             <MinimalBlogList />
@@ -27,8 +27,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-white/80 to-blue-50/80 rounded-2xl p-8 mt-16 backdrop-blur-sm border border-blue-100">
-          <section className="mt-8">
+        <div className="bg-gradient-to-r from-white/80 to-blue-50/80 rounded-2xl p-6 mt-10 backdrop-blur-sm border border-blue-100">
+          <section className="mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {/* Personal Bio Card */}
               <div className="lg:col-span-1">
@@ -194,7 +194,6 @@ export default function HomePage() {
                     })}
                   </div>
                 </div>
-
               </div>
             </div>
           </section>
