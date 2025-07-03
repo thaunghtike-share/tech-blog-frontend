@@ -50,7 +50,7 @@ export function MinimalHeader() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20 relative">
           <Link href="/" className="text-2xl font-light tracking-wide text-gray-900">
-            Learn<span className="font-semibold text-blue-600">DevOps</span>
+            Learn<span className="font-semibold text-green-600">DevOps</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
