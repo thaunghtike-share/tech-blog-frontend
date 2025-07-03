@@ -122,6 +122,7 @@ export function MinimalSidebar() {
             <li>Monolithic to Cloud-Native Migration</li>
             <li>Infrastructure Automation</li>
             <li>DevOps Consulting</li>
+            <li>Business Website Development</li>
             <li>Part-Time DevOps Support</li>
             <li>DevOps as a Service (DaaS)</li>
           </ul>

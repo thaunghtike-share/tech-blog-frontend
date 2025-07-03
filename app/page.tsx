@@ -104,7 +104,6 @@ export default function HomePage() {
           <section className="mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-1">
-                {/* Bio Card */}
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 sticky top-8 rounded-2xl p-8 shadow-sm">
                   <div className="text-center mb-6">
                     <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-6 flex items-center justify-center">
@@ -133,7 +132,6 @@ export default function HomePage() {
               </div>
 
               <div className="lg:col-span-2">
-                {/* Work Experience */}
                 <h3 className="text-2xl font-bold mb-8 text-gray-900">💼 Work Experience</h3>
                 <div className="space-y-6">
                   {(showAllWork ? workExperiences : workExperiences.slice(0, 2)).map((exp, idx) => (
@@ -159,7 +157,6 @@ export default function HomePage() {
                   </button>
                 </div>
 
-                {/* Skills */}
                 <div className="mt-16">
                   <h3 className="text-2xl font-bold mb-6 text-gray-900">🛠️ Technical Skills</h3>
                   <div className="flex flex-col lg:flex-row lg:space-x-12 space-y-8 lg:space-y-0">
@@ -192,7 +189,6 @@ export default function HomePage() {
           </section>
         </div>
 
-        {/* FAQ Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-16">
           <div className="lg:col-span-3 bg-white/90 backdrop-blur-md border border-blue-100 rounded-2xl shadow-md p-6">
             <section aria-label="FAQs" className="text-left">
@@ -233,6 +229,36 @@ export default function HomePage() {
       </main>
 
       <MinimalFooter />
+
+      {/* Messenger Chat Support Button with Label */}
+      <a
+        href="https://m.me/learndevopsnowbytho.my"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on Messenger"
+        className="fixed bottom-6 right-6 flex flex-col items-center group z-50"
+      >
+        <div className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-colors">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-7 h-7"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2 12a10 10 0 1118.74 5.995L22 22l-3.997-1.285A9.959 9.959 0 012 12z"
+            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l4 3 5-4" />
+          </svg>
+        </div>
+        <span className="mt-1 text-xs text-blue-700 font-medium group-hover:underline">
+          Chat with me
+        </span>
+      </a>
     </div>
   )
 }

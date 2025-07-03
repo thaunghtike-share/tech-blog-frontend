@@ -133,6 +133,9 @@ export function MinimalHeader() {
                   <Link href="/services/consulting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
                     DevOps Consulting
                   </Link>
+                  <Link href="/services/website" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 font-normal">
+                    Business Website Development
+                  </Link>
                 </div>
               )}
             </div>
