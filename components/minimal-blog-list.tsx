@@ -195,7 +195,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     return (
       <div className="space-y-16">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
+          <h2 className="text-3xl font-light text-gray-900">Recent Articles</h2>
         </div>
         <div className="space-y-12">
           {[1, 2, 3].map((i) => (
@@ -268,8 +268,8 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   return (
     <div className="space-y-16">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
-        <span className="text-sm text-gray-500">{articles.length} articles</span>
+        <h2 className="text-3xl font-light text-gray-900">Recent Articles Published</h2>
+        <span className="text-sm text-gray-500">Total - {articles.length} articles</span>
       </div>
 
       <div className="space-y-12">

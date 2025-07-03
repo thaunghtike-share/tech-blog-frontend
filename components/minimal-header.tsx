@@ -60,7 +60,7 @@ export function MinimalHeader() {
         <div className="flex items-center justify-between h-20 relative">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold tracking-wide text-gray-900">
-            Learn
+            learn
             <span className="font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
               DevOps
             </span>

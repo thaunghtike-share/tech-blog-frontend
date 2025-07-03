@@ -34,7 +34,7 @@ export default function ArticlesPage() {
           {/* Articles List */}
           <div className="lg:col-span-2 bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-sm border border-white/50">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-slate-900">Latest Articles</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Recent Articles</h2>
               {/* Your filters here */}
             </div>
 
