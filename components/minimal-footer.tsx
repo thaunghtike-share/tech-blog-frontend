@@ -89,7 +89,8 @@ export function MinimalFooter() {
         {/* Bottom bar */}
         <div className="border-t border-stone-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-stone-400 font-light text-sm"> © {new Date().getFullYear()} LearnDevOps. All rights reserved.</p>
-          <p className="text-stone-400 font-light text-sm mt-4 md:mt-0"> Built with 💻 by{" "}
+          <p className="text-stone-400 font-light text-sm mt-4 md:mt-0">
+            Designed and maintained by{" "}
             <a href="https://linkedin.com/in/thaunghtikeoo" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 transition-colors">
               Thaung Htike Oo
             </a>
