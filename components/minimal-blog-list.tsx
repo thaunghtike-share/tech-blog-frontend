@@ -45,7 +45,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [error, setError] = useState<string | null>(null)
 
   // Your Django API URL
-  const API_BASE_URL = "http://192.168.1.131:8000/api"
+  const API_BASE_URL = "http://192.168.100.7:8000/api"
 
   useEffect(() => {
     const fetchData = async () => {
