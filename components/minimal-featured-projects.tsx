@@ -22,58 +22,55 @@ export function MinimalFeaturedProjects() {
     {
       name: "Personal Website Backend",
       description:
-        "A robust backend REST API built with Django REST Framework, providing scalable and secure data management for a personal tech blog website.",
+        "My own robust backend REST API built with Django REST Framework, providing scalable and secure data management for a personal website.",
       url: "https://github.com/thaunghtike-share/tech-blog-backend",
       github: true,
     },
     {
       name: "Personal Website Frontend",
       description:
-        "A modern React/Next.js frontend that consumes the backend API to deliver a smooth, responsive personal tech blog website user experience.",
+        "My own modern React/Next.js frontend that consumes the backend API to deliver a smooth, responsive personal blog experience.",
       url: "https://github.com/thaunghtike-share/tech-blog-frontend",
       github: true,
     },
     {
       name: "Terraform Azure Infrastructure",
       description:
-        "Infrastructure as Code project using Terraform to manage and automate Azure cloud resources efficiently, including VMs, AKS clusters, and networking.",
+        "My own Infrastructure as Code project using Terraform to manage Azure resources like VMs, AKS clusters, NSGs, and networking.",
       url: "https://github.com/thaunghtike-share/terraform-azure",
       github: true,
     },
     {
       name: "Terraform AWS Kubespot",
       description:
-        "Terraform module for provisioning and managing Kubernetes clusters on AWS with spot instances for cost optimization and scalability.",
+        "Open-source Terraform module for Kubernetes clusters on AWS with spot instance support. Contributed Terraform code as a collaborator on this OpsZero project.",
       url: "https://github.com/opszero/terraform-aws-kubespot",
       github: true,
-    },
-    {
-      name: "MTB Pay Wallet",
-      description:
-        "A digital wallet platform providing secure and seamless mobile payments and financial services, widely used in Myanmar.",
-      url: "https://www.mtbpay.com.mm/",
-      github: false,
     },
   ]
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      <h3 className="text-3xl font-extrabold text-gray-900 mb-10 select-none">
+    <section className="mt-20 bg-white rounded-xl p-10 border border-gray-100 shadow-sm">
+      <h3 className="text-3xl font-bold mb-4 text-gray-900 text-left select-none">
         🚀 Featured Projects
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <p className="text-gray-700 mb-10 text-left leading-relaxed max-w-4xl">
+        A collection of hands-on DevOps projects ranging from cloud infrastructure to frontend/backend development.
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map(({ name, description, url, github }, idx) => (
           <article
             key={idx}
-            className="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-blue-100 transition-all hover:shadow-xl hover:-translate-y-1"
           >
-            <h4 className="text-xl font-semibold text-gray-900 mb-2">{name}</h4>
-            <p className="text-gray-700 mb-4">{description}</p>
+            <h4 className="text-lg font-semibold text-gray-900 mb-2">{name}</h4>
+            <p className="text-sm text-gray-700 mb-4">{description}</p>
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-blue-600 hover:underline font-medium"
+              className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
             >
               {github ? (
                 <>

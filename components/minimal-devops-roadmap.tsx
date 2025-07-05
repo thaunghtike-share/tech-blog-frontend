@@ -7,17 +7,13 @@ const roadmapItems = [
     emoji: "🐳",
     title: "Docker Fundamentals",
     description: "Learn containerization basics, image creation, and management.",
-    links: [
-      { text: "Official Docker Get Started", url: "https://docs.docker.com/get-started/" },
-    ],
+    links: [{ text: "Official Docker Get Started", url: "https://docs.docker.com/get-started/" }],
   },
   {
     emoji: "☸️",
     title: "Kubernetes Basics",
     description: "Understand pods, services, deployments, and cluster management.",
-    links: [
-      { text: "Kubernetes Basics Tutorial", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
-    ],
+    links: [{ text: "Kubernetes Basics Tutorial", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" }],
   },
   {
     emoji: "⚙️",
@@ -32,9 +28,7 @@ const roadmapItems = [
     emoji: "📦",
     title: "Terraform Basics",
     description: "Infrastructure as Code for cloud provisioning and automation.",
-    links: [
-      { text: "Terraform Learn", url: "https://learn.hashicorp.com/terraform" },
-    ],
+    links: [{ text: "Terraform Learn", url: "https://learn.hashicorp.com/terraform" }],
   },
   {
     emoji: "☁️",
@@ -50,9 +44,7 @@ const roadmapItems = [
     emoji: "🚀",
     title: "ArgoCD GitOps",
     description: "Master GitOps continuous delivery with ArgoCD for Kubernetes deployments.",
-    links: [
-      { text: "Official ArgoCD Docs", url: "https://argo-cd.readthedocs.io/en/stable/getting_started/" },
-    ],
+    links: [{ text: "Official ArgoCD Docs", url: "https://argo-cd.readthedocs.io/en/stable/getting_started/" }],
   },
   {
     emoji: "📊",
@@ -94,39 +86,39 @@ const roadmapItems = [
     emoji: "📡",
     title: "API Testing with Postman",
     description: "Learn how to test and automate API requests using Postman tool.",
-    links: [
-      { text: "Postman Learning Center", url: "https://learning.postman.com/docs/getting-started/introduction/" },
-    ],
+    links: [{ text: "Postman Learning Center", url: "https://learning.postman.com/docs/getting-started/introduction/" }],
   },
 ]
 
 export function MinimalDevopsRoadmap() {
   return (
-    <section className="mt-16 bg-gradient-to-tr from-white/80 to-blue-50/80 rounded-2xl p-8 backdrop-blur-md border border-blue-100 shadow-lg">
-      <h3 className="text-2xl font-bold mb-6 text-gray-900">🗺️ DevOps Learning Roadmap</h3>
-      <p className="text-gray-700 mb-8 leading-relaxed">
-        Follow this roadmap inspired by KodeKloud to learn DevOps core topics with official docs and recommended resources.
+    <section className="mt-20 bg-white rounded-xl p-10 border border-gray-100 shadow-sm">
+      <h3 className="text-3xl font-bold mb-4 text-gray-900 text-left select-none">
+        🗺️ DevOps Learning Roadmap
+      </h3>
+      <p className="text-gray-700 mb-10 text-left leading-relaxed max-w-4xl">
+        Follow this self-paced roadmap to learn essential DevOps skills through curated official docs and trusted resources.
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {roadmapItems.map(({ emoji, title, description, links }, idx) => (
           <article
             key={idx}
-            className="bg-white rounded-2xl p-6 shadow-md border border-blue-100 transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-default"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-blue-100 transition-all hover:shadow-xl hover:-translate-y-1"
           >
-            <div className="flex items-center mb-4 space-x-3 select-none">
+            <div className="flex items-start mb-4 space-x-3">
               <div className="text-3xl">{emoji}</div>
               <h4 className="text-lg font-semibold text-gray-900">{title}</h4>
             </div>
-            <p className="text-gray-600 text-sm mb-3">{description}</p>
-            <div className="flex flex-wrap gap-3">
+            <p className="text-gray-600 text-sm mb-4">{description}</p>
+            <div className="flex flex-wrap gap-2">
               {links.map(({ text, url }, lidx) => (
                 <a
                   key={lidx}
                   href={url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-blue-600 hover:underline text-sm font-medium"
+                  className="inline-block bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1 rounded-full text-xs font-medium transition-colors"
                 >
                   {text} →
                 </a>

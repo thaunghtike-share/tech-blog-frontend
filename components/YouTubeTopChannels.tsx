@@ -52,40 +52,56 @@ const topDevOpsChannels: Channel[] = [
     url: "https://www.youtube.com/c/CloudAcademy",
     videoId: "b-cHIoMbRCE",
   },
+{
+    name: "DevOps Directive",
+    description: "DevOps, CI/CD, and cloud-native tutorials and best practices.",
+    url: "https://www.youtube.com/c/DevOpsDirective",
+    videoId: "2T86xAtR6Fo",
+    },
+    {
+    name: "Just Me and Open Source",
+    description: "Live coding sessions on DevOps, cloud, and web development.",
+    url: "https://www.youtube.com/@justmeandopensource",
+    videoId: "azh8J-RGdZM",
+    }
 ]
 
 export function YouTubeTopChannels() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      <h3 className="text-3xl font-extrabold mb-8 text-gray-900">📺 Top DevOps YouTube Channels</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <section className="mt-20 bg-white rounded-xl p-10 border border-gray-100 shadow-sm">
+      <h3 className="text-3xl font-bold mb-4 text-gray-900 text-left select-none">
+        📺 Top DevOps YouTube Channels
+      </h3>
+      <p className="text-gray-700 mb-10 text-left leading-relaxed max-w-4xl">
+        Watch trusted creators explain DevOps, Cloud, CI/CD, and Infrastructure using hands-on tutorials.
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {topDevOpsChannels.map(({ name, description, url, videoId }, idx) => (
           <article
             key={idx}
-            className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl p-4 shadow-sm border border-blue-100 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden"
           >
-            <div className="aspect-w-16 aspect-h-9">
+            <div className="aspect-w-16 aspect-h-9 mb-4">
               <iframe
-                className="w-full h-full"
+                className="w-full h-full rounded-md"
                 src={`https://www.youtube.com/embed/${videoId}`}
                 title={`Latest video from ${name}`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-              ></iframe>
+              />
             </div>
-            <div className="p-6">
-              <h4 className="text-xl font-semibold text-blue-700 mb-2">{name}</h4>
-              <p className="text-gray-700 mb-4">{description}</p>
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-blue-600 font-medium hover:underline"
-              >
-                Visit Channel →
-              </a>
-            </div>
+            <h4 className="text-lg font-semibold text-blue-700 mb-1">{name}</h4>
+            <p className="text-sm text-gray-700 mb-3">{description}</p>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-sm font-medium text-blue-600 hover:underline"
+            >
+              Visit Channel →
+            </a>
           </article>
         ))}
       </div>

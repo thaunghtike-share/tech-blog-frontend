@@ -8,12 +8,13 @@ import { MinimalBlogList } from "@/components/minimal-blog-list"
 import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap"
-import { MinimalProfileCard } from "@/components/minimal-profile-card"
-import { MinimalWorkExperience } from "@/components/minimal-work-experience"
+import { AboutMeSection } from "@/components/AboutMeSection"
 import { MinimalFAQs } from "@/components/minimal-faqs"
 import { MinimalFeaturedProjects } from "@/components/minimal-featured-projects"
 import { YouTubeTopChannels } from "@/components/YouTubeTopChannels"
 import { TopUdemyCourses } from "@/components/TopUdemyCourses"
+import { FreelanceServicesSection } from "@/components/FreelanceServicesSection"
+import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
       <MinimalHero />
 
       <main className="max-w-7xl mx-auto px-4 py-10">
+        {/* Blog + Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-blue-100">
             <MinimalBlogList />
@@ -31,22 +33,23 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Roadmap, YouTube, Udemy */}
         <MinimalDevopsRoadmap />
-
-        <MinimalFeaturedProjects />
-
         <YouTubeTopChannels />
         <TopUdemyCourses />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-16">
-          <div className="lg:col-span-1">
-            <MinimalProfileCard />
-          </div>
-          <div className="lg:col-span-2">
-            <MinimalWorkExperience />
-          </div>
+        {/* Freelance Services */}
+        <div className="mt-20">
+          <FreelanceServicesSection />
         </div>
 
+        <DevOpsWorkflowExample />
+
+        {/* About + Projects */}
+        <AboutMeSection />
+        <MinimalFeaturedProjects />
+
+        {/* FAQs */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-16">
           <MinimalFAQs />
         </div>

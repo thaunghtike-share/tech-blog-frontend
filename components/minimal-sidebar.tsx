@@ -59,88 +59,90 @@ export function MinimalSidebar() {
   const API_BASE_URL = "http://192.168.100.7:8000/api"
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       try {
-        setCategoriesLoading(true)
-        const res = await fetch(`${API_BASE_URL}/categories`)
-        const data = await res.json()
-        if (Array.isArray(data)) setCategories(data)
-        else if (data?.results) setCategories(data.results)
-        else setCategories([])
+        const [catRes, tagRes, authorRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/categories`),
+          fetch(`${API_BASE_URL}/tags`),
+          fetch(`${API_BASE_URL}/authors/?featured=true`),
+        ])
+
+        const catData = await catRes.json()
+        const tagData = await tagRes.json()
+        const authorData = await authorRes.json()
+
+        setCategories(Array.isArray(catData) ? catData : catData?.results || [])
+        setTags(Array.isArray(tagData) ? tagData : tagData?.results || [])
+        setFeaturedAuthors(Array.isArray(authorData) ? authorData : authorData?.results || [])
       } catch {
         setCategoriesError("Failed to fetch categories")
-        setCategories([])
+        setTagsError("Failed to fetch tags")
+        setFeaturedError("Failed to fetch featured authors")
       } finally {
         setCategoriesLoading(false)
-      }
-    }
-
-    const fetchTags = async () => {
-      try {
-        setTagsLoading(true)
-        const res = await fetch(`${API_BASE_URL}/tags`)
-        const data = await res.json()
-        if (Array.isArray(data)) setTags(data)
-        else if (data?.results) setTags(data.results)
-        else setTags([])
-      } catch {
-        setTagsError("Failed to fetch tags")
-        setTags([])
-      } finally {
         setTagsLoading(false)
-      }
-    }
-
-    const fetchFeaturedAuthors = async () => {
-      try {
-        setFeaturedLoading(true)
-        const res = await fetch(`${API_BASE_URL}/authors/?featured=true`)
-        const data = await res.json()
-        if (Array.isArray(data)) setFeaturedAuthors(data)
-        else if (data?.results) setFeaturedAuthors(data.results)
-        else setFeaturedAuthors([])
-      } catch {
-        setFeaturedError("Failed to fetch featured authors")
-        setFeaturedAuthors([])
-      } finally {
         setFeaturedLoading(false)
       }
     }
 
-    fetchCategories()
-    fetchTags()
-    fetchFeaturedAuthors()
+    fetchData()
   }, [])
 
   return (
     <div className="space-y-12">
-      {/* Freelance Services */}
-      <Card className="border-0 bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
+      {/* 🚀 Freelance DevOps Services */}
+      <Card className="bg-white border border-gray-200 rounded-2xl shadow-md">
         <CardContent className="p-6">
-          <h3 className="text-xl font-semibold mb-4">🚀 Freelance DevOps Services</h3>
-          <ul className="list-disc list-inside text-sm font-light space-y-2">
-            <li>Monolithic to Cloud-Native Migration</li>
-            <li>Infrastructure Automation</li>
-            <li>DevOps Consulting</li>
-            <li>Business Website Development</li>
-            <li>Part-Time DevOps Support</li>
-            <li>DevOps as a Service (DaaS)</li>
-          </ul>
+          <h3 className="text-xl font-semibold text-gray-900 mb-6">🚀 Freelance DevOps Services</h3>
+          <div className="space-y-4">
+            {[
+              {
+                title: "Cloud-Native Migration",
+                desc: "Modernize your apps with Kubernetes, GitOps, containers.",
+                href: "/services/cloud-native-migration",
+              },
+              {
+                title: "Infrastructure Automation",
+                desc: "Terraform, Pulumi, Ansible — automate from dev to prod.",
+                href: "/services/infrastructure-automation",
+              },
+              {
+                title: "DevOps as a Service",
+                desc: "Ongoing support for infra, CI/CD, monitoring & security.",
+                href: "/services/devops-as-a-service",
+              },
+              {
+                title: "Business Web + API Deployment",
+                desc: "Launch and scale your site or SaaS with cloud-native infra.",
+                href: "/services/web-api-deployment",
+              },
+            ].map((service, index) => (
+              <Link
+                key={index}
+                href={service.href}
+                className="block border-l-4 border-blue-600 pl-4 py-2 hover:bg-blue-50 rounded-md transition"
+              >
+                <p className="font-semibold text-gray-800">{service.title}</p>
+                <p className="text-sm text-gray-600">{service.desc}</p>
+              </Link>
+            ))}
+          </div>
+
           <Link
             href="/services"
-            className="mt-6 inline-block text-center bg-white text-blue-700 hover:bg-blue-100 font-medium py-2 px-4 rounded transition-colors"
+            className="mt-6 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors"
           >
-            See Full Services →
+            View All Services →
           </Link>
         </CardContent>
       </Card>
 
-      {/* Categories */}
+      {/* 📂 Categories */}
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
         <h3 className="text-xl font-light mb-6 text-gray-900 border-b border-gray-300 pb-2">Categories</h3>
         {categoriesLoading ? (
           <div className="space-y-3">
-            {[1, 2, 3, 4, 5].map((i) => (
+            {[...Array(5)].map((_, i) => (
               <div key={i} className="animate-pulse flex items-center justify-between py-2">
                 <div className="flex items-center space-x-3">
                   <div className="w-5 h-5 bg-blue-200 rounded" />
@@ -151,12 +153,7 @@ export function MinimalSidebar() {
             ))}
           </div>
         ) : categoriesError ? (
-          <div className="text-center py-4">
-            <p className="text-red-500 text-sm mb-2">{categoriesError}</p>
-            <button onClick={() => window.location.reload()} className="text-xs text-red-600 hover:text-red-700 underline">
-              Try again
-            </button>
-          </div>
+          <div className="text-red-500 text-sm text-center">{categoriesError}</div>
         ) : (
           <>
             <ul className="divide-y divide-gray-100">
@@ -170,11 +167,11 @@ export function MinimalSidebar() {
                     >
                       <div className="flex items-center space-x-3">
                         <Icon className={`${colorClass} h-5 w-5 group-hover:text-blue-600 transition-colors`} />
-                        <span className="text-gray-700 font-medium group-hover:text-blue-600 transition-colors">
+                        <span className="text-gray-700 font-medium group-hover:text-blue-600">
                           {category.name}
                         </span>
                       </div>
-                      <span className="text-blue-400 group-hover:text-blue-600 text-lg leading-none">→</span>
+                      <span className="text-blue-400 group-hover:text-blue-600 text-lg">→</span>
                     </Link>
                   </li>
                 )
@@ -192,7 +189,7 @@ export function MinimalSidebar() {
         )}
       </div>
 
-      {/* Tags */}
+      {/* 🏷️ Tags */}
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
         <h3 className="text-xl font-light mb-6 text-gray-900 border-b border-gray-300 pb-2">Tags</h3>
         {tagsLoading ? (
@@ -202,12 +199,7 @@ export function MinimalSidebar() {
             ))}
           </div>
         ) : tagsError ? (
-          <div className="text-center py-4">
-            <p className="text-red-500 text-sm mb-2">{tagsError}</p>
-            <button onClick={() => window.location.reload()} className="text-xs text-red-600 hover:text-red-700 underline">
-              Try again
-            </button>
-          </div>
+          <div className="text-red-500 text-sm text-center">{tagsError}</div>
         ) : (
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
@@ -223,7 +215,7 @@ export function MinimalSidebar() {
         )}
       </div>
 
-      {/* Featured Authors */}
+      {/* ✨ Featured Authors */}
       <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 border border-gray-200 shadow-sm">
         <h3 className="text-xl font-light mb-6 text-gray-900 border-b border-gray-300 pb-2">Featured Authors</h3>
         {featuredLoading ? (
@@ -233,12 +225,7 @@ export function MinimalSidebar() {
             ))}
           </div>
         ) : featuredError ? (
-          <div className="text-center py-4">
-            <p className="text-red-500 text-sm mb-2">{featuredError}</p>
-            <button onClick={() => window.location.reload()} className="text-xs text-red-600 hover:text-red-700 underline">
-              Try again
-            </button>
-          </div>
+          <div className="text-red-500 text-sm text-center">{featuredError}</div>
         ) : featuredAuthors.length === 0 ? (
           <p className="text-gray-500 text-sm">No featured authors found.</p>
         ) : (
@@ -254,9 +241,7 @@ export function MinimalSidebar() {
                   className="w-10 h-10 rounded-full border object-cover shadow-sm"
                 />
                 <div>
-                  <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600">
-                    {author.name}
-                  </p>
+                  <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600">{author.name}</p>
                   {(author.job_title || author.company) && (
                     <p className="text-xs text-gray-500 font-light">
                       {author.job_title}
