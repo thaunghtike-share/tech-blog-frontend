@@ -1,79 +1,99 @@
 "use client";
 
-import React, { useState } from "react";
-import { Play, ExternalLink, Star, Clock, Users } from "lucide-react";
+import React from "react";
+import { Star, User, BookOpen, ExternalLink, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
+
+interface Review {
+  username: string;
+  comment: string;
+}
 
 interface UdemyCourse {
   title: string;
   description: string;
   url: string;
-  videoId: string;
+  author: string;
   rating?: number;
-  students?: number;
-  duration?: string;
+  reviews?: Review[];
 }
 
 const udemyCourses: UdemyCourse[] = [
   {
     title: "Docker & Kubernetes: The Practical Guide",
-    description: "Master containerization and orchestration with hands-on projects and real-world scenarios.",
+    author: "Brett Fisher",
     url: "https://www.udemy.com/course/docker-kubernetes-the-practical-guide/",
-    videoId: "JMXtXHA62jg",
     rating: 4.7,
-    students: 125000,
-    duration: "22 hours"
+    reviews: [
+      { username: "Alice", comment: "Comprehensive and practical, perfect for hands-on learners." },
+      { username: "Bob", comment: "Loved the clear explanations and real-world examples." },
+      { username: "Carol", comment: "Helped me get a great job in DevOps!" },
+    ],
+    description: "",
   },
   {
     title: "DevOps CI/CD with Jenkins & Docker",
-    description: "Build automated pipelines with Jenkins, Docker, and GitHub Actions for seamless deployments.",
+    author: "Tae Kim",
     url: "https://www.udemy.com/course/learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/",
-    videoId: "kXV3R5XrrkE",
     rating: 4.6,
-    students: 87000,
-    duration: "15 hours"
+    reviews: [
+      { username: "Dave", comment: "Great course to build solid CI/CD pipelines." },
+      { username: "Eve", comment: "The Jenkins setups were easy to follow." },
+      { username: "Frank", comment: "Recommended for beginners and intermediates alike." },
+    ],
+    description: "",
   },
   {
     title: "DevOps Bootcamp: Terraform, Kubernetes, AWS",
-    description: "Complete infrastructure automation with Terraform, Kubernetes, and cloud platforms.",
+    author: "School of DevOps®",
     url: "https://www.udemy.com/course/devops-bootcamp-terraform-kubernetes-aws-docker/",
-    videoId: "SBJk8nZw9Jo",
     rating: 4.8,
-    students: 95000,
-    duration: "30 hours"
+    reviews: [
+      { username: "Grace", comment: "Detailed and thorough with excellent cloud coverage." },
+      { username: "Heidi", comment: "Very helpful for infrastructure automation." },
+      { username: "Ivan", comment: "Perfect blend of Terraform and Kubernetes concepts." },
+    ],
+    description: "",
   },
   {
     title: "Kubernetes for Absolute Beginners",
-    description: "Start your Kubernetes journey with practical labs and beginner-friendly explanations.",
+    author: "Mumshad Mannambeth",
     url: "https://www.udemy.com/course/kubernetes-for-the-absolute-beginners-hands-on/",
-    videoId: "n0j3LoCNs8E",
     rating: 4.5,
-    students: 110000,
-    duration: "12 hours"
+    reviews: [
+      { username: "Judy", comment: "Perfect for those starting fresh with Kubernetes." },
+      { username: "Ken", comment: "The labs made learning super easy." },
+      { username: "Laura", comment: "Clear and beginner-friendly." },
+    ],
+    description: "",
   },
   {
     title: "Infrastructure Automation With Terraform",
-    description: "Automate cloud infrastructure using Terraform with AWS and multi-cloud examples.",
+    author: "Ned Bellavance",
     url: "https://www.udemy.com/course/learn-devops-infrastructure-automation-with-terraform/",
-    videoId: "gDN3oL5gFyI",
     rating: 4.7,
-    students: 78000,
-    duration: "18 hours"
+    reviews: [
+      { username: "Mike", comment: "Excellent introduction to Terraform automation." },
+      { username: "Nina", comment: "Step-by-step explanations were great." },
+      { username: "Oscar", comment: "Helped me automate my projects fast." },
+    ],
+    description: "",
   },
   {
     title: "AWS Certified DevOps Engineer Professional",
-    description: "Prepare for the AWS DevOps certification with hands-on labs and practice exams.",
+    author: "Stephane Maarek",
     url: "https://www.udemy.com/course/aws-certified-devops-engineer-professional-hands-on/",
-    videoId: "s2Jg3t7S7c8",
     rating: 4.8,
-    students: 65000,
-    duration: "25 hours"
+    reviews: [
+      { username: "Peggy", comment: "Comprehensive and practical preparation for the exam." },
+      { username: "Quinn", comment: "Good mix of theory and hands-on labs." },
+      { username: "Ralph", comment: "Helped me pass the certification with ease." },
+    ],
+    description: "",
   }
 ];
 
 export function TopUdemyCourses() {
-  const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
-
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
@@ -96,68 +116,47 @@ export function TopUdemyCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -5 }}
-            className="relative group"
+            className="border border-gray-200 rounded-lg shadow-sm bg-white p-6 flex flex-col justify-between"
           >
-            <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white">
-              {/* Video Thumbnail with Play Button */}
-              <div 
-                className="relative aspect-video bg-gray-900"
-                onMouseEnter={() => setHoveredVideo(course.videoId)}
-                onMouseLeave={() => setHoveredVideo(null)}
-              >
-                <iframe
-                  src={`https://www.youtube.com/embed/${course.videoId}?autoplay=${hoveredVideo === course.videoId ? 1 : 0}&mute=1&loop=1&controls=0&modestbranding=1`}
-                  title={course.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                  allowFullScreen
-                />
-                <div className={`absolute inset-0 flex items-center justify-center ${hoveredVideo === course.videoId ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
-                  <div className="bg-black/50 rounded-full p-4 backdrop-blur-sm">
-                    <Play className="w-6 h-6 text-white" fill="currentColor" />
-                  </div>
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-blue-600" />
+                {course.title}
+              </h3>
+              <p className="text-sm text-gray-600 mb-3 flex items-center gap-1">
+                <User className="w-4 h-4" /> {course.author}
+              </p>
+              {course.rating && (
+                <div className="flex items-center gap-1 text-yellow-500 mb-3">
+                  <Star className="w-5 h-5" />
+                  <span className="font-medium text-gray-900">{course.rating}</span>
                 </div>
-              </div>
+              )}
 
-              {/* Course Content */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-sm font-medium text-gray-900">
-                      {course.rating}
-                    </span>
-                  </div>
-                  <div className="flex space-x-4 text-sm text-gray-500">
-                    <span className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
-                      {course.students?.toLocaleString()}
-                    </span>
-                    <span className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {course.duration}
-                    </span>
-                  </div>
+              {/* Show up to 3 reviews */}
+              {course.reviews && course.reviews.length > 0 && (
+                <div className="space-y-2 mb-4">
+                  {course.reviews.slice(0, 3).map((review, i) => (
+                    <div key={i} className="text-gray-700 italic text-sm flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4 text-blue-500" />
+                      <span>
+                        <strong>{review.username}:</strong> {review.comment}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-
-                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
-                  {course.title}
-                </h3>
-                <p className="text-gray-600 mb-4 line-clamp-2">
-                  {course.description}
-                </p>
-
-                <a
-                  href={course.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors group"
-                >
-                  Enroll Now
-                  <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
+              )}
             </div>
+
+            <a
+              href={course.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto inline-flex items-center justify-center w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+            >
+              Enroll Now
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </a>
           </motion.div>
         ))}
       </div>
