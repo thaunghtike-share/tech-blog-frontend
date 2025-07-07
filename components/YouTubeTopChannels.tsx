@@ -34,15 +34,6 @@ const topDevOpsChannels: Channel[] = [
     latestVideoDate: "3 days ago"
   },
   {
-    name: "CNCF [Cloud Native Computing Foundation]",
-    description: "Official channel with talks, tutorials and updates on Kubernetes and cloud-native technologies.",
-    url: "https://www.youtube.com/c/cloudnativefdn",
-    videoId: "WxgcRpWKWBs",
-    subscribers: "156K",
-    latestVideoTitle: "KubeCon 2023 Keynote Highlights",
-    latestVideoDate: "1 month ago"
-  },
-  {
     name: "A Cloud Guru",
     description: "Cloud computing and DevOps courses & tutorials from industry experts.",
     url: "https://www.youtube.com/c/ACloudGuru",
@@ -59,24 +50,6 @@ const topDevOpsChannels: Channel[] = [
     subscribers: "187K",
     latestVideoTitle: "Terraform for Beginners - Full Course",
     latestVideoDate: "1 week ago"
-  },
-  {
-    name: "Tech Primers",
-    description: "DevOps, Kubernetes, microservices, and cloud computing tutorials with coding examples.",
-    url: "https://www.youtube.com/c/TechPrimers",
-    videoId: "mJsLK-iPagc",
-    subscribers: "142K",
-    latestVideoTitle: "Jenkins Pipeline as Code Tutorial",
-    latestVideoDate: "2 weeks ago"
-  },
-  {
-    name: "Cloud Academy",
-    description: "Cloud computing and DevOps learning resources with certification prep.",
-    url: "https://www.youtube.com/c/CloudAcademy",
-    videoId: "b-cHIoMbRCE",
-    subscribers: "76K",
-    latestVideoTitle: "Azure DevOps Pipelines Deep Dive",
-    latestVideoDate: "3 weeks ago"
   },
   {
     name: "DevOps Directive",

@@ -33,7 +33,7 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "Linux & Networking",
+        title: "Linux & Bash Scripting",
         details: "Learn essential system and network skills.",
         duration: "2-3 weeks",
         subtopics: [
@@ -44,7 +44,25 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "Bash/Python Scripting",
+        title: "Cloud Fundamentals",
+        details: "Automate tasks using simple scripts.",
+        duration: "2 weeks",
+        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+      },
+      {
+        title: "Network Fundamentals",
+        details: "Automate tasks using simple scripts.",
+        duration: "2 weeks",
+        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+      },
+      {
+        title: "Docker Fundamentals",
+        details: "Automate tasks using simple scripts.",
+        duration: "2 weeks",
+        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+      },
+      {
+        title: "Python Fundamentals",
         details: "Automate tasks using simple scripts.",
         duration: "2 weeks",
         subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
@@ -77,7 +95,18 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "Docker & Containers",
+        title: "AWS DevOps Services",
+        details: "Package and run applications in containers.",
+        duration: "2-3 weeks",
+        subtopics: [
+          "Docker CLI",
+          "Dockerfile & images",
+          "Volumes & networks",
+          "docker-compose",
+        ],
+      },
+      {
+        title: "Azure DevOps Services",
         details: "Package and run applications in containers.",
         duration: "2-3 weeks",
         subtopics: [
@@ -99,7 +128,7 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "CI/CD Pipelines",
+        title: "CICD Pipelines",
         details: "Automate app delivery workflows.",
         duration: "3 weeks",
         subtopics: [
@@ -121,7 +150,7 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "Cloud Providers",
+        title: "Hashicorp Packer",
         details: "Learn core cloud services.",
         duration: "4 weeks",
         subtopics: ["AWS EC2/S3/IAM", "Azure RG/VNet/VM", "GCP basics"],

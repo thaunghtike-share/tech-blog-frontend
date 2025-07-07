@@ -8,6 +8,7 @@ import { MinimalBlogList } from "@/components/minimal-blog-list"
 import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap"
+import { CertificationRoadmap } from "@/components/CertificationRoadmap"
 import { MinimalFAQs } from "@/components/minimal-faqs"
 import { MinimalFeaturedProjects } from "@/components/minimal-featured-projects"
 import { YouTubeTopChannels } from "@/components/YouTubeTopChannels"
@@ -34,6 +35,9 @@ export default function HomePage() {
 
         {/* Roadmap, YouTube, Udemy */}
         <MinimalDevopsRoadmap />
+        <CertificationRoadmap />
+
+        {/* YouTube Channels and Udemy Courses */}
         <YouTubeTopChannels />
         <TopUdemyCourses />
 
