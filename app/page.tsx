@@ -15,6 +15,7 @@ import { YouTubeTopChannels } from "@/components/YouTubeTopChannels"
 import { TopUdemyCourses } from "@/components/TopUdemyCourses"
 import { FreelanceServicesSection } from "@/components/FreelanceServicesSection"
 import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
+import { RequiredSkills } from "@/components/skills"
 
 export default function HomePage() {
   return (
@@ -35,6 +36,7 @@ export default function HomePage() {
 
         {/* Roadmap, YouTube, Udemy */}
         <MinimalDevopsRoadmap />
+        <RequiredSkills />
         <YouTubeTopChannels />
         <TopUdemyCourses />
 

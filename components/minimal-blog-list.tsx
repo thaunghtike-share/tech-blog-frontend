@@ -45,7 +45,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [error, setError] = useState<string | null>(null)
 
   // Your Django API URL
-  const API_BASE_URL = "http://192.168.100.7:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
     const fetchData = async () => {
@@ -268,7 +268,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   return (
     <div className="space-y-16">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-light text-gray-900">Recent Articles Published</h2>
+        <h2 className="text-3xl font-bold mb-5 text-gray-900 text-left select-none">Recent Articles Published</h2>
         <span className="text-sm text-gray-500">Total - {articles.length} articles</span>
       </div>
 
