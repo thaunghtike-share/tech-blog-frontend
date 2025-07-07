@@ -48,9 +48,7 @@ export default function HomePage() {
         <MinimalFeaturedProjects />
 
         {/* FAQs */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-16">
           <MinimalFAQs />
-        </div>
       </main>
 
       <MinimalFooter />
