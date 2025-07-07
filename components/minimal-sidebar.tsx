@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Server, Code, Brain, Cloud, Cog, BarChart3, Shield, Database, Globe, Zap,
+  ChevronDown, ChevronUp, ArrowRight, User, Tag, Folder, Star
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -10,11 +11,13 @@ import Link from "next/link"
 interface Category {
   id: number
   name: string
+  post_count?: number
 }
 
 interface Tag {
   id: number
   name: string
+  post_count?: number
 }
 
 interface FeaturedAuthor {
@@ -25,36 +28,38 @@ interface FeaturedAuthor {
   featured: boolean
   job_title?: string
   company?: string
+  post_count?: number
 }
 
 const getCategoryIconWithColor = (categoryName: string): [React.ComponentType<React.SVGProps<SVGSVGElement>>, string] => {
   const name = categoryName.toLowerCase()
-  if (name.includes("devops")) return [Server, "text-emerald-500"]
-  if (name.includes("python")) return [Code, "text-yellow-500"]
-  if (name.includes("ai") || name.includes("ml")) return [Brain, "text-purple-600"]
-  if (name.includes("cloud")) return [Cloud, "text-sky-400"]
-  if (name.includes("automation")) return [Cog, "text-orange-500"]
-  if (name.includes("monitoring")) return [BarChart3, "text-pink-500"]
-  if (name.includes("security")) return [Shield, "text-red-500"]
-  if (name.includes("database")) return [Database, "text-indigo-600"]
-  if (name.includes("web")) return [Globe, "text-cyan-600"]
-  return [Zap, "text-gray-400"]
+  if (name.includes("devops")) return [Server, "bg-emerald-100 text-emerald-600"]
+  if (name.includes("python")) return [Code, "bg-yellow-100 text-yellow-600"]
+  if (name.includes("ai") || name.includes("ml")) return [Brain, "bg-purple-100 text-purple-600"]
+  if (name.includes("cloud")) return [Cloud, "bg-sky-100 text-sky-600"]
+  if (name.includes("automation")) return [Cog, "bg-orange-100 text-orange-600"]
+  if (name.includes("monitoring")) return [BarChart3, "bg-pink-100 text-pink-600"]
+  if (name.includes("security")) return [Shield, "bg-red-100 text-red-600"]
+  if (name.includes("database")) return [Database, "bg-indigo-100 text-indigo-600"]
+  if (name.includes("web")) return [Globe, "bg-cyan-100 text-cyan-600"]
+  return [Zap, "bg-gray-100 text-gray-600"]
 }
 
 export function MinimalSidebar() {
   const [categories, setCategories] = useState<Category[]>([])
-  const [categoriesLoading, setCategoriesLoading] = useState(true)
-  const [categoriesError, setCategoriesError] = useState<string | null>(null)
-
   const [tags, setTags] = useState<Tag[]>([])
-  const [tagsLoading, setTagsLoading] = useState(true)
-  const [tagsError, setTagsError] = useState<string | null>(null)
-
   const [featuredAuthors, setFeaturedAuthors] = useState<FeaturedAuthor[]>([])
-  const [featuredLoading, setFeaturedLoading] = useState(true)
-  const [featuredError, setFeaturedError] = useState<string | null>(null)
-
   const [showAllCategories, setShowAllCategories] = useState(false)
+  const [loading, setLoading] = useState({
+    categories: true,
+    tags: true,
+    authors: true
+  })
+  const [error, setError] = useState({
+    categories: null as string | null,
+    tags: null as string | null,
+    authors: null as string | null
+  })
 
   const API_BASE_URL = "http://192.168.1.131:8000/api"
 
@@ -62,9 +67,9 @@ export function MinimalSidebar() {
     const fetchData = async () => {
       try {
         const [catRes, tagRes, authorRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/categories`),
-          fetch(`${API_BASE_URL}/tags`),
-          fetch(`${API_BASE_URL}/authors/?featured=true`),
+          fetch(`${API_BASE_URL}/categories?count_posts=true`),
+          fetch(`${API_BASE_URL}/tags?count_posts=true`),
+          fetch(`${API_BASE_URL}/authors/?featured=true&count_posts=true`),
         ])
 
         const catData = await catRes.json()
@@ -74,14 +79,18 @@ export function MinimalSidebar() {
         setCategories(Array.isArray(catData) ? catData : catData?.results || [])
         setTags(Array.isArray(tagData) ? tagData : tagData?.results || [])
         setFeaturedAuthors(Array.isArray(authorData) ? authorData : authorData?.results || [])
-      } catch {
-        setCategoriesError("Failed to fetch categories")
-        setTagsError("Failed to fetch tags")
-        setFeaturedError("Failed to fetch featured authors")
+      } catch (err) {
+        setError({
+          categories: "Failed to load categories",
+          tags: "Failed to load tags",
+          authors: "Failed to load authors"
+        })
       } finally {
-        setCategoriesLoading(false)
-        setTagsLoading(false)
-        setFeaturedLoading(false)
+        setLoading({
+          categories: false,
+          tags: false,
+          authors: false
+        })
       }
     }
 
@@ -89,171 +98,246 @@ export function MinimalSidebar() {
   }, [])
 
   return (
-    <div className="space-y-12">
-      {/* 🚀 Freelance DevOps Services */}
-      <Card className="bg-white border border-gray-200 rounded-2xl shadow-md">
+    <aside className="space-y-6">
+      {/* Services Card */}
+      <Card className="border-0 shadow-sm bg-gradient-to-br from-blue-50 to-indigo-50">
         <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">🚀 Freelance DevOps Services</h3>
-          <div className="space-y-4">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+              <Zap className="h-5 w-5" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">DevOps Services</h3>
+          </div>
+          
+          <ul className="space-y-4">
             {[
               {
-                title: "Cloud-Native Migration",
-                desc: "Modernize your apps with Kubernetes, GitOps, containers.",
-                href: "/services/cloud-native-migration",
+                title: "Cloud Migration",
+                desc: "Modernize with Kubernetes & GitOps",
+                icon: <Cloud className="h-5 w-5 text-sky-600" />
               },
               {
-                title: "Infrastructure Automation",
-                desc: "Terraform, Pulumi, Ansible — automate from dev to prod.",
-                href: "/services/infrastructure-automation",
+                title: "Infra Automation",
+                desc: "Terraform, Ansible, Pulumi",
+                icon: <Cog className="h-5 w-5 text-orange-600" />
               },
               {
-                title: "DevOps as a Service",
-                desc: "Ongoing support for infra, CI/CD, monitoring & security.",
-                href: "/services/devops-as-a-service",
+                title: "CI/CD Pipelines",
+                desc: "End-to-end automation",
+                icon: <BarChart3 className="h-5 w-5 text-pink-600" />
               },
               {
-                title: "Business Web + API Deployment",
-                desc: "Launch and scale your site or SaaS with cloud-native infra.",
-                href: "/services/web-api-deployment",
-              },
+                title: "Web Deployment",
+                desc: "Scalable cloud-native apps",
+                icon: <Globe className="h-5 w-5 text-cyan-600" />
+              }
             ].map((service, index) => (
-              <Link
-                key={index}
-                href={service.href}
-                className="block border-l-4 border-blue-600 pl-4 py-2 hover:bg-blue-50 rounded-md transition"
-              >
-                <p className="font-semibold text-gray-800">{service.title}</p>
-                <p className="text-sm text-gray-600">{service.desc}</p>
-              </Link>
+              <li key={index}>
+                <Link
+                  href={`/services#${service.title.toLowerCase().replace(' ', '-')}`}
+                  className="flex items-start gap-4 p-3 rounded-lg hover:bg-white hover:shadow transition-all"
+                >
+                  <div className="p-2 bg-white rounded-lg shadow-sm">
+                    {service.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">{service.title}</h4>
+                    <p className="text-sm text-gray-600">{service.desc}</p>
+                  </div>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
 
           <Link
             href="/services"
-            className="mt-6 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors"
+            className="mt-6 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
           >
-            View All Services →
+            Explore Services
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </CardContent>
       </Card>
 
-      {/* 📂 Categories */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-        <h3 className="text-xl font-light mb-6 text-gray-900 border-b border-gray-300 pb-2">Categories</h3>
-        {categoriesLoading ? (
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="animate-pulse flex items-center justify-between py-2">
-                <div className="flex items-center space-x-3">
-                  <div className="w-5 h-5 bg-blue-200 rounded" />
-                  <div className="w-28 h-4 bg-blue-200 rounded" />
-                </div>
-                <div className="w-5 h-5 bg-blue-200 rounded" />
-              </div>
-            ))}
+      {/* Categories Section */}
+      <Card className="border-0 shadow-sm">
+        <CardContent className="p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+              <Folder className="h-5 w-5" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">Categories</h3>
           </div>
-        ) : categoriesError ? (
-          <div className="text-red-500 text-sm text-center">{categoriesError}</div>
-        ) : (
-          <>
-            <ul className="divide-y divide-gray-100">
-              {(showAllCategories ? categories : categories.slice(0, 5)).map((category) => {
-                const [Icon, colorClass] = getCategoryIconWithColor(category.name)
-                return (
-                  <li key={category.id}>
-                    <Link
-                      href={`/category/${category.id}`}
-                      className="flex items-center justify-between py-3 px-3 rounded-lg hover:bg-blue-50 transition-colors group"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <Icon className={`${colorClass} h-5 w-5 group-hover:text-blue-600 transition-colors`} />
-                        <span className="text-gray-700 font-medium group-hover:text-blue-600">
-                          {category.name}
-                        </span>
-                      </div>
-                      <span className="text-blue-400 group-hover:text-blue-600 text-lg">→</span>
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-            {categories.length > 5 && (
-              <button
-                onClick={() => setShowAllCategories(!showAllCategories)}
-                className="mt-4 w-full text-sm text-blue-600 hover:text-blue-800 font-medium"
-              >
-                {showAllCategories ? "Show less ▲" : "Show more ▼"}
-              </button>
-            )}
-          </>
-        )}
-      </div>
 
-      {/* 🏷️ Tags */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-        <h3 className="text-xl font-light mb-6 text-gray-900 border-b border-gray-300 pb-2">Tags</h3>
-        {tagsLoading ? (
-          <div className="flex flex-wrap gap-2">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="w-16 h-6 bg-blue-200 rounded-full animate-pulse" />
-            ))}
-          </div>
-        ) : tagsError ? (
-          <div className="text-red-500 text-sm text-center">{tagsError}</div>
-        ) : (
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Link
-                key={tag.id}
-                href={`/tag/${tag.id}`}
-                className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 hover:bg-blue-200 transition"
-              >
-                #{tag.name}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ✨ Featured Authors */}
-      <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 border border-gray-200 shadow-sm">
-        <h3 className="text-xl font-light mb-6 text-gray-900 border-b border-gray-300 pb-2">Featured Authors</h3>
-        {featuredLoading ? (
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="animate-pulse h-5 w-full bg-gray-300 rounded" />
-            ))}
-          </div>
-        ) : featuredError ? (
-          <div className="text-red-500 text-sm text-center">{featuredError}</div>
-        ) : featuredAuthors.length === 0 ? (
-          <p className="text-gray-500 text-sm">No featured authors found.</p>
-        ) : (
-          <div className="space-y-4">
-            {featuredAuthors.map((author) => (
-              <div
-                key={author.id}
-                className="flex items-center space-x-4 p-3 rounded-xl hover:bg-white hover:shadow transition duration-200"
-              >
-                <img
-                  src={author.avatar}
-                  alt={author.name}
-                  className="w-10 h-10 rounded-full border object-cover shadow-sm"
-                />
-                <div>
-                  <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600">{author.name}</p>
-                  {(author.job_title || author.company) && (
-                    <p className="text-xs text-gray-500 font-light">
-                      {author.job_title}
-                      {author.company ? ` at ${author.company}` : ""}
-                    </p>
+          {loading.categories ? (
+            <div className="space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="animate-pulse h-12 rounded-lg bg-gray-100" />
+              ))}
+            </div>
+          ) : error.categories ? (
+            <div className="text-center py-4 text-red-500 text-sm">
+              Failed to load categories
+            </div>
+          ) : (
+            <>
+              <ul className="space-y-2">
+                {(showAllCategories ? categories : categories.slice(0, 5)).map((category) => {
+                  const [Icon, colorClass] = getCategoryIconWithColor(category.name)
+                  return (
+                    <li key={category.id}>
+                      <Link
+                        href={`/category/${category.id}`}
+                        className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg ${colorClass.split(' ')[0]}`}>
+                            <Icon className={`h-5 w-5 ${colorClass.split(' ')[1]}`} />
+                          </div>
+                          <span className="font-medium text-gray-700 group-hover:text-blue-600">
+                            {category.name}
+                          </span>
+                        </div>
+                        {category.post_count && (
+                          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                            {category.post_count}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+              {categories.length > 5 && (
+                <button
+                  onClick={() => setShowAllCategories(!showAllCategories)}
+                  className="mt-4 w-full flex items-center justify-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  {showAllCategories ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Show More
+                    </>
                   )}
-                </div>
-              </div>
-            ))}
+                </button>
+              )}
+            </>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Tags Section */}
+      <Card className="border-0 shadow-sm">
+        <CardContent className="p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
+              <Tag className="h-5 w-5" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">Popular Tags</h3>
           </div>
-        )}
-      </div>
-    </div>
+
+          {loading.tags ? (
+            <div className="flex flex-wrap gap-2">
+              {[...Array(10)].map((_, i) => (
+                <div key={i} className="h-8 w-20 rounded-full bg-gray-100 animate-pulse" />
+              ))}
+            </div>
+          ) : error.tags ? (
+            <div className="text-center py-4 text-red-500 text-sm">
+              Failed to load tags
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {tags.slice(0, 15).map((tag) => (
+                <Link
+                  key={tag.id}
+                  href={`/tag/${tag.id}`}
+                  className={`text-xs px-3 py-1 rounded-full font-medium ${
+                    tag.post_count && tag.post_count > 5 
+                      ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  } transition-colors`}
+                >
+                  #{tag.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Featured Authors */}
+      <Card className="border border-gray-200 rounded-xl shadow-sm">
+        <CardContent className="p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+              <Star className="h-5 w-5" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">Featured Experts</h3>
+          </div>
+
+          {loading.authors ? (
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="flex items-center gap-4 p-3">
+                  <div className="h-12 w-12 rounded-full bg-gray-100 animate-pulse" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 w-32 bg-gray-100 rounded animate-pulse" />
+                    <div className="h-3 w-24 bg-gray-100 rounded animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : error.authors ? (
+            <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
+              <p className="text-red-500 text-sm">Failed to load experts</p>
+            </div>
+          ) : featuredAuthors.length === 0 ? (
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <p className="text-gray-500 text-sm">No featured experts available</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {featuredAuthors.map((author) => (
+                <div 
+                  key={author.id} 
+                  className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                >
+                  <div className="relative">
+                    <img
+                      src={author.avatar}
+                      alt={author.name}
+                      className="h-12 w-12 rounded-full object-cover border border-gray-200"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/default-avatar.png'
+                      }}
+                    />
+                    <div className="absolute -bottom-1 -right-1 bg-blue-500 text-white p-1 rounded-full">
+                      <Star className="h-3 w-3" />
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-gray-900 truncate">{author.name}</h4>
+                    <p className="text-sm text-gray-600 truncate">
+                      {author.job_title || 'DevOps Engineer'}
+                    </p>
+                    {author.post_count && (
+                      <p className="text-xs text-gray-400 mt-1">
+                        {author.post_count} {author.post_count === 1 ? 'article' : 'articles'}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </aside>
   )
 }

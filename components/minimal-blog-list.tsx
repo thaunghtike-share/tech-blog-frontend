@@ -1,11 +1,10 @@
 "use client"
 
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, User } from "lucide-react"
+import { Calendar, Clock, User, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
-// Types for your API data
 interface Article {
   id: number
   title: string
@@ -37,7 +36,7 @@ interface MinimalBlogListProps {
 }
 
 export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
-  const [articles, setArticles] = useState<Article[]>([])
+ const [articles, setArticles] = useState<Article[]>([])
   const [authors, setAuthors] = useState<Author[]>([])
   const [tags, setTags] = useState<Tag[]>([])
   const [categories, setCategories] = useState<Category[]>([])
@@ -193,26 +192,25 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   if (loading) {
     return (
-      <div className="space-y-16">
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-gray-900">Recent Articles</h2>
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Articles</h2>
+          <div className="h-1 w-24 bg-gray-200 rounded-full"></div>
         </div>
-        <div className="space-y-12">
+        <div className="grid gap-8">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse">
-              <div className="flex items-start space-x-4 mb-4">
-                <div className="w-8 h-4 bg-blue-200 rounded"></div>
-                <div className="w-20 h-6 bg-blue-200 rounded"></div>
+            <div key={i} className="animate-pulse bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+              <div className="flex gap-3 mb-4">
+                <div className="h-6 w-24 bg-gray-200 rounded-full"></div>
               </div>
-              <div className="w-3/4 h-8 bg-blue-200 rounded mb-4"></div>
-              <div className="w-full h-4 bg-blue-200 rounded mb-2"></div>
-              <div className="w-2/3 h-4 bg-blue-200 rounded mb-6"></div>
-              <div className="flex space-x-6">
-                <div className="w-24 h-4 bg-blue-200 rounded"></div>
-                <div className="w-32 h-4 bg-blue-200 rounded"></div>
-                <div className="w-16 h-4 bg-blue-200 rounded"></div>
+              <div className="h-8 w-3/4 bg-gray-200 rounded mb-4"></div>
+              <div className="h-4 w-full bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 w-2/3 bg-gray-200 rounded mb-6"></div>
+              <div className="flex gap-4">
+                <div className="h-4 w-20 bg-gray-200 rounded-full"></div>
+                <div className="h-4 w-24 bg-gray-200 rounded-full"></div>
+                <div className="h-4 w-16 bg-gray-200 rounded-full"></div>
               </div>
-              <div className="mt-8 h-px bg-blue-200"></div>
             </div>
           ))}
         </div>
@@ -222,98 +220,88 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   if (error) {
     return (
-      <div className="space-y-16">
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
-        </div>
-        <div className="text-center py-12 bg-red-50 rounded-lg border border-red-200">
-          <div className="text-red-500 mb-4 text-2xl">⚠️</div>
-          <h3 className="text-lg font-semibold text-red-700 mb-2">Unable to load articles</h3>
-          <p className="text-red-600 mb-4">{error}</p>
-          <div className="text-sm text-red-600 mb-4">
-            <p>
-              Make sure your Django server is running on:{" "}
-              <code className="bg-red-100 px-2 py-1 rounded">http://localhost:8000</code>
-            </p>
-            <p>
-              And CORS is configured to allow:{" "}
-              <code className="bg-red-100 px-2 py-1 rounded">http://localhost:3000</code>
-            </p>
-          </div>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
+      <div className="max-w-4xl mx-auto p-8 bg-red-50 rounded-xl border border-red-200 text-center">
+        <div className="text-red-500 mb-4 text-4xl">⚠️</div>
+        <h3 className="text-xl font-semibold text-red-700 mb-2">Loading Error</h3>
+        <p className="text-red-600 mb-6">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+        >
+          Retry Loading
+        </button>
       </div>
     )
   }
 
   if (!Array.isArray(articles) || articles.length === 0) {
     return (
-      <div className="space-y-16">
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-light text-gray-900">Latest Articles</h2>
-        </div>
-        <div className="text-center py-12">
-          <div className="text-gray-400 mb-4 text-4xl">📝</div>
-          <p className="text-gray-600">No articles found. Check back soon!</p>
-        </div>
+      <div className="max-w-4xl mx-auto text-center py-16">
+        <div className="text-gray-400 mb-6 text-5xl">📝</div>
+        <h3 className="text-xl font-medium text-gray-700 mb-2">No articles found</h3>
+        <p className="text-gray-500 max-w-md mx-auto">
+          {searchQuery ? "No matches for your search." : "Check back soon for new articles!"}
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-16">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold mb-5 text-gray-900 text-left select-none">Recent Articles Published</h2>
-        <span className="text-sm text-gray-500">Total - {articles.length} articles</span>
+    <div className="max-w-4xl mx-auto">
+      <div className="mb-12">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Articles</h2>
+        <div className="h-1 w-24 bg-blue-600 rounded-full"></div>
+        <p className="mt-4 text-gray-500">
+          {searchQuery 
+            ? `${articles.length} search results` 
+            : "Recent publications from our team"}
+        </p>
       </div>
 
-      <div className="space-y-12">
+      <div className="grid gap-8">
         {articles.map((article, index) => (
-          <article key={article.id} className="group">
-            <div className="flex items-start space-x-4 mb-4">
-              <span className="text-sm text-gray-400 font-mono mt-1">{String(index + 1).padStart(2, "0")}</span>
-              <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+          <article 
+            key={article.id} 
+            className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div className="flex flex-wrap gap-2 mb-4">
+              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
                 {getCategoryName(article.category)}
               </Badge>
-              {getTagNames(article.tags)
-                .slice(0, 2)
-                .map((tagName, tagIndex) => (
-                  <Badge key={tagIndex} variant="secondary" className="text-xs bg-indigo-50 text-indigo-700">
-                    {tagName}
-                  </Badge>
-                ))}
+              {getTagNames(article.tags).slice(0, 2).map((tagName, tagIndex) => (
+                <Badge key={tagIndex} variant="secondary" className="bg-gray-100 text-gray-700">
+                  {tagName}
+                </Badge>
+              ))}
             </div>
 
-            <Link href={`/articles/${article.id}`} className="block">
-              <h3 className="text-2xl font-light text-gray-900 mb-4 group-hover:text-blue-600 transition-colors leading-tight">
+            <Link href={`/articles/${article.id}`} className="group block">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
                 {article.title || "Untitled Article"}
               </h3>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6 font-light">
-                {truncateContent(article.content)}
+              <p className="text-gray-600 mb-6 line-clamp-2">
+                {truncateContent(article.content, 200)}
               </p>
+              <div className="flex items-center text-blue-600 group-hover:text-blue-700 transition-colors">
+                <span className="text-sm font-medium">Read more</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </div>
             </Link>
 
-            <div className="flex items-center text-sm text-gray-500 space-x-6">
+            <div className="mt-6 pt-6 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
               <div className="flex items-center">
-                <User className="h-4 w-4 mr-1" />
-                <span className="font-light">{getAuthorName(article.author)}</span>
+                <User className="h-4 w-4 mr-2 text-gray-400" />
+                <span>{getAuthorName(article.author)}</span>
               </div>
               <div className="flex items-center">
-                <Calendar className="h-4 w-4 mr-1" />
-                {formatDate(article.published_at)}
+                <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+                <span>{formatDate(article.published_at)}</span>
               </div>
               <div className="flex items-center">
-                <Clock className="h-4 w-4 mr-1" />
-                {calculateReadTime(article.content)}
+                <Clock className="h-4 w-4 mr-2 text-gray-400" />
+                <span>{calculateReadTime(article.content)} read</span>
               </div>
             </div>
-
-            <div className="mt-8 h-px bg-gray-200"></div>
           </article>
         ))}
       </div>

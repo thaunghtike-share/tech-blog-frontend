@@ -59,10 +59,10 @@ export function MinimalHeader() {
   return (
     <header className="bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-blue-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20 relative">
+        <div className="flex items-center justify-between h-25 relative">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Logo" className="h-37 w-auto" />
+            <img src="/logo.png" alt="Logo" className="h-38 w-auto" />
           </Link>
 
           {/* Navigation */}
