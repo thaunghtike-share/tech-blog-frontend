@@ -1,110 +1,214 @@
-"use client"
+"use client";
 
-import React from "react"
+import React, { useState } from "react";
+import { Play, ExternalLink, User, ThumbsUp, Clock } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Channel {
-  name: string
-  description: string
-  url: string
-  videoId: string
+  name: string;
+  description: string;
+  url: string;
+  videoId: string;
+  subscribers?: string;
+  latestVideoTitle?: string;
+  latestVideoDate?: string;
 }
 
 const topDevOpsChannels: Channel[] = [
   {
     name: "TechWorld with Nana",
-    description: "Clear and practical DevOps and Kubernetes tutorials.",
+    description: "Clear and practical DevOps and Kubernetes tutorials from a former Google engineer.",
     url: "https://www.youtube.com/c/TechWorldwithNana",
     videoId: "1J2YOV6LcwY",
+    subscribers: "235K",
+    latestVideoTitle: "Kubernetes Crash Course for Absolute Beginners",
+    latestVideoDate: "2 weeks ago"
   },
   {
     name: "The DevOps Toolkit",
-    description: "Hands-on DevOps tooling and cloud-native tech deep dives.",
+    description: "Hands-on DevOps tooling and cloud-native tech deep dives with real-world examples.",
     url: "https://www.youtube.com/c/DevOpsToolkit",
     videoId: "4N_MWAQEzWg",
+    subscribers: "98K",
+    latestVideoTitle: "GitOps with ArgoCD - Full Tutorial",
+    latestVideoDate: "3 days ago"
   },
   {
-    name: "Cloud Native Computing Foundation",
-    description: "Official CNCF channel with talks and updates on cloud-native tech.",
+    name: "CNCF [Cloud Native Computing Foundation]",
+    description: "Official channel with talks, tutorials and updates on Kubernetes and cloud-native technologies.",
     url: "https://www.youtube.com/c/cloudnativefdn",
     videoId: "WxgcRpWKWBs",
+    subscribers: "156K",
+    latestVideoTitle: "KubeCon 2023 Keynote Highlights",
+    latestVideoDate: "1 month ago"
   },
   {
     name: "A Cloud Guru",
-    description: "Cloud computing and DevOps courses & tutorials.",
+    description: "Cloud computing and DevOps courses & tutorials from industry experts.",
     url: "https://www.youtube.com/c/ACloudGuru",
     videoId: "4SWsW8V8QV8",
+    subscribers: "312K",
+    latestVideoTitle: "AWS EKS vs. Self-Managed Kubernetes",
+    latestVideoDate: "5 days ago"
   },
   {
     name: "KodeKloud",
-    description: "DevOps, Kubernetes, Docker, Terraform and cloud tutorials.",
+    description: "DevOps, Kubernetes, Docker, Terraform and cloud tutorials with hands-on labs.",
     url: "https://www.youtube.com/c/KodeKloud",
     videoId: "HuMREoq7gU0",
+    subscribers: "187K",
+    latestVideoTitle: "Terraform for Beginners - Full Course",
+    latestVideoDate: "1 week ago"
   },
   {
     name: "Tech Primers",
-    description: "DevOps, Kubernetes, microservices, and cloud computing tutorials.",
+    description: "DevOps, Kubernetes, microservices, and cloud computing tutorials with coding examples.",
     url: "https://www.youtube.com/c/TechPrimers",
     videoId: "mJsLK-iPagc",
+    subscribers: "142K",
+    latestVideoTitle: "Jenkins Pipeline as Code Tutorial",
+    latestVideoDate: "2 weeks ago"
   },
   {
     name: "Cloud Academy",
-    description: "Cloud computing and DevOps learning resources and tutorials.",
+    description: "Cloud computing and DevOps learning resources with certification prep.",
     url: "https://www.youtube.com/c/CloudAcademy",
     videoId: "b-cHIoMbRCE",
+    subscribers: "76K",
+    latestVideoTitle: "Azure DevOps Pipelines Deep Dive",
+    latestVideoDate: "3 weeks ago"
   },
-{
+  {
     name: "DevOps Directive",
-    description: "DevOps, CI/CD, and cloud-native tutorials and best practices.",
+    description: "DevOps, CI/CD, and cloud-native tutorials focusing on best practices.",
     url: "https://www.youtube.com/c/DevOpsDirective",
     videoId: "2T86xAtR6Fo",
-    },
-    {
+    subscribers: "54K",
+    latestVideoTitle: "Monitoring with Prometheus & Grafana",
+    latestVideoDate: "4 days ago"
+  },
+  {
     name: "Just Me and Open Source",
-    description: "Live coding sessions on DevOps, cloud, and web development.",
+    description: "Live coding sessions on DevOps tools and infrastructure as code.",
     url: "https://www.youtube.com/@justmeandopensource",
     videoId: "azh8J-RGdZM",
-    }
-]
+    subscribers: "43K",
+    latestVideoTitle: "Building a Kubernetes Cluster from Scratch",
+    latestVideoDate: "1 week ago"
+  }
+];
 
 export function YouTubeTopChannels() {
-  return (
-    <section className="mt-20 bg-white rounded-xl p-10 border border-gray-100 shadow-sm">
-      <h3 className="text-3xl font-bold mb-4 text-gray-900 text-left select-none">
-        📺 Top DevOps YouTube Channels
-      </h3>
-      <p className="text-gray-700 mb-10 text-left leading-relaxed max-w-4xl">
-        Watch trusted creators explain DevOps, Cloud, CI/CD, and Infrastructure using hands-on tutorials.
-      </p>
+  const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {topDevOpsChannels.map(({ name, description, url, videoId }, idx) => (
-          <article
+  return (
+    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="text-center mb-12">
+        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-red-100 text-red-600 mb-3">
+          <Play className="w-4 h-4 mr-2" />
+          Video Learning
+        </span>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Learn DevOps from YouTube Experts
+        </h2>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          Subscribe to these top channels for free DevOps tutorials, hands-on labs, and the latest cloud-native trends.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {topDevOpsChannels.map((channel, idx) => (
+          <motion.div
             key={idx}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-blue-100 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            whileHover={{ y: -5 }}
+            className="relative group"
           >
-            <div className="aspect-w-16 aspect-h-9 mb-4">
-              <iframe
-                className="w-full h-full rounded-md"
-                src={`https://www.youtube.com/embed/${videoId}`}
-                title={`Latest video from ${name}`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+            <div className="h-full rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white flex flex-col">
+              {/* Video Thumbnail with Play Button */}
+              <div 
+                className="relative aspect-video bg-gray-900"
+                onMouseEnter={() => setHoveredVideo(channel.videoId)}
+                onMouseLeave={() => setHoveredVideo(null)}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${channel.videoId}?autoplay=${hoveredVideo === channel.videoId ? 1 : 0}&mute=1&loop=1&controls=0&modestbranding=1`}
+                  title={`Latest from ${channel.name}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                  allowFullScreen
+                />
+                <div className={`absolute inset-0 flex items-center justify-center ${hoveredVideo === channel.videoId ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
+                  <div className="bg-black/50 rounded-full p-4 backdrop-blur-sm">
+                    <Play className="w-6 h-6 text-white" fill="currentColor" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Channel Content */}
+              <div className="p-6 flex-grow flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="bg-blue-100 p-2 rounded-full mr-3">
+                    <User className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">{channel.name}</h3>
+                    <div className="flex items-center text-sm text-gray-500">
+                      <span className="flex items-center mr-3">
+                        <User className="w-3 h-3 mr-1" />
+                        {channel.subscribers}
+                      </span>
+                      <span className="flex items-center">
+                        <ThumbsUp className="w-3 h-3 mr-1" />
+                        Top Rated
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-gray-600 mb-4 flex-grow">{channel.description}</p>
+
+                <div className="bg-gray-50 p-3 rounded-lg mb-4">
+                  <div className="flex items-center text-sm text-gray-500 mb-1">
+                    <Clock className="w-3 h-3 mr-2" />
+                    Latest Video
+                  </div>
+                  <p className="text-sm font-medium text-gray-900 line-clamp-1">
+                    {channel.latestVideoTitle}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {channel.latestVideoDate}
+                  </p>
+                </div>
+
+                <a
+                  href={channel.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors group"
+                >
+                  Subscribe
+                  <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
             </div>
-            <h4 className="text-lg font-semibold text-blue-700 mb-1">{name}</h4>
-            <p className="text-sm text-gray-700 mb-3">{description}</p>
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-sm font-medium text-blue-600 hover:underline"
-            >
-              Visit Channel →
-            </a>
-          </article>
+          </motion.div>
         ))}
       </div>
+
+      <div className="mt-12 text-center">
+        <a
+          href="https://www.youtube.com/results?search_query=devops+tutorial"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 transition-colors"
+        >
+          Explore More DevOps Videos
+          <ExternalLink className="w-4 h-4 ml-2" />
+        </a>
+      </div>
     </section>
-  )
+  );
 }

@@ -215,7 +215,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     { text: "Kubernetes Basics", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
     { text: "Helm Documentation", url: "https://helm.sh/docs/" }
   ],
-  // Add more resources as needed...
 };
 
 const getStageIcon = (stageKey: string) => {
@@ -242,116 +241,126 @@ export function MinimalDevopsRoadmap() {
 
   return (
     <>
-      <section className="mt-20 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
-        <div className="w-full">
-          <div className="flex items-center gap-3 mb-2">
-            <Cloud className="w-6 h-6 text-blue-500" />
-            <span className="text-sm font-medium text-black bg-blue-50 px-3 py-1 rounded-full">
-              DevOps Learning Path
-            </span>
-          </div>
-          
-          <h2 className="text-4xl font-bold mb-6 text-black">
-            Step-by-Step Roadmap
+      <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center mb-12">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-600 mb-3">
+            <Cloud className="w-4 h-4 mr-2" />
+            Learning Path
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            DevOps Mastery Roadmap
           </h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            A structured learning path from beginner to advanced DevOps concepts and tools.
+          </p>
+        </div>
 
-          <div className="flex flex-wrap gap-2 mb-8 border-b border-gray-200 pb-6">
-            {roadmap.map((stage) => (
-              <button
-                key={stage.key}
-                onClick={() => setSelectedStageKey(stage.key)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${selectedStageKey === stage.key 
-                  ? 'bg-blue-600 text-white shadow-md' 
-                  : 'bg-white text-black hover:bg-blue-50 border border-gray-200'}`}
-              >
-                {getStageIcon(stage.key)}
-                <span className="font-medium">{stage.label}</span>
-                {selectedStageKey === stage.key && <ChevronRight className="w-4 h-4" />}
-              </button>
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+          {roadmap.map((stage) => (
+            <button
+              key={stage.key}
+              onClick={() => setSelectedStageKey(stage.key)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${selectedStageKey === stage.key 
+                ? 'bg-blue-600 text-white shadow-md' 
+                : 'bg-white text-black hover:bg-blue-50 border border-gray-200'}`}
+            >
+              {getStageIcon(stage.key)}
+              <span className="font-medium">{stage.label}</span>
+              {selectedStageKey === stage.key && <ChevronRight className="w-4 h-4" />}
+            </button>
+          ))}
+        </div>
 
-          <div className="mb-10">
-            {selectedStage.description?.length > 0 ? (
-              <>
-                <p className="text-black text-lg leading-relaxed mb-4">
-                  {selectedStage.description[0]}
-                </p>
-                {selectedStage.description.length > 1 && (
-                  <p className="text-gray-700">{selectedStage.description[1]}</p>
-                )}
-              </>
-            ) : (
-              <p className="text-gray-500 italic">No description available for this stage</p>
-            )}
-          </div>
+        <div className="mb-10 text-center max-w-4xl mx-auto">
+          {selectedStage.description?.length > 0 ? (
+            <>
+              <p className="text-gray-800 text-lg leading-relaxed mb-4">
+                {selectedStage.description[0]}
+              </p>
+              {selectedStage.description.length > 1 && (
+                <p className="text-gray-600">{selectedStage.description[1]}</p>
+              )}
+            </>
+          ) : (
+            <p className="text-gray-500 italic">No description available for this stage</p>
+          )}
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-            {selectedStage.items?.map(({ title, details, duration, subtopics }, idx) => (
-              <div
-                key={idx}
-                className="group bg-white border border-gray-200 rounded-xl p-6 shadow-xs hover:shadow-md transition-all hover:border-blue-200 hover:-translate-y-1"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h4 className="text-xl font-semibold text-black group-hover:text-blue-600 transition">
-                    {title}
-                  </h4>
-                  <span className="flex items-center text-xs font-medium bg-blue-50 text-black px-2.5 py-1 rounded-full border border-gray-200">
-                    <Clock className="w-3 h-3 mr-1 text-blue-500" />
-                    {duration}
-                  </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {selectedStage.items?.map(({ title, details, duration, subtopics }, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="relative group"
+            >
+              <div className="h-full rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white flex flex-col">
+                <div className="p-6 flex-grow">
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition">
+                      {title}
+                    </h4>
+                    <span className="flex items-center text-xs font-medium bg-blue-50 text-gray-800 px-2.5 py-1 rounded-full border border-gray-200">
+                      <Clock className="w-3 h-3 mr-1 text-blue-500" />
+                      {duration}
+                    </span>
+                  </div>
+                  
+                  <p className="text-gray-600 text-sm mb-4">{details}</p>
+                  
+                  {subtopics?.length > 0 ? (
+                    <ul className="mb-5 space-y-3">
+                      {subtopics.map((sub, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="relative flex-shrink-0 mt-0.5">
+                            <span className="absolute inset-0 bg-blue-100 rounded-full opacity-75 animate-pulse"></span>
+                            <span className="relative flex items-center justify-center w-5 h-5 bg-blue-500 rounded-full">
+                              <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                              </svg>
+                            </span>
+                          </span>
+                          <span className="ml-3 text-gray-800 text-sm font-medium leading-tight">
+                            {sub}
+                            <span className="block text-xs text-gray-500 font-normal mt-0.5">
+                              Learn more about this topic
+                            </span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-gray-400 text-sm mb-5">No subtopics listed</p>
+                  )}
                 </div>
                 
-                <p className="text-gray-700 text-sm mb-4">{details}</p>
-                
-                {subtopics?.length > 0 ? (
-                  <ul className="mb-5 space-y-3">
-                    {subtopics.map((sub, i) => (
-                      <li key={i} className="flex items-start">
-                        <span className="relative flex-shrink-0 mt-0.5">
-                          <span className="absolute inset-0 bg-blue-100 rounded-full opacity-75 animate-pulse"></span>
-                          <span className="relative flex items-center justify-center w-5 h-5 bg-blue-500 rounded-full">
-                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </span>
-                        </span>
-                        <span className="ml-3 text-black text-sm font-medium leading-tight">
-                          {sub}
-                          <span className="block text-xs text-gray-500 font-normal mt-0.5">
-                            Learn more about this topic
-                          </span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-400 text-sm mb-5">No subtopics listed</p>
-                )}
-                
-                <button 
-                  onClick={() => setSelectedTopic({
-                    title: title,
-                    links: resourceLinks[title] || []
-                  })}
-                  className="
-                    w-full 
-                    bg-blue-50 hover:bg-blue-100
-                    text-blue-600 hover:text-blue-800
-                    border border-blue-200
-                    px-4 py-2 rounded-lg
-                    text-sm font-medium
-                    flex items-center justify-between
-                    transition-all
-                    group
-                  "
-                >
-                  <span>Explore resources</span>
-                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                <div className="px-6 pb-6">
+                  <button 
+                    onClick={() => setSelectedTopic({
+                      title: title,
+                      links: resourceLinks[title] || []
+                    })}
+                    className="
+                      w-full 
+                      bg-blue-50 hover:bg-blue-100
+                      text-blue-600 hover:text-blue-800
+                      border border-blue-200
+                      px-4 py-2 rounded-lg
+                      text-sm font-medium
+                      flex items-center justify-between
+                      transition-all
+                      group
+                    "
+                  >
+                    <span>Explore resources</span>
+                    <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </button>
+                </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
