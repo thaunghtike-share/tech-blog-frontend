@@ -2,6 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
+import rehypeRaw from "rehype-raw"; // To parse raw HTML in markdown
 import "highlight.js/styles/atom-one-light.css";
 
 import { MinimalHeader } from "@/components/minimal-header";
@@ -44,13 +45,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Article Content */}
-        <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 prose prose-lg mx-auto max-w-none">
+        <article
+          className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 prose prose-lg mx-auto max-w-full overflow-x-auto"
+        >
           <h1 className="text-5xl font-extrabold mb-4">{article.title}</h1>
           <p className="text-gray-500 italic mb-8">Published on {publishDate}</p>
 
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight]}
+            rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
               h1: ({ node, ...props }) => (
                 <h1 className="text-4xl font-bold my-6" {...props} />
@@ -71,6 +74,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </pre>
                 );
               },
+              blockquote: ({ node, ...props }) => (
+                <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4" {...props} />
+              ),
+              img: ({ node, ...props }) => (
+                <img
+                  {...props}
+                  className="max-w-full rounded-lg shadow-md my-6 mx-auto"
+                  alt={props.alt || "Article image"}
+                />
+              ),
             }}
           >
             {article.content}
