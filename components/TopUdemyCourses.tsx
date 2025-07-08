@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Star, User, BookOpen, ExternalLink, MessageSquare } from "lucide-react";
+import React, { useState } from "react";
+import { Star, User, BookOpen, ExternalLink, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Review {
@@ -19,110 +19,121 @@ interface UdemyCourse {
   reviews?: Review[];
 }
 
-const udemyCourses: UdemyCourse[] = [
+const allUdemyCourses: UdemyCourse[] = [
   {
-    title: "Docker & Kubernetes: The Practical Guide",
-    author: "Brett Fisher",
-    authorImage: "https://randomuser.me/api/portraits/men/32.jpg",
-    url: "https://www.udemy.com/course/docker-kubernetes-the-practical-guide/",
-    rating: 4.7,
-    description:
-      "Learn Docker containerization and Kubernetes orchestration with hands-on labs and real-world projects.",
-    reviews: [
-      { username: "Alice", comment: "Comprehensive and practical, perfect for hands-on learners." },
-      { username: "Bob", comment: "Loved the clear explanations and real-world examples." },
-      { username: "Carol", comment: "Helped me get a great job in DevOps!" },
-    ],
-  },
-  {
-    title: "DevOps CI/CD with Jenkins & Docker",
-    author: "Tae Kim",
-    authorImage: "https://randomuser.me/api/portraits/men/45.jpg",
-    url: "https://www.udemy.com/course/learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/",
-    rating: 4.6,
-    description:
-      "Build and automate continuous integration and delivery pipelines using Jenkins and Docker.",
-    reviews: [
-      { username: "Dave", comment: "Great course to build solid CI/CD pipelines." },
-      { username: "Eve", comment: "The Jenkins setups were easy to follow." },
-      { username: "Frank", comment: "Recommended for beginners and intermediates alike." },
-    ],
-  },
-  {
-    title: "DevOps Bootcamp: Terraform, Kubernetes, AWS",
-    author: "School of DevOps®",
-    authorImage: "https://randomuser.me/api/portraits/women/68.jpg",
-    url: "https://www.udemy.com/course/devops-bootcamp-terraform-kubernetes-aws-docker/",
-    rating: 4.8,
-    description:
-      "Comprehensive training on infrastructure as code with Terraform, Kubernetes management, and AWS fundamentals.",
-    reviews: [
-      { username: "Grace", comment: "Detailed and thorough with excellent cloud coverage." },
-      { username: "Heidi", comment: "Very helpful for infrastructure automation." },
-      { username: "Ivan", comment: "Perfect blend of Terraform and Kubernetes concepts." },
-    ],
-  },
-  {
-    title: "Kubernetes for Absolute Beginners",
-    author: "Mumshad Mannambeth",
-    authorImage: "https://randomuser.me/api/portraits/men/21.jpg",
-    url: "https://www.udemy.com/course/kubernetes-for-the-absolute-beginners-hands-on/",
+    title: "DevOps 101",
+    author: "Jane DevOps",
+    url: "...",
     rating: 4.5,
-    description:
-      "Start from zero and learn Kubernetes basics with hands-on labs to deploy and manage containers.",
-    reviews: [
-      { username: "Judy", comment: "Perfect for those starting fresh with Kubernetes." },
-      { username: "Ken", comment: "The labs made learning super easy." },
-      { username: "Laura", comment: "Clear and beginner-friendly." },
-    ],
+    description: "Foundational DevOps principles, tools & practices.",
   },
   {
-    title: "Infrastructure Automation With Terraform",
-    author: "Ned Bellavance",
-    authorImage: "https://randomuser.me/api/portraits/men/51.jpg",
-    url: "https://www.udemy.com/course/learn-devops-infrastructure-automation-with-terraform/",
+    title: "Docker Before Compose — Learn Docker by Example",
+    author: "Docker Guru",
+    url: "...",
+    rating: 4.6,
+    description: "Hands‑on Docker tutorials through practical examples.",
+  },
+  {
+    title: "Understanding Docker in About an Hour",
+    author: "Quick Docker",
+    url: "...",
+    rating: 4.5,
+    description: "Quick and thorough intro to Docker essentials.",
+  },
+  {
+    title: "Minikube: A Simple Introduction to Kubernetes",
+    author: "K8s Starter",
+    url: "...",
+    rating: 4.6,
+    description: "Learn Kubernetes basics locally using Minikube.",
+  },
+  {
+    title: "Kube By Example — Spring Boot on Kubernetes",
+    author: "Spring K8s",
+    url: "...",
+    rating: 4.6,
+    description: "Deploy Spring Boot apps on Kubernetes step by step.",
+  },
+  {
+    title: "Service Mesh with Istio and Kubernetes",
+    author: "Istio Pro",
+    url: "...",
+    rating: 4.6,
+    description: "Intro to service mesh with Istio on Kubernetes.",
+  },
+  {
+    title: "Building Docker & Kubernetes Network & Security Lab for Free",
+    author: "Security Dev",
+    url: "...",
     rating: 4.7,
-    description:
-      "Master Terraform fundamentals to automate cloud infrastructure provisioning efficiently.",
-    reviews: [
-      { username: "Mike", comment: "Excellent introduction to Terraform automation." },
-      { username: "Nina", comment: "Step-by-step explanations were great." },
-      { username: "Oscar", comment: "Helped me automate my projects fast." },
-    ],
+    description: "Hands‑on Docker/K8s lab focused on networking & security.",
   },
   {
-    title: "AWS Certified DevOps Engineer Professional",
-    author: "Stephane Maarek",
-    authorImage: "https://randomuser.me/api/portraits/men/55.jpg",
-    url: "https://www.udemy.com/course/aws-certified-devops-engineer-professional-hands-on/",
-    rating: 4.8,
-    description:
-      "Prepare thoroughly for the AWS DevOps Engineer certification with practical exam strategies.",
-    reviews: [
-      { username: "Peggy", comment: "Comprehensive and practical preparation for the exam." },
-      { username: "Quinn", comment: "Good mix of theory and hands-on labs." },
-      { username: "Ralph", comment: "Helped me pass the certification with ease." },
-    ],
+    title: "FREE Advanced Jenkins in K8s (Docker in Docker)",
+    author: "Jenkins K8s",
+    url: "...",
+    rating: 4.5,
+    description: "Advanced Jenkins pipelines inside Kubernetes.",
+  },
+  {
+    title: "Terraform Lightning Course",
+    author: "Terraform Ace",
+    url: "...",
+    rating: 4.6,
+    description: "Quick intro to Infrastructure as Code with Terraform.",
+  },
+  {
+    title: "Continuous Delivery with Kubernetes and Octopus Deploy",
+    author: "Octopus CD",
+    url: "...",
+    rating: 4.6,
+    description: "Integrate CD pipelines using K8s + Octopus Deploy.",
+  },
+  // additional:
+  {
+    title: "Git, GitHub, and GitHub Actions: An Introduction",
+    author: "Emil Terhoven",
+    url: "https://www.udemy.com/course/git-github-and-github-actions-an-introduction/",
+    rating: 4.7,
+    description: "Learn Git, GitHub & GitHub Actions basics in ~1h51m.", reviews: [],
+  },
+  {
+    title: "Intro to Linux Shell Scripting",
+    author: "Jason Cannon",
+    url: "https://www.udemy.com/course/linux-shell-scripting-free/",
+    rating: 4.7,
+    description: "Shell scripting essentials in Linux.",
+  },
+  {
+    title: "Ansible Basics: An Automation Technical Overview",
+    author: "Red Hat, Inc.",
+    url: "https://www.udemy.com/course/ansible-basics-an-automation-technical-overview/",
+    rating: 4.4,
+    description: "Intro to Ansible, playbooks, modules & automation.",
   },
 ];
 
 export function TopUdemyCourses() {
+  const [showAll, setShowAll] = useState(false);
+  const coursesToShow = showAll ? allUdemyCourses : allUdemyCourses.slice(0, 6);
+
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mb-3">
-          Premium Learning
+          Free DevOps Learning
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Master DevOps with Top-Rated Courses
+          Top Free DevOps Courses on Udemy
         </h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Hand-picked Udemy courses to accelerate your DevOps journey with practical skills.
+          Curated list of free Udemy courses to master DevOps tools and practices.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {udemyCourses.map((course, idx) => (
+        {coursesToShow.map((course, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 20 }}
@@ -149,7 +160,6 @@ export function TopUdemyCourses() {
                 <span>{course.author}</span>
               </p>
 
-              {/* Course description */}
               {course.description && (
                 <p className="text-gray-700 text-sm mb-4">{course.description}</p>
               )}
@@ -161,7 +171,6 @@ export function TopUdemyCourses() {
                 </div>
               )}
 
-              {/* Show up to 3 reviews */}
               {course.reviews && course.reviews.length > 0 && (
                 <div className="space-y-2 mb-4">
                   {course.reviews.slice(0, 3).map((review, i) => (
@@ -189,16 +198,18 @@ export function TopUdemyCourses() {
         ))}
       </div>
 
-      <div className="mt-12 text-center">
-        <a
-          href="https://www.udemy.com/courses/development/devops/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+      <div className="mt-10 text-center">
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-full shadow-sm text-blue-600 bg-white hover:bg-gray-100 transition-colors"
         >
-          View All DevOps Courses
-          <ExternalLink className="w-4 h-4 ml-2" />
-        </a>
+          {showAll ? "Show Less" : "See More"}
+          {showAll ? (
+            <ChevronUp className="w-4 h-4 ml-2" />
+          ) : (
+            <ChevronDown className="w-4 h-4 ml-2" />
+          )}
+        </button>
       </div>
     </section>
   );
