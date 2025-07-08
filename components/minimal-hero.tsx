@@ -10,15 +10,14 @@ import {
   Database,
   GitBranch,
   ArrowRight,
-  ChevronUp,
-  Rocket,
-  EyeOff
+  EyeOff,
+  Eye,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
 
 export function MinimalHero() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
 
   const container = {
     show: {
@@ -45,9 +44,9 @@ export function MinimalHero() {
             size="sm"
             className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-full px-5 py-2 hover:from-blue-700 hover:to-indigo-700 transition-all shadow"
             onClick={() => setVisible(true)}
+            aria-label="Show Hero Section"
           >
-            <Rocket className="w-4 h-4 mr-2" />
-            Start DevOps Journey
+            <Eye className="w-4 h-4" />
           </Button>
         </div>
       )}
@@ -95,7 +94,7 @@ export function MinimalHero() {
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent inline-flex items-center">
                   <span className="text-gray-800">Learn DevOps —</span>
                   <Cpu className="w-6 h-6 mr-2" />
-                  For IT Students in {" "}
+                  For IT Students in{" "}
                   <span className="ml-1 bg-gradient-to-r from-red-500 via-green-500 to-yellow-400 bg-clip-text text-transparent font-semibold font-[Noto_Sans_Myanmar]">
                     Myanmar
                   </span>
@@ -106,7 +105,9 @@ export function MinimalHero() {
                 variants={item}
                 className="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
               >
-                A curated DevOps roadmap, tools, and projects — built especially for students, junior developers, and aspiring engineers in Myanmar 🇲🇲 to kickstart their cloud and automation journey.
+                A curated DevOps roadmap, tools, and projects — built especially for
+                students, junior developers, and aspiring engineers in Myanmar 🇲🇲
+                to kickstart their cloud and automation journey.
               </motion.p>
 
               <motion.div
@@ -151,12 +152,13 @@ export function MinimalHero() {
                   <Cpu className="w-4 h-4 mr-1" /> DevOps
                 </span>
               </motion.div>
-            <motion.div variants={item} className="mt-10">
+              <motion.div variants={item} className="mt-10">
                 <Button
-                    size="icon"
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow"
-                    onClick={() => setVisible(false)}
-                    >
+                  size="icon"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow"
+                  onClick={() => setVisible(false)}
+                  aria-label="Hide Hero Section"
+                >
                   <EyeOff className="w-5 h-5" />
                 </Button>
               </motion.div>

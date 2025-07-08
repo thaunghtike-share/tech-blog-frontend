@@ -36,14 +36,13 @@ interface MinimalBlogListProps {
 }
 
 export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
- const [articles, setArticles] = useState<Article[]>([])
+  const [articles, setArticles] = useState<Article[]>([])
   const [authors, setAuthors] = useState<Author[]>([])
   const [tags, setTags] = useState<Tag[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Your Django API URL
   const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
@@ -73,7 +72,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         }
         setLoading(false)
 
-        // Then fetch supporting data (authors, tags, categories) - optional
         try {
           const authorsResponse = await fetch(`${API_BASE_URL}/authors/`)
           if (authorsResponse.ok) {
@@ -131,7 +129,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     fetchData()
   }, [searchQuery])
 
-  // Helper functions with array safety checks
   const getAuthorName = (authorId: number) => {
     if (!Array.isArray(authors) || authors.length === 0) {
       return `Author ${authorId}`
@@ -199,7 +196,10 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         </div>
         <div className="grid gap-8">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div
+              key={i}
+              className="animate-pulse bg-white p-6 rounded-xl border border-gray-100 shadow-sm"
+            >
               <div className="flex gap-3 mb-4">
                 <div className="h-6 w-24 bg-gray-200 rounded-full"></div>
               </div>
@@ -252,27 +252,38 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Articles</h2>
         <div className="h-1 w-24 bg-blue-600 rounded-full"></div>
         <p className="mt-4 text-gray-500">
-          {searchQuery 
-            ? `${articles.length} search results` 
+          {searchQuery
+            ? `${articles.length} search results`
             : "Recent publications from our team"}
         </p>
       </div>
 
       <div className="grid gap-8">
-        {articles.map((article, index) => (
-          <article 
-            key={article.id} 
+        {articles.map((article) => (
+          <article
+            key={article.id}
             className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
           >
-            <div className="flex flex-wrap gap-2 mb-4">
-              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                {getCategoryName(article.category)}
-              </Badge>
-              {getTagNames(article.tags).slice(0, 2).map((tagName, tagIndex) => (
-                <Badge key={tagIndex} variant="secondary" className="bg-gray-100 text-gray-700">
-                  {tagName}
+            <div className="flex justify-between flex-wrap gap-2 mb-4">
+              {/* Category badges on left */}
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                  {getCategoryName(article.category)}
                 </Badge>
-              ))}
+              </div>
+
+              {/* Tag badges on right */}
+              <div className="flex flex-wrap gap-2">
+                {getTagNames(article.tags).slice(0, 2).map((tagName, tagIndex) => (
+                  <Badge
+                    key={tagIndex}
+                    variant="secondary"
+                    className="bg-gray-100 text-gray-700"
+                  >
+                    {tagName}
+                  </Badge>
+                ))}
+              </div>
             </div>
 
             <Link href={`/articles/${article.id}`} className="group block">
