@@ -15,9 +15,18 @@ export function MinimalHeader() {
 
   const [isArticlesOpen, setIsArticlesOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [articlesTimeout, setArticlesTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [servicesTimeout, setServicesTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const { theme, setTheme } = useTheme()
   const API_BASE_URL = "http://192.168.1.131:8000/api"
+
+  useEffect(() => {
+    return () => {
+      if (articlesTimeout) clearTimeout(articlesTimeout)
+      if (servicesTimeout) clearTimeout(servicesTimeout)
+    }
+  }, [articlesTimeout, servicesTimeout])
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -59,7 +68,7 @@ export function MinimalHeader() {
   return (
     <header className="bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-blue-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-25 relative">
+        <div className="flex items-center justify-between h-26 relative">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <img src="/logo.png" alt="Logo" className="h-38 w-auto" />
@@ -72,8 +81,14 @@ export function MinimalHeader() {
             {/* Articles Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => setIsArticlesOpen(true)}
-              onMouseLeave={() => setIsArticlesOpen(false)}
+              onMouseEnter={() => {
+                if (articlesTimeout) clearTimeout(articlesTimeout)
+                setIsArticlesOpen(true)
+              }}
+              onMouseLeave={() => {
+                const timeout = setTimeout(() => setIsArticlesOpen(false), 200)
+                setArticlesTimeout(timeout)
+              }}
             >
               <button
                 className="flex items-center hover:text-blue-600"
@@ -82,7 +97,17 @@ export function MinimalHeader() {
                 Articles <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isArticlesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg z-50 py-2">
+                <div 
+                  className="absolute top-full left-0 mt-2 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg z-50 py-2"
+                  onMouseEnter={() => {
+                    if (articlesTimeout) clearTimeout(articlesTimeout)
+                    setIsArticlesOpen(true)
+                  }}
+                  onMouseLeave={() => {
+                    const timeout = setTimeout(() => setIsArticlesOpen(false), 200)
+                    setArticlesTimeout(timeout)
+                  }}
+                >
                   <Link href="/articles" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">All Articles</Link>
                   <Link href="/categories" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Categories</Link>
                   <Link href="/tags" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Tags</Link>
@@ -94,8 +119,14 @@ export function MinimalHeader() {
             {/* Services Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => setIsServicesOpen(true)}
-              onMouseLeave={() => setIsServicesOpen(false)}
+              onMouseEnter={() => {
+                if (servicesTimeout) clearTimeout(servicesTimeout)
+                setIsServicesOpen(true)
+              }}
+              onMouseLeave={() => {
+                const timeout = setTimeout(() => setIsServicesOpen(false), 200)
+                setServicesTimeout(timeout)
+              }}
             >
               <button
                 className="flex items-center hover:text-blue-600"
@@ -104,7 +135,17 @@ export function MinimalHeader() {
                 Services <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isServicesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg z-50 py-2">
+                <div 
+                  className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg z-50 py-2"
+                  onMouseEnter={() => {
+                    if (servicesTimeout) clearTimeout(servicesTimeout)
+                    setIsServicesOpen(true)
+                  }}
+                  onMouseLeave={() => {
+                    const timeout = setTimeout(() => setIsServicesOpen(false), 200)
+                    setServicesTimeout(timeout)
+                  }}
+                >
                   <Link href="/services/devops-as-a-service" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">DevOps as a Service</Link>
                   <Link href="/services/cloud-migration" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Cloud-Native Migration</Link>
                   <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Infrastructure as Code</Link>

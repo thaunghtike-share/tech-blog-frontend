@@ -4,8 +4,8 @@ import { Facebook, Github, Linkedin, Mail, Twitter, BookOpen, Code2, Terminal, L
 export function MinimalFooter() {
   return (
     <footer className="bg-gradient-to-r from-slate-100 to-stone-100 mt-24 border-t border-gray-200/50">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="max-w-7xl mx-auto px-2 py-11">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-13">
           {/* Brand & Description */}
           <div className="md:col-span-2">
             <Link href="/" className="text-2xl font-bold tracking-wide mb-6 flex items-center">
