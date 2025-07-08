@@ -2,7 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import rehypeRaw from "rehype-raw"; // To parse raw HTML in markdown
+import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
 
 import { MinimalHeader } from "@/components/minimal-header";
@@ -20,8 +20,23 @@ interface Article {
   featured: boolean;
 }
 
+interface Author {
+  id: number;
+  name: string;
+}
+
 interface ArticlePageProps {
   params: { id: string };
+}
+
+async function fetchAuthor(id: number): Promise<Author | null> {
+  try {
+    const res = await fetch(`http://localhost:8000/api/authors/${id}`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
@@ -36,7 +51,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     );
   }
   const article: Article = await res.json();
-
+  const author = await fetchAuthor(article.author);
   const publishDate = new Date(article.published_at).toLocaleDateString();
 
   return (
@@ -45,11 +60,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Article Content */}
-        <article
-          className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 prose prose-lg mx-auto max-w-full overflow-x-auto"
-        >
+        <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 prose prose-lg max-w-full overflow-x-auto">
           <h1 className="text-5xl font-extrabold mb-4">{article.title}</h1>
-          <p className="text-gray-500 italic mb-8">Published on {publishDate}</p>
+          <p className="text-gray-500 italic mb-2">Published on {publishDate}</p>
+          <p className="text-gray-600 italic mb-8">By {author ? author.name : "Unknown author"}</p>
 
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -61,8 +75,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               h2: ({ node, ...props }) => (
                 <h2 className="text-3xl font-semibold my-5" {...props} />
               ),
-              p: ({ node, ...props }) => (
-                <p className="text-lg leading-relaxed mb-4" {...props} />
+              p: ({ node, children, ...props }) => (
+                <div className="mb-4 text-lg leading-relaxed" {...props}>
+                  {children}
+                </div>
               ),
               code: ({ inline, className, children, ...props }: any) => {
                 if (inline) {
