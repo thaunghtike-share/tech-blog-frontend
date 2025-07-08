@@ -25,6 +25,42 @@ const topDevOpsChannels: Channel[] = [
     latestVideoDate: "2 weeks ago"
   },
   {
+    name: "Stephane Maarek",
+    description: "AWS, DevOps, and Kubernetes tutorials with hands-on labs and real-world examples.",
+    url: "https://www.youtube.com/c/StephaneMaarek",
+    videoId: "syjdzF2Ut7o",
+    subscribers: "121K",
+    latestVideoTitle: "Kubernetes Crash Course for Absolute Beginners",
+    latestVideoDate: "2 weeks ago"
+  },
+  {
+    name: "Just Me and Open Source",
+    description: "Live coding sessions on DevOps tools and infrastructure as code.",
+    url: "https://www.youtube.com/@justmeandopensource",
+    videoId: "azh8J-RGdZM",
+    subscribers: "43K",
+    latestVideoTitle: "Building a Kubernetes Cluster from Scratch",
+    latestVideoDate: "1 week ago"
+  },
+  {
+    name: "KodeKloud",
+    description: "DevOps, Kubernetes, Docker, Terraform and cloud tutorials with hands-on labs.",
+    url: "https://www.youtube.com/c/KodeKloud",
+    videoId: "HuMREoq7gU0",
+    subscribers: "187K",
+    latestVideoTitle: "Terraform for Beginners - Full Course",
+    latestVideoDate: "1 week ago"
+  },
+  {
+    name: "Bret Fisher Cloud Native DevOps",
+    description: "DevOps nd Cloud tutorials with hands-on labs.",
+    url: "https://www.youtube.com/c/BretFisherDockerandDevOps",
+    videoId: "lAEkK6Cl3Ys",
+    subscribers: "87K",
+    latestVideoTitle: "Terraform for Beginners - Full Course",
+    latestVideoDate: "1 week ago"
+  },
+  {
     name: "The DevOps Toolkit",
     description: "Hands-on DevOps tooling and cloud-native tech deep dives with real-world examples.",
     url: "https://www.youtube.com/c/DevOpsToolkit",
@@ -43,15 +79,6 @@ const topDevOpsChannels: Channel[] = [
     latestVideoDate: "5 days ago"
   },
   {
-    name: "KodeKloud",
-    description: "DevOps, Kubernetes, Docker, Terraform and cloud tutorials with hands-on labs.",
-    url: "https://www.youtube.com/c/KodeKloud",
-    videoId: "HuMREoq7gU0",
-    subscribers: "187K",
-    latestVideoTitle: "Terraform for Beginners - Full Course",
-    latestVideoDate: "1 week ago"
-  },
-  {
     name: "DevOps Directive",
     description: "DevOps, CI/CD, and cloud-native tutorials focusing on best practices.",
     url: "https://www.youtube.com/c/DevOpsDirective",
@@ -59,15 +86,6 @@ const topDevOpsChannels: Channel[] = [
     subscribers: "54K",
     latestVideoTitle: "Monitoring with Prometheus & Grafana",
     latestVideoDate: "4 days ago"
-  },
-  {
-    name: "Just Me and Open Source",
-    description: "Live coding sessions on DevOps tools and infrastructure as code.",
-    url: "https://www.youtube.com/@justmeandopensource",
-    videoId: "azh8J-RGdZM",
-    subscribers: "43K",
-    latestVideoTitle: "Building a Kubernetes Cluster from Scratch",
-    latestVideoDate: "1 week ago"
   }
 ];
 

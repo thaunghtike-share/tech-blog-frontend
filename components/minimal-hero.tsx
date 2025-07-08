@@ -12,6 +12,7 @@ import {
   ArrowRight,
   ChevronUp,
   Rocket,
+  EyeOff
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
@@ -38,7 +39,6 @@ export function MinimalHero() {
 
   return (
     <>
-      {/* Toggle Button */}
       {!visible && (
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100 shadow-sm py-4 px-6 flex justify-center items-center">
           <Button
@@ -52,7 +52,6 @@ export function MinimalHero() {
         </div>
       )}
 
-      {/* Hero Section */}
       <AnimatePresence>
         {visible && (
           <motion.section
@@ -61,16 +60,16 @@ export function MinimalHero() {
             animate="show"
             exit="exit"
             variants={container}
-            className="relative bg-gradient-to-br from-blue-50/80 via-indigo-50/80 to-emerald-50/80 py-16 md:py-24 border-b border-gray-200/50 overflow-hidden"
+            className="relative bg-gradient-to-br from-blue-50/80 via-indigo-50/80 to-emerald-50/80 py-12 md:py-20 border-b border-gray-200/50 overflow-hidden"
           >
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10 [background-image:linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
             {/* Floating icons */}
-            <Cloud className="absolute top-20 left-10 text-blue-200/60 w-12 h-12 hidden md:block" />
-            <Server className="absolute bottom-20 right-10 text-indigo-200/60 w-12 h-12 hidden md:block" />
-            <Database className="absolute top-1/3 right-20 text-emerald-200/60 w-10 h-10 hidden md:block" />
-            <GitBranch className="absolute bottom-1/4 left-20 text-blue-200/60 w-10 h-10 hidden md:block" />
+            <Cloud className="absolute top-20 left-10 text-blue-200/60 w-10 h-10 hidden md:block" />
+            <Server className="absolute bottom-20 right-10 text-indigo-200/60 w-10 h-10 hidden md:block" />
+            <Database className="absolute top-1/3 right-20 text-emerald-200/60 w-8 h-8 hidden md:block" />
+            <GitBranch className="absolute bottom-1/4 left-20 text-blue-200/60 w-8 h-8 hidden md:block" />
 
             {/* Hero Content */}
             <motion.div
@@ -82,29 +81,32 @@ export function MinimalHero() {
             >
               <motion.div
                 variants={item}
-                className="inline-flex items-center gap-2 bg-white text-blue-600 text-xs font-medium px-4 py-2 rounded-full mb-5 shadow-sm border border-gray-200/50"
+                className="inline-flex items-center gap-2 bg-white text-blue-600 text-[11px] md:text-xs font-medium px-4 py-1.5 rounded-full mb-4 shadow-sm border border-gray-200/50"
               >
                 <Zap className="h-3 w-3" />
-                <span>DevOps • Automation • AI/ML</span>
+                <span>DevOps • DevSecOps • MLOPS • Automation</span>
                 <Code className="h-3 w-3 ml-1" />
               </motion.div>
 
               <motion.h1
                 variants={item}
-                className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight"
+                className="text-xl md:text-3xl font-semibold text-gray-900 mb-4 tracking-tight"
               >
-                <span className="text-gray-800">Thaung Htike Oo - </span>
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent inline-flex items-center">
-                  <Cpu className="w-8 h-8 mr-2" />
-                  Learn DevOps
+                  <span className="text-gray-800">Learn DevOps —</span>
+                  <Cpu className="w-6 h-6 mr-2" />
+                  For IT Students in {" "}
+                  <span className="ml-1 bg-gradient-to-r from-red-500 via-green-500 to-yellow-400 bg-clip-text text-transparent font-semibold font-[Noto_Sans_Myanmar]">
+                    Myanmar
+                  </span>
                 </span>
               </motion.h1>
 
               <motion.p
                 variants={item}
-                className="text-lg md:text-xl text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
+                className="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
               >
-                Practical guides on Kubernetes, Terraform, MLOps and cloud-native architectures — helping engineers build scalable, resilient systems.
+                A curated DevOps roadmap, tools, and projects — built especially for students, junior developers, and aspiring engineers in Myanmar 🇲🇲 to kickstart their cloud and automation journey.
               </motion.p>
 
               <motion.div
@@ -131,7 +133,7 @@ export function MinimalHero() {
 
               <motion.div
                 variants={item}
-                className="mt-12 flex flex-wrap justify-center gap-4 text-gray-500 text-sm"
+                className="mt-10 flex flex-wrap justify-center gap-4 text-gray-500 text-sm"
               >
                 <span className="flex items-center">
                   <Server className="w-4 h-4 mr-1" /> Kubernetes
@@ -146,19 +148,16 @@ export function MinimalHero() {
                   <Cloud className="w-4 h-4 mr-1" /> Cloud
                 </span>
                 <span className="flex items-center">
-                  <Cpu className="w-4 h-4 mr-1" /> CI/CD
+                  <Cpu className="w-4 h-4 mr-1" /> DevOps
                 </span>
               </motion.div>
-
-              {/* Hide Section Button - Styled to Match */}
-              <motion.div variants={item} className="mt-12">
+            <motion.div variants={item} className="mt-10">
                 <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-full px-5 py-2 hover:from-blue-700 hover:to-indigo-700 transition-all shadow"
-                  onClick={() => setVisible(false)}
-                >
-                  <ChevronUp className="w-4 h-4 mr-2" />
-                  Hide DevOps Hero
+                    size="icon"
+                    className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow"
+                    onClick={() => setVisible(false)}
+                    >
+                  <EyeOff className="w-5 h-5" />
                 </Button>
               </motion.div>
             </motion.div>

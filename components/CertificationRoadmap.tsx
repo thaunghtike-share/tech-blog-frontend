@@ -9,6 +9,7 @@ import {
   Zap,
   Check,
   X,
+  GraduationCap,
   Dock,
   GitMerge,
   Server,
@@ -199,8 +200,8 @@ export function CertificationRoadmap() {
         {/* Section Header */}
         <div className="text-center mb-12">
           <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-600 mb-3">
-            <Cloud className="w-4 h-4 mr-2" />
-            Learning Path
+            <GraduationCap className="w-4 h-4 mr-2" />
+            Certificate Roadmap
           </span>
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             DevOps Certification Roadmap

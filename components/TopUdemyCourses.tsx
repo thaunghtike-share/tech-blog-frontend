@@ -14,6 +14,7 @@ interface UdemyCourse {
   description: string;
   url: string;
   author: string;
+  authorImage?: string;
   rating?: number;
   reviews?: Review[];
 }
@@ -22,75 +23,87 @@ const udemyCourses: UdemyCourse[] = [
   {
     title: "Docker & Kubernetes: The Practical Guide",
     author: "Brett Fisher",
+    authorImage: "https://randomuser.me/api/portraits/men/32.jpg",
     url: "https://www.udemy.com/course/docker-kubernetes-the-practical-guide/",
     rating: 4.7,
+    description:
+      "Learn Docker containerization and Kubernetes orchestration with hands-on labs and real-world projects.",
     reviews: [
       { username: "Alice", comment: "Comprehensive and practical, perfect for hands-on learners." },
       { username: "Bob", comment: "Loved the clear explanations and real-world examples." },
       { username: "Carol", comment: "Helped me get a great job in DevOps!" },
     ],
-    description: "",
   },
   {
     title: "DevOps CI/CD with Jenkins & Docker",
     author: "Tae Kim",
+    authorImage: "https://randomuser.me/api/portraits/men/45.jpg",
     url: "https://www.udemy.com/course/learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/",
     rating: 4.6,
+    description:
+      "Build and automate continuous integration and delivery pipelines using Jenkins and Docker.",
     reviews: [
       { username: "Dave", comment: "Great course to build solid CI/CD pipelines." },
       { username: "Eve", comment: "The Jenkins setups were easy to follow." },
       { username: "Frank", comment: "Recommended for beginners and intermediates alike." },
     ],
-    description: "",
   },
   {
     title: "DevOps Bootcamp: Terraform, Kubernetes, AWS",
     author: "School of DevOps®",
+    authorImage: "https://randomuser.me/api/portraits/women/68.jpg",
     url: "https://www.udemy.com/course/devops-bootcamp-terraform-kubernetes-aws-docker/",
     rating: 4.8,
+    description:
+      "Comprehensive training on infrastructure as code with Terraform, Kubernetes management, and AWS fundamentals.",
     reviews: [
       { username: "Grace", comment: "Detailed and thorough with excellent cloud coverage." },
       { username: "Heidi", comment: "Very helpful for infrastructure automation." },
       { username: "Ivan", comment: "Perfect blend of Terraform and Kubernetes concepts." },
     ],
-    description: "",
   },
   {
     title: "Kubernetes for Absolute Beginners",
     author: "Mumshad Mannambeth",
+    authorImage: "https://randomuser.me/api/portraits/men/21.jpg",
     url: "https://www.udemy.com/course/kubernetes-for-the-absolute-beginners-hands-on/",
     rating: 4.5,
+    description:
+      "Start from zero and learn Kubernetes basics with hands-on labs to deploy and manage containers.",
     reviews: [
       { username: "Judy", comment: "Perfect for those starting fresh with Kubernetes." },
       { username: "Ken", comment: "The labs made learning super easy." },
       { username: "Laura", comment: "Clear and beginner-friendly." },
     ],
-    description: "",
   },
   {
     title: "Infrastructure Automation With Terraform",
     author: "Ned Bellavance",
+    authorImage: "https://randomuser.me/api/portraits/men/51.jpg",
     url: "https://www.udemy.com/course/learn-devops-infrastructure-automation-with-terraform/",
     rating: 4.7,
+    description:
+      "Master Terraform fundamentals to automate cloud infrastructure provisioning efficiently.",
     reviews: [
       { username: "Mike", comment: "Excellent introduction to Terraform automation." },
       { username: "Nina", comment: "Step-by-step explanations were great." },
       { username: "Oscar", comment: "Helped me automate my projects fast." },
     ],
-    description: "",
   },
   {
     title: "AWS Certified DevOps Engineer Professional",
     author: "Stephane Maarek",
+    authorImage: "https://randomuser.me/api/portraits/men/55.jpg",
     url: "https://www.udemy.com/course/aws-certified-devops-engineer-professional-hands-on/",
     rating: 4.8,
+    description:
+      "Prepare thoroughly for the AWS DevOps Engineer certification with practical exam strategies.",
     reviews: [
       { username: "Peggy", comment: "Comprehensive and practical preparation for the exam." },
       { username: "Quinn", comment: "Good mix of theory and hands-on labs." },
       { username: "Ralph", comment: "Helped me pass the certification with ease." },
     ],
-    description: "",
-  }
+  },
 ];
 
 export function TopUdemyCourses() {
@@ -123,9 +136,24 @@ export function TopUdemyCourses() {
                 <BookOpen className="w-5 h-5 text-blue-600" />
                 {course.title}
               </h3>
-              <p className="text-sm text-gray-600 mb-3 flex items-center gap-1">
-                <User className="w-4 h-4" /> {course.author}
+
+              <p className="text-sm text-gray-600 mb-2 flex items-center gap-2">
+                {course.authorImage && (
+                  <img
+                    src={course.authorImage}
+                    alt={course.author}
+                    className="w-6 h-6 rounded-full object-cover"
+                    loading="lazy"
+                  />
+                )}
+                <span>{course.author}</span>
               </p>
+
+              {/* Course description */}
+              {course.description && (
+                <p className="text-gray-700 text-sm mb-4">{course.description}</p>
+              )}
+
               {course.rating && (
                 <div className="flex items-center gap-1 text-yellow-500 mb-3">
                   <Star className="w-5 h-5" />
