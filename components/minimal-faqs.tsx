@@ -44,7 +44,7 @@ export function MinimalFAQs() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 4);
+  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 6);
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

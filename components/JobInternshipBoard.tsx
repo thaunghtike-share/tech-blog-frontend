@@ -6,11 +6,11 @@ import {
   Building2,
   MapPin,
   ExternalLink,
-  BadgeCheck,
   DollarSign,
   Bus,
   Users,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const jobs = [
   {
@@ -66,9 +66,13 @@ export function JobInternshipBoard() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job, i) => (
-          <div
+          <motion.div
             key={i}
-            className="bg-white border border-gray-100 rounded-xl shadow-md p-6 hover:shadow-lg transition flex flex-col justify-between"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.15, duration: 0.4 }}
+            whileHover={{ y: -8, boxShadow: "0px 10px 15px rgba(99, 102, 241, 0.3)" }}
+            className="bg-white border border-gray-100 rounded-xl shadow-md p-6 cursor-pointer flex flex-col justify-between"
           >
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-1">
@@ -111,12 +115,13 @@ export function JobInternshipBoard() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm inline-flex items-center text-indigo-600 hover:underline font-medium"
+                onClick={e => e.stopPropagation()}
               >
                 View Opportunity
                 <ExternalLink className="w-4 h-4 ml-1" />
               </a>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

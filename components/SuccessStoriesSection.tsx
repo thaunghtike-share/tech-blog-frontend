@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
@@ -10,7 +11,7 @@ const testimonials = [
     feedback:
       "This blog helped me understand CI/CD pipelines and Kubernetes. I landed my first DevOps job thanks to the free resources!",
   },
- {
+  {
     name: "Thet Oo Naing",
     role: "Junior DevOps Engineer at XYZ",
     feedback:
@@ -45,9 +46,17 @@ export function SuccessStoriesSection() {
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {testimonials.map((t, i) => (
-          <div
+          <motion.div
             key={i}
-            className="bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center flex flex-col justify-between"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate="visible"
+            transition={{ type: "spring", stiffness: 100, damping: 15, delay: i * 0.15 }}
+            whileHover={{ scale: 1.05, y: -10, boxShadow: "0 8px 15px rgba(0,0,0,0.15)" }}
+            className="bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center flex flex-col justify-between cursor-pointer"
           >
             <p className="text-gray-700 text-sm mb-4">"{t.feedback}"</p>
             <div className="mt-auto">
@@ -59,7 +68,7 @@ export function SuccessStoriesSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
