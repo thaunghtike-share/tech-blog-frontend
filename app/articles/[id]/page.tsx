@@ -29,6 +29,7 @@ interface ArticlePageProps {
   params: { id: string };
 }
 
+// Fetch a single author
 async function fetchAuthor(id: number): Promise<Author | null> {
   try {
     const res = await fetch(`http://localhost:8000/api/authors/${id}`, { cache: "no-store" });
@@ -39,8 +40,20 @@ async function fetchAuthor(id: number): Promise<Author | null> {
   }
 }
 
+// Fetch all articles
+async function fetchAllArticles(): Promise<Article[]> {
+  try {
+    const res = await fetch("http://localhost:8000/api/articles/", { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : data.results || [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { id } = params;
+  const id = parseInt(params.id);
 
   const res = await fetch(`http://localhost:8000/api/articles/${id}`, { cache: "no-store" });
   if (!res.ok) {
@@ -50,8 +63,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       </div>
     );
   }
+
   const article: Article = await res.json();
   const author = await fetchAuthor(article.author);
+  const allArticles = await fetchAllArticles();
+
+  const sorted = allArticles.sort((a, b) =>
+    new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+  );
+
+  const currentIndex = sorted.findIndex((a) => a.id === article.id);
+  const prevArticle = sorted[currentIndex + 1] || null;
+  const nextArticle = sorted[currentIndex - 1] || null;
+
+  const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
   const publishDate = new Date(article.published_at).toLocaleDateString();
 
   return (
@@ -63,7 +88,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 prose prose-lg max-w-full overflow-x-auto">
           <h1 className="text-5xl font-extrabold mb-4">{article.title}</h1>
           <p className="text-gray-500 italic mb-2">Published on {publishDate}</p>
-          <p className="text-gray-600 italic mb-8">By {author ? author.name : "Unknown author"}</p>
+          <p className="text-gray-600 italic mb-8">By {author?.name || "Unknown author"}</p>
 
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -82,7 +107,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               ),
               code: ({ inline, className, children, ...props }: any) => {
                 if (inline) {
-                  return <code className="bg-gray-200 rounded px-1" {...props}>{children}</code>;
+                  return (
+                    <code className="bg-gray-200 rounded px-1" {...props}>
+                      {children}
+                    </code>
+                  );
                 }
                 return (
                   <pre className="bg-gray-100 rounded-lg p-4 overflow-x-auto mb-4" {...props}>
@@ -104,11 +133,43 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           >
             {article.content}
           </ReactMarkdown>
+
+          {/* Prev / Next Navigation */}
+          <div className="mt-12 flex justify-between items-center text-sm text-blue-600 font-medium">
+            {prevArticle ? (
+              <a href={`/articles/${prevArticle.id}`} className="hover:underline">
+                ← {prevArticle.title}
+              </a>
+            ) : <span />}
+
+            {nextArticle ? (
+              <a href={`/articles/${nextArticle.id}`} className="hover:underline text-right">
+                {nextArticle.title} →
+              </a>
+            ) : <span />}
+          </div>
         </article>
 
         {/* Sidebar */}
-        <aside className="lg:col-span-1">
+        <aside className="lg:col-span-1 space-y-12">
           <MinimalSidebar />
+
+          {/* Recent Articles */}
+          <div className="bg-white/80 border border-white/50 shadow-sm rounded-xl p-4">
+            <h3 className="text-lg font-bold text-slate-800 mb-4">📚 Recent Articles</h3>
+            <ul className="space-y-2 text-sm text-blue-700">
+              {recentArticles.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`/articles/${item.id}`}
+                    className="hover:underline block truncate"
+                  >
+                    • {item.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </aside>
       </main>
 
