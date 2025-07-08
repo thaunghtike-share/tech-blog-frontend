@@ -21,97 +21,75 @@ interface UdemyCourse {
 
 const allUdemyCourses: UdemyCourse[] = [
   {
-    title: "DevOps 101",
-    author: "Jane DevOps",
-    url: "...",
-    rating: 4.5,
-    description: "Foundational DevOps principles, tools & practices.",
-  },
-  {
-    title: "Docker Before Compose — Learn Docker by Example",
-    author: "Docker Guru",
-    url: "...",
-    rating: 4.6,
-    description: "Hands‑on Docker tutorials through practical examples.",
-  },
-  {
-    title: "Understanding Docker in About an Hour",
-    author: "Quick Docker",
-    url: "...",
-    rating: 4.5,
-    description: "Quick and thorough intro to Docker essentials.",
-  },
-  {
-    title: "Minikube: A Simple Introduction to Kubernetes",
-    author: "K8s Starter",
-    url: "...",
-    rating: 4.6,
-    description: "Learn Kubernetes basics locally using Minikube.",
-  },
-  {
-    title: "Kube By Example — Spring Boot on Kubernetes",
-    author: "Spring K8s",
-    url: "...",
-    rating: 4.6,
-    description: "Deploy Spring Boot apps on Kubernetes step by step.",
-  },
-  {
-    title: "Service Mesh with Istio and Kubernetes",
-    author: "Istio Pro",
-    url: "...",
-    rating: 4.6,
-    description: "Intro to service mesh with Istio on Kubernetes.",
-  },
-  {
-    title: "Building Docker & Kubernetes Network & Security Lab for Free",
-    author: "Security Dev",
-    url: "...",
-    rating: 4.7,
-    description: "Hands‑on Docker/K8s lab focused on networking & security.",
-  },
-  {
-    title: "FREE Advanced Jenkins in K8s (Docker in Docker)",
-    author: "Jenkins K8s",
-    url: "...",
-    rating: 4.5,
-    description: "Advanced Jenkins pipelines inside Kubernetes.",
-  },
-  {
-    title: "Terraform Lightning Course",
-    author: "Terraform Ace",
-    url: "...",
-    rating: 4.6,
-    description: "Quick intro to Infrastructure as Code with Terraform.",
-  },
-  {
-    title: "Continuous Delivery with Kubernetes and Octopus Deploy",
-    author: "Octopus CD",
-    url: "...",
-    rating: 4.6,
-    description: "Integrate CD pipelines using K8s + Octopus Deploy.",
-  },
-  // additional:
-  {
     title: "Git, GitHub, and GitHub Actions: An Introduction",
     author: "Emil Terhoven",
     url: "https://www.udemy.com/course/git-github-and-github-actions-an-introduction/",
     rating: 4.7,
-    description: "Learn Git, GitHub & GitHub Actions basics in ~1h51m.", reviews: [],
+    description: "Learn Git, GitHub & GitHub Actions basics in under 2 hours."
   },
   {
     title: "Intro to Linux Shell Scripting",
     author: "Jason Cannon",
     url: "https://www.udemy.com/course/linux-shell-scripting-free/",
     rating: 4.7,
-    description: "Shell scripting essentials in Linux.",
+    description: "Shell scripting essentials for Linux administrators."
   },
   {
     title: "Ansible Basics: An Automation Technical Overview",
     author: "Red Hat, Inc.",
     url: "https://www.udemy.com/course/ansible-basics-an-automation-technical-overview/",
     rating: 4.4,
-    description: "Intro to Ansible, playbooks, modules & automation.",
+    description: "Learn the basics of Ansible automation by Red Hat."
   },
+  {
+    title: "How to Use Docker and Docker Compose",
+    author: "Cerulean Canvas",
+    url: "https://www.udemy.com/course/docker-essentials",
+    rating: 4.6,
+    description: "Learn Docker and Docker Compose quickly and efficiently."
+  },
+  {
+    title: "Introduction to DevOps",
+    author: "Dicecamp Academy",
+    url: "https://www.udemy.com/course/introduction-to-devops-f",
+    rating: 4.3,
+    description: "A beginner-friendly introduction to DevOps concepts and tools."
+  },
+  {
+    title: "AWS Essentials",
+    author: "Sundus Hussain",
+    url: "https://www.udemy.com/course/aws-from-scratch",
+    rating: 4.5,
+    description: "Get started with AWS and DevOps cloud basics."
+  },
+  {
+    title: "Docker Crash Course for Busy DevOps and Developers",
+    author: "Tao W.",
+    url: "https://www.udemy.com/course/docker-crash-course-for-busy-devops-and-developers/",
+    rating: 4.6,
+    description: "Practical Docker use cases and examples for DevOps."
+  },
+  {
+    title: "Jenkins Crash Course for DevOps and Developers",
+    author: "Tao W.",
+    url: "https://www.udemy.com/course/jenkins-crash-course-for-devops-and-developers/",
+    rating: 4.4,
+    description: "Fast-paced intro to Jenkins CI/CD pipelines."
+  },
+  {
+    title: "Kubernetes for Beginners",
+    author: "School of DevOps®",
+    url: "https://www.udemy.com/course/kubernetes-for-beginners/",
+    rating: 4.6,
+    description: "Start learning Kubernetes with hands-on examples."
+  },
+  {
+    title: "DevOps Essentials",
+    author: "Edureka!",
+    url: "https://www.udemy.com/course/devops-essentials/",
+    rating: 4.5,
+    description: "Learn DevOps culture, CI/CD pipelines, Jenkins, Git & Docker."
+  }
 ];
 
 export function TopUdemyCourses() {

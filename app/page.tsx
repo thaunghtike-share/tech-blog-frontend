@@ -17,6 +17,7 @@ import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
 import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { JobInternshipBoard } from "@/components/JobInternshipBoard"
+import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
 
 export default function HomePage() {
   return (
@@ -73,6 +74,8 @@ export default function HomePage() {
         <CertificationRoadmap />
         <YouTubeTopChannels />
         <TopUdemyCourses />
+
+        <RecommendedPaidCourses />
 
         <div className="mt-20">
           <FreelanceServicesSection />
