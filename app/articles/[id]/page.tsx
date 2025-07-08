@@ -29,7 +29,6 @@ interface ArticlePageProps {
   params: { id: string };
 }
 
-// Fetch a single author
 async function fetchAuthor(id: number): Promise<Author | null> {
   try {
     const res = await fetch(`http://localhost:8000/api/authors/${id}`, { cache: "no-store" });
@@ -40,7 +39,6 @@ async function fetchAuthor(id: number): Promise<Author | null> {
   }
 }
 
-// Fetch all articles
 async function fetchAllArticles(): Promise<Article[]> {
   try {
     const res = await fetch("http://localhost:8000/api/articles/", { cache: "no-store" });
@@ -68,8 +66,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const author = await fetchAuthor(article.author);
   const allArticles = await fetchAllArticles();
 
-  const sorted = allArticles.sort((a, b) =>
-    new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+  const sorted = allArticles.sort(
+    (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
   );
 
   const currentIndex = sorted.findIndex((a) => a.id === article.id);
@@ -79,9 +77,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
   const publishDate = new Date(article.published_at).toLocaleDateString();
 
-  // Helper to create excerpt from content (first 80 chars, no markdown tags)
   function excerpt(content: string) {
-    const plainText = content.replace(/[#_*>\-\[\]\(\)`]/g, "").slice(0, 80);
+    const plainText = content
+      .replace(/<[^>]+>/g, "")                  // remove HTML tags
+      .replace(/[#_*>\-\[\]\(\)`~]/g, "")       // remove Markdown syntax
+      .replace(/\s+/g, " ")                     // collapse extra spaces/newlines
+      .trim()
+      .slice(0, 80);
     return plainText.length === 80 ? plainText + "..." : plainText;
   }
 
@@ -100,12 +102,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
-              h1: ({ node, ...props }) => (
-                <h1 className="text-4xl font-bold my-6" {...props} />
-              ),
-              h2: ({ node, ...props }) => (
-                <h2 className="text-3xl font-semibold my-5" {...props} />
-              ),
+              h1: ({ node, ...props }) => <h1 className="text-4xl font-bold my-6" {...props} />,
+              h2: ({ node, ...props }) => <h2 className="text-3xl font-semibold my-5" {...props} />,
               p: ({ node, children, ...props }) => (
                 <div className="mb-4 text-lg leading-relaxed" {...props}>
                   {children}
@@ -126,7 +124,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 );
               },
               blockquote: ({ node, ...props }) => (
-                <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4" {...props} />
+                <blockquote
+                  className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4"
+                  {...props}
+                />
               ),
               img: ({ node, ...props }) => (
                 <img
@@ -146,13 +147,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <a href={`/articles/${prevArticle.id}`} className="hover:underline">
                 ← {prevArticle.title}
               </a>
-            ) : <span />}
-
+            ) : (
+              <span />
+            )}
             {nextArticle ? (
               <a href={`/articles/${nextArticle.id}`} className="hover:underline text-right">
                 {nextArticle.title} →
               </a>
-            ) : <span />}
+            ) : (
+              <span />
+            )}
           </div>
         </article>
 
@@ -169,13 +173,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               {recentArticles.map((item) => {
                 const date = new Date(item.published_at).toLocaleDateString();
                 return (
-                  <li key={item.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200">
+                  <li
+                    key={item.id}
+                    className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200"
+                  >
                     <a href={`/articles/${item.id}`} className="block group">
                       <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
                         {item.title}
                       </h4>
                       <p className="text-xs text-gray-500 mt-1">{date}</p>
-                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">{excerpt(item.content)}</p>
+                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                        {excerpt(item.content)}
+                      </p>
                     </a>
                   </li>
                 );

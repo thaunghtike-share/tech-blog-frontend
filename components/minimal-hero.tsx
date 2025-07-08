@@ -92,12 +92,14 @@ export function MinimalHero() {
                 className="text-xl md:text-3xl font-semibold text-gray-900 mb-4 tracking-tight"
               >
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent inline-flex items-center">
-                  <span className="text-gray-800">Learn DevOps —</span>
+                  <span className="text-gray-800">Learn DevOps Now —</span>
                   <Cpu className="w-6 h-6 mr-2" />
-                  For IT Students in{" "}
-                  <span className="ml-1 bg-gradient-to-r from-red-500 via-green-500 to-yellow-400 bg-clip-text text-transparent font-semibold font-[Noto_Sans_Myanmar]">
-                    Myanmar
-                  </span>
+                  For IT Students in
+                  <img
+                    src="/myanmar-flag.svg"
+                    alt="Myanmar"
+                    className="ml-2 inline-block w-6 h-4 shadow-sm"
+                  />
                 </span>
               </motion.h1>
 
@@ -106,8 +108,8 @@ export function MinimalHero() {
                 className="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
               >
                 A curated DevOps roadmap, tools, and projects — built especially for
-                students, junior developers, and aspiring engineers in Myanmar 🇲🇲
-                to kickstart their cloud and automation journey.
+                students, junior developers, and aspiring engineers in Myanmar
+                to kickstart their cloud devops and automation journey.
               </motion.p>
 
               <motion.div
