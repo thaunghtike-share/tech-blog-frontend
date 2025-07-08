@@ -72,9 +72,9 @@ export function RecommendedPaidCourses() {
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
-        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-red-100 text-red-600 mb-3">
+        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-green-100 text-green-600 mb-3">
           <Play className="w-4 h-4 mr-2" />
-          Video Learning
+          Premium DevOps Learning
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Recommended Paid DevOps & Kubernetes Courses

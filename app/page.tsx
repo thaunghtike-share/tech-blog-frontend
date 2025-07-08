@@ -86,7 +86,6 @@ export default function HomePage() {
 
         <JobInternshipBoard />
         <SuccessStoriesSection />
-
         <AuthorsContributorsCTA />
         <MinimalFAQs />
       </main>
