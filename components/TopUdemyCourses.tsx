@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Star, User, BookOpen, ExternalLink, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
+import { Star, User, GraduationCap, BookOpen, ExternalLink, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Review {
@@ -121,9 +121,10 @@ export function TopUdemyCourses() {
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
-        <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mb-3">
-          Free DevOps Learning
-        </span>
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-600 mb-3">
+            <GraduationCap className="w-4 h-4 mr-2" />
+            Free DevOps Learning
+          </span>
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Top Free DevOps Courses on Udemy
         </h2>
