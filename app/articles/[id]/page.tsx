@@ -79,6 +79,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
   const publishDate = new Date(article.published_at).toLocaleDateString();
 
+  // Helper to create excerpt from content (first 80 chars, no markdown tags)
+  function excerpt(content: string) {
+    const plainText = content.replace(/[#_*>\-\[\]\(\)`]/g, "").slice(0, 80);
+    return plainText.length === 80 ? plainText + "..." : plainText;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
@@ -155,19 +161,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <MinimalSidebar />
 
           {/* Recent Articles */}
-          <div className="bg-white/80 border border-white/50 shadow-sm rounded-xl p-4">
-            <h3 className="text-lg font-bold text-slate-800 mb-4">📚 Recent Articles</h3>
-            <ul className="space-y-2 text-sm text-blue-700">
-              {recentArticles.map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`/articles/${item.id}`}
-                    className="hover:underline block truncate"
-                  >
-                    • {item.title}
-                  </a>
-                </li>
-              ))}
+          <div className="bg-white/90 border border-white/70 shadow rounded-xl p-4">
+            <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+              📚 Recent Articles
+            </h3>
+            <ul className="space-y-4">
+              {recentArticles.map((item) => {
+                const date = new Date(item.published_at).toLocaleDateString();
+                return (
+                  <li key={item.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200">
+                    <a href={`/articles/${item.id}`} className="block group">
+                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-gray-500 mt-1">{date}</p>
+                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">{excerpt(item.content)}</p>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </aside>
