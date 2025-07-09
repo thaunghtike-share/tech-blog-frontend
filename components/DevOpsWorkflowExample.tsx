@@ -12,7 +12,6 @@ import {
   GitPullRequest,
   Server,
   Activity,
-  ArrowRightCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -136,40 +135,37 @@ export function DevOpsWorkflowExample() {
             Workflow Steps
           </h3>
 
-          {/* Horizontal Stepper with Connectors */}
-          <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center space-x-2">
+          {/* Horizontal Stepper - NO arrows */}
+          <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center space-x-3">
             {workflowSteps.map((step, i) => {
               const Icon = step.icon;
+              const isSelected = currentStep === i;
               return (
-                <div key={step.id} className="flex items-center space-x-2">
-                  <motion.button
-                    onClick={() => setCurrentStep(i)}
-                    whileHover={{ scale: 1.05 }}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap border transition-all
+                <motion.button
+                  key={step.id}
+                  onClick={() => setCurrentStep(i)}
+                  whileHover={{ scale: 1.05 }}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap border transition-all text-sm font-medium
                     ${
-                      currentStep === i
-                        ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                        : "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200"
+                      isSelected
+                        ? "bg-blue-600 text-white border-blue-600 shadow-lg"
+                        : "bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100"
+                    }`}
+                >
+                  <div
+                    className={`w-7 h-7 flex items-center justify-center rounded-full ${
+                      isSelected ? "bg-white text-blue-600" : "bg-blue-600 text-white"
                     }`}
                   >
-                    <div
-                      className={`w-6 h-6 flex items-center justify-center rounded-full text-xs ${step.iconColor}`}
-                    >
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium">{step.title}</span>
-                  </motion.button>
-
-                  {/* Connector → except after last step */}
-                  {i < workflowSteps.length - 1 && (
-                    <ArrowRightCircle className="text-gray-300 w-5 h-5 shrink-0" />
-                  )}
-                </div>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  {step.title}
+                </motion.button>
               );
             })}
           </div>
 
-          {/* Step Content */}
+          {/* Step Details */}
           <AnimatePresence mode="wait">
             <motion.div
               key={workflowSteps[currentStep].id}
