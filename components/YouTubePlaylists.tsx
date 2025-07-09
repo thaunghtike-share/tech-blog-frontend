@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Play, Globe, ExternalLink, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import { ChevronDown, ChevronUp } from "lucide-react"; // make sure this is imported
 
 interface Playlist {
   title: string;
@@ -208,13 +209,18 @@ export function YouTubePlaylists() {
       {playlists.length > 9 && (
         <div className="mt-10 text-center">
           <button
-            onClick={() => setShowAll((prev) => !prev)}
-            className="inline-flex items-center px-6 py-3 border rounded-full text-base font-medium text-gray-700 hover:bg-gray-100 transition"
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-full shadow-sm text-red-600 bg-white hover:bg-gray-100 transition-colors"
           >
-            {showAll ? "See Less" : "See More"}
-          </button>
-        </div>
-      )}
+            {showAll ? "Show Less" : "See More"}
+            {showAll ? (
+              <ChevronUp className="w-4 h-4 ml-2" />
+            ) : (
+          <ChevronDown className="w-4 h-4 ml-2" />
+          )}
+        </button>
+      </div>
+    )}
     </section>
   );
 }

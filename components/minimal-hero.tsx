@@ -83,7 +83,7 @@ export function MinimalHero() {
                 className="inline-flex items-center gap-2 bg-white text-blue-600 text-[11px] md:text-xs font-medium px-4 py-1.5 rounded-full mb-4 shadow-sm border border-gray-200/50"
               >
                 <Zap className="h-3 w-3" />
-                <span>DevOps • DevSecOps • MLOPS • Automation</span>
+                <span>DevOps • DevSecOps • IAC</span>
                 <Code className="h-3 w-3 ml-1" />
               </motion.div>
 

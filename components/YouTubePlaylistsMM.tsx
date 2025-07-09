@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Play, ExternalLink, Clock, Globe } from "lucide-react";
 import { motion } from "framer-motion";
+import { ChevronDown, ChevronUp } from "lucide-react"; // make sure this is imported
 
 interface Playlist {
   title: string;
@@ -79,7 +80,7 @@ export function YouTubePlaylistsMM() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
 
-  const displayed = showAll ? burmesePlaylists : burmesePlaylists.slice(0, 10);
+  const displayed = showAll ? burmesePlaylists : burmesePlaylists.slice(0, 9);
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -155,16 +156,21 @@ export function YouTubePlaylistsMM() {
         ))}
       </div>
 
-      {burmesePlaylists.length > 10 && (
+      {burmesePlaylists.length > 9 && (
         <div className="mt-10 text-center">
           <button
-            onClick={() => setShowAll((prev) => !prev)}
-            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-full shadow-sm text-gray-700 bg-white hover:bg-gray-100 transition-colors"
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-full shadow-sm text-yellow-600 bg-white hover:bg-gray-100 transition-colors"
           >
-            {showAll ? "Show Less" : "Show More Burmese Playlists"}
-          </button>
-        </div>
-      )}
+            {showAll ? "Show Less" : "See More"}
+            {showAll ? (
+              <ChevronUp className="w-4 h-4 ml-2" />
+          ) : (
+              <ChevronDown className="w-4 h-4 ml-2" />
+          )}
+        </button>
+      </div>
+    )}
     </section>
   );
 }
