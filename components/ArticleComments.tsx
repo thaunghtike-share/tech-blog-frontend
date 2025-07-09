@@ -8,6 +8,7 @@ interface Comment {
   id: number;
   name: string;
   content: string;
+  rating?: number | null;
   created_at: string;
 }
 
@@ -22,6 +23,7 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
 
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
+  const [rating, setRating] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -59,7 +61,7 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
       const res = await fetch(`${API_BASE_URL}/articles/${articleId}/comments/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), content: content.trim() }),
+        body: JSON.stringify({ name: name.trim(), content: content.trim(), rating }),
       });
 
       if (!res.ok) {
@@ -69,6 +71,7 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
 
       setName("");
       setContent("");
+      setRating(null);
       fetchComments();
     } catch (err: any) {
       setSubmitError(err.message || "Error submitting comment");
@@ -78,6 +81,26 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
   }
 
   const displayedComments = showAll ? comments : comments.slice(0, 3);
+
+  // Helper to render stars for rating display (read-only)
+  function renderStars(count: number | null | undefined) {
+    if (!count) return null;
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span
+          key={i}
+          className={`inline-block text-yellow-400 ${
+            i <= count ? "opacity-100" : "opacity-30"
+          }`}
+          aria-hidden="true"
+        >
+          ★
+        </span>
+      );
+    }
+    return stars;
+  }
 
   return (
     <section className="mt-10 max-w-2xl mx-auto px-4">
@@ -97,10 +120,10 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
 
       {loading && (
         <div className="flex justify-center py-4">
-          <div className="h-8 w-8 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="h-8 w-8 border-2 border-gray-300 border-t-yellow-400 rounded-full animate-spin"></div>
         </div>
       )}
-      
+
       {error && (
         <p className="text-sm text-red-600 mb-4 px-3 py-2 bg-red-50 rounded">{error}</p>
       )}
@@ -109,26 +132,29 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
         <p className="text-sm text-gray-500 italic py-4">No comments yet. Be the first to comment!</p>
       )}
 
-      <div className="space-y-4 mb-6">
-        {displayedComments.map(({ id, name, content, created_at }) => (
+      <div className="space-y-6 mb-6">
+        {displayedComments.map(({ id, name, content, rating, created_at }) => (
           <div key={id} className="pb-4 border-b border-gray-100 last:border-0">
-            <div className="flex justify-between items-start mb-1">
+            <div className="flex justify-between items-center mb-1">
               <span className="text-sm font-medium text-gray-900">{name}</span>
               <span className="text-xs text-gray-400">
                 {new Date(created_at).toLocaleDateString(undefined, {
-                  month: 'short',
-                  day: 'numeric'
+                  month: "short",
+                  day: "numeric",
                 })}
               </span>
             </div>
-            <p className="text-sm text-gray-700">{content}</p>
+            <div className="flex items-center mb-1 space-x-2">
+              {renderStars(rating)}
+            </div>
+            <p className="text-sm text-gray-700 whitespace-pre-wrap">{content}</p>
           </div>
         ))}
       </div>
 
       <div className="bg-gray-50 p-4 rounded-lg">
         <h3 className="text-sm font-medium mb-3 text-gray-800">Add your comment</h3>
-        
+
         {submitError && (
           <p className="text-xs text-red-600 mb-3">{submitError}</p>
         )}
@@ -138,28 +164,59 @@ export function ArticleComments({ articleId }: ArticleCommentsProps) {
             <input
               type="text"
               placeholder="Your name"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={submitting}
             />
           </div>
-          
+
           <div className="mb-3">
             <textarea
               placeholder="Write your comment..."
               rows={3}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               disabled={submitting}
             />
           </div>
-          
+
+          <div className="mb-4">
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Your rating:
+            </label>
+            <div className="flex space-x-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setRating(star)}
+                  className={`text-2xl ${
+                    star <= (rating ?? 0) ? "text-yellow-400" : "text-gray-300"
+                  } focus:outline-none`}
+                  aria-label={`${star} Star${star > 1 ? "s" : ""}`}
+                >
+                  ★
+                </button>
+              ))}
+              {rating !== null && (
+                <button
+                  type="button"
+                  onClick={() => setRating(null)}
+                  className="ml-2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
+                  aria-label="Clear rating"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-2 px-4 bg-gray-800 text-white text-sm font-medium rounded hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-500 disabled:opacity-50"
+            className="w-full py-2 px-4 bg-yellow-500 text-white text-sm font-medium rounded hover:bg-yellow-600 focus:outline-none focus:ring-1 focus:ring-yellow-400 disabled:opacity-50"
           >
             {submitting ? "Posting..." : "Post comment"}
           </button>
