@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, User, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface Article {
   id: number
@@ -145,69 +146,76 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Articles</h2>
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Latest Articles</h2>
         <div className="h-1 w-24 bg-blue-600 rounded-full"></div>
       </div>
 
       <div className="grid gap-8">
-        {paginatedArticles.map((article) => {
-          const author = getAuthor(article.author)
-          return (
-            <article
-              key={article.id}
-              className="bg-white p-6 rounded-xl border border-gray-100 shadow hover:shadow-md transition"
-            >
-              <div className="flex justify-between flex-wrap mb-4 gap-2">
-                <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
-                  {getCategoryName(article.category)}
-                </Badge>
-                <div className="flex flex-wrap gap-2">
-                  {getTagNames(article.tags).slice(0, 2).map((tag, i) => (
-                    <Badge key={i} className="bg-gray-100 text-gray-700">
-                      {tag}
-                    </Badge>
-                  ))}
+        <AnimatePresence mode="wait">
+          {paginatedArticles.map((article) => {
+            const author = getAuthor(article.author)
+            return (
+              <motion.article
+                key={article.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white p-6 rounded-xl border border-gray-100 shadow hover:shadow-lg transition"
+              >
+                <div className="flex justify-between flex-wrap mb-4 gap-2">
+                  <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
+                    {getCategoryName(article.category)}
+                  </Badge>
+                  <div className="flex flex-wrap gap-2">
+                    {getTagNames(article.tags).slice(0, 2).map((tag, i) => (
+                      <Badge key={i} className="bg-gray-100 text-gray-700">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <Link href={`/articles/${article.id}`} className="group block">
-                <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition">
-                  {article.title}
-                </h3>
-                <p className="text-gray-600 mb-4 line-clamp-2">
-                  {truncate(stripMarkdown(article.content), 200)}
-                </p>
-                <div className="text-sm text-blue-600 flex items-center gap-1 group-hover:text-blue-700 transition">
-                  Read more <ArrowRight className="w-4 h-4" />
-                </div>
-              </Link>
+                <Link href={`/articles/${article.id}`} className="group block">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition">
+                    {article.title}
+                  </h3>
+                  <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
+                    {truncate(stripMarkdown(article.content), 200)}
+                  </p>
+                  <div className="text-sm text-blue-600 flex items-center gap-1 group-hover:underline">
+                    Read more <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Link>
 
-              <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                <div className="flex items-center gap-2">
-                  {author?.avatar ? (
-                    <img
-                      src={author.avatar}
-                      alt={author.name}
-                      className="w-5 h-5 rounded-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <User className="text-gray-400" style={{ width: "14px", height: "14px" }} />
-                  )}
-                  <span>{getAuthorName(article.author)}</span>
+                <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-2">
+                    {author?.avatar ? (
+                      <img
+                        src={author.avatar}
+                        alt={author.name}
+                        className="w-5 h-5 rounded-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <User className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                    )}
+                    <span>{getAuthorName(article.author)}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                    <span>{formatDate(article.published_at)}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                    <span>{calculateReadTime(article.content)} read</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Calendar className="text-gray-400" style={{ width: "14px", height: "14px" }} />
-                  <span>{formatDate(article.published_at)}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="text-gray-400" style={{ width: "14px", height: "14px" }} />
-                  <span>{calculateReadTime(article.content)} read</span>
-                </div>
-              </div>
-            </article>
-          )
-        })}
+              </motion.article>
+            )
+          })}
+        </AnimatePresence>
       </div>
 
       {/* Pagination */}

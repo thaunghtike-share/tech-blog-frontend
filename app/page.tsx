@@ -10,7 +10,6 @@ import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap"
 import { CertificationRoadmap } from "@/components/CertificationRoadmap"
 import { MinimalFAQs } from "@/components/minimal-faqs"
 import { MinimalFeaturedProjects } from "@/components/minimal-featured-projects"
-import { YouTubeTopChannels } from "@/components/YouTubeTopChannels"
 import { TopUdemyCourses } from "@/components/TopUdemyCourses"
 import { FreelanceServicesSection } from "@/components/FreelanceServicesSection"
 import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
@@ -18,6 +17,7 @@ import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { JobInternshipBoard } from "@/components/JobInternshipBoard"
 import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
+import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
 import { YouTubePlaylists } from "@/components/YouTubePlaylists"
 
 export default function HomePage() {
@@ -73,8 +73,8 @@ export default function HomePage() {
 
         <MinimalDevopsRoadmap />
 
+        <YouTubePlaylistsMM />
         <YouTubePlaylists />
-        <YouTubeTopChannels />
 
         <TopUdemyCourses />
         <RecommendedPaidCourses />

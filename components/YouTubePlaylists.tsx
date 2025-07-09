@@ -1,167 +1,217 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, ExternalLink, Clock, Globe } from "lucide-react";
+import { Play, Globe, ExternalLink, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Playlist {
   title: string;
-  videoId: string;
+  videoId: string; // for preview embed
   playlistUrl: string;
-  updated?: string;
-  duration?: string;
+  channel: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  estDuration: string; // e.g. "2-4 weeks"
 }
 
-const burmesePlaylists: Playlist[] = [
+const playlists: Playlist[] = [
   {
-    title: "Python Fundamentals by Sayar Thet Khine",
-    videoId: "DP3AIYK-HR8",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLVhJW4jnAwFQ-E62y9MPJY8t33E8RThPy",
-    updated: "Apr 2015",
+    title: "AWS Cloud Computing For Beginners",
+    videoId: "3XFODda6YXo",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLEiEAq2VkUULlNtIFhEQHo8gacvme35rz",
+    channel: "Simplilearn",
+    difficulty: "Beginner",
+    estDuration: "3-4 weeks",
   },
   {
-    title: "Basic Networking Tutorials By RHC Technologies",
-    videoId: "DhJ4kL2HbuA",
-    playlistUrl: "https://www.youtube.com/watch?v=DhJ4kL2HbuA&list=PLuMzkmyfR9LY64pZl4zhYehlpXXAtGwZ",
-    updated: "Apr 2024",
+    title: "AWS Course Certification",
+    videoId: "YqWuL3an-5o",
+    playlistUrl: "https://www.youtube.com/watch?v=YqWuL3an-5ohttps://www.youtube.com/watch?v=YqWuL3an-5o",
+    channel: "Intellipaat",
+    difficulty: "Beginner",
+    estDuration: "3-4 weeks",
   },
   {
-    title: "Basic Networking Lessons By WalkTechVlogs by Uphyo",
-    videoId: "PYqqykoMB1Y",
-    playlistUrl: "https://www.youtube.com/watch?v=PYqqykoMB1Y&list=PL6jybr6k2wfqVgPv-kqlKoK2g2HJb3niX",
-    updated: "Apr 2022" 
+    title: "Azure (AZ-900) Full Course",
+    videoId: "NPEsD6n9A_I",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLGjZwEtPN7j-Q59JYso3L4_yoCjj2syrM",
+    channel: "Adam Marczak - Azure for Everyone",
+    difficulty: "Beginner",
+    estDuration: "3-5 weeks",
   },
   {
-    title: "Linux Foundation Certified System Administrator (LFCS) - by HelloCloud",
-    videoId: "qJnZGcL4jkQ",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtf9x079XNlEgyiCv-XwxXxG",
-    updated: "Mar 2024",
+    title: "AZ-900 Azure Fundamentals",
+    videoId: "IUCEFBmYIog",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3",
+    channel: "John Savill's Technical Training",
+    difficulty: "Beginner",
+    estDuration: "2-3 weeks",
   },
   {
-    title: "Hello Docker - Tutorial Series - by HelloCloud",
-    videoId: "9qsWPKZH9PE",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtc07cVn3OXFiaIYXnDx5pDf",
-    updated: "Feb 2024",
+    title: "Linux System Administration",
+    videoId: "Wgi-OfbP2Gw",
+    playlistUrl: "https://www.youtube.com/watch?v=Wgi-OfbP2Gw&list=PL9ooVrP1hQOH3SvcgkC4Qv2cyCebvs0Ik",
+    channel: "Edureka",
+    difficulty: "Intermediate",
+    estDuration: "3-5 weeks",
   },
   {
-    title: "AWS Essentials by DevKTOps",
-    videoId: "W3jTLLA4tCg",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLSKzuxf9q42Fu5nunaTbH0nFVt1GqDgMW",
-    updated: "Feb 2024",
+    title: "Linux Command Line Tutorials",
+    videoId: "2PGnYjbYuUo",
+    playlistUrl: "https://www.youtube.com/watch?v=2PGnYjbYuUo",
+    channel: "Geek's Lesson",
+    difficulty: "Intermediate",
+    estDuration: "3-5 weeks",
   },
   {
-    title: "AWS Fundamentals by Myanmar Tech Academy ",
-    videoId: "Dn5B-qliqyk",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz4H8wn2KnPI-u5a3F9UNNVz",
-    updated: "Jan 2024",
+    title: "Docker Crash Course Tutorial",
+    videoId: "31ieHmcTUOk",
+    playlistUrl: "https://www.youtube.com/playlist?list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7",
+    channel: "Net Ninja",
+    difficulty: "Intermediate",
+    estDuration: "2-3 weeks",
   },
   {
-    title: "Linux By Myanmar Tech Academy",
-    videoId: "22Lc-1wg1aQ",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz59dNMjdMyA0LmQtqRNRPU0",
-    updated: "Dec 2023",
+    title: "Docker Tutorial",
+    videoId: "zJ6WbK9zFpI",
+    playlistUrl: "https://www.youtube.com/watch?v=zJ6WbK9zFpI&t=11s",
+    channel: "Kode Kloud",
+    difficulty: "Intermediate",
+    estDuration: "2-3 weeks",
   },
   {
-    title: "Git Basic Course By Myanmar Data Science",
-    videoId: "22Lc-1wg1aQ",
-    playlistUrl: "https://www.youtube.com/watch?v=DB_MEZZdiIs&list=PLD_eiqVVLZDge73nM5J-LyPgbfVL6vnDc",
-    updated: "Dec 2022",
+    title: "Certified Kubernetes Administrator Course",
+    videoId: "6_gMoe7Ik8k",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLl4APkPHzsUUOkOv3i62UidrLmSB8DcGC",
+    channel: "Tech Tutorials with Piyush",
+    difficulty: "Advanced",
+    estDuration: "2-3 weeks",
   },
   {
-    title: "Terraform Tutorial Series- by HelloCloud",
-    videoId: "v4X3D4YlyHc",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtdufeA0ab5mKycSJgq5Bi57",
-    updated: "Mar 2024",
+    title: "CI/CD Tutorials",
+    videoId: "R8_veQiYBjI",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLy7NrYWoggjzSIlwxeBbcgfAdYoxCIrM2",
+    channel: "TechWorld with Nana ",
+    difficulty: "Intermediate",
+    estDuration: "3-5 weeks",
+  },
+  {
+    title: "Github Action Tutorials",
+    videoId: "-hVG9z0fCac",
+    playlistUrl: "https://www.youtube.com/watch?v=-hVG9z0fCac&list=PLArH6NjfKsUhvGHrpag7SuPumMzQRhUKY",
+    channel: "glich stream",
+    difficulty: "Intermediate",
+    estDuration: "3-5 weeks",
+  },
+  {
+    title: "Learn Git – Full Course for Beginners",
+    videoId: "zTjRZNkhiEU",
+    playlistUrl: "https://www.youtube.com/watch?v=zTjRZNkhiEU",
+    channel: "freeCodeCamp.org",
+    difficulty: "Intermediate",
+    estDuration: "3-5 weeks",
+  },
+  {
+    title: "Terraform Full Course For Beginners",
+    videoId: "j0mfH_7sR7k",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLl4APkPHzsUUHlbhuq9V02n9AMLPySoEQ",
+    channel: "Tech Tutorials with Piyush",
+    difficulty: "Advanced",
+    estDuration: "3-4 weeks",
+  },
+  {
+    title: "Getting started with Ansible",
+    videoId: "3RiVKs8GHYQ",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70",
+    channel: "Learn Linux TV",
+    difficulty: "Intermediate",
+    estDuration: "4-5 weeks",
+  },
+  {
+    title: "Ansible Zero to Hero [FULL Course in 3+ Hours)- TechWorld With Murali",
+    videoId: "aT69WlNi8EA",
+    playlistUrl: "https://www.youtube.com/playlist?list=PL0lvsZ5ieQicXHPMNNg7qXJJoO2AnE8ej",
+    channel: "TechWorld with Murali",
+    difficulty: "Intermediate",
+    estDuration: "3-4 weeks",
   },
 ];
 
 export function YouTubePlaylists() {
-  const [hovered, setHovered] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
-
-  const displayed = showAll ? burmesePlaylists : burmesePlaylists.slice(0, 10);
+  const displayed = showAll ? playlists : playlists.slice(0, 9);
 
   return (
-    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section className="max-w-7xl mx-auto py-12 px-4">
       <div className="text-center mb-12">
         <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700 mb-3">
           <Globe className="w-4 h-4 mr-2" />
-          Burmese Playlist Courses
+          DevOps Playlist Courses
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Top DevOps & Cloud Playlists in Burmese
+          Top DevOps & Cloud Playlists
         </h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
           Handpicked Burmese-language video playlists to learn DevOps tools like Docker, Kubernetes, AWS, Terraform, and more.
         </p>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {displayed.map((course, idx) => (
+        {displayed.map((pl, idx) => (
           <motion.div
-            key={idx}
+            key={pl.playlistUrl} // unique key
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -5 }}
-            className="relative group"
+            className="border rounded-xl shadow hover:shadow-lg p-6 bg-white flex flex-col"
           >
-            <div className="h-full rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white flex flex-col">
-              <div
-                className="relative aspect-video bg-black"
-                onMouseEnter={() => setHovered(course.videoId)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <iframe
-                  src={`https://www.youtube.com/embed/${course.videoId}?autoplay=${
-                    hovered === course.videoId ? 1 : 0
-                  }&mute=1&loop=1&controls=0&modestbranding=1`}
-                  title={course.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                  allowFullScreen
-                />
-                <div
-                  className={`absolute inset-0 flex items-center justify-center ${
-                    hovered === course.videoId ? "opacity-0" : "opacity-100"
-                  } transition-opacity`}
-                >
-                  <div className="bg-black/50 rounded-full p-4 backdrop-blur-sm">
-                    <Play className="w-6 h-6 text-white" fill="currentColor" />
-                  </div>
-                </div>
-              </div>
+            {/* Title */}
+            <h3 className="text-lg font-semibold mb-3">{pl.title}</h3>
 
-              <div className="p-6 flex-grow flex flex-col">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{course.title}</h3>
-
-                <div className="text-sm text-gray-500 mb-4 flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-yellow-500" />
-                  Updated {course.updated}
-                </div>
-
-                <a
-                  href={course.playlistUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-auto inline-flex items-center justify-center w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg transition-colors group"
-                >
-                  Watch Playlist
-                  <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
+            {/* YouTube preview iframe */}
+            <div className="aspect-video mb-4 rounded overflow-hidden shadow-sm">
+              <iframe
+                src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}
+                title={pl.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
             </div>
+
+            {/* Channel and Difficulty */}
+            <div className="flex justify-between items-center mb-3 text-sm text-gray-600">
+              <span>Channel: <strong>{pl.channel}</strong></span>
+              <span>Difficulty: <strong>{pl.difficulty}</strong></span>
+            </div>
+
+            {/* Estimated learning time */}
+            <div className="flex items-center text-sm text-gray-500 mb-6">
+              <Clock className="w-4 h-4 mr-1" />
+              <span>Estimated: {pl.estDuration}</span>
+            </div>
+
+            {/* Watch Playlist Button */}
+            <a
+              href={pl.playlistUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto inline-flex items-center justify-center w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition"
+            >
+              Watch Playlist
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </a>
           </motion.div>
         ))}
       </div>
 
-      {burmesePlaylists.length > 10 && (
+      {/* Show More / See Less Button */}
+      {playlists.length > 9 && (
         <div className="mt-10 text-center">
           <button
             onClick={() => setShowAll((prev) => !prev)}
-            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-full shadow-sm text-gray-700 bg-white hover:bg-gray-100 transition-colors"
+            className="inline-flex items-center px-6 py-3 border rounded-full text-base font-medium text-gray-700 hover:bg-gray-100 transition"
           >
-            {showAll ? "Show Less" : "Show More Burmese Playlists"}
+            {showAll ? "See Less" : "See More"}
           </button>
         </div>
       )}
