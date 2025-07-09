@@ -73,8 +73,8 @@ export default function HomePage() {
 
         <MinimalDevopsRoadmap />
 
-        <YouTubeTopChannels />
         <YouTubePlaylists />
+        <YouTubeTopChannels />
 
         <TopUdemyCourses />
         <RecommendedPaidCourses />

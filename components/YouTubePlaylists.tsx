@@ -17,13 +17,19 @@ const burmesePlaylists: Playlist[] = [
     title: "Python Fundamentals by Sayar Thet Khine",
     videoId: "DP3AIYK-HR8",
     playlistUrl: "https://www.youtube.com/playlist?list=PLVhJW4jnAwFQ-E62y9MPJY8t33E8RThPy",
+    updated: "Apr 2015",
+  },
+  {
+    title: "Basic Networking Tutorials By RHC Technologies",
+    videoId: "DhJ4kL2HbuA",
+    playlistUrl: "https://www.youtube.com/watch?v=DhJ4kL2HbuA&list=PLuMzkmyfR9LY64pZl4zhYehlpXXAtGwZ",
     updated: "Apr 2024",
   },
   {
-    title: "Terraform Tutorial Series- by HelloCloud",
-    videoId: "v4X3D4YlyHc",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtdufeA0ab5mKycSJgq5Bi57",
-    updated: "Mar 2024",
+    title: "Basic Networking Lessons By WalkTechVlogs by Uphyo",
+    videoId: "PYqqykoMB1Y",
+    playlistUrl: "https://www.youtube.com/watch?v=PYqqykoMB1Y&list=PL6jybr6k2wfqVgPv-kqlKoK2g2HJb3niX",
+    updated: "Apr 2022" 
   },
   {
     title: "Linux Foundation Certified System Administrator (LFCS) - by HelloCloud",
@@ -54,6 +60,18 @@ const burmesePlaylists: Playlist[] = [
     videoId: "22Lc-1wg1aQ",
     playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz59dNMjdMyA0LmQtqRNRPU0",
     updated: "Dec 2023",
+  },
+  {
+    title: "Git Basic Course By Myanmar Data Science",
+    videoId: "22Lc-1wg1aQ",
+    playlistUrl: "https://www.youtube.com/watch?v=DB_MEZZdiIs&list=PLD_eiqVVLZDge73nM5J-LyPgbfVL6vnDc",
+    updated: "Dec 2022",
+  },
+  {
+    title: "Terraform Tutorial Series- by HelloCloud",
+    videoId: "v4X3D4YlyHc",
+    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtdufeA0ab5mKycSJgq5Bi57",
+    updated: "Mar 2024",
   },
 ];
 
