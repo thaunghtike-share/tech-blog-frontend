@@ -6,20 +6,18 @@ import {
   ChevronRight,
   Clock,
   BookOpen,
-  Zap,
   Check,
-  X,
   GraduationCap,
   Dock,
   GitMerge,
   Server,
   Lock,
   Gauge,
-  Cloud,
   Rocket,
-  Shield
+  Shield,
+  ArrowRight
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface CertificationItem {
   title: string;
@@ -30,6 +28,7 @@ interface CertificationItem {
   topics: string[];
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   recommended?: boolean;
+  examLink: string;
 }
 
 const certifications: CertificationItem[] = [
@@ -42,7 +41,8 @@ const certifications: CertificationItem[] = [
     preparationTime: "3-4 weeks",
     difficulty: 'Beginner',
     recommended: true,
-    topics: ["Cloud concepts", "Security and compliance", "Billing and pricing", "AWS core services"]
+    topics: ["Cloud concepts", "Security and compliance", "Billing and pricing", "AWS core services"],
+    examLink: "https://aws.amazon.com/certification/certified-cloud-practitioner/"
   },
   {
     title: "Microsoft Azure Fundamentals (AZ-900)",
@@ -51,7 +51,8 @@ const certifications: CertificationItem[] = [
     examDetails: "40-60 questions | 60 minutes | $99",
     preparationTime: "3-4 weeks",
     difficulty: 'Beginner',
-    topics: ["Cloud concepts", "Azure architecture", "Governance and compliance", "Cost management"]
+    topics: ["Cloud concepts", "Azure architecture", "Governance and compliance", "Cost management"],
+    examLink: "https://learn.microsoft.com/en-us/certifications/azure-fundamentals/"
   },
   {
     title: "Linux Foundation Certified System Administrator (LFCS)",
@@ -60,7 +61,8 @@ const certifications: CertificationItem[] = [
     examDetails: "Performance-based | 2 hours | $300",
     preparationTime: "4-6 weeks",
     difficulty: 'Beginner',
-    topics: ["System configuration", "User and group management", "Storage management", "Networking"]
+    topics: ["System configuration", "User and group management", "Storage management", "Networking"],
+    examLink: "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/"
   },
   {
     title: "Docker Certified Associate",
@@ -70,7 +72,8 @@ const certifications: CertificationItem[] = [
     preparationTime: "4-6 weeks",
     difficulty: 'Beginner',
     recommended: true,
-    topics: ["Image creation and management", "Orchestration basics", "Networking and storage", "Security best practices"]
+    topics: ["Image creation and management", "Orchestration basics", "Networking and storage", "Security best practices"],
+    examLink: "https://success.docker.com/certification"
   },
   {
     title: "Git Version Control Basics",
@@ -79,7 +82,8 @@ const certifications: CertificationItem[] = [
     examDetails: "Self-paced | Free",
     preparationTime: "2-3 weeks",
     difficulty: 'Beginner',
-    topics: ["Commits and branches", "Merging and rebasing", "Conflict resolution", "Remote workflows"]
+    topics: ["Commits and branches", "Merging and rebasing", "Conflict resolution", "Remote workflows"],
+    examLink: "https://learngitbranching.js.org/"
   },
 
   // Intermediate
@@ -90,7 +94,8 @@ const certifications: CertificationItem[] = [
     examDetails: "Performance-based | 2 hours | $395",
     preparationTime: "6-10 weeks",
     difficulty: 'Intermediate',
-    topics: ["Application deployment", "Configuration and secrets", "Observability", "Pod design"]
+    topics: ["Application deployment", "Configuration and secrets", "Observability", "Pod design"],
+    examLink: "https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/"
   },
   {
     title: "Certified Kubernetes Administrator (CKA)",
@@ -100,7 +105,8 @@ const certifications: CertificationItem[] = [
     preparationTime: "8-12 weeks",
     difficulty: 'Intermediate',
     recommended: true,
-    topics: ["Cluster architecture", "Installation and configuration", "Workloads and scheduling", "Networking"]
+    topics: ["Cluster architecture", "Installation and configuration", "Workloads and scheduling", "Networking"],
+    examLink: "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/"
   },
   {
     title: "Prometheus Certified Associate",
@@ -109,7 +115,8 @@ const certifications: CertificationItem[] = [
     examDetails: "Performance-based | 2 hours | $250",
     preparationTime: "6-8 weeks",
     difficulty: 'Intermediate',
-    topics: ["Metrics collection", "Alerting rules", "PromQL", "Service discovery"]
+    topics: ["Metrics collection", "Alerting rules", "PromQL", "Service discovery"],
+    examLink: "https://training.linuxfoundation.org/certification/prometheus-certified-associate/"
   },
   {
     title: "GitOps with ArgoCD",
@@ -118,7 +125,8 @@ const certifications: CertificationItem[] = [
     examDetails: "60 questions | 90 minutes | $200",
     preparationTime: "4-6 weeks",
     difficulty: 'Intermediate',
-    topics: ["GitOps principles", "Application deployment", "Sync strategies", "Troubleshooting"]
+    topics: ["GitOps principles", "Application deployment", "Sync strategies", "Troubleshooting"],
+    examLink: "https://codefresh.io/certifications/argocd/"
   },
   {
     title: "AWS Certified Solutions Architect - Associate",
@@ -128,7 +136,8 @@ const certifications: CertificationItem[] = [
     preparationTime: "6-8 weeks",
     difficulty: 'Intermediate',
     recommended: true,
-    topics: ["Design resilient architectures", "Secure applications", "Performance and cost optimization", "Cloud monitoring"]
+    topics: ["Design resilient architectures", "Secure applications", "Performance and cost optimization", "Cloud monitoring"],
+    examLink: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
   },
 
   // Advanced
@@ -139,7 +148,8 @@ const certifications: CertificationItem[] = [
     examDetails: "75 questions | 180 minutes | $300",
     preparationTime: "12-16 weeks",
     difficulty: 'Advanced',
-    topics: ["Enterprise architecture design", "Migration planning", "Multi-account strategy", "Cost management"]
+    topics: ["Enterprise architecture design", "Migration planning", "Multi-account strategy", "Cost management"],
+    examLink: "https://aws.amazon.com/certification/certified-solutions-architect-professional/"
   },
   {
     title: "AWS Certified DevOps Engineer - Professional",
@@ -149,7 +159,8 @@ const certifications: CertificationItem[] = [
     preparationTime: "12-16 weeks",
     difficulty: 'Advanced',
     recommended: true,
-    topics: ["CI/CD pipeline implementation", "Monitoring and logging", "Infrastructure as Code", "Incident and event response"]
+    topics: ["CI/CD pipeline implementation", "Monitoring and logging", "Infrastructure as Code", "Incident and event response"],
+    examLink: "https://aws.amazon.com/certification/certified-devops-engineer-professional/"
   },
   {
     title: "Terraform Associate",
@@ -159,7 +170,8 @@ const certifications: CertificationItem[] = [
     preparationTime: "4-6 weeks",
     difficulty: 'Advanced',
     recommended: true,
-    topics: ["Terraform CLI", "State management", "Modules and workspaces", "Cloud infrastructure provisioning"]
+    topics: ["Terraform CLI", "State management", "Modules and workspaces", "Cloud infrastructure provisioning"],
+    examLink: "https://developer.hashicorp.com/certifications/terraform-associate"
   },
   {
     title: "Certified Kubernetes Security Specialist (CKS)",
@@ -168,7 +180,8 @@ const certifications: CertificationItem[] = [
     examDetails: "Performance-based | 2 hours | $395",
     preparationTime: "8-12 weeks",
     difficulty: 'Advanced',
-    topics: ["Cluster hardening", "System hardening", "Minimize microservice vulnerabilities", "Supply chain security"]
+    topics: ["Cluster hardening", "System hardening", "Minimize microservice vulnerabilities", "Supply chain security"],
+    examLink: "https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist-cks/"
   },
   {
     title: "Istio Service Mesh Expert",
@@ -177,15 +190,21 @@ const certifications: CertificationItem[] = [
     examDetails: "Performance-based | 90 minutes | $200",
     preparationTime: "5-7 weeks",
     difficulty: 'Advanced',
-    topics: ["Traffic management", "Security and policies", "Observability", "Istio architecture"]
+    topics: ["Traffic management", "Security and policies", "Observability", "Istio architecture"],
+    examLink: "https://academy.tetrate.io/courses/istio-certified-expert"
   }
 ];
-
 
 const difficultyColors = {
   'Beginner': 'bg-blue-100 text-blue-800',
   'Intermediate': 'bg-green-100 text-green-800',
   'Advanced': 'bg-purple-100 text-purple-800'
+};
+
+const difficultyIcons = {
+  'Beginner': <Rocket className="w-4 h-4" />,
+  'Intermediate': <Gauge className="w-4 h-4" />,
+  'Advanced': <Shield className="w-4 h-4" />
 };
 
 export function CertificationRoadmap() {
@@ -195,76 +214,71 @@ export function CertificationRoadmap() {
   const filteredCerts = certifications.filter((cert) => cert.difficulty === filter);
 
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8">
+    <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-600 mb-3">
+        <div className="text-center mb-16">
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white text-blue-600 shadow-sm border border-blue-100 mb-4"
+          >
             <GraduationCap className="w-4 h-4 mr-2" />
             Certificate Roadmap
-          </span>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl font-bold text-gray-900 mb-4"
+          >
             DevOps Certification Roadmap
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
+          >
             Validate your skills with industry-recognized certifications
-          </p>
+          </motion.p>
         </div>
 
-        {/* Filter Buttons with Icons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          <button
-            onClick={() => setFilter('Beginner')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              filter === 'Beginner'
-                ? 'bg-blue-100 text-blue-800'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            <Rocket className="w-4 h-4" />
-            Beginner
-          </button>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {["Beginner", "Intermediate", "Advanced"].map((level) => (
+            <button
+              key={level}
+              onClick={() => setFilter(level as any)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm ${
+                filter === level
+                  ? `${difficultyColors[level as keyof typeof difficultyColors]} shadow-md`
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+              }`}
+            >
+              {difficultyIcons[level as keyof typeof difficultyIcons]}
+              {level}
+            </button>
+          ))}
+        </motion.div>
 
-          <button
-            onClick={() => setFilter('Intermediate')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              filter === 'Intermediate'
-                ? 'bg-green-100 text-green-800'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            <Gauge className="w-4 h-4" />
-            Intermediate
-          </button>
-
-          <button
-            onClick={() => setFilter('Advanced')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              filter === 'Advanced'
-                ? 'bg-purple-100 text-purple-800'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            <Shield className="w-4 h-4" />
-            Advanced
-          </button>
-        </div>
-
-        {/* Certifications Grid */}
         {filteredCerts.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredCerts.map((cert, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden"
+                whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden transition-all"
               >
                 <div className="p-6">
                   <div className="flex items-start">
-                    <div className="p-2 rounded-lg bg-gray-50 mr-4">
+                    <div className={`p-3 rounded-xl ${filter === cert.difficulty ? difficultyColors[cert.difficulty] : 'bg-gray-100'} mr-4`}>
                       {cert.icon}
                     </div>
                     <div className="flex-1">
@@ -273,7 +287,7 @@ export function CertificationRoadmap() {
                           {cert.title}
                         </h3>
                         {cert.recommended && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                             Recommended
                           </span>
                         )}
@@ -282,47 +296,47 @@ export function CertificationRoadmap() {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex items-center text-sm text-gray-600">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{cert.preparationTime}</span>
-                    <span className="mx-2">•</span>
+                  <div className="mt-5 flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+                    <Clock className="w-4 h-4 mr-2 text-gray-500" />
+                    <span className="font-medium">{cert.preparationTime} prep</span>
+                    <span className="mx-2 text-gray-400">|</span>
                     <span>{cert.examDetails}</span>
                   </div>
 
-                  <div className="mt-3">
+                  <div className="mt-4 flex items-center justify-between">
                     <span
                       className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${difficultyColors[cert.difficulty]}`}
                     >
-                      {cert.difficulty}
+                      {difficultyIcons[cert.difficulty as keyof typeof difficultyIcons]}
+                      <span className="ml-1">{cert.difficulty}</span>
                     </span>
                   </div>
 
-                  <div className="mt-4">
-                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <div className="mt-6">
+                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
                       Topics Covered
                     </h4>
-                    <ul className="space-y-2">
-                      {cert.topics.slice(0, 3).map((topic, i) => (
+                    <ul className="space-y-2.5">
+                      {cert.topics.slice(0, 6).map((topic, i) => (
                         <li key={i} className="flex items-start">
                           <Check className="flex-shrink-0 h-4 w-4 text-green-500 mt-0.5 mr-2" />
                           <span className="text-sm text-gray-700">{topic}</span>
                         </li>
                       ))}
-                      {cert.topics.length > 3 && (
-                        <li className="text-xs text-gray-500">
-                          +{cert.topics.length - 3} more topics
-                        </li>
-                      )}
                     </ul>
                   </div>
 
-                  <button
-                    onClick={() => setSelectedCert(cert)}
-                    className="mt-6 w-full flex items-center justify-between px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    <span>View details</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <div className="mt-8">
+                    <a
+                      href={cert.examLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-between px-4 py-3 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors hover:shadow-sm"
+                    >
+                      <span>View Exam Details</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -333,8 +347,6 @@ export function CertificationRoadmap() {
           </p>
         )}
       </div>
-
-      {/* Keep your existing modal code here */}
     </div>
   );
 }

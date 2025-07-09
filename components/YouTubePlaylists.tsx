@@ -79,7 +79,7 @@ export function YouTubePlaylists() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
 
-  const displayed = showAll ? burmesePlaylists : burmesePlaylists.slice(0, 9);
+  const displayed = showAll ? burmesePlaylists : burmesePlaylists.slice(0, 10);
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -155,7 +155,7 @@ export function YouTubePlaylists() {
         ))}
       </div>
 
-      {burmesePlaylists.length > 9 && (
+      {burmesePlaylists.length > 10 && (
         <div className="mt-10 text-center">
           <button
             onClick={() => setShowAll((prev) => !prev)}

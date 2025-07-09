@@ -95,7 +95,7 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "AWS DevOps Services",
+        title: "AWS Services",
         details: "Package and run applications in containers.",
         duration: "2-3 weeks",
         subtopics: [
@@ -106,7 +106,7 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "Azure DevOps Services",
+        title: "Azure Services",
         details: "Package and run applications in containers.",
         duration: "2-3 weeks",
         subtopics: [
@@ -128,7 +128,7 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "CICD Pipelines",
+        title: "CICD",
         details: "Automate app delivery workflows.",
         duration: "3 weeks",
         subtopics: [
@@ -166,7 +166,7 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "GitOps (ArgoCD)",
+        title: "GitOps",
         details: "Declarative delivery with Git as the source of truth.",
         duration: "2 weeks",
         subtopics: [
