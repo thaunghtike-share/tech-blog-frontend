@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
+import { ArticleComments } from "@/components/ArticleComments";
 
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
@@ -144,6 +145,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Share Buttons */}
           <ShareButtons articleId={article.id} title={article.title} />
+
+          {/* Add Comments section here */}
+          <ArticleComments articleId={article.id} />
 
           {/* Prev / Next Navigation */}
           <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium border-t pt-6">

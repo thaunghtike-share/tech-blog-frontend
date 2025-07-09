@@ -75,7 +75,6 @@ export function ShareButtons({ articleId, title }: ShareButtonsProps) {
                 exit={{ opacity: 0, y: -8 }}
                 className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-green-600"
               >
-                Link copied!
               </motion.div>
             )}
           </AnimatePresence>
