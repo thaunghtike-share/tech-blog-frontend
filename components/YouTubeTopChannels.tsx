@@ -16,6 +16,15 @@ interface Channel {
 
 const topDevOpsChannels: Channel[] = [
   {
+    name: "Hello Cloud",
+    description: "မြန်မာဘာသာဖြင့် သင်ကြားပေးသော Cloud Native Education Courses များ",
+    url: "https://www.youtube.com/c/HelloCloud",
+    videoId: "j7ZkJM1C26o",
+    subscribers: "7K",
+    latestVideoTitle: "[HKS Session 07] Auto-unseal Vault using Transit Secrets Engine [Burmese Language]",
+    latestVideoDate: "2 months ago"
+  },
+  {
     name: "TechWorld with Nana",
     description: "Clear and practical DevOps and Kubernetes tutorials from a former Google engineer.",
     url: "https://www.youtube.com/c/TechWorldwithNana",

@@ -18,6 +18,7 @@ import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { JobInternshipBoard } from "@/components/JobInternshipBoard"
 import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
+import { YouTubePlaylists } from "@/components/YouTubePlaylists"
 
 export default function HomePage() {
   return (
@@ -71,11 +72,14 @@ export default function HomePage() {
         </div>
 
         <MinimalDevopsRoadmap />
-        <CertificationRoadmap />
-        <YouTubeTopChannels />
-        <TopUdemyCourses />
 
+        <YouTubeTopChannels />
+        <YouTubePlaylists />
+
+        <TopUdemyCourses />
         <RecommendedPaidCourses />
+
+        <CertificationRoadmap />
 
         <div className="mt-20">
           <FreelanceServicesSection />
