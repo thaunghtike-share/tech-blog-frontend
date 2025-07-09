@@ -4,8 +4,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
-import { ArticleComments } from "@/components/ArticleComments";
-
+import { GiscusComments } from "@/components/GiscusComments";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -96,33 +95,55 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Article Content */}
         <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 prose prose-lg max-w-full overflow-x-auto">
-          <h1 className="text-5xl font-extrabold mb-4">{article.title}</h1>
-          <p className="text-gray-500 italic mb-2">Published on {publishDate}</p>
-          <p className="text-gray-600 italic mb-8">By {author?.name || "Unknown author"}</p>
+          <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+          <p className="text-gray-600 italic mb-3">Published on {publishDate}</p>
+          <p className="text-gray-600 italic mb-8">
+            Written By{" "}
+            <span className="ml-2 font-medium not-italic text-gray-800">
+              {author?.name || "Unknown author"}
+            </span>
+          </p>
 
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
-              h1: ({ node, ...props }) => <h1 className="text-4xl font-bold my-6" {...props} />,
-              h2: ({ node, ...props }) => <h2 className="text-3xl font-semibold my-5" {...props} />,
-              p: ({ node, children, ...props }) => (
-                <div className="mb-4 text-lg leading-relaxed" {...props}>
-                  {children}
-                </div>
+              h1: ({ node, ...props }) => (
+                <h1 className="text-3xl font-semibold my-4" {...props} />
               ),
-              code: ({ inline, className, children, ...props }: any) => {
+              h2: ({ node, ...props }) => (
+                <h2 className="text-2xl font-semibold my-3" {...props} />
+              ),
+              p: ({ node, children, ...props }) => (
+                <p className="mb-3 text-base leading-relaxed text-gray-800" {...props}>
+                  {children}
+                </p>
+              ),
+              code: ({ inline, className = "", children, ...props }: any) => {
                 if (inline) {
                   return (
-                    <code className="bg-gray-200 rounded px-1" {...props}>
+                    <code className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono" {...props}>
                       {children}
                     </code>
                   );
                 }
+
+                const match = /language-(\w+)/.exec(className || "");
+                const language = match?.[1] || "";
+
                 return (
-                  <pre className="bg-gray-100 rounded-lg p-4 overflow-x-auto mb-4" {...props}>
-                    <code className={className}>{children}</code>
-                  </pre>
+                  <div className="relative mb-6 rounded-lg bg-white shadow border border-gray-200">
+                    {language && (
+                      <div className="absolute top-0 right-0 px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-bl-md font-mono border-l border-b border-gray-300">
+                        {language}
+                      </div>
+                    )}
+                    <pre className="overflow-x-auto p-4 text-sm text-gray-800">
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    </pre>
+                  </div>
                 );
               },
               blockquote: ({ node, ...props }) => (
@@ -146,8 +167,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Share Buttons */}
           <ShareButtons articleId={article.id} title={article.title} />
 
-          {/* Add Comments section here */}
-          <ArticleComments articleId={article.id} />
+          {/* Comments */}
+          <GiscusComments />
 
           {/* Prev / Next Navigation */}
           <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium border-t pt-6">
