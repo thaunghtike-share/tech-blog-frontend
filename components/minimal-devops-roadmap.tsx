@@ -23,227 +23,202 @@ interface ResourceLink {
   url: string;
 }
 
-const roadmap: RoadmapStage[] = [
-  {
+const roadmap: RoadmapStage[] = [  {
     key: "beginner",
     label: "Beginner",
     description: [
-      "Get started with foundational DevOps topics like Linux, Git, and scripting.",
-      "Perfect for newcomers aiming to build strong technical basics.",
+      "Start your DevOps journey with foundational tools and concepts.",
+      "Best for absolute beginners and career switchers."
     ],
     items: [
       {
-        title: "Linux & Bash Scripting",
-        details: "Learn essential system and network skills.",
+        title: "Linux Fundamentals",
+        details: "Understand the Linux operating system and shell commands.",
         duration: "2-3 weeks",
         subtopics: [
-          "Basic CLI commands",
-          "Permissions & file systems",
-          "SSH setup",
-          "IP, DNS, and ports",
-        ],
+          "File systems & permissions",
+          "Shell navigation",
+          "Process management",
+          "SSH & remote access"
+        ]
       },
       {
         title: "Cloud Fundamentals",
-        details: "Automate tasks using simple scripts.",
-        duration: "2 weeks",
-        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+        details: "Grasp basic concepts of cloud computing and major providers.",
+        duration: "2-3 weeks",
+        subtopics: ["IaaS vs PaaS vs SaaS", "AWS Free Tier", "Azure Basics", "GCP Console"]
       },
       {
-        title: "Network Fundamentals",
-        details: "Automate tasks using simple scripts.",
+        title: "Networking Basics",
+        details: "Learn the essentials of computer networking.",
         duration: "2 weeks",
-        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+        subtopics: ["IP & Subnets", "Ports", "DNS", "HTTP vs HTTPS"]
       },
       {
-        title: "Docker Fundamentals",
-        details: "Automate tasks using simple scripts.",
-        duration: "2 weeks",
-        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+        title: "Bash & Python Scripting",
+        details: "Automate tasks with scripts and basic programming logic.",
+        duration: "2-3 weeks",
+        subtopics: ["Bash syntax", "Loops & conditionals", "Python basics"]
       },
       {
-        title: "Python Fundamentals",
-        details: "Automate tasks using simple scripts.",
-        duration: "2 weeks",
-        subtopics: ["Bash syntax", "Conditional logic", "Loops", "Python basics"],
+        title: "Git & Version Control",
+        details: "Track changes and collaborate on code.",
+        duration: "2-3 weeks",
+        subtopics: ["Git CLI", "Branches & merging", "GitHub usage"]
       },
       {
-        title: "Git & GitOps",
-        details: "Version control and GitOps workflows.",
-        duration: "3 weeks",
-        subtopics: [
-          "Git branches & pull requests",
-          "GitHub Actions basics",
-          "Intro to ArgoCD",
-          "Declarative deployments",
-        ],
+        title: "Docker Basics",
+        details: "Understand containerization and Docker CLI.",
+        duration: "2 weeks",
+        subtopics: ["Images & containers", "Dockerfile", "Volumes & ports"]
       },
       {
         title: "YAML & JSON",
-        details: "Understand config formats used in DevOps.",
+        details: "Work with common configuration formats.",
         duration: "1 week",
-        subtopics: ["YAML syntax", "JSON structures", "Common use in CI/CD"],
-      },
-    ],
+        subtopics: ["YAML syntax", "JSON usage in APIs", "CI/CD configs"]
+      }
+    ]
   },
   {
     key: "intermediate",
     label: "Intermediate",
     description: [
-      "Build on your foundation with containers, pipelines, and cloud infrastructure.",
-      "Suitable if you already know scripting and version control.",
+      "Build upon your foundation with real DevOps tools and practices.",
+      "Ideal for those comfortable with scripting and cloud basics."
     ],
     items: [
       {
-        title: "AWS Services",
-        details: "Package and run applications in containers.",
-        duration: "2-3 weeks",
-        subtopics: [
-          "Docker CLI",
-          "Dockerfile & images",
-          "Volumes & networks",
-          "docker-compose",
-        ],
+        title: "AWS Core Services",
+        details: "Dive into EC2, IAM, S3, and basic networking.",
+        duration: "3-4 weeks",
+        subtopics: ["EC2 provisioning", "S3 storage", "IAM roles & policies"]
       },
       {
-        title: "Azure Services",
-        details: "Package and run applications in containers.",
-        duration: "2-3 weeks",
-        subtopics: [
-          "Docker CLI",
-          "Dockerfile & images",
-          "Volumes & networks",
-          "docker-compose",
-        ],
+        title: "Azure Fundamentals",
+        details: "Explore Azure resource groups, VMs, and storage.",
+        duration: "3-4 weeks",
+        subtopics: ["Azure Portal", "VNet & Subnets", "Blob storage"]
       },
       {
-        title: "Kubernetes",
-        details: "Orchestrate containers at scale.",
+        title: "Kubernetes Essentials",
+        details: "Learn to orchestrate containers at scale.",
         duration: "4 weeks",
-        subtopics: [
-          "Pods & deployments",
-          "Services & ingress",
-          "ConfigMaps & secrets",
-          "Helm basics",
-        ],
+        subtopics: ["Pods & deployments", "Services & Ingress", "Helm", "Namespaces"]
       },
       {
-        title: "CICD",
-        details: "Automate app delivery workflows.",
+        title: "CI/CD Fundamentals",
+        details: "Automate software delivery using pipelines.",
         duration: "3 weeks",
-        subtopics: [
-          "GitHub Actions",
-          "Jenkins pipelines",
-          "Triggers & webhooks",
-          "Testing/staging environments",
-        ],
+        subtopics: ["GitHub Actions", "GitLab CI/CD", "Webhooks", "Testing pipelines"]
       },
       {
-        title: "Terraform",
-        details: "Provision infrastructure using code.",
+        title: "Container Services (ECS/EKS)",
+        details: "Deploy and manage containers on AWS.",
         duration: "3 weeks",
-        subtopics: [
-          "Terraform syntax",
-          "Providers & resources",
-          "Modules & state",
-          "Azure/AWS basics",
-        ],
+        subtopics: ["Fargate", "EKS setup", "Service discovery", "Auto-scaling"]
       },
       {
-        title: "Hashicorp Packer",
-        details: "Learn core cloud services.",
-        duration: "4 weeks",
-        subtopics: ["AWS EC2/S3/IAM", "Azure RG/VNet/VM", "GCP basics"],
-      },
-    ],
+        title: "Monitoring & Observability",
+        details: "Monitor app health and metrics effectively.",
+        duration: "3 weeks",
+        subtopics: ["Prometheus", "Grafana", "CloudWatch", "Loki"]
+      }
+    ]
   },
   {
     key: "advanced",
     label: "Advanced",
     description: [
-      "Focus on scaling, security, and real projects with GitOps and observability.",
-      "For those ready to operate production-grade systems.",
+      "Work with infrastructure as code, GitOps, and production-grade security.",
+      "Perfect for engineers aiming for senior/lead roles."
     ],
     items: [
       {
-        title: "GitOps",
-        details: "Declarative delivery with Git as the source of truth.",
-        duration: "2 weeks",
-        subtopics: [
-          "ArgoCD setup",
-          "Sync policies",
-          "App manifests in Git",
-          "Health/status checks",
-        ],
+        title: "Terraform IaC",
+        details: "Provision cloud infrastructure with Terraform.",
+        duration: "3-4 weeks",
+        subtopics: ["HCL basics", "Modules & state", "Providers", "Remote backends"]
       },
       {
-        title: "Monitoring & Observability",
-        details: "Track metrics, logs, and app performance.",
+        title: "GitOps with ArgoCD",
+        details: "Deploy apps declaratively with Git as the source of truth.",
+        duration: "2-3 weeks",
+        subtopics: ["ArgoCD install", "App manifests", "Sync policies", "Health checks"]
+      },
+      {
+        title: "Vault & Secrets Management",
+        details: "Secure sensitive data in apps and pipelines.",
+        duration: "2-3 weeks",
+        subtopics: ["Vault setup", "Token & policy management", "Kubernetes secrets"]
+      },
+      {
+        title: "Kubernetes Security",
+        details: "Enforce security and access control in Kubernetes.",
         duration: "3 weeks",
-        subtopics: [
-          "Prometheus metrics",
-          "Grafana dashboards",
-          "Loki logs",
-          "ELK stack overview",
-        ],
-      },
-      {
-        title: "Security & Secrets",
-        details: "Protect systems & data in production.",
-        duration: "3 weeks",
-        subtopics: [
-          "Vault for secrets",
-          "Kubernetes RBAC",
-          "Pod security policies",
-          "OPA/Gatekeeper",
-        ],
-      },
-      {
-        title: "Cost Optimization",
-        details: "Reduce cloud costs effectively.",
-        duration: "2 weeks",
-        subtopics: [
-          "Spot instances",
-          "Auto-scaling",
-          "Tagging strategies",
-          "Rightsizing",
-        ],
-      },
-      {
-        title: "Certs & Real Projects",
-        details: "Practice and prep for interviews & certs.",
-        duration: "Varies",
-        subtopics: [
-          "Build infra with IaC",
-          "Mock interviews",
-          "CKA, Terraform, AWS certs",
-        ],
-      },
-    ],
-  },
+        subtopics: ["RBAC", "Pod Security Policies", "OPA Gatekeeper", "Network Policies"]
+      }
+    ]
+  }
 ];
 
 const resourceLinks: Record<string, ResourceLink[]> = {
-  "Linux & Networking": [
-    { text: "Linux Command Basics", url: "https://ubuntu.com/tutorials/command-line-for-beginners" },
-    { text: "Networking Fundamentals", url: "https://www.cisco.com/c/en/us/solutions/enterprise-networks/networking-fundamentals.html" }
+  "Linux Fundamentals": [
+    { text: "Linux Journey", url: "https://linuxjourney.com/" },
+    { text: "Ubuntu CLI Basics", url: "https://ubuntu.com/tutorials/command-line-for-beginners" }
   ],
-  "Bash/Python Scripting": [
-    { text: "Bash Scripting Guide", url: "https://linuxconfig.org/bash-scripting-tutorial" },
-    { text: "Python for Beginners", url: "https://www.python.org/about/gettingstarted/" }
+  "Cloud Fundamentals": [
+    { text: "AWS Cloud Concepts", url: "https://aws.amazon.com/training/digital/cloud-practitioner/" },
+    { text: "Azure Fundamentals", url: "https://learn.microsoft.com/en-us/training/azure/" }
   ],
-  "Git & GitOps": [
-    { text: "Git Official Documentation", url: "https://git-scm.com/doc" },
-    { text: "GitHub Actions Docs", url: "https://docs.github.com/en/actions" }
+  "Networking Basics": [
+    { text: "Cisco Networking Guide", url: "https://www.cisco.com/c/en/us/solutions/enterprise-networks/networking-fundamentals.html" },
+    { text: "Computer Networking Tutorial", url: "https://www.geeksforgeeks.org/computer-network-tutorials/" }
   ],
-  "Docker & Containers": [
-    { text: "Official Docker Get Started", url: "https://docs.docker.com/get-started/" },
-    { text: "Docker Compose Guide", url: "https://docs.docker.com/compose/" }
+  "Bash & Python Scripting": [
+    { text: "Bash Scripting", url: "https://linuxconfig.org/bash-scripting-tutorial" },
+    { text: "Python Beginner Guide", url: "https://www.python.org/about/gettingstarted/" }
   ],
-  "Kubernetes": [
-    { text: "Kubernetes Basics", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
-    { text: "Helm Documentation", url: "https://helm.sh/docs/" }
+  "Git & Version Control": [
+    { text: "Git Docs", url: "https://git-scm.com/doc" },
+    { text: "GitHub Actions", url: "https://docs.github.com/en/actions" }
   ],
+  "Docker Basics": [
+    { text: "Docker Getting Started", url: "https://docs.docker.com/get-started/" },
+    { text: "Docker Compose", url: "https://docs.docker.com/compose/" }
+  ],
+  "YAML & JSON": [
+    { text: "YAML Tutorial", url: "https://www.tutorialspoint.com/yaml/index.htm" },
+    { text: "JSON Guide", url: "https://www.json.org/json-en.html" }
+  ],
+  "Kubernetes Essentials": [
+    { text: "K8s Basics", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
+    { text: "Helm Charts", url: "https://helm.sh/docs/" }
+  ],
+  "CI/CD Fundamentals": [
+    { text: "CI/CD Guide", url: "https://about.gitlab.com/topics/ci-cd/" },
+    { text: "GitHub Actions", url: "https://docs.github.com/en/actions" }
+  ],
+  "Monitoring & Observability": [
+    { text: "Prometheus Docs", url: "https://prometheus.io/docs/" },
+    { text: "Grafana Docs", url: "https://grafana.com/docs/" }
+  ],
+  "Terraform IaC": [
+    { text: "Terraform Basics", url: "https://developer.hashicorp.com/terraform/docs" },
+    { text: "Terraform Learn", url: "https://learn.hashicorp.com/terraform" }
+  ],
+  "GitOps with ArgoCD": [
+    { text: "ArgoCD Docs", url: "https://argo-cd.readthedocs.io/en/stable/" },
+    { text: "GitOps by WeaveWorks", url: "https://www.weave.works/technologies/gitops/" }
+  ],
+  "Vault & Secrets Management": [
+    { text: "Vault Docs", url: "https://developer.hashicorp.com/vault/docs" },
+    { text: "Kubernetes Secrets", url: "https://kubernetes.io/docs/concepts/configuration/secret/" }
+  ],
+  "Kubernetes Security": [
+    { text: "K8s RBAC", url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/" },
+    { text: "OPA Gatekeeper", url: "https://open-policy-agent.github.io/gatekeeper/" }
+  ]
 };
 
 const getStageIcon = (stageKey: string) => {

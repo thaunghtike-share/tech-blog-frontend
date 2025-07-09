@@ -152,7 +152,7 @@ export function YouTubePlaylists() {
           Top DevOps & Cloud Playlists
         </h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Handpicked Burmese-language video playlists to learn DevOps tools like Docker, Kubernetes, AWS, Terraform, and more.
+          Recommended video playlists to learn DevOps tools like Linux, Docker, Kubernetes, AWS, Terraform, and more.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

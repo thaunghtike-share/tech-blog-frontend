@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, ExternalLink, Clock, Globe } from "lucide-react";
+import { Play, ExternalLink, Clock, Globe, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react"; // make sure this is imported
 
 interface Playlist {
   title: string;
   videoId: string;
   playlistUrl: string;
-  updated?: string;
-  duration?: string;
+  duration: string;
 }
 
 const burmesePlaylists: Playlist[] = [
@@ -18,61 +16,61 @@ const burmesePlaylists: Playlist[] = [
     title: "Python Fundamentals by Sayar Thet Khine",
     videoId: "DP3AIYK-HR8",
     playlistUrl: "https://www.youtube.com/playlist?list=PLVhJW4jnAwFQ-E62y9MPJY8t33E8RThPy",
-    updated: "Apr 2015",
+    duration: "2-3 weeks",
   },
   {
     title: "Basic Networking Tutorials By RHC Technologies",
     videoId: "DhJ4kL2HbuA",
     playlistUrl: "https://www.youtube.com/watch?v=DhJ4kL2HbuA&list=PLuMzkmyfR9LY64pZl4zhYehlpXXAtGwZ",
-    updated: "Apr 2024",
+    duration: "2 weeks",
   },
   {
     title: "Basic Networking Lessons By WalkTechVlogs by Uphyo",
     videoId: "PYqqykoMB1Y",
     playlistUrl: "https://www.youtube.com/watch?v=PYqqykoMB1Y&list=PL6jybr6k2wfqVgPv-kqlKoK2g2HJb3niX",
-    updated: "Apr 2022" 
+    duration: "2 weeks",
   },
   {
     title: "Linux Foundation Certified System Administrator (LFCS) - by HelloCloud",
     videoId: "qJnZGcL4jkQ",
     playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtf9x079XNlEgyiCv-XwxXxG",
-    updated: "Mar 2024",
+    duration: "3-4 weeks",
   },
   {
     title: "Hello Docker - Tutorial Series - by HelloCloud",
     videoId: "9qsWPKZH9PE",
     playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtc07cVn3OXFiaIYXnDx5pDf",
-    updated: "Feb 2024",
+    duration: "2 weeks",
   },
   {
     title: "AWS Essentials by DevKTOps",
     videoId: "W3jTLLA4tCg",
     playlistUrl: "https://www.youtube.com/playlist?list=PLSKzuxf9q42Fu5nunaTbH0nFVt1GqDgMW",
-    updated: "Feb 2024",
+    duration: "3 weeks",
   },
   {
     title: "AWS Fundamentals by Myanmar Tech Academy ",
     videoId: "Dn5B-qliqyk",
     playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz4H8wn2KnPI-u5a3F9UNNVz",
-    updated: "Jan 2024",
+    duration: "2-3 weeks",
   },
   {
     title: "Linux By Myanmar Tech Academy",
     videoId: "22Lc-1wg1aQ",
     playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz59dNMjdMyA0LmQtqRNRPU0",
-    updated: "Dec 2023",
+    duration: "2-3 weeks",
   },
   {
     title: "Git Basic Course By Myanmar Data Science",
     videoId: "22Lc-1wg1aQ",
     playlistUrl: "https://www.youtube.com/watch?v=DB_MEZZdiIs&list=PLD_eiqVVLZDge73nM5J-LyPgbfVL6vnDc",
-    updated: "Dec 2022",
+    duration: "1 week",
   },
   {
     title: "Terraform Tutorial Series- by HelloCloud",
     videoId: "v4X3D4YlyHc",
     playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtdufeA0ab5mKycSJgq5Bi57",
-    updated: "Mar 2024",
+    duration: "2-3 weeks",
   },
 ];
 
@@ -100,7 +98,7 @@ export function YouTubePlaylistsMM() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayed.map((course, idx) => (
           <motion.div
-            key={idx}
+            key={course.playlistUrl}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
@@ -138,7 +136,7 @@ export function YouTubePlaylistsMM() {
 
                 <div className="text-sm text-gray-500 mb-4 flex items-center gap-2">
                   <Clock className="w-4 h-4 text-yellow-500" />
-                  Updated {course.updated}
+                  Estimated: {course.duration}
                 </div>
 
                 <a
@@ -165,12 +163,12 @@ export function YouTubePlaylistsMM() {
             {showAll ? "Show Less" : "See More"}
             {showAll ? (
               <ChevronUp className="w-4 h-4 ml-2" />
-          ) : (
+            ) : (
               <ChevronDown className="w-4 h-4 ml-2" />
-          )}
-        </button>
-      </div>
-    )}
+            )}
+          </button>
+        </div>
+      )}
     </section>
   );
 }
