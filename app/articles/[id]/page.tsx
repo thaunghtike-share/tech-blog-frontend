@@ -8,6 +8,7 @@ import "highlight.js/styles/atom-one-light.css";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
+import { ShareButtons } from "@/components/share-buttons";
 
 interface Article {
   id: number;
@@ -79,9 +80,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   function excerpt(content: string) {
     const plainText = content
-      .replace(/<[^>]+>/g, "")                  // remove HTML tags
-      .replace(/[#_*>\-\[\]\(\)`~]/g, "")       // remove Markdown syntax
-      .replace(/\s+/g, " ")                     // collapse extra spaces/newlines
+      .replace(/<[^>]+>/g, "")
+      .replace(/[#_*>\-\[\]\(\)`~]/g, "")
+      .replace(/\s+/g, " ")
       .trim()
       .slice(0, 80);
     return plainText.length === 80 ? plainText + "..." : plainText;
@@ -141,8 +142,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             {article.content}
           </ReactMarkdown>
 
+          {/* Share Buttons */}
+          <ShareButtons articleId={article.id} title={article.title} />
+
           {/* Prev / Next Navigation */}
-          <div className="mt-12 flex justify-between items-center text-sm text-blue-600 font-medium">
+          <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium border-t pt-6">
             {prevArticle ? (
               <a href={`/articles/${prevArticle.id}`} className="hover:underline">
                 ← {prevArticle.title}
