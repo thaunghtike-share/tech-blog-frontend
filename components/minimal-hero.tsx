@@ -72,7 +72,7 @@ export function MinimalHero() {
           <Code className="h-3 w-3 ml-1" />
         </motion.div>
 
-        {/* Heading */}
+        {/* Heading (title) */}
         <motion.h1
           variants={item}
           className="text-sm sm:text-base md:text-3xl font-semibold text-gray-900 mb-4 tracking-tight"
@@ -91,7 +91,7 @@ export function MinimalHero() {
         {/* Description */}
         <motion.p
           variants={item}
-          className="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
+          className="text-sm sm:text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
         >
           A curated DevOps roadmap, tools, and projects — built especially for
           students, junior developers, and aspiring engineers in Myanmar
