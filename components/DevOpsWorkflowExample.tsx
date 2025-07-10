@@ -108,9 +108,9 @@ export function DevOpsWorkflowExample() {
       </div>
 
       {/* Diagram */}
-      <div className="relative w-full aspect-video mb-20">
+      <div className="relative w-full aspect-video mb-23">
         <Image
-          src="/mbf.png"
+          src="/dinger.png"
           alt="DevOps workflow diagram"
           fill
           className="object-contain"
