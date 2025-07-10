@@ -63,12 +63,12 @@ export default function HomePage() {
       <main className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
           {/* Blog List (main content) */}
-          <div className="min-w-[70vw] md:min-w-0 flex-1 bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-blue-100">
+          <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-blue-100">
             <MinimalBlogList />
           </div>
 
           {/* Sidebar - appears to the right on all screens */}
-          <div className="w-[300px] flex-shrink-0 sticky top-6 h-fit">
+          <div className="hidden md:block w-[300px] flex-shrink-0 sticky top-6 h-fit">
             <MinimalSidebar />
           </div>
         </div>
