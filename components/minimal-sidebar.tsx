@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Server, Code, Brain, Cloud, Cog, BarChart3, Shield, Database, Globe, Zap,
-  ChevronDown, ChevronUp, ArrowRight, User, Tag, Folder, Star
+  ChevronDown, ChevronUp, ArrowRight, Tag, Folder, Star
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -98,7 +98,7 @@ export function MinimalSidebar() {
   }, [])
 
   return (
-    <aside className="space-y-6">
+    <aside className="space-y-6 w-80 max-w-full">
       {/* Services Card */}
       <Card className="border-0 shadow-sm bg-gradient-to-br from-blue-50 to-indigo-50">
         <CardContent className="p-6">
@@ -171,7 +171,7 @@ export function MinimalSidebar() {
 
           {loading.categories ? (
             <div className="space-y-3">
-              {[...Array(5)].map((_, i) => (
+              {[...Array(6)].map((_, i) => (
                 <div key={i} className="animate-pulse h-12 rounded-lg bg-gray-100" />
               ))}
             </div>
@@ -181,8 +181,8 @@ export function MinimalSidebar() {
             </div>
           ) : (
             <>
-              <ul className="space-y-2">
-                {(showAllCategories ? categories : categories.slice(0, 5)).map((category) => {
+              <ul className="grid grid-cols-2 gap-3">
+                {(showAllCategories ? categories : categories.slice(0, 6)).map((category) => {
                   const [Icon, colorClass] = getCategoryIconWithColor(category.name)
                   return (
                     <li key={category.id}>
@@ -194,7 +194,7 @@ export function MinimalSidebar() {
                           <div className={`p-2 rounded-lg ${colorClass.split(' ')[0]}`}>
                             <Icon className={`h-5 w-5 ${colorClass.split(' ')[1]}`} />
                           </div>
-                          <span className="font-medium text-gray-700 group-hover:text-blue-600">
+                          <span className="font-medium text-gray-700 group-hover:text-blue-600 truncate">
                             {category.name}
                           </span>
                         </div>
@@ -208,7 +208,7 @@ export function MinimalSidebar() {
                   )
                 })}
               </ul>
-              {categories.length > 5 && (
+              {categories.length > 6 && (
                 <button
                   onClick={() => setShowAllCategories(!showAllCategories)}
                   className="mt-4 w-full flex items-center justify-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
@@ -221,7 +221,7 @@ export function MinimalSidebar() {
                   ) : (
                     <>
                       <ChevronDown className="h-4 w-4" />
-                      Show More
+                      See More
                     </>
                   )}
                 </button>
