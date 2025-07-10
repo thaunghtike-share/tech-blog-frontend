@@ -94,7 +94,7 @@ const allUdemyCourses: UdemyCourse[] = [
 
 export function TopUdemyCourses() {
   const [showAll, setShowAll] = useState(false);
-  const coursesToShow = showAll ? allUdemyCourses : allUdemyCourses.slice(0, 6);
+  const coursesToShow = showAll ? allUdemyCourses : allUdemyCourses.slice(0, 9);
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

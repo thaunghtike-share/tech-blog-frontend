@@ -201,6 +201,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
   ],
   "Git & Version Control": [
     { text: "Git Docs", url: "https://git-scm.com/doc" },
+    { text: "Git Branching", url: "https://learngitbranching.js.org/"},
     { text: "GitHub Actions", url: "https://docs.github.com/en/actions" }
   ],
   "Docker Basics": [

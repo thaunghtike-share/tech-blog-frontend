@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import {
   CheckCircle2,
-  ArrowRight,
   GitCommit,
   Code,
   Shield,
@@ -12,6 +11,7 @@ import {
   GitPullRequest,
   Server,
   Activity,
+  Settings,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -23,25 +23,22 @@ const workflowSteps = [
     tools: ["Terraform", "Terragrunt", "Terraformer"],
     icon: GitPullRequest,
     color: "bg-yellow-100 text-yellow-700",
-    iconColor: "bg-yellow-500 text-white",
   },
   {
     id: 2,
     title: "Code Commit",
     description: "Code is pushed to GitHub triggering the CI pipeline",
-    tools: ["GitHub", "Git"],
+    tools: ["GitHub", "Git", "VS Code"],
     icon: GitCommit,
     color: "bg-blue-100 text-blue-700",
-    iconColor: "bg-blue-500 text-white",
   },
   {
     id: 3,
     title: "Build & Scan",
     description: "Docker image built and scanned using Trivy",
-    tools: ["Docker", "Trivy"],
+    tools: ["Docker", "Trivy", "Docker buildx"],
     icon: Shield,
     color: "bg-green-100 text-green-700",
-    iconColor: "bg-green-500 text-white",
   },
   {
     id: 4,
@@ -50,16 +47,14 @@ const workflowSteps = [
     tools: ["Azure ACR"],
     icon: Package,
     color: "bg-purple-100 text-purple-700",
-    iconColor: "bg-purple-500 text-white",
   },
   {
     id: 5,
-    title: "Kubernetes Deployment",
+    title: "Deploy Apps using GitOps with ArgoCD",
     description: "Argo CD deploys apps using Helm charts",
     tools: ["Argo CD", "Helm"],
     icon: Server,
     color: "bg-red-100 text-red-700",
-    iconColor: "bg-red-500 text-white",
   },
   {
     id: 6,
@@ -68,16 +63,14 @@ const workflowSteps = [
     tools: ["GitHub", "Argo CD Image Updater"],
     icon: GitPullRequest,
     color: "bg-orange-100 text-orange-700",
-    iconColor: "bg-orange-500 text-white",
   },
   {
     id: 7,
-    title: "Monitoring",
+    title: "Logging & Monitoring",
     description: "Prometheus and Grafana provide metrics and alerts",
-    tools: ["Prometheus", "Grafana"],
+    tools: ["Prometheus", "Grafana", "Loki", "Azure Monitor", "Elastic Cloud"],
     icon: Activity,
     color: "bg-indigo-100 text-indigo-700",
-    iconColor: "bg-indigo-500 text-white",
   },
 ];
 
@@ -131,36 +124,36 @@ export function DevOpsWorkflowExample() {
         {/* Workflow Stepper */}
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
-            <ArrowRight className="text-blue-600" />
+            <Settings className="text-blue-600" />
             Workflow Steps
           </h3>
 
-          {/* Horizontal Stepper - NO arrows */}
-          <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center space-x-3">
+          {/* Connected Horizontal Stepper */}
+          <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center">
             {workflowSteps.map((step, i) => {
               const Icon = step.icon;
               const isSelected = currentStep === i;
+
               return (
-                <motion.button
-                  key={step.id}
-                  onClick={() => setCurrentStep(i)}
-                  whileHover={{ scale: 1.05 }}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap border transition-all text-sm font-medium
-                    ${
-                      isSelected
-                        ? "bg-blue-600 text-white border-blue-600 shadow-lg"
-                        : "bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100"
-                    }`}
-                >
-                  <div
-                    className={`w-7 h-7 flex items-center justify-center rounded-full ${
-                      isSelected ? "bg-white text-blue-600" : "bg-blue-600 text-white"
-                    }`}
+                <React.Fragment key={step.id}>
+                  <motion.button
+                    onClick={() => setCurrentStep(i)}
+                    whileHover={{ scale: 1.05 }}
+                    className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all flex-shrink-0
+                      ${
+                        isSelected
+                          ? "bg-blue-600 text-white border-blue-600 shadow-lg"
+                          : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50 hover:shadow-sm"
+                      }`}
                   >
                     <Icon className="w-4 h-4" />
-                  </div>
-                  {step.title}
-                </motion.button>
+                  </motion.button>
+
+                  {/* Connector Line */}
+                  {i < workflowSteps.length - 1 && (
+                    <div className="h-0.5 w-5 bg-blue-300 mx-1 flex-shrink-0 rounded-full" />
+                  )}
+                </React.Fragment>
               );
             })}
           </div>

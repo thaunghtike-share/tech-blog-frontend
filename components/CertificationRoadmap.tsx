@@ -71,19 +71,8 @@ const certifications: CertificationItem[] = [
     examDetails: "55 questions | 90 minutes | $195",
     preparationTime: "4-6 weeks",
     difficulty: 'Beginner',
-    recommended: true,
     topics: ["Image creation and management", "Orchestration basics", "Networking and storage", "Security best practices"],
     examLink: "https://success.docker.com/certification"
-  },
-  {
-    title: "Git Version Control Basics",
-    icon: <GitMerge className="w-6 h-6 text-gray-700" />,
-    organization: "Open Source Community",
-    examDetails: "Self-paced | Free",
-    preparationTime: "2-3 weeks",
-    difficulty: 'Beginner',
-    topics: ["Commits and branches", "Merging and rebasing", "Conflict resolution", "Remote workflows"],
-    examLink: "https://learngitbranching.js.org/"
   },
 
   // Intermediate
@@ -94,6 +83,7 @@ const certifications: CertificationItem[] = [
     examDetails: "Performance-based | 2 hours | $395",
     preparationTime: "6-10 weeks",
     difficulty: 'Intermediate',
+    recommended: true,
     topics: ["Application deployment", "Configuration and secrets", "Observability", "Pod design"],
     examLink: "https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/"
   },
@@ -109,14 +99,15 @@ const certifications: CertificationItem[] = [
     examLink: "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/"
   },
   {
-    title: "Prometheus Certified Associate",
-    icon: <Gauge className="w-6 h-6 text-red-500" />,
-    organization: "Linux Foundation",
-    examDetails: "Performance-based | 2 hours | $250",
+    title: "AWS Certified Solutions Architect - Associate",
+    icon: <Server className="w-6 h-6 text-orange-400" />,
+    organization: "Amazon Web Services",
+    examDetails: "65 questions | 130 minutes | $150",
     preparationTime: "6-8 weeks",
     difficulty: 'Intermediate',
-    topics: ["Metrics collection", "Alerting rules", "PromQL", "Service discovery"],
-    examLink: "https://training.linuxfoundation.org/certification/prometheus-certified-associate/"
+    recommended: true,
+    topics: ["Design resilient architectures", "Secure applications", "Performance and cost optimization", "Cloud monitoring"],
+    examLink: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
   },
   {
     title: "GitOps with ArgoCD",
@@ -129,30 +120,30 @@ const certifications: CertificationItem[] = [
     examLink: "https://codefresh.io/certifications/argocd/"
   },
   {
-    title: "AWS Certified Solutions Architect - Associate",
-    icon: <Server className="w-6 h-6 text-orange-400" />,
-    organization: "Amazon Web Services",
-    examDetails: "65 questions | 130 minutes | $150",
+    title: "Prometheus Associate PCA",
+    icon: <Gauge className="w-6 h-6 text-red-500" />,
+    organization: "Linux Foundation",
+    examDetails: "Performance-based | 2 hours | $250",
     preparationTime: "6-8 weeks",
     difficulty: 'Intermediate',
-    recommended: true,
-    topics: ["Design resilient architectures", "Secure applications", "Performance and cost optimization", "Cloud monitoring"],
-    examLink: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
+    topics: ["Metrics collection", "Alerting rules", "PromQL", "Service discovery"],
+    examLink: "https://training.linuxfoundation.org/certification/prometheus-certified-associate/"
   },
 
   // Advanced
   {
-    title: "AWS Certified Solutions Architect - Professional",
+    title: "AWS SA - Professional",
     icon: <Server className="w-6 h-6 text-orange-600" />,
     organization: "Amazon Web Services",
     examDetails: "75 questions | 180 minutes | $300",
     preparationTime: "12-16 weeks",
     difficulty: 'Advanced',
+    recommended: true,
     topics: ["Enterprise architecture design", "Migration planning", "Multi-account strategy", "Cost management"],
     examLink: "https://aws.amazon.com/certification/certified-solutions-architect-professional/"
   },
   {
-    title: "AWS Certified DevOps Engineer - Professional",
+    title: "AWS Certified DevOps Engineer",
     icon: <Server className="w-6 h-6 text-orange-500" />,
     organization: "Amazon Web Services",
     examDetails: "75 questions | 180 minutes | $300",
@@ -174,7 +165,7 @@ const certifications: CertificationItem[] = [
     examLink: "https://developer.hashicorp.com/certifications/terraform-associate"
   },
   {
-    title: "Certified Kubernetes Security Specialist (CKS)",
+    title: "Kubernetes Security Specialist (CKS)",
     icon: <Lock className="w-6 h-6 text-green-600" />,
     organization: "CNCF",
     examDetails: "Performance-based | 2 hours | $395",
@@ -184,7 +175,7 @@ const certifications: CertificationItem[] = [
     examLink: "https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist-cks/"
   },
   {
-    title: "Istio Service Mesh Expert",
+    title: "Certified Istio Service Mesh Expert",
     icon: <Gauge className="w-6 h-6 text-indigo-500" />,
     organization: "Istio Community",
     examDetails: "Performance-based | 90 minutes | $200",
