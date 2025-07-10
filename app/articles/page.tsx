@@ -7,6 +7,7 @@ import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalBlogList } from "@/components/minimal-blog-list"
 import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
+import { MinimalHero } from "@/components/minimal-hero"
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
@@ -48,7 +49,7 @@ export default function ArticlesPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="hidden lg:block lg:col-span-1">
             <MinimalSidebar />
           </div>
         </div>

@@ -9,6 +9,7 @@ import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { ShareButtons } from "@/components/share-buttons";
+import { MinimalHero } from "@/components/minimal-hero";
 
 interface Article {
   id: number;
@@ -107,6 +108,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
+      <MinimalHero />
 
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Article Content */}
@@ -224,7 +226,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </article>
 
         {/* Sidebar */}
-        <aside className="lg:col-span-1 space-y-12">
+        <aside className="hidden lg:block lg:col-span-1 space-y-12">
           <MinimalSidebar />
 
           {/* Recent Articles */}

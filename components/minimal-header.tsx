@@ -77,21 +77,44 @@ export function MinimalHeader() {
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Mobile Header */}
-        <div className="flex items-center justify-between md:hidden py-2 gap-2">
+        <div className="flex items-center justify-between md:hidden py-2 gap-2 relative">
           {/* Logo */}
           <Link href="/" className="flex items-center justify-start">
             <img src="/logo.png" alt="Logo" className="h-28 w-auto" />
           </Link>
 
           {/* Search */}
-          <div className="flex-1 px-1">
+          <div className="flex-1 px-1 relative">
             <Input
               type="text"
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-full text-sm"
+              autoComplete="off"
+              spellCheck={false}
             />
+
+            {/* Show search results dropdown on mobile */}
+            {searchQuery && searchResults.length > 0 && (
+              <div className="absolute z-50 w-full mt-2 bg-white shadow-lg border border-gray-200 rounded-lg max-h-60 overflow-y-auto">
+                {searchResults.map((article) => (
+                  <Link
+                    key={article.id}
+                    href={`/articles/${article.id}`}
+                    className="block px-4 py-2 text-sm hover:bg-blue-50"
+                    onClick={() => {
+                      handleClear()
+                      setIsMobileMenuOpen(false)
+                    }}
+                  >
+                    {article.title}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* No clear (X) button on mobile as requested */}
           </div>
 
           {/* Bell */}
@@ -108,10 +131,8 @@ export function MinimalHeader() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden mt-3 space-y-4 pb-6 border-t pt-4 text-sm">
-
             <Link href="/" className={navLinkStyle("/")}>Home</Link>
 
-            {/* Articles Dropdown */}
             <div>
               <button
                 onClick={() => setIsArticlesOpen(!isArticlesOpen)}
@@ -129,7 +150,6 @@ export function MinimalHeader() {
               )}
             </div>
 
-            {/* Services Dropdown */}
             <div>
               <button
                 onClick={() => setIsServicesOpen(!isServicesOpen)}
