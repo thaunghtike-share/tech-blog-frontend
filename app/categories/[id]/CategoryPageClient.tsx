@@ -86,20 +86,22 @@ export default function CategoryPageClient({ id }: Props) {
     <div className="min-h-screen bg-white flex flex-col">
       <MinimalHeader />
 
-      <div className="flex flex-col md:flex-row max-w-7xl mx-auto px-4 py-8 gap-6 w-full">
-        {/* Main content */}
-        <main className="w-full md:flex-1">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-3 text-slate-800 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              {category.name}
-            </h1>
-            <div className="w-20 h-1 bg-blue-500 rounded-full mb-4"></div>
-            <p className="text-gray-600 text-lg">
-              Explore the latest articles and tutorials in {category.name.toLowerCase()}.
-            </p>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 py-8 w-full">
+        {/* Category Title */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-3 text-slate-800 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+            {category.name}
+          </h1>
+          <div className="w-20 h-1 bg-blue-500 rounded-full mb-4"></div>
+          <p className="text-gray-600 text-lg">
+            Explore the latest articles and tutorials in {category.name.toLowerCase()}.
+          </p>
+        </div>
 
-          <div className="space-y-6">
+        {/* Main content & sidebar aligned together */}
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Articles */}
+          <main className="w-full md:flex-1 space-y-6">
             {loadingArticles && <p>Loading articles...</p>}
             {errorArticles && <p className="text-red-500">Error: {errorArticles}</p>}
             {!loadingArticles && articles.length === 0 && (
@@ -142,13 +144,13 @@ export default function CategoryPageClient({ id }: Props) {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </main>
+          </main>
 
-        {/* Sidebar on the right */}
-        <aside className="w-full md:w-80">
-          <MinimalSidebar />
-        </aside>
+          {/* Sidebar */}
+          <aside className="w-full md:w-80">
+            <MinimalSidebar />
+          </aside>
+        </div>
       </div>
 
       <MinimalFooter />
