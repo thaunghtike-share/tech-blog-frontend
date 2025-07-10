@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalSidebar } from "@/components/minimal-sidebar";
+import { MinimalFooter } from "@/components/minimal-footer";
+
 interface Category {
   id: number;
   name: string;
@@ -15,9 +19,7 @@ interface Tag {
 
 export default function NewArticlePage() {
   // --- Auth state ---
-  const [token, setToken] = useState<string | null>(
-    typeof window !== "undefined" ? localStorage.getItem("token") : null
-  );
+  const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
@@ -36,6 +38,14 @@ export default function NewArticlePage() {
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  // Load token from localStorage on client only
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedToken = localStorage.getItem("token");
+      setToken(savedToken);
+    }
+  }, []);
 
   // Fetch categories & tags once
   useEffect(() => {
@@ -162,182 +172,190 @@ export default function NewArticlePage() {
     setLoading(false);
   }
 
-  // Render login form or article form depending on token
-  if (!token) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <form
-          onSubmit={handleLogin}
-          className="bg-white p-6 rounded shadow-md w-full max-w-sm"
-        >
-          <h1 className="text-xl font-bold mb-4">Login</h1>
-
-          <label className="block mb-1 font-semibold">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
-          />
-
-          <label className="block mb-1 font-semibold">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
-          />
-
-          {loginError && (
-            <p className="text-red-600 mb-4">{loginError}</p>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-          >
-            Login
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  // Logged in: show article form
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-      <button
-        onClick={handleLogout}
-        className="absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-      >
-        Logout
-      </button>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      <MinimalHeader />
 
-      <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-6 gap-16">
-        <form
-          onSubmit={handleSubmit}
-          className="lg:col-span-4 space-y-6 bg-white p-6 rounded-xl shadow-lg"
-        >
-          <h1 className="text-3xl font-bold mb-6">New Article Editor</h1>
-
-          {/* Title */}
-          <div>
-            <label className="block font-semibold mb-1">Title</label>
-            <input
-              type="text"
-              value={form.title}
-              onChange={(e) => handleChange("title", e.target.value)}
-              required
-              className="w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </div>
-
-          {/* Category Dropdown */}
-          <div>
-            <label className="block font-semibold mb-1">Category</label>
-            <select
-              value={form.category}
-              onChange={(e) => handleChange("category", e.target.value)}
-              required
-              className="w-full border border-gray-300 rounded px-3 py-2"
+      <main className="flex-grow max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-6 gap-12">
+        {/* Main content */}
+        <section className="lg:col-span-4">
+          {!token ? (
+            <form
+              onSubmit={handleLogin}
+              className="bg-white p-6 rounded shadow-md max-w-md mx-auto"
             >
-              <option value="">Select category</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-          </div>
+              <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
 
-          {/* Tags as buttons */}
-          <div>
-            <label className="block font-semibold mb-2">Tags (select one or more)</label>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => {
-                const selected = form.tags.includes(tag.id);
-                return (
-                  <button
-                    type="button"
-                    key={tag.id}
-                    onClick={() => toggleTag(tag.id)}
-                    className={`px-4 py-1 rounded-full border ${
-                      selected
-                        ? "bg-blue-600 text-white border-blue-600"
-                        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                    } focus:outline-none`}
+              <label className="block mb-1 font-semibold">Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+              />
+
+              <label className="block mb-1 font-semibold">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+              />
+
+              {loginError && (
+                <p className="text-red-600 mb-4">{loginError}</p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+              >
+                Login
+              </button>
+            </form>
+          ) : (
+            <>
+              <div className="flex justify-between items-center mb-6 max-w-md mx-auto">
+                <h1 className="text-3xl font-bold">New Article Editor</h1>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                >
+                  Logout
+                </button>
+              </div>
+
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white p-6 rounded-xl shadow-lg max-w-3xl mx-auto space-y-6"
+              >
+                {/* Title */}
+                <div>
+                  <label className="block font-semibold mb-1">Title</label>
+                  <input
+                    type="text"
+                    value={form.title}
+                    onChange={(e) => handleChange("title", e.target.value)}
+                    required
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                  />
+                </div>
+
+                {/* Category Dropdown */}
+                <div>
+                  <label className="block font-semibold mb-1">Category</label>
+                  <select
+                    value={form.category}
+                    onChange={(e) => handleChange("category", e.target.value)}
+                    required
+                    className="w-full border border-gray-300 rounded px-3 py-2"
                   >
-                    {tag.name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+                    <option value="">Select category</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-          {/* Featured */}
-          <div className="flex items-center space-x-2">
-            <input
-              id="featured"
-              type="checkbox"
-              checked={form.featured}
-              onChange={(e) => handleChange("featured", e.target.checked)}
-              className="h-5 w-5"
-            />
-            <label htmlFor="featured" className="font-semibold">
-              Featured Article
-            </label>
-          </div>
+                {/* Tags as buttons */}
+                <div>
+                  <label className="block font-semibold mb-2">
+                    Tags (select one or more)
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {tags.map((tag) => {
+                      const selected = form.tags.includes(tag.id);
+                      return (
+                        <button
+                          type="button"
+                          key={tag.id}
+                          onClick={() => toggleTag(tag.id)}
+                          className={`px-4 py-1 rounded-full border ${
+                            selected
+                              ? "bg-blue-600 text-white border-blue-600"
+                              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                          } focus:outline-none`}
+                        >
+                          {tag.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
-          {/* Published At */}
-          <div>
-            <label className="block font-semibold mb-1">Published Date</label>
-            <input
-              type="date"
-              value={form.published_at}
-              onChange={(e) => handleChange("published_at", e.target.value)}
-              required
-              className="w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </div>
+                {/* Featured */}
+                <div className="flex items-center space-x-2">
+                  <input
+                    id="featured"
+                    type="checkbox"
+                    checked={form.featured}
+                    onChange={(e) => handleChange("featured", e.target.checked)}
+                    className="h-5 w-5"
+                  />
+                  <label htmlFor="featured" className="font-semibold">
+                    Featured Article
+                  </label>
+                </div>
 
-          {/* Content - Markdown Editor */}
-          <div>
-            <label className="block font-semibold mb-1">Content (Markdown)</label>
-            <MDEditor
-              value={form.content}
-              onChange={(val) => handleChange("content", val || "")}
-              height={350}
-              preview="edit"
-              textareaProps={{
-                placeholder: "Write your article content here...",
-                className:
-                  "border border-gray-300 rounded-lg p-4 text-base leading-relaxed focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white text-gray-900 shadow-sm transition-shadow",
-              }}
-              previewOptions={{
-                className:
-                  "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
-              }}
-            />
-          </div>
+                {/* Published At */}
+                <div>
+                  <label className="block font-semibold mb-1">Published Date</label>
+                  <input
+                    type="date"
+                    value={form.published_at}
+                    onChange={(e) => handleChange("published_at", e.target.value)}
+                    required
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                  />
+                </div>
 
-          {/* Submit button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700 transition"
-          >
-            {loading ? "Submitting..." : "Submit Article"}
-          </button>
+                {/* Content - Markdown Editor */}
+                <div>
+                  <label className="block font-semibold mb-1">Content (Markdown)</label>
+                  <MDEditor
+                    value={form.content}
+                    onChange={(val) => handleChange("content", val || "")}
+                    height={350}
+                    preview="edit"
+                    textareaProps={{
+                      placeholder: "Write your article content here...",
+                      className:
+                        "border border-gray-300 rounded-lg p-4 text-base leading-relaxed focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white text-gray-900 shadow-sm transition-shadow",
+                    }}
+                    previewOptions={{
+                      className:
+                        "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
+                    }}
+                  />
+                </div>
 
-          {/* Message */}
-          {message && <p className="mt-4 text-center">{message}</p>}
-        </form>
+                {/* Submit button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700 transition"
+                >
+                  {loading ? "Submitting..." : "Submit Article"}
+                </button>
 
-        {/* Sidebar */}
-        <aside className="lg:col-span-2">{/* Add your sidebar here */}</aside>
+                {/* Message */}
+                {message && <p className="mt-4 text-center">{message}</p>}
+              </form>
+            </>
+          )}
+        </section>
+
+        {/* Sidebar always rendered on right side on large screens */}
+        <aside className="lg:col-span-2">
+          <MinimalSidebar />
+        </aside>
       </main>
+
+      <MinimalFooter />
     </div>
   );
 }
