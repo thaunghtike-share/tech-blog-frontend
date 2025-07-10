@@ -3,17 +3,7 @@
 import React, { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
-import { MinimalHeader } from "@/components/minimal-header";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
-import { MinimalFooter } from "@/components/minimal-footer";
-import { MinimalHero } from "@/components/minimal-hero";
-
 interface Category {
-  id: number;
-  name: string;
-}
-
-interface Author {
   id: number;
   name: string;
 }
@@ -24,56 +14,92 @@ interface Tag {
 }
 
 export default function NewArticlePage() {
+  // --- Auth state ---
+  const [token, setToken] = useState<string | null>(
+    typeof window !== "undefined" ? localStorage.getItem("token") : null
+  );
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState<string | null>(null);
+
+  // --- Article form state ---
   const [form, setForm] = useState({
     title: "",
     category: "",
     tags: [] as number[],
-    author: "",
     featured: false,
     published_at: new Date().toISOString().slice(0, 10),
     content: "",
   });
 
   const [categories, setCategories] = useState<Category[]>([]);
-  const [authors, setAuthors] = useState<Author[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
+  // Fetch categories & tags once
   useEffect(() => {
     async function fetchData() {
       try {
-        const [catRes, authorRes, tagRes] = await Promise.all([
-          fetch("http://localhost:8000/api/categories"),
-          fetch("http://localhost:8000/api/authors"),
-          fetch("http://localhost:8000/api/tags"),
+        const [catRes, tagRes] = await Promise.all([
+          fetch("http://localhost:8000/api/categories/"),
+          fetch("http://localhost:8000/api/tags/"),
         ]);
         if (!catRes.ok) throw new Error("Failed to fetch categories");
-        if (!authorRes.ok) throw new Error("Failed to fetch authors");
         if (!tagRes.ok) throw new Error("Failed to fetch tags");
 
         const catData = await catRes.json();
-        const authorData = await authorRes.json();
         const tagData = await tagRes.json();
 
         setCategories(Array.isArray(catData) ? catData : catData.results || []);
-        setAuthors(Array.isArray(authorData) ? authorData : authorData.results || []);
         setTags(Array.isArray(tagData) ? tagData : tagData.results || []);
       } catch (error) {
         console.error("Error loading dropdown data:", error);
         setCategories([]);
-        setAuthors([]);
         setTags([]);
       }
     }
     fetchData();
   }, []);
 
+  // Login handler
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setLoginError(null);
+    try {
+      const res = await fetch("http://localhost:8000/api/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) {
+        setLoginError("Invalid username or password");
+        return;
+      }
+      const data = await res.json();
+      setToken(data.token);
+      localStorage.setItem("token", data.token);
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      setLoginError("Login failed");
+    }
+  }
+
+  // Logout handler
+  function handleLogout() {
+    setToken(null);
+    localStorage.removeItem("token");
+    setMessage(null);
+  }
+
+  // Article form change handler
   function handleChange(field: string, value: any) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
-  // Toggle tag selection
+  // Toggle tags
   function toggleTag(id: number) {
     setForm((prev) => {
       const isSelected = prev.tags.includes(id);
@@ -85,8 +111,14 @@ export default function NewArticlePage() {
     });
   }
 
+  // Submit article
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!token) {
+      setMessage("You must be logged in to submit an article.");
+      return;
+    }
+
     setLoading(true);
     setMessage(null);
 
@@ -94,7 +126,6 @@ export default function NewArticlePage() {
       title: form.title,
       category: Number(form.category),
       tags: form.tags,
-      author: Number(form.author),
       featured: form.featured,
       published_at: form.published_at,
       content: form.content,
@@ -103,7 +134,10 @@ export default function NewArticlePage() {
     try {
       const res = await fetch("http://localhost:8000/api/articles/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -113,7 +147,6 @@ export default function NewArticlePage() {
           title: "",
           category: "",
           tags: [],
-          author: "",
           featured: false,
           published_at: new Date().toISOString().slice(0, 10),
           content: "",
@@ -129,10 +162,58 @@ export default function NewArticlePage() {
     setLoading(false);
   }
 
+  // Render login form or article form depending on token
+  if (!token) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <form
+          onSubmit={handleLogin}
+          className="bg-white p-6 rounded shadow-md w-full max-w-sm"
+        >
+          <h1 className="text-xl font-bold mb-4">Login</h1>
+
+          <label className="block mb-1 font-semibold">Username</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+          />
+
+          <label className="block mb-1 font-semibold">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+          />
+
+          {loginError && (
+            <p className="text-red-600 mb-4">{loginError}</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  // Logged in: show article form
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-      <MinimalHeader />
-      <MinimalHero />
+      <button
+        onClick={handleLogout}
+        className="absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+      >
+        Logout
+      </button>
 
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-6 gap-16">
         <form
@@ -195,24 +276,6 @@ export default function NewArticlePage() {
             </div>
           </div>
 
-          {/* Author Dropdown */}
-          <div>
-            <label className="block font-semibold mb-1">Author</label>
-            <select
-              value={form.author}
-              onChange={(e) => handleChange("author", e.target.value)}
-              required
-              className="w-full border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">Select author</option>
-              {authors.map((author) => (
-                <option key={author.id} value={author.id}>
-                  {author.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
           {/* Featured */}
           <div className="flex items-center space-x-2">
             <input
@@ -251,14 +314,14 @@ export default function NewArticlePage() {
                 placeholder: "Write your article content here...",
                 className:
                   "border border-gray-300 rounded-lg p-4 text-base leading-relaxed focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white text-gray-900 shadow-sm transition-shadow",
-                }}
-                previewOptions={{
+              }}
+              previewOptions={{
                 className:
                   "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
-                }}
-              />
-            </div>
-            
+              }}
+            />
+          </div>
+
           {/* Submit button */}
           <button
             type="submit"
@@ -273,12 +336,8 @@ export default function NewArticlePage() {
         </form>
 
         {/* Sidebar */}
-        <aside className="lg:col-span-2">
-          <MinimalSidebar />
-        </aside>
+        <aside className="lg:col-span-2">{/* Add your sidebar here */}</aside>
       </main>
-
-      <MinimalFooter />
     </div>
   );
 }

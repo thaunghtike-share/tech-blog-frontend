@@ -65,12 +65,19 @@ export function MinimalSidebar() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading({ categories: true, tags: true, authors: true })
+      setError({ categories: null, tags: null, authors: null })
+
       try {
         const [catRes, tagRes, authorRes] = await Promise.all([
           fetch(`${API_BASE_URL}/categories/?count_posts=true`),
           fetch(`${API_BASE_URL}/tags/?count_posts=true`),
           fetch(`${API_BASE_URL}/authors/?featured=true&count_posts=true`),
         ])
+
+        if (!catRes.ok) throw new Error("Failed to fetch categories")
+        if (!tagRes.ok) throw new Error("Failed to fetch tags")
+        if (!authorRes.ok) throw new Error("Failed to fetch authors")
 
         const catData = await catRes.json()
         const tagData = await tagRes.json()
@@ -86,11 +93,7 @@ export function MinimalSidebar() {
           authors: "Failed to load authors"
         })
       } finally {
-        setLoading({
-          categories: false,
-          tags: false,
-          authors: false
-        })
+        setLoading({ categories: false, tags: false, authors: false })
       }
     }
 
@@ -177,7 +180,7 @@ export function MinimalSidebar() {
             </div>
           ) : error.categories ? (
             <div className="text-center py-4 text-red-500 text-sm">
-              Failed to load categories
+              {error.categories}
             </div>
           ) : (
             <>
@@ -249,7 +252,7 @@ export function MinimalSidebar() {
             </div>
           ) : error.tags ? (
             <div className="text-center py-4 text-red-500 text-sm">
-              Failed to load tags
+              {error.tags}
             </div>
           ) : (
             <div className="flex flex-wrap gap-2">
@@ -295,7 +298,7 @@ export function MinimalSidebar() {
             </div>
           ) : error.authors ? (
             <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
-              <p className="text-red-500 text-sm">Failed to load experts</p>
+              <p className="text-red-500 text-sm">{error.authors}</p>
             </div>
           ) : featuredAuthors.length === 0 ? (
             <div className="text-center p-4 bg-gray-50 rounded-lg">
