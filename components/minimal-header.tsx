@@ -77,12 +77,14 @@ export function MinimalHeader() {
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Mobile Header */}
-        <div className="flex items-center justify-between md:hidden py-2">
+        <div className="flex items-center justify-between md:hidden py-2 gap-2">
+          {/* Logo */}
           <Link href="/" className="flex items-center justify-start">
             <img src="/logo.png" alt="Logo" className="h-28 w-auto" />
           </Link>
 
-          <div className="flex-1 px-3">
+          {/* Search */}
+          <div className="flex-1 px-1">
             <Input
               type="text"
               placeholder="Search articles..."
@@ -92,6 +94,12 @@ export function MinimalHeader() {
             />
           </div>
 
+          {/* Bell */}
+          <button className="p-2 rounded-full hover:bg-blue-50 text-blue-600 hover:shadow-md">
+            <Bell className="w-5 h-5" />
+          </button>
+
+          {/* Menu Toggle */}
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2">
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -142,13 +150,6 @@ export function MinimalHeader() {
 
             <Link href="/contact" className={navLinkStyle("/contact")}>Contact</Link>
             <Link href="/about" className={navLinkStyle("/about")}>About</Link>
-
-            {/* Bell Icon for mobile */}
-            <div className="flex justify-center pt-2">
-              <button className="p-2 rounded-full hover:bg-blue-50 text-blue-600 hover:shadow-md">
-                <Bell className="w-5 h-5" />
-              </button>
-            </div>
           </div>
         )}
 
@@ -218,7 +219,7 @@ export function MinimalHeader() {
             <Link href="/about" className="hover:text-blue-600">About</Link>
           </nav>
 
-          {/* Search + Actions */}
+          {/* Desktop Search + Subscribe */}
           <div className="flex items-center space-x-3">
             <div className="relative w-56">
               <Input
@@ -228,14 +229,6 @@ export function MinimalHeader() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pr-10"
               />
-              {loading && (
-                <div className="absolute top-2 right-8 animate-spin">
-                  <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                  </svg>
-                </div>
-              )}
               {searchQuery && (
                 <Button
                   size="icon"
@@ -261,19 +254,8 @@ export function MinimalHeader() {
                   ))}
                 </div>
               )}
-              {searchQuery && !loading && searchResults.length === 0 && !error && (
-                <div className="absolute z-50 w-full mt-2 px-4 py-2 text-sm text-gray-500 bg-white border border-gray-200 rounded">
-                  No articles found
-                </div>
-              )}
-              {error && (
-                <div className="absolute z-50 w-full mt-2 bg-red-100 text-red-700 shadow-md border border-red-300 rounded-lg px-4 py-2 text-sm">
-                  {error}
-                </div>
-              )}
             </div>
 
-            {/* Subscribe only on desktop */}
             <Button className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold text-sm px-4 py-2 rounded-md shadow-lg">
               Subscribe
             </Button>
