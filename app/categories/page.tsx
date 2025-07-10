@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import { MinimalHero } from "@/components/minimal-hero"
 
 // Types for your API data
 interface Category {
@@ -92,15 +93,7 @@ export default function CategoriesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
-
-      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-xl md:text-3xl font-light text-slate-900 mb-3 tracking-wide">
-            <span className="font-tight text-black-700">Explore </span><span className="font-medium text-blue-600">Categories</span>
-          </h1>
-          <p className="text-slate-600">Found {categories.length} categories</p>
-        </div>
-      </section>
+      <MinimalHero />
 
       <main className="max-w-6xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

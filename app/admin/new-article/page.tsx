@@ -6,6 +6,7 @@ import MDEditor from "@uiw/react-md-editor";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
+import { MinimalHero } from "@/components/minimal-hero";
 
 interface Category {
   id: number;
@@ -131,6 +132,7 @@ export default function NewArticlePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
+      <MinimalHero />
 
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-4 gap-16">
         <form
