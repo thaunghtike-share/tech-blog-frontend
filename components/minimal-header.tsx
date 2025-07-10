@@ -17,7 +17,7 @@ export function MinimalHeader() {
   const [articlesTimeout, setArticlesTimeout] = useState<NodeJS.Timeout | null>(null)
   const [servicesTimeout, setServicesTimeout] = useState<NodeJS.Timeout | null>(null)
 
-  const API_BASE_URL = "http://192.168.100.7:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
     return () => {
