@@ -67,8 +67,8 @@ export function MinimalSidebar() {
     const fetchData = async () => {
       try {
         const [catRes, tagRes, authorRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/categories?count_posts=true`),
-          fetch(`${API_BASE_URL}/tags?count_posts=true`),
+          fetch(`${API_BASE_URL}/categories/?count_posts=true`),
+          fetch(`${API_BASE_URL}/tags/?count_posts=true`),
           fetch(`${API_BASE_URL}/authors/?featured=true&count_posts=true`),
         ])
 
