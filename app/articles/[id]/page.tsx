@@ -156,6 +156,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     {children}
                   </div>
                 ),
+                a: ({ node, href, children, ...props }) => (
+                <a
+                  href={href}
+                  className="text-blue-600 hover:underline break-words"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  {...props}
+                >
+                  {children}
+                </a>
+                ),
                 code: ({ inline, className = "", children, ...props }: any) => {
                   if (inline) {
                     return (
