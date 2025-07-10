@@ -55,10 +55,16 @@ const roadmap: RoadmapStage[] = [  {
         subtopics: ["IP & Subnets", "Ports", "DNS", "HTTP vs HTTPS"]
       },
       {
-        title: "Bash & Python Scripting",
-        details: "Automate tasks with scripts and basic programming logic.",
+        title: "Bash Scripting",
+        details: "Automate tasks with bash scripts",
         duration: "2-3 weeks",
-        subtopics: ["Bash syntax", "Loops & conditionals", "Python basics"]
+        subtopics: ["Bash syntax", "Loops & conditionals"]
+      },
+      {
+        title: "Python Fundamentals",
+        details: "Learn Python Programming Fundamentals",
+        duration: "10 weeks",
+        subtopics: ["Python syntax", "Loops & conditionals"]
       },
       {
         title: "Git & Version Control",
@@ -101,13 +107,25 @@ const roadmap: RoadmapStage[] = [  {
         subtopics: ["Azure Portal", "VNet & Subnets", "Blob storage"]
       },
       {
-        title: "Kubernetes Essentials",
+        title: "Kubernetes Essentials Part-I",
         details: "Learn to orchestrate containers at scale.",
         duration: "4 weeks",
-        subtopics: ["Pods & deployments", "Services & Ingress", "Helm", "Namespaces"]
+        subtopics: ["Pods & deployments", "Services & Ingress", "Statefulset", "Resource Usage", "Namespaces"]
       },
       {
-        title: "CI/CD Fundamentals",
+        title: "Kubernetes Essentials Part-II",
+        details: "Learn to orchestrate containers at scale.",
+        duration: "4 weeks",
+        subtopics: ["HPA","Volumes","Secrets & Configmap", "Health Check Probes", "KEDA", "PDB"]
+      },
+      {
+        title: "Kubernetes Advanced ",
+        details: "Learn to manage kubernetes cluster.",
+        duration: "4 weeks",
+        subtopics: ["customize", "rancher", "helm", "Lens", "Dashboard", "Sealed Secrets"]
+      },
+      {
+        title: "CICD Fundamentals",
         details: "Automate software delivery using pipelines.",
         duration: "3 weeks",
         subtopics: ["GitHub Actions", "GitLab CI/CD", "Webhooks", "Testing pipelines"]
@@ -175,8 +193,10 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     { text: "Cisco Networking Guide", url: "https://www.cisco.com/c/en/us/solutions/enterprise-networks/networking-fundamentals.html" },
     { text: "Computer Networking Tutorial", url: "https://www.geeksforgeeks.org/computer-network-tutorials/" }
   ],
-  "Bash & Python Scripting": [
-    { text: "Bash Scripting", url: "https://linuxconfig.org/bash-scripting-tutorial" },
+  "Bash Scripting": [
+    { text: "Python Beginner Guide", url: "https://www.python.org/about/gettingstarted/" }
+  ],
+  "Python Fundamentals": [
     { text: "Python Beginner Guide", url: "https://www.python.org/about/gettingstarted/" }
   ],
   "Git & Version Control": [
@@ -237,11 +257,12 @@ const getStageIcon = (stageKey: string) => {
 export function MinimalDevopsRoadmap() {
   const [selectedStageKey, setSelectedStageKey] = useState(roadmap[0]?.key || "beginner");
   const [selectedTopic, setSelectedTopic] = useState<{title: string, links: ResourceLink[]} | null>(null);
+  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
   const selectedStage = roadmap.find((r) => r.key === selectedStageKey) || roadmap[0];
 
-  if (!selectedStage) {
-    return <div className="p-8 text-black">Error: No roadmap data available</div>;
-  }
+  const toggleExpand = (title: string) => {
+    setExpandedTopics((prev) => ({ ...prev, [title]: !prev[title] }));
+  };
 
   return (
     <>
@@ -276,95 +297,91 @@ export function MinimalDevopsRoadmap() {
         </div>
 
         <div className="mb-10 text-center max-w-4xl mx-auto">
-          {selectedStage.description?.length > 0 ? (
+          {selectedStage.description?.length > 0 && (
             <>
               <p className="text-gray-800 text-lg leading-relaxed mb-4">
                 {selectedStage.description[0]}
               </p>
-              {selectedStage.description.length > 1 && (
+              {selectedStage.description[1] && (
                 <p className="text-gray-600">{selectedStage.description[1]}</p>
               )}
             </>
-          ) : (
-            <p className="text-gray-500 italic">No description available for this stage</p>
           )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {selectedStage.items?.map(({ title, details, duration, subtopics }, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="relative group"
-            >
-              <div className="h-full rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white flex flex-col">
-                <div className="p-6 flex-grow">
-                  <div className="flex justify-between items-start mb-3">
-                    <h4 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition">
-                      {title}
-                    </h4>
-                    <span className="flex items-center text-xs font-medium bg-blue-50 text-gray-800 px-2.5 py-1 rounded-full border border-gray-200">
-                      <Clock className="w-3 h-3 mr-1 text-blue-500" />
-                      {duration}
-                    </span>
+          {selectedStage.items?.map(({ title, details, duration, subtopics }, idx) => {
+            const isExpanded = expandedTopics[title];
+            const displaySubtopics = isExpanded ? subtopics : subtopics.slice(0, 4);
+
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="relative group"
+              >
+                <div className="h-full rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white flex flex-col">
+                  <div className="p-6 flex-grow">
+                    <div className="flex justify-between items-start mb-3">
+                      <h4 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition">
+                        {title}
+                      </h4>
+                      <span className="flex items-center text-xs font-medium bg-blue-50 text-gray-800 px-2.5 py-1 rounded-full border border-gray-200">
+                        <Clock className="w-3 h-3 mr-1 text-blue-500" />
+                        {duration}
+                      </span>
+                    </div>
+
+                    <p className="text-gray-600 text-sm mb-4">{details}</p>
+
+                    {displaySubtopics?.length > 0 ? (
+                      <ul className="mb-3 space-y-3">
+                        {displaySubtopics.map((sub, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="relative flex-shrink-0 mt-0.5">
+                              <span className="absolute inset-0 bg-blue-100 rounded-full opacity-75 animate-pulse"></span>
+                              <span className="relative flex items-center justify-center w-5 h-5 bg-blue-500 rounded-full">
+                                <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </span>
+                            </span>
+                            <span className="ml-3 text-gray-800 text-sm font-medium leading-tight">
+                              {sub}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-400 text-sm mb-5">No subtopics listed</p>
+                    )}
+
+                    {subtopics.length > 4 && (
+                      <button
+                        onClick={() => toggleExpand(title)}
+                        className="text-blue-600 text-sm font-medium hover:underline focus:outline-none"
+                      >
+                        {isExpanded ? "Show Less" : "See More Topics"}
+                      </button>
+                    )}
                   </div>
-                  
-                  <p className="text-gray-600 text-sm mb-4">{details}</p>
-                  
-                  {subtopics?.length > 0 ? (
-                    <ul className="mb-5 space-y-3">
-                      {subtopics.map((sub, i) => (
-                        <li key={i} className="flex items-start">
-                          <span className="relative flex-shrink-0 mt-0.5">
-                            <span className="absolute inset-0 bg-blue-100 rounded-full opacity-75 animate-pulse"></span>
-                            <span className="relative flex items-center justify-center w-5 h-5 bg-blue-500 rounded-full">
-                              <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                              </svg>
-                            </span>
-                          </span>
-                          <span className="ml-3 text-gray-800 text-sm font-medium leading-tight">
-                            {sub}
-                            <span className="block text-xs text-gray-500 font-normal mt-0.5">
-                              Learn more about this topic
-                            </span>
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-gray-400 text-sm mb-5">No subtopics listed</p>
-                  )}
+
+                  <div className="px-6 pb-6">
+                    <button 
+                      onClick={() => setSelectedTopic({ title, links: resourceLinks[title] || [] })}
+                      className="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 hover:text-blue-800 border border-blue-200 px-4 py-2 rounded-lg text-sm font-medium flex items-center justify-between transition-all group"
+                    >
+                      <span>Explore resources</span>
+                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </button>
+                  </div>
                 </div>
-                
-                <div className="px-6 pb-6">
-                  <button 
-                    onClick={() => setSelectedTopic({
-                      title: title,
-                      links: resourceLinks[title] || []
-                    })}
-                    className="
-                      w-full 
-                      bg-blue-50 hover:bg-blue-100
-                      text-blue-600 hover:text-blue-800
-                      border border-blue-200
-                      px-4 py-2 rounded-lg
-                      text-sm font-medium
-                      flex items-center justify-between
-                      transition-all
-                      group
-                    "
-                  >
-                    <span>Explore resources</span>
-                    <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
