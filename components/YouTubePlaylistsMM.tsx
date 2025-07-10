@@ -1,84 +1,52 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Play, ExternalLink, Clock, Globe, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Playlist {
   title: string;
-  videoId: string;
-  playlistUrl: string;
+  video_id: string;
+  playlist_url: string;
   duration: string;
 }
 
-const burmesePlaylists: Playlist[] = [
-  {
-    title: "Python Fundamentals by Sayar Thet Khine",
-    videoId: "DP3AIYK-HR8",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLVhJW4jnAwFQ-E62y9MPJY8t33E8RThPy",
-    duration: "2-3 weeks",
-  },
-  {
-    title: "Basic Networking Tutorials By RHC Technologies",
-    videoId: "DhJ4kL2HbuA",
-    playlistUrl: "https://www.youtube.com/watch?v=DhJ4kL2HbuA&list=PLuMzkmyfR9LY64pZl4zhYehlpXXAtGwZ",
-    duration: "2 weeks",
-  },
-  {
-    title: "Basic Networking Lessons By WalkTechVlogs by Uphyo",
-    videoId: "PYqqykoMB1Y",
-    playlistUrl: "https://www.youtube.com/watch?v=PYqqykoMB1Y&list=PL6jybr6k2wfqVgPv-kqlKoK2g2HJb3niX",
-    duration: "2 weeks",
-  },
-  {
-    title: "Linux Foundation Certified System Administrator (LFCS) - by HelloCloud",
-    videoId: "qJnZGcL4jkQ",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtf9x079XNlEgyiCv-XwxXxG",
-    duration: "3-4 weeks",
-  },
-  {
-    title: "Hello Docker - Tutorial Series - by HelloCloud",
-    videoId: "9qsWPKZH9PE",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtc07cVn3OXFiaIYXnDx5pDf",
-    duration: "2 weeks",
-  },
-  {
-    title: "AWS Essentials by DevKTOps",
-    videoId: "W3jTLLA4tCg",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLSKzuxf9q42Fu5nunaTbH0nFVt1GqDgMW",
-    duration: "3 weeks",
-  },
-  {
-    title: "AWS Fundamentals by Myanmar Tech Academy ",
-    videoId: "Dn5B-qliqyk",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz4H8wn2KnPI-u5a3F9UNNVz",
-    duration: "2-3 weeks",
-  },
-  {
-    title: "Linux By Myanmar Tech Academy",
-    videoId: "22Lc-1wg1aQ",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLfFA9b_Mlfz59dNMjdMyA0LmQtqRNRPU0",
-    duration: "2-3 weeks",
-  },
-  {
-    title: "Git Basic Course By Myanmar Data Science",
-    videoId: "22Lc-1wg1aQ",
-    playlistUrl: "https://www.youtube.com/watch?v=DB_MEZZdiIs&list=PLD_eiqVVLZDge73nM5J-LyPgbfVL6vnDc",
-    duration: "1 week",
-  },
-  {
-    title: "Terraform Tutorial Series- by HelloCloud",
-    videoId: "v4X3D4YlyHc",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLvzWOIc1IOtdufeA0ab5mKycSJgq5Bi57",
-    duration: "2-3 weeks",
-  },
-];
-
 export function YouTubePlaylistsMM() {
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [hovered, setHovered] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const displayed = showAll ? burmesePlaylists : burmesePlaylists.slice(0, 9);
+  useEffect(() => {
+    async function fetchPlaylists() {
+      try {
+        const res = await fetch("http://localhost:8000/api/mmplaylists/");
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        setPlaylists(data.results); // Extract playlists from paginated response
+      } catch (err: any) {
+        setError(err.message || "Unknown error");
+        console.error("Failed to fetch playlists:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPlaylists();
+  }, []);
+
+  const displayed = showAll ? playlists : playlists.slice(0, 9);
+
+  if (loading) {
+    return <p className="text-center py-10 text-gray-500">Loading playlists...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center py-10 text-red-500">Error: {error}</p>;
+  }
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -98,7 +66,7 @@ export function YouTubePlaylistsMM() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayed.map((course, idx) => (
           <motion.div
-            key={course.playlistUrl}
+            key={course.playlist_url}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
@@ -108,12 +76,12 @@ export function YouTubePlaylistsMM() {
             <div className="h-full rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white flex flex-col">
               <div
                 className="relative aspect-video bg-black"
-                onMouseEnter={() => setHovered(course.videoId)}
+                onMouseEnter={() => setHovered(course.video_id)}
                 onMouseLeave={() => setHovered(null)}
               >
                 <iframe
-                  src={`https://www.youtube.com/embed/${course.videoId}?autoplay=${
-                    hovered === course.videoId ? 1 : 0
+                  src={`https://www.youtube.com/embed/${course.video_id}?autoplay=${
+                    hovered === course.video_id ? 1 : 0
                   }&mute=1&loop=1&controls=0&modestbranding=1`}
                   title={course.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -122,7 +90,7 @@ export function YouTubePlaylistsMM() {
                 />
                 <div
                   className={`absolute inset-0 flex items-center justify-center ${
-                    hovered === course.videoId ? "opacity-0" : "opacity-100"
+                    hovered === course.video_id ? "opacity-0" : "opacity-100"
                   } transition-opacity`}
                 >
                   <div className="bg-black/50 rounded-full p-4 backdrop-blur-sm">
@@ -140,7 +108,7 @@ export function YouTubePlaylistsMM() {
                 </div>
 
                 <a
-                  href={course.playlistUrl}
+                  href={course.playlist_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-auto inline-flex items-center justify-center w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg transition-colors group"
@@ -154,7 +122,7 @@ export function YouTubePlaylistsMM() {
         ))}
       </div>
 
-      {burmesePlaylists.length > 9 && (
+      {playlists.length > 9 && (
         <div className="mt-10 text-center">
           <button
             onClick={() => setShowAll(!showAll)}
