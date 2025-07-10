@@ -10,8 +10,8 @@ import {
   Database,
   GitBranch,
   ArrowRight,
-  Plus,
-  Minus,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
@@ -156,18 +156,18 @@ export function MinimalHero() {
           )}
         </AnimatePresence>
 
-        {/* Toggle Button */}
+        {/* Toggle Button - below expandable content */}
         <motion.div variants={item} className="mt-10">
           <Button
             size="icon"
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow transition-transform"
             onClick={() => setExpanded((v) => !v)}
             aria-label={expanded ? "Minimize Hero Content" : "Expand Hero Content"}
           >
             {expanded ? (
-              <Minus className="w-5 h-5" />
+              <ChevronUp className="w-5 h-5" />
             ) : (
-              <Plus className="w-5 h-5" />
+              <ChevronDown className="w-5 h-5" />
             )}
           </Button>
         </motion.div>
