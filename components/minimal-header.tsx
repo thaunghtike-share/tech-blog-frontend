@@ -3,10 +3,13 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ChevronDown, X } from "lucide-react"
+import { ChevronDown, X, Menu, Bell } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export function MinimalHeader() {
+  const pathname = usePathname()
+
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
@@ -16,6 +19,7 @@ export function MinimalHeader() {
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [articlesTimeout, setArticlesTimeout] = useState<NodeJS.Timeout | null>(null)
   const [servicesTimeout, setServicesTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const API_BASE_URL = "http://192.168.1.131:8000/api"
 
@@ -63,10 +67,93 @@ export function MinimalHeader() {
     setError(null)
   }
 
+  const navLinkStyle = (href: string) =>
+    `block font-medium text-gray-800 px-3 py-2 rounded-md ${
+      pathname === href ? "bg-gray-100 shadow-inner" : "hover:bg-gray-100 hover:shadow-inner"
+    }`
+
   return (
     <header className="bg-white border-b border-blue-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-26 relative">
+
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between md:hidden py-2">
+          <Link href="/" className="flex items-center justify-start">
+            <img src="/logo.png" alt="Logo" className="h-28 w-auto" />
+          </Link>
+
+          <div className="flex-1 px-3">
+            <Input
+              type="text"
+              placeholder="Search articles..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-full text-sm"
+            />
+          </div>
+
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2">
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden mt-3 space-y-4 pb-6 border-t pt-4 text-sm">
+
+            <Link href="/" className={navLinkStyle("/")}>Home</Link>
+
+            {/* Articles Dropdown */}
+            <div>
+              <button
+                onClick={() => setIsArticlesOpen(!isArticlesOpen)}
+                className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
+              >
+                Articles <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isArticlesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {isArticlesOpen && (
+                <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-blue-200 pl-3">
+                  <Link href="/articles" className={navLinkStyle("/articles")}>All Articles</Link>
+                  <Link href="/categories" className={navLinkStyle("/categories")}>Categories</Link>
+                  <Link href="/tags" className={navLinkStyle("/tags")}>Tags</Link>
+                  <Link href="/authors" className={navLinkStyle("/authors")}>Authors</Link>
+                </div>
+              )}
+            </div>
+
+            {/* Services Dropdown */}
+            <div>
+              <button
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+                className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
+              >
+                Services <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isServicesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {isServicesOpen && (
+                <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-indigo-200 pl-3">
+                  <Link href="/services/devops-as-a-service" className={navLinkStyle("/services/devops-as-a-service")}>DevOps as a Service</Link>
+                  <Link href="/services/cloud-migration" className={navLinkStyle("/services/cloud-migration")}>Cloud-Native Migration</Link>
+                  <Link href="/services/infra-as-code" className={navLinkStyle("/services/infra-as-code")}>Infrastructure as Code</Link>
+                  <Link href="/services/consulting" className={navLinkStyle("/services/consulting")}>DevOps Consulting</Link>
+                  <Link href="/services/website" className={navLinkStyle("/services/website")}>Website Development</Link>
+                </div>
+              )}
+            </div>
+
+            <Link href="/contact" className={navLinkStyle("/contact")}>Contact</Link>
+            <Link href="/about" className={navLinkStyle("/about")}>About</Link>
+
+            {/* Bell Icon for mobile */}
+            <div className="flex justify-center pt-2">
+              <button className="p-2 rounded-full hover:bg-blue-50 text-blue-600 hover:shadow-md">
+                <Bell className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-between h-26 relative">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <img src="/logo.png" alt="Logo" className="h-38 w-auto" />
@@ -133,7 +220,6 @@ export function MinimalHeader() {
 
           {/* Search + Actions */}
           <div className="flex items-center space-x-3">
-            {/* Search */}
             <div className="relative w-56">
               <Input
                 type="text"
@@ -187,9 +273,7 @@ export function MinimalHeader() {
               )}
             </div>
 
-            {/* Removed Theme Toggle! */}
-
-            {/* Subscribe */}
+            {/* Subscribe only on desktop */}
             <Button className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold text-sm px-4 py-2 rounded-md shadow-lg">
               Subscribe
             </Button>
