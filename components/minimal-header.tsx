@@ -237,7 +237,7 @@ export function MinimalHeader() {
             <Link href="/about" className="hover:text-blue-600">About</Link>
           </nav>
 
-          {/* Desktop Search + Subscribe */}
+          {/* Desktop Search + Bell Icon replaces Subscribe button */}
           <div className="flex items-center space-x-3">
             <div className="relative w-56">
               <Input
@@ -274,9 +274,10 @@ export function MinimalHeader() {
               )}
             </div>
 
-            <Button className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold text-sm px-4 py-2 rounded-md shadow-lg">
-              Subscribe
-            </Button>
+            {/* Replaced Subscribe button with Bell icon */}
+            <button className="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50 transition-shadow">
+              <Bell className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </div>
