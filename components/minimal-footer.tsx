@@ -65,7 +65,7 @@ export function MinimalFooter() {
           </div>
 
           {/* Mobile: Resources + Connect side by side */}
-          <div className="flex flex-col gap-8 md:hidden sm:flex-row sm:justify-between mt-10">
+          <div className="flex flex-row gap-8 md:hidden justify-between mt-10">
             {/* Resources */}
             <div className="flex-1">
               <h3 className="font-semibold mb-4 text-slate-800 flex items-center">

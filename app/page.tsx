@@ -54,7 +54,7 @@ export default function HomePage() {
 
         {/* Text outside the icon */}
         <span className="font-medium text-gray-900 select-none text-small whitespace-nowrap">
-          Need Support?
+          Chat?
         </span>
       </a>
 
