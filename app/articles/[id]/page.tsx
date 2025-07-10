@@ -26,8 +26,28 @@ interface Author {
   name: string;
 }
 
+interface Tag {
+  id: number;
+  name: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
+}
+
 interface ArticlePageProps {
   params: { id: string };
+}
+
+async function fetchJSON<T>(url: string): Promise<T[]> {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    const data = await res.json();
+    return Array.isArray(data) ? data : data.results || [];
+  } catch {
+    return [];
+  }
 }
 
 async function fetchAuthor(id: number): Promise<Author | null> {
@@ -37,17 +57,6 @@ async function fetchAuthor(id: number): Promise<Author | null> {
     return await res.json();
   } catch {
     return null;
-  }
-}
-
-async function fetchAllArticles(): Promise<Article[]> {
-  try {
-    const res = await fetch("http://localhost:8000/api/articles/", { cache: "no-store" });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data : data.results || [];
-  } catch {
-    return [];
   }
 }
 
@@ -64,8 +73,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const article: Article = await res.json();
-  const author = await fetchAuthor(article.author);
-  const allArticles = await fetchAllArticles();
+  const [author, allArticles, tags, categories] = await Promise.all([
+    fetchAuthor(article.author),
+    fetchJSON<Article>("http://localhost:8000/api/articles/"),
+    fetchJSON<Tag>("http://localhost:8000/api/tags/"),
+    fetchJSON<Category>("http://localhost:8000/api/categories/")
+  ]);
 
   const sorted = allArticles.sort(
     (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
@@ -77,6 +90,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
   const publishDate = new Date(article.published_at).toLocaleDateString();
+
+  const categoryName = categories.find((c) => c.id === article.category)?.name || "General";
+  const tagNames = article.tags.map((id) => tags.find((t) => t.id === id)?.name).filter(Boolean) as string[];
 
   function excerpt(content: string) {
     const plainText = content
@@ -97,7 +113,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 max-w-full overflow-x-auto">
           <div className="prose prose-lg">
             <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
-            <div className="text-gray-600 italic mb-8">
+
+            <div className="text-gray-600 italic mb-4">
               <p>Published on {publishDate}</p>
               <p>
                 Written By{" "}
@@ -105,6 +122,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   {author?.name || "Unknown author"}
                 </span>
               </p>
+            </div>
+
+            {/* ✅ Category and Tags */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full">
+                📂 {categoryName}
+              </span>
+              {tagNames.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200 transition"
+                >
+                  #{tag}
+                </span>
+              ))}
             </div>
 
             <ReactMarkdown
@@ -170,13 +202,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </ReactMarkdown>
           </div>
 
-          {/* Share Buttons */}
           <ShareButtons articleId={article.id} title={article.title} />
-
-          {/* Comments */}
           <GiscusComments />
 
-          {/* Prev / Next Navigation */}
           <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium border-t pt-6">
             {prevArticle ? (
               <a href={`/articles/${prevArticle.id}`} className="hover:underline">

@@ -94,7 +94,7 @@ export function MinimalHero() {
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent inline-flex items-center">
                   <span className="text-gray-800">Learn DevOps Now —</span>
                   <Cpu className="w-6 h-6 mr-2" />
-                  For IT Students in
+                  For IT Students in Myanmar
                   <img
                     src="/myanmar-flag.svg"
                     alt="Myanmar"

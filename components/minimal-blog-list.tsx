@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, User, ArrowRight } from "lucide-react"
+import { Calendar, Clock, User, ArrowRight, Tag as TagIcon, Folder } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -111,7 +111,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     `${Math.ceil((text.split(" ").length || 1) / 200)} min`
 
   const stripMarkdown = (md: string) =>
-    md.replace(/<[^>]+>/g, "").replace(/[#_*`>!\[\]\(\)~\-]/g, "").trim()
+    md.replace(/<[^>]+>/g, "").replace(/[#_*>!\[\]\(\)~\-]/g, "").trim()
 
   const truncate = (str: string, max = 150) =>
     str.length <= max ? str : str.slice(0, max) + "..."
@@ -165,14 +165,19 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                 className="bg-white p-6 rounded-xl border border-gray-100 shadow hover:shadow-lg transition"
               >
                 <div className="flex justify-between flex-wrap mb-4 gap-2">
-                  <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
+                  <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-2 py-1 rounded-full text-sm font-small">
+                    <Folder className="w-4 h-4" />
                     {getCategoryName(article.category)}
-                  </Badge>
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     {getTagNames(article.tags).slice(0, 2).map((tag, i) => (
-                      <Badge key={i} className="bg-gray-100 text-gray-700">
+                      <span
+                        key={i}
+                        className="flex items-center gap-1 text-sm bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full hover:bg-gray-200 transition"
+                      >
+                        <TagIcon className="w-3.5 h-3.5" />
                         {tag}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                 </div>
