@@ -134,10 +134,10 @@ export default function NewArticlePage() {
       <MinimalHeader />
       <MinimalHero />
 
-      <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-4 gap-16">
+      <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-6 gap-16">
         <form
           onSubmit={handleSubmit}
-          className="lg:col-span-3 space-y-6 bg-white p-6 rounded-xl shadow-lg"
+          className="lg:col-span-4 space-y-6 bg-white p-6 rounded-xl shadow-lg"
         >
           <h1 className="text-3xl font-bold mb-6">New Article Editor</h1>
 
@@ -250,14 +250,15 @@ export default function NewArticlePage() {
               textareaProps={{
                 placeholder: "Write your article content here...",
                 className:
-                  "border border-gray-300 rounded p-3 text-base leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black",
-              }}
-              previewOptions={{
-                className: "bg-white text-black rounded p-3",
-              }}
-            />
-          </div>
-
+                  "border border-gray-300 rounded-lg p-4 text-base leading-relaxed focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white text-gray-900 shadow-sm transition-shadow",
+                }}
+                previewOptions={{
+                className:
+                  "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
+                }}
+              />
+            </div>
+            
           {/* Submit button */}
           <button
             type="submit"
@@ -272,7 +273,7 @@ export default function NewArticlePage() {
         </form>
 
         {/* Sidebar */}
-        <aside className="lg:col-span-1">
+        <aside className="lg:col-span-2">
           <MinimalSidebar />
         </aside>
       </main>

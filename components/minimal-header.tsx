@@ -144,7 +144,6 @@ export function MinimalHeader() {
                 <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-blue-200 pl-3">
                   <Link href="/articles" className={navLinkStyle("/articles")}>All Articles</Link>
                   <Link href="/categories" className={navLinkStyle("/categories")}>Categories</Link>
-                  <Link href="/tags" className={navLinkStyle("/tags")}>Tags</Link>
                   <Link href="/authors" className={navLinkStyle("/authors")}>Authors</Link>
                 </div>
               )}
@@ -203,7 +202,6 @@ export function MinimalHeader() {
                 <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
                   <Link href="/articles" className="block px-4 py-2 hover:bg-blue-50">All Articles</Link>
                   <Link href="/categories" className="block px-4 py-2 hover:bg-blue-50">Categories</Link>
-                  <Link href="/tags" className="block px-4 py-2 hover:bg-blue-50">Tags</Link>
                   <Link href="/authors" className="block px-4 py-2 hover:bg-blue-50">Authors</Link>
                 </div>
               )}
