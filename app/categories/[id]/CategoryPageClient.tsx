@@ -146,7 +146,7 @@ export default function CategoryPageClient({ id }: Props) {
         </main>
 
         {/* Sidebar on the right */}
-        <aside className="w-full md:w-72">
+        <aside className="w-full md:w-80">
           <MinimalSidebar />
         </aside>
       </div>
