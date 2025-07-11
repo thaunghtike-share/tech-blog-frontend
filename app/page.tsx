@@ -19,6 +19,7 @@ import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
 import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
 import { YouTubePlaylists } from "@/components/YouTubePlaylists"
 import { FreeLabs } from "@/components/FreeLabs"
+import Intro from "@/components/Intro"
 
 export default function HomePage() {
   return (
@@ -74,7 +75,10 @@ export default function HomePage() {
         </div>
 
         {/* Other Sections */}
-        <MinimalDevopsRoadmap />
+        <Intro />
+        <section id="devops-roadmap">
+          <MinimalDevopsRoadmap />
+        </section>
         <YouTubePlaylists />
         <FreeLabs />
         <YouTubePlaylistsMM />

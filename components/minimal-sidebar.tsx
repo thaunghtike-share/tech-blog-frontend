@@ -144,8 +144,8 @@ export function MinimalSidebar() {
                     {service.icon}
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900">{service.title}</h4>
-                    <p className="text-sm text-gray-600">{service.desc}</p>
+                    <h4 className="text-sm font-medium text-gray-800">{service.title}</h4>
+                    <p className="text-xs text-gray-600">{service.desc}</p>
                   </div>
                 </Link>
               </li>
@@ -197,7 +197,7 @@ export function MinimalSidebar() {
                           <div className={`p-2 rounded-lg ${colorClass.split(' ')[0]}`}>
                             <Icon className={`h-5 w-5 ${colorClass.split(' ')[1]}`} />
                           </div>
-                          <span className="font-medium text-gray-700 group-hover:text-blue-600 truncate">
+                          <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 truncate">
                             {category.name}
                           </span>
                         </div>
