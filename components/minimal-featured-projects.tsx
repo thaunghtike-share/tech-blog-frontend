@@ -1,40 +1,61 @@
 "use client";
 
-import React from "react";
-import { Github, ExternalLink, Code } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Github, Code } from "lucide-react";
 import { motion } from "framer-motion";
 
-const projects = [
-  {
-    name: "Personal Website Backend",
-    description: "Robust backend REST API built with Django REST Framework, providing scalable and secure data management.",
-    url: "https://github.com/thaunghtike-share/tech-blog-backend",
-    tags: ["Django", "REST API", "PostgreSQL"]
-  },
-  {
-    name: "Personal Website Frontend", 
-    description: "Modern React/Next.js frontend that consumes the backend API for a responsive blog experience.",
-    url: "https://github.com/thaunghtike-share/tech-blog-frontend",
-    tags: ["React", "Next.js", "Tailwind CSS"]
-  },
-  {
-    name: "Terraform Azure Infrastructure",
-    description: "Infrastructure as Code project managing Azure resources like VMs, AKS clusters, and networking.",
-    url: "https://github.com/thaunghtike-share/terraform-azure",
-    tags: ["Terraform", "Azure", "IaC"]
-  },
-  {
-    name: "Terraform AWS Kubespot",
-    description: "Open-source Terraform module for Kubernetes clusters on AWS with spot instance support.",
-    url: "https://github.com/opszero/terraform-aws-kubespot", 
-    tags: ["Terraform", "AWS", "Kubernetes"]
-  }
-];
+interface Project {
+  id?: number;
+  name: string;
+  description: string;
+  url: string;
+  tags: string[];
+}
+
+const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 export function MinimalFeaturedProjects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch(`${API_BASE_URL}/projects/`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        console.log("Raw API data:", data);  // <-- Log raw data for debugging
+
+        let projectsData: Project[];
+        if (Array.isArray(data)) {
+          projectsData = data;
+        } else if (data.results && Array.isArray(data.results)) {
+          projectsData = data.results;
+        } else {
+          throw new Error("Invalid data format received from API");
+        }
+
+        setProjects(projectsData);
+      } catch (err: any) {
+        setError(err.message || "Failed to load projects.");
+        console.error("Error fetching projects:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProjects();
+  }, []);
+
+  if (loading) return <p className="text-center py-12 text-gray-500">Loading projects...</p>;
+  if (error) return <p className="text-center py-12 text-red-600">{error}</p>;
+
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header - Centered like Udemy/YouTube */}
       <div className="text-center mb-12">
         <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 mb-3">
           <Code className="w-4 h-4 mr-2" />
@@ -48,11 +69,10 @@ export function MinimalFeaturedProjects() {
         </p>
       </div>
 
-      {/* Projects Grid - Same card style as Udemy */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, idx) => (
           <motion.div
-            key={idx}
+            key={project.id ?? idx}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
@@ -62,17 +82,18 @@ export function MinimalFeaturedProjects() {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{project.name}</h3>
                 <p className="text-gray-600 mb-4">{project.description}</p>
-                
-                {/* Tags - Similar to Udemy's metadata */}
+
                 <div className="flex flex-wrap gap-2 mb-5">
                   {project.tags.map((tag, i) => (
-                    <span key={i} className="text-xs font-medium bg-gray-100 text-gray-800 px-2.5 py-1 rounded-full">
+                    <span
+                      key={i}
+                      className="text-xs font-medium bg-gray-100 text-gray-800 px-2.5 py-1 rounded-full"
+                    >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                {/* Button - Matching Udemy's style */}
                 <a
                   href={project.url}
                   target="_blank"
@@ -88,7 +109,6 @@ export function MinimalFeaturedProjects() {
         ))}
       </div>
 
-      {/* Footer Button - Same as Udemy */}
       <div className="mt-12 text-center">
         <a
           href="https://github.com/thaunghtike-share"
