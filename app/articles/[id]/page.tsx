@@ -67,6 +67,7 @@ async function fetchAuthor(id: number): Promise<Author | null> {
 }
 
 function extractHeadings(markdown: string): { text: string; level: number; id: string }[] {
+  const idCounts: Record<string, number> = {};
   return markdown
     .split("\n")
     .map((line) => {
@@ -74,10 +75,22 @@ function extractHeadings(markdown: string): { text: string; level: number; id: s
       if (!match) return null;
       const [, hashes, rawText] = match;
       const level = hashes.length;
-      const id = rawText.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
-      return { text: rawText, level, id };
+
+      let baseId = rawText.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+      if (idCounts[baseId]) {
+        idCounts[baseId] += 1;
+        baseId = `${baseId}-${idCounts[baseId]}`;
+      } else {
+        idCounts[baseId] = 1;
+      }
+
+      return { text: rawText, level, id: baseId };
     })
     .filter(Boolean) as { text: string; level: number; id: string }[];
+}
+
+function fixMarkdownSpacing(content: string): string {
+  return content.replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2");
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
@@ -171,10 +184,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
                   return <h2 id={id} className="text-2xl font-semibold my-3" {...props}>{children}</h2>;
                 },
+                h3: ({ node, children, ...props }) => {
+                  const text = String(children);
+                  const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+                  return <h3 id={id} className="text-xl font-semibold my-2" {...props}>{children}</h3>;
+                },
                 p: ({ node, children, ...props }) => (
-                  <div className="mb-3 text-base leading-relaxed text-gray-800" {...props}>
+                  <p className="mb-3 text-base leading-relaxed text-gray-800" {...props}>
                     {children}
-                  </div>
+                  </p>
                 ),
                 a: ({ node, href, children, ...props }) => (
                   <a href={href} className="text-blue-600 italic hover:underline break-words" target="_blank" rel="noopener noreferrer" {...props}>
@@ -221,7 +239,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 ),
               }}
             >
-              {article.content}
+              {fixMarkdownSpacing(article.content)}
             </ReactMarkdown>
           </div>
 
@@ -306,15 +324,22 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   key={id}
                   style={{
                     paddingLeft: `${(level - 1) * 16}px`,
-                    borderLeft: `4px solid transparent`,
-                    transition: "border-color 0.3s",
+                    borderLeft: level > 1 ? "2px dotted #9ca3af" : "none",
+                    marginLeft: level > 1 ? "8px" : "0",
+                    position: "relative"
                   }}
-                  className="hover:bg-blue-50 hover:border-blue-500 cursor-pointer rounded"
+                  className="hover:bg-blue-50 cursor-pointer rounded transition-colors duration-200"
                 >
                   <a
                     href={`#${id}`}
-                    className="text-blue-700 hover:text-blue-900 hover:underline font-medium block truncate"
+                    className="text-blue-700 hover:text-blue-900 font-medium block py-1.5 pl-2 truncate"
                   >
+                    {level > 1 && (
+                      <span 
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-2 rounded-full bg-blue-400"
+                        style={{ left: "-5px" }}
+                      />
+                    )}
                     {text}
                   </a>
                 </li>
