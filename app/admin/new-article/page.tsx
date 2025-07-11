@@ -54,8 +54,8 @@ export default function NewArticlePage() {
     async function fetchData() {
       try {
         const [catRes, tagRes] = await Promise.all([
-          fetch("${API_BASE_URL}/categories/"),
-          fetch("${API_BASE_URL}/tags/"),
+          fetch(`${API_BASE_URL}/categories/`),
+          fetch(`${API_BASE_URL}/tags/`),
         ]);
         if (!catRes.ok) throw new Error("Failed to fetch categories");
         if (!tagRes.ok) throw new Error("Failed to fetch tags");
@@ -79,7 +79,7 @@ export default function NewArticlePage() {
     e.preventDefault();
     setLoginError(null);
     try {
-      const res = await fetch("${API_BASE_URL}/login/", {
+      const res = await fetch(`${API_BASE_URL}/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -144,7 +144,7 @@ export default function NewArticlePage() {
     };
 
     try {
-      const res = await fetch("${API_BASE_URL}/articles/", {
+      const res = await fetch(`${API_BASE_URL}/articles/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

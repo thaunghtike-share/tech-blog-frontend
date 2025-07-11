@@ -82,11 +82,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article: Article = await res.json();
   const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
-    fetchJSON<Article>("${API_BASE_URL}/articles/"),
-    fetchJSON<Tag>("${API_BASE_URL}/tags/"),
-    fetchJSON<Category>("${API_BASE_URL}/categories/"),
-    fetchJSON<Author>("${API_BASE_URL}/authors/")
+    fetchJSON<Article>(`${API_BASE_URL}/articles/`),
+    fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
+    fetchJSON<Category>(`${API_BASE_URL}/categories/`),
+    fetchJSON<Author>(`${API_BASE_URL}/authors/`)
   ]);
+
 
   const sorted = allArticles.sort(
     (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
