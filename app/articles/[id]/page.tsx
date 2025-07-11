@@ -210,25 +210,76 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     {children}
                   </li>
                 ),
-                code: ({ inline, className = "", children, ...props }: any) => {
-                  if (inline) {
-                    return <code className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono" {...props}>{children}</code>;
-                  }
-                  const match = /language-(\w+)/.exec(className || "");
-                  const language = match?.[1] || "";
-                  return (
-                    <div className="relative mb-6 rounded-lg bg-white shadow border border-gray-200">
-                      {language && (
-                        <div className="absolute top-0 right-0 px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-bl-md font-mono border-l border-b border-gray-300">
-                          {language}
-                        </div>
-                      )}
-                      <pre className="overflow-x-auto p-4 text-sm text-gray-800">
-                        <code className={className} {...props}>{children}</code>
-                      </pre>
-                    </div>
-                  );
-                },
+code: ({ inline, className = "", children, ...props }: any) => {
+  if (inline) {
+    return (
+      <code
+        className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono"
+        {...props}
+      >
+        {children}
+      </code>
+    );
+  }
+
+  const match = /language-(\w+)/.exec(className || "");
+  const language = match?.[1] || "";
+
+  if (language === "bash" || language === "shell") {
+    const codeString = String(children);
+    const lines = codeString.split("\n").filter(line => line.trim() !== "");
+
+    return (
+      <pre
+        className="overflow-x-auto text-sm font-mono text-gray-900 bg-transparent shadow-none border-none p-0 m-0"
+        {...props}
+        style={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+          border: "none",
+          padding: 0,
+          margin: 0,
+        }}
+      >
+        {lines.map((line, idx) => {
+          const trimmedLine = line.trim();
+          const startsWithDollar = trimmedLine.startsWith("$");
+          const commandPart = startsWithDollar
+            ? trimmedLine.slice(1).trimStart()
+            : trimmedLine;
+
+          return (
+            <div key={idx} className="flex items-center select-text">
+              {/* Note style vertical bar */}
+              <span className="inline-block w-1.5 h-6 bg-blue-500 rounded mr-3" />
+              {/* Dollar sign in bold */}
+              {startsWithDollar && <span className="font-bold mr-1">$</span>}
+              {/* Command text italic */}
+              <span>{commandPart}</span>
+            </div>
+          );
+        })}
+      </pre>
+    );
+  }
+
+  return (
+    <div className="relative mb-6 rounded-lg bg-white shadow border border-gray-200">
+      {language && (
+        <div className="absolute top-0 right-0 px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-bl-md font-mono border-l border-b border-gray-300">
+          {language}
+        </div>
+      )}
+      <pre className="overflow-x-auto p-4 text-sm text-gray-800">
+        <code className={className} {...props}>
+          {children}
+        </code>
+      </pre>
+    </div>
+  );
+},
+
+
                 blockquote: ({ node, ...props }) => (
                   <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4" {...props} />
                 ),
