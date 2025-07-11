@@ -18,6 +18,7 @@ import {
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { MinimalHero } from "@/components/minimal-hero"
+import { MinimalSidebar } from "@/components/minimal-sidebar"
 
 // Types for your API data
 interface Category {

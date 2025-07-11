@@ -247,6 +247,7 @@ export function MinimalHeader() {
                   <Link href="/learn-devops-on-youtube" className="block px-4 py-2 hover:bg-blue-50">YouTube</Link>
                   <Link href="/learn-devops-on-udemy" className="block px-4 py-2 hover:bg-blue-50">Udemy Free Course</Link>
                   <Link href="/recommended-paid-courses" className="block px-4 py-2 hover:bg-blue-50">Recommended Paid Course</Link>
+                  <Link href="/free-labs" className="block px-4 py-2 hover:bg-blue-50">Free Labs</Link>
                 </div>
               )}
             </div>
