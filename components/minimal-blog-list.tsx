@@ -1,8 +1,6 @@
 "use client"
-
 import React, { useState, useEffect } from "react"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, User, ArrowRight, Tag as TagIcon, Folder } from "lucide-react"
+import { Calendar, Clock, User, ArrowRight, TagIcon, Folder, Sparkles } from 'lucide-react'
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -55,7 +53,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       try {
         setLoading(true)
         setError(null)
-
         let url = `${API_BASE_URL}/articles/`
         if (searchQuery.trim()) {
           url += `?search=${encodeURIComponent(searchQuery.trim())}`
@@ -93,12 +90,8 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   const getAuthor = (id: number) => authors.find((a) => a.id === id)
   const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`
-
-  const getTagNames = (ids: number[]) =>
-    ids.map((id) => tags.find((t) => t.id === id)?.name || `Tag ${id}`)
-
-  const getCategoryName = (id: number | null) =>
-    categories.find((c) => c.id === id)?.name || "General"
+  const getTagNames = (ids: number[]) => ids.map((id) => tags.find((t) => t.id === id)?.name || `Tag ${id}`)
+  const getCategoryName = (id: number | null) => categories.find((c) => c.id === id)?.name || "General"
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -107,22 +100,33 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       day: "numeric",
     })
 
-  const calculateReadTime = (text: string) =>
-    `${Math.ceil((text.split(" ").length || 1) / 200)} min`
+  const calculateReadTime = (text: string) => `${Math.ceil((text.split(" ").length || 1) / 200)} min`
 
   const stripMarkdown = (md: string) =>
-    md.replace(/<[^>]+>/g, "").replace(/[#_*>!\[\]\(\)~\-]/g, "").trim()
+    md
+      .replace(/<[^>]+>/g, "")
+      .replace(/[#_*>!\[\]$$$$~\-]/g, "")
+      .trim()
 
-  const truncate = (str: string, max = 150) =>
-    str.length <= max ? str : str.slice(0, max) + "..."
+  const truncate = (str: string, max = 150) => (str.length <= max ? str : str.slice(0, max) + "...")
 
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Latest Articles</h2>
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              Latest Articles
+            </h2>
+          </div>
+          <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+        </div>
         <div className="grid gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="animate-pulse p-4 bg-white rounded-xl shadow" />
+            <div key={i} className="animate-pulse p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-lg" />
           ))}
         </div>
       </div>
@@ -131,28 +135,47 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto text-center text-red-600 p-6 bg-red-50 rounded-xl">
-        <p>Error: {error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg"
-        >
-          Retry
-        </button>
+      <div className="max-w-4xl mx-auto text-center">
+        <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-6 shadow-lg">
+          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+              />
+            </svg>
+          </div>
+          <p className="text-red-600 mb-4">Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     )
   }
 
   return (
-      <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
+    <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       <div className="mb-12">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Latest Articles</h2>
-        <div className="h-1 w-24 bg-blue-600 rounded-full"></div>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
+            <Sparkles className="w-6 h-6 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            Latest Articles
+          </h2>
+        </div>
+        <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
       </div>
 
       <div className="grid gap-8">
         <AnimatePresence mode="wait">
-          {paginatedArticles.map((article) => {
+          {paginatedArticles.map((article, index) => {
             const author = getAuthor(article.author)
             return (
               <motion.article
@@ -161,36 +184,38 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-                className="bg-white p-6 rounded-xl border border-gray-100 shadow hover:shadow-lg transition"
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
                 <div className="flex justify-between flex-wrap mb-4 gap-2">
-                  <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-2 py-1 rounded-full text-sm font-small">
+                  <div className="flex items-center gap-1 text-blue-600 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100">
                     <Folder className="w-4 h-4" />
                     {getCategoryName(article.category)}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {getTagNames(article.tags).slice(0, 2).map((tag, i) => (
-                      <span
-                        key={i}
-                        className="flex items-center gap-1 text-sm bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full hover:bg-gray-200 transition"
-                      >
-                        <TagIcon className="w-3.5 h-3.5" />
-                        {tag}
-                      </span>
-                    ))}
+                    {getTagNames(article.tags)
+                      .slice(0, 2)
+                      .map((tag, i) => (
+                        <span
+                          key={i}
+                          className="flex items-center gap-1 text-sm bg-gradient-to-r from-gray-50 to-slate-50 text-gray-700 px-2.5 py-1 rounded-full hover:from-gray-100 hover:to-slate-100 transition-all border border-gray-200"
+                        >
+                          <TagIcon className="w-3.5 h-3.5" />
+                          {tag}
+                        </span>
+                      ))}
                   </div>
                 </div>
 
-                <Link href={`/articles/${article.id}`} className="group block">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition">
+                <Link href={`/articles/${article.id}`} className="group/link block">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                     {article.title}
                   </h3>
                   <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
                     {truncate(stripMarkdown(article.content), 200)}
                   </p>
-                  <div className="text-sm text-blue-600 flex items-center gap-1 group-hover:underline">
-                    Read more <ArrowRight className="w-4 h-4" />
+                  <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
+                    Read more <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                   </div>
                 </Link>
 
@@ -198,22 +223,24 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                   <div className="flex items-center gap-2">
                     {author?.avatar ? (
                       <img
-                        src={author.avatar}
+                        src={author.avatar || "/placeholder.svg"}
                         alt={author.name}
-                        className="w-5 h-5 rounded-full object-cover"
+                        className="w-5 h-5 rounded-full object-cover border border-gray-200"
                         loading="lazy"
                       />
                     ) : (
-                      <User className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                        <User className="w-3 h-3 text-white" />
+                      </div>
                     )}
-                    <span>{getAuthorName(article.author)}</span>
+                    <span className="font-medium">{getAuthorName(article.author)}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Calendar className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                    <Calendar className="w-4 h-4 text-gray-400" />
                     <span>{formatDate(article.published_at)}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Clock className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                    <Clock className="w-4 h-4 text-gray-400" />
                     <span>{calculateReadTime(article.content)} read</span>
                   </div>
                 </div>
@@ -223,36 +250,40 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         </AnimatePresence>
       </div>
 
-      {/* Pagination */}
-      <nav className="mt-10 flex justify-center items-center gap-2">
-        <button
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-          className="px-3 py-1 rounded-full border text-sm disabled:opacity-50"
-        >
-          Prev
-        </button>
-        {Array.from({ length: totalPages }, (_, i) => (
+      {/* Enhanced Pagination */}
+      {totalPages > 1 && (
+        <nav className="mt-10 flex justify-center items-center gap-2">
           <button
-            key={i}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 rounded-full text-sm ${
-              currentPage === i + 1
-                ? "bg-blue-600 text-white"
-                : "border bg-white text-gray-700 hover:bg-gray-100"
-            }`}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
           >
-            {i + 1}
+            Prev
           </button>
-        ))}
-        <button
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-          className="px-3 py-1 rounded-full border text-sm disabled:opacity-50"
-        >
-          Next
-        </button>
-      </nav>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-3 py-1 rounded-full text-sm transition-all ${
+                currentPage === i + 1
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                  : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 shadow-sm"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+          >
+            Next
+          </button>
+        </nav>
+      )}
     </div>
   )
 }

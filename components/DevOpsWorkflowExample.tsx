@@ -1,19 +1,8 @@
-"use client";
-
-import React, { useState } from "react";
-import Image from "next/image";
-import {
-  CheckCircle2,
-  GitCommit,
-  Code,
-  Shield,
-  Package,
-  GitPullRequest,
-  Server,
-  Activity,
-  Settings,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+"use client"
+import React, { useState } from "react"
+import Image from "next/image"
+import { CheckCircle2, GitCommit, Code, Shield, Package, GitPullRequest, Server, Activity, Settings, Sparkles } from 'lucide-react'
+import { motion, AnimatePresence } from "framer-motion"
 
 const workflowSteps = [
   {
@@ -72,7 +61,7 @@ const workflowSteps = [
     icon: Activity,
     color: "bg-indigo-100 text-indigo-700",
   },
-];
+]
 
 const techStack = [
   "GitHub",
@@ -86,79 +75,105 @@ const techStack = [
   "Grafana",
   "Image Updater",
   "Terraform",
-];
+]
 
 export function DevOpsWorkflowExample() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0)
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
+      {/* Enhanced Header */}
       <div className="text-center mb-16">
-        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white mb-4">
-          <Code className="w-4 h-4 mr-2" />
-          Case Study
-        </span>
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-3 mb-6"
+        >
+          <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
+            <Code className="w-6 h-6 text-white" />
+          </div>
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+            <Sparkles className="w-4 h-4 mr-2" />
+            Case Study
+          </span>
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+        >
           Enterprise GitOps Workflow
-        </h2>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-           devops architecture design built for client's company using gitops and argocd
-        </p>
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-gray-600 max-w-3xl mx-auto"
+        >
+          DevOps architecture design built for client's company using GitOps and ArgoCD
+        </motion.p>
       </div>
 
-      {/* Diagram */}
-      <div className="relative w-full aspect-video mb-23">
+      {/* Enhanced Diagram */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3 }}
+        className="relative w-full aspect-video mb-16 rounded-2xl overflow-hidden shadow-xl border border-gray-200"
+      >
         <Image
           src="/dinger.png"
           alt="DevOps workflow diagram"
           fill
-          className="object-contain"
+          className="object-contain bg-gradient-to-br from-gray-50 to-blue-50"
           quality={100}
           priority
         />
-      </div>
+      </motion.div>
 
-      {/* Workflow + Tech Stack */}
+      {/* Enhanced Workflow + Tech Stack */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Workflow Stepper */}
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+        {/* Enhanced Workflow Stepper */}
+        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
-            <Settings className="text-blue-600" />
+            <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
+              <Settings className="w-5 h-5 text-white" />
+            </div>
             Workflow Steps
           </h3>
 
-          {/* Connected Horizontal Stepper */}
+          {/* Enhanced Connected Horizontal Stepper */}
           <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center">
             {workflowSteps.map((step, i) => {
-              const Icon = step.icon;
-              const isSelected = currentStep === i;
-
+              const Icon = step.icon
+              const isSelected = currentStep === i
               return (
                 <React.Fragment key={step.id}>
                   <motion.button
                     onClick={() => setCurrentStep(i)}
                     whileHover={{ scale: 1.05 }}
-                    className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all flex-shrink-0
-                      ${
-                        isSelected
-                          ? "bg-blue-600 text-white border-blue-600 shadow-lg"
-                          : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50 hover:shadow-sm"
-                      }`}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center justify-center w-10 h-10 rounded-full transition-all flex-shrink-0 ${
+                      isSelected
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg scale-110"
+                        : "bg-white text-blue-600 border-2 border-blue-300 hover:bg-blue-50 hover:shadow-md"
+                    }`}
                   >
                     <Icon className="w-4 h-4" />
                   </motion.button>
-
-                  {/* Connector Line */}
+                  {/* Enhanced Connector Line */}
                   {i < workflowSteps.length - 1 && (
-                    <div className="h-0.5 w-5 bg-blue-300 mx-1 flex-shrink-0 rounded-full" />
+                    <div className="h-0.5 w-5 bg-gradient-to-r from-blue-300 to-indigo-300 mx-1 flex-shrink-0 rounded-full" />
                   )}
                 </React.Fragment>
-              );
+              )
             })}
           </div>
 
-          {/* Step Details */}
+          {/* Enhanced Step Details */}
           <AnimatePresence mode="wait">
             <motion.div
               key={workflowSteps[currentStep].id}
@@ -168,26 +183,21 @@ export function DevOpsWorkflowExample() {
               transition={{ duration: 0.3 }}
             >
               <div
-                className={`${workflowSteps[currentStep].color} w-14 h-14 rounded-xl flex items-center justify-center mb-6`}
+                className={`${workflowSteps[currentStep].color} w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg`}
               >
                 {React.createElement(workflowSteps[currentStep].icon, { className: "w-6 h-6" })}
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-3">
-                {workflowSteps[currentStep].title}
-              </h4>
-              <p className="text-gray-700 mb-6">
-                {workflowSteps[currentStep].description}
-              </p>
+
+              <h4 className="text-xl font-bold text-gray-900 mb-3">{workflowSteps[currentStep].title}</h4>
+              <p className="text-gray-700 mb-6">{workflowSteps[currentStep].description}</p>
 
               <div className="space-y-2">
-                <h5 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                  Tools Used
-                </h5>
+                <h5 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Tools Used</h5>
                 <div className="flex flex-wrap gap-2">
                   {workflowSteps[currentStep].tools.map((tool) => (
                     <span
                       key={tool}
-                      className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
+                      className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 rounded-full text-sm font-medium shadow-sm hover:shadow-md transition-shadow"
                     >
                       {tool}
                     </span>
@@ -198,20 +208,25 @@ export function DevOpsWorkflowExample() {
           </AnimatePresence>
         </div>
 
-        {/* Tech Stack + Features */}
-        <div>
-          {/* Tech Stack */}
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 mb-8">
+        {/* Enhanced Tech Stack + Features */}
+        <div className="space-y-8">
+          {/* Enhanced Tech Stack */}
+          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <Code className="text-blue-600" />
+              <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+                <Code className="w-5 h-5 text-white" />
+              </div>
               Complete Tech Stack
             </h3>
             <div className="flex flex-wrap gap-3">
-              {techStack.map((tool) => (
+              {techStack.map((tool, index) => (
                 <motion.div
                   key={tool}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.05 }}
-                  className="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg font-medium text-sm"
+                  className="px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-purple-100 hover:to-pink-100 text-gray-800 hover:text-purple-800 rounded-lg font-medium text-sm shadow-sm hover:shadow-md transition-all"
                 >
                   {tool}
                 </motion.div>
@@ -219,10 +234,12 @@ export function DevOpsWorkflowExample() {
             </div>
           </div>
 
-          {/* Key Features */}
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+          {/* Enhanced Key Features */}
+          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <CheckCircle2 className="text-blue-600" />
+              <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-white" />
+              </div>
               Key Features
             </h3>
             <ul className="space-y-4">
@@ -240,10 +257,12 @@ export function DevOpsWorkflowExample() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors"
                 >
-                  <CheckCircle2 className="text-green-500 w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">{feature}</span>
+                  <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mt-0.5">
+                    <CheckCircle2 className="text-white w-4 h-4 flex-shrink-0" />
+                  </div>
+                  <span className="text-gray-700 font-medium">{feature}</span>
                 </motion.li>
               ))}
             </ul>
@@ -251,5 +270,5 @@ export function DevOpsWorkflowExample() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,22 +1,23 @@
 "use client"
-
-import { useState } from "react";
-import { ChevronDown, ChevronUp, Plus, Minus } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react"
+import { ChevronDown, ChevronUp, Plus, Minus, HelpCircle } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 type FAQ = {
-  question: string;
-  answer: string;
-};
+  question: string
+  answer: string
+}
 
 const faqsData: FAQ[] = [
   {
     question: "What technologies do you specialize in?",
-    answer: "I specialize in DevOps and Automation technologies including Kubernetes, Terraform, Ansible, Azure, AWS, and CI/CD pipelines.",
+    answer:
+      "I specialize in DevOps and Automation technologies including Kubernetes, Terraform, Ansible, Azure, AWS, and CI/CD pipelines.",
   },
   {
     question: "Do you offer consulting services?",
-    answer: "Yes, I provide DevOps consulting to help organizations improve their infrastructure automation, cloud adoption, and reliability.",
+    answer:
+      "Yes, I provide DevOps consulting to help organizations improve their infrastructure automation, cloud adoption, and reliability.",
   },
   {
     question: "How can I contact you?",
@@ -32,45 +33,52 @@ const faqsData: FAQ[] = [
   },
   {
     question: "Do you make handover if clients hire in-house DevOps team?",
-    answer: "Yes, I ensure proper handover and documentation if clients hire in-house DevOps engineers to take over ongoing operations.",
+    answer:
+      "Yes, I ensure proper handover and documentation if clients hire in-house DevOps engineers to take over ongoing operations.",
   },
-];
+]
 
 export function MinimalFAQs() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [showAll, setShowAll] = useState(false)
 
   const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+    setOpenIndex(openIndex === index ? null : index)
+  }
 
-  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 6);
+  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 6)
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mb-4"
+            className="flex items-center justify-center gap-3 mb-4"
           >
-            Need Help?
-          </motion.span>
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
+              <HelpCircle className="w-4 h-4 text-white" />
+            </div>
+            <span className="inline-block bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 px-4 py-1 rounded-full text-sm font-medium border border-blue-200">
+              Need Help?
+            </span>
+          </motion.div>
+
           <motion.h2
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-3"
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-3"
           >
             Frequently Asked Questions
           </motion.h2>
+
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ delay: 0.2 }}
             className="text-lg text-gray-600 max-w-2xl mx-auto"
           >
             Quick answers to common questions about my services
@@ -86,7 +94,7 @@ export function MinimalFAQs() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5 }}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all"
+              className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl"
             >
               <button
                 className="w-full flex flex-col items-center p-6 text-center"
@@ -94,29 +102,31 @@ export function MinimalFAQs() {
                 aria-expanded={openIndex === index}
               >
                 <div className="w-full">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {faq.question}
-                  </h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-medium text-gray-900 text-left flex-1">{faq.question}</h3>
+                    <div className="ml-4 flex-shrink-0">
+                      {openIndex === index ? (
+                        <Minus className="w-5 h-5 text-blue-600" />
+                      ) : (
+                        <Plus className="w-5 h-5 text-gray-500" />
+                      )}
+                    </div>
+                  </div>
                   <AnimatePresence>
                     {openIndex === index && (
-                      <motion.p
+                      <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="text-gray-600 text-sm px-4"
+                        className="overflow-hidden"
                       >
-                        {faq.answer}
-                      </motion.p>
+                        <div className="pt-4 border-t border-gray-100">
+                          <p className="text-gray-600 text-sm text-left leading-relaxed">{faq.answer}</p>
+                        </div>
+                      </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
-                <div className="mt-4">
-                  {openIndex === index ? (
-                    <Minus className="w-5 h-5 text-blue-600" />
-                  ) : (
-                    <Plus className="w-5 h-5 text-gray-500" />
-                  )}
                 </div>
               </button>
             </motion.div>
@@ -124,11 +134,13 @@ export function MinimalFAQs() {
         </div>
 
         {/* Show More/Less Button */}
-        {faqsData.length > 3 && (
+        {faqsData.length > 6 && (
           <div className="mt-8 text-center">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setShowAll(!showAll)}
-              className="inline-flex items-center px-5 py-2 border border-gray-300 rounded-full text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               {showAll ? (
                 <>
@@ -141,10 +153,10 @@ export function MinimalFAQs() {
                   <ChevronDown className="w-4 h-4 ml-2" />
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
         )}
       </div>
     </section>
-  );
+  )
 }

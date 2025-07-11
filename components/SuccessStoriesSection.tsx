@@ -1,8 +1,7 @@
-"use client";
-
-import React from "react";
-import { Star, Quote } from "lucide-react";
-import { motion } from "framer-motion";
+"use client"
+import React from "react"
+import { Star, Quote } from 'lucide-react'
+import { motion } from "framer-motion"
 
 const testimonials = [
   {
@@ -29,19 +28,43 @@ const testimonials = [
     feedback:
       "The roadmap and certification guidance gave me the confidence to clear my first cloud cert. Highly recommend!",
   },
-];
+]
 
 export function SuccessStoriesSection() {
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
-        <Quote className="mx-auto mb-4 w-10 h-10 text-indigo-600" />
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-3 mb-4"
+        >
+          <div className="p-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl shadow-lg">
+            <Quote className="w-4 h-4 text-white" />
+          </div>
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 border border-indigo-200">
+            <Star className="w-4 h-4 mr-2" />
+            Success Stories
+          </span>
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent mb-3"
+        >
           Success Stories from Myanmar
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-gray-600 max-w-2xl mx-auto text-lg"
+        >
           See how students and junior engineers from Myanmar are growing in the DevOps world.
-        </p>
+        </motion.p>
       </div>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -56,11 +79,19 @@ export function SuccessStoriesSection() {
             animate="visible"
             transition={{ type: "spring", stiffness: 100, damping: 15, delay: i * 0.15 }}
             whileHover={{ scale: 1.05, y: -10, boxShadow: "0 8px 15px rgba(0,0,0,0.15)" }}
-            className="bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center flex flex-col justify-between cursor-pointer"
+            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 text-center flex flex-col justify-between cursor-pointer transition-all duration-300 hover:shadow-2xl"
           >
-            <p className="text-gray-700 text-sm mb-4">"{t.feedback}"</p>
+            {/* Quote Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl">
+                <Quote className="w-6 h-6 text-indigo-600" />
+              </div>
+            </div>
+
+            <p className="text-gray-700 text-sm mb-4 leading-relaxed italic">"{t.feedback}"</p>
+
             <div className="mt-auto">
-              <div className="text-indigo-600 font-semibold">{t.name}</div>
+              <div className="text-indigo-600 font-medium">{t.name}</div>
               <div className="text-sm text-gray-500">{t.role}</div>
               <div className="flex justify-center mt-2">
                 {[...Array(5)].map((_, i) => (
@@ -72,5 +103,5 @@ export function SuccessStoriesSection() {
         ))}
       </div>
     </section>
-  );
+  )
 }

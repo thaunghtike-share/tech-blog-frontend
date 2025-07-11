@@ -1,18 +1,6 @@
 "use client"
-
 import { useState } from "react"
-import {
-  Zap,
-  Code,
-  Cloud,
-  Cpu,
-  Server,
-  Database,
-  GitBranch,
-  ArrowRight,
-  ChevronUp,
-  ChevronDown,
-} from "lucide-react"
+import { Zap, Code, Cloud, Cpu, Server, Database, GitBranch, ArrowRight, ChevronUp, ChevronDown } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRouter } from "next/navigation"
@@ -45,16 +33,40 @@ export function MinimalHero() {
       animate="show"
       exit="exit"
       variants={container}
-      className="relative bg-gradient-to-br from-blue-50/80 via-indigo-50/80 to-emerald-50/80 py-12 md:py-20 border-b border-gray-200/50 overflow-hidden"
+      className="relative bg-gradient-to-br from-blue-50/80 via-indigo-50/80 to-purple-50/80 py-12 md:py-20 border-b border-gray-200/50 overflow-hidden"
     >
-      {/* Background pattern */}
+      {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-10 [background-image:linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-
-      {/* Floating icons */}
-      <Cloud className="absolute top-20 left-10 text-blue-200/60 w-10 h-10 hidden md:block" />
-      <Server className="absolute bottom-20 right-10 text-indigo-200/60 w-10 h-10 hidden md:block" />
-      <Database className="absolute top-1/3 right-20 text-emerald-200/60 w-8 h-8 hidden md:block" />
-      <GitBranch className="absolute bottom-1/4 left-20 text-blue-200/60 w-8 h-8 hidden md:block" />
+      
+      {/* Enhanced floating icons with animation */}
+      <motion.div
+        animate={{ y: [-10, 10, -10] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-20 left-10 text-blue-300/60 w-10 h-10 hidden md:block"
+      >
+        <Cloud className="w-full h-full" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [10, -10, 10] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-20 right-10 text-indigo-300/60 w-10 h-10 hidden md:block"
+      >
+        <Server className="w-full h-full" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [-5, 15, -5] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/3 right-20 text-purple-300/60 w-8 h-8 hidden md:block"
+      >
+        <Database className="w-full h-full" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [15, -5, 15] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-1/4 left-20 text-blue-300/60 w-8 h-8 hidden md:block"
+      >
+        <GitBranch className="w-full h-full" />
+      </motion.div>
 
       {/* Hero Content */}
       <motion.div
@@ -64,14 +76,18 @@ export function MinimalHero() {
         animate="show"
         exit="exit"
       >
-        {/* Badge */}
+        {/* Enhanced Badge */}
         <motion.div
           variants={item}
-          className="inline-flex items-center gap-2 bg-white text-blue-600 text-[11px] md:text-xs font-medium px-4 py-1.5 rounded-full mb-4 shadow-sm border border-gray-200/50"
+          className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm text-blue-600 text-[11px] md:text-xs font-medium px-4 py-1.5 rounded-full mb-4 shadow-lg border border-blue-100"
         >
-          <Zap className="h-3 w-3" />
+          <div className="p-0.5 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full">
+            <Zap className="h-3 w-3 text-white" />
+          </div>
           <span>DevOps • DevSecOps • IAC</span>
-          <Code className="h-3 w-3 ml-1" />
+          <div className="p-0.5 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full">
+            <Code className="h-3 w-3 text-white ml-1" />
+          </div>
         </motion.div>
 
         {/* Heading (title) */}
@@ -85,7 +101,7 @@ export function MinimalHero() {
             <img
               src="/myanmar-flag.svg"
               alt="Myanmar"
-              className="inline-block w-6 h-4 shadow-sm ml-1"
+              className="inline-block w-6 h-4 shadow-sm ml-1 rounded"
             />
           </span>
         </motion.h1>
@@ -95,9 +111,12 @@ export function MinimalHero() {
           variants={item}
           className="text-sm sm:text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mb-8"
         >
-          A curated DevOps roadmap, tools, and projects — built especially for
-          students, junior developers, and aspiring engineers in Myanmar
-          to kickstart their cloud devops and automation journey.
+          A curated DevOps roadmap, tools, and projects — built especially for students, junior developers, and aspiring
+          engineers in Myanmar to kickstart their{" "}
+          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-medium">
+            cloud DevOps and automation journey
+          </span>
+          .
         </motion.p>
 
         {/* Expandable Content */}
@@ -110,14 +129,11 @@ export function MinimalHero() {
               exit="exit"
               className="flex flex-col items-center gap-10"
             >
-              {/* Buttons */}
-              <motion.div
-                variants={item}
-                className="flex flex-row flex-wrap justify-center gap-3"
-              >
+              {/* Enhanced Buttons */}
+              <motion.div variants={item} className="flex flex-row flex-wrap justify-center gap-3">
                 <Button
                   size="lg"
-                  className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-all"
+                  className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all"
                   onClick={() => router.push("/articles")}
                 >
                   <Code className="mr-2 h-4 w-4" />
@@ -127,11 +143,11 @@ export function MinimalHero() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-gray-300 bg-white/50 hover:bg-white text-gray-700 shadow-sm flex items-center"
+                  className="border-gray-300 bg-white/80 backdrop-blur-sm hover:bg-white text-gray-700 shadow-lg hover:shadow-xl flex items-center transition-all"
                   onClick={() => {
-                    const element = document.getElementById('free-labs');
+                    const element = document.getElementById("free-labs")
                     if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
+                      element.scrollIntoView({ behavior: "smooth" })
                     }
                   }}
                 >
@@ -140,44 +156,40 @@ export function MinimalHero() {
                 </Button>
               </motion.div>
 
-              {/* Tags */}
-              <motion.div
-                variants={item}
-                className="flex flex-wrap justify-center gap-4 text-gray-500 text-sm"
-              >
-                <span className="flex items-center">
-                  <Server className="w-4 h-4 mr-1" /> Kubernetes
-                </span>
-                <span className="flex items-center">
-                  <GitBranch className="w-4 h-4 mr-1" /> Terraform
-                </span>
-                <span className="flex items-center">
-                  <Database className="w-4 h-4 mr-1" /> MLOps
-                </span>
-                <span className="flex items-center">
-                  <Cloud className="w-4 h-4 mr-1" /> Cloud
-                </span>
-                <span className="flex items-center">
-                  <Cpu className="w-4 h-4 mr-1" /> DevOps
-                </span>
+              {/* Enhanced Tags */}
+              <motion.div variants={item} className="flex flex-wrap justify-center gap-4 text-gray-500 text-sm">
+                {[
+                  { icon: Server, label: "Kubernetes", color: "text-blue-600" },
+                  { icon: GitBranch, label: "Terraform", color: "text-green-600" },
+                  { icon: Database, label: "MLOps", color: "text-purple-600" },
+                  { icon: Cloud, label: "Cloud", color: "text-cyan-600" },
+                  { icon: Cpu, label: "DevOps", color: "text-orange-600" },
+                ].map((item, index) => (
+                  <motion.span
+                    key={item.label}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-white/60 backdrop-blur-sm rounded-full border border-gray-200 hover:bg-white/80 transition-all"
+                  >
+                    <item.icon className={`w-4 h-4 ${item.color}`} />
+                    {item.label}
+                  </motion.span>
+                ))}
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Toggle Button - below expandable content */}
+        {/* Enhanced Toggle Button */}
         <motion.div variants={item} className="mt-10">
           <Button
             size="icon"
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow transition-transform"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all hover:scale-105"
             onClick={() => setExpanded((v) => !v)}
             aria-label={expanded ? "Minimize Hero Content" : "Expand Hero Content"}
           >
-            {expanded ? (
-              <ChevronUp className="w-5 h-5" />
-            ) : (
-              <ChevronDown className="w-5 h-5" />
-            )}
+            {expanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </Button>
         </motion.div>
       </motion.div>
