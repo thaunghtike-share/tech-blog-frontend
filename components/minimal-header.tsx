@@ -269,10 +269,8 @@ export function MinimalHeader() {
               </button>
               {isServicesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/services/devops-as-a-service" className="block px-4 py-2 hover:bg-blue-50">DevOps as a Service</Link>
-                  <Link href="/services/cloud-migration" className="block px-4 py-2 hover:bg-blue-50">Cloud-Native Migration</Link>
+                  <Link href="/services/monolithic-to-cloud-native-migration" className="block px-4 py-2 hover:bg-blue-50">Cloud-Native Migration</Link>
                   <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">Infrastructure as Code</Link>
-                  <Link href="/services/consulting" className="block px-4 py-2 hover:bg-blue-50">DevOps Consulting</Link>
                   <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">Website Development</Link>
                 </div>
               )}
