@@ -8,7 +8,7 @@ import { YouTubePlaylists } from "@/components/YouTubePlaylists"
 import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
 import { TopUdemyCourses } from "@/components/TopUdemyCourses"
 
-export default function LearnDevOpsOnUtube() {
+export default function LearnDevOpsOnUdemyPage() {
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get("search") || ""
 

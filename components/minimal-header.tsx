@@ -227,6 +227,30 @@ export function MinimalHeader() {
               )}
             </div>
 
+            {/* Learning Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => {
+                if (learningTimeout) clearTimeout(learningTimeout)
+                setIsLearningOpen(true)
+              }}
+              onMouseLeave={() => {
+                const timeout = setTimeout(() => setIsLearningOpen(false), 200)
+                setLearningTimeout(timeout)
+              }}
+            >
+              <button className="flex items-center hover:text-blue-600">
+                Learning <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {isLearningOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                  <Link href="/learn-devops-on-youtube" className="block px-4 py-2 hover:bg-blue-50">YouTube</Link>
+                  <Link href="/learn-devops-on-udemy" className="block px-4 py-2 hover:bg-blue-50">Udemy Free Course</Link>
+                  <Link href="/recommended-paid-courses" className="block px-4 py-2 hover:bg-blue-50">Recommended Paid Course</Link>
+                </div>
+              )}
+            </div>
+
             {/* Services Dropdown */}
             <div
               className="relative"
@@ -249,30 +273,6 @@ export function MinimalHeader() {
                   <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">Infrastructure as Code</Link>
                   <Link href="/services/consulting" className="block px-4 py-2 hover:bg-blue-50">DevOps Consulting</Link>
                   <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">Website Development</Link>
-                </div>
-              )}
-            </div>
-
-            {/* Learning Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => {
-                if (learningTimeout) clearTimeout(learningTimeout)
-                setIsLearningOpen(true)
-              }}
-              onMouseLeave={() => {
-                const timeout = setTimeout(() => setIsLearningOpen(false), 200)
-                setLearningTimeout(timeout)
-              }}
-            >
-              <button className="flex items-center hover:text-blue-600">
-                Learning <ChevronDown className="ml-1 w-4 h-4" />
-              </button>
-              {isLearningOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/learn-devops-on-youtube" className="block px-4 py-2 hover:bg-blue-50">YouTube</Link>
-                  <Link href="/learn-devops-on-udemy" className="block px-4 py-2 hover:bg-blue-50">Udemy Free Course</Link>
-                  <Link href="/learn-paid-courses" className="block px-4 py-2 hover:bg-blue-50">Recommended Paid Course</Link>
                 </div>
               )}
             </div>

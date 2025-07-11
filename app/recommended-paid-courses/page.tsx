@@ -6,8 +6,10 @@ import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { YouTubePlaylists } from "@/components/YouTubePlaylists"
 import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
+import { TopUdemyCourses } from "@/components/TopUdemyCourses"
+import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
 
-export default function LearnDevOpsOnUtubePage() {
+export default function RecommendedPaidCoursesPage() {
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get("search") || ""
 
@@ -45,8 +47,7 @@ export default function LearnDevOpsOnUtubePage() {
       </a>
       {/* Full header with search */}
       <MinimalHeader />
-      <YouTubePlaylists />
-      <YouTubePlaylistsMM />
+      <RecommendedPaidCourses />
       <MinimalFooter />
     </div>
   )
