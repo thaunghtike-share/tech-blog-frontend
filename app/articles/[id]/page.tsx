@@ -74,6 +74,19 @@ async function fetchAuthor(id: number): Promise<Author | null> {
   }
 }
 
+function flattenChildren(children: any): string {
+  if (typeof children === "string") {
+    return children;
+  }
+  if (Array.isArray(children)) {
+    return children.map(flattenChildren).join("");
+  }
+  if (children && typeof children === "object" && "props" in children) {
+    return flattenChildren(children.props.children);
+  }
+  return "";
+}
+
 function extractHeadings(
   markdown: string
 ): { text: string; level: number; id: string }[] {
@@ -112,7 +125,7 @@ function fixMarkdownSpacing(content: string): string {
     .replace(/(!\[.*?\]\(.*?\))\n([^\n])/g, "$1\n\n$2");
 }
 
-export default async function ArticlePage({ params }: { params: { id: string } }) {
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const id = parseInt(params.id);
 
   const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" });
@@ -182,7 +195,14 @@ export default async function ArticlePage({ params }: { params: { id: string } }
           className="w-10 h-10 rounded-full"
         >
           <defs>
-            <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="messengerGradient"
+              x1="0"
+              y1="0"
+              x2="240"
+              y2="240"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#E1306C" />
               <stop offset="1" stopColor="#833AB4" />
             </linearGradient>
@@ -197,7 +217,9 @@ export default async function ArticlePage({ params }: { params: { id: string } }
           Chat?
         </span>
       </a>
+
       <MinimalHeader />
+
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Article Content */}
         <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 max-w-full overflow-x-auto">
@@ -230,7 +252,10 @@ export default async function ArticlePage({ params }: { params: { id: string } }
               components={{
                 h1: ({ node, children, ...props }) => {
                   const text = String(children);
-                  const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+                  const id = text
+                    .toLowerCase()
+                    .replace(/[^\w]+/g, "-")
+                    .replace(/^-+|-+$/g, "");
                   return (
                     <h1 id={id} className="text-3xl font-semibold my-4" {...props}>
                       {children}
@@ -239,7 +264,10 @@ export default async function ArticlePage({ params }: { params: { id: string } }
                 },
                 h2: ({ node, children, ...props }) => {
                   const text = String(children);
-                  const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+                  const id = text
+                    .toLowerCase()
+                    .replace(/[^\w]+/g, "-")
+                    .replace(/^-+|-+$/g, "");
                   return (
                     <h2 id={id} className="text-2xl font-semibold my-3" {...props}>
                       {children}
@@ -248,7 +276,10 @@ export default async function ArticlePage({ params }: { params: { id: string } }
                 },
                 h3: ({ node, children, ...props }) => {
                   const text = String(children);
-                  const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+                  const id = text
+                    .toLowerCase()
+                    .replace(/[^\w]+/g, "-")
+                    .replace(/^-+|-+$/g, "");
                   return (
                     <h3 id={id} className="text-xl font-semibold my-2" {...props}>
                       {children}
@@ -299,72 +330,50 @@ export default async function ArticlePage({ params }: { params: { id: string } }
                   }
 
                   const match = /language-(\w+)/.exec(className || "");
-                  const language = match?.[1] || "";
+                  const language = match?.[1]?.toLowerCase() || "";
 
-                  if (language === "bash" || language === "shell") {
-                    const codeString = String(children);
-                    const lines = codeString.split("\n").filter((line) => line.trim() !== "");
+                  // flattenChildren function to get string from children
+                  const codeString = flattenChildren(children);
 
-                    return (
-                      <pre
-                        className="overflow-x-auto text-sm font-mono text-gray-900 bg-transparent shadow-none border-none p-2 m-0"
-                        {...props}
-                        style={{
-                          backgroundColor: "transparent",
-                          boxShadow: "none",
-                          border: "none",
-                        }}
-                      >
-                        {lines.map((line, idx) => {
-                          const trimmedLine = line.trim();
-                          const startsWithDollar = trimmedLine.startsWith("$");
-                          const commandPart = startsWithDollar
-                            ? trimmedLine.slice(1).trimStart()
-                            : trimmedLine;
+                  const lines = codeString.split("\n").filter((line) => line.trim() !== "");
 
-                          return (
-                            <div
-                              key={idx}
-                              className="flex items-start select-text gap-3"
-                              style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
-                            >
-                              {/* Vertical note bar, full height */}
-                              <span
-                                className="inline-block w-1.5 bg-blue-500 rounded"
-                                style={{ minHeight: "1.5em" }}
-                              />
-
-                              <div>
-                                {/* Dollar sign in bold */}
-                                {startsWithDollar && (
-                                  <span
-                                    className="font-bold mr-1"
-                                    style={{ userSelect: "none" }}
-                                  >
-                                    $
-                                  </span>
-                                )}
-                                {/* Command text italic, allow wrapping */}
-                                <span>{commandPart}</span>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </pre>
-                    );
-                  }
+                  // Check if bash/shell first line starts with $
+                  const isShellLike = language === "bash" || language === "shell";
+                  const firstLine = lines[0]?.trim() || "";
+                  const startsWithDollar = isShellLike && firstLine.startsWith("$");
 
                   return (
-                    <div className="relative mb-6 rounded-lg bg-white shadow border border-gray-200">
+                    <div
+                      className="relative mb-6 rounded-lg bg-white text-gray-900 font-mono text-sm shadow-sm border border-blue-300"
+                      {...props}
+                    >
+                      {/* Language badge */}
                       {language && (
-                        <div className="absolute top-0 right-0 px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-bl-md font-mono border-l border-b border-gray-300">
-                          {language}
+                        <div className="absolute top-2 right-2 bg-blue-100 text-blue-700 rounded px-2 py-0.5 text-xs font-semibold select-none pointer-events-none">
+                          {language.toUpperCase()}
                         </div>
                       )}
-                      <pre className="overflow-x-auto p-4 text-sm text-gray-800">
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
+
+                      {/* Code content */}
+                      <pre className="whitespace-pre-wrap p-4 overflow-x-auto rounded-lg">
+                        {lines.map((line, idx) => (
+                          <div key={idx} className="flex">
+                            {/* Show $ prompt only on first line of shell commands starting with $ */}
+                            {idx === 0 && startsWithDollar && (
+                              <span
+                                className="text-blue-600 font-bold select-none mr-2"
+                                aria-hidden="true"
+                              >
+                                $
+                              </span>
+                            )}
+                            <span>
+                              {idx === 0 && startsWithDollar
+                                ? line.slice(1).trimStart()
+                                : line}
+                            </span>
+                          </div>
+                        ))}
                       </pre>
                     </div>
                   );
@@ -405,7 +414,9 @@ export default async function ArticlePage({ params }: { params: { id: string } }
             <div>
               <h4 className="text-lg font-semibold mb-1">Written By</h4>
               <p className="text-medium font-medium">{author?.name || "Unknown author"}</p>
-              {author?.bio && <p className="text-gray-800 mt-2 max-w-xl">{author.bio}</p>}
+              {author?.bio && (
+                <p className="text-gray-800 mt-2 max-w-xl">{author.bio}</p>
+              )}
               {author?.linkedin && (
                 <a
                   href={author.linkedin}
@@ -452,7 +463,8 @@ export default async function ArticlePage({ params }: { params: { id: string } }
             <ul className="grid gap-6 md:grid-cols-2">
               {recentArticles.map((item) => {
                 const date = new Date(item.published_at).toLocaleDateString();
-                const itemCategory = categories.find((c) => c.id === item.category)?.name || "General";
+                const itemCategory =
+                  categories.find((c) => c.id === item.category)?.name || "General";
                 const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
 
                 return (
