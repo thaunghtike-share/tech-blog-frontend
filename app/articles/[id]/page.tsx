@@ -50,7 +50,7 @@ interface ArticlePageProps {
   params: { id: string };
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://192.168.100.7:8000/api";
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
@@ -103,10 +103,16 @@ function extractHeadings(
 }
 
 function fixMarkdownSpacing(content: string): string {
-  return content.replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2");
+  return content
+    // Ensure blank lines before and after code blocks after headings
+    .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2")
+    // Ensure blank line before image
+    .replace(/([^\n])\n(!\[)/g, "$1\n\n$2")
+    // Ensure blank line after image
+    .replace(/(!\[.*?\]\(.*?\))\n([^\n])/g, "$1\n\n$2");
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params }: { params: { id: string } }) {
   const id = parseInt(params.id);
 
   const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" });
@@ -370,13 +376,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   />
                 ),
                 img: ({ node, ...props }) => (
-                  <div className="my-6">
+                  <>
                     <img
                       {...props}
-                      className="max-w-full rounded-lg shadow-md mx-auto"
+                      className="my-6 max-w-full rounded-lg shadow-md mx-auto"
                       alt={props.alt || "Article image"}
                     />
-                  </div>
+                  </>
                 ),
               }}
             >

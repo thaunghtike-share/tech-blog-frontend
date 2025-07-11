@@ -11,7 +11,7 @@ interface Playlist {
   duration: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api"; // <-- your API base URL here
+const API_BASE_URL = "http://192.168.100.7:8000/api"; // <-- your API base URL here
 
 export function YouTubePlaylistsMM() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
