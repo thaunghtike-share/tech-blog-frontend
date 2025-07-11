@@ -33,67 +33,26 @@ const getPlatformIcon = (platform: string) => {
   return <BookOpen className="w-5 h-5" />
 }
 
-const allFreeLabs: DevOpsLab[] = [
-  {
-    title: "KodeKloud",
-    platform: "KodeKloud",
-    url: "https://studio.kodekloud.com/labs",
-    description: "Real tasks, real scenarios, zero BS.",
-    difficulty: "Beginner → Advanced",
-  },
-  {
-    title: "Killer Coda",
-    platform: "killercoda",
-    url: "https://killercoda.com/",
-    description: "Quick, no-install browser labs",
-    difficulty: "Beginner → Intermediate",
-  },
-  {
-    title: "Kubernetes Lab",
-    platform: "lets play with k8s",
-    url: "https://labs.play-with-k8s.com/",
-    description: "A simple, interactive and fun playground to learn Kubernetes",
-    difficulty: "Intermediate",
-  },
-  {
-    title: "Docker Lab",
-    platform: "lets play with docker",
-    url: "https://labs.play-with-docker.com",
-    description: "A simple, interactive and fun playground to learn Docker",
-    difficulty: "Intermediate",
-  },
-  {
-    title: "Git Lab",
-    platform: "git branching",
-    url: "https://learngitbranching.js.org",
-    description: "The most visual and interactive way to learn Git on the web",
-    difficulty: "Intermediate",
-  },
-  {
-    title: "Terraform Lab",
-    platform: "kodekloud",
-    url: "https://kodekloud.com/pages/free-labs/terraform",
-    description: "Terraform Free Labs by KodeKloud",
-    difficulty: "Beginner",
-  },
-  {
-    title: "Linux Lab",
-    platform: "kodekloud",
-    url: "https://kodekloud.com/free-labs/linux",
-    description: "Linux Free Labs",
-    difficulty: "Beginner",
-  },
-]
+const API_BASE_URL = "http://192.168.1.131:8000/api"
 
 export function FreeLabs() {
+  const [labs, setLabs] = useState<DevOpsLab[]>([])
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  // Always show all labs, no toggle
-  const labsToShow = allFreeLabs
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/freelabs/`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("API response:", data)
+        // If paginated, data.results is array; else data is array
+        setLabs(Array.isArray(data) ? data : data.results || [])
+      })
+      .catch((err) => console.error("Failed to load labs:", err))
+  }, [])
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -111,7 +70,7 @@ export function FreeLabs() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {labsToShow.map((lab, idx) => {
+        {labs.map((lab, idx) => {
           const icon = getPlatformIcon(lab.platform)
           const buttonText = "Launch Lab"
           const buttonColor = "bg-black hover:bg-gray-900"
