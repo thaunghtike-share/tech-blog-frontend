@@ -14,7 +14,6 @@ export default function ArticlesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-x-hidden">
       <MinimalHeader />
-      <MinimalHero />
 
       <main className="max-w-7xl mx-auto px-4 py-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-16">

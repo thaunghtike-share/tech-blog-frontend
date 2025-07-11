@@ -10,7 +10,7 @@ import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { ShareButtons } from "@/components/share-buttons";
 import { MinimalHero } from "@/components/minimal-hero";
-import { BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, Linkedin } from "lucide-react";
 
 interface Article {
   id: number;
@@ -26,6 +26,9 @@ interface Article {
 interface Author {
   id: number;
   name: string;
+  bio?: string;
+  avatar?: string;
+  linkedin?: string;
 }
 
 interface Tag {
@@ -114,23 +117,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <MinimalHeader />
-      <MinimalHero />
 
       <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Article Content */}
         <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 max-w-full overflow-x-auto">
           <div className="prose prose-lg">
-            <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+            <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
 
-            <div className="text-gray-600 italic mb-4">
-              <p>Published on {publishDate}</p>
-              <p>
-                Written By{" "}
-                <span className="ml-2 font-medium not-italic text-gray-800">
-                  {author?.name || "Unknown author"}
-                </span>
-              </p>
-            </div>
+            {/* Published on date + author name in one italic line */}
+            <p className="text-gray-600 italic mb-6">
+              Published on{" "}
+              <span className="font-bold italic">{publishDate}</span>{" "}
+              By{" "}
+              <span className="font-bold italic">{author?.name || "Unknown author"}</span>
+            </p>
 
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full">
@@ -235,24 +235,55 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <ShareButtons articleId={article.id} title={article.title} />
           <GiscusComments />
 
-          <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium border-t pt-6">
-            {prevArticle ? (
-              <a href={`/articles/${prevArticle.id}`} className="hover:underline">
-                ← {prevArticle.title}
-              </a>
-            ) : (
-              <span />
+          {/* Written By Author Info Section */}
+          <div className="max-w-7xl mx-auto py-12 px-4 flex items-center gap-6">
+            {author?.avatar && (
+              <img
+                src={author.avatar}
+                alt={author.name}
+                className="w-24 h-24 rounded-full object-cover border border-gray-300 shadow-sm"
+              />
             )}
-            {nextArticle ? (
-              <a href={`/articles/${nextArticle.id}`} className="hover:underline text-right">
-                {nextArticle.title} →
-              </a>
-            ) : (
-              <span />
-            )}
+            <div>
+              <h4 className="text-lg font-semibold mb-1">Written By</h4>
+              <p className="text-medium font-medium">{author?.name || "Unknown author"}</p>
+              {author?.bio && <p className="text-gray-800 mt-2 max-w-xl">{author.bio}</p>}
+              {author?.linkedin && (
+                <a
+                  href={author.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 text-gray-800 hover:bg-gray-200 rounded px-3 py-1 text-sm font-medium"
+                  style={{ paddingLeft: 0 }}
+                >
+                  <Linkedin className="w-5 h-5 bg-gray-300 rounded p-0.5" />
+                  <span>LinkedIn</span>
+                </a>
+              )}
+            </div>
           </div>
 
-          {/* 📚 Recent Articles */}
+          <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium pt-6">
+            {prevArticle ? (
+              <a href={`/articles/${prevArticle.id}`} className="hover:underline flex items-center gap-1">
+                <ArrowLeft className="w-4 h-4" />
+                <span>{prevArticle.title}</span>
+              </a>
+            ) : (
+              <span />
+            )}
+
+            {nextArticle ? (
+              <a href={`/articles/${nextArticle.id}`} className="hover:underline flex items-center gap-1 text-right">
+                <span>{nextArticle.title}</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              ) : (
+                <span />
+              )}
+            </div>
+
+          {/* Recent Articles Section */}
           <div className="mt-16">
             <h3 className="text-xl font-bold text-slate-800 mb-6">📚 Recent Articles</h3>
             <ul className="grid gap-6 md:grid-cols-2">
@@ -296,7 +327,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg">
                 <BookOpen className="w-5 h-5" />
               </span>
-                Read Also
+              Read Also
             </h3>
             <ul className="space-y-4">
               {sameCategoryArticles.map((item) => {
