@@ -10,6 +10,7 @@ import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { ShareButtons } from "@/components/share-buttons";
 import { MinimalHero } from "@/components/minimal-hero";
+import { BookOpen } from "lucide-react";
 
 interface Article {
   id: number;
@@ -74,11 +75,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const article: Article = await res.json();
-  const [author, allArticles, tags, categories] = await Promise.all([
+  const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
     fetchJSON<Article>("http://localhost:8000/api/articles/"),
     fetchJSON<Tag>("http://localhost:8000/api/tags/"),
-    fetchJSON<Category>("http://localhost:8000/api/categories/")
+    fetchJSON<Category>("http://localhost:8000/api/categories/"),
+    fetchJSON<Author>("http://localhost:8000/api/authors/")
   ]);
 
   const sorted = allArticles.sort(
@@ -90,6 +92,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const nextArticle = sorted[currentIndex - 1] || null;
 
   const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
+  const sameCategoryArticles = sorted
+    .filter((a) => a.category === article.category && a.id !== article.id)
+    .slice(0, 5);
+
   const publishDate = new Date(article.published_at).toLocaleDateString();
 
   const categoryName = categories.find((c) => c.id === article.category)?.name || "General";
@@ -126,7 +132,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </p>
             </div>
 
-            {/* ✅ Category and Tags */}
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full">
                 📂 {categoryName}
@@ -145,27 +150,39 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeHighlight, rehypeRaw]}
               components={{
-                h1: ({ node, ...props }) => (
-                  <h1 className="text-3xl font-semibold my-4" {...props} />
-                ),
-                h2: ({ node, ...props }) => (
-                  <h2 className="text-2xl font-semibold my-3" {...props} />
-                ),
+                h1: ({ node, ...props }) => <h1 className="text-3xl font-semibold my-4" {...props} />,
+                h2: ({ node, ...props }) => <h2 className="text-2xl font-semibold my-3" {...props} />,
                 p: ({ node, children, ...props }) => (
                   <div className="mb-3 text-base leading-relaxed text-gray-800" {...props}>
                     {children}
                   </div>
                 ),
                 a: ({ node, href, children, ...props }) => (
-                <a
-                  href={href}
-                  className="text-blue-600 hover:underline break-words"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  {...props}
-                >
-                  {children}
-                </a>
+                  <a
+                    href={href}
+                    className="text-blue-600 italic hover:underline break-words"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...props}
+                  >
+                    {children}
+                  </a>
+                ),
+                ul: ({ node, children, ...props }) => (
+                  <ul className="mb-4 list-none space-y-2 pl-4" {...props}>
+                    {children}
+                  </ul>
+                ),
+                ol: ({ node, children, ...props }) => (
+                  <ol className="mb-4 list-decimal space-y-2 pl-6 text-gray-800" {...props}>
+                    {children}
+                  </ol>
+                ),
+                li: ({ node, children, ...props }) => (
+                  <li className="relative pl-6 text-base text-gray-700 leading-relaxed" {...props}>
+                    <span className="absolute left-0 top-1 text-pink-500">•</span>
+                    {children}
+                  </li>
                 ),
                 code: ({ inline, className = "", children, ...props }: any) => {
                   if (inline) {
@@ -234,20 +251,58 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <span />
             )}
           </div>
+
+          {/* 📚 Recent Articles */}
+          <div className="mt-16">
+            <h3 className="text-xl font-bold text-slate-800 mb-6">📚 Recent Articles</h3>
+            <ul className="grid gap-6 md:grid-cols-2">
+              {recentArticles.map((item) => {
+                const date = new Date(item.published_at).toLocaleDateString();
+                const itemCategory = categories.find((c) => c.id === item.category)?.name || "General";
+                const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
+
+                return (
+                  <li
+                    key={item.id}
+                    className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-200 bg-white"
+                  >
+                    <a href={`/articles/${item.id}`} className="block group space-y-2">
+                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-gray-500">{date}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {excerpt(item.content)}
+                      </p>
+                      <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-2">
+                        <span className="bg-gray-100 px-2 py-0.5 rounded-full">📂 {itemCategory}</span>
+                        <span className="bg-gray-100 px-2 py-0.5 rounded-full">✍️ {itemAuthor}</span>
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </article>
 
         {/* Sidebar */}
         <aside className="hidden lg:block lg:col-span-1 space-y-12">
           <MinimalSidebar />
 
-          {/* Recent Articles */}
+          {/* ✅ Read Also with Icon */}
           <div className="bg-white/90 border border-white/70 shadow rounded-xl p-4">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-              📚 Recent Articles
+              <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg">
+                <BookOpen className="w-5 h-5" />
+              </span>
+                Read Also
             </h3>
             <ul className="space-y-4">
-              {recentArticles.map((item) => {
+              {sameCategoryArticles.map((item) => {
                 const date = new Date(item.published_at).toLocaleDateString();
+                const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
+
                 return (
                   <li
                     key={item.id}
@@ -261,6 +316,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                         {excerpt(item.content)}
                       </p>
+                      <p className="text-xs text-gray-500 mt-1">✍️ {itemAuthor}</p>
                     </a>
                   </li>
                 );

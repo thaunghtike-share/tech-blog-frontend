@@ -281,7 +281,7 @@ export function MinimalSidebar() {
             <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
               <Star className="h-5 w-5" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900">Featured Experts</h3>
+            <h3 className="text-xl font-semibold text-gray-900">Featured Authors</h3>
           </div>
 
           {loading.authors ? (
@@ -302,7 +302,7 @@ export function MinimalSidebar() {
             </div>
           ) : featuredAuthors.length === 0 ? (
             <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <p className="text-gray-500 text-sm">No featured experts available</p>
+              <p className="text-gray-500 text-sm">No featured authors available</p>
             </div>
           ) : (
             <div className="space-y-4">
