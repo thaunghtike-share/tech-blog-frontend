@@ -17,6 +17,8 @@ interface Tag {
   name: string;
 }
 
+const API_BASE_URL = "http://192.168.1.131:8000/api"
+
 export default function NewArticlePage() {
   // --- Auth state ---
   const [token, setToken] = useState<string | null>(null);
@@ -52,8 +54,8 @@ export default function NewArticlePage() {
     async function fetchData() {
       try {
         const [catRes, tagRes] = await Promise.all([
-          fetch("http://localhost:8000/api/categories/"),
-          fetch("http://localhost:8000/api/tags/"),
+          fetch("${API_BASE_URL}/categories/"),
+          fetch("${API_BASE_URL}/tags/"),
         ]);
         if (!catRes.ok) throw new Error("Failed to fetch categories");
         if (!tagRes.ok) throw new Error("Failed to fetch tags");
@@ -77,7 +79,7 @@ export default function NewArticlePage() {
     e.preventDefault();
     setLoginError(null);
     try {
-      const res = await fetch("http://localhost:8000/api/login/", {
+      const res = await fetch("${API_BASE_URL}/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -142,7 +144,7 @@ export default function NewArticlePage() {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/api/articles/", {
+      const res = await fetch("${API_BASE_URL}/articles/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

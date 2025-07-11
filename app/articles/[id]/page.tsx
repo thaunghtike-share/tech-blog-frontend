@@ -45,6 +45,8 @@ interface ArticlePageProps {
   params: { id: string };
 }
 
+const API_BASE_URL = "http://192.168.1.131:8000/api"
+
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
     const res = await fetch(url, { cache: "no-store" });
@@ -57,7 +59,7 @@ async function fetchJSON<T>(url: string): Promise<T[]> {
 
 async function fetchAuthor(id: number): Promise<Author | null> {
   try {
-    const res = await fetch(`http://localhost:8000/api/authors/${id}`, { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/authors/${id}`, { cache: "no-store" });
     if (!res.ok) return null;
     return await res.json();
   } catch {
@@ -68,7 +70,7 @@ async function fetchAuthor(id: number): Promise<Author | null> {
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const id = parseInt(params.id);
 
-  const res = await fetch(`http://localhost:8000/api/articles/${id}`, { cache: "no-store" });
+  const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" });
   if (!res.ok) {
     return (
       <div className="p-8 text-center text-red-600">
@@ -80,10 +82,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article: Article = await res.json();
   const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
-    fetchJSON<Article>("http://localhost:8000/api/articles/"),
-    fetchJSON<Tag>("http://localhost:8000/api/tags/"),
-    fetchJSON<Category>("http://localhost:8000/api/categories/"),
-    fetchJSON<Author>("http://localhost:8000/api/authors/")
+    fetchJSON<Article>("${API_BASE_URL}/articles/"),
+    fetchJSON<Tag>("${API_BASE_URL}/tags/"),
+    fetchJSON<Category>("${API_BASE_URL}/categories/"),
+    fetchJSON<Author>("${API_BASE_URL}/authors/")
   ]);
 
   const sorted = allArticles.sort(
