@@ -15,10 +15,10 @@ import { FreelanceServicesSection } from "@/components/FreelanceServicesSection"
 import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
 import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA"
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection"
-import { JobInternshipBoard } from "@/components/JobInternshipBoard"
 import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
 import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
 import { YouTubePlaylists } from "@/components/YouTubePlaylists"
+import { FreeLabs } from "@/components/FreeLabs"
 
 export default function HomePage() {
   return (
@@ -76,6 +76,7 @@ export default function HomePage() {
         {/* Other Sections */}
         <MinimalDevopsRoadmap />
         <YouTubePlaylists />
+        <FreeLabs />
         <YouTubePlaylistsMM />
         <TopUdemyCourses />
         <RecommendedPaidCourses />
@@ -87,7 +88,6 @@ export default function HomePage() {
 
         <DevOpsWorkflowExample />
         <MinimalFeaturedProjects />
-        <JobInternshipBoard />
         <SuccessStoriesSection />
         <AuthorsContributorsCTA />
         <MinimalFAQs />
