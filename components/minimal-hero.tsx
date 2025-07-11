@@ -15,9 +15,11 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 
 export function MinimalHero() {
   const [expanded, setExpanded] = useState(true)
+  const router = useRouter()
 
   const container = {
     show: {
@@ -116,6 +118,7 @@ export function MinimalHero() {
                 <Button
                   size="lg"
                   className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-all"
+                  onClick={() => router.push("/articles")}
                 >
                   <Code className="mr-2 h-4 w-4" />
                   Explore Articles
@@ -125,9 +128,15 @@ export function MinimalHero() {
                   variant="outline"
                   size="lg"
                   className="border-gray-300 bg-white/50 hover:bg-white text-gray-700 shadow-sm flex items-center"
+                  onClick={() => {
+                    const element = document.getElementById('free-labs');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                 >
                   <Cloud className="mr-2 h-4 w-4" />
-                  View Projects
+                  Hands-On Labs
                 </Button>
               </motion.div>
 
