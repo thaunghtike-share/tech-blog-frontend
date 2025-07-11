@@ -9,7 +9,13 @@ import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { ShareButtons } from "@/components/share-buttons";
-import { ArrowLeft, ArrowRight, BookOpen, Linkedin, ListOrdered } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Linkedin,
+  ListOrdered,
+} from "lucide-react";
 
 interface Article {
   id: number;
@@ -58,7 +64,9 @@ async function fetchJSON<T>(url: string): Promise<T[]> {
 
 async function fetchAuthor(id: number): Promise<Author | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}/authors/${id}`, { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/authors/${id}`, {
+      cache: "no-store",
+    });
     if (!res.ok) return null;
     return await res.json();
   } catch {
@@ -66,7 +74,9 @@ async function fetchAuthor(id: number): Promise<Author | null> {
   }
 }
 
-function extractHeadings(markdown: string): { text: string; level: number; id: string }[] {
+function extractHeadings(
+  markdown: string
+): { text: string; level: number; id: string }[] {
   const idCounts: Record<string, number> = {};
   return markdown
     .split("\n")
@@ -76,7 +86,10 @@ function extractHeadings(markdown: string): { text: string; level: number; id: s
       const [, hashes, rawText] = match;
       const level = hashes.length;
 
-      let baseId = rawText.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+      let baseId = rawText
+        .toLowerCase()
+        .replace(/[^\w]+/g, "-")
+        .replace(/^-+|-+$/g, "");
       if (idCounts[baseId]) {
         idCounts[baseId] += 1;
         baseId = `${baseId}-${idCounts[baseId]}`;
@@ -111,7 +124,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     fetchJSON<Article>(`${API_BASE_URL}/articles/`),
     fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
     fetchJSON<Category>(`${API_BASE_URL}/categories/`),
-    fetchJSON<Author>(`${API_BASE_URL}/authors/`)
+    fetchJSON<Author>(`${API_BASE_URL}/authors/`),
   ]);
 
   const headings = extractHeadings(article.content);
@@ -132,7 +145,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const publishDate = new Date(article.published_at).toLocaleDateString();
 
   const categoryName = categories.find((c) => c.id === article.category)?.name || "General";
-  const tagNames = article.tags.map((id) => tags.find((t) => t.id === id)?.name).filter(Boolean) as string[];
+  const tagNames = article.tags
+    .map((id) => tags.find((t) => t.id === id)?.name)
+    .filter(Boolean) as string[];
 
   function excerpt(content: string) {
     const plainText = content
@@ -164,7 +179,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 📂 {categoryName}
               </span>
               {tagNames.map((tag, index) => (
-                <span key={index} className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">
+                <span
+                  key={index}
+                  className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full"
+                >
                   #{tag}
                 </span>
               ))}
@@ -177,17 +195,29 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 h1: ({ node, children, ...props }) => {
                   const text = String(children);
                   const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
-                  return <h1 id={id} className="text-3xl font-semibold my-4" {...props}>{children}</h1>;
+                  return (
+                    <h1 id={id} className="text-3xl font-semibold my-4" {...props}>
+                      {children}
+                    </h1>
+                  );
                 },
                 h2: ({ node, children, ...props }) => {
                   const text = String(children);
                   const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
-                  return <h2 id={id} className="text-2xl font-semibold my-3" {...props}>{children}</h2>;
+                  return (
+                    <h2 id={id} className="text-2xl font-semibold my-3" {...props}>
+                      {children}
+                    </h2>
+                  );
                 },
                 h3: ({ node, children, ...props }) => {
                   const text = String(children);
                   const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
-                  return <h3 id={id} className="text-xl font-semibold my-2" {...props}>{children}</h3>;
+                  return (
+                    <h3 id={id} className="text-xl font-semibold my-2" {...props}>
+                      {children}
+                    </h3>
+                  );
                 },
                 p: ({ node, children, ...props }) => (
                   <p className="mb-3 text-base leading-relaxed text-gray-800" {...props}>
@@ -195,97 +225,127 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </p>
                 ),
                 a: ({ node, href, children, ...props }) => (
-                  <a href={href} className="text-blue-600 italic hover:underline break-words" target="_blank" rel="noopener noreferrer" {...props}>
+                  <a
+                    href={href}
+                    className="text-blue-600 italic hover:underline break-words"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...props}
+                  >
                     {children}
                   </a>
                 ),
                 ul: ({ node, children, ...props }) => (
-                  <ul className="mb-4 list-disc space-y-2 pl-4" {...props}>{children}</ul>
+                  <ul className="mb-4 list-disc space-y-2 pl-4" {...props}>
+                    {children}
+                  </ul>
                 ),
                 ol: ({ node, children, ...props }) => (
-                  <ol className="mb-4 list-decimal space-y-2 pl-6 text-gray-800" {...props}>{children}</ol>
+                  <ol className="mb-4 list-decimal space-y-2 pl-6 text-gray-800" {...props}>
+                    {children}
+                  </ol>
                 ),
                 li: ({ node, children, ...props }) => (
                   <li className="text-base text-gray-700 leading-relaxed" {...props}>
                     {children}
                   </li>
                 ),
-code: ({ inline, className = "", children, ...props }: any) => {
-  if (inline) {
-    return (
-      <code
-        className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono"
-        {...props}
-      >
-        {children}
-      </code>
-    );
-  }
+                code: ({ inline, className = "", children, ...props }: any) => {
+                  if (inline) {
+                    return (
+                      <code
+                        className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono"
+                        {...props}
+                      >
+                        {children}
+                      </code>
+                    );
+                  }
 
-  const match = /language-(\w+)/.exec(className || "");
-  const language = match?.[1] || "";
+                  const match = /language-(\w+)/.exec(className || "");
+                  const language = match?.[1] || "";
 
-  if (language === "bash" || language === "shell") {
-    const codeString = String(children);
-    const lines = codeString.split("\n").filter(line => line.trim() !== "");
+                  if (language === "bash" || language === "shell") {
+                    const codeString = String(children);
+                    const lines = codeString.split("\n").filter((line) => line.trim() !== "");
 
-    return (
-      <pre
-        className="overflow-x-auto text-sm font-mono text-gray-900 bg-transparent shadow-none border-none p-0 m-0"
-        {...props}
-        style={{
-          backgroundColor: "transparent",
-          boxShadow: "none",
-          border: "none",
-          padding: 0,
-          margin: 0,
-        }}
-      >
-        {lines.map((line, idx) => {
-          const trimmedLine = line.trim();
-          const startsWithDollar = trimmedLine.startsWith("$");
-          const commandPart = startsWithDollar
-            ? trimmedLine.slice(1).trimStart()
-            : trimmedLine;
+                    return (
+                      <pre
+                        className="overflow-x-auto text-sm font-mono text-gray-900 bg-transparent shadow-none border-none p-2 m-0"
+                        {...props}
+                        style={{
+                          backgroundColor: "transparent",
+                          boxShadow: "none",
+                          border: "none",
+                        }}
+                      >
+                        {lines.map((line, idx) => {
+                          const trimmedLine = line.trim();
+                          const startsWithDollar = trimmedLine.startsWith("$");
+                          const commandPart = startsWithDollar
+                            ? trimmedLine.slice(1).trimStart()
+                            : trimmedLine;
 
-          return (
-            <div key={idx} className="flex items-center select-text">
-              {/* Note style vertical bar */}
-              <span className="inline-block w-1.5 h-6 bg-blue-500 rounded mr-3" />
-              {/* Dollar sign in bold */}
-              {startsWithDollar && <span className="font-bold mr-1">$</span>}
-              {/* Command text italic */}
-              <span>{commandPart}</span>
-            </div>
-          );
-        })}
-      </pre>
-    );
-  }
+                          return (
+                            <div
+                              key={idx}
+                              className="flex items-start select-text gap-3"
+                              style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+                            >
+                              {/* Vertical note bar, full height */}
+                              <span
+                                className="inline-block w-1.5 bg-blue-500 rounded"
+                                style={{ minHeight: "1.5em" }}
+                              />
 
-  return (
-    <div className="relative mb-6 rounded-lg bg-white shadow border border-gray-200">
-      {language && (
-        <div className="absolute top-0 right-0 px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-bl-md font-mono border-l border-b border-gray-300">
-          {language}
-        </div>
-      )}
-      <pre className="overflow-x-auto p-4 text-sm text-gray-800">
-        <code className={className} {...props}>
-          {children}
-        </code>
-      </pre>
-    </div>
-  );
-},
+                              <div>
+                                {/* Dollar sign in bold */}
+                                {startsWithDollar && (
+                                  <span
+                                    className="font-bold mr-1"
+                                    style={{ userSelect: "none" }}
+                                  >
+                                    $
+                                  </span>
+                                )}
+                                {/* Command text italic, allow wrapping */}
+                                <span>{commandPart}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </pre>
+                    );
+                  }
 
-
+                  return (
+                    <div className="relative mb-6 rounded-lg bg-white shadow border border-gray-200">
+                      {language && (
+                        <div className="absolute top-0 right-0 px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-bl-md font-mono border-l border-b border-gray-300">
+                          {language}
+                        </div>
+                      )}
+                      <pre className="overflow-x-auto p-4 text-sm text-gray-800">
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      </pre>
+                    </div>
+                  );
+                },
                 blockquote: ({ node, ...props }) => (
-                  <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4" {...props} />
+                  <blockquote
+                    className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4"
+                    {...props}
+                  />
                 ),
                 img: ({ node, ...props }) => (
                   <div className="my-6">
-                    <img {...props} className="max-w-full rounded-lg shadow-md mx-auto" alt={props.alt || "Article image"} />
+                    <img
+                      {...props}
+                      className="max-w-full rounded-lg shadow-md mx-auto"
+                      alt={props.alt || "Article image"}
+                    />
                   </div>
                 ),
               }}
@@ -300,15 +360,25 @@ code: ({ inline, className = "", children, ...props }: any) => {
           {/* Author Info */}
           <div className="max-w-7xl mx-auto py-12 px-4 flex items-center gap-6">
             {author?.avatar && (
-              <img src={author.avatar} alt={author.name} className="w-24 h-24 rounded-full object-cover border border-gray-300 shadow-sm" />
+              <img
+                src={author.avatar}
+                alt={author.name}
+                className="w-24 h-24 rounded-full object-cover border border-gray-300 shadow-sm"
+              />
             )}
             <div>
               <h4 className="text-lg font-semibold mb-1">Written By</h4>
               <p className="text-medium font-medium">{author?.name || "Unknown author"}</p>
               {author?.bio && <p className="text-gray-800 mt-2 max-w-xl">{author.bio}</p>}
               {author?.linkedin && (
-                <a href={author.linkedin} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-gray-800 hover:bg-gray-200 rounded px-3 py-1 text-sm font-medium" style={{ paddingLeft: 0 }}>
-                  <Linkedin className="w-5 h-5 bg-gray-300 rounded p-0.5" />
+                <a
+                  href={author.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 text-blue-800 hover:bg-white-200 rounded px-3 py-1 text-sm font-medium"
+                  style={{ paddingLeft: 0 }}
+                >
+                  <Linkedin className="w-5 h-5 rounded p-0.5" />
                   <span>LinkedIn</span>
                 </a>
               )}
@@ -317,17 +387,27 @@ code: ({ inline, className = "", children, ...props }: any) => {
 
           <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium pt-6">
             {prevArticle ? (
-              <a href={`/articles/${prevArticle.id}`} className="hover:underline flex items-center gap-1">
+              <a
+                href={`/articles/${prevArticle.id}`}
+                className="hover:underline flex items-center gap-1"
+              >
                 <ArrowLeft className="w-4 h-4" />
                 <span>{prevArticle.title}</span>
               </a>
-            ) : <span />}
+            ) : (
+              <span />
+            )}
             {nextArticle ? (
-              <a href={`/articles/${nextArticle.id}`} className="hover:underline flex items-center gap-1 text-right">
+              <a
+                href={`/articles/${nextArticle.id}`}
+                className="hover:underline flex items-center gap-1 text-right"
+              >
                 <span>{nextArticle.title}</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
-            ) : <span />}
+            ) : (
+              <span />
+            )}
           </div>
 
           {/* Recent Articles */}
@@ -340,13 +420,20 @@ code: ({ inline, className = "", children, ...props }: any) => {
                 const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
 
                 return (
-                  <li key={item.id} className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-200 bg-white">
+                  <li
+                    key={item.id}
+                    className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-200 bg-white"
+                  >
                     <a href={`/articles/${item.id}`} className="block group space-y-2">
-                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">{item.title}</h4>
+                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
+                        {item.title}
+                      </h4>
                       <p className="text-xs text-gray-500">{date}</p>
                       <p className="text-sm text-gray-600 line-clamp-2">{excerpt(item.content)}</p>
                       <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-2">
-                        <span className="bg-gray-100 px-2 py-0.5 rounded-full">📂 {itemCategory}</span>
+                        <span className="bg-gray-100 px-2 py-0.5 rounded-full">
+                          📂 {itemCategory}
+                        </span>
                         <span className="bg-gray-100 px-2 py-0.5 rounded-full">✍️ {itemAuthor}</span>
                       </div>
                     </a>
@@ -377,7 +464,7 @@ code: ({ inline, className = "", children, ...props }: any) => {
                     paddingLeft: `${(level - 1) * 16}px`,
                     borderLeft: level > 1 ? "2px dotted #9ca3af" : "none",
                     marginLeft: level > 1 ? "8px" : "0",
-                    position: "relative"
+                    position: "relative",
                   }}
                   className="hover:bg-blue-50 cursor-pointer rounded transition-colors duration-200"
                 >
@@ -386,7 +473,7 @@ code: ({ inline, className = "", children, ...props }: any) => {
                     className="text-blue-700 hover:text-blue-900 font-medium block py-1.5 pl-2 truncate"
                   >
                     {level > 1 && (
-                      <span 
+                      <span
                         className="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-2 rounded-full bg-blue-400"
                         style={{ left: "-5px" }}
                       />
@@ -412,9 +499,14 @@ code: ({ inline, className = "", children, ...props }: any) => {
                 const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
 
                 return (
-                  <li key={item.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200">
+                  <li
+                    key={item.id}
+                    className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200"
+                  >
                     <a href={`/articles/${item.id}`} className="block group">
-                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">{item.title}</h4>
+                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
+                        {item.title}
+                      </h4>
                       <p className="text-xs text-gray-500 mt-1">{date}</p>
                       <p className="text-sm text-gray-600 mt-2 line-clamp-2">{excerpt(item.content)}</p>
                       <p className="text-xs text-gray-500 mt-1">✍️ {itemAuthor}</p>
