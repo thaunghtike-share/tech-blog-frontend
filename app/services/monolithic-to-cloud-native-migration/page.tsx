@@ -25,6 +25,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { motion } from "framer-motion"
 
 export default function MonolithicToCloudNativePage() {
   const searchParams = useSearchParams()
@@ -358,19 +359,17 @@ export default function MonolithicToCloudNativePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="relative">
-                    <pre className="bg-gradient-to-br from-slate-50 to-slate-100 text-slate-800 border border-slate-200 p-6 rounded-xl overflow-x-auto text-xs leading-relaxed shadow-inner font-mono">
+                    <pre className="bg-gradient-to-br from-slate-50 to-slate-100 text-slate-800 border border-slate-200 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed shadow-inner font-mono">
                       {`# main.tf - Complete Azure Infrastructure
 module "infra" {
   source = "./terraform-azurerm"
   
-  # Resource Groups Configuration
   resource_groups = {
     dev = {
       location = "southeastasia"
     }
   }
   
-  # Virtual Network Setup
   vnets = {
     myvnet = {
       name                = "myvnet"
@@ -386,7 +385,6 @@ module "infra" {
     }
   }
   
-  # Azure Container Registry
   acr_registries = {
     myacrk8s12345 = {
       create              = true
@@ -413,13 +411,6 @@ module "infra" {
       enable_rbac      = true
     }
   }
-  
-  # Tags for resource management
-  tags = {
-    Environment = "development"
-    Project     = "cloud-migration"
-    Owner       = "devops-team"
-  }
 }`}
                     </pre>
                     <div className="absolute top-4 right-4">
@@ -428,6 +419,260 @@ module "infra" {
                         Production Ready
                       </Badge>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 2: GitHub Actions CI/CD */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-green-500 to-green-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">2</span>
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">CI/CD Pipeline with GitHub Actions</h2>
+              <p className="text-base text-gray-600">Automated build, test, and deployment workflows</p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="space-y-6">
+              {/* Pipeline Overview */}
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg">
+                      <Zap className="w-5 h-5 text-white" />
+                    </div>
+                    Complete CI/CD Workflow
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    From code commit to production deployment
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4">
+                    {[
+                      {
+                        step: "1",
+                        title: "Docker Build & Push",
+                        desc: "Multi-platform container builds with environment-specific configurations",
+                        color: "blue",
+                        icon: Dock,
+                      },
+                      {
+                        step: "2",
+                        title: "Push to ACR",
+                        desc: "Secure image storage in Azure Container Registry with automated tagging",
+                        color: "indigo",
+                        icon: Database,
+                      },
+                      {
+                        step: "3",
+                        title: "Security Scanning",
+                        desc: "Trivy vulnerability scanning for HIGH and CRITICAL security issues",
+                        color: "red",
+                        icon: ShieldCheck,
+                      },
+                      {
+                        step: "4",
+                        title: "ArgoCD Deployment",
+                        desc: "GitOps-based deployment with automated sync and verification",
+                        color: "purple",
+                        icon: Rocket,
+                      },
+                      {
+                        step: "5",
+                        title: "Health Verification",
+                        desc: "Automated deployment verification and rollback on failure",
+                        color: "green",
+                        icon: CheckCircle2,
+                      },
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-start gap-3 p-4 bg-white/80 rounded-xl backdrop-blur-sm border border-white/50 hover:bg-white/90 transition-all duration-300 group"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">
+                            {item.step}
+                          </div>
+                          <div
+                            className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                          >
+                            <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900 mb-1 text-sm">{item.title}</h4>
+                          <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Branch Strategy */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg shadow-lg">
+                      <Code className="w-5 h-5 text-white" />
+                    </div>
+                    Multi-Environment Strategy
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Automated deployments across development lifecycle
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {[
+                      { branch: "main", env: "Production", color: "red", desc: "Stable production releases" },
+                      { branch: "dev", env: "Development", color: "blue", desc: "Feature development and testing" },
+                      { branch: "uat", env: "UAT", color: "orange", desc: "User acceptance testing environment" },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className={`flex items-center gap-3 p-3 bg-${item.color}-50 rounded-lg border border-${item.color}-200 hover:shadow-md transition-all duration-300 group cursor-pointer`}
+                      >
+                        <div
+                          className={`p-2 bg-${item.color}-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <Code className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm font-bold text-gray-900">{item.branch}</span>
+                            <span className="text-xs text-gray-500">→</span>
+                            <span className="text-sm font-semibold text-gray-800">{item.env}</span>
+                          </div>
+                          <p className="text-xs text-gray-600">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="space-y-6">
+              {/* Workflow Animation */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg">
+                      <Activity className="w-5 h-5 text-white" />
+                    </div>
+                    Pipeline Workflow
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Automated deployment pipeline visualization
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* Workflow Steps */}
+                    <div className="relative">
+                      {[
+                        { icon: Code, label: "Code Push", status: "completed" },
+                        { icon: Dock, label: "Docker Build", status: "completed" },
+                        { icon: Database, label: "Push to ACR", status: "completed" },
+                        { icon: ShieldCheck, label: "Security Scan", status: "running" },
+                        { icon: Cloud, label: "Deploy to AKS", status: "pending" },
+                        { icon: CheckCircle2, label: "Verify Health", status: "pending" },
+                      ].map((step, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.2 }}
+                          className="flex items-center gap-3 p-3 rounded-lg"
+                        >
+                          <div
+                            className={`p-2 rounded-lg ${
+                              step.status === "completed"
+                                ? "bg-green-100 text-green-600"
+                                : step.status === "running"
+                                  ? "bg-blue-100 text-blue-600 animate-pulse"
+                                  : "bg-gray-100 text-gray-400"
+                            }`}
+                          >
+                            <step.icon className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1">
+                            <span
+                              className={`text-sm font-medium ${
+                                step.status === "completed"
+                                  ? "text-green-700"
+                                  : step.status === "running"
+                                    ? "text-blue-700"
+                                    : "text-gray-500"
+                              }`}
+                            >
+                              {step.label}
+                            </span>
+                          </div>
+                          <div
+                            className={`w-3 h-3 rounded-full ${
+                              step.status === "completed"
+                                ? "bg-green-500"
+                                : step.status === "running"
+                                  ? "bg-blue-500 animate-pulse"
+                                  : "bg-gray-300"
+                            }`}
+                          />
+                        </motion.div>
+                      ))}
+
+                      {/* Connecting Line */}
+                      <div className="absolute left-5 top-6 bottom-6 w-0.5 bg-gradient-to-b from-green-500 via-blue-500 to-gray-300"></div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Key Features */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg shadow-lg">
+                      <Star className="w-5 h-5 text-white" />
+                    </div>
+                    Pipeline Features
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Enterprise-grade CI/CD capabilities
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      { icon: Zap, label: "Self-hosted Runners", desc: "Faster builds with dedicated infrastructure" },
+                      { icon: ShieldCheck, label: "Security First", desc: "Trivy scanning & secret management" },
+                      { icon: Activity, label: "Real-time Monitoring", desc: "Google Chat notifications & alerts" },
+                      { icon: Rocket, label: "Zero Downtime", desc: "Blue-green deployments with rollback" },
+                    ].map((feature, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        <div className="p-1.5 bg-orange-100 rounded-lg flex-shrink-0">
+                          <feature.icon className="w-3 h-3 text-orange-600" />
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-gray-900 text-sm mb-1">{feature.label}</h5>
+                          <p className="text-gray-600 text-xs leading-relaxed">{feature.desc}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>

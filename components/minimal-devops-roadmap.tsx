@@ -360,9 +360,9 @@ export function MinimalDevopsRoadmap() {
           className="mb-10 text-center max-w-4xl mx-auto"
         >
           {selectedStage.description?.length > 0 && (
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 border border-blue-100">
+            <div className="">
               <p className="text-gray-800 text-lg leading-relaxed mb-4 font-medium">{selectedStage.description[0]}</p>
-              {selectedStage.description[1] && <p className="text-gray-600">{selectedStage.description[1]}</p>}
+              {selectedStage.description[1] && <p className="text-gray-800">{selectedStage.description[1]}</p>}
             </div>
           )}
         </motion.div>
