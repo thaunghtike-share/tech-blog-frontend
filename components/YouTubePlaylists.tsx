@@ -68,7 +68,7 @@ export function YouTubePlaylists() {
   return (
     <section className="max-w-7xl mx-auto py-12 px-4">
       <div className="text-center mb-12">
-        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700 mb-3">
+        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-red-100 text-red-700 mb-3">
           <Globe className="w-4 h-4 mr-2" />
           DevOps Playlist Courses
         </span>

@@ -17,8 +17,12 @@ export function MinimalHeader() {
 
   const [isArticlesOpen, setIsArticlesOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [isLearningOpen, setIsLearningOpen] = useState(false)
+
   const [articlesTimeout, setArticlesTimeout] = useState<NodeJS.Timeout | null>(null)
   const [servicesTimeout, setServicesTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [learningTimeout, setLearningTimeout] = useState<NodeJS.Timeout | null>(null)
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const API_BASE_URL = "http://192.168.1.131:8000/api"
@@ -27,8 +31,9 @@ export function MinimalHeader() {
     return () => {
       if (articlesTimeout) clearTimeout(articlesTimeout)
       if (servicesTimeout) clearTimeout(servicesTimeout)
+      if (learningTimeout) clearTimeout(learningTimeout)
     }
-  }, [articlesTimeout, servicesTimeout])
+  }, [articlesTimeout, servicesTimeout, learningTimeout])
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -167,7 +172,22 @@ export function MinimalHeader() {
               )}
             </div>
 
-            <Link href="/contact" className={navLinkStyle("/contact")}>Contact</Link>
+            <div>
+              <button
+                onClick={() => setIsLearningOpen(!isLearningOpen)}
+                className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
+              >
+                Learning <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isLearningOpen ? "rotate-180" : ""}`} />
+              </button>
+              {isLearningOpen && (
+                <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-blue-200 pl-3">
+                  <Link href="/learn-devops-on-utube" className={navLinkStyle("/learn-devops-on-utube")}>YouTube</Link>
+                  <Link href="/learn-free-udemy" className={navLinkStyle("/learn-free-udemy")}>Udemy Free Course</Link>
+                  <Link href="/learn-paid-courses" className={navLinkStyle("/learn-paid-courses")}>Recommended Paid Course</Link>
+                </div>
+              )}
+            </div>
+
             <Link href="/about" className={navLinkStyle("/about")}>About</Link>
           </div>
         )}
@@ -233,7 +253,30 @@ export function MinimalHeader() {
               )}
             </div>
 
-            <Link href="/contact" className="hover:text-blue-600">Contact</Link>
+            {/* Learning Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => {
+                if (learningTimeout) clearTimeout(learningTimeout)
+                setIsLearningOpen(true)
+              }}
+              onMouseLeave={() => {
+                const timeout = setTimeout(() => setIsLearningOpen(false), 200)
+                setLearningTimeout(timeout)
+              }}
+            >
+              <button className="flex items-center hover:text-blue-600">
+                Learning <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {isLearningOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                  <Link href="/learn-devops-on-youtube" className="block px-4 py-2 hover:bg-blue-50">YouTube</Link>
+                  <Link href="/learn-devops-on-udemy" className="block px-4 py-2 hover:bg-blue-50">Udemy Free Course</Link>
+                  <Link href="/learn-paid-courses" className="block px-4 py-2 hover:bg-blue-50">Recommended Paid Course</Link>
+                </div>
+              )}
+            </div>
+
             <Link href="/about" className="hover:text-blue-600">About</Link>
           </nav>
 
