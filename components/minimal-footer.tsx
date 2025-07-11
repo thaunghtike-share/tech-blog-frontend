@@ -1,44 +1,32 @@
 import Link from "next/link"
-import {
-  Facebook,
-  Github,
-  Linkedin,
-  Mail,
-  BookOpen,
-  Code2,
-  Terminal,
-  Layers,
-  FileText,
-} from "lucide-react"
+import { Facebook, Github, Linkedin, Mail, BookOpen, Code2, Terminal, Layers, FileText } from 'lucide-react'
 
 export function MinimalFooter() {
   return (
-    <footer className="bg-gradient-to-r from-slate-100 to-stone-100 mt-24 border-t border-gray-200/50">
-      <div className="max-w-7xl mx-auto px-4 py-11">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer className="bg-gradient-to-r from-slate-100 to-stone-100 mt-20 border-t border-gray-200/50">
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand & Description */}
           <div className="md:col-span-2">
             <Link
               href="/"
-              className="text-2xl font-bold tracking-wide mb-6 flex items-center"
+              className="text-xl font-bold tracking-wide mb-5 flex items-center"
             >
-              <Terminal className="w-6 h-6 mr-2 text-indigo-600" />
+              <Terminal className="w-5 h-5 mr-2 text-indigo-600" />
               learn
               <span className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent ml-1">
                 DevOps
               </span>
             </Link>
-
-            <p className="text-slate-600 font-light leading-relaxed mb-6 max-w-md text-sm">
+            <p className="text-slate-600 font-light leading-relaxed mb-5 max-w-md text-sm">
               Expert content on DevOps, AI/ML, and automation — written by engineers, for engineers.
             </p>
-
             <div className="flex flex-wrap gap-3 items-center">
               <a
                 href="https://github.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center bg-black/90 hover:bg-black text-white text-sm px-4 py-2 rounded-lg shadow transition-all"
+                className="inline-flex items-center bg-black/90 hover:bg-black text-white text-sm px-3 py-2 rounded-lg shadow transition-all"
               >
                 <Github className="w-4 h-4 mr-2" />
                 GitHub
@@ -47,7 +35,7 @@ export function MinimalFooter() {
                 href="https://linkedin.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center bg-blue-700/90 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg shadow transition-all"
+                className="inline-flex items-center bg-blue-700/90 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded-lg shadow transition-all"
               >
                 <Linkedin className="w-4 h-4 mr-2" />
                 LinkedIn
@@ -56,7 +44,7 @@ export function MinimalFooter() {
                 href="https://facebook.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center bg-blue-700/90 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg shadow transition-all"
+                className="inline-flex items-center bg-blue-700/90 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded-lg shadow transition-all"
               >
                 <Facebook className="w-4 h-4 mr-2" />
                 Facebook
@@ -65,7 +53,7 @@ export function MinimalFooter() {
           </div>
 
           {/* Mobile: Resources + Connect side by side */}
-          <div className="flex flex-row gap-8 md:hidden justify-between mt-10">
+          <div className="flex flex-row gap-8 md:hidden justify-between mt-8">
             {/* Resources */}
             <div className="flex-1">
               <h3 className="font-semibold mb-4 text-slate-800 flex items-center">
@@ -196,7 +184,7 @@ export function MinimalFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-stone-200/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-stone-200/50 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-stone-500 font-light text-sm text-center md:text-left">
             © {new Date().getFullYear()} LearnDevOps. All rights reserved.
           </p>

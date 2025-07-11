@@ -1,64 +1,58 @@
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import rehypeRaw from "rehype-raw";
-import "highlight.js/styles/atom-one-light.css";
-import { GiscusComments } from "@/components/GiscusComments";
-import { MinimalHeader } from "@/components/minimal-header";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
-import { MinimalFooter } from "@/components/minimal-footer";
-import { ShareButtons } from "@/components/share-buttons";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  Linkedin,
-  ListOrdered,
-} from "lucide-react";
+import React from "react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
+import rehypeRaw from "rehype-raw"
+import "highlight.js/styles/atom-one-light.css"
+import { GiscusComments } from "@/components/GiscusComments"
+import { MinimalHeader } from "@/components/minimal-header"
+import { MinimalSidebar } from "@/components/minimal-sidebar"
+import { MinimalFooter } from "@/components/minimal-footer"
+import { ShareButtons } from "@/components/share-buttons"
+import { ArrowLeft, ArrowRight, BookOpen, Linkedin, ListOrdered } from 'lucide-react'
 
 interface Article {
-  id: number;
-  title: string;
-  content: string;
-  published_at: string;
-  category: number;
-  tags: number[];
-  author: number;
-  featured: boolean;
+  id: number
+  title: string
+  content: string
+  published_at: string
+  category: number
+  tags: number[]
+  author: number
+  featured: boolean
 }
 
 interface Author {
-  id: number;
-  name: string;
-  bio?: string;
-  avatar?: string;
-  linkedin?: string;
+  id: number
+  name: string
+  bio?: string
+  avatar?: string
+  linkedin?: string
 }
 
 interface Tag {
-  id: number;
-  name: string;
+  id: number
+  name: string
 }
 
 interface Category {
-  id: number;
-  name: string;
+  id: number
+  name: string
 }
 
 interface ArticlePageProps {
-  params: { id: string };
+  params: { id: string }
 }
 
-const API_BASE_URL = "http://192.168.100.7:8000/api";
+const API_BASE_URL = "http://192.168.100.7:8000/api"
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
-    const res = await fetch(url, { cache: "no-store" });
-    const data = await res.json();
-    return Array.isArray(data) ? data : data.results || [];
+    const res = await fetch(url, { cache: "no-store" })
+    const data = await res.json()
+    return Array.isArray(data) ? data : data.results || []
   } catch {
-    return [];
+    return []
   }
 }
 
@@ -66,53 +60,51 @@ async function fetchAuthor(id: number): Promise<Author | null> {
   try {
     const res = await fetch(`${API_BASE_URL}/authors/${id}`, {
       cache: "no-store",
-    });
-    if (!res.ok) return null;
-    return await res.json();
+    })
+    if (!res.ok) return null
+    return await res.json()
   } catch {
-    return null;
+    return null
   }
 }
 
 function flattenChildren(children: any): string {
   if (typeof children === "string") {
-    return children;
+    return children
   }
   if (Array.isArray(children)) {
-    return children.map(flattenChildren).join("");
+    return children.map(flattenChildren).join("")
   }
   if (children && typeof children === "object" && "props" in children) {
-    return flattenChildren(children.props.children);
+    return flattenChildren(children.props.children)
   }
-  return "";
+  return ""
 }
 
-function extractHeadings(
-  markdown: string
-): { text: string; level: number; id: string }[] {
-  const idCounts: Record<string, number> = {};
+function extractHeadings(markdown: string): { text: string; level: number; id: string }[] {
+  const idCounts: Record<string, number> = {}
   return markdown
     .split("\n")
     .map((line) => {
-      const match = line.match(/^(#{1,6})\s+(.*)/);
-      if (!match) return null;
-      const [, hashes, rawText] = match;
-      const level = hashes.length;
-
+      const match = line.match(/^(#{1,6})\s+(.*)/)
+      if (!match) return null
+      const [, hashes, rawText] = match
+      const level = hashes.length
       let baseId = rawText
         .toLowerCase()
         .replace(/[^\w]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+        .replace(/^-+|-+$/g, "")
+
       if (idCounts[baseId]) {
-        idCounts[baseId] += 1;
-        baseId = `${baseId}-${idCounts[baseId]}`;
+        idCounts[baseId] += 1
+        baseId = `${baseId}-${idCounts[baseId]}`
       } else {
-        idCounts[baseId] = 1;
+        idCounts[baseId] = 1
       }
 
-      return { text: rawText, level, id: baseId };
+      return { text: rawText, level, id: baseId }
     })
-    .filter(Boolean) as { text: string; level: number; id: string }[];
+    .filter(Boolean) as { text: string; level: number; id: string }[]
 }
 
 function fixMarkdownSpacing(content: string): string {
@@ -122,60 +114,56 @@ function fixMarkdownSpacing(content: string): string {
     // Ensure blank line before image
     .replace(/([^\n])\n(!\[)/g, "$1\n\n$2")
     // Ensure blank line after image
-    .replace(/(!\[.*?\]\(.*?\))\n([^\n])/g, "$1\n\n$2");
+    .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2")
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const id = parseInt(params.id);
+  const id = parseInt(params.id)
+  const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" })
 
-  const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" });
   if (!res.ok) {
     return (
       <div className="p-8 text-center text-red-600">
         <p>Article not found or failed to load.</p>
       </div>
-    );
+    )
   }
 
-  const article: Article = await res.json();
+  const article: Article = await res.json()
   const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
     fetchJSON<Article>(`${API_BASE_URL}/articles/`),
     fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
     fetchJSON<Category>(`${API_BASE_URL}/categories/`),
     fetchJSON<Author>(`${API_BASE_URL}/authors/`),
-  ]);
+  ])
 
-  const headings = extractHeadings(article.content);
-
+  const headings = extractHeadings(article.content)
   const sorted = allArticles.sort(
     (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
-  );
-
-  const currentIndex = sorted.findIndex((a) => a.id === article.id);
-  const prevArticle = sorted[currentIndex + 1] || null;
-  const nextArticle = sorted[currentIndex - 1] || null;
-
-  const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
+  )
+  const currentIndex = sorted.findIndex((a) => a.id === article.id)
+  const prevArticle = sorted[currentIndex + 1] || null
+  const nextArticle = sorted[currentIndex - 1] || null
+  const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5)
   const sameCategoryArticles = sorted
     .filter((a) => a.category === article.category && a.id !== article.id)
-    .slice(0, 5);
+    .slice(0, 5)
 
-  const publishDate = new Date(article.published_at).toLocaleDateString();
-
-  const categoryName = categories.find((c) => c.id === article.category)?.name || "General";
+  const publishDate = new Date(article.published_at).toLocaleDateString()
+  const categoryName = categories.find((c) => c.id === article.category)?.name || "General"
   const tagNames = article.tags
     .map((id) => tags.find((t) => t.id === id)?.name)
-    .filter(Boolean) as string[];
+    .filter(Boolean) as string[]
 
   function excerpt(content: string) {
     const plainText = content
       .replace(/<[^>]+>/g, "")
-      .replace(/[#_*>\-\[\]\(\)`~]/g, "")
+      .replace(/[#_*>\-\[\]$$$$`~]/g, "")
       .replace(/\s+/g, " ")
       .trim()
-      .slice(0, 80);
-    return plainText.length === 80 ? plainText + "..." : plainText;
+      .slice(0, 80)
+    return plainText.length === 80 ? plainText + "..." : plainText
   }
 
   return (
@@ -186,14 +174,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-2 cursor-pointer transition-transform hover:scale-110"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-10 h-10 rounded-full"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
           <defs>
             <linearGradient
               id="messengerGradient"
@@ -208,39 +191,30 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
+          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-small whitespace-nowrap">
-          Chat?
-        </span>
+        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
 
       <MinimalHeader />
 
-      <main className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <main className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Article Content */}
-        <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow border border-white/50 max-w-full overflow-x-auto">
+        <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow border border-white/50 max-w-full overflow-x-auto">
           <div className="prose prose-lg">
-            <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
-
-            <p className="text-gray-600 italic mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">{article.title}</h1>
+            <p className="text-gray-600 italic mb-4 text-sm">
               Published on{" "}
               <span className="font-bold italic">{publishDate}</span> By{" "}
               <span className="font-bold italic">{author?.name || "Unknown author"}</span>
             </p>
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full">
+            <div className="flex flex-wrap gap-2 mb-4">
+              <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full">
                 📂 {categoryName}
               </span>
               {tagNames.map((tag, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full"
-                >
+                <span key={index} className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-full">
                   #{tag}
                 </span>
               ))}
@@ -251,43 +225,43 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               rehypePlugins={[rehypeHighlight, rehypeRaw]}
               components={{
                 h1: ({ node, children, ...props }) => {
-                  const text = String(children);
+                  const text = String(children)
                   const id = text
                     .toLowerCase()
                     .replace(/[^\w]+/g, "-")
-                    .replace(/^-+|-+$/g, "");
+                    .replace(/^-+|-+$/g, "")
                   return (
-                    <h1 id={id} className="text-3xl font-semibold my-4" {...props}>
+                    <h1 id={id} className="text-2xl font-semibold my-4" {...props}>
                       {children}
                     </h1>
-                  );
+                  )
                 },
                 h2: ({ node, children, ...props }) => {
-                  const text = String(children);
+                  const text = String(children)
                   const id = text
                     .toLowerCase()
                     .replace(/[^\w]+/g, "-")
-                    .replace(/^-+|-+$/g, "");
+                    .replace(/^-+|-+$/g, "")
                   return (
-                    <h2 id={id} className="text-2xl font-semibold my-3" {...props}>
+                    <h2 id={id} className="text-xl font-semibold my-3" {...props}>
                       {children}
                     </h2>
-                  );
+                  )
                 },
                 h3: ({ node, children, ...props }) => {
-                  const text = String(children);
+                  const text = String(children)
                   const id = text
                     .toLowerCase()
                     .replace(/[^\w]+/g, "-")
-                    .replace(/^-+|-+$/g, "");
+                    .replace(/^-+|-+$/g, "")
                   return (
-                    <h3 id={id} className="text-xl font-semibold my-2" {...props}>
+                    <h3 id={id} className="text-lg font-semibold my-2" {...props}>
                       {children}
                     </h3>
-                  );
+                  )
                 },
                 p: ({ node, children, ...props }) => (
-                  <p className="mb-3 text-base leading-relaxed text-gray-800" {...props}>
+                  <p className="mb-3 text-sm leading-relaxed text-gray-800" {...props}>
                     {children}
                   </p>
                 ),
@@ -313,7 +287,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </ol>
                 ),
                 li: ({ node, children, ...props }) => (
-                  <li className="text-base text-gray-700 leading-relaxed" {...props}>
+                  <li className="text-sm text-gray-700 leading-relaxed" {...props}>
                     {children}
                   </li>
                 ),
@@ -326,21 +300,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       >
                         {children}
                       </code>
-                    );
+                    )
                   }
-
-                  const match = /language-(\w+)/.exec(className || "");
-                  const language = match?.[1]?.toLowerCase() || "";
-
+                  const match = /language-(\w+)/.exec(className || "")
+                  const language = match?.[1]?.toLowerCase() || ""
                   // flattenChildren function to get string from children
-                  const codeString = flattenChildren(children);
-
-                  const lines = codeString.split("\n").filter((line) => line.trim() !== "");
-
+                  const codeString = flattenChildren(children)
+                  const lines = codeString.split("\n").filter((line) => line.trim() !== "")
                   // Check if bash/shell first line starts with $
-                  const isShellLike = language === "bash" || language === "shell";
-                  const firstLine = lines[0]?.trim() || "";
-                  const startsWithDollar = isShellLike && firstLine.startsWith("$");
+                  const isShellLike = language === "bash" || language === "shell"
+                  const firstLine = lines[0]?.trim() || ""
+                  const startsWithDollar = isShellLike && firstLine.startsWith("$")
 
                   return (
                     <div
@@ -353,7 +323,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                           {language.toUpperCase()}
                         </div>
                       )}
-
                       {/* Code content */}
                       <pre className="whitespace-pre-wrap p-4 overflow-x-auto rounded-lg">
                         {lines.map((line, idx) => (
@@ -376,7 +345,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         ))}
                       </pre>
                     </div>
-                  );
+                  )
                 },
                 blockquote: ({ node, ...props }) => (
                   <blockquote
@@ -403,36 +372,36 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <GiscusComments />
 
           {/* Author Info */}
-          <div className="max-w-7xl mx-auto py-12 px-4 flex items-center gap-6">
+          <div className="max-w-7xl mx-auto py-8 px-4 flex items-center gap-4">
             {author?.avatar && (
               <img
-                src={author.avatar}
+                src={author.avatar || "/placeholder.svg"}
                 alt={author.name}
-                className="w-24 h-24 rounded-full object-cover border border-gray-300 shadow-sm"
+                className="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm"
               />
             )}
             <div>
-              <h4 className="text-lg font-semibold mb-1">Written By</h4>
-              <p className="text-medium font-medium">{author?.name || "Unknown author"}</p>
+              <h4 className="text-base font-semibold mb-1">Written By</h4>
+              <p className="text-sm font-medium">{author?.name || "Unknown author"}</p>
               {author?.bio && (
-                <p className="text-gray-800 mt-2 max-w-xl">{author.bio}</p>
+                <p className="text-gray-800 mt-2 max-w-xl text-sm">{author.bio}</p>
               )}
               {author?.linkedin && (
                 <a
                   href={author.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 text-blue-800 hover:bg-white-200 rounded px-3 py-1 text-sm font-medium"
+                  className="mt-3 inline-flex items-center gap-2 text-blue-800 hover:bg-white-200 rounded px-3 py-1 text-sm font-medium"
                   style={{ paddingLeft: 0 }}
                 >
-                  <Linkedin className="w-5 h-5 rounded p-0.5" />
+                  <Linkedin className="w-4 h-4 rounded p-0.5" />
                   <span>LinkedIn</span>
                 </a>
               )}
             </div>
           </div>
 
-          <div className="mt-8 flex justify-between items-center text-sm text-blue-600 font-medium pt-6">
+          <div className="mt-6 flex justify-between items-center text-sm text-blue-600 font-medium pt-4">
             {prevArticle ? (
               <a
                 href={`/articles/${prevArticle.id}`}
@@ -458,22 +427,22 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
 
           {/* Recent Articles */}
-          <div className="mt-16">
-            <h3 className="text-xl font-bold text-slate-800 mb-6">📚 Recent Articles</h3>
-            <ul className="grid gap-6 md:grid-cols-2">
+          <div className="mt-12">
+            <h3 className="text-lg font-bold text-slate-800 mb-4">📚 Recent Articles</h3>
+            <ul className="grid gap-4 md:grid-cols-2">
               {recentArticles.map((item) => {
-                const date = new Date(item.published_at).toLocaleDateString();
+                const date = new Date(item.published_at).toLocaleDateString()
                 const itemCategory =
-                  categories.find((c) => c.id === item.category)?.name || "General";
-                const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
+                  categories.find((c) => c.id === item.category)?.name || "General"
+                const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown"
 
                 return (
                   <li
                     key={item.id}
-                    className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-200 bg-white"
+                    className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200 bg-white"
                   >
                     <a href={`/articles/${item.id}`} className="block group space-y-2">
-                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
+                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate text-sm">
                         {item.title}
                       </h4>
                       <p className="text-xs text-gray-500">{date}</p>
@@ -486,21 +455,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       </div>
                     </a>
                   </li>
-                );
+                )
               })}
             </ul>
           </div>
         </article>
 
         {/* Sidebar */}
-        <aside className="hidden lg:block lg:col-span-1 space-y-12">
+        <aside className="hidden lg:block lg:col-span-1 space-y-8">
           <MinimalSidebar />
 
           {/* Table of Contents */}
-          <div className="bg-white/90 border border-white/70 shadow rounded-xl p-4">
-            <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-              <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg">
-                <ListOrdered className="w-5 h-5" />
+          <div className="bg-white/90 border border-white/70 shadow rounded-lg p-4">
+            <h3 className="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <span className="bg-blue-100 text-blue-600 p-1 rounded-lg">
+                <ListOrdered className="w-4 h-4" />
               </span>
               Table of Contents
             </h3>
@@ -509,21 +478,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <li
                   key={id}
                   style={{
-                    paddingLeft: `${(level - 1) * 16}px`,
+                    paddingLeft: `${(level - 1) * 12}px`,
                     borderLeft: level > 1 ? "2px dotted #9ca3af" : "none",
-                    marginLeft: level > 1 ? "8px" : "0",
+                    marginLeft: level > 1 ? "6px" : "0",
                     position: "relative",
                   }}
                   className="hover:bg-blue-50 cursor-pointer rounded transition-colors duration-200"
                 >
                   <a
                     href={`#${id}`}
-                    className="text-blue-700 hover:text-blue-900 font-medium block py-1.5 pl-2 truncate"
+                    className="text-blue-700 hover:text-blue-900 font-medium block py-1 pl-2 truncate text-sm"
                   >
                     {level > 1 && (
                       <span
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-2 rounded-full bg-blue-400"
-                        style={{ left: "-5px" }}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-blue-400"
+                        style={{ left: "-4px" }}
                       />
                     )}
                     {text}
@@ -534,17 +503,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
 
           {/* Read Also */}
-          <div className="bg-white/90 border border-white/70 shadow rounded-xl p-4">
-            <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-              <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg">
-                <BookOpen className="w-5 h-5" />
+          <div className="bg-white/90 border border-white/70 shadow rounded-lg p-4">
+            <h3 className="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <span className="bg-blue-100 text-blue-600 p-1 rounded-lg">
+                <BookOpen className="w-4 h-4" />
               </span>
               Read Also
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {sameCategoryArticles.map((item) => {
-                const date = new Date(item.published_at).toLocaleDateString();
-                const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
+                const date = new Date(item.published_at).toLocaleDateString()
+                const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown"
 
                 return (
                   <li
@@ -552,7 +521,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200"
                   >
                     <a href={`/articles/${item.id}`} className="block group">
-                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate">
+                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate text-sm">
                         {item.title}
                       </h4>
                       <p className="text-xs text-gray-500 mt-1">{date}</p>
@@ -560,7 +529,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       <p className="text-xs text-gray-500 mt-1">✍️ {itemAuthor}</p>
                     </a>
                   </li>
-                );
+                )
               })}
             </ul>
           </div>
@@ -569,5 +538,5 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       <MinimalFooter />
     </div>
-  );
+  )
 }

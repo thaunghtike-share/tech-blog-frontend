@@ -5,7 +5,7 @@ import Link from "next/link"
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { Card, CardContent } from "@/components/ui/card"
-import { Linkedin } from "lucide-react"
+import { Linkedin } from 'lucide-react'
 
 interface Author {
   id: number
@@ -46,6 +46,7 @@ export default function AuthorsPage() {
         setLoading(false)
       }
     }
+
     fetchAuthors()
   }, [])
 
@@ -57,14 +58,9 @@ export default function AuthorsPage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-2 cursor-pointer transition-transform hover:scale-110"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-10 h-10 rounded-full"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
           <defs>
             <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
               <stop stopColor="#E1306C" />
@@ -72,30 +68,26 @@ export default function AuthorsPage() {
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
+          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-small whitespace-nowrap">
-          Chat?
-        </span>
+        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
+
       <MinimalHeader />
 
-      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
+      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-12 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-light text-slate-900 mb-4 leading-relaxed">
-            <span className="font-tight text-black-700">Our </span>
-            <span className="font-medium text-blue-600">Authors</span>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-relaxed">
+            <span className="text-gray-700">Our </span>
+            <span className="text-blue-600">Authors</span>
           </h1>
-          <p className="text-base text-slate-600 font-light max-w-lg mx-auto leading-relaxed">
+          <p className="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
             Discover in-depth articles and expertise from passionate authors who are pioneering advancements in DevOps, cloud computing, AI, and cutting-edge infrastructure technologies
           </p>
         </div>
       </section>
 
-      <main className="max-w-7xl mx-auto px-4 py-16">
+      <main className="max-w-7xl mx-auto px-4 py-12">
         {loading ? (
           <p className="text-center text-gray-600">Loading authors...</p>
         ) : error ? (
@@ -123,31 +115,23 @@ export default function AuthorsPage() {
         ) : authors.length === 0 ? (
           <p className="text-center text-gray-600">No authors found.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {authors.map((author) => (
-              <Card
-                key={author.id}
-                className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
-              >
-                <CardContent className="flex flex-col items-center space-y-4 p-8">
+              <Card key={author.id} className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer">
+                <CardContent className="flex flex-col items-center space-y-4 p-6">
                   <img
-                    src={author.avatar}
+                    src={author.avatar || "/placeholder.svg"}
                     alt={author.name}
-                    className="w-24 h-24 rounded-full object-cover border border-gray-300 shadow-sm"
+                    className="w-20 h-20 rounded-full object-cover border border-gray-300 shadow-sm"
                   />
-                  <Link
-                    href={`/authors/${author.id}`}
-                    className="text-xl font-semibold text-blue-600 hover:underline"
-                  >
+                  <Link href={`/authors/${author.id}`} className="text-lg font-semibold text-blue-600 hover:underline">
                     {author.name}
                   </Link>
-                  <p className="text-sm text-gray-600 font-medium">
+                  <p className="text-sm text-gray-600 font-medium text-center">
                     {author.job_title} at {author.company}
                   </p>
                   {author.bio && (
-                    <p className="text-center text-gray-500 text-sm">
-                      {author.bio}
-                    </p>
+                    <p className="text-center text-gray-500 text-sm line-clamp-3">{author.bio}</p>
                   )}
                   {author.linkedin && (
                     <a

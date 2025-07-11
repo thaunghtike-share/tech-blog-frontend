@@ -1,17 +1,7 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import {
-  ServerCog,
-  ExternalLink,
-  Github,
-  Terminal,
-  Dock,
-  Cpu,
-  Network,
-  Cloud,
-  BookOpen,
-} from "lucide-react"
+import { useState, useEffect } from "react"
+import { ServerCog, ExternalLink, Github, Terminal, Dock, Cpu, Network, Cloud, BookOpen } from "lucide-react"
 import { motion } from "framer-motion"
 
 interface DevOpsLab {
@@ -24,13 +14,13 @@ interface DevOpsLab {
 
 const getPlatformIcon = (platform: string) => {
   const p = platform.toLowerCase()
-  if (p.includes("docker")) return <Dock className="w-5 h-5" />
-  if (p.includes("git")) return <Github className="w-5 h-5" />
-  if (p.includes("k8s")) return <Cloud className="w-5 h-5" />
-  if (p.includes("linux")) return <Terminal className="w-5 h-5" />
-  if (p.includes("terraform")) return <Network className="w-5 h-5" />
-  if (p.includes("killercoda")) return <Cpu className="w-5 h-5" />
-  return <BookOpen className="w-5 h-5" />
+  if (p.includes("docker")) return <Dock className="w-4 h-4" />
+  if (p.includes("git")) return <Github className="w-4 h-4" />
+  if (p.includes("k8s")) return <Cloud className="w-4 h-4" />
+  if (p.includes("linux")) return <Terminal className="w-4 h-4" />
+  if (p.includes("terraform")) return <Network className="w-4 h-4" />
+  if (p.includes("killercoda")) return <Cpu className="w-4 h-4" />
+  return <BookOpen className="w-4 h-4" />
 }
 
 const API_BASE_URL = "http://192.168.100.7:8000/api"
@@ -55,21 +45,19 @@ export function FreeLabs() {
   }, [])
 
   return (
-    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-12">
-        <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-black text-white mb-3">
+    <section className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="text-center mb-10">
+        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-black text-white mb-3">
           <ServerCog className="w-4 h-4 mr-2" />
           Hands-On Labs
         </span>
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Top Free DevOps Labs to Practice Skills
-        </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Top Free DevOps Labs to Practice Skills</h2>
+        <p className="text-base text-gray-600 max-w-2xl mx-auto">
           Explore these practical, free labs and playgrounds to level up your DevOps expertise.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {labs.map((lab, idx) => {
           const icon = getPlatformIcon(lab.platform)
           const buttonText = "Launch Lab"
@@ -81,11 +69,11 @@ export function FreeLabs() {
               initial={isClient ? { opacity: 0, y: 20 } : false}
               animate={isClient ? { opacity: 1, y: 0 } : false}
               transition={isClient ? { delay: idx * 0.1 } : {}}
-              whileHover={isClient ? { y: -5 } : {}}
-              className="border border-gray-200 rounded-lg shadow-sm bg-white p-6 flex flex-col justify-between"
+              whileHover={isClient ? { y: -3 } : {}}
+              className="border border-gray-200 rounded-lg shadow-sm bg-white p-5 flex flex-col justify-between"
             >
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
                   {icon}
                   {lab.title}
                 </h3>
@@ -99,7 +87,6 @@ export function FreeLabs() {
                 )}
                 <p className="text-gray-700 text-sm mb-4">{lab.description}</p>
               </div>
-
               <a
                 href={lab.url}
                 target="_blank"

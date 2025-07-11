@@ -70,17 +70,18 @@ export default function CategoryPageClient({ id }: Props) {
   }, [id])
 
   const stripMarkdown = (md: string) =>
-    md.replace(/<[^>]+>/g, "").replace(/[#_*>!\[\]\(\)~\-]/g, "").trim()
+    md
+      .replace(/<[^>]+>/g, "")
+      .replace(/[#_*>![\]$$$$~-]/g, "")
+      .trim()
 
-  const truncate = (str: string, max = 150) =>
-    str.length <= max ? str : str.slice(0, max) + "..."
+  const truncate = (str: string, max = 150) => (str.length <= max ? str : str.slice(0, max) + "...")
 
-  const calculateReadTime = (text: string) =>
-    `${Math.ceil((text.split(" ").length || 1) / 200)} min read`
+  const calculateReadTime = (text: string) => `${Math.ceil((text.split(" ").length || 1) / 200)} min read`
 
-  if (loadingCategory) return <div className="p-10 text-center">Loading category...</div>
-  if (errorCategory) return <div className="p-10 text-center text-red-500">Error: {errorCategory}</div>
-  if (!category) return <div className="p-10 text-center">Category not found</div>
+  if (loadingCategory) return <div className="p-8 text-center">Loading category...</div>
+  if (errorCategory) return <div className="p-8 text-center text-red-500">Error: {errorCategory}</div>
+  if (!category) return <div className="p-8 text-center">Category not found</div>
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -89,11 +90,11 @@ export default function CategoryPageClient({ id }: Props) {
       <div className="max-w-7xl mx-auto px-4 py-8 w-full">
         {/* Category Title */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-3 text-slate-800 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold mb-3 text-slate-800 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
             {category.name}
           </h1>
-          <div className="w-20 h-1 bg-blue-500 rounded-full mb-4"></div>
-          <p className="text-gray-600 text-lg">
+          <div className="w-16 h-1 bg-blue-500 rounded-full mb-3"></div>
+          <p className="text-gray-600 text-base">
             Explore the latest articles and tutorials in {category.name.toLowerCase()}.
           </p>
         </div>
@@ -107,37 +108,37 @@ export default function CategoryPageClient({ id }: Props) {
             {!loadingArticles && articles.length === 0 && (
               <p className="text-gray-500">No articles found in this category.</p>
             )}
+
             {articles.map((article) => (
-              <Card key={article.id} className="hover:shadow-lg transition-all duration-300 border border-gray-100 rounded-lg overflow-hidden">
-                <CardContent className="p-6 hover:bg-gray-50 transition-colors duration-200">
-                  <Link
-                    href={`/articles/${article.id}`}
-                    className="group block"
-                  >
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition">
+              <Card
+                key={article.id}
+                className="hover:shadow-lg transition-all duration-300 border border-gray-100 rounded-lg overflow-hidden"
+              >
+                <CardContent className="p-5 hover:bg-gray-50 transition-colors duration-200">
+                  <Link href={`/articles/${article.id}`} className="group block">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition">
                       {article.title}
                     </h3>
-                    <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
+                    <p className="text-gray-700 mb-4 line-clamp-2 text-sm leading-relaxed">
                       {truncate(stripMarkdown(article.content), 200)}
                     </p>
                     <div className="text-sm text-blue-600 flex items-center gap-1 group-hover:underline">
                       Read more <ArrowRight className="w-4 h-4" />
                     </div>
                   </Link>
-
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
-                      <Calendar className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                      <Calendar className="text-gray-400 w-3 h-3" />
                       <span>
-                        {new Date(article.published_at).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
+                        {new Date(article.published_at).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
                         })}
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Clock className="text-gray-400" style={{ width: "14px", height: "14px" }} />
+                      <Clock className="text-gray-400 w-3 h-3" />
                       <span>{calculateReadTime(article.content)}</span>
                     </div>
                   </div>

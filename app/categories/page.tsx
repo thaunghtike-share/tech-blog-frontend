@@ -3,22 +3,9 @@
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Server,
-  Brain,
-  Cloud,
-  Cog,
-  BarChart3,
-  Shield,
-  Code,
-  Database,
-  Globe,
-  Zap,
-} from "lucide-react"
+import { Server, Brain, Cloud, Cog, BarChart3, Shield, Code, Database, Globe, Zap } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { MinimalHero } from "@/components/minimal-hero"
-import { MinimalSidebar } from "@/components/minimal-sidebar"
 
 // Types for your API data
 interface Category {
@@ -46,10 +33,12 @@ const getCategoryColors = (categoryName: string) => {
   const name = categoryName.toLowerCase()
   if (name.includes("devops")) return { color: "from-blue-500 to-cyan-500", bgColor: "from-blue-50 to-cyan-50" }
   if (name.includes("python")) return { color: "from-green-500 to-emerald-500", bgColor: "from-green-50 to-emerald-50" }
-  if (name.includes("ai") || name.includes("ml")) return { color: "from-purple-500 to-pink-500", bgColor: "from-purple-50 to-pink-50" }
+  if (name.includes("ai") || name.includes("ml"))
+    return { color: "from-purple-500 to-pink-500", bgColor: "from-purple-50 to-pink-50" }
   if (name.includes("cloud")) return { color: "from-orange-500 to-red-500", bgColor: "from-orange-50 to-red-50" }
   if (name.includes("automation")) return { color: "from-indigo-500 to-blue-500", bgColor: "from-indigo-50 to-blue-50" }
-  if (name.includes("monitoring")) return { color: "from-yellow-500 to-orange-500", bgColor: "from-yellow-50 to-orange-50" }
+  if (name.includes("monitoring"))
+    return { color: "from-yellow-500 to-orange-500", bgColor: "from-yellow-50 to-orange-50" }
   if (name.includes("security")) return { color: "from-red-500 to-pink-500", bgColor: "from-red-50 to-pink-50" }
   if (name.includes("database")) return { color: "from-teal-500 to-cyan-500", bgColor: "from-teal-50 to-cyan-50" }
   if (name.includes("web")) return { color: "from-violet-500 to-purple-500", bgColor: "from-violet-50 to-purple-50" }
@@ -72,7 +61,7 @@ export default function CategoriesPage() {
           throw new Error(`Error ${response.status}: ${response.statusText}`)
         }
         const data = await response.json()
-        setCategories(data.results)  // 👈 Important if using DRF pagination
+        setCategories(data.results) // 👈 Important if using DRF pagination
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load categories")
       } finally {
@@ -84,11 +73,11 @@ export default function CategoriesPage() {
   }, [])
 
   if (loading) {
-    return <div className="p-10 text-center">Loading categories...</div>
+    return <div className="p-8 text-center">Loading categories...</div>
   }
 
   if (error) {
-    return <div className="p-10 text-center text-red-500">Error: {error}</div>
+    return <div className="p-8 text-center text-red-500">Error: {error}</div>
   }
 
   return (
@@ -99,14 +88,9 @@ export default function CategoriesPage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-2 cursor-pointer transition-transform hover:scale-110"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-10 h-10 rounded-full"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
           <defs>
             <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
               <stop stopColor="#E1306C" />
@@ -114,42 +98,45 @@ export default function CategoriesPage() {
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
+          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-small whitespace-nowrap">
-          Chat?
-        </span>
+        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
+
       <MinimalHeader />
 
-      <main className="max-w-6xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <main className="max-w-6xl mx-auto px-4 py-12">
+        <div className="text-center mb-10">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Article Categories</h1>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            Explore our comprehensive collection of articles organized by technology and topic areas.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => {
             const Icon = getCategoryIcon(category.name)
             const colors = getCategoryColors(category.name)
 
             return (
               <Link key={category.id} href={`/categories/${category.id}`}>
-                <Card className="group hover:shadow-xl transition-all duration-300 border-0 overflow-hidden">
-                  <div className={`h-2 bg-gradient-to-r ${colors.color}`}></div>
+                <Card className="group hover:shadow-lg transition-all duration-300 border-0 overflow-hidden h-full">
+                  <div className={`h-1 bg-gradient-to-r ${colors.color}`}></div>
                   <CardContent
-                    className={`p-8 bg-gradient-to-br ${colors.bgColor} group-hover:scale-[1.02] transition-transform`}
+                    className={`p-6 bg-gradient-to-br ${colors.bgColor} group-hover:scale-[1.01] transition-transform h-full flex flex-col`}
                   >
-                    <div className="flex items-center justify-between mb-6">
-                      <div className={`p-3 rounded-xl bg-gradient-to-r ${colors.color} text-white`}>
-                        <Icon className="h-6 w-6" />
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`p-2 rounded-lg bg-gradient-to-r ${colors.color} text-white`}>
+                        <Icon className="h-5 w-5" />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-light text-slate-900 mb-4 group-hover:text-emerald-600 transition-colors">
+                    <h3 className="text-lg font-semibold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
                       {category.name}
                     </h3>
-                    <p className="text-slate-600 font-light leading-relaxed mb-6">
+                    <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
                       Explore articles and tutorials related to {category.name.toLowerCase()}.
                     </p>
-                    <div className="text-blue-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
+                    <div className="text-blue-600 font-medium text-sm group-hover:translate-x-1 transition-transform">
                       View articles →
                     </div>
                   </CardContent>

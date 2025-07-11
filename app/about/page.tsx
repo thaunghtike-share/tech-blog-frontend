@@ -22,32 +22,40 @@ const personalInfo = {
   name: "Thaung Htike Oo",
   title: "Senior DevOps Engineer",
   location: "Yangon | Myanmar",
-  email: "thaunghtike.tho1234@gmail.com", // Update with your actual email
-  phone: "+959952492359", // Update with your actual phone
+  email: "thaunghtike.tho1234@gmail.com",
+  phone: "+959952492359",
   summary:
-    "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices."
+    "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.",
 }
 
 const workExperience = [
-{
-  company: "Maharbawga Company Ltd",
-  position: "Senior DevOps Engineer",
-  duration: "November 2024 - Present",
-  location: "Yangon, Myanmar",
-  responsibilities: [
-    "Migrated monolithic applications to microservices architecture",
-    "Led the migration of complex Azure infrastructure into Terraform, using dynamic for_each patterns to manage VMs, NSGs, NICs, public IPs, and AKS clusters.",
-    "Managed and maintained AKS clusters with multiple node pools, integrated with Azure AD authentication and Azure CNI (overlay) networking.",
-    "Built reusable Terraform modules to streamline provisioning of scalable Kubernetes infrastructure and associated cloud components.",
-    "Implemented CI/CD pipelines for AKS and VM-based applications using GitHub Actions and ArgoCD, ensuring reliable and automated deployments.",
-    "Optimized network configurations and NAT gateway associations to ensure secure and cost-effective cloud infrastructure.",
-    "Refactored legacy resources into modular, declarative infrastructure-as-code to enable consistency and version control.",
-    "Worked closely with developers and data scientists to align infrastructure with application and machine learning needs."
-  ],
-  technologies: [
-    "Azure", "AKS", "Terraform", "Kubernetes", "ArgoCD", "GitHub Actions",
-    "Azure CNI", "Linux", "Prometheus", "Grafana"
-  ],
+  {
+    company: "Maharbawga Company Ltd",
+    position: "Senior DevOps Engineer",
+    duration: "November 2024 - Present",
+    location: "Yangon, Myanmar",
+    responsibilities: [
+      "Migrated monolithic applications to microservices architecture",
+      "Led the migration of complex Azure infrastructure into Terraform, using dynamic for_each patterns to manage VMs, NSGs, NICs, public IPs, and AKS clusters.",
+      "Managed and maintained AKS clusters with multiple node pools, integrated with Azure AD authentication and Azure CNI (overlay) networking.",
+      "Built reusable Terraform modules to streamline provisioning of scalable Kubernetes infrastructure and associated cloud components.",
+      "Implemented CI/CD pipelines for AKS and VM-based applications using GitHub Actions and ArgoCD, ensuring reliable and automated deployments.",
+      "Optimized network configurations and NAT gateway associations to ensure secure and cost-effective cloud infrastructure.",
+      "Refactored legacy resources into modular, declarative infrastructure-as-code to enable consistency and version control.",
+      "Worked closely with developers and data scientists to align infrastructure with application and machine learning needs.",
+    ],
+    technologies: [
+      "Azure",
+      "AKS",
+      "Terraform",
+      "Kubernetes",
+      "ArgoCD",
+      "GitHub Actions",
+      "Azure CNI",
+      "Linux",
+      "Prometheus",
+      "Grafana",
+    ],
   },
   {
     company: "Dinger Company Ltd",
@@ -55,14 +63,14 @@ const workExperience = [
     duration: "June 2022 - August 2024",
     location: "Yangon, Myanmar",
     responsibilities: [
-      "Managed cloud infrastructure using tools such as EKS, AKS, GitHub Actions, ArgoCD,Grafana, Istio, and Loki",
+      "Managed cloud infrastructure using tools such as EKS, AKS, GitHub Actions, ArgoCD, Grafana, Istio, and Loki",
       "Successfully released the MTB Pay wallet in August 2024.",
       "Designed and implemented cloud infrastructure from ground up, including CI/CD pipelines for deployment on AKS",
       "Managed cloud cost optimization and infrastructure performance tuning for efficiency.",
-      "Deployed and maintained Kubernetes clusters using AKS and EKS to manage containerizedapplications.",
+      "Deployed and maintained Kubernetes clusters using AKS and EKS to manage containerized applications.",
       "Created and managed GitHub Actions and ArgoCD for automated deployments.",
       "Monitored and analyzed system performance using Grafana and Prometheus.",
-      "Implemented service mesh (Istio) for better traffic control and security management."
+      "Implemented service mesh (Istio) for better traffic control and security management.",
     ],
     technologies: ["AWS", "AKS", "Kubernetes", "Terraform", "Github Actions", "Python"],
   },
@@ -94,7 +102,7 @@ const workExperience = [
       "Automated infrastructure tasks with Ansible for consistent and fast deployments.",
       "Integrated ArgoCD for GitOps-based continuous delivery, improving deployment speed and reliability.",
       "Monitored application health and performance using Grafana and Elasticsearch, and identified and resolved any issues.",
-      "Centralized logging solutions with Loki for log aggregation and analysis across services."
+      "Centralized logging solutions with Loki for log aggregation and analysis across services.",
     ],
     technologies: ["Linux", "ArgoCD", "Git", "AWS", "Bash", "Monitoring", "Kubernetes", "Grafana", "Loki"],
   },
@@ -132,7 +140,7 @@ const certifications = [
     credentialId: "HCP-TF",
     validUntil: "expired",
   },
-    {
+  {
     name: "Azure Fundamentals Az-900",
     issuer: "Microsoft",
     year: "2023",
@@ -157,22 +165,27 @@ const skills = {
 const projects = [
   {
     name: "Monolithic to Cloud-Native Architecture Migration",
-    description: "Led the end-to-end migration of legacy monolithic applications to modern microservices architecture at both Dinger and Maharbawga Co., Ltd. This included containerization, infrastructure redesign, and implementing CI/CD pipelines.",
+    description:
+      "Led the end-to-end migration of legacy monolithic applications to modern microservices architecture at both Dinger and Maharbawga Co., Ltd. This included containerization, infrastructure redesign, and implementing CI/CD pipelines.",
     technologies: ["AWS", "Azure", "Kubernetes", "Terraform", "GitHub Actions", "ArgoCD"],
-    impact: "Improved deployment speed by 60%, enhanced system scalability and fault tolerance, and reduced infrastructure and maintenance costs by over 45%."
+    impact:
+      "Improved deployment speed by 60%, enhanced system scalability and fault tolerance, and reduced infrastructure and maintenance costs by over 45%.",
   },
   {
     name: "MTB Pay Wallet Release",
-    description: "Played a key role in the successful release of the MTB Pay wallet, contributing to infrastructure design, automation, and deployment processes.",
+    description:
+      "Played a key role in the successful release of the MTB Pay wallet, contributing to infrastructure design, automation, and deployment processes.",
     technologies: ["AWS", "Azure", "Kubernetes", "Terraform", "GitHub Actions", "ArgoCD"],
-    impact: "Enabled smooth and reliable product launch with improved deployment efficiency and system stability."
+    impact: "Enabled smooth and reliable product launch with improved deployment efficiency and system stability.",
   },
-{
+  {
     name: "Freelance DevOps Engineer",
-    description: "Worked as a freelance DevOps engineer on Upwork, delivering infrastructure automation with Terraform, Kubernetes setup, and backend improvements in Python/Django.",
+    description:
+      "Worked as a freelance DevOps engineer on Upwork, delivering infrastructure automation with Terraform, Kubernetes setup, and backend improvements in Python/Django.",
     technologies: ["Terraform", "Kubernetes", "AWS", "Azure", "Packer", "Grafana", "Prometheus", "CICD"],
-    impact: "Helped clients accelerate infrastructure setup and backend delivery through automation and containerization.",
-  }
+    impact:
+      "Helped clients accelerate infrastructure setup and backend delivery through automation and containerization.",
+  },
 ]
 
 export default function AboutPage() {
@@ -184,14 +197,9 @@ export default function AboutPage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-2 cursor-pointer transition-transform hover:scale-110"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-10 h-10 rounded-full"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
           <defs>
             <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
               <stop stopColor="#E1306C" />
@@ -199,44 +207,41 @@ export default function AboutPage() {
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
+          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-small whitespace-nowrap">
-          Chat?
-        </span>
+        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
+
       <MinimalHeader />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-14 border-b border-white/50">
+      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-12 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-light text-slate-900 mb-4 leading-relaxed">
-            <span className="font-tight text-black-700">About </span><span className="font-medium text-blue-600">Me</span>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-relaxed">
+            <span className="text-gray-700">About </span>
+            <span className="text-blue-600">Me</span>
           </h1>
-          <p className="text-base text-slate-600 font-light max-w-lg mx-auto leading-relaxed">
+          <p className="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
             DevOps Engineer passionate about cloud infrastructure, automation, and sharing knowledge with the community.
           </p>
         </div>
       </section>
 
-      <main className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <main className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
-          <div className="lg:col-span-1 space-y-8">
+          <div className="lg:col-span-1 space-y-6">
             <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
-              <CardContent className="p-8">
-                <div className="text-center mb-6">
-                  <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-6 flex items-center justify-center">
-                    <User className="h-16 w-16 text-white" />
+              <CardContent className="p-6">
+                <div className="text-center mb-4">
+                  <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <User className="h-12 w-12 text-white" />
                   </div>
-                  <h3 className="text-2xl font-light text-gray-900 mb-2">{personalInfo.name}</h3>
-                  <p className="text-blue-600 font-medium">{personalInfo.title}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{personalInfo.name}</h3>
+                  <p className="text-blue-600 font-medium text-sm">{personalInfo.title}</p>
                 </div>
 
-                <div className="space-y-4 text-sm">
+                <div className="space-y-3 text-sm">
                   <div className="flex items-center text-gray-600">
                     <MapPin className="h-4 w-4 mr-3 text-blue-500" />
                     {personalInfo.location}
@@ -251,16 +256,19 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-blue-200">
-                  <p className="text-gray-600 font-light leading-relaxed text-sm">{personalInfo.summary}</p>
+                <div className="mt-6 pt-4 border-t border-blue-200">
+                  <p className="text-gray-600 leading-relaxed text-sm">{personalInfo.summary}</p>
                 </div>
 
-                <div className="mt-6 flex space-x-3">
-                  <Button className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600">
+                <div className="mt-4 flex space-x-2">
+                  <Button
+                    size="sm"
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                  >
                     <Download className="h-4 w-4 mr-2" />
                     Download CV
                   </Button>
-                  <Button variant="outline" className="flex-1 bg-transparent">
+                  <Button size="sm" variant="outline" className="flex-1 bg-transparent">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     LinkedIn
                   </Button>
@@ -270,16 +278,16 @@ export default function AboutPage() {
 
             {/* Technical Skills */}
             <Card className="border-0 bg-white shadow-sm">
-              <CardContent className="p-8">
-                <h3 className="text-xl font-light mb-6 flex items-center text-gray-900">
-                  <Code className="h-5 w-5 mr-2 text-blue-600" />
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-900">
+                  <Code className="h-4 w-4 mr-2 text-blue-600" />
                   Technical Skills
                 </h3>
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
-                      <h4 className="text-sm font-medium text-gray-700 mb-3">{category}</h4>
-                      <div className="flex flex-wrap gap-2">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">{category}</h4>
+                      <div className="flex flex-wrap gap-1">
                         {skillList.map((skill) => (
                           <Badge key={skill} variant="secondary" className="text-xs bg-blue-50 text-blue-700">
                             {skill}
@@ -294,44 +302,42 @@ export default function AboutPage() {
           </div>
 
           {/* Experience, Education, Projects */}
-          <div className="lg:col-span-2 space-y-12">
+          <div className="lg:col-span-2 space-y-10">
             {/* Work Experience */}
             <div>
-              <h3 className="text-2xl font-light mb-8 flex items-center text-gray-900">
-                <Briefcase className="h-6 w-6 mr-3 text-blue-600" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
+                <Briefcase className="h-5 w-5 mr-3 text-blue-600" />
                 Work Experience
               </h3>
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {workExperience.map((job, index) => (
                   <Card key={index} className="border-0 bg-white shadow-sm hover:shadow-md transition-shadow">
-                    <CardContent className="p-8">
-                      <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                    <CardContent className="p-6">
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                         <div>
-                          <h4 className="text-xl font-medium text-gray-900 mb-1">{job.position}</h4>
-                          <p className="text-blue-600 font-medium mb-2">{job.company}</p>
+                          <h4 className="text-lg font-medium text-gray-900 mb-1">{job.position}</h4>
+                          <p className="text-blue-600 font-medium mb-2 text-sm">{job.company}</p>
                         </div>
                         <div className="text-right">
                           <div className="flex items-center text-sm text-gray-500 mb-1">
-                            <Calendar className="h-4 w-4 mr-1" />
+                            <Calendar className="h-3 w-3 mr-1" />
                             {job.duration}
                           </div>
                           <div className="flex items-center text-sm text-gray-500">
-                            <MapPin className="h-4 w-4 mr-1" />
+                            <MapPin className="h-3 w-3 mr-1" />
                             {job.location}
                           </div>
                         </div>
                       </div>
-
-                      <ul className="space-y-2 mb-6">
+                      <ul className="space-y-1 mb-4">
                         {job.responsibilities.map((responsibility, idx) => (
-                          <li key={idx} className="text-gray-600 font-light flex items-start">
+                          <li key={idx} className="text-gray-600 flex items-start text-sm">
                             <span className="text-blue-500 mr-2 mt-1">•</span>
                             {responsibility}
                           </li>
                         ))}
                       </ul>
-
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1">
                         {job.technologies.map((tech) => (
                           <Badge
                             key={tech}
@@ -350,17 +356,17 @@ export default function AboutPage() {
 
             {/* Key Projects */}
             <div>
-              <h3 className="text-2xl font-light mb-8 flex items-center text-gray-900">
-                <Server className="h-6 w-6 mr-3 text-blue-600" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
+                <Server className="h-5 w-5 mr-3 text-blue-600" />
                 Key Projects
               </h3>
-              <div className="grid grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 gap-4">
                 {projects.map((project, index) => (
                   <Card key={index} className="border-0 bg-gradient-to-br from-purple-50 to-pink-50">
-                    <CardContent className="p-8">
-                      <h4 className="text-xl font-medium text-gray-900 mb-3">{project.name}</h4>
-                      <p className="text-gray-600 font-light mb-4">{project.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
+                    <CardContent className="p-6">
+                      <h4 className="text-lg font-medium text-gray-900 mb-2">{project.name}</h4>
+                      <p className="text-gray-600 mb-3 text-sm">{project.description}</p>
+                      <div className="flex flex-wrap gap-1 mb-3">
                         {project.technologies.map((tech) => (
                           <Badge key={tech} variant="secondary" className="text-xs bg-purple-100 text-purple-700">
                             {tech}
@@ -376,21 +382,21 @@ export default function AboutPage() {
 
             {/* Education */}
             <div>
-              <h3 className="text-2xl font-light mb-8 flex items-center text-gray-900">
-                <GraduationCap className="h-6 w-6 mr-3 text-blue-600" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
+                <GraduationCap className="h-5 w-5 mr-3 text-blue-600" />
                 Education
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {education.map((edu, index) => (
                   <Card key={index} className="border-0 bg-gradient-to-br from-green-50 to-emerald-50">
-                    <CardContent className="p-8">
-                      <h4 className="text-xl font-medium text-gray-900 mb-2">{edu.degree}</h4>
-                      <p className="text-green-600 font-medium mb-2">{edu.institution}</p>
-                      <div className="flex items-center text-sm text-gray-500 mb-3">
-                        <Calendar className="h-4 w-4 mr-1" />
+                    <CardContent className="p-6">
+                      <h4 className="text-lg font-medium text-gray-900 mb-2">{edu.degree}</h4>
+                      <p className="text-green-600 font-medium mb-2 text-sm">{edu.institution}</p>
+                      <div className="flex items-center text-sm text-gray-500 mb-2">
+                        <Calendar className="h-3 w-3 mr-1" />
                         {edu.duration}
                       </div>
-                      <p className="text-gray-600 font-light mb-2">{edu.details}</p>
+                      <p className="text-gray-600 mb-2 text-sm">{edu.details}</p>
                       <p className="text-sm text-green-600 font-medium">GPA: {edu.gpa}</p>
                     </CardContent>
                   </Card>
@@ -400,15 +406,15 @@ export default function AboutPage() {
 
             {/* Certifications */}
             <div>
-              <h3 className="text-2xl font-light mb-8 flex items-center text-gray-900">
-                <Award className="h-6 w-6 mr-3 text-blue-600" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
+                <Award className="h-5 w-5 mr-3 text-blue-600" />
                 Certifications
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {certifications.map((cert, index) => (
                   <Card key={index} className="border-0 bg-gradient-to-br from-orange-50 to-red-50">
-                    <CardContent className="p-6">
-                      <h4 className="font-medium text-gray-900 mb-2">{cert.name}</h4>
+                    <CardContent className="p-4">
+                      <h4 className="font-medium text-gray-900 mb-2 text-sm">{cert.name}</h4>
                       <p className="text-orange-600 font-medium text-sm mb-2">{cert.issuer}</p>
                       <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
                         <span>Issued: {cert.year}</span>
