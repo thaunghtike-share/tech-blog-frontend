@@ -103,7 +103,7 @@ export function DevOpsWorkflowExample() {
           Enterprise GitOps Workflow
         </h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          CI/CD pipeline built for Mahar Bawga Money using GitOps and Argo CD
+           devops architecture design built for client's company using gitops and argocd
         </p>
       </div>
 

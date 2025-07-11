@@ -79,10 +79,18 @@ export default function HomePage() {
         <section id="devops-roadmap">
           <MinimalDevopsRoadmap />
         </section>
+        <section id="youtube-playlists">
         <YouTubePlaylists />
+        </section>
+        <section id="free-labs">
         <FreeLabs />
+        </section>
+        <section id="myanmar-playlists">
         <YouTubePlaylistsMM />
+        </section>
+        <section id="free-udemy">
         <TopUdemyCourses />
+        </section>
         <RecommendedPaidCourses />
         <CertificationRoadmap />
 
