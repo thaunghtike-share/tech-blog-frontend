@@ -189,81 +189,83 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Categories */}
-      <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
-              <Folder className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900">Categories</h3>
-              <p className="text-sm text-gray-600">Browse by topic</p>
-            </div>
-          </div>
+{/* Categories */}
+<Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+  <CardContent className="p-6">
+    <div className="flex items-center gap-3 mb-6">
+      <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
+        <Folder className="h-5 w-5 text-white" />
+      </div>
+      <div>
+        <h3 className="text-xl font-semibold text-gray-900">Categories</h3>
+        <p className="text-sm text-gray-600">Browse by topic</p>
+      </div>
+    </div>
 
-          {loading.categories ? (
-            <div className="space-y-3">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="animate-pulse h-12 rounded-xl bg-gradient-to-r from-gray-100 to-gray-200" />
-              ))}
-            </div>
-          ) : error.categories ? (
-            <div className="text-center py-4 bg-red-50 rounded-xl border border-red-100">
-              <p className="text-red-500 text-sm">{error.categories}</p>
-            </div>
-          ) : (
-            <>
-              <ul className="grid grid-cols-2 gap-3">
-                {(showAllCategories ? categories : categories.slice(0, 6)).map((category) => {
-                  const [Icon, colorClass] = getCategoryIconWithColor(category.name)
-                  return (
-                    <li key={category.id}>
-                      <Link
-                        href={`/category/${category.id}`}
-                        className="flex items-center justify-between p-3 rounded-xl hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 transition-all border border-transparent hover:border-blue-100 hover:shadow-md"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`p-2 rounded-lg ${colorClass.split(" ")[0]} shadow-sm`}>
-                            <Icon className={`h-4 w-4 ${colorClass.split(" ")[1]}`} />
-                          </div>
-                          <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 truncate">
-                            {category.name}
-                          </span>
-                        </div>
-                        {category.post_count && (
-                          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                            {category.post_count}
-                          </span>
-                        )}
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-
-              {categories.length > 6 && (
-                <button
-                  onClick={() => setShowAllCategories(!showAllCategories)}
-                  className="mt-4 w-full flex items-center justify-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium py-2 px-4 rounded-xl hover:bg-blue-50 transition-all border border-blue-200 hover:border-blue-300"
+    {loading.categories ? (
+      <div className="space-y-3">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="animate-pulse h-10 rounded-xl bg-gradient-to-r from-gray-100 to-gray-200" />
+        ))}
+      </div>
+    ) : error.categories ? (
+      <div className="text-center py-4 bg-red-50 rounded-xl border border-red-100">
+        <p className="text-red-500 text-sm">{error.categories}</p>
+      </div>
+    ) : (
+      <>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {(showAllCategories ? categories : categories.slice(0, 6)).map((category) => {
+            const [Icon, colorClass] = getCategoryIconWithColor(category.name)
+            return (
+              <li key={category.id}>
+                <Link
+                  href={`/categories/${category.id}`}
+                  className="flex gap-2 p-2 rounded-xl items-center transition-all border border-transparent
+                             bg-white hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100
+                             hover:border-blue-200 hover:shadow-lg hover:ring-1 hover:ring-blue-300"
                 >
-                  {showAllCategories ? (
-                    <>
-                      <ChevronUp className="h-4 w-4" />
-                      Show Less
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="h-4 w-4" />
-                      See More
-                    </>
-                  )}
-                </button>
-              )}
-            </>
-          )}
-        </CardContent>
-      </Card>
+                  <div className={`p-1 rounded-lg ${colorClass.split(" ")[0]} shadow-sm shrink-0`}>
+                    <Icon className={`h-3 w-3 ${colorClass.split(" ")[1]}`} />
+                  </div>
+                  <div className="flex flex-col min-w-0 w-full">
+                    <span className="text-xs font-medium text-gray-800 hover:text-blue-600 break-normal whitespace-normal leading-snug">
+                      {category.name}
+                    </span>
+                    {category.post_count && (
+                      <span className="text-[0.65rem] text-gray-500 mt-0.5">
+                        {category.post_count} post{category.post_count > 1 ? "s" : ""}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+
+        {categories.length > 6 && (
+          <button
+            onClick={() => setShowAllCategories(!showAllCategories)}
+            className="mt-4 w-full flex items-center justify-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium py-2 px-4 rounded-xl hover:bg-blue-50 transition-all border border-blue-200 hover:border-blue-300"
+          >
+            {showAllCategories ? (
+              <>
+                <ChevronUp className="h-4 w-4" />
+                Show Less
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-4 w-4" />
+                See More
+              </>
+            )}
+          </button>
+        )}
+      </>
+    )}
+  </CardContent>
+</Card>
 
       {/* Tags */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">

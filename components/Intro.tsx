@@ -209,7 +209,7 @@ export default function Intro() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-3 text-gray-600 max-w-2xl mx-auto"
+          className="mt-3 text-gray-700 max-w-2xl mx-auto"
         >
           Learn what DevOps really means, why it matters, and what you need to know before diving in.
         </motion.p>
@@ -307,7 +307,7 @@ export default function Intro() {
           transition={{ delay: 0.3 }}
           className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-10"
         >
-          <span className="bg-gradient-to-r from-gray-900 to-blue-800 bg-clip-text text-transparent">
+          <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4">
             Essential DevOps Tools
           </span>
         </motion.h2>
@@ -357,7 +357,7 @@ export default function Intro() {
               Learning Guideline
             </span>
           </h4>
-          <p className="text-gray-600">Follow this structured path to master DevOps</p>
+          <p className="text-gray-700">Follow this structured path to master DevOps</p>
         </motion.div>
         <div className="relative">
           {/* Enhanced progress line */}
