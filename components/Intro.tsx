@@ -40,16 +40,19 @@ export default function Intro() {
   // Enhanced card bg colors with gradients - using original structure
   const coreConceptCardColors = [
     {
+      bg: "",
       border: "border-indigo-200",
       iconBg: "bg-indigo-500 to-blue-600",
       iconColor: "text-white",
     }, // What is DevOps
     {
+      bg: "",
       border: "border-purple-200",
       iconBg: "bg-purple-500 to-indigo-600",
       iconColor: "text-white",
     }, // Key Principles
     {
+      bg: "",
       border: "border-green-200",
       iconBg: "bg-green-500 to-emerald-600",
       iconColor: "text-white",
@@ -79,13 +82,13 @@ export default function Intro() {
     { text: "Infrastructure as Code", icon: <Terminal className="w-4 h-4" />, color: "text-purple-600" },
     { text: "Monitoring & Logging", icon: <Network className="w-4 h-4" />, color: "text-purple-600" },
     { text: "Microservices", icon: <Cpu className="w-4 h-4" />, color: "text-purple-600" },
-    { text: "Collaboration Culture", icon: <Shield className="w-4 h-4" />, color: "text-purple-600" }, // Changed to Shield as per original
+    { text: "Collaboration Culture", icon: <Shield className="w-4 h-4" />, color: "text-purple-600" },
   ]
 
   // Data for Prerequisites list with specific icons and colors
   const prerequisitesList = [
     { text: "Linux & OS Fundamentals", icon: <Terminal className="w-4 h-4" />, color: "text-green-600" },
-    { text: "Programming Basics", icon: <GitBranch className="w-4 h-4" />, color: "text-green-600" }, // Changed to GitBranch as per original
+    { text: "Programming Basics", icon: <GitBranch className="w-4 h-4" />, color: "text-green-600" },
     { text: "Networking Concepts", icon: <Network className="w-4 h-4" />, color: "text-green-600" },
     { text: "Hardware Knowledge", icon: <Cpu className="w-4 h-4" />, color: "text-green-600" },
     { text: "Security Fundamentals", icon: <Shield className="w-4 h-4" />, color: "text-green-600" },
@@ -252,7 +255,7 @@ export default function Intro() {
             <div
               className={`p-2.5 rounded-xl text-white bg-gradient-to-r ${coreConceptCardColors[1].iconBg} shadow-md`}
             >
-              <Lightbulb className="w-5 h-5" /> {/* Changed to Lightbulb for Key Principles */}
+              <Lightbulb className="w-5 h-5" />
             </div>
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-3">Key Principles</h3>
@@ -279,7 +282,7 @@ export default function Intro() {
             <div
               className={`p-2.5 rounded-xl text-white bg-gradient-to-r ${coreConceptCardColors[2].iconBg} shadow-md`}
             >
-              <BookOpenCheck className="w-5 h-5" /> {/* Changed to BookOpenCheck for Prerequisites */}
+              <BookOpenCheck className="w-5 h-5" />
             </div>
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-3">Prerequisites</h3>
@@ -296,7 +299,7 @@ export default function Intro() {
         </motion.div>
       </div>
 
-      {/* Essential DevOps Tools Section - New section with distinct colors */}
+      {/* Essential DevOps Tools Section */}
       <div className="mb-12">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -309,32 +312,32 @@ export default function Intro() {
           </span>
         </motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-{devOpsTools.map((toolCategory, index) => (
-  <motion.div
-    key={index}
-    className={`bg-white rounded-xl shadow-md p-5 border ${toolCategory.cardBorder} hover:shadow-lg transition-all`}
-    variants={cardVariants}
-    initial="initial"
-    whileHover="hover"
-  >
-    <div className="flex items-center mb-4 gap-3">
-      <div className={`p-2 rounded-lg ${toolCategory.iconBg} ${toolCategory.iconColor}`}>
-        {toolCategory.icon}
-      </div>
-      <h3 className="text-lg font-semibold text-gray-800">{toolCategory.title}</h3>
-    </div>
-    <div className="flex flex-wrap gap-2">
-      {toolCategory.tools.map((tool, idx) => (
-        <span 
-          key={idx} 
-          className={`text-xs px-3 py-1 rounded-full ${toolCategory.iconBg.replace('50', '100')} ${toolCategory.iconColor.replace('600', '700')}`}
-        >
-          {tool}
-        </span>
-      ))}
-    </div>
-  </motion.div>
-))}
+          {devOpsTools.map((toolCategory, index) => (
+            <motion.div
+              key={index}
+              className={`bg-white rounded-xl shadow-md p-5 border ${toolCategory.cardBorder} hover:shadow-lg transition-all`}
+              variants={cardVariants}
+              initial="initial"
+              whileHover="hover"
+            >
+              <div className="flex items-center mb-4 gap-3">
+                <div className={`p-2 rounded-lg ${toolCategory.iconBg} ${toolCategory.iconColor}`}>
+                  {toolCategory.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800">{toolCategory.title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {toolCategory.tools.map((tool, idx) => (
+                  <span 
+                    key={idx} 
+                    className={`text-xs px-3 py-1 rounded-full ${toolCategory.iconBg.replace('50', '100')} ${toolCategory.iconColor.replace('600', '700')}`}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
