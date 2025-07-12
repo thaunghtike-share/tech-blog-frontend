@@ -46,8 +46,8 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
 
-  // Create a ref for the top heading section
-  const topRef = useRef<HTMLDivElement>(null)
+  const topRef = useRef<HTMLHeadingElement>(null)
+  const isFirstRender = useRef(true)
 
   const API_BASE_URL = "http://192.168.100.7:8000/api"
 
@@ -88,10 +88,14 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     setCurrentPage(1)
   }, [searchQuery])
 
-  // Scroll to the top heading when page changes
+  // Scroll to the top heading when currentPage changes, but skip on initial load
   useEffect(() => {
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+    } else {
+      if (topRef.current) {
+        topRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
+      }
     }
   }, [currentPage])
 
@@ -129,7 +133,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <h2
-              ref={topRef} // attach ref here for loading also
+              ref={topRef}
               className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
             >
               Latest Articles
@@ -180,7 +184,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <h2
-            ref={topRef} // attach ref here as well for normal render
+            ref={topRef}
             className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
           >
             Latest Articles
@@ -266,7 +270,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         </AnimatePresence>
       </div>
 
-      {/* Enhanced Pagination */}
       {totalPages > 1 && (
         <nav className="mt-10 flex justify-center items-center gap-2">
           <button

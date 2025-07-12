@@ -37,7 +37,6 @@ export default function Intro() {
     },
   }
 
-  // Enhanced card bg colors with gradients - using original structure
   const coreConceptCardColors = [
     {
       bg: "",
@@ -59,7 +58,6 @@ export default function Intro() {
     }, // Prerequisites
   ]
 
-  // Enhanced colors for each learning step - using original structure
   const stepColors = [
     "bg-gradient-to-r from-purple-500 to-blue-600", // Roadmap
     "bg-gradient-to-r from-red-500 to-red-600", // YouTube
@@ -76,7 +74,6 @@ export default function Intro() {
     { label: "Udemy", id: "free-udemy", desc: "Structured courses" },
   ]
 
-  // Data for Key Principles list with specific icons and colors
   const keyPrinciplesList = [
     { text: "CI/CD Pipelines", icon: <GitBranch className="w-4 h-4" />, color: "text-purple-600" },
     { text: "Infrastructure as Code", icon: <Terminal className="w-4 h-4" />, color: "text-purple-600" },
@@ -85,7 +82,6 @@ export default function Intro() {
     { text: "Collaboration Culture", icon: <Shield className="w-4 h-4" />, color: "text-purple-600" },
   ]
 
-  // Data for Prerequisites list with specific icons and colors
   const prerequisitesList = [
     { text: "Linux & OS Fundamentals", icon: <Terminal className="w-4 h-4" />, color: "text-green-600" },
     { text: "Programming Basics", icon: <GitBranch className="w-4 h-4" />, color: "text-green-600" },
@@ -94,7 +90,6 @@ export default function Intro() {
     { text: "Security Fundamentals", icon: <Shield className="w-4 h-4" />, color: "text-green-600" },
   ]
 
-  // Distinct colors for Essential DevOps Tools
   const devOpsTools = [
     {
       icon: <GitBranch className="w-5 h-5" />,
@@ -215,7 +210,7 @@ export default function Intro() {
         </motion.p>
       </div>
 
-      {/* Enhanced Three Horizontal Cards - Using original cardBgColors structure with distinct colors */}
+      {/* Enhanced Three Horizontal Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {/* What is DevOps */}
         <motion.div
@@ -319,40 +314,43 @@ export default function Intro() {
             Essential DevOps Tools
           </span>
         </motion.h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {devOpsTools.map((toolCategory, index) => (
-            <motion.div
-              key={index}
-              className={`bg-white rounded-xl shadow-md p-5 border ${toolCategory.cardBorder} hover:shadow-lg transition-all`}
-              variants={cardVariants}
-              initial="initial"
-              whileHover="hover"
-            >
-              <div className="flex items-center mb-4 gap-3">
-                <div className={`p-2 rounded-lg ${toolCategory.iconBg} ${toolCategory.iconColor}`}>
-                  {toolCategory.icon}
+
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl w-full">
+            {devOpsTools.map((toolCategory, index) => (
+              <motion.div
+                key={index}
+                className={`bg-white rounded-xl shadow-md p-5 border ${toolCategory.cardBorder} hover:shadow-lg transition-all text-center`}
+                variants={cardVariants}
+                initial="initial"
+                whileHover="hover"
+              >
+                <div className={`flex flex-col items-center mb-4 gap-2`}>
+                  <div className={`p-2 rounded-lg ${toolCategory.iconBg} ${toolCategory.iconColor}`}>
+                    {toolCategory.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800">{toolCategory.title}</h3>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800">{toolCategory.title}</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {toolCategory.tools.map((tool, idx) => (
-                  <span
-                    key={idx}
-                    className={`text-xs px-3 py-1 rounded-full ${toolCategory.iconBg.replace("50", "100")} ${toolCategory.iconColor.replace(
-                      "600",
-                      "700"
-                    )}`}
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {toolCategory.tools.map((tool, idx) => (
+                    <span
+                      key={idx}
+                      className={`text-xs px-3 py-1 rounded-full ${toolCategory.iconBg.replace("50", "100")} ${toolCategory.iconColor.replace(
+                        "600",
+                        "700"
+                      )}`}
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Enhanced Learning Guideline - Using original structure */}
+      {/* Enhanced Learning Guideline */}
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -371,7 +369,6 @@ export default function Intro() {
           <p className="text-gray-700">Follow this structured path to master DevOps</p>
         </motion.div>
         <div className="relative">
-          {/* Enhanced progress line */}
           <div className="absolute top-5 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
           <div className="grid grid-cols-5 gap-2 relative z-10">
             {learningPathItems.map((step, index) => (

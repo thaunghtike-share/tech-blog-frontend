@@ -36,98 +36,117 @@ export default function HomePage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
+        className="fixed top-1/2 right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105 transform -translate-y-1/2"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 240"
+          fill="none"
+          className="w-14 h-14 rounded-full"
+        >
           <defs>
-            <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="messengerGradient"
+              x1="0"
+              y1="0"
+              x2="240"
+              y2="240"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#E1306C" />
               <stop offset="1" stopColor="#833AB4" />
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
+          <path
+            fill="#fff"
+            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
+          />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
+        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
+          Chat?
+        </span>
       </a>
 
       {/* Header and Hero */}
       <MinimalHeader />
       <div className="-mt-20">
-      <Intro />
+        <Intro />
       </div>
 
       {/* Main Content Section */}
       <main className="max-w-7xl mx-auto px-4 py-8 relative z-10">
         <div className="-mt-10">
-        <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
-          {/* Blog List (main content) */}
-          <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
-            <MinimalBlogList />
+          <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
+            {/* Blog List (main content) */}
+            <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
+              <MinimalBlogList />
+            </div>
+            {/* Sidebar - appears to the right on all screens */}
+            <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
+              <MinimalSidebar />
+            </div>
           </div>
-          {/* Sidebar - appears to the right on all screens */}
-          <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
-            <MinimalSidebar />
-          </div>
-        </div>
         </div>
 
         {/* Other Sections */}
         <section id="devops-roadmap">
           <div className="-mt-15">
-          <MinimalDevopsRoadmap />
+            <MinimalDevopsRoadmap />
           </div>
         </section>
         <section id="youtube-playlists">
           <div className="-mt-10">
-          <YouTubePlaylists />
+            <YouTubePlaylists />
           </div>
         </section>
-        <section id="free-labs" >
+        <section id="free-labs">
           <div className="-mt-20">
-          <FreeLabs />
+            <FreeLabs />
           </div>
         </section>
         <section id="myanmar-playlists">
           <div className="-mt-24">
-          <YouTubePlaylistsMM />
+            <YouTubePlaylistsMM />
           </div>
         </section>
         <section id="free-udemy">
           <div className="-mt-12">
-          <TopUdemyCourses />
+            <TopUdemyCourses />
           </div>
         </section>
         <div className="-mt-24">
-        <CertificationRoadmap />
+          <CertificationRoadmap />
         </div>
         <div className="-mt-24">
-        <RecommendedPaidCourses />
+          <RecommendedPaidCourses />
         </div>
         <div className="mt-16">
           <div className="-mt-24">
-          <FreelanceServicesSection />
+            <FreelanceServicesSection />
           </div>
         </div>
         <div className="-mt-22">
-        <DevOpsWorkflowExample />
+          <DevOpsWorkflowExample />
         </div>
         <div className="-mt-24">
-        <MinimalFeaturedProjects />
+          <MinimalFeaturedProjects />
         </div>
         <div className="-mt-24">
-        <SuccessStoriesSection />
+          <SuccessStoriesSection />
         </div>
         <div className="-mt-24">
-        <AuthorsContributorsCTA />
+          <AuthorsContributorsCTA />
         </div>
         <div className="-mt-36">
-        <MinimalFAQs />
+          <MinimalFAQs />
         </div>
       </main>
 
       {/* Footer */}
-      <MinimalFooter />
+      <div className="-mt-6">
+        <MinimalFooter />
+      </div>
     </div>
   )
 }

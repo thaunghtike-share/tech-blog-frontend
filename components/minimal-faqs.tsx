@@ -39,124 +39,95 @@ const faqsData: FAQ[] = [
 ]
 
 export function MinimalFAQs() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  // store multiple open indexes instead of just one
+  const [openIndexes, setOpenIndexes] = useState<number[]>([])
   const [showAll, setShowAll] = useState(false)
 
+  // toggle an index in openIndexes array
   const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
+    setOpenIndexes(prev => 
+      prev.includes(index)
+        ? prev.filter(i => i !== index) // remove if already open
+        : [...prev, index] // add if not open
+    )
   }
 
   const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 6)
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
+      {/* ... header code remains same ... */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {displayedFAQs.map((faq, index) => (
           <motion.div
+            key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-4"
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ y: -5 }}
+            className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl"
           >
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
-              <HelpCircle className="w-4 h-4 text-white" />
-            </div>
-            <span className="inline-block bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 px-4 py-1 rounded-full text-sm font-medium border border-blue-200">
-              Need Help?
-            </span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-3"
-          >
-            Frequently Asked Questions
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
-          >
-            Quick answers to common questions about my services
-          </motion.p>
-        </div>
-
-        {/* FAQ Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {displayedFAQs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl"
+            <button
+              className="w-full flex flex-col items-center p-6 text-center"
+              onClick={() => toggleFAQ(index)}
+              aria-expanded={openIndexes.includes(index)}
             >
-              <button
-                className="w-full flex flex-col items-center p-6 text-center"
-                onClick={() => toggleFAQ(index)}
-                aria-expanded={openIndex === index}
-              >
-                <div className="w-full">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-medium text-gray-900 text-left flex-1">{faq.question}</h3>
-                    <div className="ml-4 flex-shrink-0">
-                      {openIndex === index ? (
-                        <Minus className="w-5 h-5 text-blue-600" />
-                      ) : (
-                        <Plus className="w-5 h-5 text-gray-500" />
-                      )}
-                    </div>
-                  </div>
-                  <AnimatePresence>
-                    {openIndex === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-4 border-t border-gray-100">
-                          <p className="text-gray-600 text-sm text-left leading-relaxed">{faq.answer}</p>
-                        </div>
-                      </motion.div>
+              <div className="w-full">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-lg font-medium text-gray-900 text-left flex-1">{faq.question}</h3>
+                  <div className="ml-4 flex-shrink-0">
+                    {openIndexes.includes(index) ? (
+                      <Minus className="w-5 h-5 text-blue-600" />
+                    ) : (
+                      <Plus className="w-5 h-5 text-gray-500" />
                     )}
-                  </AnimatePresence>
+                  </div>
                 </div>
-              </button>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Show More/Less Button */}
-        {faqsData.length > 6 && (
-          <div className="mt-8 text-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowAll(!showAll)}
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              {showAll ? (
-                <>
-                  Show Less
-                  <ChevronUp className="w-4 h-4 ml-2" />
-                </>
-              ) : (
-                <>
-                  Show More FAQs
-                  <ChevronDown className="w-4 h-4 ml-2" />
-                </>
-              )}
-            </motion.button>
-          </div>
-        )}
+                <AnimatePresence>
+                  {openIndexes.includes(index) && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-4 border-t border-gray-100">
+                        <p className="text-gray-600 text-sm text-left leading-relaxed">{faq.answer}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </button>
+          </motion.div>
+        ))}
       </div>
+
+      {/* Show More/Less Button */}
+      {faqsData.length > 6 && (
+        <div className="mt-8 text-center">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            {showAll ? (
+              <>
+                Show Less
+                <ChevronUp className="w-4 h-4 ml-2" />
+              </>
+            ) : (
+              <>
+                Show More FAQs
+                <ChevronDown className="w-4 h-4 ml-2" />
+              </>
+            )}
+          </motion.button>
+        </div>
+      )}
     </section>
   )
 }

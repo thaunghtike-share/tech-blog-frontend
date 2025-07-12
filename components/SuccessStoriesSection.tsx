@@ -28,6 +28,18 @@ const testimonials = [
     feedback:
       "The roadmap and certification guidance gave me the confidence to clear my first cloud cert. Highly recommend!",
   },
+  {
+    name: "Zwe Man",
+    role: "Junior Developer",
+    feedback:
+      "The roadmap and certification guidance gave me the confidence to clear my first cloud cert. Highly recommend!",
+  },
+  {
+    name: "Ko Ko Naing",
+    role: "Junior DevOps Engineer at XYZ",
+    feedback:
+      "This blog helped me understand CI/CD pipelines and Kubernetes. I landed my first DevOps job thanks to the free resources!",
+  },
 ]
 
 export function SuccessStoriesSection() {
