@@ -1,83 +1,91 @@
-"use client";
+"use client"
 
-import { useCallback, useEffect, useState } from "react";
-import { Check, ClipboardCopy, Facebook, Linkedin } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button"
+import { Facebook, Twitter, Linkedin, Mail, Copy, Check, Share2 } from "lucide-react"
+import { useState, useEffect } from "react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface ShareButtonsProps {
-  articleId: number;
-  title: string;
+  articleId: number // Added articleId to props
+  title: string
+  url: string
 }
 
-export function ShareButtons({ articleId, title }: ShareButtonsProps) {
-  const [currentUrl, setCurrentUrl] = useState("");
-  const [copied, setCopied] = useState(false);
+export function ShareButtons({ articleId, title, url }: ShareButtonsProps) {
+  const [copied, setCopied] = useState(false)
+  const [currentUrl, setCurrentUrl] = useState("")
+  const encodedTitle = encodeURIComponent(title)
+  const encodedUrl = encodeURIComponent(url)
 
   useEffect(() => {
-    setCurrentUrl(`${window.location.origin}/articles/${articleId}`);
-  }, [articleId]);
+    setCurrentUrl(window.location.href)
+  }, [])
 
-  const handleCopyLink = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(currentUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      console.error("Failed to copy link");
-    }
-  }, [currentUrl]);
+  const shareLinks = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+  }
 
-  if (!currentUrl) return null;
+  const copyLink = () => {
+    navigator.clipboard.writeText(url)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
-    <div className="mt-10 mb-6">
-      <h3 className="text-base font-semibold text-gray-700 mb-3">Share this article:</h3>
-      <div className="flex flex-wrap gap-3">
-        {/* Facebook */}
-        <a
-          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#1877F2] hover:bg-[#155CC0] text-white px-3 py-2 rounded-lg text-sm transition"
-        >
-          <Facebook className="w-4 h-4" />
-          Facebook
-        </a>
+    <div className="flex items-center space-x-2">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => window.open(shareLinks.facebook, "_blank")}
+        className="flex items-center gap-1 text-blue-600 border-blue-200 hover:bg-blue-50"
+      >
+        <Facebook className="h-4 w-4" />
+        Facebook
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => window.open(shareLinks.linkedin, "_blank")}
+        className="flex items-center gap-1 text-blue-700 border-blue-300 hover:bg-blue-50"
+      >
+        <Linkedin className="h-4 w-4" />
+        LinkedIn
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => window.open(shareLinks.twitter, "_blank")}
+        className="flex items-center gap-1 text-blue-400 border-blue-100 hover:bg-blue-50"
+      >
+        <Twitter className="h-4 w-4" />
+        Twitter
+      </Button>
 
-        {/* LinkedIn */}
-        <a
-          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#0077B5] hover:bg-[#005f91] text-white px-3 py-2 rounded-lg text-sm transition"
-        >
-          <Linkedin className="w-4 h-4" />
-          LinkedIn
-        </a>
-
-        {/* Copy Link */}
-        <button
-          onClick={handleCopyLink}
-          className="relative flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-2 rounded-lg text-sm transition"
-        >
-          {copied ? (
-            <Check className="w-4 h-4 text-green-600" />
-          ) : (
-            <ClipboardCopy className="w-4 h-4" />
-          )}
-          {copied ? "Copied!" : "Copy Link"}
-          <AnimatePresence>
-            {copied && (
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-green-600"
-              ></motion.div>
-            )}
-          </AnimatePresence>
-        </button>
-      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-1 text-gray-600 hover:bg-gray-100 bg-transparent"
+          >
+            <Share2 className="h-4 w-4" />
+            More
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={copyLink}>
+            {copied ? <Check className="h-4 w-4 mr-2 text-green-500" /> : <Copy className="h-4 w-4 mr-2" />}
+            {copied ? "Copied!" : "Copy Link"}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => window.open(`mailto:?subject=${encodedTitle}&body=${encodedUrl}`, "_blank")}>
+            <Mail className="h-4 w-4 mr-2" />
+            Email
+          </DropdownMenuItem>
+          {/* Add more share options here if needed */}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
-  );
+  )
 }

@@ -23,7 +23,7 @@ const getPlatformIcon = (platform: string) => {
   return <BookOpen className="w-4 h-4" />
 }
 
-const API_BASE_URL = "http://172.20.10.6:8000/api"
+const API_BASE_URL = "http://192.168.100.7:8000/api"
 
 export function FreeLabs() {
   const [labs, setLabs] = useState<DevOpsLab[]>([])

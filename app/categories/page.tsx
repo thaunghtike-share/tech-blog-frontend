@@ -1,11 +1,10 @@
 "use client"
-
+import { useEffect, useState } from "react"
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Server, Brain, Cloud, Cog, BarChart3, Shield, Code, Database, Globe, Zap } from "lucide-react"
 import Link from "next/link"
-import { useState, useEffect } from "react"
 
 // Types for your API data
 interface Category {
@@ -49,8 +48,7 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-
-  const API_BASE_URL = "http://172.20.10.6:8000/api"
+  const API_BASE_URL = "http://192.168.100.7:8000/api"
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -68,7 +66,6 @@ export default function CategoriesPage() {
         setLoading(false)
       }
     }
-
     fetchCategories()
   }, [])
 
@@ -81,7 +78,15 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
+      {/* Subtle background pattern */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
       {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
@@ -102,22 +107,18 @@ export default function CategoriesPage() {
         </svg>
         <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
-
       <MinimalHeader />
-
-      <main className="max-w-6xl mx-auto px-4 py-12">
+      <main className="max-w-6xl mx-auto px-4 py-12 relative z-10">
         <div className="text-center mb-10">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Article Categories</h1>
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
             Explore our comprehensive collection of articles organized by technology and topic areas.
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => {
             const Icon = getCategoryIcon(category.name)
             const colors = getCategoryColors(category.name)
-
             return (
               <Link key={category.id} href={`/categories/${category.id}`}>
                 <Card className="group hover:shadow-lg transition-all duration-300 border-0 overflow-hidden h-full">
@@ -146,7 +147,6 @@ export default function CategoriesPage() {
           })}
         </div>
       </main>
-
       <MinimalFooter />
     </div>
   )

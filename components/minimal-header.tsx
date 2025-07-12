@@ -9,23 +9,19 @@ import { usePathname } from "next/navigation"
 
 export function MinimalHeader() {
   const pathname = usePathname()
-
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
   const [isArticlesOpen, setIsArticlesOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [isLearningOpen, setIsLearningOpen] = useState(false)
-
   const [articlesTimeout, setArticlesTimeout] = useState<NodeJS.Timeout | null>(null)
   const [servicesTimeout, setServicesTimeout] = useState<NodeJS.Timeout | null>(null)
   const [learningTimeout, setLearningTimeout] = useState<NodeJS.Timeout | null>(null)
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const API_BASE_URL = "http://172.20.10.6:8000/api"
+  const API_BASE_URL = "http://192.168.100.7:8000/api"
 
   useEffect(() => {
     return () => {
@@ -42,10 +38,8 @@ export function MinimalHeader() {
         setError(null)
         return
       }
-
       setLoading(true)
       setError(null)
-
       try {
         const res = await fetch(`${API_BASE_URL}/articles/?search=${encodeURIComponent(searchQuery)}`)
         if (!res.ok) throw new Error(`Error fetching results: ${res.statusText}`)
@@ -78,9 +72,8 @@ export function MinimalHeader() {
     }`
 
   return (
-    <header className="bg-white border-b border-blue-200 sticky top-0 z-50 shadow-sm">
+    <header className="bg-gray-50 border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
-
         {/* Mobile Header */}
         <div className="flex items-center justify-between md:hidden py-2 gap-2 relative">
           {/* Logo */}
@@ -99,7 +92,6 @@ export function MinimalHeader() {
               autoComplete="off"
               spellCheck={false}
             />
-
             {/* Show search results dropdown on mobile */}
             {searchQuery && searchResults.length > 0 && (
               <div className="absolute z-50 w-full mt-2 bg-white shadow-lg border border-gray-200 rounded-lg max-h-60 overflow-y-auto">
@@ -118,7 +110,6 @@ export function MinimalHeader() {
                 ))}
               </div>
             )}
-
             {/* No clear (X) button on mobile as requested */}
           </div>
 
@@ -136,57 +127,81 @@ export function MinimalHeader() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden mt-3 space-y-4 pb-6 border-t pt-4 text-sm">
-            <Link href="/" className={navLinkStyle("/")}>Home</Link>
-
+            <Link href="/" className={navLinkStyle("/")}>
+              Home
+            </Link>
             <div>
               <button
                 onClick={() => setIsArticlesOpen(!isArticlesOpen)}
                 className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
               >
-                Articles <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isArticlesOpen ? "rotate-180" : ""}`} />
+                Articles{" "}
+                <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isArticlesOpen ? "rotate-180" : ""}`} />
               </button>
               {isArticlesOpen && (
                 <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-blue-200 pl-3">
-                  <Link href="/articles" className={navLinkStyle("/articles")}>All Articles</Link>
-                  <Link href="/categories" className={navLinkStyle("/categories")}>Categories</Link>
-                  <Link href="/authors" className={navLinkStyle("/authors")}>Authors</Link>
+                  <Link href="/articles" className={navLinkStyle("/articles")}>
+                    All Articles
+                  </Link>
+                  <Link href="/categories" className={navLinkStyle("/categories")}>
+                    Categories
+                  </Link>
+                  <Link href="/authors" className={navLinkStyle("/authors")}>
+                    Authors
+                  </Link>
                 </div>
               )}
             </div>
-
             <div>
               <button
                 onClick={() => setIsServicesOpen(!isServicesOpen)}
                 className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
               >
-                Services <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isServicesOpen ? "rotate-180" : ""}`} />
+                Services{" "}
+                <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isServicesOpen ? "rotate-180" : ""}`} />
               </button>
               {isServicesOpen && (
                 <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-indigo-200 pl-3">
-                  <Link href="/services/monolithic-to-cloud-native-migration" className="block px-4 py-2 hover:bg-blue-50">Cloud-Native Migration</Link>
-                  <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">Infrastructure as Code</Link>
-                  <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">Website Development</Link>
+                  <Link
+                    href="/services/monolithic-to-cloud-native-migration"
+                    className="block px-4 py-2 hover:bg-blue-50"
+                  >
+                    Cloud-Native Migration
+                  </Link>
+                  <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">
+                    Infrastructure as Code
+                  </Link>
+                  <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">
+                    Website Development
+                  </Link>
                 </div>
               )}
             </div>
-
             <div>
               <button
                 onClick={() => setIsLearningOpen(!isLearningOpen)}
                 className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
               >
-                Learning <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isLearningOpen ? "rotate-180" : ""}`} />
+                Learning{" "}
+                <ChevronDown className={`ml-1 w-4 h-4 transition-transform ${isLearningOpen ? "rotate-180" : ""}`} />
               </button>
               {isLearningOpen && (
                 <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-blue-200 pl-3">
-                  <Link href="/learn-devops-on-utube" className={navLinkStyle("/learn-devops-on-utube")}>YouTube</Link>
-                  <Link href="/learn-free-udemy" className={navLinkStyle("/learn-free-udemy")}>Udemy Free Course</Link>
-                  <Link href="/learn-paid-courses" className={navLinkStyle("/learn-paid-courses")}>Recommended Paid Course</Link>
+                  <Link href="/learn-devops-on-utube" className={navLinkStyle("/learn-devops-on-utube")}>
+                    YouTube
+                  </Link>
+                  <Link href="/learn-free-udemy" className={navLinkStyle("/learn-free-udemy")}>
+                    Udemy Free Course
+                  </Link>
+                  <Link href="/learn-paid-courses" className={navLinkStyle("/learn-paid-courses")}>
+                    Recommended Paid Course
+                  </Link>
                 </div>
               )}
             </div>
-
-            <Link href="/about" className={navLinkStyle("/about")}>About</Link>
+            <Link href="/about" className={navLinkStyle("/about")}>
+              About
+            </Link>
           </div>
         )}
 
@@ -199,7 +214,9 @@ export function MinimalHeader() {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
-            <Link href="/" className="hover:text-blue-600">Home</Link>
+            <Link href="/" className="hover:text-blue-600">
+              Home
+            </Link>
 
             {/* Articles Dropdown */}
             <div
@@ -218,9 +235,15 @@ export function MinimalHeader() {
               </button>
               {isArticlesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/articles" className="block px-4 py-2 hover:bg-blue-50">All Articles</Link>
-                  <Link href="/categories" className="block px-4 py-2 hover:bg-blue-50">Categories</Link>
-                  <Link href="/authors" className="block px-4 py-2 hover:bg-blue-50">Authors</Link>
+                  <Link href="/articles" className="block px-4 py-2 hover:bg-blue-50">
+                    All Articles
+                  </Link>
+                  <Link href="/categories" className="block px-4 py-2 hover:bg-blue-50">
+                    Categories
+                  </Link>
+                  <Link href="/authors" className="block px-4 py-2 hover:bg-blue-50">
+                    Authors
+                  </Link>
                 </div>
               )}
             </div>
@@ -242,10 +265,18 @@ export function MinimalHeader() {
               </button>
               {isLearningOpen && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/learn-devops-on-youtube" className="block px-4 py-2 hover:bg-blue-50">YouTube</Link>
-                  <Link href="/learn-devops-on-udemy" className="block px-4 py-2 hover:bg-blue-50">Udemy Free Course</Link>
-                  <Link href="/recommended-paid-courses" className="block px-4 py-2 hover:bg-blue-50">Recommended Paid Course</Link>
-                  <Link href="/free-labs" className="block px-4 py-2 hover:bg-blue-50">Free Labs</Link>
+                  <Link href="/learn-devops-on-youtube" className="block px-4 py-2 hover:bg-blue-50">
+                    YouTube
+                  </Link>
+                  <Link href="/learn-devops-on-udemy" className="block px-4 py-2 hover:bg-blue-50">
+                    Udemy Free Course
+                  </Link>
+                  <Link href="/recommended-paid-courses" className="block px-4 py-2 hover:bg-blue-50">
+                    Recommended Paid Course
+                  </Link>
+                  <Link href="/free-labs" className="block px-4 py-2 hover:bg-blue-50">
+                    Free Labs
+                  </Link>
                 </div>
               )}
             </div>
@@ -267,14 +298,24 @@ export function MinimalHeader() {
               </button>
               {isServicesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
-                  <Link href="/services/monolithic-to-cloud-native-migration" className="block px-4 py-2 hover:bg-blue-50">Cloud-Native Migration</Link>
-                  <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">Infrastructure as Code</Link>
-                  <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">Website Development</Link>
+                  <Link
+                    href="/services/monolithic-to-cloud-native-migration"
+                    className="block px-4 py-2 hover:bg-blue-50"
+                  >
+                    Cloud-Native Migration
+                  </Link>
+                  <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">
+                    Infrastructure as Code
+                  </Link>
+                  <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">
+                    Website Development
+                  </Link>
                 </div>
               )}
             </div>
-
-            <Link href="/about" className="hover:text-blue-600">About</Link>
+            <Link href="/about" className="hover:text-blue-600">
+              About
+            </Link>
           </nav>
 
           {/* Desktop Search + Bell Icon replaces Subscribe button */}
@@ -313,7 +354,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             {/* Replaced Subscribe button with Bell icon */}
             <button className="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50 transition-shadow">
               <Bell className="w-6 h-6" />

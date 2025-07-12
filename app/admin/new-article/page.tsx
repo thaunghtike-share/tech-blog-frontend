@@ -1,7 +1,7 @@
 "use client"
-
+import { useEffect, useState } from "react"
 import type React from "react"
-import { useState, useEffect } from "react"
+
 import MDEditor from "@uiw/react-md-editor"
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalSidebar } from "@/components/minimal-sidebar"
@@ -17,7 +17,7 @@ interface Tag {
   name: string
 }
 
-const API_BASE_URL = "http://172.20.10.6:8000/api"
+const API_BASE_URL = "http://192.168.100.7:8000/api"
 
 export default function NewArticlePage() {
   // --- Auth state ---
@@ -71,7 +71,6 @@ export default function NewArticlePage() {
         setTags([])
       }
     }
-
     fetchData()
   }, [])
 
@@ -79,7 +78,6 @@ export default function NewArticlePage() {
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoginError(null)
-
     try {
       const res = await fetch(`${API_BASE_URL}/login/`, {
         method: "POST",
@@ -129,7 +127,6 @@ export default function NewArticlePage() {
   // Submit article
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-
     if (!token) {
       setMessage("You must be logged in to submit an article.")
       return
@@ -174,12 +171,19 @@ export default function NewArticlePage() {
     } catch (error) {
       setMessage("Error submitting article: " + String(error))
     }
-
     setLoading(false)
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen flex flex-col bg-gray-50 relative overflow-x-hidden">
+      {/* Subtle background pattern */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
       {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
@@ -200,10 +204,8 @@ export default function NewArticlePage() {
         </svg>
         <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
-
       <MinimalHeader />
-
-      <main className="flex-grow max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-6 gap-10">
+      <main className="flex-grow max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-6 gap-10 relative z-10">
         {/* Main content */}
         <section className="lg:col-span-4">
           {!token ? (
@@ -244,7 +246,6 @@ export default function NewArticlePage() {
                   Logout
                 </button>
               </div>
-
               <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto space-y-4">
                 {/* Title */}
                 <div>
@@ -257,7 +258,6 @@ export default function NewArticlePage() {
                     className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                   />
                 </div>
-
                 {/* Category Dropdown */}
                 <div>
                   <label className="block font-semibold mb-1 text-sm">Category</label>
@@ -275,7 +275,6 @@ export default function NewArticlePage() {
                     ))}
                   </select>
                 </div>
-
                 {/* Tags as buttons */}
                 <div>
                   <label className="block font-semibold mb-2 text-sm">Tags (select one or more)</label>
@@ -299,7 +298,6 @@ export default function NewArticlePage() {
                     })}
                   </div>
                 </div>
-
                 {/* Featured */}
                 <div className="flex items-center space-x-2">
                   <input
@@ -313,7 +311,6 @@ export default function NewArticlePage() {
                     Featured Article
                   </label>
                 </div>
-
                 {/* Published At */}
                 <div>
                   <label className="block font-semibold mb-1 text-sm">Published Date</label>
@@ -325,7 +322,6 @@ export default function NewArticlePage() {
                     className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                   />
                 </div>
-
                 {/* Content - Markdown Editor */}
                 <div>
                   <label className="block font-semibold mb-1 text-sm">Content (Markdown)</label>
@@ -344,7 +340,6 @@ export default function NewArticlePage() {
                     }}
                   />
                 </div>
-
                 {/* Submit button */}
                 <button
                   type="submit"
@@ -353,20 +348,17 @@ export default function NewArticlePage() {
                 >
                   {loading ? "Submitting..." : "Submit Article"}
                 </button>
-
                 {/* Message */}
                 {message && <p className="mt-4 text-center text-sm">{message}</p>}
               </form>
             </>
           )}
         </section>
-
         {/* Sidebar always rendered on right side on large screens */}
         <aside className="lg:col-span-2">
           <MinimalSidebar />
         </aside>
       </main>
-
       <MinimalFooter />
     </div>
   )

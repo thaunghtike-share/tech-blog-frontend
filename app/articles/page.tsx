@@ -1,5 +1,4 @@
 "use client"
-
 import { useSearchParams } from "next/navigation"
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalBlogList } from "@/components/minimal-blog-list"
@@ -9,9 +8,16 @@ import { MinimalFooter } from "@/components/minimal-footer"
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get("search") || ""
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-x-hidden">
+    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
+      {/* Subtle background pattern */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
       {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
@@ -32,9 +38,7 @@ export default function ArticlesPage() {
         </svg>
         <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
-
       <MinimalHeader />
-
       <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-12">
           {/* Articles List */}
@@ -44,18 +48,14 @@ export default function ArticlesPage() {
               {/* Your filters here */}
             </div>
             <MinimalBlogList searchQuery={searchQuery} />
-            <div className="flex justify-center mt-10">
-              {/* pagination buttons */}
-            </div>
+            <div className="flex justify-center mt-10">{/* pagination buttons */}</div>
           </div>
-
           {/* Sidebar */}
           <aside className="lg:col-span-2">
             <MinimalSidebar />
           </aside>
         </div>
       </main>
-
       <MinimalFooter />
     </div>
   )

@@ -195,7 +195,15 @@ const projects = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
+      {/* Subtle background pattern */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
       {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
@@ -216,23 +224,21 @@ export default function AboutPage() {
         </svg>
         <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
       </a>
-
       <MinimalHeader />
-
       {/* Page Header */}
       <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-12 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-relaxed">
-            <span className="text-gray-700">About </span>
-            <span className="text-blue-600">Me</span>
+            <span className="text-gray-700">Our </span>
+            <span className="text-blue-600">Authors</span>
           </h1>
           <p className="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
-            DevOps Engineer passionate about cloud infrastructure, automation, and sharing knowledge with the community.
+            Discover in-depth articles and expertise from passionate authors who are pioneering advancements in DevOps,
+            cloud computing, AI, and cutting-edge infrastructure technologies
           </p>
         </div>
       </section>
-
-      <main className="max-w-7xl mx-auto px-4 py-12">
+      <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
@@ -251,7 +257,6 @@ export default function AboutPage() {
                   <h3 className="text-2xl font-bold text-gray-900 mb-1">{personalInfo.name}</h3>
                   <p className="text-blue-600 font-semibold text-base">{personalInfo.title}</p>
                 </div>
-
                 <div className="space-y-3 text-sm text-gray-700">
                   <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-3 text-blue-500" />
@@ -266,11 +271,9 @@ export default function AboutPage() {
                     {personalInfo.phone}
                   </div>
                 </div>
-
                 <div className="mt-6 pt-4 border-t border-blue-200">
                   <p className="text-gray-700 leading-relaxed text-sm">{personalInfo.summary}</p>
                 </div>
-
                 <div className="mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                   <Button
                     size="lg"
@@ -291,7 +294,6 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
-
             {/* Technical Skills */}
             <Card className="border-0 bg-white shadow-lg">
               <CardHeader className="pb-4">
@@ -322,7 +324,6 @@ export default function AboutPage() {
               </CardContent>
             </Card>
           </div>
-
           {/* Experience, Education, Projects, Certifications */}
           <div className="lg:col-span-2 space-y-10">
             {/* Work Experience */}
@@ -377,7 +378,6 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-
             {/* Key Projects */}
             <div>
               <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
@@ -412,7 +412,6 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-
             {/* Education */}
             <div>
               <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
@@ -439,7 +438,6 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-
             {/* Certifications */}
             <div>
               <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
@@ -468,7 +466,6 @@ export default function AboutPage() {
           </div>
         </div>
       </main>
-
       <MinimalFooter />
     </div>
   )
