@@ -24,7 +24,7 @@ interface Props {
   id: string
 }
 
-const API_BASE_URL = "http://192.168.100.7:8000/api"
+const API_BASE_URL = "http://172.20.10.6:8000/api"
 
 export default function CategoryPageClient({ id }: Props) {
   const [category, setCategory] = useState<Category | null>(null)

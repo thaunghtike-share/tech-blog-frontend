@@ -13,7 +13,7 @@ interface Playlist {
   estDuration: string
 }
 
-const API_BASE_URL = "http://192.168.100.7:8000/api"
+const API_BASE_URL = "http://172.20.10.6:8000/api"
 
 const difficultyConfig = {
   Beginner: { color: "from-green-500 to-emerald-600", bg: "from-green-50 to-emerald-50", text: "text-green-700" },

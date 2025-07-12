@@ -25,7 +25,7 @@ export function MinimalHeader() {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const API_BASE_URL = "http://192.168.100.7:8000/api"
+  const API_BASE_URL = "http://172.20.10.6:8000/api"
 
   useEffect(() => {
     return () => {
@@ -163,11 +163,9 @@ export function MinimalHeader() {
               </button>
               {isServicesOpen && (
                 <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-indigo-200 pl-3">
-                  <Link href="/services/devops-as-a-service" className={navLinkStyle("/services/devops-as-a-service")}>DevOps as a Service</Link>
-                  <Link href="/services/cloud-migration" className={navLinkStyle("/services/cloud-migration")}>Cloud-Native Migration</Link>
-                  <Link href="/services/infra-as-code" className={navLinkStyle("/services/infra-as-code")}>Infrastructure as Code</Link>
-                  <Link href="/services/consulting" className={navLinkStyle("/services/consulting")}>DevOps Consulting</Link>
-                  <Link href="/services/website" className={navLinkStyle("/services/website")}>Website Development</Link>
+                  <Link href="/services/monolithic-to-cloud-native-migration" className="block px-4 py-2 hover:bg-blue-50">Cloud-Native Migration</Link>
+                  <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">Infrastructure as Code</Link>
+                  <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">Website Development</Link>
                 </div>
               )}
             </div>
