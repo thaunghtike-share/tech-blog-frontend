@@ -83,12 +83,11 @@ export function YouTubePlaylistsMM() {
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center gap-3 mb-4"
         >
-          <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-lg">
             <Globe className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-yellow-50 to-orange-50 text-orange-700 border border-orange-200">
-            <Star className="w-4 h-4 mr-2" />
-            Burmese Playlist Courses
+            <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-red-50 to-pink-50 text-red-700 border border-red-200">
+            🇲🇲 Burmese Playlist Courses
           </span>
         </motion.div>
 
@@ -96,9 +95,9 @@ export function YouTubePlaylistsMM() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-yellow-800 to-orange-800 bg-clip-text text-transparent mb-4"
+          className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-red-800 to-pink-800 bg-clip-text text-transparent mb-4"
         >
-          Top DevOps & Cloud Playlists in Burmese
+          Top DevOps Playlists in Myanmar
         </motion.h2>
 
         <motion.p
@@ -144,7 +143,7 @@ export function YouTubePlaylistsMM() {
                   hovered === course.video_id ? "opacity-0" : "opacity-100"
                 } transition-opacity duration-300`}
               >
-                <div className="bg-gradient-to-r from-yellow-500/80 to-orange-500/80 backdrop-blur-sm rounded-full p-4 shadow-2xl">
+                <div>
                   <Play className="w-6 h-6 text-white" fill="currentColor" />
                 </div>
               </div>
@@ -152,22 +151,16 @@ export function YouTubePlaylistsMM() {
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-              {/* Language badge */}
-              <div className="absolute top-4 right-4">
-                <div className="px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-medium rounded-full shadow-lg">
-                  🇲🇲 Burmese
-                </div>
-              </div>
             </div>
 
             {/* Content */}
             <div className="p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
+              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
                 {course.title}
               </h3>
 
-              <div className="text-sm text-gray-500 mb-4 flex items-center gap-2 bg-gradient-to-r from-yellow-50 to-orange-50 px-3 py-2 rounded-full border border-yellow-200">
-                <Clock className="w-4 h-4 text-yellow-500" />
+              <div className="text-sm text-gray-500 mb-4 flex items-center gap-2 px-3 py-2 rounded-full">
+                <Clock className="w-4 h-4 text-red-500" />
                 Estimated: {course.duration}
               </div>
 
@@ -175,7 +168,7 @@ export function YouTubePlaylistsMM() {
                 href={course.playlist_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white font-medium rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group/btn"
+                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 text-white font-medium rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group/btn"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Watch Playlist
@@ -192,9 +185,9 @@ export function YouTubePlaylistsMM() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            {showAll ? "Show Less" : `See All ${playlists.length} Playlists`}
+            {showAll ? "Show Less" : `See All Playlists`}
             {showAll ? <ChevronUp className="w-4 h-4 ml-2" /> : <ChevronDown className="w-4 h-4 ml-2" />}
           </motion.button>
         </div>
