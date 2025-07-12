@@ -222,7 +222,7 @@ export function TopUdemyCourses() {
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            {showAll ? "Show Less" : `See All ${courses.length} Courses`}
+            {showAll ? "Show Less" : `See All Courses`}
             {showAll ? <ChevronUp className="w-4 h-4 ml-2" /> : <ChevronDown className="w-4 h-4 ml-2" />}
           </motion.button>
         </div>

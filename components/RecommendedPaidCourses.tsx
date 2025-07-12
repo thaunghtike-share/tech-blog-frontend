@@ -175,7 +175,7 @@ export function RecommendedPaidCourses() {
           onClick={() => setShowAll(!showAll)}
           className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          {showAll ? "Show Less" : "See More"}
+          {showAll ? "Show Less" : "See All Courses"}
         </motion.button>
       </div>
     </section>
