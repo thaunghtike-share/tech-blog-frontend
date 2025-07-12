@@ -1,6 +1,6 @@
 "use client"
-import { useEffect, useState } from "react"
-import { Play, ExternalLink, Clock, Globe, ChevronDown, ChevronUp, Star } from 'lucide-react'
+import { useEffect, useState, useRef } from "react"
+import { Play, ExternalLink, Clock, Globe, ChevronDown, ChevronUp } from "lucide-react"
 import { motion } from "framer-motion"
 
 interface Playlist {
@@ -18,6 +18,8 @@ export function YouTubePlaylistsMM() {
   const [showAll, setShowAll] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     async function fetchPlaylists() {
@@ -40,9 +42,17 @@ export function YouTubePlaylistsMM() {
 
   const displayed = showAll ? playlists : playlists.slice(0, 9)
 
+  const handleToggleShowAll = () => {
+    if (showAll) {
+      // Scroll smoothly to top of the playlists section when showing less
+      sectionRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+    setShowAll(!showAll)
+  }
+
   if (loading) {
     return (
-      <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section ref={sectionRef} className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl mx-auto mb-4 animate-pulse"></div>
           <div className="h-8 bg-gray-200 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
@@ -63,7 +73,7 @@ export function YouTubePlaylistsMM() {
 
   if (error) {
     return (
-      <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section ref={sectionRef} className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center bg-red-50 border border-red-200 rounded-3xl p-12">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Globe className="w-8 h-8 text-red-600" />
@@ -76,17 +86,17 @@ export function YouTubePlaylistsMM() {
   }
 
   return (
-    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section ref={sectionRef} className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center gap-3 mb-4"
         >
-            <div className="p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-lg">
+          <div className="p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-lg">
             <Globe className="w-4 h-4 text-white" />
           </div>
-            <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-red-50 to-pink-50 text-red-700 border border-red-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-red-50 to-pink-50 text-red-700 border border-red-200">
             🇲🇲 Burmese Playlist Courses
           </span>
         </motion.div>
@@ -106,8 +116,7 @@ export function YouTubePlaylistsMM() {
           transition={{ delay: 0.2 }}
           className="text-lg text-gray-600 max-w-3xl mx-auto"
         >
-          Handpicked Burmese-language video playlists to learn DevOps tools like Docker, Kubernetes, AWS, Terraform, and
-          more.
+          Handpicked Burmese-language video playlists to learn DevOps tools like Docker, Kubernetes, AWS, Terraform, and more.
         </motion.p>
       </div>
 
@@ -150,7 +159,6 @@ export function YouTubePlaylistsMM() {
 
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
             </div>
 
             {/* Content */}
@@ -184,7 +192,7 @@ export function YouTubePlaylistsMM() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowAll(!showAll)}
+            onClick={handleToggleShowAll}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
             {showAll ? "Show Less" : `See All Playlists`}

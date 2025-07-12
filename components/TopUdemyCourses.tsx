@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Star, GraduationCap, BookOpen, ExternalLink, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react'
 import { motion } from "framer-motion"
 
@@ -26,6 +26,8 @@ export function TopUdemyCourses() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showAll, setShowAll] = useState(false)
+
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     async function fetchCourses() {
@@ -62,9 +64,19 @@ export function TopUdemyCourses() {
     fetchCourses()
   }, [])
 
+  const displayed = showAll ? courses : courses.slice(0, 9)
+
+  const handleToggleShowAll = () => {
+    if (showAll) {
+      // Scroll smoothly to top of the courses section when showing less
+      sectionRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+    setShowAll(!showAll)
+  }
+
   if (loading) {
     return (
-      <section className="max-w-7xl mx-auto py-12 px-4">
+      <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
         <div className="text-center mb-12">
           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl mx-auto mb-4 animate-pulse"></div>
           <div className="h-8 bg-gray-200 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
@@ -85,7 +97,7 @@ export function TopUdemyCourses() {
 
   if (error) {
     return (
-      <section className="max-w-7xl mx-auto py-12 px-4">
+      <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
         <div className="text-center bg-red-50 border border-red-200 rounded-3xl p-12">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <GraduationCap className="w-8 h-8 text-red-600" />
@@ -97,10 +109,8 @@ export function TopUdemyCourses() {
     )
   }
 
-  const displayed = showAll ? courses : courses.slice(0, 9)
-
   return (
-    <section className="max-w-7xl mx-auto py-12 px-4">
+    <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
       <div className="text-center mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -219,7 +229,7 @@ export function TopUdemyCourses() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowAll(!showAll)}
+            onClick={handleToggleShowAll}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
             {showAll ? "Show Less" : `See All Courses`}

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { Star, BookOpen, Play, ExternalLink } from 'lucide-react'
 import { motion } from "framer-motion"
 
@@ -68,11 +68,19 @@ const paidCourses: PaidCourse[] = [
 
 export function RecommendedPaidCourses() {
   const [showAll, setShowAll] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
   const coursesToShow = showAll ? paidCourses : paidCourses.slice(0, 6)
 
+  const handleToggleShowAll = () => {
+    if (showAll) {
+      sectionRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+    setShowAll(!showAll)
+  }
+
   return (
-    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section ref={sectionRef} className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -172,7 +180,7 @@ export function RecommendedPaidCourses() {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => setShowAll(!showAll)}
+          onClick={handleToggleShowAll}
           className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
         >
           {showAll ? "Show Less" : "See All Courses"}

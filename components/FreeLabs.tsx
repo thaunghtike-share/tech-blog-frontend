@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import {
   ArrowRight,
@@ -23,7 +23,6 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 
 interface DevOpsLab {
   title: string
@@ -40,7 +39,7 @@ interface FreeLabCardProps {
 
 const getPlatformIcon = (platform: string) => {
   const p = platform.toLowerCase()
-  const commonClass = "w-4 h-4 text-emerald-600"  // add your color class here
+  const commonClass = "w-4 h-4 text-emerald-600"
 
   if (p.includes("docker")) return <Dock className={commonClass} />
   if (p.includes("git")) return <Github className={commonClass} />
@@ -97,6 +96,8 @@ const FreeLabCard: React.FC<FreeLabCardProps> = ({ lab, buttonText }) => {
 
 export function FreeLabs() {
   const [labs, setLabs] = useState<DevOpsLab[]>([])
+  const [showAll, setShowAll] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
   const API_BASE_URL = "http://192.168.100.7:8000/api"
 
   useEffect(() => {
@@ -109,9 +110,17 @@ export function FreeLabs() {
   }, [])
 
   const buttonText = "Launch Lab"
+  const labsToShow = showAll ? labs : labs.slice(0, 6)
+
+  const toggleShowAll = () => {
+    if (showAll) {
+      sectionRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+    setShowAll(!showAll)
+  }
 
   return (
-    <section className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section ref={sectionRef} className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="text-center mb-10">
         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white bg-gradient-to-r from-emerald-600 to-teal-600 shadow-sm mb-3">
           <ServerCog className="w-4 h-4 mr-2 text-white" />
@@ -126,10 +135,23 @@ export function FreeLabs() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {labs.map((lab, idx) => (
+        {labsToShow.map((lab, idx) => (
           <FreeLabCard key={idx} lab={lab} buttonText={buttonText} />
         ))}
       </div>
+
+      {labs.length > 6 && (
+        <div className="mt-10 text-center">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleShowAll}
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            {showAll ? "See Less" : "See More Labs"}
+          </motion.button>
+        </div>
+      )}
     </section>
   )
 }
