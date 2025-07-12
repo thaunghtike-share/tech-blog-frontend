@@ -53,10 +53,13 @@ export default function HomePage() {
 
       {/* Header and Hero */}
       <MinimalHeader />
+      <div className="-mt-20">
       <Intro />
+      </div>
 
       {/* Main Content Section */}
       <main className="max-w-7xl mx-auto px-4 py-8 relative z-10">
+        <div className="-mt-10">
         <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
           {/* Blog List (main content) */}
           <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
@@ -67,33 +70,60 @@ export default function HomePage() {
             <MinimalSidebar />
           </div>
         </div>
+        </div>
 
         {/* Other Sections */}
         <section id="devops-roadmap">
+          <div className="-mt-15">
           <MinimalDevopsRoadmap />
+          </div>
         </section>
         <section id="youtube-playlists">
+          <div className="-mt-10">
           <YouTubePlaylists />
+          </div>
         </section>
-        <section id="free-labs">
+        <section id="free-labs" >
+          <div className="-mt-20">
           <FreeLabs />
+          </div>
         </section>
         <section id="myanmar-playlists">
+          <div className="-mt-24">
           <YouTubePlaylistsMM />
+          </div>
         </section>
         <section id="free-udemy">
+          <div className="-mt-12">
           <TopUdemyCourses />
+          </div>
         </section>
-        <RecommendedPaidCourses />
+        <div className="-mt-24">
         <CertificationRoadmap />
-        <div className="mt-16">
-          <FreelanceServicesSection />
         </div>
+        <div className="-mt-24">
+        <RecommendedPaidCourses />
+        </div>
+        <div className="mt-16">
+          <div className="-mt-24">
+          <FreelanceServicesSection />
+          </div>
+        </div>
+        <div className="-mt-22">
         <DevOpsWorkflowExample />
+        </div>
+        <div className="-mt-24">
         <MinimalFeaturedProjects />
+        </div>
+        <div className="-mt-24">
         <SuccessStoriesSection />
+        </div>
+        <div className="-mt-24">
         <AuthorsContributorsCTA />
+        </div>
+        <div className="-mt-36">
         <MinimalFAQs />
+        </div>
       </main>
 
       {/* Footer */}

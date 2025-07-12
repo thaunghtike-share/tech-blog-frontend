@@ -63,7 +63,7 @@ export default function Intro() {
   const stepColors = [
     "bg-gradient-to-r from-purple-500 to-blue-600", // Roadmap
     "bg-gradient-to-r from-red-500 to-red-600", // YouTube
-    "bg-gradient-to-r from-gray-500 to-gray-600", // Labs
+    "bg-gradient-to-r from-emerald-500 to-emerald-600", // Labs
     "bg-gradient-to-r from-red-500 to-red-600", // Local
     "bg-gradient-to-r from-purple-500 to-blue-600", // Udemy
   ]
@@ -262,9 +262,13 @@ export default function Intro() {
           <div className="text-gray-700 text-sm">
             <ul className="space-y-2 flex flex-col items-center">
               {keyPrinciplesList.map((item, idx) => (
-                <li key={idx} className="flex items-center gap-2 w-fit">
-                  <span className={`bg-white/80 p-1.5 rounded-lg shadow-sm ${item.color}`}>{item.icon}</span>
-                  <span>{item.text}</span>
+                <li key={idx} className="flex items-center gap-3 w-fit">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 bg-white/80 rounded-lg shadow-sm ${item.color}`}
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="text-sm leading-tight">{item.text}</span>
                 </li>
               ))}
             </ul>
@@ -289,9 +293,13 @@ export default function Intro() {
           <div className="text-gray-700 text-sm">
             <ul className="space-y-2 flex flex-col items-center">
               {prerequisitesList.map((item, idx) => (
-                <li key={idx} className="flex items-center gap-2 w-fit">
-                  <span className={`bg-white/80 p-1.5 rounded-lg shadow-sm ${item.color}`}>{item.icon}</span>
-                  <span>{item.text}</span>
+                <li key={idx} className="flex items-center gap-3 w-fit">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 bg-white/80 rounded-lg shadow-sm ${item.color}`}
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="text-sm leading-tight">{item.text}</span>
                 </li>
               ))}
             </ul>
@@ -301,7 +309,7 @@ export default function Intro() {
 
       {/* Essential DevOps Tools Section */}
       <div className="mb-12">
-        <motion.h2
+        <motion.h3
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -310,7 +318,7 @@ export default function Intro() {
           <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4">
             Essential DevOps Tools
           </span>
-        </motion.h2>
+        </motion.h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {devOpsTools.map((toolCategory, index) => (
             <motion.div
@@ -328,9 +336,12 @@ export default function Intro() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {toolCategory.tools.map((tool, idx) => (
-                  <span 
-                    key={idx} 
-                    className={`text-xs px-3 py-1 rounded-full ${toolCategory.iconBg.replace('50', '100')} ${toolCategory.iconColor.replace('600', '700')}`}
+                  <span
+                    key={idx}
+                    className={`text-xs px-3 py-1 rounded-full ${toolCategory.iconBg.replace("50", "100")} ${toolCategory.iconColor.replace(
+                      "600",
+                      "700"
+                    )}`}
                   >
                     {tool}
                   </span>
