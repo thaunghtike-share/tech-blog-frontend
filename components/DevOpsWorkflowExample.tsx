@@ -122,13 +122,13 @@ export function DevOpsWorkflowExample() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
-        className="relative w-full aspect-video mb-16 rounded-2xl overflow-hidden shadow-xl border border-gray-200"
+        className="relative w-full aspect-video mb-16 rounded-2xl overflow-hidden shadow-xl"
       >
         <Image
           src="/dinger.png"
           alt="DevOps workflow diagram"
           fill
-          className="object-contain bg-gradient-to-br from-gray-50 to-blue-50"
+          className="object-contain"
           quality={100}
           priority
         />
@@ -137,7 +137,7 @@ export function DevOpsWorkflowExample() {
       {/* Enhanced Workflow + Tech Stack */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Enhanced Workflow Stepper */}
-        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
+        <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
             <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
               <Settings className="w-5 h-5 text-white" />
@@ -211,7 +211,7 @@ export function DevOpsWorkflowExample() {
         {/* Enhanced Tech Stack + Features */}
         <div className="space-y-8">
           {/* Enhanced Tech Stack */}
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
+          <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
                 <Code className="w-5 h-5 text-white" />
@@ -235,7 +235,7 @@ export function DevOpsWorkflowExample() {
           </div>
 
           {/* Enhanced Key Features */}
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
+          <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
                 <CheckCircle2 className="w-5 h-5 text-white" />
