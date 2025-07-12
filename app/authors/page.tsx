@@ -131,7 +131,7 @@ export default function AuthorsPage() {
                     {author.job_title} at {author.company}
                   </p>
                   {author.bio && (
-                    <p className="text-center text-gray-500 text-sm line-clamp-3">{author.bio}</p>
+                    <p className="text-center text-gray-500 text-sm whitespace-pre-line">{author.bio}</p>
                   )}
                   {author.linkedin && (
                     <a

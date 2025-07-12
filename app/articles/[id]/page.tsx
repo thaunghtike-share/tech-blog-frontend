@@ -1,4 +1,3 @@
-import React from "react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
@@ -9,7 +8,9 @@ import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalSidebar } from "@/components/minimal-sidebar"
 import { MinimalFooter } from "@/components/minimal-footer"
 import { ShareButtons } from "@/components/share-buttons"
-import { ArrowLeft, ArrowRight, BookOpen, Linkedin, ListOrdered } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, Linkedin, ListOrdered, UserCircle } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link"
 
 interface Article {
   id: number
@@ -108,17 +109,19 @@ function extractHeadings(markdown: string): { text: string; level: number; id: s
 }
 
 function fixMarkdownSpacing(content: string): string {
-  return content
-    // Ensure blank lines before and after code blocks after headings
-    .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2")
-    // Ensure blank line before image
-    .replace(/([^\n])\n(!\[)/g, "$1\n\n$2")
-    // Ensure blank line after image
-    .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2")
+  return (
+    content
+      // Ensure blank lines before and after code blocks after headings
+      .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2")
+      // Ensure blank line before image
+      .replace(/([^\n])\n(!\[)/g, "$1\n\n$2")
+      // Ensure blank line after image
+      .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2")
+  )
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const id = parseInt(params.id)
+  const id = Number.parseInt(params.id)
   const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" })
 
   if (!res.ok) {
@@ -139,27 +142,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   ])
 
   const headings = extractHeadings(article.content)
-  const sorted = allArticles.sort(
-    (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
-  )
+  const sorted = allArticles.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
   const currentIndex = sorted.findIndex((a) => a.id === article.id)
   const prevArticle = sorted[currentIndex + 1] || null
   const nextArticle = sorted[currentIndex - 1] || null
   const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5)
-  const sameCategoryArticles = sorted
-    .filter((a) => a.category === article.category && a.id !== article.id)
-    .slice(0, 5)
+  const sameCategoryArticles = sorted.filter((a) => a.category === article.category && a.id !== article.id).slice(0, 5)
 
   const publishDate = new Date(article.published_at).toLocaleDateString()
   const categoryName = categories.find((c) => c.id === article.category)?.name || "General"
-  const tagNames = article.tags
-    .map((id) => tags.find((t) => t.id === id)?.name)
-    .filter(Boolean) as string[]
+  const tagNames = article.tags.map((id) => tags.find((t) => t.id === id)?.name).filter(Boolean) as string[]
 
   function excerpt(content: string) {
     const plainText = content
       .replace(/<[^>]+>/g, "")
-      .replace(/[#_*>\-\[\]$$$$`~]/g, "")
+      .replace(/[#_*>\-[\]$$$$`~]/g, "")
       .replace(/\s+/g, " ")
       .trim()
       .slice(0, 80)
@@ -178,14 +175,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
           <defs>
-            <linearGradient
-              id="messengerGradient"
-              x1="0"
-              y1="0"
-              x2="240"
-              y2="240"
-              gradientUnits="userSpaceOnUse"
-            >
+            <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
               <stop stopColor="#E1306C" />
               <stop offset="1" stopColor="#833AB4" />
             </linearGradient>
@@ -204,8 +194,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="prose prose-lg">
             <h1 className="text-2xl md:text-3xl font-bold mb-2">{article.title}</h1>
             <p className="text-gray-600 italic mb-4 text-sm">
-              Published on{" "}
-              <span className="font-bold italic">{publishDate}</span> By{" "}
+              Published on <span className="font-bold italic">{publishDate}</span> By{" "}
               <span className="font-bold italic">{author?.name || "Unknown author"}</span>
             </p>
 
@@ -294,10 +283,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 code: ({ inline, className = "", children, ...props }: any) => {
                   if (inline) {
                     return (
-                      <code
-                        className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono"
-                        {...props}
-                      >
+                      <code className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono" {...props}>
                         {children}
                       </code>
                     )
@@ -329,18 +315,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                           <div key={idx} className="flex">
                             {/* Show $ prompt only on first line of shell commands starting with $ */}
                             {idx === 0 && startsWithDollar && (
-                              <span
-                                className="text-blue-600 font-bold select-none mr-2"
-                                aria-hidden="true"
-                              >
+                              <span className="text-blue-600 font-bold select-none mr-2" aria-hidden="true">
                                 $
                               </span>
                             )}
-                            <span>
-                              {idx === 0 && startsWithDollar
-                                ? line.slice(1).trimStart()
-                                : line}
-                            </span>
+                            <span>{idx === 0 && startsWithDollar ? line.slice(1).trimStart() : line}</span>
                           </div>
                         ))}
                       </pre>
@@ -348,10 +327,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   )
                 },
                 blockquote: ({ node, ...props }) => (
-                  <blockquote
-                    className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4"
-                    {...props}
-                  />
+                  <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4" {...props} />
                 ),
                 img: ({ node, ...props }) => (
                   <>
@@ -372,41 +348,41 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <GiscusComments />
 
           {/* Author Info */}
-          <div className="max-w-7xl mx-auto py-8 px-4 flex items-center gap-4">
-            {author?.avatar && (
-              <img
-                src={author.avatar || "/placeholder.svg"}
-                alt={author.name}
-                className="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm"
-              />
-            )}
-            <div>
-              <h4 className="text-base font-semibold mb-1">Written By</h4>
-              <p className="text-sm font-medium">{author?.name || "Unknown author"}</p>
-              {author?.bio && (
-                <p className="text-gray-800 mt-2 max-w-xl text-sm">{author.bio}</p>
+          <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-0 shadow-lg">
+            <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
+              {author?.avatar ? (
+                <img
+                  src={author.avatar || "/placeholder.svg"}
+                  alt={author.name}
+                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md flex-shrink-0"
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-full bg-blue-200 flex items-center justify-center flex-shrink-0 border-4 border-white shadow-md">
+                  <UserCircle className="w-16 h-16 text-blue-600" />
+                </div>
               )}
-              {author?.linkedin && (
-                <a
-                  href={author.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 text-blue-800 hover:bg-white-200 rounded px-3 py-1 text-sm font-medium"
-                  style={{ paddingLeft: 0 }}
-                >
-                  <Linkedin className="w-4 h-4 rounded p-0.5" />
-                  <span>LinkedIn</span>
-                </a>
-              )}
-            </div>
-          </div>
+              <div className="text-center md:text-left">
+                <h4 className="text-lg font-bold text-gray-900 mb-1">Written By</h4>
+                <p className="text-xl font-semibold text-blue-700 mb-2">{author?.name || "Unknown author"}</p>
+                {author?.bio && <p className="text-gray-700 leading-relaxed text-sm">{author.bio}</p>}
+                {author?.linkedin && (
+                  <a
+                    href={author.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-blue-800 hover:underline text-sm font-medium"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                    <span>Connect on LinkedIn</span>
+                  </a>
+                )}
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="mt-6 flex justify-between items-center text-sm text-blue-600 font-medium pt-4">
             {prevArticle ? (
-              <a
-                href={`/articles/${prevArticle.id}`}
-                className="hover:underline flex items-center gap-1"
-              >
+              <a href={`/articles/${prevArticle.id}`} className="hover:underline flex items-center gap-1">
                 <ArrowLeft className="w-4 h-4" />
                 <span>{prevArticle.title}</span>
               </a>
@@ -414,10 +390,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <span />
             )}
             {nextArticle ? (
-              <a
-                href={`/articles/${nextArticle.id}`}
-                className="hover:underline flex items-center gap-1 text-right"
-              >
+              <a href={`/articles/${nextArticle.id}`} className="hover:underline flex items-center gap-1 text-right">
                 <span>{nextArticle.title}</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
@@ -432,28 +405,26 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <ul className="grid gap-4 md:grid-cols-2">
               {recentArticles.map((item) => {
                 const date = new Date(item.published_at).toLocaleDateString()
-                const itemCategory =
-                  categories.find((c) => c.id === item.category)?.name || "General"
+                const itemCategory = categories.find((c) => c.id === item.category)?.name || "General"
                 const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown"
 
                 return (
-                  <li
-                    key={item.id}
-                    className="border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow duration-200 bg-white"
-                  >
-                    <a href={`/articles/${item.id}`} className="block group space-y-2">
-                      <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate text-sm">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-gray-500">{date}</p>
-                      <p className="text-sm text-gray-600 line-clamp-2">{excerpt(item.content)}</p>
-                      <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-2">
-                        <span className="bg-gray-100 px-2 py-0.5 rounded-full">
-                          📂 {itemCategory}
-                        </span>
-                        <span className="bg-gray-100 px-2 py-0.5 rounded-full">✍️ {itemAuthor}</span>
-                      </div>
-                    </a>
+                  <li key={item.id}>
+                    <Card className="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 bg-white">
+                      <CardContent className="p-0">
+                        <Link href={`/articles/${item.id}`} className="block group space-y-2">
+                          <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate text-base">
+                            {item.title}
+                          </h4>
+                          <p className="text-xs text-gray-500 mt-1">{date}</p>
+                          <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">{excerpt(item.content)}</p>
+                          <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-2">
+                            <span className="bg-gray-100 px-2 py-0.5 rounded-full">📂 {itemCategory}</span>
+                            <span className="bg-gray-100 px-2 py-0.5 rounded-full">✍️ {itemAuthor}</span>
+                          </div>
+                        </Link>
+                      </CardContent>
+                    </Card>
                   </li>
                 )
               })}

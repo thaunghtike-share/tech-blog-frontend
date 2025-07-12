@@ -1,10 +1,11 @@
+"use client"
+
 import { MinimalHeader } from "@/components/minimal-header"
 import { MinimalFooter } from "@/components/minimal-footer"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
-  User,
   MapPin,
   Mail,
   Phone,
@@ -14,9 +15,11 @@ import {
   Award,
   Code,
   Download,
-  ExternalLink,
   Server,
+  Linkedin,
+  Sparkles,
 } from "lucide-react"
+import Image from "next/image"
 
 const personalInfo = {
   name: "Thaung Htike Oo",
@@ -26,6 +29,8 @@ const personalInfo = {
   phone: "+959952492359",
   summary:
     "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.",
+  avatar: "/placeholder.svg?height=150&width=150", // Placeholder for avatar
+  linkedinUrl: "https://www.linkedin.com/in/thaung-htike-oo-devops/",
 }
 
 const workExperience = [
@@ -231,45 +236,56 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
+            <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg">
               <CardContent className="p-6">
-                <div className="text-center mb-4">
-                  <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <User className="h-12 w-12 text-white" />
+                <div className="text-center mb-6">
+                  <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <Image
+                      src={personalInfo.avatar || "/placeholder.svg"}
+                      alt={personalInfo.name}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-full"
+                    />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{personalInfo.name}</h3>
-                  <p className="text-blue-600 font-medium text-sm">{personalInfo.title}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-1">{personalInfo.name}</h3>
+                  <p className="text-blue-600 font-semibold text-base">{personalInfo.title}</p>
                 </div>
 
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center text-gray-600">
+                <div className="space-y-3 text-sm text-gray-700">
+                  <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-3 text-blue-500" />
                     {personalInfo.location}
                   </div>
-                  <div className="flex items-center text-gray-600">
+                  <div className="flex items-center">
                     <Mail className="h-4 w-4 mr-3 text-blue-500" />
                     {personalInfo.email}
                   </div>
-                  <div className="flex items-center text-gray-600">
+                  <div className="flex items-center">
                     <Phone className="h-4 w-4 mr-3 text-blue-500" />
                     {personalInfo.phone}
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-blue-200">
-                  <p className="text-gray-600 leading-relaxed text-sm">{personalInfo.summary}</p>
+                  <p className="text-gray-700 leading-relaxed text-sm">{personalInfo.summary}</p>
                 </div>
 
-                <div className="mt-4 flex space-x-2">
+                <div className="mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                   <Button
-                    size="sm"
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                    size="lg"
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all"
                   >
                     <Download className="h-4 w-4 mr-2" />
                     Download CV
                   </Button>
-                  <Button size="sm" variant="outline" className="flex-1 bg-transparent">
-                    <ExternalLink className="h-4 w-4 mr-2" />
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="flex-1 border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all bg-transparent"
+                    onClick={() => window.open(personalInfo.linkedinUrl, "_blank")}
+                  >
+                    <Linkedin className="h-4 w-4 mr-2" />
                     LinkedIn
                   </Button>
                 </div>
@@ -277,19 +293,25 @@ export default function AboutPage() {
             </Card>
 
             {/* Technical Skills */}
-            <Card className="border-0 bg-white shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-900">
-                  <Code className="h-4 w-4 mr-2 text-blue-600" />
+            <Card className="border-0 bg-white shadow-lg">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-xl font-bold text-gray-900">
+                  <Code className="h-6 w-6 mr-3 text-blue-600" />
                   Technical Skills
-                </h3>
-                <div className="space-y-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 pt-0">
+                <div className="space-y-5">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">{category}</h4>
-                      <div className="flex flex-wrap gap-1">
+                      <h4 className="text-base font-semibold text-gray-800 mb-2">{category}</h4>
+                      <div className="flex flex-wrap gap-2">
                         {skillList.map((skill) => (
-                          <Badge key={skill} variant="secondary" className="text-xs bg-blue-50 text-blue-700">
+                          <Badge
+                            key={skill}
+                            variant="secondary"
+                            className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium"
+                          >
                             {skill}
                           </Badge>
                         ))}
@@ -301,48 +323,50 @@ export default function AboutPage() {
             </Card>
           </div>
 
-          {/* Experience, Education, Projects */}
+          {/* Experience, Education, Projects, Certifications */}
           <div className="lg:col-span-2 space-y-10">
             {/* Work Experience */}
             <div>
-              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
-                <Briefcase className="h-5 w-5 mr-3 text-blue-600" />
+              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+                <Briefcase className="h-6 w-6 mr-3 text-blue-600" />
                 Work Experience
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {workExperience.map((job, index) => (
-                  <Card key={index} className="border-0 bg-white shadow-sm hover:shadow-md transition-shadow">
+                  <Card
+                    key={index}
+                    className="border-0 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
+                  >
                     <CardContent className="p-6">
-                      <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                         <div>
-                          <h4 className="text-lg font-medium text-gray-900 mb-1">{job.position}</h4>
-                          <p className="text-blue-600 font-medium mb-2 text-sm">{job.company}</p>
+                          <h4 className="text-xl font-bold text-gray-900 mb-1">{job.position}</h4>
+                          <p className="text-blue-700 font-semibold text-base mb-2">{job.company}</p>
                         </div>
-                        <div className="text-right">
-                          <div className="flex items-center text-sm text-gray-500 mb-1">
-                            <Calendar className="h-3 w-3 mr-1" />
+                        <div className="text-right text-sm text-gray-600">
+                          <div className="flex items-center justify-end mb-1">
+                            <Calendar className="h-4 w-4 mr-2" />
                             {job.duration}
                           </div>
-                          <div className="flex items-center text-sm text-gray-500">
-                            <MapPin className="h-3 w-3 mr-1" />
+                          <div className="flex items-center justify-end">
+                            <MapPin className="h-4 w-4 mr-2" />
                             {job.location}
                           </div>
                         </div>
                       </div>
-                      <ul className="space-y-1 mb-4">
+                      <ul className="space-y-2 mb-4 list-disc pl-5">
                         {job.responsibilities.map((responsibility, idx) => (
-                          <li key={idx} className="text-gray-600 flex items-start text-sm">
-                            <span className="text-blue-500 mr-2 mt-1">•</span>
+                          <li key={idx} className="text-gray-700 text-sm leading-relaxed">
                             {responsibility}
                           </li>
                         ))}
                       </ul>
-                      <div className="flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-2">
                         {job.technologies.map((tech) => (
                           <Badge
                             key={tech}
                             variant="outline"
-                            className="text-xs bg-indigo-50 text-indigo-700 border-indigo-200"
+                            className="text-sm bg-indigo-100 text-indigo-800 border-indigo-300 px-3 py-1 rounded-full font-medium"
                           >
                             {tech}
                           </Badge>
@@ -356,24 +380,33 @@ export default function AboutPage() {
 
             {/* Key Projects */}
             <div>
-              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
-                <Server className="h-5 w-5 mr-3 text-blue-600" />
+              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+                <Server className="h-6 w-6 mr-3 text-blue-600" />
                 Key Projects
               </h3>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-6">
                 {projects.map((project, index) => (
-                  <Card key={index} className="border-0 bg-gradient-to-br from-purple-50 to-pink-50">
+                  <Card
+                    key={index}
+                    className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                  >
                     <CardContent className="p-6">
-                      <h4 className="text-lg font-medium text-gray-900 mb-2">{project.name}</h4>
-                      <p className="text-gray-600 mb-3 text-sm">{project.description}</p>
-                      <div className="flex flex-wrap gap-1 mb-3">
+                      <h4 className="text-xl font-bold text-gray-900 mb-2">{project.name}</h4>
+                      <p className="text-gray-700 mb-3 text-sm leading-relaxed">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-3">
                         {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary" className="text-xs bg-purple-100 text-purple-700">
+                          <Badge
+                            key={tech}
+                            variant="secondary"
+                            className="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium"
+                          >
                             {tech}
                           </Badge>
                         ))}
                       </div>
-                      <p className="text-sm text-green-600 font-medium">✅ {project.impact}</p>
+                      <p className="text-base text-green-700 font-semibold flex items-center gap-2">
+                        <Sparkles className="h-4 w-4 text-green-600" /> {project.impact}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -382,22 +415,25 @@ export default function AboutPage() {
 
             {/* Education */}
             <div>
-              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
-                <GraduationCap className="h-5 w-5 mr-3 text-blue-600" />
+              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+                <GraduationCap className="h-6 w-6 mr-3 text-blue-600" />
                 Education
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {education.map((edu, index) => (
-                  <Card key={index} className="border-0 bg-gradient-to-br from-green-50 to-emerald-50">
+                  <Card
+                    key={index}
+                    className="border-0 bg-gradient-to-br from-green-50 to-emerald-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                  >
                     <CardContent className="p-6">
-                      <h4 className="text-lg font-medium text-gray-900 mb-2">{edu.degree}</h4>
-                      <p className="text-green-600 font-medium mb-2 text-sm">{edu.institution}</p>
-                      <div className="flex items-center text-sm text-gray-500 mb-2">
-                        <Calendar className="h-3 w-3 mr-1" />
+                      <h4 className="text-xl font-bold text-gray-900 mb-2">{edu.degree}</h4>
+                      <p className="text-green-700 font-semibold text-base mb-2">{edu.institution}</p>
+                      <div className="flex items-center text-sm text-gray-600 mb-2">
+                        <Calendar className="h-4 w-4 mr-2" />
                         {edu.duration}
                       </div>
-                      <p className="text-gray-600 mb-2 text-sm">{edu.details}</p>
-                      <p className="text-sm text-green-600 font-medium">GPA: {edu.gpa}</p>
+                      <p className="text-gray-700 mb-2 text-sm leading-relaxed">{edu.details}</p>
+                      <p className="text-base text-green-700 font-semibold">GPA: {edu.gpa}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -406,21 +442,24 @@ export default function AboutPage() {
 
             {/* Certifications */}
             <div>
-              <h3 className="text-xl font-semibold mb-6 flex items-center text-gray-900">
-                <Award className="h-5 w-5 mr-3 text-blue-600" />
+              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+                <Award className="h-6 w-6 mr-3 text-blue-600" />
                 Certifications
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {certifications.map((cert, index) => (
-                  <Card key={index} className="border-0 bg-gradient-to-br from-orange-50 to-red-50">
-                    <CardContent className="p-4">
-                      <h4 className="font-medium text-gray-900 mb-2 text-sm">{cert.name}</h4>
-                      <p className="text-orange-600 font-medium text-sm mb-2">{cert.issuer}</p>
-                      <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                  <Card
+                    key={index}
+                    className="border-0 bg-gradient-to-br from-orange-50 to-red-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                  >
+                    <CardContent className="p-6">
+                      <h4 className="font-bold text-gray-900 mb-2 text-base">{cert.name}</h4>
+                      <p className="text-orange-700 font-semibold text-sm mb-2">{cert.issuer}</p>
+                      <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
                         <span>Issued: {cert.year}</span>
                         <span>Valid until: {cert.validUntil}</span>
                       </div>
-                      <p className="text-xs text-gray-500 font-mono">{cert.credentialId}</p>
+                      <p className="text-sm text-gray-700 font-mono">{cert.credentialId}</p>
                     </CardContent>
                   </Card>
                 ))}

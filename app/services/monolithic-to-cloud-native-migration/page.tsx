@@ -21,6 +21,13 @@ import {
   ArrowRight,
   CheckCircle2,
   Star,
+  GitBranch,
+  RefreshCw,
+  BellRing,
+  MessageSquare,
+  Cpu,
+  MemoryStick,
+  LayoutDashboard,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -364,12 +371,6 @@ export default function MonolithicToCloudNativePage() {
 module "infra" {
   source = "./terraform-azurerm"
   
-  resource_groups = {
-    dev = {
-      location = "southeastasia"
-    }
-  }
-  
   vnets = {
     myvnet = {
       name                = "myvnet"
@@ -387,7 +388,7 @@ module "infra" {
   
   acr_registries = {
     myacrk8s12345 = {
-      create              = true
+      create               = true
       resource_group_name = "dev"
       location            = "southeastasia"
       sku                 = "Basic"
@@ -410,6 +411,10 @@ module "infra" {
       enable_monitoring = true
       enable_rbac      = true
     }
+  }
+  
+  tags = {
+    Environment = "development"
   }
 }`}
                     </pre>
@@ -631,7 +636,6 @@ module "infra" {
                           />
                         </motion.div>
                       ))}
-
                       {/* Connecting Line */}
                       <div className="absolute left-5 top-6 bottom-6 w-0.5 bg-gradient-to-b from-green-500 via-blue-500 to-gray-300"></div>
                     </div>
@@ -670,6 +674,542 @@ module "infra" {
                         <div>
                           <h5 className="font-semibold text-gray-900 text-sm mb-1">{feature.label}</h5>
                           <p className="text-gray-600 text-xs leading-relaxed">{feature.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 3: ArgoCD & AKS Sync */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">3</span>
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                GitOps with ArgoCD for AKS Deployments
+              </h2>
+              <p className="text-base text-gray-600">Declarative, automated deployments to Azure Kubernetes Service</p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="space-y-6">
+              {/* ArgoCD Overview */}
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg">
+                      <GitBranch className="w-5 h-5 text-white" />
+                    </div>
+                    ArgoCD: The GitOps Way
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Automated synchronization of desired state from Git
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4">
+                    {[
+                      {
+                        icon: GitBranch,
+                        title: "Declarative Deployments",
+                        desc: "Define application state in Git, ArgoCD ensures cluster matches",
+                        color: "blue",
+                      },
+                      {
+                        icon: RefreshCw,
+                        title: "Automated Sync",
+                        desc: "Continuously monitors Git repos and automatically syncs changes to AKS",
+                        color: "green",
+                      },
+                      {
+                        icon: ShieldCheck,
+                        title: "Rollback & Health Checks",
+                        desc: "Easy rollbacks to previous versions and automated health monitoring",
+                        color: "orange",
+                      },
+                      {
+                        icon: Layers,
+                        title: "Helm Chart Support",
+                        desc: "Manages deployments using Helm charts for complex applications",
+                        color: "purple",
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-4 bg-white/80 rounded-xl backdrop-blur-sm border border-white/50 hover:bg-white/90 transition-all duration-300 group"
+                      >
+                        <div
+                          className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900 mb-1 text-sm">{item.title}</h4>
+                          <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ArgoCD Admin Portal */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg">
+                      <LayoutDashboard className="w-5 h-5 text-white" />
+                    </div>
+                    ArgoCD Admin Portal
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Centralized management and visualization of your applications
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative h-[300px] w-full bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100">
+                    <Image
+                      src="/argocd.png?height=300&width=500"
+                      alt="ArgoCD Admin Portal Screenshot"
+                      fill
+                      className="object-contain p-4"
+                      quality={100}
+                    />
+                  </div>
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                    The ArgoCD UI provides a comprehensive overview of your applications, their health, and
+                    synchronization status. You can easily drill down into individual resources, view logs, and perform
+                    manual syncs or rollbacks.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="space-y-6">
+              {/* ArgoCD Helm Repo Example */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg">
+                      <Code className="w-5 h-5 text-white" />
+                    </div>
+                    ArgoCD Application Definition (Helm)
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Example of an ArgoCD Application resource for a Helm chart
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative">
+                    <pre className="bg-gradient-to-br from-slate-50 to-slate-100 text-slate-800 border border-slate-200 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed shadow-inner font-mono">
+                      {`apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: exchange-backend-dev
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: myalias=mahar.azurecr.io/exchange-backend-dev
+    argocd-image-updater.argoproj.io/myalias.update-strategy: latest
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: dev
+    argocd-image-updater.argoproj.io/myalias.force-update: "true"
+spec:
+  destination:
+    namespace: dev
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+  source:
+    path: helm_charts/exchange-backend-dev
+    repoURL: git@github.com:MarharbawgaMoney/kubernetes.git
+    targetRevision: dev
+`}
+                    </pre>
+                    <div className="absolute top-4 right-4">
+                      <Badge className="bg-purple-100 text-purple-800 border border-purple-200 shadow-sm">
+                        <Star className="w-3 h-3 mr-1" />
+                        GitOps Ready
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ArgoCD Application Design */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg">
+                      <Layers className="w-5 h-5 text-white" />
+                    </div>
+                    What is GitOps and ArgoCD? 
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                    GitOps is a software engineering practice that uses a Git repository as its single source of truth. Teams commit declarative configurations into Git, and these configurations are used to create environments needed for the continuous delivery process. There is no manual setup of environments and no use of standalone scripts—everything is defined through the Git repository. 
+                  </p>
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">  
+                    A basic part of the GitOps process is a pull request. New versions of a configuration are introduced via pull request, merged with the main branch in the Git repository, and then the new version is automatically deployed. The Git repository contains a full record of all changes, including all details of the environment at every stage of the process. Argo CD handles the latter stages of the GitOps process, ensuring that new configurations are correctly deployed to a Kubernetes cluster.
+                  </p></CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative h-[300px] w-full bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100">
+                    <Image
+                      src="/argo.png?height=300&width=500"
+                      alt="ArgoCD Application View Screenshot"
+                      fill
+                      className="object-contain p-4"
+                      quality={100}
+                    />
+                  </div>
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                   Argo CD is a Kubernetes-native continuous deployment (CD) tool. Unlike external CD tools that only enable push-based deployments, Argo CD can pull updated code from Git repositories and deploy it directly to Kubernetes resources. It enables developers to manage both infrastructure configuration and application updates in one system.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 4: ArgoCD Image Updater */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">4</span>
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                Automated Image Updates with ArgoCD Image Updater
+              </h2>
+              <p className="text-base text-gray-600">
+                Keep your applications up-to-date with the latest container images
+              </p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="space-y-6">
+              {/* Image Updater Overview */}
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-orange-50 via-yellow-50 to-amber-50 hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg shadow-lg">
+                      <RefreshCw className="w-5 h-5 text-white" />
+                    </div>
+                    Seamless Image Rollouts
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Automated updates for container images in your GitOps workflow
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4">
+                    {[
+                      {
+                        icon: Dock,
+                        title: "Container Registry Integration",
+                        desc: "Monitors Docker Hub, ACR, ECR, GCR for new image tags",
+                        color: "blue",
+                      },
+                      {
+                        icon: GitBranch,
+                        title: "Git Commit Automation",
+                        desc: "Automatically updates image tags in Git and triggers ArgoCD sync",
+                        color: "green",
+                      },
+                      {
+                        icon: Zap,
+                        title: "Zero-Touch Updates",
+                        desc: "Eliminates manual intervention for image updates, reducing human error",
+                        color: "purple",
+                      },
+                      {
+                        icon: ShieldCheck,
+                        title: "Version Pinning",
+                        desc: "Supports various update strategies (e.g., latest, semver) for controlled rollouts",
+                        color: "orange",
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-4 bg-white/80 rounded-xl backdrop-blur-sm border border-white/50 hover:bg-white/90 transition-all duration-300 group"
+                      >
+                        <div
+                          className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900 mb-1 text-sm">{item.title}</h4>
+                          <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="space-y-6">
+              {/* Image Updater Config Example */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg">
+                      <Code className="w-5 h-5 text-white" />
+                    </div>
+                    ArgoCD Image Updater Configuration
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Example of image update configuration in ArgoCD Application
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative">
+                    <pre className="bg-gradient-to-br from-slate-50 to-slate-100 text-slate-800 border border-slate-200 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed shadow-inner font-mono">
+                      {`apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: my-image=myregistry/my-image
+    argocd-image-updater.argoproj.io/my-image.update-strategy: latest
+    argocd-image-updater.argoproj.io/my-image.allow-tags: regexp:^v\\d{1}\\.\\d{1}\\.\\d{1}$
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: main
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/my-org/my-gitops-repo.git
+    targetRevision: HEAD
+    path: apps/my-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  # ... other syncPolicy, etc.
+`}
+                    </pre>
+                    <div className="absolute top-4 right-4">
+                      <Badge className="bg-orange-100 text-orange-800 border border-orange-200 shadow-sm">
+                        <Star className="w-3 h-3 mr-1" />
+                        Automated
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 5: Monitoring and Logging */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-red-500 to-red-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">5</span>
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Comprehensive Monitoring & Alerting</h2>
+              <p className="text-base text-gray-600">
+                Real-time insights and proactive notifications for your cloud-native applications
+              </p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="space-y-6">
+              {/* Monitoring Stack Overview */}
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-red-50 via-pink-50 to-rose-50 hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-red-500 to-red-600 rounded-lg shadow-lg">
+                      <Activity className="w-5 h-5 text-white" />
+                    </div>
+                    Unified Observability Stack
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Prometheus, Grafana, Loki, and Azure Monitor for full visibility
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4">
+                    {[
+                      {
+                        icon: Activity,
+                        title: "Prometheus for Metrics",
+                        desc: "Collects and stores time-series data from Kubernetes and applications",
+                        color: "blue",
+                      },
+                      {
+                        icon: MessageSquare,
+                        title: "Loki for Logs",
+                        desc: "Centralized log aggregation for easy troubleshooting and analysis",
+                        color: "green",
+                      },
+                      {
+                        icon: LayoutDashboard,
+                        title: "Grafana Dashboards",
+                        desc: "Visualize metrics and logs with custom dashboards for real-time insights",
+                        color: "purple",
+                      },
+                      {
+                        icon: Cloud,
+                        title: "Azure Monitor Integration",
+                        desc: "Leverage Azure's native monitoring for cloud resources and services",
+                        color: "orange",
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-4 bg-white/80 rounded-xl backdrop-blur-sm border border-white/50 hover:bg-white/90 transition-all duration-300 group"
+                      >
+                        <div
+                          className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900 mb-1 text-sm">{item.title}</h4>
+                          <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="space-y-6">
+              {/* Grafana Dashboards Example */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg">
+                      <LayoutDashboard className="w-5 h-5 text-white" />
+                    </div>
+                    Grafana Dashboards for Key Metrics
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Visualize performance and resource utilization
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {[
+                      {
+                        icon: Cpu,
+                        label: "Azure SQL CPU Usage",
+                        desc: "Monitor CPU utilization of your Azure SQL Database instances",
+                        color: "blue",
+                        image: "/placeholder.svg?height=150&width=300",
+                      },
+                      {
+                        icon: MemoryStick,
+                        label: "Kubernetes Pod CPU/Memory",
+                        desc: "Track resource consumption for individual pods and deployments",
+                        color: "green",
+                        image: "/placeholder.svg?height=150&width=300",
+                      },
+                      {
+                        icon: Server,
+                        label: "Node Resource Usage",
+                        desc: "Overview of CPU, memory, and disk usage across AKS nodes",
+                        color: "purple",
+                        image: "/placeholder.svg?height=150&width=300",
+                      },
+                    ].map((metric, index) => (
+                      <div
+                        key={index}
+                        className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="p-1.5 bg-blue-100 rounded-lg flex-shrink-0">
+                            <metric.icon className="w-3 h-3 text-blue-600" />
+                          </div>
+                          <div>
+                            <h5 className="font-semibold text-gray-900 text-sm mb-1">{metric.label}</h5>
+                            <p className="text-gray-600 text-xs leading-relaxed">{metric.desc}</p>
+                          </div>
+                        </div>
+                        <div className="relative h-[150px] w-full bg-white rounded-lg border border-gray-100 overflow-hidden">
+                          <Image
+                            src={metric.image || "/placeholder.svg"}
+                            alt={`${metric.label} Dashboard`}
+                            layout="fill"
+                            objectFit="contain"
+                            quality={100}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Google Chat Alerts */}
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-3 text-lg">
+                    <div className="p-2 bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg">
+                      <BellRing className="w-5 h-5 text-white" />
+                    </div>
+                    Proactive Alerting with Google Chat
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    Instant notifications for critical events
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {[
+                      {
+                        icon: Zap,
+                        label: "Pod Failure Alerts",
+                        desc: "Receive immediate notifications when a Kubernetes pod fails or crashes",
+                        color: "red",
+                      },
+                      {
+                        icon: RefreshCw,
+                        label: "Pod Restart Alerts",
+                        desc: "Get alerts for unexpected pod restarts, indicating potential issues",
+                        color: "orange",
+                      },
+                      {
+                        icon: ShieldCheck,
+                        label: "Security Alerts",
+                        desc: "Notify on security vulnerabilities detected by Trivy or other scanners",
+                        color: "purple",
+                      },
+                      {
+                        icon: Cloud,
+                        label: "Resource Exceeded Alerts",
+                        desc: "Alerts when CPU/memory limits are approached or exceeded for pods/nodes",
+                        color: "blue",
+                      },
+                    ].map((alert, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        <div className="p-1.5 bg-green-100 rounded-lg flex-shrink-0">
+                          <alert.icon className="w-3 h-3 text-green-600" />
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-gray-900 text-sm mb-1">{alert.label}</h5>
+                          <p className="text-gray-600 text-xs leading-relaxed">{alert.desc}</p>
                         </div>
                       </div>
                     ))}

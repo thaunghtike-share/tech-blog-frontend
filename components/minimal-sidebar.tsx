@@ -1,6 +1,24 @@
 "use client"
+
 import { Card, CardContent } from "@/components/ui/card"
-import { Server, Code, Brain, Cloud, Cog, BarChart3, Shield, Database, Globe, Zap, ChevronDown, ChevronUp, ArrowRight, Folder, Star, Sparkles } from 'lucide-react'
+import {
+  Server,
+  Code,
+  Brain,
+  Cloud,
+  Cog,
+  BarChart3,
+  Shield,
+  Database,
+  Globe,
+  Zap,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight,
+  Folder,
+  Star,
+  Sparkles,
+} from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 
@@ -94,7 +112,7 @@ export function MinimalSidebar() {
 
   return (
     <aside className="space-y-6 w-80 max-w-full">
-      {/* Enhanced Services Card */}
+      {/* Services Card */}
       <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-hidden">
         <CardContent className="p-0">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
@@ -171,7 +189,7 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Enhanced Categories Section */}
+      {/* Categories */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-3 mb-6">
@@ -247,7 +265,7 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Enhanced Tags Section */}
+      {/* Tags */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-3 mb-6">
@@ -290,7 +308,7 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Enhanced Featured Authors */}
+      {/* Featured Authors */}
       <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-blue-50/50 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-3 mb-6">
@@ -347,10 +365,14 @@ export function MinimalSidebar() {
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                    <h4 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors break-words">
                       {author.name}
                     </h4>
-                    <p className="text-sm text-gray-600 truncate">{author.job_title || "DevOps Engineer"}</p>
+                    <p className="text-sm text-gray-600 break-words">
+                      {author.job_title
+                        ? `${author.job_title}${author.company ? ` at ${author.company}` : ""}`
+                        : "DevOps Engineer"}
+                    </p>
                     {author.post_count && (
                       <p className="text-xs text-gray-400 mt-1">
                         {author.post_count} {author.post_count === 1 ? "article" : "articles"}

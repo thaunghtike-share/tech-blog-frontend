@@ -147,8 +147,8 @@ export default function CategoryPageClient({ id }: Props) {
             ))}
           </main>
 
-          {/* Sidebar */}
-          <aside className="w-full md:w-80">
+          {/* Sidebar - hidden on mobile, shown on desktop */}
+          <aside className="hidden md:block md:w-80">
             <MinimalSidebar />
           </aside>
         </div>
