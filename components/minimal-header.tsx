@@ -355,8 +355,8 @@ export function MinimalHeader() {
               )}
             </div>
             {/* Replaced Subscribe button with Bell icon */}
-            <button className="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50 transition-shadow">
-              <Bell className="w-6 h-6" />
+            <button className="text-indigo-600 hover:text-indigo-800 p-2 rounded-full hover:bg-blue-50 transition-shadow">
+              <Bell className="w-6 h-7" />
             </button>
           </div>
         </div>

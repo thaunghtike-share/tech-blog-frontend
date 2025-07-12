@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Calendar, Clock, User, ArrowRight, TagIcon, Folder, Sparkles } from 'lucide-react'
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -46,6 +46,9 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
 
+  // Create a ref for the top heading section
+  const topRef = useRef<HTMLDivElement>(null)
+
   const API_BASE_URL = "http://192.168.100.7:8000/api"
 
   useEffect(() => {
@@ -85,6 +88,13 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     setCurrentPage(1)
   }, [searchQuery])
 
+  // Scroll to the top heading when page changes
+  useEffect(() => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+  }, [currentPage])
+
   const totalPages = Math.ceil(articles.length / PAGE_SIZE)
   const paginatedArticles = articles.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
@@ -118,7 +128,10 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
             <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <h2
+              ref={topRef} // attach ref here for loading also
+              className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
+            >
               Latest Articles
             </h2>
           </div>
@@ -166,7 +179,10 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+          <h2
+            ref={topRef} // attach ref here as well for normal render
+            className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
+          >
             Latest Articles
           </h2>
         </div>
@@ -188,7 +204,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                 className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
                 <div className="flex justify-between flex-wrap mb-4 gap-2">
-                  <div className="flex items-center gap-1 text-blue-600 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100">
+                  <div className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100">
                     <Folder className="w-4 h-4" />
                     {getCategoryName(article.category)}
                   </div>

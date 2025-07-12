@@ -113,7 +113,7 @@ export function MinimalSidebar() {
   return (
     <aside className="space-y-6 w-80 max-w-full">
       {/* Services Card */}
-      <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-hidden">
+      <Card className="border-0 shadow-lg bg-white overflow-hidden">
         <CardContent className="p-0">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
             <div className="flex items-center gap-3 mb-2">
