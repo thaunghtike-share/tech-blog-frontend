@@ -513,7 +513,7 @@ export function MinimalDevopsRoadmap() {
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
                 className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden pointer-events-auto border border-gray-200"
               >
-                <div className="bg-gradient-to-r from-green-500 to-teal-600 p-6 text-white">
+                <div className={`bg-gradient-to-r ${getStageGradient(selectedStageKey)} p-6 text-white`}>
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-xl font-bold mb-2">{selectedTopic.title}</h3>
