@@ -64,7 +64,7 @@ export function YouTubePlaylists() {
     fetchPlaylists()
   }, [])
 
-  const displayed = showAll ? playlists : playlists.slice(0, 9)
+  const displayed = showAll ? playlists : playlists.slice(0, 6)
 
   return (
     <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">

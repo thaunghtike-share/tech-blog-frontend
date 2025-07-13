@@ -53,15 +53,6 @@ export function ShareButtons({ articleId, title, url }: ShareButtonsProps) {
         <Linkedin className="h-4 w-4" />
         LinkedIn
       </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => window.open(shareLinks.twitter, "_blank")}
-        className="flex items-center gap-1 text-blue-400 border-blue-100 hover:bg-blue-50"
-      >
-        <Twitter className="h-4 w-4" />
-        Twitter
-      </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
