@@ -276,16 +276,8 @@ export function MinimalDevopsRoadmap() {
 
   const displayedItems = showAllTopics ? selectedStage.items : selectedStage.items.slice(0, 6)
 
-  // Scroll to roadmap section when collapsing "See Less"
-  const handleToggleShowAll = () => {
-    if (showAllTopics) {
-      const roadmapElement = document.querySelector("section.mt-20.max-w-7xl")
-      if (roadmapElement) {
-        roadmapElement.scrollIntoView({ behavior: "smooth" })
-      }
-    }
-    setShowAllTopics(!showAllTopics)
-  }
+  // For the modal icon gradient
+  const modalStageKey = selectedStageKey
 
   return (
     <>
@@ -484,7 +476,7 @@ export function MinimalDevopsRoadmap() {
         {selectedStage.items.length > 6 && (
           <div className="flex justify-center mt-8">
             <button
-              onClick={handleToggleShowAll}
+              onClick={() => setShowAllTopics(!showAllTopics)}
               className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white font-semibold transition-shadow shadow-md hover:shadow-lg bg-gradient-to-r ${getStageGradient(selectedStageKey)}`}
             >
               {showAllTopics ? (
@@ -521,11 +513,11 @@ export function MinimalDevopsRoadmap() {
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
                 className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden pointer-events-auto border border-gray-200"
               >
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
+                <div className="bg-gradient-to-r from-green-500 to-teal-600 p-6 text-white">
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-xl font-bold mb-2">{selectedTopic.title}</h3>
-                      <p className="text-blue-100">Curated learning resources</p>
+                      <p className="text-green-100">Curated learning resources</p>
                     </div>
                     <button
                       onClick={() => setSelectedTopic(null)}
@@ -548,22 +540,22 @@ export function MinimalDevopsRoadmap() {
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block p-4 rounded-2xl border border-gray-200 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group"
+                          className="block p-4 rounded-2xl border border-gray-200 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group flex items-start"
                         >
-                          <div className="flex items-start">
-                            <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-3 rounded-xl mr-4 group-hover:shadow-lg transition-shadow">
-                              <BookOpen className="w-5 h-5 text-white" />
-                            </div>
-                            <div className="flex-1">
-                              <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
-                                {link.text}
-                              </p>
-                              <p className="text-sm text-gray-500 truncate">
-                                {new URL(link.url).hostname.replace("www.", "")}
-                              </p>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                          <div
+                            className={`bg-gradient-to-r ${getStageGradient(modalStageKey)} p-3 rounded-xl mr-4 group-hover:shadow-lg transition-shadow flex-shrink-0`}
+                          >
+                            <BookOpen className="w-5 h-5 text-white" />
                           </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+                              {link.text}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate">
+                              {new URL(link.url).hostname.replace("www.", "")}
+                            </p>
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors mt-1" />
                         </motion.a>
                       ))}
                     </div>
