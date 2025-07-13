@@ -36,7 +36,7 @@ export default function HomePage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed top-1/2 right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105 transform -translate-y-1/2"
+        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
