@@ -316,37 +316,67 @@ export function ArticleContent({
           ) : <span />}
         </div>
 
-        {/* Recent Articles */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold text-slate-800 mb-4">📚 Recent Articles</h2>
-          <ul className="grid gap-4 md:grid-cols-2">
-            {recentArticles.map((item) => {
-              const date = new Date(item.published_at).toLocaleDateString()
-              const itemCategory = categories.find((c) => c.id === item.category)?.name || "General"
-              const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown"
-              return (
-                <li key={item.id}>
-                  <Card className="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 bg-white">
-                    <CardContent className="p-0">
-                      <Link href={`/articles/${item.id}`} className="block group space-y-2">
-                        <h4 className="font-semibold text-blue-700 group-hover:text-blue-900 truncate text-base">
-                          {item.title}
-                        </h4>
-                        <p className="text-xs text-gray-500 mt-1">{date}</p>
-                        <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">{excerpt(item.content)}</p>
-                        <div className="text-sm text-yellow-500 group-hover:text-yellow-900 truncate">
-                          <span className="bg-yellow-100 text-yellow-800 text-sm px-2 py-1 rounded-full">
-                            ✍️ {itemAuthor}
-                        </span>
-                        </div>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
+{/* Recent Articles */}
+<div className="mt-12">
+  <div className="flex items-center justify-between mb-6">
+    <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+      <BookOpen className="w-5 h-5 text-indigo-600" />
+      <span>Recent Articles</span>
+    </h2>
+    <Link href="/articles" className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1 transition-colors">
+      View all <ArrowRight className="w-4 h-4" />
+    </Link>
+  </div>
+  
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {recentArticles.map((item) => {
+      const date = new Date(item.published_at).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      const itemCategory = categories.find((c) => c.id === item.category)?.name || "General";
+      const itemAuthor = authors.find((a) => a.id === item.author)?.name || "Unknown";
+      
+      return (
+        <Card key={item.id} className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-all duration-200 h-full flex flex-col group hover:border-indigo-100">
+          <Link href={`/articles/${item.id}`} className="block flex-grow flex flex-col">
+            {item.image_url && (
+              <div className="h-[180px] w-full overflow-hidden bg-gray-50">
+                <img
+                  src={item.image_url}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                />
+              </div>
+            )}
+            <CardContent className="p-5 flex-grow flex flex-col bg-white">
+              <Badge variant="outline" className="w-fit mb-3 text-xs px-2.5 py-1 bg-indigo-50 text-indigo-700 border-indigo-100 hover:bg-indigo-100">
+                {itemCategory}
+              </Badge>
+              <h4 className="font-medium text-gray-800 group-hover:text-indigo-600 transition-colors line-clamp-2 text-[15px] leading-snug">
+                {item.title}
+              </h4>
+              <p className="text-sm text-gray-600 line-clamp-2 mt-2 mb-4">
+                {excerpt(item.content)}
+              </p>
+              <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs text-gray-600">
+                  <User className="w-3.5 h-3.5 text-indigo-500" />
+                  <span>{itemAuthor}</span>
+                </div>
+                <div className="text-xs text-gray-500 flex items-center gap-1">
+                  <CalendarDays className="w-3.5 h-3.5 text-indigo-500" />
+                  <span>{date}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Link>
+        </Card>
+      );
+    })}
+  </div>
+</div>
       </article>
 
       {/* Sidebar */}

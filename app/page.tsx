@@ -69,12 +69,10 @@ export default function HomePage() {
       </a>
 
       {/* Fixed Header - no shadow on mobile */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white md:bg-white/90 md:backdrop-blur-md md:shadow-md">
-        <MinimalHeader />
-      </div>
+      <MinimalHeader />
 
       {/* Hero Intro with mobile spacing fix */}
-      <div className="pt-[64px] md:pt-[80px] -mt-4 md:-mt-8">
+      <div className="pt-[64px] md:pt-[80px] md:-mt-30">
         <Intro />
       </div>
 

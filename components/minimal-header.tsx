@@ -72,7 +72,7 @@ export function MinimalHeader() {
     }`
 
   return (
-    <header className="bg-gray-50 sticky top-0 z-50">
+    <header className="bg-gray-50 sticky top-0 z-50 md:border-b md:border-gray-200 md:shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
       {/* Subtle background pattern */}
       <div
