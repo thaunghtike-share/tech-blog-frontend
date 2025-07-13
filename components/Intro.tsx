@@ -43,27 +43,27 @@ export default function Intro() {
       border: "border-indigo-200",
       iconBg: "bg-indigo-500 to-blue-600",
       iconColor: "text-white",
-    }, // What is DevOps
+    },
     {
       bg: "",
       border: "border-purple-200",
       iconBg: "bg-purple-500 to-indigo-600",
       iconColor: "text-white",
-    }, // Key Principles
+    },
     {
       bg: "",
       border: "border-green-200",
       iconBg: "bg-green-500 to-emerald-600",
       iconColor: "text-white",
-    }, // Prerequisites
+    },
   ]
 
   const stepColors = [
-    "bg-gradient-to-r from-purple-500 to-blue-600", // Roadmap
-    "bg-gradient-to-r from-red-500 to-red-600", // YouTube
-    "bg-gradient-to-r from-emerald-500 to-emerald-600", // Labs
-    "bg-gradient-to-r from-red-500 to-red-600", // Local
-    "bg-gradient-to-r from-purple-500 to-blue-600", // Udemy
+    "bg-gradient-to-r from-purple-500 to-blue-600",
+    "bg-gradient-to-r from-red-500 to-red-600",
+    "bg-gradient-to-r from-emerald-500 to-emerald-600",
+    "bg-gradient-to-r from-red-500 to-red-600",
+    "bg-gradient-to-r from-purple-500 to-blue-600",
   ]
 
   const learningPathItems = [
@@ -176,7 +176,7 @@ export default function Intro() {
 
   return (
     <section className="mt-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-      {/* Enhanced Intro Header - Using original structure */}
+      {/* Header */}
       <div className="mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -194,23 +194,25 @@ export default function Intro() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-gray-900"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-snug"
         >
           Start Your{" "}
-          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">DevOps</span>{" "}
+          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            DevOps
+          </span>{" "}
           Journey
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-3 text-gray-700 max-w-2xl mx-auto"
+          className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base"
         >
           Learn what DevOps really means, why it matters, and what you need to know before diving in.
         </motion.p>
       </div>
 
-      {/* Enhanced Three Horizontal Cards */}
+      {/* Three Horizontal Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {/* What is DevOps */}
         <motion.div
@@ -401,18 +403,15 @@ export default function Intro() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 1 }}
           className="mt-10 flex justify-center"
         >
-          <motion.button
+          <button
             onClick={() => scrollToSection("devops-roadmap")}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
+            className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-900 transition-colors font-semibold"
           >
-            <Sparkles className="w-4 h-4 mr-2" /> Start Your Journey
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </motion.button>
+            Explore Now <ChevronRight className="w-4 h-4" />
+          </button>
         </motion.div>
       </div>
     </section>

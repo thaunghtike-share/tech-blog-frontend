@@ -68,9 +68,13 @@ export default function HomePage() {
         </span>
       </a>
 
-      {/* Header and Hero */}
-      <MinimalHeader />
-      <div className="-mt-20">
+      {/* Fixed Header - no shadow on mobile */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white md:bg-white/90 md:backdrop-blur-md md:shadow-md">
+        <MinimalHeader />
+      </div>
+
+      {/* Hero Intro with mobile spacing fix */}
+      <div className="pt-[64px] md:pt-[80px] -mt-4 md:-mt-8">
         <Intro />
       </div>
 
@@ -78,11 +82,9 @@ export default function HomePage() {
       <main className="max-w-7xl mx-auto px-4 py-8 relative z-10">
         <div className="-mt-10">
           <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
-            {/* Blog List (main content) */}
             <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
               <MinimalBlogList />
             </div>
-            {/* Sidebar - appears to the right on all screens */}
             <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
               <MinimalSidebar />
             </div>
@@ -90,30 +92,20 @@ export default function HomePage() {
         </div>
 
         {/* Other Sections */}
-        <section id="devops-roadmap">
-          <div className="-mt-15">
-            <MinimalDevopsRoadmap />
-          </div>
+        <section id="devops-roadmap" className="-mt-15">
+          <MinimalDevopsRoadmap />
         </section>
-        <section id="youtube-playlists">
-          <div className="-mt-10">
-            <YouTubePlaylists />
-          </div>
+        <section id="youtube-playlists" className="-mt-10">
+          <YouTubePlaylists />
         </section>
-        <section id="free-labs">
-          <div className="-mt-20">
-            <FreeLabs />
-          </div>
+        <section id="free-labs" className="-mt-20">
+          <FreeLabs />
         </section>
-        <section id="myanmar-playlists">
-          <div className="-mt-24">
-            <YouTubePlaylistsMM />
-          </div>
+        <section id="myanmar-playlists" className="-mt-24">
+          <YouTubePlaylistsMM />
         </section>
-        <section id="free-udemy">
-          <div className="-mt-12">
-            <TopUdemyCourses />
-          </div>
+        <section id="free-udemy" className="-mt-12">
+          <TopUdemyCourses />
         </section>
         <div className="-mt-24">
           <CertificationRoadmap />
@@ -121,10 +113,8 @@ export default function HomePage() {
         <div className="-mt-24">
           <RecommendedPaidCourses />
         </div>
-        <div className="mt-16">
-          <div className="-mt-24">
-            <FreelanceServicesSection />
-          </div>
+        <div className="mt-16 -mt-24">
+          <FreelanceServicesSection />
         </div>
         <div className="-mt-22">
           <DevOpsWorkflowExample />

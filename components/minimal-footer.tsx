@@ -3,7 +3,7 @@ import { Facebook, Linkedin, Youtube, Github, Mail } from "lucide-react"
 
 export function MinimalFooter() {
   return (
-    <footer className="bg-gray-50 text-gray-700 py-10 md:py-12 relative z-10">
+    <footer className="bg-gray-50 text-gray-700 py-10 md:py-12 relative z-10 border-t border-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Background pattern */}
         <div

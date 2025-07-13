@@ -264,13 +264,27 @@ const getStageGradient = (stageKey: string) => {
 
 export function MinimalDevopsRoadmap() {
   const [selectedStageKey, setSelectedStageKey] = useState(roadmap[0]?.key || "beginner")
-  const [selectedTopic, setSelectedTopic] = useState<{ title: string; links: ResourceLink[] } | null>(null)
+  const [selectedTopic, setSelectedTopic] = useState<{ title: string; links: { text: string; url: string }[] } | null>(null)
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({})
+  const [showAllTopics, setShowAllTopics] = useState(false)
 
   const selectedStage = roadmap.find((r) => r.key === selectedStageKey) || roadmap[0]
 
   const toggleExpand = (title: string) => {
     setExpandedTopics((prev) => ({ ...prev, [title]: !prev[title] }))
+  }
+
+  const displayedItems = showAllTopics ? selectedStage.items : selectedStage.items.slice(0, 6)
+
+  // Scroll to roadmap section when collapsing "See Less"
+  const handleToggleShowAll = () => {
+    if (showAllTopics) {
+      const roadmapElement = document.querySelector("section.mt-20.max-w-7xl")
+      if (roadmapElement) {
+        roadmapElement.scrollIntoView({ behavior: "smooth" })
+      }
+    }
+    setShowAllTopics(!showAllTopics)
   }
 
   return (
@@ -322,7 +336,11 @@ export function MinimalDevopsRoadmap() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
-              onClick={() => setSelectedStageKey(stage.key)}
+              onClick={() => {
+                setSelectedStageKey(stage.key)
+                setShowAllTopics(false) // reset showAll when switching stages
+                setExpandedTopics({})
+              }}
               className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl transition-all duration-300 ${
                 selectedStageKey === stage.key
                   ? `bg-gradient-to-r ${getStageGradient(stage.key)} text-white shadow-lg scale-105`
@@ -368,7 +386,7 @@ export function MinimalDevopsRoadmap() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {selectedStage.items?.map(({ title, details, duration, subtopics }, idx) => {
+          {displayedItems.map(({ title, details, duration, subtopics }, idx) => {
             const isExpanded = expandedTopics[title]
             const displaySubtopics = isExpanded ? subtopics : subtopics.slice(0, 4)
             return (
@@ -381,7 +399,6 @@ export function MinimalDevopsRoadmap() {
                 className="relative group h-full"
               >
                 <div className="h-full rounded-3xl overflow-hidden shadow-xl border border-white/50 bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                  {/* Header with gradient */}
                   <div className={`p-6 bg-gradient-to-r ${getStageGradient(selectedStageKey)} text-white`}>
                     <div className="flex justify-between items-start mb-3">
                       <h4 className="text-lg font-bold leading-tight">{title}</h4>
@@ -393,7 +410,6 @@ export function MinimalDevopsRoadmap() {
                     <p className="text-white/90 text-sm leading-relaxed">{details}</p>
                   </div>
 
-                  {/* Content */}
                   <div className="p-6 flex-grow">
                     {displaySubtopics?.length > 0 ? (
                       <ul className="space-y-3 mb-4">
@@ -416,12 +432,7 @@ export function MinimalDevopsRoadmap() {
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
                                 >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={3}
-                                    d="M5 13l4 4L19 7"
-                                  />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                 </svg>
                               </span>
                             </span>
@@ -455,7 +466,6 @@ export function MinimalDevopsRoadmap() {
                     )}
                   </div>
 
-                  {/* Footer */}
                   <div className="p-6 pt-0">
                     <button
                       onClick={() => setSelectedTopic({ title, links: resourceLinks[title] || [] })}
@@ -470,9 +480,29 @@ export function MinimalDevopsRoadmap() {
             )
           })}
         </div>
+
+        {selectedStage.items.length > 6 && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={handleToggleShowAll}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white font-semibold transition-shadow shadow-md hover:shadow-lg bg-gradient-to-r ${getStageGradient(selectedStageKey)}`}
+            >
+              {showAllTopics ? (
+                <>
+                  <ChevronDown className="w-5 h-5" />
+                  See Less
+                </>
+              ) : (
+                <>
+                  <ChevronRight className="w-5 h-5" />
+                  See All Topics
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </section>
 
-      {/* Enhanced Resource Popup */}
       <AnimatePresence>
         {selectedTopic && (
           <>
