@@ -1,7 +1,7 @@
 "use client"
-import { useState } from "react"
 import { ChevronDown, ChevronRight, Clock, BookOpen, Layers, Shield, Cloud, Code, X, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef } from "react"
 
 interface RoadmapItem {
   title: string
@@ -268,6 +268,8 @@ export function MinimalDevopsRoadmap() {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({})
   const [showAllTopics, setShowAllTopics] = useState(false)
 
+  const roadmapRef = useRef<HTMLDivElement>(null)
+
   const selectedStage = roadmap.find((r) => r.key === selectedStageKey) || roadmap[0]
 
   const toggleExpand = (title: string) => {
@@ -281,7 +283,7 @@ export function MinimalDevopsRoadmap() {
 
   return (
     <>
-      <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section ref={roadmapRef} className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -473,26 +475,34 @@ export function MinimalDevopsRoadmap() {
           })}
         </div>
 
-        {selectedStage.items.length > 6 && (
-          <div className="flex justify-center mt-8">
-            <button
-              onClick={() => setShowAllTopics(!showAllTopics)}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white font-semibold transition-shadow shadow-md hover:shadow-lg bg-gradient-to-r ${getStageGradient(selectedStageKey)}`}
-            >
-              {showAllTopics ? (
-                <>
-                  <ChevronDown className="w-5 h-5" />
-                  See Less
-                </>
-              ) : (
-                <>
-                  <ChevronRight className="w-5 h-5" />
-                  See All Topics
-                </>
-              )}
-            </button>
-          </div>
-        )}
+ {selectedStage.items.length > 6 && (
+  <div className="flex justify-center mt-8">
+    <button
+      onClick={() => {
+        if (showAllTopics) {
+          setShowAllTopics(false)
+          roadmapRef.current?.scrollIntoView({ behavior: "smooth" })
+        } else {
+          setShowAllTopics(true)
+        }
+      }}
+      className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white font-semibold transition-shadow shadow-md hover:shadow-lg bg-gradient-to-r ${getStageGradient(selectedStageKey)}`}
+    >
+      {showAllTopics ? (
+        <>
+          <ChevronDown className="w-5 h-5" />
+          See Less
+        </>
+      ) : (
+        <>
+          <ChevronRight className="w-5 h-5" />
+          See All Topics
+        </>
+      )}
+    </button>
+  </div>
+)}
+
       </section>
 
       <AnimatePresence>
