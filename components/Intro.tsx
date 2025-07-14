@@ -121,7 +121,7 @@ export default function Intro() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-snug select-text"
+            className="text-xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4"
           >
             Start Your{" "}
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
@@ -177,9 +177,9 @@ export default function Intro() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-2xl font-bold text-gray-900 mb-6 select-text text-center"
+          className="text-2xl font-bold text-gray-900 mb-10 select-text text-center"
         >
-          <span className="bg-gradient-to-r from-gray-900 to-indigo-800 bg-clip-text text-transparent">
+          <span className="font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
             Essential DevOps Tools
           </span>
         </motion.h3>
@@ -193,7 +193,6 @@ export default function Intro() {
               transition={{ delay: 0.1 * i }}
               className="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
               variants={cardVariants}
-              initial="initial"
               whileHover="hover"
             >
               <div className="flex items-center mb-4">
@@ -230,7 +229,7 @@ export default function Intro() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-8 select-text"
+          className="mb-6 select-text"
         >
           <h4 className="text-2xl font-bold text-gray-900 mb-5 flex items-center justify-center gap-2 select-text">
             <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg select-text">
@@ -240,7 +239,7 @@ export default function Intro() {
               Learning Guideline
             </span>
           </h4>
-          <p className="text-gray-700 text-center">          
+          <p className="text-gray-700 text-center">
             Follow this structured path to master DevOps
           </p>
         </motion.div>
@@ -258,7 +257,7 @@ export default function Intro() {
               >
                 <button
                   onClick={() => scrollToSection(step.id)}
-                  className="mb- text-sm font-medium text-gray-700 hover:text-gray-900 hover:underline transition-colors"
+                  className="mb-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:underline transition-colors"
                 >
                   {step.label}
                 </button>
@@ -270,7 +269,7 @@ export default function Intro() {
                 >
                   {index + 1}
                 </motion.div>
-                <div className="mt-3 text-xs text-gray-500 text-center">
+                <div className="mt-2 text-xs text-gray-500 text-center">
                   {step.desc}
                 </div>
               </motion.div>
