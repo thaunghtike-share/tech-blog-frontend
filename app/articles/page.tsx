@@ -1,13 +1,20 @@
-"use client"
-import { useSearchParams } from "next/navigation"
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalBlogList } from "@/components/minimal-blog-list"
-import { MinimalSidebar } from "@/components/minimal-sidebar"
-import { MinimalFooter } from "@/components/minimal-footer"
+"use client";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalBlogList } from "@/components/minimal-blog-list";
+import { MinimalSidebar } from "@/components/minimal-sidebar";
+import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function ArticlesPage() {
-  const searchParams = useSearchParams()
-  const searchQuery = searchParams.get("search") || ""
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+
+  useEffect(() => {
+    // On mount, scroll to top to prevent auto scrolling to blog list
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
       {/* Subtle background pattern */}
@@ -26,17 +33,34 @@ export default function ArticlesPage() {
         aria-label="Chat with me on Messenger"
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 240"
+          fill="none"
+          className="w-8 h-8 rounded-full"
+        >
           <defs>
-            <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="messengerGradient"
+              x1="0"
+              y1="0"
+              x2="240"
+              y2="240"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#E1306C" />
               <stop offset="1" stopColor="#833AB4" />
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
+          <path
+            fill="#fff"
+            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
+          />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
+        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">
+          Chat?
+        </span>
       </a>
       <MinimalHeader />
       <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
@@ -47,7 +71,9 @@ export default function ArticlesPage() {
               {/* Your filters here */}
             </div>
             <MinimalBlogList searchQuery={searchQuery} />
-            <div className="flex justify-center mt-10">{/* pagination buttons */}</div>
+            <div className="flex justify-center mt-10">
+              {/* pagination buttons */}
+            </div>
           </div>
           {/* Sidebar */}
           <aside className="lg:col-span-2">
@@ -57,5 +83,5 @@ export default function ArticlesPage() {
       </main>
       <MinimalFooter />
     </div>
-  )
+  );
 }

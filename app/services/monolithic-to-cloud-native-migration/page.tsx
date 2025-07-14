@@ -142,7 +142,7 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Architecture Overview */}
-        <section className="mb-20 relative min-h-[650px] bg-gray-50 overflow-hidden">
+        <section className="mb-14 relative min-h-[550px] bg-gray-50 overflow-hidden">
           {/* Subtle background pattern */}
           <div
             className="absolute inset-0 z-0 opacity-10"
@@ -151,19 +151,20 @@ export default function MonolithicToCloudNativePage() {
                 "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
             }}
           ></div>
-          <div className="relative z-10 text-center -mb-4">
+          <div className="relative z-10 text-center -mb-0">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               End-to-End DevOps Architecture
             </h2>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed mb-10">
               Our comprehensive solution covers every aspect of your cloud
               journey, from infrastructure provisioning to continuous delivery
               and robust monitoring.
             </p>
           </div>
-          <Card className="overflow-hidden bg-gray-50 duration-500 border-0 shadow-none">
+          {/* Updated dinger.png container with soft border */}
+          <Card className="mb-6 overflow-hidden bg-gray-50 duration-500 border border-gray-300 shadow-sm ">
             <CardContent className="p-4">
-              <div className="h-[750px] w-full relative">
+              <div className="h-[700px] w-full relative">
                 <div
                   className="absolute inset-0 z-0 opacity-10"
                   style={{
@@ -183,7 +184,7 @@ export default function MonolithicToCloudNativePage() {
             </CardContent>
           </Card>
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-0">
             {[
               {
                 value: "99.9%",
@@ -1557,86 +1558,69 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* Call to Action - Redesigned */}
         <section className="mb-12">
-          <div className="relative">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl transform rotate-1"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl transform -rotate-1"></div>
-            {/* Main content */}
-            <Card className="relative border-0 shadow-xl bg-white rounded-2xl overflow-hidden">
-              <CardContent className="p-10 lg:p-12">
-                <div className="max-w-4xl mx-auto text-center">
-                  {/* Header */}
-                  <div className="mb-6">
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-3 py-1 rounded-full mb-4">
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      <span className="text-sm font-semibold text-gray-700">
-                        Ready to Get Started?
-                      </span>
-                    </div>
-                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                      Transform Your Application
-                      <span className="block text-transparent bg-gradient-to-r from-teal-600 to-blue-700 bg-clip-text">
-                        Into the Cloud
-                      </span>
-                    </h2>
-                    <p className="text-base text-gray-600 leading-relaxed max-w-3xl mx-auto">
-                      Let's migrate your monolithic application to a modern,
-                      scalable, cloud-native architecture with our proven
-                      methodology and expert guidance.
-                    </p>
+          <Card className="relative border border-gray-200 shadow-lg bg-white rounded-2xl overflow-hidden p-8 md:p-10 text-center">
+            {/* Subtle gradient background */}
+            <div className="absolute inset-0 bg-gray-50 opacity-20 rounded-xl"></div>
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-4 py-1.5 rounded-full mb-4 text-sm font-semibold text-gray-700">
+                <Sparkles className="w-4 h-4 mr-1 text-blue-600" />
+                Ready to Transform?
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                Accelerate Your Journey to Cloud-Native
+              </h2>
+              <p className="text-base text-gray-600 leading-relaxed mb-8">
+                Partner with us to seamlessly migrate your monolithic
+                applications and unlock the full potential of scalable,
+                resilient, and cost-efficient cloud solutions.
+              </p>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 border-0"
+              >
+                <Rocket className="w-4 h-4 mr-2" />
+                Schedule a Free Consultation
+              </Button>
+              {/* Trust indicators */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10 pt-6 border-t border-gray-100">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-2">
+                    <CheckCircle2 className="w-5 h-5 text-green-600" />
                   </div>
-                  {/* Action buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-                    <Button
-                      size="lg"
-                      className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
-                    >
-                      <Rocket className="w-4 h-4 mr-2" />
-                      Schedule Free Consultation
-                    </Button>
-                  </div>
-                  {/* Trust indicators */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-2">
-                        <CheckCircle2 className="w-5 h-5 text-green-600" />
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">
-                        100% Success Rate
-                      </h4>
-                      <p className="text-xs text-gray-600">
-                        All migrations completed successfully
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
-                        <Zap className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">
-                        2-4 Week Timeline
-                      </h4>
-                      <p className="text-xs text-gray-600">
-                        Fast, efficient migration process
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-2">
-                        <ShieldCheck className="w-5 h-5 text-purple-600" />
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">
-                        Enterprise Security
-                      </h4>
-                      <p className="text-xs text-gray-600">
-                        Bank-level security standards
-                      </p>
-                    </div>
-                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                    Proven Success
+                  </h4>
+                  <p className="text-xs text-gray-600">
+                    100% successful migrations
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
+                    <Zap className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                    Rapid Deployment
+                  </h4>
+                  <p className="text-xs text-gray-600">
+                    2-4 week average timeline
+                  </p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-2">
+                    <ShieldCheck className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                    Enterprise-Grade Security
+                  </h4>
+                  <p className="text-xs text-gray-600">
+                    Built-in security from day one
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
         </section>
       </main>
       <MinimalFooter />
