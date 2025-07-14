@@ -528,7 +528,7 @@ export function ArticleContent({
         </div>
         <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden">
           {/* Subtle gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-blue-50 opacity-70 rounded-xl"></div>
+          <div className="absolute inset-0 bg-white-50 opacity-70 rounded-xl"></div>
           <div className="relative z-10 flex items-start justify-between">
             <div>
               <h3 className="text-sm font-medium text-gray-600 mb-1">
