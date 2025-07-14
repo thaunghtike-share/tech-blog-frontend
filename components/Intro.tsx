@@ -77,38 +77,54 @@ export default function Intro() {
 
   const toolCategories = [
     {
-      name: "Development",
+      name: "Prerequisites",
       icon: <Code2 className="w-5 h-5" />,
-      tools: ["Git", "GitHub", "IDEs", "SDKs"],
+      tools: [
+        "Programming Basics",
+        "Networking Basics",
+        "Operating System",
+        "Computer Fundamentals",
+      ],
       color: "bg-blue-100 text-blue-800",
       frameColor: "bg-blue-500",
     },
     {
-      name: "Operations",
+      name: "Beginner",
       icon: <Server className="w-5 h-5" />,
-      tools: ["Linux", "Bash", "SSH", "Monitoring"],
+      tools: [
+        "Linux & Bash Scripting",
+        "CCNA",
+        "Cloud Fundamentals",
+        "HTML & CSS",
+      ],
       color: "bg-purple-100 text-purple-800",
       frameColor: "bg-purple-500",
     },
     {
-      name: "Automation",
+      name: "Intermediate",
       icon: <GitMerge className="w-5 h-5" />,
-      tools: ["Jenkins", "GitHub Actions", "CI/CD Pipelines"],
+      tools: [
+        "Containerization",
+        "AWS Associate",
+        "Git",
+        "Kubernetes Fundamentals",
+        "CICD",
+      ],
       color: "bg-green-100 text-green-800",
       frameColor: "bg-green-500",
     },
     {
-      name: "Security",
+      name: "Advanced",
       icon: <ShieldCheck className="w-5 h-5" />,
-      tools: ["Vault", "IAM", "Security Scanning"],
+      tools: ["Infrastructure as Code", "Security", "GitOps", "Troubleshooting"],
       color: "bg-red-100 text-red-800",
       frameColor: "bg-red-500",
     },
-  ];  
+  ];
 
   return (
     <section className="py-16 px-4 max-w-7xl mx-auto">
-      {/* ✅ Your Original Hero Section */}
+      {/* ✅ Hero Section */}
       <section className="mt-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-12">
           <motion.div
@@ -177,7 +193,7 @@ export default function Intro() {
         </div>
       </motion.div>
 
-      {/* Essential DevOps Tools */}
+      {/* DevOps Learning Levels */}
       <div className="mb-14">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -189,7 +205,7 @@ export default function Intro() {
             <Wrench className="w-5 h-5 text-white" />
           </div>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
-            <Sparkles className="w-3 h-3 mr-1.5" /> Essential DevOps Tools
+            <Sparkles className="w-3 h-3 mr-1.5" /> DevOps Learning Levels
           </span>
         </motion.div>
 
@@ -199,9 +215,8 @@ export default function Intro() {
           transition={{ delay: 0.3 }}
           className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base select-text text-center mb-10"
         >
-          DevOps tools help automate, manage, and monitor the software
-          development lifecycle. They improve collaboration, speed, and
-          reliability across teams.
+          Explore DevOps from foundational knowledge to advanced infrastructure
+          practices through structured stages.
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -215,9 +230,7 @@ export default function Intro() {
               variants={cardVariants}
               whileHover="hover"
             >
-              {/* Colored top frame */}
               <div className={`h-2 ${category.frameColor}`} />
-
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div
