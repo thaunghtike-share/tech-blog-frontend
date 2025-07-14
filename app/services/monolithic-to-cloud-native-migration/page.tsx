@@ -32,6 +32,7 @@ import {
   Scale,
   Scan,
   Users,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,6 +55,7 @@ export default function MonolithicToCloudNativePage() {
   const iconStyle = (color: string) => `w-4 h-4 text-${color}-600`;
   const titleStyle = "font-bold text-gray-900 mb-1 text-base";
   const descStyle = "text-gray-600 leading-relaxed text-sm";
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
       {/* Subtle background pattern */}
@@ -61,7 +63,7 @@ export default function MonolithicToCloudNativePage() {
         className="absolute inset-0 z-0 opacity-10"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
       {/* Messenger Floating Button */}
@@ -183,6 +185,123 @@ export default function MonolithicToCloudNativePage() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Explanation of dinger.png */}
+          <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
+                  <BookOpen className="w-5 h-5 text-purple-600" />
+                </div>
+                Understanding the Architecture
+              </CardTitle>
+              <CardDescription className="text-sm text-gray-600">
+                A detailed breakdown of our cloud-native solution
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-gray-700 text-base leading-relaxed">
+                The diagram above illustrates the end-to-end DevOps architecture
+                we implement for our clients, ensuring a robust, scalable, and
+                secure cloud-native environment. Here's a breakdown of each key
+                component:
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {
+                    icon: GitBranch,
+                    title: "Source Control (GitHub)",
+                    desc: "All application code, infrastructure as code (Terraform), and Kubernetes manifests are stored in GitHub repositories, serving as the single source of truth for version control and collaboration.",
+                    color: "blue",
+                  },
+                  {
+                    icon: Code,
+                    title: "Infrastructure as Code (Terraform)",
+                    desc: "Terraform is used to declaratively define and provision all cloud infrastructure resources, including Azure Kubernetes Service (AKS), Virtual Networks, Container Registries, and databases.",
+                    color: "green",
+                  },
+                  {
+                    icon: Zap,
+                    title: "CI/CD Pipeline (GitHub Actions)",
+                    desc: "Automated workflows in GitHub Actions handle continuous integration (building, testing, security scanning) and continuous delivery (deploying applications to AKS).",
+                    color: "orange",
+                  },
+                  {
+                    icon: Dock,
+                    title: "Containerization (Docker)",
+                    desc: "Applications are containerized using Docker, ensuring consistency across different environments and simplifying deployment.",
+                    color: "purple",
+                  },
+                  {
+                    icon: Database,
+                    title: "Container Registry (ACR)",
+                    desc: "Azure Container Registry (ACR) securely stores and manages Docker images, integrated with the CI/CD pipeline for automated image pushes.",
+                    color: "red",
+                  },
+                  {
+                    icon: Server,
+                    title: "Kubernetes Orchestration (AKS)",
+                    desc: "Azure Kubernetes Service (AKS) provides a managed Kubernetes environment for deploying, managing, and scaling containerized applications.",
+                    color: "teal",
+                  },
+                  {
+                    icon: Layers,
+                    title: "GitOps (ArgoCD)",
+                    desc: "ArgoCD implements GitOps principles, continuously synchronizing the desired state of applications defined in Git with the actual state in the AKS cluster, ensuring automated and declarative deployments.",
+                    color: "blue",
+                  },
+                  {
+                    icon: RefreshCw,
+                    title: "Image Updates (ArgoCD Image Updater)",
+                    desc: "ArgoCD Image Updater automatically detects new image versions in ACR and updates the Kubernetes manifests in Git, triggering seamless application rollouts.",
+                    color: "green",
+                  },
+                  {
+                    icon: Activity,
+                    title:
+                      "Monitoring (Prometheus, Grafana, Loki, Azure Monitor)",
+                    desc: "A unified observability stack provides real-time insights: Prometheus for metrics, Loki for logs, Grafana for dashboards, and Azure Monitor for comprehensive cloud resource monitoring.",
+                    color: "orange",
+                  },
+                  {
+                    icon: BellRing,
+                    title: "Alerting & Notifications",
+                    desc: "Configurable alerts from Prometheus Alertmanager are sent to communication channels like Google Chat and Slack for proactive incident management.",
+                    color: "purple",
+                  },
+                  {
+                    icon: ShieldCheck,
+                    title: "Security (Trivy, RBAC, Network Policies)",
+                    desc: "Security is integrated at every layer, including container image scanning with Trivy, Role-Based Access Control (RBAC) for least privilege, and network policies for secure communication.",
+                    color: "red",
+                  },
+                  {
+                    icon: Scale,
+                    title: "Autoscaling (HPA, VPA, KEDA)",
+                    desc: "Dynamic autoscaling ensures optimal performance and cost-efficiency, with Horizontal Pod Autoscaler (HPA), Vertical Pod Autoscaler (VPA), and Kubernetes Event-driven Autoscaling (KEDA).",
+                    color: "teal",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className={listItemStyle}>
+                    <div className={iconWrapperStyle(item.color)}>
+                      <item.icon className={iconStyle(item.color)} />
+                    </div>
+                    <div>
+                      <h4 className={titleStyle}>{item.title}</h4>
+                      <p className={descStyle}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-gray-700 text-base leading-relaxed mt-4">
+                This integrated approach ensures that your applications are not
+                only deployed efficiently but also maintained with high
+                availability, security, and cost-effectiveness, reflecting our
+                proven success in cloud-native transformations.
+              </p>
+            </CardContent>
+          </Card>
+
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-0">
             {[
@@ -576,12 +695,8 @@ export default function MonolithicToCloudNativePage() {
                         />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-sm">
-                          {item.title}
-                        </h4>
-                        <p className="text-gray-600 leading-relaxed text-xs">
-                          {item.desc}
-                        </p>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -1400,7 +1515,6 @@ export default function MonolithicToCloudNativePage() {
             </Card>
           </div>
         </section>
-
         {/* Step 8: Autoscaling for Kubernetes */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -1479,7 +1593,6 @@ export default function MonolithicToCloudNativePage() {
             </Card>
           </div>
         </section>
-
         {/* Step 9: Comprehensive Security */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -1557,7 +1670,6 @@ export default function MonolithicToCloudNativePage() {
             </Card>
           </div>
         </section>
-
         {/* Call to Action - Redesigned */}
         <section className="mb-12">
           <Card className="relative border border-gray-200 shadow-lg bg-white rounded-2xl overflow-hidden p-8 md:p-10 text-center">

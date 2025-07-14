@@ -19,7 +19,6 @@ import {
   Terminal,
   Server,
   Database,
-  ExternalLink,
   Layers,
   Cpu,
   MemoryStick,
@@ -53,7 +52,7 @@ export default function InfraAsCodePage() {
         className="absolute inset-0 z-0 opacity-10"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
       <MinimalHeader />
@@ -72,8 +71,10 @@ export default function InfraAsCodePage() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
-              Transform your infrastructure management from manual processes to
-              automated, version-controlled, and reproducible deployments.
+              As an expert in Infrastructure as Code (IaC), I transform your
+              infrastructure management from manual processes to automated,
+              version-controlled, and reproducible deployments, ensuring
+              efficiency and reliability.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
               <Badge className="px-4 py-2 bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all duration-300 hover:scale-105 cursor-pointer">
@@ -95,7 +96,6 @@ export default function InfraAsCodePage() {
             </div>
           </div>
         </section>
-
         {/* What is IaC? */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -159,7 +159,6 @@ export default function InfraAsCodePage() {
             </CardContent>
           </Card>
         </section>
-
         {/* Importance of IaC */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -230,7 +229,6 @@ export default function InfraAsCodePage() {
             </CardContent>
           </Card>
         </section>
-
         {/* IaC in Real-World Usage */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -301,7 +299,6 @@ export default function InfraAsCodePage() {
             </CardContent>
           </Card>
         </section>
-
         {/* Step-by-Step IaC Implementation */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -366,12 +363,8 @@ export default function InfraAsCodePage() {
                       <item.icon className={`w-4 h-4 text-${item.color}-600`} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-1 text-sm">
-                        {item.title}
-                      </h4>
-                      <p className="text-gray-600 leading-relaxed text-xs">
-                        {item.desc}
-                      </p>
+                      <h4 className={titleStyle}>{item.title}</h4>
+                      <p className={descStyle}>{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -379,7 +372,6 @@ export default function InfraAsCodePage() {
             </CardContent>
           </Card>
         </section>
-
         {/* IaC Tools Deep Dive */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -395,7 +387,6 @@ export default function InfraAsCodePage() {
               </p>
             </div>
           </div>
-
           {/* Terraform */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
@@ -456,78 +447,8 @@ export default function InfraAsCodePage() {
                   </div>
                 ))}
               </div>
-              <h5 className="font-semibold text-gray-800 mt-4">
-                My Terraform Repositories:
-              </h5>
-              <div className="space-y-3">
-                <div className="group p-4 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-blue-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Cloud className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">
-                          Azure Infrastructure Module
-                        </h4>
-                        <p className="text-gray-600 mb-2 text-sm">
-                          Complete Azure setup with AKS, ACR, VNet, and
-                          monitoring.
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border-blue-300 text-blue-700 hover:border-blue-500 bg-transparent"
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/thaunghtike-share/terraform-azure",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Repo
-                    </Button>
-                  </div>
-                </div>
-                <div className="group p-4 bg-orange-50 rounded-xl border border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-orange-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Server className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">
-                          AWS EKS Spot Instance Module
-                        </h4>
-                        <p className="text-gray-600 mb-2 text-sm">
-                          Cost-effective EKS cluster with spot instances and
-                          auto-scaling.
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 border-orange-300 text-orange-700 hover:border-orange-500 bg-transparent"
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/thaunghtike-share/terraform-aws-kubespot",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Repo
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
-
           {/* Ansible */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
@@ -588,46 +509,8 @@ export default function InfraAsCodePage() {
                   </div>
                 ))}
               </div>
-              <h5 className="font-semibold text-gray-800 mt-4">
-                My Ansible Repositories:
-              </h5>
-              <div className="space-y-3">
-                <div className="group p-4 bg-green-50 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-green-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Terminal className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">
-                          Ansible Kubernetes Deployment
-                        </h4>
-                        <p className="text-gray-600 mb-2 text-sm">
-                          Automating Kubernetes application deployments with
-                          Ansible playbooks.
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="group-hover:bg-green-500 group-hover:text-white transition-all duration-300 border-green-300 text-green-700 hover:border-green-500 bg-transparent"
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/your-username/ansible-kubernetes-deployment",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Repo
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
-
           {/* Pulumi */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
@@ -688,46 +571,8 @@ export default function InfraAsCodePage() {
                   </div>
                 ))}
               </div>
-              <h5 className="font-semibold text-gray-800 mt-4">
-                My Pulumi Repositories:
-              </h5>
-              <div className="space-y-3">
-                <div className="group p-4 bg-teal-50 rounded-xl border border-teal-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-teal-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Code className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">
-                          Pulumi AWS EKS Cluster
-                        </h4>
-                        <p className="text-gray-600 mb-2 text-sm">
-                          Provisioning an AWS EKS cluster using Pulumi with
-                          TypeScript.
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="group-hover:bg-teal-500 group-hover:text-white transition-all duration-300 border-teal-300 text-teal-700 hover:border-teal-500 bg-transparent"
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/your-username/pulumi-aws-eks",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Repo
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
-
           {/* AWS CloudFormation */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
@@ -789,46 +634,8 @@ export default function InfraAsCodePage() {
                   </div>
                 ))}
               </div>
-              <h5 className="font-semibold text-gray-800 mt-4">
-                My AWS CloudFormation Repositories:
-              </h5>
-              <div className="space-y-3">
-                <div className="group p-4 bg-orange-50 rounded-xl border border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-orange-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Cloud className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">
-                          CloudFormation VPC & EC2
-                        </h4>
-                        <p className="text-gray-600 mb-2 text-sm">
-                          Templates for provisioning secure VPCs and EC2
-                          instances on AWS.
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 border-orange-300 text-orange-700 hover:border-orange-500 bg-transparent"
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/your-username/cloudformation-vpc-ec2",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Repo
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
-
           {/* AWS Boto3 */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
@@ -890,52 +697,14 @@ export default function InfraAsCodePage() {
                   </div>
                 ))}
               </div>
-              <h5 className="font-semibold text-gray-800 mt-4">
-                My AWS Boto3 Repositories:
-              </h5>
-              <div className="space-y-3">
-                <div className="group p-4 bg-red-50 rounded-xl border border-red-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-red-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Database className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">
-                          Boto3 S3 Bucket Management
-                        </h4>
-                        <p className="text-gray-600 mb-2 text-sm">
-                          Python scripts for automating S3 bucket creation,
-                          deletion, and object management.
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="group-hover:bg-red-500 group-hover:text-white transition-all duration-300 border-red-300 text-red-700 hover:border-red-500 bg-transparent"
-                      onClick={() =>
-                        window.open(
-                          "https://github.com/your-username/boto3-s3-scripts",
-                          "_blank"
-                        )
-                      }
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Repo
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </section>
-
         {/* Call to Action */}
         <section className="mb-12">
           <Card className="relative border border-gray-200 shadow-lg bg-white rounded-2xl overflow-hidden p-8 md:p-10 text-center">
             {/* Subtle gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-50 to-blue-50 opacity-60 rounded-2xl"></div>
+            <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-2xl"></div>
             <div className="relative z-10 max-w-3xl mx-auto">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-4 py-1.5 rounded-full mb-4 text-sm font-semibold text-gray-700">
                 <Sparkles className="w-4 h-4 mr-1 text-blue-600" />
