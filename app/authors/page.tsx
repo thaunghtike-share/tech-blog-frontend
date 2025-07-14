@@ -17,7 +17,7 @@ interface Author {
   linkedin?: string
 }
 
-const API_BASE_URL = "http://192.168.100.7:8000/api"
+const API_BASE_URL = "http://192.168.1.131:8000/api"
 
 export default function AuthorsPage() {
   const [authors, setAuthors] = useState<Author[]>([])

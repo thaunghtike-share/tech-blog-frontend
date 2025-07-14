@@ -29,7 +29,7 @@ const personalInfo = {
   phone: "+959952492359",
   summary:
     "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.",
-  avatar: "/placeholder.svg?height=150&width=150", // Placeholder for avatar
+  avatar: "/me.png?height=150&width=150", // Placeholder for avatar
   linkedinUrl: "https://www.linkedin.com/in/thaung-htike-oo-devops/",
 }
 
@@ -226,15 +226,14 @@ export default function AboutPage() {
       </a>
       <MinimalHeader />
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 py-12 border-b border-white/50">
+      <section className="bg-gray-50 py-12 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-relaxed">
-            <span className="text-gray-700">Our </span>
-            <span className="text-blue-600">Authors</span>
+            <span className="text-gray-700">About </span>
+            <span className="text-blue-600">Me</span>
           </h1>
           <p className="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
-            Discover in-depth articles and expertise from passionate authors who are pioneering advancements in DevOps,
-            cloud computing, AI, and cutting-edge infrastructure technologies
+            From CI/CD to MLOps — streamlining software delivery in the cloud era.
           </p>
         </div>
       </section>
@@ -242,12 +241,12 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg">
+            <Card className="border-0 bg-gray-50 shadow-lg">
               <CardContent className="p-6">
                 <div className="text-center mb-6">
                   <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg">
                     <Image
-                      src={personalInfo.avatar || "/placeholder.svg"}
+                      src={personalInfo.avatar || "/me.png"}
                       alt={personalInfo.name}
                       layout="fill"
                       objectFit="cover"
@@ -323,6 +322,55 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
+            <Card className="border-0 bg-white shadow-lg">
+  <CardHeader className="pb-4">
+    <CardTitle className="flex items-center text-xl font-bold text-gray-900">
+      <Briefcase className="h-6 w-6 mr-3 text-green-600" />
+      Freelance Earnings (Upwork)
+    </CardTitle>
+  </CardHeader>
+  <CardContent className="p-6 pt-0 space-y-4">
+    <div className="flex items-center justify-between">
+      <p className="text-sm text-gray-700 font-medium">Total Earnings</p>
+      <Badge className="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full">
+        $14,000+
+      </Badge>
+    </div>
+    <p className="text-sm text-gray-600 leading-relaxed">
+      Worked long-term as a Kubernetes Engineer providing reliable support and infrastructure automation to global clients.  
+      Also attempted DevOps content writing, but had to pause due to limited time.
+    </p>
+    <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+      <li>Kubernetes cluster setup, management, and scaling</li>
+      <li>Terraform-based infrastructure provisioning (AWS & Azure)</li>
+      <li>CI/CD pipeline design using GitHub Actions</li>
+      <li>Monitoring and alerting with Grafana & Prometheus</li>
+      <li>DevOps content creation (paused due to time constraints)</li>
+    </ul>
+
+    {/* Earnings Screenshot */}
+    <div className="mt-4 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+      <Image
+        src="/earnings.png" // ← your image file
+        alt="Upwork Earnings"
+        width={800}
+        height={400}
+        className="w-full h-auto object-contain"
+      />
+    </div>
+
+    {/* Upwork profile button */}
+    <Button
+      size="sm"
+      variant="outline"
+      className="w-full border-2 border-green-300 text-green-700 hover:bg-green-50 hover:border-green-400 font-semibold transition-all bg-transparent"
+      onClick={() => window.open("https://www.upwork.com/freelancers/~thaunghtike", "_blank")}
+    >
+      View Upwork Profile
+    </Button>
+  </CardContent>
+</Card>
+
           </div>
           {/* Experience, Education, Projects, Certifications */}
           <div className="lg:col-span-2 space-y-10">
@@ -388,7 +436,7 @@ export default function AboutPage() {
                 {projects.map((project, index) => (
                   <Card
                     key={index}
-                    className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                    className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
                       <h4 className="text-xl font-bold text-gray-900 mb-2">{project.name}</h4>
@@ -404,9 +452,6 @@ export default function AboutPage() {
                           </Badge>
                         ))}
                       </div>
-                      <p className="text-base text-green-700 font-semibold flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-green-600" /> {project.impact}
-                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -422,7 +467,7 @@ export default function AboutPage() {
                 {education.map((edu, index) => (
                   <Card
                     key={index}
-                    className="border-0 bg-gradient-to-br from-green-50 to-emerald-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                    className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
                       <h4 className="text-xl font-bold text-gray-900 mb-2">{edu.degree}</h4>
@@ -432,7 +477,6 @@ export default function AboutPage() {
                         {edu.duration}
                       </div>
                       <p className="text-gray-700 mb-2 text-sm leading-relaxed">{edu.details}</p>
-                      <p className="text-base text-green-700 font-semibold">GPA: {edu.gpa}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -448,7 +492,7 @@ export default function AboutPage() {
                 {certifications.map((cert, index) => (
                   <Card
                     key={index}
-                    className="border-0 bg-gradient-to-br from-orange-50 to-red-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                    className="border-0 bg-gray-50 to-red-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
                       <h4 className="font-bold text-gray-900 mb-2 text-base">{cert.name}</h4>

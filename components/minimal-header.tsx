@@ -21,7 +21,7 @@ export function MinimalHeader() {
   const [learningTimeout, setLearningTimeout] = useState<NodeJS.Timeout | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const API_BASE_URL = "http://192.168.100.7:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
     return () => {

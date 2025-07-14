@@ -48,7 +48,7 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const API_BASE_URL = "http://192.168.100.7:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api"
 
   useEffect(() => {
     const fetchCategories = async () => {
