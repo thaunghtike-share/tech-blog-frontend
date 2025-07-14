@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Server,
   Code,
@@ -18,97 +18,106 @@ import {
   Folder,
   Star,
   Sparkles,
-} from "lucide-react"
-import { useState, useEffect } from "react"
-import Link from "next/link"
+} from "lucide-react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface Category {
-  id: number
-  name: string
-  post_count?: number
+  id: number;
+  name: string;
+  post_count?: number;
 }
 
 interface FeaturedAuthor {
-  id: number
-  name: string
-  bio: string
-  avatar: string
-  featured: boolean
-  job_title?: string
-  company?: string
-  post_count?: number
+  id: number;
+  name: string;
+  bio: string;
+  avatar: string;
+  featured: boolean;
+  job_title?: string;
+  company?: string;
+  post_count?: number;
 }
 
 const getCategoryIconWithColor = (
-  categoryName: string,
+  categoryName: string
 ): [React.ComponentType<React.SVGProps<SVGSVGElement>>, string] => {
-  const name = categoryName.toLowerCase()
-  if (name.includes("devops")) return [Server, "bg-emerald-100 text-emerald-600"]
-  if (name.includes("python")) return [Code, "bg-yellow-100 text-yellow-600"]
-  if (name.includes("ai") || name.includes("ml")) return [Brain, "bg-purple-100 text-purple-600"]
-  if (name.includes("cloud")) return [Cloud, "bg-sky-100 text-sky-600"]
-  if (name.includes("automation")) return [Cog, "bg-orange-100 text-orange-600"]
-  if (name.includes("monitoring")) return [BarChart3, "bg-pink-100 text-pink-600"]
-  if (name.includes("security")) return [Shield, "bg-red-100 text-red-600"]
-  if (name.includes("database")) return [Database, "bg-indigo-100 text-indigo-600"]
-  if (name.includes("web")) return [Globe, "bg-cyan-100 text-cyan-600"]
-  return [Zap, "bg-gray-100 text-gray-600"]
-}
+  const name = categoryName.toLowerCase();
+  if (name.includes("devops"))
+    return [Server, "bg-emerald-100 text-emerald-600"];
+  if (name.includes("python")) return [Code, "bg-yellow-100 text-yellow-600"];
+  if (name.includes("ai") || name.includes("ml"))
+    return [Brain, "bg-purple-100 text-purple-600"];
+  if (name.includes("cloud")) return [Cloud, "bg-sky-100 text-sky-600"];
+  if (name.includes("automation"))
+    return [Cog, "bg-orange-100 text-orange-600"];
+  if (name.includes("monitoring"))
+    return [BarChart3, "bg-pink-100 text-pink-600"];
+  if (name.includes("security")) return [Shield, "bg-red-100 text-red-600"];
+  if (name.includes("database"))
+    return [Database, "bg-indigo-100 text-indigo-600"];
+  if (name.includes("web")) return [Globe, "bg-cyan-100 text-cyan-600"];
+  return [Zap, "bg-gray-100 text-gray-600"];
+};
 
 export function MinimalSidebar() {
-  const [categories, setCategories] = useState<Category[]>([])
-  const [tags, setTags] = useState<any[]>([])
-  const [featuredAuthors, setFeaturedAuthors] = useState<FeaturedAuthor[]>([])
-  const [showAllCategories, setShowAllCategories] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [tags, setTags] = useState<any[]>([]);
+  const [featuredAuthors, setFeaturedAuthors] = useState<FeaturedAuthor[]>([]);
+  const [showAllCategories, setShowAllCategories] = useState(false);
   const [loading, setLoading] = useState({
     categories: true,
     tags: true,
     authors: true,
-  })
+  });
   const [error, setError] = useState({
     categories: null as string | null,
     tags: null as string | null,
     authors: null as string | null,
-  })
+  });
 
-  const API_BASE_URL = "http://192.168.1.131:8000/api"
+  const API_BASE_URL = "http://192.168.1.131:8000/api";
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading({ categories: true, tags: true, authors: true })
-      setError({ categories: null, tags: null, authors: null })
+      setLoading({ categories: true, tags: true, authors: true });
+      setError({ categories: null, tags: null, authors: null });
 
       try {
         const [catRes, tagRes, authorRes] = await Promise.all([
           fetch(`${API_BASE_URL}/categories/?count_posts=true`),
           fetch(`${API_BASE_URL}/tags/?count_posts=true`),
           fetch(`${API_BASE_URL}/authors/?featured=true&count_posts=true`),
-        ])
+        ]);
 
-        if (!catRes.ok) throw new Error("Failed to fetch categories")
-        if (!tagRes.ok) throw new Error("Failed to fetch tags")
-        if (!authorRes.ok) throw new Error("Failed to fetch authors")
+        if (!catRes.ok) throw new Error("Failed to fetch categories");
+        if (!tagRes.ok) throw new Error("Failed to fetch tags");
+        if (!authorRes.ok) throw new Error("Failed to fetch authors");
 
-        const catData = await catRes.json()
-        const tagData = await tagRes.json()
-        const authorData = await authorRes.json()
+        const catData = await catRes.json();
+        const tagData = await tagRes.json();
+        const authorData = await authorRes.json();
 
-        setCategories(Array.isArray(catData) ? catData : catData?.results || [])
-        setTags(Array.isArray(tagData) ? tagData : tagData?.results || [])
-        setFeaturedAuthors(Array.isArray(authorData) ? authorData : authorData?.results || [])
+        setCategories(
+          Array.isArray(catData.results) ? catData.results : catData
+        );
+        setTags(Array.isArray(tagData.results) ? tagData.results : tagData);
+        setFeaturedAuthors(
+          Array.isArray(authorData.results) ? authorData.results : authorData
+        );
       } catch (err) {
         setError({
           categories: "Failed to load categories",
           tags: "Failed to load tags",
           authors: "Failed to load authors",
-        })
+        });
       } finally {
-        setLoading({ categories: false, tags: false, authors: false })
+        setLoading({ categories: false, tags: false, authors: false });
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <aside className="space-y-6 w-80 max-w-full">
@@ -157,7 +166,9 @@ export function MinimalSidebar() {
               ].map((service, index) => (
                 <li key={index}>
                   <Link
-                    href={`/services#${service.title.toLowerCase().replace(" ", "-")}`}
+                    href={`/services#${service.title
+                      .toLowerCase()
+                      .replace(" ", "-")}`}
                     className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/80 hover:shadow-md transition-all"
                   >
                     <div
@@ -169,7 +180,9 @@ export function MinimalSidebar() {
                       <h4 className="text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors">
                         {service.title}
                       </h4>
-                      <p className="text-xs text-gray-600 mt-1">{service.desc}</p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        {service.desc}
+                      </p>
                     </div>
                     <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
                   </Link>
@@ -188,7 +201,6 @@ export function MinimalSidebar() {
           </div>
         </CardContent>
       </Card>
-
       {/* Categories */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
@@ -197,7 +209,9 @@ export function MinimalSidebar() {
               <Folder className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-900">Categories</h3>
+              <h3 className="text-xl font-semibold text-gray-900">
+                Categories
+              </h3>
               <p className="text-sm text-gray-600">Browse by topic</p>
             </div>
           </div>
@@ -205,7 +219,10 @@ export function MinimalSidebar() {
           {loading.categories ? (
             <div className="space-y-3">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="animate-pulse h-10 rounded-xl bg-gradient-to-r from-gray-100 to-gray-200" />
+                <div
+                  key={i}
+                  className="animate-pulse h-10 rounded-xl bg-gradient-to-r from-gray-100 to-gray-200"
+                />
               ))}
             </div>
           ) : error.categories ? (
@@ -215,35 +232,48 @@ export function MinimalSidebar() {
           ) : (
             <>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {(showAllCategories ? categories : categories.slice(0, 6)).map((category) => {
-                  const [Icon, colorClass] = getCategoryIconWithColor(category.name)
-                  return (
-                    <li key={category.id}>
-                      <Link
-                        href={`/categories/${category.id}`}
-                        className="flex gap-2 p-2 rounded-xl items-center transition-all border border-transparent
-                                   bg-white hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100
-                                   hover:border-blue-200 hover:shadow-lg hover:ring-1 hover:ring-blue-300"
-                      >
-                        <div className={`p-1 rounded-lg ${colorClass.split(" ")[0]} shadow-sm shrink-0`}>
-                          <Icon className={`h-3 w-3 ${colorClass.split(" ")[1]}`} />
-                        </div>
-                        <div className="flex flex-col min-w-0 w-full">
-                          <span className="text-xs font-medium text-gray-800 hover:text-blue-600 break-normal whitespace-normal leading-snug">
-                            {category.name}
-                          </span>
-                          {category.post_count && (
-                            <span className="text-[0.65rem] text-gray-500 mt-0.5">
-                              {category.post_count} post{category.post_count > 1 ? "s" : ""}
-                            </span>
-                          )}
-                        </div>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
+                {(showAllCategories ? categories : categories.slice(0, 6)).map(
+                  (category) => {
+                    const [Icon, colorClass] = getCategoryIconWithColor(
+                      category.name
+                    );
+                    return (
+                      <li key={category.id} className="w-full">
+                        <Link
+                          href={`/categories/${category.id}`}
+                          className="block w-full rounded-xl transition-colors"
+                        >
+                          <div className="flex items-start gap-3 p-2 rounded-xl border border-transparent bg-white">
+                            <div
+                              className={`p-1 rounded-lg ${
+                                colorClass.split(" ")[0]
+                              } shadow-sm shrink-0`}
+                            >
+                              <Icon
+                                className={`h-4 w-4 ${
+                                  colorClass.split(" ")[1]
+                                }`}
+                              />
+                            </div>
 
+                            <div className="flex flex-col leading-tight">
+                              <span className="text-sm font-medium text-gray-800 hover:text-blue-600 break-words">
+                                {category.name}
+                              </span>
+                              {typeof category.post_count === "number" && (
+                                <span className="text-xs text-gray-500 select-none">
+                                  {category.post_count} article
+                                  {category.post_count !== 1 ? "s" : ""}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  }
+                )}
+              </ul>
               {categories.length > 6 && (
                 <button
                   onClick={() => setShowAllCategories(!showAllCategories)}
@@ -275,7 +305,9 @@ export function MinimalSidebar() {
               <Folder className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-900">Popular Tags</h3>
+              <h3 className="text-xl font-semibold text-gray-900">
+                Popular Tags
+              </h3>
               <p className="text-sm text-gray-600">Trending topics</p>
             </div>
           </div>
@@ -283,7 +315,10 @@ export function MinimalSidebar() {
           {loading.tags ? (
             <div className="flex flex-wrap gap-2">
               {[...Array(10)].map((_, i) => (
-                <div key={i} className="h-8 w-20 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 animate-pulse" />
+                <div
+                  key={i}
+                  className="h-8 w-20 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 animate-pulse"
+                />
               ))}
             </div>
           ) : error.tags ? (
@@ -318,7 +353,9 @@ export function MinimalSidebar() {
               <Star className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-900">Featured Authors</h3>
+              <h3 className="text-xl font-semibold text-gray-900">
+                Featured Authors
+              </h3>
               <p className="text-sm text-gray-600">Expert contributors</p>
             </div>
           </div>
@@ -344,7 +381,9 @@ export function MinimalSidebar() {
               <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Star className="w-6 h-6 text-gray-400" />
               </div>
-              <p className="text-gray-500 text-sm">No featured authors available</p>
+              <p className="text-gray-500 text-sm">
+                No featured authors available
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -359,7 +398,8 @@ export function MinimalSidebar() {
                       alt={author.name}
                       className="h-12 w-12 rounded-full object-cover border-2 border-white shadow-md group-hover:shadow-lg transition-shadow"
                       onError={(e) => {
-                        ;(e.target as HTMLImageElement).src = "/default-avatar.png"
+                        (e.target as HTMLImageElement).src =
+                          "/default-avatar.png";
                       }}
                     />
                     <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-1 rounded-full shadow-md">
@@ -372,16 +412,18 @@ export function MinimalSidebar() {
                     </h4>
                     <p className="text-sm text-gray-600 break-words">
                       {author.job_title
-                        ? `${author.job_title}${author.company ? ` at ${author.company}` : ""}`
+                        ? `${author.job_title}${
+                            author.company ? ` at ${author.company}` : ""
+                          }`
                         : "DevOps Engineer"}
                     </p>
                     {author.post_count && (
                       <p className="text-xs text-gray-400 mt-1">
-                        {author.post_count} {author.post_count === 1 ? "article" : "articles"}
+                        {author.post_count}{" "}
+                        {author.post_count === 1 ? "post" : "posts"}
                       </p>
                     )}
                   </div>
-                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
                 </div>
               ))}
             </div>
@@ -389,5 +431,5 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
     </aside>
-  )
+  );
 }
