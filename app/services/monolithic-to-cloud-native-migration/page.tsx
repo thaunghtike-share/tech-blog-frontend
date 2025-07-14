@@ -11,7 +11,6 @@ import {
   Activity,
   ExternalLink,
   Code,
-  Search,
   FileText,
   Zap,
   Lock,
@@ -30,6 +29,9 @@ import {
   MemoryStick,
   LayoutDashboard,
   Terminal,
+  Scale,
+  Scan,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,7 +47,6 @@ import { motion } from "framer-motion";
 export default function MonolithicToCloudNativePage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-
   const listItemStyle =
     "flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group";
   const iconWrapperStyle = (color: string) =>
@@ -53,7 +54,6 @@ export default function MonolithicToCloudNativePage() {
   const iconStyle = (color: string) => `w-4 h-4 text-${color}-600`;
   const titleStyle = "font-bold text-gray-900 mb-1 text-base";
   const descStyle = "text-gray-600 leading-relaxed text-sm";
-
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
       {/* Subtle background pattern */}
@@ -151,7 +151,6 @@ export default function MonolithicToCloudNativePage() {
                 "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
             }}
           ></div>
-
           <div className="relative z-10 text-center -mb-4">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               End-to-End DevOps Architecture
@@ -162,7 +161,6 @@ export default function MonolithicToCloudNativePage() {
               and robust monitoring.
             </p>
           </div>
-
           <Card className="overflow-hidden bg-gray-50 duration-500 border-0 shadow-none">
             <CardContent className="p-4">
               <div className="h-[750px] w-full relative">
@@ -184,7 +182,6 @@ export default function MonolithicToCloudNativePage() {
               </div>
             </CardContent>
           </Card>
-
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-8">
             {[
@@ -1402,6 +1399,164 @@ export default function MonolithicToCloudNativePage() {
             </Card>
           </div>
         </section>
+
+        {/* Step 8: Autoscaling for Kubernetes */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">8</span>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Dynamic Autoscaling for Kubernetes
+              </h2>
+              <p className="text-lg text-gray-600">
+                Ensure optimal performance and cost-efficiency with intelligent
+                scaling
+              </p>
+            </div>
+          </div>
+          <div className="space-y-8">
+            <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <div className="p-2 bg-blue-100 rounded-lg shadow-sm">
+                    <Scale className="w-5 h-5 text-blue-600" />
+                  </div>
+                  Intelligent Scaling Strategies
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600">
+                  Automated scaling at node and pod levels for peak performance
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  To handle varying workloads and optimize resource utilization,
+                  we implement a multi-faceted autoscaling strategy within your
+                  Kubernetes environment. This ensures your applications remain
+                  responsive and cost-effective under any load.
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    {
+                      icon: Server,
+                      title: "Node Pool Autoscaling",
+                      desc: "Automatically adjusts the number of nodes in your Kubernetes cluster based on resource demand, ensuring your cluster has enough capacity.",
+                      color: "teal",
+                    },
+                    {
+                      icon: Cpu,
+                      title: "Horizontal Pod Autoscaler (HPA)",
+                      desc: "Scales the number of pod replicas up or down based on observed CPU utilization or other custom metrics.",
+                      color: "green",
+                    },
+                    {
+                      icon: MemoryStick,
+                      title: "Vertical Pod Autoscaler (VPA)",
+                      desc: "Automatically adjusts the CPU and memory requests/limits for containers in a pod based on historical usage, optimizing resource allocation.",
+                      color: "purple",
+                    },
+                    {
+                      icon: Zap,
+                      title: "KEDA (Kubernetes Event-driven Autoscaling)",
+                      desc: "Extends Kubernetes autoscaling capabilities to scale applications based on external events like message queue length, Kafka topics, or custom metrics.",
+                      color: "orange",
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
+                      </div>
+                      <div>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Step 9: Comprehensive Security */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">9</span>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Comprehensive Security Measures
+              </h2>
+              <p className="text-lg text-gray-600">
+                Protecting your applications and infrastructure at every layer
+              </p>
+            </div>
+          </div>
+          <div className="space-y-8">
+            <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
+                    <ShieldCheck className="w-5 h-5 text-purple-600" />
+                  </div>
+                  Multi-Layered Security Approach
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600">
+                  From code to cloud, ensuring robust protection
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  Security is paramount in cloud-native environments. Our
+                  approach integrates security practices throughout the entire
+                  DevOps lifecycle, from continuous scanning to strict access
+                  controls.
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    {
+                      icon: Scan,
+                      title: "Container Image Scanning",
+                      desc: "Automated vulnerability scanning of container images using tools like Trivy in the CI/CD pipeline to prevent insecure images from reaching production.",
+                      color: "red",
+                    },
+                    {
+                      icon: Cloud,
+                      title: "Cloud-Level Security",
+                      desc: "Implementing best practices for cloud provider security, including network segmentation (VNet/VPC), firewall rules, and security groups.",
+                      color: "blue",
+                    },
+                    {
+                      icon: Dock,
+                      title: "Container-Level Security",
+                      desc: "Applying security contexts, limiting privileges, and using read-only file systems for containers to minimize attack surface.",
+                      color: "green",
+                    },
+                    {
+                      icon: Users,
+                      title: "RBAC (Role-Based Access Control)",
+                      desc: "Strictly defining roles and permissions for users and services within Kubernetes and cloud environments to enforce least privilege.",
+                      color: "orange",
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
+                      </div>
+                      <div>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section className="mb-12">
           <div className="relative">
