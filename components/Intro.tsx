@@ -7,7 +7,9 @@ import {
   Code2,
   Server,
   GitMerge,
+  Wrench,
   ShieldCheck,
+  ListTodo,
   ArrowRight,
   Rocket,
   BookOpenCheck,
@@ -111,7 +113,7 @@ export default function Intro() {
             className="flex items-center justify-center gap-3 mb-6 select-text"
           >
             <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg select-text">
-              <BookOpenCheck className="w-5 h-5 text-white" />
+              <Rocket className="w-5 h-5 text-white" />
             </div>
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
               <Sparkles className="w-3 h-3 mr-1.5" /> Introduction
@@ -171,8 +173,22 @@ export default function Intro() {
         </div>
       </motion.div>
 
-      {/* Tool Categories */}
+      {/* Essential DevOps Tools */}
       <div className="mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-6 select-text flex items-center justify-center gap-3"
+        >
+          <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow select-text">
+            <Wrench className="w-5 h-5 text-white" />
+          </div>
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
+            Essential Tools
+          </span>
+        </motion.div>
+
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -233,7 +249,7 @@ export default function Intro() {
         >
           <h4 className="text-2xl font-bold text-gray-900 mb-5 flex items-center justify-center gap-2 select-text">
             <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg select-text">
-              <BookOpenCheck className="w-5 h-5 text-white" />
+              <ListTodo className="w-5 h-5 text-white" />
             </div>
             <span className="bg-gradient-to-r from-gray-900 to-indigo-800 bg-clip-text text-transparent select-text">
               Learning Guideline
