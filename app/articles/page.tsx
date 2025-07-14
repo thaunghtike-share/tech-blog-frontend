@@ -44,7 +44,6 @@ export default function ArticlesPage() {
           {/* Articles List */}
           <div className="lg:col-span-4 bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-slate-900">Recent Articles</h2>
               {/* Your filters here */}
             </div>
             <MinimalBlogList searchQuery={searchQuery} />
