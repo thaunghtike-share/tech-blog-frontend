@@ -354,10 +354,6 @@ export default function NewArticlePage() {
             </>
           )}
         </section>
-        {/* Sidebar always rendered on right side on large screens */}
-        <aside className="lg:col-span-2">
-          <MinimalSidebar />
-        </aside>
       </main>
       <MinimalFooter />
     </div>
