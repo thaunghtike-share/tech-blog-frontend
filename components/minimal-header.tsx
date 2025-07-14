@@ -315,7 +315,7 @@ export function MinimalHeader() {
                   <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">
                     Infrastructure as Code
                   </Link>
-                  <Link href="/services/website" className="block px-4 py-2 hover:bg-blue-50">
+                  <Link href="/services/website-development" className="block px-4 py-2 hover:bg-blue-50">
                     Website Development
                   </Link>
                 </div>
