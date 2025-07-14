@@ -81,26 +81,30 @@ export default function Intro() {
       icon: <Code2 className="w-5 h-5" />,
       tools: ["Git", "GitHub", "IDEs", "SDKs"],
       color: "bg-blue-100 text-blue-800",
+      frameColor: "bg-blue-500",
     },
     {
       name: "Operations",
       icon: <Server className="w-5 h-5" />,
       tools: ["Linux", "Bash", "SSH", "Monitoring"],
       color: "bg-purple-100 text-purple-800",
+      frameColor: "bg-purple-500",
     },
     {
       name: "Automation",
       icon: <GitMerge className="w-5 h-5" />,
       tools: ["Jenkins", "GitHub Actions", "CI/CD Pipelines"],
       color: "bg-green-100 text-green-800",
+      frameColor: "bg-green-500",
     },
     {
       name: "Security",
       icon: <ShieldCheck className="w-5 h-5" />,
       tools: ["Vault", "IAM", "Security Scanning"],
       color: "bg-red-100 text-red-800",
+      frameColor: "bg-red-500",
     },
-  ];
+  ];  
 
   return (
     <section className="py-16 px-4 max-w-7xl mx-auto">
@@ -185,20 +189,20 @@ export default function Intro() {
             <Wrench className="w-5 h-5 text-white" />
           </div>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
-            Essential Tools
+            <Sparkles className="w-3 h-3 mr-1.5" /> Essential DevOps Tools
           </span>
         </motion.div>
 
-        <motion.h3
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-2xl font-bold text-gray-900 mb-10 select-text text-center"
+          className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base select-text text-center mb-10"
         >
-          <span className="font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
-            Essential DevOps Tools
-          </span>
-        </motion.h3>
+          DevOps tools help automate, manage, and monitor the software
+          development lifecycle. They improve collaboration, speed, and
+          reliability across teams.
+        </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {toolCategories.map((category, i) => (
@@ -207,33 +211,38 @@ export default function Intro() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * i }}
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+              className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden"
               variants={cardVariants}
               whileHover="hover"
             >
-              <div className="flex items-center mb-4">
-                <div
-                  className={`p-2 ${category.color.split(" ")[0]} ${
-                    category.color.split(" ")[1]
-                  } rounded-lg mr-3`}
-                >
-                  {category.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {category.name}
-                </h3>
-              </div>
-              <ul className="space-y-2">
-                {category.tools.map((tool, j) => (
-                  <li
-                    key={j}
-                    className="flex items-center text-gray-700 text-sm"
+              {/* Colored top frame */}
+              <div className={`h-2 ${category.frameColor}`} />
+
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div
+                    className={`p-2 ${category.color.split(" ")[0]} ${
+                      category.color.split(" ")[1]
+                    } rounded-lg mr-3`}
                   >
-                    <ChevronRight className="w-4 h-4 text-gray-400 mr-2" />
-                    {tool}
-                  </li>
-                ))}
-              </ul>
+                    {category.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {category.name}
+                  </h3>
+                </div>
+                <ul className="space-y-2">
+                  {category.tools.map((tool, j) => (
+                    <li
+                      key={j}
+                      className="flex items-center text-gray-700 text-sm"
+                    >
+                      <ChevronRight className="w-4 h-4 text-gray-400 mr-2" />
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -251,8 +260,8 @@ export default function Intro() {
             <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg select-text">
               <ListTodo className="w-5 h-5 text-white" />
             </div>
-            <span className="bg-gradient-to-r from-gray-900 to-indigo-800 bg-clip-text text-transparent select-text">
-              Learning Guideline
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
+              <Sparkles className="w-3 h-3 mr-1.5" /> Guideline
             </span>
           </h4>
           <p className="text-gray-700 text-center">
