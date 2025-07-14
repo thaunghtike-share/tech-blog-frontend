@@ -1,10 +1,8 @@
-"use client"
-
-import Image from "next/image"
-import { useSearchParams } from "next/navigation"
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalFooter } from "@/components/minimal-footer"
-import { CodeToggle } from "@/components/code-toggle" // Import the new component
+"use client";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalFooter } from "@/components/minimal-footer";
 import {
   Dock,
   ShieldCheck,
@@ -13,6 +11,8 @@ import {
   Activity,
   ExternalLink,
   Code,
+  Search,
+  FileText,
   Zap,
   Lock,
   Layers,
@@ -29,17 +29,30 @@ import {
   Cpu,
   MemoryStick,
   LayoutDashboard,
-  HardDrive,
   Terminal,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { motion } from "framer-motion"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 export default function MonolithicToCloudNativePage() {
-  const searchParams = useSearchParams()
-  const searchQuery = searchParams.get("search") || ""
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+
+  const listItemStyle =
+    "flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group";
+  const iconWrapperStyle = (color: string) =>
+    `p-2 bg-${color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`;
+  const iconStyle = (color: string) => `w-4 h-4 text-${color}-600`;
+  const titleStyle = "font-bold text-gray-900 mb-1 text-base";
+  const descStyle = "text-gray-600 leading-relaxed text-sm";
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
@@ -51,7 +64,6 @@ export default function MonolithicToCloudNativePage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-
       {/* Messenger Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
@@ -60,21 +72,36 @@ export default function MonolithicToCloudNativePage() {
         aria-label="Chat with me on Messenger"
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 240"
+          fill="none"
+          className="w-8 h-8 rounded-full"
+        >
           <defs>
-            <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="messengerGradient"
+              x1="0"
+              y1="0"
+              x2="240"
+              y2="240"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#E1306C" />
               <stop offset="1" stopColor="#833AB4" />
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
+          <path
+            fill="#fff"
+            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
+          />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
+        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">
+          Chat?
+        </span>
       </a>
-
       <MinimalHeader />
-
       <main className="mt-4 max-w-7xl mx-auto px-6 py-10 relative z-10">
         {/* Hero Section */}
         <section className="text-center mb-20">
@@ -90,8 +117,9 @@ export default function MonolithicToCloudNativePage() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
-              Empower your business with scalable, resilient, and cost-efficient cloud solutions through modern DevOps
-              practices and infrastructure automation.
+              Empower your business with scalable, resilient, and cost-efficient
+              cloud solutions through modern DevOps practices and infrastructure
+              automation.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
               <Badge className="px-4 py-2 bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-all duration-300 hover:scale-105 cursor-pointer">
@@ -113,19 +141,38 @@ export default function MonolithicToCloudNativePage() {
             </div>
           </div>
         </section>
-
         {/* Architecture Overview */}
-        <section className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">End-to-End DevOps Architecture</h2>
+        <section className="mb-20 relative min-h-[650px] bg-gray-50 overflow-hidden">
+          {/* Subtle background pattern */}
+          <div
+            className="absolute inset-0 z-0 opacity-10"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            }}
+          ></div>
+
+          <div className="relative z-10 text-center -mb-4">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              End-to-End DevOps Architecture
+            </h2>
             <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Our comprehensive solution covers every aspect of your cloud journey, from infrastructure provisioning to
-              continuous delivery and robust monitoring.
+              Our comprehensive solution covers every aspect of your cloud
+              journey, from infrastructure provisioning to continuous delivery
+              and robust monitoring.
             </p>
           </div>
-          <Card className="overflow-hidden shadow-xl border border-gray-100 bg-white/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-500">
-            <CardContent className="p-8">
-              <div className="relative h-[500px] w-full bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100">
+
+          <Card className="overflow-hidden bg-gray-50 duration-500 border-0 shadow-none">
+            <CardContent className="p-4">
+              <div className="h-[750px] w-full relative">
+                <div
+                  className="absolute inset-0 z-0 opacity-10"
+                  style={{
+                    backgroundImage:
+                      "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+                  }}
+                ></div>
                 <Image
                   src="/dinger.png"
                   alt="Complete DevOps Architecture Diagram"
@@ -139,12 +186,32 @@ export default function MonolithicToCloudNativePage() {
           </Card>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-8">
             {[
-              { value: "99.9%", label: "Uptime SLA", color: "teal", icon: CheckCircle2 },
-              { value: "50%", label: "Cost Reduction", color: "green", icon: ArrowRight },
-              { value: "10x", label: "Faster Deployments", color: "purple", icon: Zap },
-              { value: "24/7", label: "Monitoring", color: "orange", icon: Activity },
+              {
+                value: "99.9%",
+                label: "Uptime SLA",
+                color: "teal",
+                icon: CheckCircle2,
+              },
+              {
+                value: "50%",
+                label: "Cost Reduction",
+                color: "green",
+                icon: ArrowRight,
+              },
+              {
+                value: "10x",
+                label: "Faster Deployments",
+                color: "purple",
+                icon: Zap,
+              },
+              {
+                value: "24/7",
+                label: "Monitoring",
+                color: "orange",
+                icon: Activity,
+              },
             ].map((stat, index) => (
               <div
                 key={index}
@@ -155,13 +222,18 @@ export default function MonolithicToCloudNativePage() {
                     className={`w-7 h-7 mx-auto text-${stat.color}-600 group-hover:scale-110 transition-transform duration-300`}
                   />
                 </div>
-                <div className={`text-2xl font-bold text-${stat.color}-700 mb-1`}>{stat.value}</div>
-                <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
+                <div
+                  className={`text-2xl font-bold text-${stat.color}-700 mb-1`}
+                >
+                  {stat.value}
+                </div>
+                <div className="text-sm text-gray-600 font-medium">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
         </section>
-
         {/* Step 1: Terraform Infrastructure */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -169,11 +241,14 @@ export default function MonolithicToCloudNativePage() {
               <span className="font-bold text-lg">1</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Infrastructure as Code with Terraform</h2>
-              <p className="text-lg text-gray-600">Automated, reproducible cloud infrastructure provisioning</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Infrastructure as Code with Terraform
+              </h2>
+              <p className="text-lg text-gray-600">
+                Automated, reproducible cloud infrastructure provisioning
+              </p>
             </div>
           </div>
-
           <div className="space-y-8">
             {/* Why Terraform Section */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -216,25 +291,19 @@ export default function MonolithicToCloudNativePage() {
                       color: "blue",
                     },
                   ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
-                    >
-                      <div
-                        className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-base">{item.title}</h4>
-                        <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Terraform Modules Section */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -258,18 +327,30 @@ export default function MonolithicToCloudNativePage() {
                             <Cloud className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-gray-900 text-base mb-1">Azure Infrastructure Module</h4>
+                            <h4 className="font-bold text-gray-900 text-base mb-1">
+                              Azure Infrastructure Module
+                            </h4>
                             <p className="text-gray-600 mb-2 text-sm">
-                              Complete Azure setup with AKS, ACR, VNet, and monitoring.
+                              Complete Azure setup with AKS, ACR, VNet, and
+                              monitoring.
                             </p>
                             <div className="flex items-center gap-2">
-                              <Badge variant="secondary" className="text-xs font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-medium"
+                              >
                                 AKS
                               </Badge>
-                              <Badge variant="secondary" className="text-xs font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-medium"
+                              >
                                 ACR
                               </Badge>
-                              <Badge variant="secondary" className="text-xs font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-medium"
+                              >
                                 VNet
                               </Badge>
                             </div>
@@ -279,14 +360,18 @@ export default function MonolithicToCloudNativePage() {
                           variant="outline"
                           size="sm"
                           className="group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border-blue-300 text-blue-700 hover:border-blue-500 bg-transparent"
-                          onClick={() => window.open("https://github.com/thaunghtike-share/terraform-azure", "_blank")}
+                          onClick={() =>
+                            window.open(
+                              "https://github.com/thaunghtike-share/terraform-azure",
+                              "_blank"
+                            )
+                          }
                         >
                           <ExternalLink className="w-3 h-3 mr-1" />
                           View Module
                         </Button>
                       </div>
                     </div>
-
                     <div className="group p-4 bg-orange-50 rounded-xl border border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -294,18 +379,30 @@ export default function MonolithicToCloudNativePage() {
                             <Server className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-gray-900 text-base mb-1">AWS EKS Spot Instance Module</h4>
+                            <h4 className="font-bold text-gray-900 text-base mb-1">
+                              AWS EKS Spot Instance Module
+                            </h4>
                             <p className="text-gray-600 mb-2 text-sm">
-                              Cost-effective EKS cluster with spot instances and auto-scaling.
+                              Cost-effective EKS cluster with spot instances and
+                              auto-scaling.
                             </p>
                             <div className="flex items-center gap-2">
-                              <Badge variant="secondary" className="text-xs font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-medium"
+                              >
                                 EKS
                               </Badge>
-                              <Badge variant="secondary" className="text-xs font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-medium"
+                              >
                                 Spot Instances
                               </Badge>
-                              <Badge variant="secondary" className="text-xs font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-medium"
+                              >
                                 Auto-scaling
                               </Badge>
                             </div>
@@ -316,7 +413,10 @@ export default function MonolithicToCloudNativePage() {
                           size="sm"
                           className="group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 border-orange-300 text-orange-700 hover:border-orange-500 bg-transparent"
                           onClick={() =>
-                            window.open("https://github.com/thaunghtike-share/terraform-aws-kubespot", "_blank")
+                            window.open(
+                              "https://github.com/thaunghtike-share/terraform-aws-kubespot",
+                              "_blank"
+                            )
                           }
                         >
                           <ExternalLink className="w-3 h-3 mr-1" />
@@ -327,7 +427,6 @@ export default function MonolithicToCloudNativePage() {
                   </div>
                 </CardContent>
               </Card>
-
               {/* Resources Deployed */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
@@ -345,10 +444,26 @@ export default function MonolithicToCloudNativePage() {
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       { icon: Server, label: "AKS Cluster", color: "blue" },
-                      { icon: Dock, label: "Container Registry", color: "green" },
-                      { icon: Cloud, label: "Virtual Networks", color: "purple" },
-                      { icon: Activity, label: "Monitoring Stack", color: "orange" },
-                      { icon: ShieldCheck, label: "Security Policies", color: "red" },
+                      {
+                        icon: Dock,
+                        label: "Container Registry",
+                        color: "green",
+                      },
+                      {
+                        icon: Cloud,
+                        label: "Virtual Networks",
+                        color: "purple",
+                      },
+                      {
+                        icon: Activity,
+                        label: "Monitoring Stack",
+                        color: "orange",
+                      },
+                      {
+                        icon: ShieldCheck,
+                        label: "Security Policies",
+                        color: "red",
+                      },
                       { icon: Database, label: "Databases", color: "yellow" },
                     ].map((resource, index) => (
                       <div
@@ -358,155 +473,17 @@ export default function MonolithicToCloudNativePage() {
                         <resource.icon
                           className={`w-4 h-4 text-${resource.color}-600 group-hover:scale-110 transition-transform duration-300`}
                         />
-                        <span className="text-sm font-semibold text-gray-800">{resource.label}</span>
+                        <span className="text-sm font-semibold text-gray-800">
+                          {resource.label}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
             </div>
-
-            {/* Usage Example */}
-            <CodeToggle title="View Real-World Usage Example (main.tf)" defaultOpen={false}>
-              <pre className="bg-white text-gray-800 border-0 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed shadow-inner font-mono">
-                {`# main.tf - Complete Azure Infrastructure
-module "infra" {
-  source = "./terraform-azurerm"
-
-  # Resource Groups Configuration
-  resource_groups = {
-    dev = {
-      location = "southeastasia"
-    }
-  }
-
-  # Virtual Network Setup
-  vnets = {
-    myvnet = {
-      name                = "myvnet"
-      location            = "southeastasia"
-      resource_group_name = "dev"
-      address_space       = ["10.100.0.0/16"]
-      subnets = {
-        default = {
-          resource_group_name = "dev"
-          address_prefix      = "10.100.1.0/24"
-        }
-      }
-    }
-  }
-
-  # Azure Container Registry
-  acr_registries = {
-    myacrk8s12345 = {
-      create               = true
-      resource_group_name = "dev"
-      location            = "southeastasia"
-      sku                  = "Basic"
-      admin_enabled       = true
-    }
-  }
-
-  # AKS Cluster Configuration
-  aks_clusters = {
-    dev-cluster = {
-      resource_group_name = "dev"
-      location            = "southeastasia"
-      dns_prefix          = "devaks"
-      default_node_pool = {
-        name       = "default"
-        node_count = 2
-        vm_size    = "Standard_D2_v2"
-      }
-      # Enable monitoring and security
-      enable_monitoring = true
-      enable_rbac      = true
-    }
-  }
-
-  # Tags for resource management
-  tags = {
-    Environment = "development"
-    Project      = "cloud-migration"
-    Owner        = "devops-team"
-  }
-}`}
-              </pre>
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-green-100 text-green-800 border border-green-200 shadow-sm">
-                  <Star className="w-3 h-3 mr-1" />
-                  Production Ready
-                </Badge>
-              </div>
-            </CodeToggle>
-
-            {/* Terragrunt and Terraformer */}
-            <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
-                  <div className="p-2 bg-orange-100 rounded-lg shadow-sm">
-                    <HardDrive className="w-5 h-5 text-orange-600" />
-                  </div>
-                  Terragrunt and Terraformer
-                </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
-                  Enhancing Terraform with DRY principles and reverse engineering
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-base">What is Terragrunt?</h4>
-                  <p className="text-gray-600 leading-relaxed text-sm">
-                    Terragrunt is a thin wrapper that provides extra tools for keeping your Terraform configurations DRY
-                    (Don't Repeat Yourself), working with multiple Terraform modules, and managing remote state. It
-                    helps manage large, complex Terraform codebases by orchestrating Terraform runs across multiple
-                    modules and environments.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-base">What is Terraformer?</h4>
-                  <p className="text-gray-600 leading-relaxed text-sm">
-                    Terraformer is a CLI tool that generates Terraform configuration from existing infrastructure
-                    (reverse Terraform). It allows you to import existing cloud resources into Terraform state and
-                    generate corresponding `.tf` files, making it easier to adopt IaC for existing environments.
-                  </p>
-                </div>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    {
-                      icon: Code,
-                      title: "DRY Terraform Code",
-                      desc: "Reduce code duplication and manage configurations efficiently across environments with Terragrunt.",
-                      color: "blue",
-                    },
-                    {
-                      icon: RefreshCw,
-                      title: "Import Existing Infra",
-                      desc: "Use Terraformer to generate Terraform code from your live cloud resources.",
-                      color: "green",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
-                    >
-                      <div
-                        className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-base">{item.title}</h4>
-                        <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </section>
-
         {/* Step 2: GitHub Actions CI/CD */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -514,11 +491,14 @@ module "infra" {
               <span className="font-bold text-lg">2</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">CI/CD Pipeline with GitHub Actions</h2>
-              <p className="text-lg text-gray-600">Automated build, test, and deployment workflows</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                CI/CD Pipeline with GitHub Actions
+              </h2>
+              <p className="text-lg text-gray-600">
+                Automated build, test, and deployment workflows
+              </p>
             </div>
           </div>
-
           <div className="space-y-8">
             {/* Complete CI/CD Workflow */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -534,7 +514,7 @@ module "infra" {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                   {/* Workflow Steps - Horizontal Layout */}
                   {[
                     {
@@ -593,18 +573,23 @@ module "infra" {
                       <div
                         className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300 mb-2`}
                       >
-                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                        <item.icon
+                          className={`w-4 h-4 text-${item.color}-600`}
+                        />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-sm">{item.title}</h4>
-                        <p className="text-gray-600 leading-relaxed text-xs">{item.desc}</p>
+                        <h4 className="font-bold text-gray-900 mb-1 text-sm">
+                          {item.title}
+                        </h4>
+                        <p className="text-gray-600 leading-relaxed text-xs">
+                          {item.desc}
+                        </p>
                       </div>
                     </motion.div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Self-hosted Runners Explanation */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -616,37 +601,61 @@ module "infra" {
                     Self-hosted Runners in CI/CD
                   </CardTitle>
                   <CardDescription className="text-sm text-gray-600">
-                    Leveraging custom infrastructure for faster and more controlled builds
+                    Leveraging custom infrastructure for faster and more
+                    controlled builds
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-gray-700 text-sm leading-relaxed">
-                    Self-hosted runners allow you to run your CI/CD jobs on your own infrastructure, whether it's
-                    Kubernetes clusters or Azure VMs. This provides several benefits:
+                    Self-hosted runners allow you to run your CI/CD jobs on your
+                    own infrastructure, whether it's Kubernetes clusters or
+                    Azure VMs. This provides several benefits:
                   </p>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 space-y-2">
-                    <li>
-                      **Faster Builds**: Utilize powerful machines with specific configurations, reducing build times.
-                    </li>
-                    <li>
-                      **Custom Environments**: Install custom software, tools, and dependencies not available on
-                      cloud-hosted runners.
-                    </li>
-                    <li>
-                      **Security & Compliance**: Keep sensitive data and build artifacts within your network boundaries.
-                    </li>
-                    <li>
-                      **Cost Optimization**: Potentially reduce costs for high-volume builds by optimizing resource
-                      utilization.
-                    </li>
-                  </ul>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      {
+                        icon: Zap,
+                        title: "Faster Builds",
+                        desc: "Utilize powerful machines with specific configurations, reducing build times.",
+                        color: "blue",
+                      },
+                      {
+                        icon: Code,
+                        title: "Custom Environments",
+                        desc: "Install custom software, tools, and dependencies not available on cloud-hosted runners.",
+                        color: "green",
+                      },
+                      {
+                        icon: ShieldCheck,
+                        title: "Security & Compliance",
+                        desc: "Keep sensitive data and build artifacts within your network boundaries.",
+                        color: "orange",
+                      },
+                      {
+                        icon: Database,
+                        title: "Cost Optimization",
+                        desc: "Potentially reduce costs for high-volume builds by optimizing resource utilization.",
+                        color: "purple",
+                      },
+                    ].map((item, index) => (
+                      <div key={index} className={listItemStyle}>
+                        <div className={iconWrapperStyle(item.color)}>
+                          <item.icon className={iconStyle(item.color)} />
+                        </div>
+                        <div>
+                          <h4 className={titleStyle}>{item.title}</h4>
+                          <p className={descStyle}>{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                   <p className="text-gray-700 text-sm leading-relaxed">
-                    We configure self-hosted runners as Kubernetes deployments or Azure VM Scale Sets, ensuring
-                    scalability and high availability for your CI/CD workloads.
+                    We configure self-hosted runners as Kubernetes deployments
+                    or Azure VM Scale Sets, ensuring scalability and high
+                    availability for your CI/CD workloads.
                   </p>
                 </CardContent>
               </Card>
-
               {/* Pipeline Workflow Animation */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
@@ -666,11 +675,31 @@ module "infra" {
                     <div className="relative">
                       {[
                         { icon: Code, label: "Code Push", status: "completed" },
-                        { icon: Dock, label: "Docker Build", status: "completed" },
-                        { icon: Database, label: "Push to ACR", status: "completed" },
-                        { icon: ShieldCheck, label: "Security Scan", status: "running" },
-                        { icon: Cloud, label: "Deploy to AKS", status: "pending" },
-                        { icon: CheckCircle2, label: "Verify Health", status: "pending" },
+                        {
+                          icon: Dock,
+                          label: "Docker Build",
+                          status: "completed",
+                        },
+                        {
+                          icon: Database,
+                          label: "Push to ACR",
+                          status: "completed",
+                        },
+                        {
+                          icon: ShieldCheck,
+                          label: "Security Scan",
+                          status: "running",
+                        },
+                        {
+                          icon: Cloud,
+                          label: "Deploy to AKS",
+                          status: "pending",
+                        },
+                        {
+                          icon: CheckCircle2,
+                          label: "Verify Health",
+                          status: "pending",
+                        },
                       ].map((step, index) => (
                         <motion.div
                           key={index}
@@ -684,8 +713,8 @@ module "infra" {
                               step.status === "completed"
                                 ? "bg-green-100 text-green-600"
                                 : step.status === "running"
-                                  ? "bg-blue-100 text-blue-600 animate-pulse"
-                                  : "bg-gray-100 text-gray-400"
+                                ? "bg-blue-100 text-blue-600 animate-pulse"
+                                : "bg-gray-100 text-gray-400"
                             }`}
                           >
                             <step.icon className="w-4 h-4" />
@@ -696,8 +725,8 @@ module "infra" {
                                 step.status === "completed"
                                   ? "text-green-700"
                                   : step.status === "running"
-                                    ? "text-blue-700"
-                                    : "text-gray-500"
+                                  ? "text-blue-700"
+                                  : "text-gray-500"
                               }`}
                             >
                               {step.label}
@@ -708,8 +737,8 @@ module "infra" {
                               step.status === "completed"
                                 ? "bg-green-500"
                                 : step.status === "running"
-                                  ? "bg-blue-500 animate-pulse"
-                                  : "bg-gray-300"
+                                ? "bg-blue-500 animate-pulse"
+                                : "bg-gray-300"
                             }`}
                           />
                         </motion.div>
@@ -721,7 +750,6 @@ module "infra" {
                 </CardContent>
               </Card>
             </div>
-
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Key Features */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -739,40 +767,44 @@ module "infra" {
                 <CardContent>
                   <div className="grid grid-cols-1 gap-3">
                     {[
-                      { icon: Zap, label: "Self-hosted Runners", desc: "Faster builds with dedicated infrastructure." },
+                      {
+                        icon: Zap,
+                        label: "Self-hosted Runners",
+                        desc: "Faster builds with dedicated infrastructure.",
+                        color: "blue",
+                      },
                       {
                         icon: ShieldCheck,
                         label: "Security First",
                         desc: "Trivy scanning & secret management for secure pipelines.",
+                        color: "green",
                       },
                       {
                         icon: Activity,
                         label: "Real-time Monitoring",
                         desc: "Integrated monitoring and Google Chat notifications.",
+                        color: "purple",
                       },
                       {
                         icon: Rocket,
                         label: "Zero Downtime",
                         desc: "Blue-green deployments with automated rollback on failure.",
+                        color: "orange",
                       },
                     ].map((feature, index) => (
-                      <div
-                        key={index}
-                        className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-                      >
-                        <div className="p-1.5 bg-orange-100 rounded-lg flex-shrink-0">
-                          <feature.icon className="w-3 h-3 text-orange-600" />
+                      <div key={index} className={listItemStyle}>
+                        <div className={iconWrapperStyle(feature.color)}>
+                          <feature.icon className={iconStyle(feature.color)} />
                         </div>
                         <div>
-                          <h5 className="font-semibold text-gray-900 text-base mb-1">{feature.label}</h5>
-                          <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
+                          <h4 className={titleStyle}>{feature.label}</h4>
+                          <p className={descStyle}>{feature.desc}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
-
               {/* Branch Strategy */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
@@ -789,7 +821,12 @@ module "infra" {
                 <CardContent>
                   <div className="space-y-3">
                     {[
-                      { branch: "main", env: "Production", color: "red", desc: "Stable production releases." },
+                      {
+                        branch: "main",
+                        env: "Production",
+                        color: "red",
+                        desc: "Stable production releases.",
+                      },
                       {
                         branch: "dev",
                         env: "Development",
@@ -814,9 +851,13 @@ module "infra" {
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-base font-bold text-gray-900">{item.branch}</span>
+                            <span className="text-base font-bold text-gray-900">
+                              {item.branch}
+                            </span>
                             <span className="text-xs text-gray-500">→</span>
-                            <span className="text-base font-semibold text-gray-800">{item.env}</span>
+                            <span className="text-base font-semibold text-gray-800">
+                              {item.env}
+                            </span>
                           </div>
                           <p className="text-sm text-gray-600">{item.desc}</p>
                         </div>
@@ -828,7 +869,6 @@ module "infra" {
             </div>
           </div>
         </section>
-
         {/* Step 3: ArgoCD & AKS Sync */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -836,11 +876,14 @@ module "infra" {
               <span className="font-bold text-lg">3</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">GitOps with ArgoCD for AKS Deployments</h2>
-              <p className="text-lg text-gray-600">Declarative, automated deployments to Azure Kubernetes Service</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                GitOps with ArgoCD for AKS Deployments
+              </h2>
+              <p className="text-lg text-gray-600">
+                Declarative, automated deployments to Azure Kubernetes Service
+              </p>
             </div>
           </div>
-
           <div className="space-y-8">
             {/* What is GitOps and ArgoCD? */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -857,22 +900,28 @@ module "infra" {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  GitOps is a software engineering practice that uses a Git repository as its single source of truth.
-                  Teams commit declarative configurations into Git, and these configurations are used to create
-                  environments needed for the continuous delivery process. There is no manual setup of environments and
-                  no use of standalone scripts—everything is defined through the Git repository.
+                  GitOps is a software engineering practice that uses a Git
+                  repository as its single source of truth. Teams commit
+                  declarative configurations into Git, and these configurations
+                  are used to create environments needed for the continuous
+                  delivery process. There is no manual setup of environments and
+                  no use of standalone scripts—everything is defined through the
+                  Git repository.
                 </p>
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  A basic part of the GitOps process is a pull request. New versions of a configuration are introduced
-                  via pull request, merged with the main branch in the Git repository, and then the new version is
-                  automatically deployed. The Git repository contains a full record of all changes, including all
-                  details of the environment at every stage of the process. Argo CD handles the latter stages of the
-                  GitOps process, ensuring that new configurations are correctly deployed to a Kubernetes cluster.
+                  A basic part of the GitOps process is a pull request. New
+                  versions of a configuration are introduced via pull request,
+                  merged with the main branch in the Git repository, and then
+                  the new version is automatically deployed. The Git repository
+                  contains a full record of all changes, including all details
+                  of the environment at every stage of the process. Argo CD
+                  handles the latter stages of the GitOps process, ensuring that
+                  new configurations are correctly deployed to a Kubernetes
+                  cluster.
                 </p>
                 {/* Removed argo.png from here */}
               </CardContent>
             </Card>
-
             <div className="grid lg:grid-cols-2 gap-8">
               {/* How ArgoCD Works in Kubernetes */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -889,33 +938,62 @@ module "infra" {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-gray-700 text-sm leading-relaxed">
-                    Argo CD is a Kubernetes-native continuous deployment (CD) tool. Unlike external CD tools that only
-                    enable push-based deployments, Argo CD can pull updated code from Git repositories and deploy it
-                    directly to Kubernetes resources. It enables developers to manage both infrastructure configuration
-                    and application updates in one system.
+                    Argo CD is a Kubernetes-native continuous deployment (CD)
+                    tool. Unlike external CD tools that only enable push-based
+                    deployments, Argo CD can pull updated code from Git
+                    repositories and deploy it directly to Kubernetes resources.
+                    It enables developers to manage both infrastructure
+                    configuration and application updates in one system.
                   </p>
                   <div className="relative h-[250px] w-full bg-gray-50 rounded-xl border border-gray-100">
                     <Image
-                      src="/argo.png" // argo.png moved here
+                      src="/howargocdwork.png"
                       alt="ArgoCD Sync Diagram"
                       fill
                       className="object-contain p-4"
                       quality={100}
                     />
                   </div>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 space-y-2">
-                    <li>
-                      **Declarative Deployments**: Define application state in Git, ArgoCD ensures cluster matches.
-                    </li>
-                    <li>**Automated Sync**: Continuously monitors Git repos and automatically syncs changes to AKS.</li>
-                    <li>
-                      **Rollback & Health Checks**: Easy rollbacks to previous versions and automated health monitoring.
-                    </li>
-                    <li>**Helm Chart Support**: Manages deployments using Helm charts for complex applications.</li>
-                  </ul>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      {
+                        icon: CheckCircle2,
+                        title: "Declarative Deployments",
+                        desc: "Define application state in Git, ArgoCD ensures cluster matches.",
+                        color: "blue",
+                      },
+                      {
+                        icon: RefreshCw,
+                        title: "Automated Sync",
+                        desc: "Continuously monitors Git repos and automatically syncs changes to AKS.",
+                        color: "green",
+                      },
+                      {
+                        icon: ArrowRight,
+                        title: "Rollback & Health Checks",
+                        desc: "Easy rollbacks to previous versions and automated health monitoring.",
+                        color: "orange",
+                      },
+                      {
+                        icon: Code,
+                        title: "Helm Chart Support",
+                        desc: "Manages deployments using Helm charts for complex applications.",
+                        color: "purple",
+                      },
+                    ].map((item, index) => (
+                      <div key={index} className={listItemStyle}>
+                        <div className={iconWrapperStyle(item.color)}>
+                          <item.icon className={iconStyle(item.color)} />
+                        </div>
+                        <div>
+                          <h4 className={titleStyle}>{item.title}</h4>
+                          <p className={descStyle}>{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
-
               {/* ArgoCD Admin Portal */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
@@ -926,7 +1004,8 @@ module "infra" {
                     ArgoCD Admin Portal
                   </CardTitle>
                   <CardDescription className="text-sm text-gray-600">
-                    Centralized management and visualization of your applications
+                    Centralized management and visualization of your
+                    applications
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -940,55 +1019,22 @@ module "infra" {
                     />
                   </div>
                   <p className="text-gray-700 text-sm mt-4 leading-relaxed">
-                    The ArgoCD UI provides a comprehensive overview of your applications, their health, and
-                    synchronization status. You can easily drill down into individual resources, view logs, and perform
-                    manual syncs or rollbacks.
+                    The ArgoCD UI provides a comprehensive overview of your
+                    applications, their health, and synchronization status. You
+                    can easily drill down into individual resources, view logs,
+                    and perform manual syncs or rollbacks.
+                  </p>
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                    The ArgoCD UI provides a comprehensive overview of your
+                    applications, their health, and synchronization status. You
+                    can easily drill down into individual resources, view logs,
+                    and perform manual syncs or rollbacks.
                   </p>
                 </CardContent>
               </Card>
             </div>
-
-            {/* ArgoCD Helm Repo Example */}
-            <CodeToggle title="View ArgoCD Application Definition (Helm)" defaultOpen={false}>
-              <pre className="bg-white text-gray-800 border-0 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed shadow-inner font-mono">
-                {`apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: exchange-backend-dev
-  namespace: argocd
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: myalias=mahar.azurecr.io/exchange-backend-dev
-    argocd-image-updater.argoproj.io/myalias.update-strategy: latest
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/git-branch: dev
-    argocd-image-updater.argoproj.io/myalias.force-update: "true"
-spec:
-  destination:
-    namespace: dev
-    name: in-cluster
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: false
-    syncOptions:
-      - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
-  source:
-    path: helm_charts/exchange-backend-dev
-    repoURL: git@github.com:MarharbawgaMoney/kubernetes.git
-    targetRevision: dev`}
-              </pre>
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-purple-100 text-purple-800 border border-purple-200 shadow-sm">
-                  <Star className="w-3 h-3 mr-1" />
-                  GitOps Ready
-                </Badge>
-              </div>
-            </CodeToggle>
           </div>
         </section>
-
         {/* Step 4: ArgoCD Image Updater */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -1000,11 +1046,11 @@ spec:
                 Automated Image Updates with ArgoCD Image Updater
               </h2>
               <p className="text-lg text-gray-600">
-                Keep your applications up-to-date with the latest container images
+                Keep your applications up-to-date with the latest container
+                images
               </p>
             </div>
           </div>
-
           <div className="space-y-8">
             {/* What is ArgoCD Image Updater? */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -1015,17 +1061,21 @@ spec:
                   </div>
                   What is ArgoCD Image Updater?
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">Seamless Image Rollouts</CardDescription>
+                <CardDescription className="text-sm text-gray-600">
+                  Seamless Image Rollouts
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  ArgoCD Image Updater is a tool that automatically updates the image tags in your Kubernetes manifests
-                  (managed by ArgoCD) whenever a new image is pushed to your container registry. This ensures your
-                  applications are always running the latest versions without manual intervention.
+                  ArgoCD Image Updater is a tool that automatically updates the
+                  image tags in your Kubernetes manifests (managed by ArgoCD)
+                  whenever a new image is pushed to your container registry.
+                  This ensures your applications are always running the latest
+                  versions without manual intervention.
                 </p>
-                <div className="relative h-[250px] w-full bg-gray-50 rounded-xl border border-gray-100">
+                <div className="relative h-[300px] w-full bg-gray-50 rounded-xl border border-gray-100">
                   <Image
-                    src="/placeholder.svg?height=250&width=400"
+                    src="/argoimageupdater.png?height=250&width=400"
                     alt="ArgoCD Image Updater Workflow"
                     fill
                     className="object-contain p-4"
@@ -1059,60 +1109,21 @@ spec:
                       color: "orange",
                     },
                   ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
-                    >
-                      <div
-                        className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-base">{item.title}</h4>
-                        <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
-            {/* Image Updater Config Example */}
-            <CodeToggle title="View ArgoCD Image Updater Configuration" defaultOpen={false}>
-              <pre className="bg-white text-gray-800 border-0 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed shadow-inner font-mono">
-                {`apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-app
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: my-image=myregistry/my-image
-    argocd-image-updater.argoproj.io/my-image.update-strategy: latest
-    argocd-image-updater.argoproj.io/my-image.allow-tags: regexp:^v\\d{1}\\.\\d{1}\\.\\d{1}$
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/git-branch: main
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/my-org/my-gitops-repo.git
-    targetRevision: HEAD
-    path: apps/my-app
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: production
-  # ... other syncPolicy, etc.
-`}
-              </pre>
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-orange-100 text-orange-800 border border-orange-200 shadow-sm">
-                  <Star className="w-3 h-3 mr-1" />
-                  Automated
-                </Badge>
-              </div>
-            </CodeToggle>
           </div>
         </section>
-
         {/* Step 5: Comprehensive Monitoring */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
@@ -1120,13 +1131,15 @@ spec:
               <span className="font-bold text-lg">5</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Comprehensive Monitoring</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Comprehensive Monitoring
+              </h2>
               <p className="text-lg text-gray-600">
-                Real-time insights into your cloud-native applications and infrastructure
+                Real-time insights into your cloud-native applications and
+                infrastructure
               </p>
             </div>
           </div>
-
           <div className="space-y-8">
             {/* Unified Observability Stack */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -1138,7 +1151,8 @@ spec:
                   Unified Observability Stack
                 </CardTitle>
                 <CardDescription className="text-sm text-gray-600">
-                  Prometheus, Grafana, Loki, and Azure Monitor for full visibility
+                  Prometheus, Grafana, Loki, and Azure Monitor for full
+                  visibility
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -1169,84 +1183,13 @@ spec:
                       color: "orange",
                     },
                   ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
-                    >
-                      <div
-                        className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-base">{item.title}</h4>
-                        <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Grafana Dashboards Example */}
-            <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
-                  <div className="p-2 bg-blue-100 rounded-lg shadow-sm">
-                    <LayoutDashboard className="w-5 h-5 text-blue-600" />
-                  </div>
-                  Grafana Dashboards for Key Metrics
-                </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
-                  Visualize performance and resource utilization
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[
-                    {
-                      icon: Cpu,
-                      label: "Azure SQL CPU Usage",
-                      desc: "Monitor CPU utilization of your Azure SQL Database instances to identify performance bottlenecks.",
-                      color: "blue",
-                      image: "/placeholder.svg?height=150&width=300",
-                    },
-                    {
-                      icon: MemoryStick,
-                      label: "Kubernetes Pod CPU/Memory",
-                      desc: "Track resource consumption for individual pods and deployments, ensuring optimal resource allocation.",
-                      color: "green",
-                      image: "/placeholder.svg?height=150&width=300",
-                    },
-                    {
-                      icon: Server,
-                      label: "Node Resource Usage",
-                      desc: "Overview of CPU, memory, and disk usage across AKS nodes to prevent resource exhaustion.",
-                      color: "purple",
-                      image: "/placeholder.svg?height=150&width=300",
-                    },
-                  ].map((metric, index) => (
-                    <div
-                      key={index}
-                      className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-                    >
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className="p-1.5 bg-blue-100 rounded-lg flex-shrink-0">
-                          <metric.icon className="w-3 h-3 text-blue-600" />
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-gray-900 text-base mb-1">{metric.label}</h5>
-                          <p className="text-gray-600 text-sm leading-relaxed">{metric.desc}</p>
-                        </div>
-                      </div>
-                      <div className="relative h-[150px] w-full bg-white rounded-lg border border-gray-100 overflow-hidden">
-                        <Image
-                          src={metric.image || "/placeholder.svg"}
-                          alt={`${metric.label} Dashboard`}
-                          layout="fill"
-                          objectFit="contain"
-                          quality={100}
-                        />
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1255,19 +1198,22 @@ spec:
             </Card>
           </div>
         </section>
-
         {/* Step 6: Proactive Alerting & Incident Management */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-10">
-            <div className="bg-gradient-to-br from-green-500 to-teal-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+            <div className="bg-gradient-to-br from-red-500 to-rose-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">6</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Proactive Alerting & Incident Management</h2>
-              <p className="text-lg text-gray-600">Instant notifications and automated responses for critical events</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Proactive Alerting & Incident Management
+              </h2>
+              <p className="text-lg text-gray-600">
+                Instant notifications and automated responses for critical
+                events
+              </p>
             </div>
           </div>
-
           <div className="space-y-8">
             {/* Configurable Alert Manager Rules */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -1279,14 +1225,17 @@ spec:
                   Configurable Alert Manager Rules
                 </CardTitle>
                 <CardDescription className="text-sm text-gray-600">
-                  Define custom alerts for critical infrastructure and application events
+                  Define custom alerts for critical infrastructure and
+                  application events
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  Our alerting system, powered by Prometheus Alertmanager, allows for highly customizable rules to
-                  detect anomalies and critical states within your Kubernetes cluster and applications. These rules
-                  ensure that your team is immediately notified of issues, enabling rapid response and minimizing
+                  Our alerting system, powered by Prometheus Alertmanager,
+                  allows for highly customizable rules to detect anomalies and
+                  critical states within your Kubernetes cluster and
+                  applications. These rules ensure that your team is immediately
+                  notified of issues, enabling rapid response and minimizing
                   downtime.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -1316,25 +1265,19 @@ spec:
                       color: "green",
                     },
                   ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
-                    >
-                      <div
-                        className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1 text-base">{item.title}</h4>
-                        <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
             {/* Proactive Alerting with Google Chat & Slack */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
@@ -1345,7 +1288,8 @@ spec:
                   Proactive Alerting with Google Chat & Slack
                 </CardTitle>
                 <CardDescription className="text-sm text-gray-600">
-                  Instant notifications for critical events across your preferred communication channels
+                  Instant notifications for critical events across your
+                  preferred communication channels
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -1376,54 +1320,94 @@ spec:
                       color: "blue",
                     },
                   ].map((alert, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-                    >
-                      <div className="p-1.5 bg-green-100 rounded-lg flex-shrink-0">
-                        <alert.icon className="w-3 h-3 text-green-600" />
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(alert.color)}>
+                        <alert.icon className={iconStyle(alert.color)} />
                       </div>
                       <div>
-                        <h5 className="font-semibold text-gray-900 text-base mb-1">{alert.label}</h5>
-                        <p className="text-gray-600 text-sm leading-relaxed">{alert.desc}</p>
+                        <h4 className={titleStyle}>{alert.label}</h4>
+                        <p className={descStyle}>{alert.desc}</p>
                       </div>
                     </div>
                   ))}
-                </div>
-                <div className="grid md:grid-cols-2 gap-4 mt-4">
-                  <div className="relative h-[150px] w-full bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
-                    <Image
-                      src="/placeholder.svg?height=150&width=300"
-                      alt="Google Chat Alert Sample"
-                      layout="fill"
-                      objectFit="contain"
-                      quality={100}
-                    />
-                    <div className="absolute bottom-2 left-2 text-xs text-gray-500">Google Chat Notification</div>
-                  </div>
-                  <div className="relative h-[150px] w-full bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
-                    <Image
-                      src="/placeholder.svg?height=150&width=300"
-                      alt="Slack Alert Sample"
-                      layout="fill"
-                      objectFit="contain"
-                      quality={100}
-                    />
-                    <div className="absolute bottom-2 left-2 text-xs text-gray-500">Slack Notification</div>
-                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
         </section>
-
+        {/* Step 7: Centralized Logging & Analytics */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <span className="font-bold text-lg">7</span>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Centralized Logging & Analytics
+              </h2>
+              <p className="text-lg text-gray-600">
+                Gain deep insights into application behavior and system health
+              </p>
+            </div>
+          </div>
+          <div className="space-y-8">
+            {/* Key Logging Solutions */}
+            <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
+                    <FileText className="w-5 h-5 text-purple-600" />
+                  </div>
+                  Key Logging Solutions
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600">
+                  Leveraging industry-standard tools for comprehensive log
+                  management
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  Centralized logging is crucial for monitoring,
+                  troubleshooting, and auditing cloud-native applications. We
+                  integrate various logging solutions to provide a unified view
+                  of your system's behavior.
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    {
+                      icon: MessageSquare,
+                      title: "Loki for Kubernetes Logs",
+                      desc: "Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. It's designed to be very cost-effective by indexing only metadata (labels) rather than the full log content. This makes it ideal for storing and querying large volumes of logs from Kubernetes clusters, allowing for efficient log analysis and troubleshooting.",
+                      color: "green",
+                    },
+                    {
+                      icon: Cloud,
+                      title: "Azure Monitor for Cloud Logs",
+                      desc: "Azure's native monitoring solution that collects, analyzes, and acts on telemetry from your Azure and on-premises environments. It provides comprehensive logging for all Azure resources.",
+                      color: "blue",
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className={listItemStyle}>
+                      <div className={iconWrapperStyle(item.color)}>
+                        <item.icon className={iconStyle(item.color)} />
+                      </div>
+                      <div>
+                        <h4 className={titleStyle}>{item.title}</h4>
+                        <p className={descStyle}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
         {/* Call to Action */}
         <section className="mb-12">
           <div className="relative">
             {/* Background decoration */}
             <div className="absolute inset-0 bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl transform rotate-1"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl transform -rotate-1"></div>
-
             {/* Main content */}
             <Card className="relative border-0 shadow-xl bg-white rounded-2xl overflow-hidden">
               <CardContent className="p-10 lg:p-12">
@@ -1432,7 +1416,9 @@ spec:
                   <div className="mb-6">
                     <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-3 py-1 rounded-full mb-4">
                       <Sparkles className="w-4 h-4 mr-2" />
-                      <span className="text-sm font-semibold text-gray-700">Ready to Get Started?</span>
+                      <span className="text-sm font-semibold text-gray-700">
+                        Ready to Get Started?
+                      </span>
                     </div>
                     <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                       Transform Your Application
@@ -1441,11 +1427,11 @@ spec:
                       </span>
                     </h2>
                     <p className="text-base text-gray-600 leading-relaxed max-w-3xl mx-auto">
-                      Let's migrate your monolithic application to a modern, scalable, cloud-native architecture with
-                      our proven methodology and expert guidance.
+                      Let's migrate your monolithic application to a modern,
+                      scalable, cloud-native architecture with our proven
+                      methodology and expert guidance.
                     </p>
                   </div>
-
                   {/* Action buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
                     <Button
@@ -1455,38 +1441,41 @@ spec:
                       <Rocket className="w-4 h-4 mr-2" />
                       Schedule Free Consultation
                     </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-2 border-gray-200 text-gray-700 hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50 font-semibold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 bg-white"
-                    >
-                      <Star className="w-4 h-4 mr-2" />
-                      View Success Stories
-                    </Button>
                   </div>
-
                   {/* Trust indicators */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100">
                     <div className="flex flex-col items-center">
                       <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-2">
                         <CheckCircle2 className="w-5 h-5 text-green-600" />
                       </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">100% Success Rate</h4>
-                      <p className="text-xs text-gray-600">All migrations completed successfully</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                        100% Success Rate
+                      </h4>
+                      <p className="text-xs text-gray-600">
+                        All migrations completed successfully
+                      </p>
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
                         <Zap className="w-5 h-5 text-blue-600" />
                       </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">2-4 Week Timeline</h4>
-                      <p className="text-xs text-gray-600">Fast, efficient migration process</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                        2-4 Week Timeline
+                      </h4>
+                      <p className="text-xs text-gray-600">
+                        Fast, efficient migration process
+                      </p>
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-2">
                         <ShieldCheck className="w-5 h-5 text-purple-600" />
                       </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">Enterprise Security</h4>
-                      <p className="text-xs text-gray-600">Bank-level security standards</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                        Enterprise Security
+                      </h4>
+                      <p className="text-xs text-gray-600">
+                        Bank-level security standards
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1497,5 +1486,5 @@ spec:
       </main>
       <MinimalFooter />
     </div>
-  )
+  );
 }

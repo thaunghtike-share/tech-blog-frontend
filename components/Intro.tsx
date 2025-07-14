@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   BookOpenCheck,
@@ -18,24 +18,25 @@ import {
   Activity,
   Cloud,
   Lightbulb,
-} from "lucide-react"
-import { motion } from "framer-motion"
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Intro() {
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
+    const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" })
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }
+  };
 
   const cardVariants = {
-    initial: { y: 0 },
+    initial: { y: 0, boxShadow: "0 0 rgba(0,0,0,0)" },
     hover: {
-      y: -5,
-      transition: { duration: 0.2 },
+      y: -8,
+      boxShadow: "0 10px 20px rgba(0,0,0,0.12)",
+      transition: { duration: 0.3 },
     },
-  }
+  };
 
   const learningPathItems = [
     { label: "Roadmap", id: "devops-roadmap", desc: "Complete landscape" },
@@ -43,7 +44,7 @@ export default function Intro() {
     { label: "Labs", id: "free-labs", desc: "Hands-on practice" },
     { label: "Local", id: "myanmar-playlists", desc: "Local resources" },
     { label: "Udemy", id: "free-udemy", desc: "Structured courses" },
-  ]
+  ];
 
   const stepColors = [
     "bg-gradient-to-r from-purple-500 to-blue-600",
@@ -51,14 +52,15 @@ export default function Intro() {
     "bg-gradient-to-r from-emerald-500 to-emerald-600",
     "bg-gradient-to-r from-red-500 to-red-600",
     "bg-gradient-to-r from-purple-500 to-blue-600",
-  ]
+  ];
 
   const devOpsConcepts = [
     {
       icon: <Rocket className="w-5 h-5" />,
       title: "What is DevOps?",
-      description: "A culture and practice that bridges development and operations teams to deliver software rapidly and reliably.",
-      color: "from-indigo-500 to-blue-600"
+      description:
+        "A culture and practice that bridges development and operations teams to deliver software rapidly and reliably.",
+      color: "from-indigo-500 to-blue-600",
     },
     {
       icon: <Lightbulb className="w-5 h-5" />,
@@ -68,9 +70,9 @@ export default function Intro() {
         "Infrastructure as Code",
         "Monitoring & Logging",
         "Microservices Architecture",
-        "Collaboration Culture"
+        "Collaboration Culture",
       ],
-      color: "from-purple-500 to-indigo-600"
+      color: "from-purple-500 to-indigo-600",
     },
     {
       icon: <BookOpenCheck className="w-5 h-5" />,
@@ -80,52 +82,52 @@ export default function Intro() {
         "Programming Basics",
         "Networking Concepts",
         "Cloud Basics",
-        "Security Fundamentals"
+        "Security Fundamentals",
       ],
-      color: "from-green-500 to-emerald-600"
-    }
-  ]
+      color: "from-green-500 to-emerald-600",
+    },
+  ];
 
   const devOpsTools = [
     {
       icon: <GitBranch className="w-5 h-5" />,
       title: "Version Control",
       tools: ["Git", "GitHub", "GitLab"],
-      color: "bg-blue-100 text-blue-800"
+      color: "bg-blue-100 text-blue-800",
     },
     {
       icon: <Workflow className="w-5 h-5" />,
       title: "CI/CD",
       tools: ["Jenkins", "GitHub Actions", "CircleCI"],
-      color: "bg-purple-100 text-purple-800"
+      color: "bg-purple-100 text-purple-800",
     },
     {
       icon: <Box className="w-5 h-5" />,
       title: "Containerization",
       tools: ["Docker", "Containerd", "Podman"],
-      color: "bg-green-100 text-green-800"
+      color: "bg-green-100 text-green-800",
     },
     {
       icon: <LayoutGrid className="w-5 h-5" />,
       title: "Orchestration",
       tools: ["Kubernetes", "Swarm", "Nomad"],
-      color: "bg-red-100 text-red-800"
+      color: "bg-red-100 text-red-800",
     },
     {
       icon: <Code className="w-5 h-5" />,
       title: "Infrastructure as Code",
       tools: ["Terraform", "Ansible", "Pulumi"],
-      color: "bg-yellow-100 text-yellow-800"
+      color: "bg-yellow-100 text-yellow-800",
     },
     {
       icon: <Activity className="w-5 h-5" />,
       title: "Monitoring",
       tools: ["Prometheus", "Grafana", "Datadog"],
-      color: "bg-teal-100 text-teal-800"
-    }
-  ]
+      color: "bg-teal-100 text-teal-800",
+    },
+  ];
 
-return (
+  return (
     <section className="mt-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
       {/* Header */}
       <div className="mb-12">
@@ -159,7 +161,8 @@ return (
           transition={{ delay: 0.2 }}
           className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base select-text"
         >
-          Learn what DevOps really means, why it matters, and what you need to know before diving in.
+          Learn what DevOps really means, why it matters, and what you need to
+          know before diving in.
         </motion.p>
       </div>
 
@@ -168,7 +171,7 @@ return (
         {devOpsConcepts.map((concept, index) => (
           <motion.div
             key={index}
-            className="bg-white rounded-xl shadow-md p-6 border border-gray-100 select-text"
+            className="bg-white rounded-xl p-6 border border-gray-100 select-text shadow-sm"
             variants={cardVariants}
             initial="initial"
             whileHover="hover"
@@ -179,14 +182,21 @@ return (
             >
               {concept.icon}
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3 select-text">{concept.title}</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 select-text text-center">
+              {concept.title}
+            </h3>
 
             {concept.description ? (
-              <p className="text-sm text-gray-700 select-text">{concept.description}</p>
+              <p className="text-sm text-gray-700 select-text">
+                {concept.description}
+              </p>
             ) : (
-              <ul className="space-y-2 text-sm text-gray-700 select-text">
+              <ul className="flex flex-col items-center space-y-2 text-sm text-gray-700 select-text">
                 {concept.items?.map((item, i) => (
-                  <li key={i} className="flex items-center justify-center gap-2 select-text">
+                  <li
+                    key={i}
+                    className="flex items-center gap-2 select-text justify-center"
+                  >
                     <ChevronRight className="w-4 h-4 text-gray-400" />
                     <span>{item}</span>
                   </li>
@@ -221,15 +231,21 @@ return (
               style={{ cursor: "default" }}
             >
               <div
-                className={`flex justify-center mb-2 p-2 w-10 h-10 mx-auto rounded-lg ${tool.color
-                  .split(" ")[0]} ${tool.color.split(" ")[1]}`}
+                className={`flex justify-center mb-2 p-2 w-10 h-10 mx-auto rounded-lg ${
+                  tool.color.split(" ")[0]
+                } ${tool.color.split(" ")[1]}`}
               >
                 {tool.icon}
               </div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2 select-text">{tool.title}</h4>
+              <h4 className="text-sm font-medium text-gray-900 mb-2 select-text">
+                {tool.title}
+              </h4>
               <div className="flex flex-wrap justify-center gap-1 select-text">
                 {tool.tools.map((t, i) => (
-                  <span key={i} className={`text-xs px-2 py-0.5 rounded-md ${tool.color}`}>
+                  <span
+                    key={i}
+                    className={`text-xs px-2 py-0.5 rounded-md ${tool.color}`}
+                  >
                     {t}
                   </span>
                 ))}
@@ -255,7 +271,9 @@ return (
               Learning Guideline
             </span>
           </h4>
-          <p className="text-gray-700 select-text">Follow this structured path to master DevOps</p>
+          <p className="text-gray-700 select-text">
+            Follow this structured path to master DevOps
+          </p>
         </motion.div>
         <div className="relative">
           <div className="absolute top-5 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
@@ -282,7 +300,9 @@ return (
                 >
                   {index + 1}
                 </motion.div>
-                <div className="mt-1.5 text-xs text-gray-500 text-center select-text">{step.desc}</div>
+                <div className="mt-1.5 text-xs text-gray-500 text-center select-text">
+                  {step.desc}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -292,9 +312,8 @@ return (
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
           className="mt-10 flex justify-center"
-        >
-        </motion.div>
+        ></motion.div>
       </div>
     </section>
-  )
+  );
 }
