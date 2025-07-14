@@ -1,86 +1,115 @@
-"use client"
-import { useEffect, useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalFooter } from "@/components/minimal-footer"
-import { MinimalSidebar } from "@/components/minimal-sidebar"
-import Link from "next/link"
-import { Calendar, Clock, ArrowRight } from "lucide-react"
+"use client";
+import { useEffect, useState, useRef } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalFooter } from "@/components/minimal-footer";
+import { MinimalSidebar } from "@/components/minimal-sidebar";
+import Link from "next/link";
+import { Calendar, Clock, ArrowRight } from "lucide-react";
 
 interface Category {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
 interface Article {
-  id: number
-  title: string
-  content: string
-  published_at: string
+  id: number;
+  title: string;
+  content: string;
+  published_at: string;
 }
 
 interface Props {
-  id: string
+  id: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api"
+const API_BASE_URL = "http://192.168.1.131:8000/api";
+const PAGE_SIZE = 6;
 
 export default function CategoryPageClient({ id }: Props) {
-  const [category, setCategory] = useState<Category | null>(null)
-  const [articles, setArticles] = useState<Article[]>([])
-  const [loadingCategory, setLoadingCategory] = useState(true)
-  const [loadingArticles, setLoadingArticles] = useState(true)
-  const [errorCategory, setErrorCategory] = useState<string | null>(null)
-  const [errorArticles, setErrorArticles] = useState<string | null>(null)
+  const [category, setCategory] = useState<Category | null>(null);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loadingCategory, setLoadingCategory] = useState(true);
+  const [loadingArticles, setLoadingArticles] = useState(true);
+  const [errorCategory, setErrorCategory] = useState<string | null>(null);
+  const [errorArticles, setErrorArticles] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchCategory() {
-      setLoadingCategory(true)
-      setErrorCategory(null)
+      setLoadingCategory(true);
+      setErrorCategory(null);
       try {
-        const res = await fetch(`${API_BASE_URL}/categories/${id}/`)
-        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`)
-        const data = await res.json()
-        setCategory(data)
+        const res = await fetch(`${API_BASE_URL}/categories/${id}/`);
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const data = await res.json();
+        setCategory(data);
       } catch (err) {
-        setErrorCategory(err instanceof Error ? err.message : "Failed to fetch category")
+        setErrorCategory(
+          err instanceof Error ? err.message : "Failed to fetch category"
+        );
       } finally {
-        setLoadingCategory(false)
+        setLoadingCategory(false);
       }
     }
 
     async function fetchArticles() {
-      setLoadingArticles(true)
-      setErrorArticles(null)
+      setLoadingArticles(true);
+      setErrorArticles(null);
       try {
-        const res = await fetch(`${API_BASE_URL}/articles/?category=${id}`)
-        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`)
-        const data = await res.json()
-        setArticles(data.results)
+        const res = await fetch(`${API_BASE_URL}/articles/?category=${id}`);
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const data = await res.json();
+        setArticles(data.results || data);
       } catch (err) {
-        setErrorArticles(err instanceof Error ? err.message : "Failed to fetch articles")
+        setErrorArticles(
+          err instanceof Error ? err.message : "Failed to fetch articles"
+        );
       } finally {
-        setLoadingArticles(false)
+        setLoadingArticles(false);
       }
     }
 
-    fetchCategory()
-    fetchArticles()
-  }, [id])
+    fetchCategory();
+    fetchArticles();
+    setCurrentPage(1); // reset page on category change
+  }, [id]);
+
+  useEffect(() => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [currentPage]);
 
   const stripMarkdown = (md: string) =>
     md
       .replace(/<[^>]+>/g, "")
       .replace(/[#_*>![\]$$$$~-]/g, "")
-      .trim()
+      .trim();
 
-  const truncate = (str: string, max = 150) => (str.length <= max ? str : str.slice(0, max) + "...")
+  const truncate = (str: string, max = 150) =>
+    str.length <= max ? str : str.slice(0, max) + "...";
 
-  const calculateReadTime = (text: string) => `${Math.ceil((text.split(" ").length || 1) / 200)} min read`
+  const calculateReadTime = (text: string) =>
+    `${Math.ceil((text.split(" ").length || 1) / 200)} min read`;
 
-  if (loadingCategory) return <div className="p-8 text-center">Loading category...</div>
-  if (errorCategory) return <div className="p-8 text-center text-red-500">Error: {errorCategory}</div>
-  if (!category) return <div className="p-8 text-center">Category not found</div>
+  // Pagination logic
+  const totalPages = Math.ceil(articles.length / PAGE_SIZE);
+  const paginatedArticles = articles.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  if (loadingCategory)
+    return <div className="p-8 text-center">Loading category...</div>;
+  if (errorCategory)
+    return (
+      <div className="p-8 text-center text-red-500">Error: {errorCategory}</div>
+    );
+  if (!category)
+    return <div className="p-8 text-center">Category not found</div>;
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden flex flex-col">
@@ -93,7 +122,10 @@ export default function CategoryPageClient({ id }: Props) {
         }}
       ></div>
       <MinimalHeader />
-      <div className="max-w-7xl mx-auto px-4 py-8 w-full relative z-10">
+      <div
+        className="max-w-7xl mx-auto px-4 py-8 w-full relative z-10"
+        ref={topRef}
+      >
         {/* Category Title */}
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-bold mb-3 text-slate-800 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
@@ -101,7 +133,8 @@ export default function CategoryPageClient({ id }: Props) {
           </h1>
           <div className="w-16 h-1 bg-blue-500 rounded-full mb-3"></div>
           <p className="text-gray-600 text-base">
-            Explore the latest articles and tutorials in {category.name.toLowerCase()}.
+            Explore the latest articles and tutorials in{" "}
+            {category.name.toLowerCase()}.
           </p>
         </div>
         {/* Main content & sidebar aligned together */}
@@ -109,17 +142,24 @@ export default function CategoryPageClient({ id }: Props) {
           {/* Articles */}
           <main className="w-full md:flex-1 space-y-6">
             {loadingArticles && <p>Loading articles...</p>}
-            {errorArticles && <p className="text-red-500">Error: {errorArticles}</p>}
-            {!loadingArticles && articles.length === 0 && (
-              <p className="text-gray-500">No articles found in this category.</p>
+            {errorArticles && (
+              <p className="text-red-500">Error: {errorArticles}</p>
             )}
-            {articles.map((article) => (
+            {!loadingArticles && articles.length === 0 && (
+              <p className="text-gray-500">
+                No articles found in this category.
+              </p>
+            )}
+            {paginatedArticles.map((article) => (
               <Card
                 key={article.id}
                 className="hover:shadow-lg transition-all duration-300 border border-gray-100 rounded-lg overflow-hidden"
               >
                 <CardContent className="p-5 hover:bg-gray-50 transition-colors duration-200">
-                  <Link href={`/articles/${article.id}`} className="group block">
+                  <Link
+                    href={`/articles/${article.id}`}
+                    className="group block"
+                  >
                     <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition">
                       {article.title}
                     </h3>
@@ -134,11 +174,14 @@ export default function CategoryPageClient({ id }: Props) {
                     <div className="flex items-center gap-1">
                       <Calendar className="text-gray-400 w-3 h-3" />
                       <span>
-                        {new Date(article.published_at).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
+                        {new Date(article.published_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
@@ -149,6 +192,40 @@ export default function CategoryPageClient({ id }: Props) {
                 </CardContent>
               </Card>
             ))}
+            {/* Pagination buttons */}
+            {totalPages > 1 && (
+              <nav className="mt-8 flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+                >
+                  Prev
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-3 py-1 rounded-full text-sm transition-all ${
+                      currentPage === i + 1
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                        : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 shadow-sm"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+                >
+                  Next
+                </button>
+              </nav>
+            )}
           </main>
           {/* Sidebar - hidden on mobile, shown on desktop */}
           <aside className="hidden md:block md:w-80">
@@ -158,5 +235,5 @@ export default function CategoryPageClient({ id }: Props) {
       </div>
       <MinimalFooter />
     </div>
-  )
+  );
 }
