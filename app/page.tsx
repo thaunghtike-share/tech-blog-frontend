@@ -72,7 +72,7 @@ export default function HomePage() {
       <MinimalHeader />
 
       {/* Hero Intro with mobile spacing fix */}
-      <div className="pt-[64px] md:pt-[80px] md:-mt-30">
+      <div className="pt-[64px] md:pt-[80px] md:-mt-44">
         <Intro />
       </div>
 
