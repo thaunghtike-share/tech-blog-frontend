@@ -317,14 +317,16 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "Terraform IaC",
+        title: "Infrastructure As Code",
         details: "Provision cloud infrastructure with Terraform.",
         duration: "3-4 weeks",
         subtopics: [
-          "HCL basics",
-          "Modules & state",
-          "Providers",
-          "Remote backends",
+          "HCL syntax and variables",
+          "Modules and reusability",
+          "Providers and resources",
+          "Terraform state management",
+          "Remote backends (S3, Azure, GCS)",
+          "Workspaces and environments",
         ],
       },
       {
@@ -332,10 +334,12 @@ const roadmap: RoadmapStage[] = [
         details: "Deploy apps declaratively with Git as the source of truth.",
         duration: "2-3 weeks",
         subtopics: [
-          "ArgoCD install",
-          "App manifests",
-          "Sync policies",
-          "Health checks",
+          "Installing and configuring ArgoCD",
+          "Managing applications with Git",
+          "Helm integration",
+          "Sync and self-healing",
+          "App health & status checks",
+          "RBAC and multi-tenancy in ArgoCD",
         ],
       },
       {
@@ -343,9 +347,12 @@ const roadmap: RoadmapStage[] = [
         details: "Secure sensitive data in apps and pipelines.",
         duration: "2-3 weeks",
         subtopics: [
-          "Vault setup",
-          "Token & policy management",
-          "Kubernetes secrets",
+          "Vault architecture and setup",
+          "Secrets engines and dynamic secrets",
+          "Policies and token authentication",
+          "Kubernetes integration with Vault Agent",
+          "Audit logging and leases",
+          "KV Secrets v1 vs v2",
         ],
       },
       {
@@ -353,14 +360,42 @@ const roadmap: RoadmapStage[] = [
         details: "Enforce security and access control in Kubernetes.",
         duration: "3 weeks",
         subtopics: [
-          "RBAC",
-          "Pod Security Policies",
-          "OPA Gatekeeper",
-          "Network Policies",
+          "RBAC (Roles and Bindings)",
+          "Pod Security Standards (PSS)",
+          "Network Policies (Calico/Cilium)",
+          "Admission Controllers",
+          "OPA Gatekeeper with constraints",
+          "Runtime security (Seccomp, AppArmor)",
+        ],
+      },
+      {
+        title: "Logging & Monitoring",
+        details: "Observe, trace, and analyze workloads effectively.",
+        duration: "3 weeks",
+        subtopics: [
+          "Prometheus fundamentals",
+          "Grafana dashboards",
+          "AlertManager setup",
+          "Loki for log aggregation",
+          "ELK vs EFK stacks",
+          "Tracing with OpenTelemetry",
+        ],
+      },
+      {
+        title: "Ansible Configuration Management",
+        details: "Automate infrastructure configuration and provisioning.",
+        duration: "3 weeks",
+        subtopics: [
+          "YAML syntax for Ansible",
+          "Playbooks and tasks",
+          "Inventory files and variables",
+          "Roles and reusable code",
+          "Ansible Vault for secrets",
+          "Ad-hoc commands and idempotency",
         ],
       },
     ],
-  },
+  }
 ];
 
 const resourceLinks: Record<string, ResourceLink[]> = {
@@ -574,7 +609,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     {
       text: "GitLab CI/CD Pipelines",
       url: "https://docs.gitlab.com/ee/ci/",
-    }
+    },
   ],
 
   "Cloud Container Services (AKS/ECS/EKS)": [
@@ -595,35 +630,109 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/",
     },
   ],
-  "Terraform IaC": [
+  "Infrastructure As Code": [
     {
-      text: "Terraform Basics",
+      text: "Terraform Getting Started",
+      url: "https://developer.hashicorp.com/terraform/tutorials",
+    },
+    {
+      text: "Terraform Docs",
       url: "https://developer.hashicorp.com/terraform/docs",
     },
-    { text: "Terraform Learn", url: "https://learn.hashicorp.com/terraform" },
+    {
+      text: "Terraform Best Practices",
+      url: "https://www.terraform-best-practices.com/",
+    }
   ],
+
   "GitOps with ArgoCD": [
-    { text: "ArgoCD Docs", url: "https://argo-cd.readthedocs.io/en/stable/" },
     {
-      text: "GitOps by WeaveWorks",
-      url: "https://www.weave.works/technologies/gitops/",
+      text: "ArgoCD Official Docs",
+      url: "https://argo-cd.readthedocs.io/en/stable/",
+    },
+    {
+      text: "ArgoCD Helm Integration",
+      url: "https://argo-cd.readthedocs.io/en/stable/user-guide/helm/",
+    },
+    {
+      text: "ArgoCD RBAC",
+      url: "https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/",
     },
   ],
+
   "Vault & Secrets Management": [
-    { text: "Vault Docs", url: "https://developer.hashicorp.com/vault/docs" },
     {
-      text: "Kubernetes Secrets",
-      url: "https://kubernetes.io/docs/concepts/configuration/secret/",
+      text: "Vault Official Learn Guides",
+      url: "https://developer.hashicorp.com/vault/tutorials",
+    },
+    {
+      text: "Vault Docs",
+      url: "https://developer.hashicorp.com/vault/docs",
+    },
+    {
+      text: "Vault Kubernetes Integration",
+      url: "https://developer.hashicorp.com/vault/docs/platform/k8s",
+    },
+    {
+      text: "Vault Dynamic Secrets",
+      url: "https://developer.hashicorp.com/vault/docs/secrets",
     },
   ],
+
   "Kubernetes Security": [
     {
-      text: "K8s RBAC",
-      url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/",
+      text: "Kubernetes Security Overview",
+      url: "https://kubernetes.io/docs/concepts/security/overview/",
     },
     {
-      text: "OPA Gatekeeper",
-      url: "https://open-policy-agent.github.io/gatekeeper/",
+      text: "Pod Security Standards (PSS)",
+      url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
+    },
+    {
+      text: "OPA Gatekeeper Docs",
+      url: "https://open-policy-agent.github.io/gatekeeper/website/docs/",
+    },
+    {
+      text: "Kubernetes Network Policies",
+      url: "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
+    },
+  ],
+
+  "Logging & Monitoring": [
+    {
+      text: "Prometheus Docs",
+      url: "https://prometheus.io/docs/introduction/overview/",
+    },
+    {
+      text: "Grafana Dashboards",
+      url: "https://grafana.com/docs/grafana/latest/dashboards/",
+    },
+    {
+      text: "Loki for Logging",
+      url: "https://grafana.com/docs/loki/latest/",
+    },
+    {
+      text: "OpenTelemetry",
+      url: "https://opentelemetry.io/docs/",
+    },
+  ],
+
+  "Ansible Configuration Management": [
+    {
+      text: "Ansible Getting Started",
+      url: "https://docs.ansible.com/ansible/latest/getting_started/index.html",
+    },
+    {
+      text: "Ansible Docs",
+      url: "https://docs.ansible.com/",
+    },
+    {
+      text: "Ansible Vault",
+      url: "https://docs.ansible.com/ansible/latest/user_guide/vault.html",
+    },
+    {
+      text: "Ansible Best Practices",
+      url: "https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html",
     },
   ],
 };
