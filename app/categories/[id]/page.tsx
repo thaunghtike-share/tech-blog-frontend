@@ -1,15 +1,13 @@
-import CategoryPageClient from "./CategoryPageClient"
+import CategoryPageClient from "./CategoryPageClient";
 
 interface PageProps {
   params: {
-    id: string
-  }
+    id: string;
+  };
 }
 
-// This is a Server Component, params is a plain object here
-export default function CategoryPage({ params }: PageProps) {
-  const { id } = params
+export default async function CategoryPage({ params }: PageProps) {
+  const { id } = await params;
 
-  // Just pass id to client component
-  return <CategoryPageClient id={id} />
+  return <CategoryPageClient id={id} />;
 }
