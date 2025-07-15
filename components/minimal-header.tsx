@@ -307,15 +307,15 @@ export function MinimalHeader() {
               {isServicesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
                   <Link
-                    href="/services/monolithic-to-cloud-native-migration"
+                    href="/services/cloud-migration"
                     className="block px-4 py-2 hover:bg-blue-50"
                   >
                     Cloud-Native Migration
                   </Link>
-                  <Link href="/services/infra-as-code" className="block px-4 py-2 hover:bg-blue-50">
+                  <Link href="/services/infrastructure-automation" className="block px-4 py-2 hover:bg-blue-50">
                     Infrastructure as Code
                   </Link>
-                  <Link href="/services/website-development" className="block px-4 py-2 hover:bg-blue-50">
+                  <Link href="/services/web-development" className="block px-4 py-2 hover:bg-blue-50">
                     Website Development
                   </Link>
                 </div>

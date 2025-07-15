@@ -144,18 +144,13 @@ export function MinimalSidebar() {
                   desc: "Modernize with Kubernetes & GitOps",
                   icon: <Cloud className="h-5 w-5" />,
                   gradient: "from-sky-500 to-blue-600",
+                  url: ""
                 },
                 {
-                  title: "Infra Automation",
+                  title: "Infrastructure Automation",
                   desc: "Terraform, Ansible, Pulumi",
                   icon: <Cog className="h-5 w-5" />,
                   gradient: "from-orange-500 to-red-600",
-                },
-                {
-                  title: "CI/CD Pipelines",
-                  desc: "End-to-end automation",
-                  icon: <BarChart3 className="h-5 w-5" />,
-                  gradient: "from-pink-500 to-rose-600",
                 },
                 {
                   title: "Web Deployment",
@@ -166,7 +161,7 @@ export function MinimalSidebar() {
               ].map((service, index) => (
                 <li key={index}>
                   <Link
-                    href={`/services#${service.title
+                    href={`/services/${service.title
                       .toLowerCase()
                       .replace(" ", "-")}`}
                     className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/80 hover:shadow-md transition-all"
