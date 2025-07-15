@@ -84,12 +84,6 @@ const roadmap: RoadmapStage[] = [
         subtopics: ["Python syntax", "Loops & conditionals"],
       },
       {
-        title: "Git & Version Control",
-        details: "Track changes and collaborate on code.",
-        duration: "2-3 weeks",
-        subtopics: ["Git CLI", "Branches & merging", "GitHub usage"],
-      },
-      {
         title: "Docker Basics",
         details: "Understand containerization and Docker CLI.",
         duration: "2 weeks",
@@ -122,6 +116,12 @@ const roadmap: RoadmapStage[] = [
         details: "Explore Azure resource groups, VMs, and storage.",
         duration: "3-4 weeks",
         subtopics: ["Azure Portal", "VNet & Subnets", "Blob storage"],
+      },
+      {
+        title: "Git & Version Control",
+        details: "Track changes and collaborate on code.",
+        duration: "2-3 weeks",
+        subtopics: ["Git CLI", "Branches & merging", "GitHub usage"],
       },
       {
         title: "Kubernetes Essentials Part-I",

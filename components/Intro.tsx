@@ -44,9 +44,9 @@ export default function Intro() {
   ];
 
   const stepColors = [
-    "bg-gradient-to-r from-purple-500 to-blue-600",
+    "bg-gradient-to-r from-green-500 to-emerald-600",
     "bg-gradient-to-r from-red-500 to-red-600",
-    "bg-gradient-to-r from-emerald-500 to-emerald-600",
+    "bg-gradient-to-r from-orange-500 to-amber-600",
     "bg-gradient-to-r from-red-500 to-red-600",
     "bg-gradient-to-r from-purple-500 to-blue-600",
   ];
@@ -63,14 +63,14 @@ export default function Intro() {
       icon: <Cpu className="w-6 h-6" />,
       title: "Core Practices",
       description:
-        "CI/CD, infrastructure as code, monitoring, logging, and communication between teams.",
+        "CICD, Containerization, Version Control, Orchestration, Infrastructure As Code, Monitoring & Logging, and Incident Response",
       color: "bg-purple-500",
     },
     {
       icon: <Cloud className="w-6 h-6" />,
       title: "Cloud Native",
       description:
-        "Designed for modern cloud environments with microservices and containers.",
+        "Cloud-native is a way of building and running applications that fully leverage the cloud model — scalable, resilient, flexible, and automated.",
       color: "bg-amber-500",
     },
   ];
@@ -92,10 +92,11 @@ export default function Intro() {
       name: "Beginner",
       icon: <Server className="w-5 h-5" />,
       tools: [
-        "Linux & Bash Scripting",
-        "CCNA",
+        "Linux Server Administration",
+        "Linux Bash Scripting",
+        "CCNA Networking",
         "Cloud Fundamentals",
-        "HTML & CSS",
+        "Docker",
       ],
       color: "bg-purple-100 text-purple-800",
       frameColor: "bg-purple-500",
@@ -105,10 +106,10 @@ export default function Intro() {
       icon: <GitMerge className="w-5 h-5" />,
       tools: [
         "Containerization",
-        "AWS Associate",
-        "Git",
+        "AWS Services",
+        "Version Control",
         "Kubernetes Fundamentals",
-        "CICD",
+        "CICD Pipeline",
       ],
       color: "bg-green-100 text-green-800",
       frameColor: "bg-green-500",
@@ -116,7 +117,7 @@ export default function Intro() {
     {
       name: "Advanced",
       icon: <ShieldCheck className="w-5 h-5" />,
-      tools: ["Infrastructure as Code", "Security", "GitOps", "Troubleshooting"],
+      tools: ["Infrastructure as Code", "Configuration Management", "Security", "GitOps", "Monitoring & Logging"],
       color: "bg-red-100 text-red-800",
       frameColor: "bg-red-500",
     },
