@@ -85,15 +85,6 @@ export function MinimalFooter() {
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Connect</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-2 text-blue-600" />
-                <a
-                  href="mailto:thaunghtike.tho1234@gmail.com"
-                  className="hover:text-blue-600 transition-colors font-medium"
-                >
-                  Email Us
-                </a>
-              </li>
-              <li className="flex items-center">
                 <Linkedin className="h-5 w-5 mr-2 text-blue-600" />
                 <a
                   href="https://www.linkedin.com/in/thaung-htike-oo-devops/"
@@ -102,17 +93,6 @@ export function MinimalFooter() {
                   className="hover:text-blue-600 transition-colors font-medium"
                 >
                   LinkedIn
-                </a>
-              </li>
-              <li className="flex items-center">
-                <Youtube className="h-5 w-5 mr-2 text-red-600" />
-                <a
-                  href="https://www.youtube.com/@learndevopsnowbytho"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-blue-600 transition-colors font-medium"
-                >
-                  YouTube
                 </a>
               </li>
               <li className="flex items-center">
