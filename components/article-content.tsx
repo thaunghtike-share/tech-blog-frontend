@@ -8,6 +8,7 @@ import CountUp from "react-countup";
 import { GiscusComments } from "@/components/GiscusComments";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { ShareButtons } from "@/components/share-buttons";
+import type { Element } from "hast";
 import {
   ArrowLeft,
   ArrowRight,
@@ -17,11 +18,14 @@ import {
   UserCircle,
   CalendarDays,
   User,
+  Clipboard,
+  Check,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface Article {
   id: number;
@@ -89,6 +93,33 @@ function excerpt(content: string) {
     .slice(0, 80);
   return plainText.length === 80 ? plainText + "..." : plainText;
 }
+
+// CopyButton component for code blocks
+const CopyButton = ({ code }: { code: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <Button
+      onClick={handleCopy}
+      variant="ghost"
+      size="sm"
+      className="absolute top-2 right-2 text-black hover:bg-gray-200 px-2 py-1 text-xs rounded-md transition-colors duration-200"
+    >
+      {copied ? (
+        <Check className="w-3 h-3 mr-1" />
+      ) : (
+        <Clipboard className="w-3 h-3 mr-1" />
+      )}
+      {copied ? "Copied!" : "Copy"}
+    </Button>
+  );
+};
 
 export function ArticleContent({
   article,
@@ -249,7 +280,7 @@ export function ArticleContent({
                 </a>
               ),
               ul: ({ children, ...props }) => (
-                <ul className="mb-4 list-disc space-y-2 pl-4" {...props}>
+                <ul className="mb-4 list-none space-y-2 pl-4" {...props}>
                   {children}
                 </ul>
               ),
@@ -263,9 +294,10 @@ export function ArticleContent({
               ),
               li: ({ children, ...props }) => (
                 <li
-                  className="text-sm text-gray-700 leading-relaxed"
+                  className="flex items-start text-sm text-gray-700 leading-relaxed"
                   {...props}
                 >
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 mr-2 flex-shrink-0" />
                   {children}
                 </li>
               ),
@@ -289,17 +321,26 @@ export function ArticleContent({
                 const isShellLike = language === "bash" || language === "shell";
                 const startsWithDollar =
                   isShellLike && lines[0]?.trim().startsWith("$");
+
+                const showCopyButton = [
+                  "yaml",
+                  "bash",
+                  "shell",
+                  "hcl",
+                ].includes(language);
+
                 return (
                   <div
                     className="relative mb-6 rounded-lg bg-white text-gray-900 font-mono text-sm shadow-sm border border-blue-300"
                     {...props}
                   >
                     {language && (
-                      <div className="absolute top-2 right-2 bg-blue-100 text-blue-700 rounded px-2 py-0.5 text-xs font-semibold">
+                      <div className="absolute top-2 left-2 text-blue-700 rounded px-2 py-0.5 text-xs font-semibold">
                         {language.toUpperCase()}
                       </div>
                     )}
-                    <pre className="whitespace-pre-wrap p-4 overflow-x-auto rounded-lg">
+                    {showCopyButton && <CopyButton code={codeString} />}
+                    <pre className="whitespace-pre-wrap p-4 overflow-x-auto rounded-lg pt-10">
                       {lines.map((line, idx) => (
                         <div key={idx} className="flex">
                           {idx === 0 && startsWithDollar && (
@@ -347,7 +388,7 @@ export function ArticleContent({
           />
         </div>
         <GiscusComments />
-        <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-0 shadow-lg">
+        <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-lg">
           <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
             {author?.avatar ? (
               <img
@@ -377,7 +418,7 @@ export function ArticleContent({
                   href={author.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 text-blue-800 hover:underline text-sm font-medium"
+                  className="mt-3 inline-flex items-center gap-2 text-blue-800 hover:underline text-sm font-medium transition-colors duration-200 hover:text-blue-900"
                 >
                   <Linkedin className="w-4 h-4" />
                   <span>LinkedIn</span>
@@ -390,7 +431,7 @@ export function ArticleContent({
           {prevArticle ? (
             <a
               href={`/articles/${prevArticle.id}`}
-              className="hover:underline flex items-center gap-1"
+              className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>{prevArticle.title}</span>
@@ -401,7 +442,7 @@ export function ArticleContent({
           {nextArticle ? (
             <a
               href={`/articles/${nextArticle.id}`}
-              className="hover:underline flex items-center gap-1 text-right"
+              className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800"
             >
               <span>{nextArticle.title}</span>
               <ArrowRight className="w-4 h-4" />
@@ -442,7 +483,7 @@ export function ArticleContent({
               return (
                 <Card
                   key={item.id}
-                  className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-all duration-200 h-full flex flex-col group hover:border-indigo-100"
+                  className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-200 h-full flex flex-col group hover:border-indigo-200"
                 >
                   <Link
                     href={`/articles/${item.id}`}
@@ -460,11 +501,11 @@ export function ArticleContent({
                     <CardContent className="p-5 flex-grow flex flex-col bg-white">
                       <Badge
                         variant="outline"
-                        className="w-fit mb-3 text-xs px-2.5 py-1 bg-indigo-50 text-indigo-700 border-indigo-100 hover:bg-indigo-100"
+                        className="w-fit mb-3 text-xs px-2.5 py-1 bg-indigo-100 text-indigo-800 border-indigo-200 hover:bg-indigo-200"
                       >
                         {itemCategory}
                       </Badge>
-                      <h4 className="font-medium text-gray-800 group-hover:text-indigo-600 transition-colors line-clamp-2 text-[15px] leading-snug">
+                      <h4 className="font-medium text-gray-800 group-hover:text-indigo-700 transition-colors line-clamp-2 text-[15px] leading-snug">
                         {item.title}
                       </h4>
                       <p className="text-sm text-gray-600 line-clamp-2 mt-2 mb-4">

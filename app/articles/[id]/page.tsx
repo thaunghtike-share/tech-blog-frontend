@@ -1,50 +1,49 @@
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalFooter } from "@/components/minimal-footer"
-import { ArticleContent } from "@/components/article-content"
+import { notFound } from "next/navigation";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalFooter } from "@/components/minimal-footer";
+import { ArticleContent } from "@/components/article-content";
 
 interface Article {
-  id: number
-  title: string
-  content: string
-  published_at: string
-  category: number
-  tags: number[]
-  author: number
-  featured: boolean
-  read_count?: number
+  id: number;
+  title: string;
+  content: string;
+  published_at: string;
+  category: number;
+  tags: number[];
+  author: number;
+  featured: boolean;
+  read_count?: number;
 }
 
 interface Author {
-  id: number
-  name: string
-  bio?: string
-  avatar?: string
-  linkedin?: string
+  id: number;
+  name: string;
+  bio?: string;
+  avatar?: string;
+  linkedin?: string;
 }
 
 interface Tag {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
 interface Category {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
-interface ArticlePageProps {
-  params: { id: string }
-}
+export const dynamic = "force-dynamic";
 
-const API_BASE_URL = "http://192.168.1.131:8000/api"
+const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
-    const res = await fetch(url, { cache: "no-store" })
-    const data = await res.json()
-    return Array.isArray(data) ? data : data.results || []
+    const res = await fetch(url, { cache: "no-store" });
+    const data = await res.json();
+    return Array.isArray(data) ? data : data.results || [];
   } catch {
-    return []
+    return [];
   }
 }
 
@@ -52,49 +51,64 @@ async function fetchAuthor(id: number): Promise<Author | null> {
   try {
     const res = await fetch(`${API_BASE_URL}/authors/${id}`, {
       cache: "no-store",
-    })
-    if (!res.ok) return null
-    return await res.json()
+    });
+    if (!res.ok) return null;
+    return await res.json();
   } catch {
-    return null
+    return null;
   }
 }
 
-function extractHeadings(markdown: string): { text: string; level: number; id: string }[] {
-  const idCounts: Record<string, number> = {}
+function extractHeadings(
+  markdown: string
+): { text: string; level: number; id: string }[] {
+  const idCounts: Record<string, number> = {};
   return markdown
     .split("\n")
     .map((line) => {
-      const match = line.match(/^(#{1,6})\s+(.*)/)
-      if (!match) return null
-      const [, hashes, rawText] = match
-      const level = hashes.length
+      const match = line.match(/^(#{1,6})\s+(.*)/);
+      if (!match) return null;
+      const [, hashes, rawText] = match;
+      const level = hashes.length;
       let baseId = rawText
         .toLowerCase()
         .replace(/[^\w]+/g, "-")
-        .replace(/^-+|-+$/g, "")
+        .replace(/^-+|-+$/g, "");
       if (idCounts[baseId]) {
-        idCounts[baseId] += 1
-        baseId = `${baseId}-${idCounts[baseId]}`
+        idCounts[baseId] += 1;
+        baseId = `${baseId}-${idCounts[baseId]}`;
       } else {
-        idCounts[baseId] = 1
+        idCounts[baseId] = 1;
       }
-      return { text: rawText, level, id: baseId }
+      return { text: rawText, level, id: baseId };
     })
-    .filter(Boolean) as { text: string; level: number; id: string }[]
+    .filter(Boolean) as { text: string; level: number; id: string }[];
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const id = Number.parseInt(params.id)
-  const res = await fetch(`${API_BASE_URL}/articles/${id}`, { cache: "no-store" })
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  // Await the params as per Next.js 15 requirements
+  const { id: idStr } = await params;
+  const id = Number(idStr);
+
+  if (!idStr || Number.isNaN(id)) {
+    notFound();
+  }
+
+  const res = await fetch(`${API_BASE_URL}/articles/${id}`, {
+    cache: "no-store",
+  });
   if (!res.ok) {
     return (
       <div className="p-8 text-center text-red-600">
         <p>Article not found or failed to load.</p>
       </div>
-    )
+    );
   }
-  const article: Article = await res.json()
+  const article: Article = await res.json();
 
   const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
@@ -102,19 +116,27 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
     fetchJSON<Category>(`${API_BASE_URL}/categories/`),
     fetchJSON<Author>(`${API_BASE_URL}/authors/`),
-  ])
+  ]);
 
-  const headings = extractHeadings(article.content)
-  const sorted = allArticles.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
-  const currentIndex = sorted.findIndex((a) => a.id === article.id)
-  const prevArticle = sorted[currentIndex + 1] || null
-  const nextArticle = sorted[currentIndex - 1] || null
-  const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5)
-  const sameCategoryArticles = sorted.filter((a) => a.category === article.category && a.id !== article.id).slice(0, 5)
+  const headings = extractHeadings(article.content);
+  const sorted = allArticles.sort(
+    (a, b) =>
+      new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+  );
+  const currentIndex = sorted.findIndex((a) => a.id === article.id);
+  const prevArticle = sorted[currentIndex + 1] || null;
+  const nextArticle = sorted[currentIndex - 1] || null;
+  const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
+  const sameCategoryArticles = sorted
+    .filter((a) => a.category === article.category && a.id !== article.id)
+    .slice(0, 5);
 
-  const publishDate = new Date(article.published_at).toLocaleDateString()
-  const categoryName = categories.find((c) => c.id === article.category)?.name || "General"
-  const tagNames = article.tags.map((id) => tags.find((t) => t.id === id)?.name).filter(Boolean) as string[]
+  const publishDate = new Date(article.published_at).toLocaleDateString();
+  const categoryName =
+    categories.find((c) => c.id === article.category)?.name || "General";
+  const tagNames = article.tags
+    .map((id) => tags.find((t) => t.id === id)?.name)
+    .filter(Boolean) as string[];
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
@@ -126,6 +148,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
+
       {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
@@ -163,7 +186,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           Chat?
         </span>
       </a>
-      
+
       <MinimalHeader />
       <ArticleContent
         article={article}
