@@ -94,7 +94,7 @@ const roadmap: RoadmapStage[] = [
         title: "Computer Fundamentals",
         details:
           "Understand the basics of computers including hardware, software, operating systems, and basic internet concepts.",
-        duration: "6 weeks",
+        duration: "4 weeks",
         subtopics: [
           "Computer hardware basics",
           "Operating system concepts",
@@ -107,7 +107,7 @@ const roadmap: RoadmapStage[] = [
         title: "Virtualization",
         details:
           "Learn the fundamentals of virtualization technology, types, and its role in modern IT infrastructure.",
-        duration: "Ongoing",
+        duration: "2 weeks",
         subtopics: [
           "Types of virtualization (hardware, software, network, storage)",
           "Hypervisors (Type 1 and Type 2)",
@@ -129,7 +129,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Linux Fundamentals",
         details: "Understand the Linux operating system and shell commands.",
-        duration: "2-3 weeks",
+        duration: "4 weeks",
         subtopics: [
           "File systems & permissions",
           "Shell navigation",
@@ -142,7 +142,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Cloud Fundamentals",
         details: "Grasp basic concepts of cloud computing and major providers.",
-        duration: "2-3 weeks",
+        duration: "4 weeks",
         subtopics: [
           "IaaS vs PaaS vs SaaS",
           "AWS Free Tier overview",
@@ -155,7 +155,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Bash Scripting",
         details: "Automate tasks with bash scripts.",
-        duration: "2-3 weeks",
+        duration: "3 weeks",
         subtopics: [
           "Bash syntax and variables",
           "Loops & conditionals",
@@ -182,7 +182,7 @@ const roadmap: RoadmapStage[] = [
         title: "CCNA",
         details:
           "Prepare for Cisco Certified Network Associate certification with core networking, routing, switching, and device management skills.",
-        duration: "8-12 weeks",
+        duration: "8 weeks",
         subtopics: [
           "Networking fundamentals (OSI, TCP/IP models)",
           "IP addressing and subnetting",
@@ -218,7 +218,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "AWS DevOps Services",
         details: "Dive into EC2, IAM, S3, and basic networking.",
-        duration: "3-4 weeks",
+        duration: "6 weeks",
         subtopics: [
           "EC2 provisioning and management",
           "S3 bucket operations and lifecycle",
@@ -231,7 +231,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Azure DevOps Services",
         details: "Explore Azure resource groups, VMs, and storage.",
-        duration: "3-4 weeks",
+        duration: "6 weeks",
         subtopics: [
           "Azure Portal navigation",
           "Resource groups & management",
@@ -244,7 +244,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Version Control",
         details: "Track changes and collaborate on code.",
-        duration: "2-3 weeks",
+        duration: "3 weeks",
         subtopics: [
           "Git CLI commands",
           "Branching and merging",
@@ -257,7 +257,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Kubernetes Essentials Part-I",
         details: "Learn to orchestrate containers at scale.",
-        duration: "4 weeks",
+        duration: "5 weeks",
         subtopics: [
           "Pods and ReplicaSets",
           "Deployments and rollout strategies",
@@ -270,7 +270,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Kubernetes Essentials Part-II",
         details: "Go deeper into Kubernetes with advanced workloads.",
-        duration: "4 weeks",
+        duration: "6 weeks",
         subtopics: [
           "Horizontal Pod Autoscaler (HPA)",
           "Persistent Volumes and PVCs",
@@ -319,7 +319,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Infrastructure As Code",
         details: "Provision cloud infrastructure with Terraform.",
-        duration: "3-4 weeks",
+        duration: "7 weeks",
         subtopics: [
           "HCL syntax and variables",
           "Modules and reusability",
@@ -332,7 +332,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "GitOps with ArgoCD",
         details: "Deploy apps declaratively with Git as the source of truth.",
-        duration: "2-3 weeks",
+        duration: "4 weeks",
         subtopics: [
           "Installing and configuring ArgoCD",
           "Managing applications with Git",
@@ -345,7 +345,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Vault & Secrets Management",
         details: "Secure sensitive data in apps and pipelines.",
-        duration: "2-3 weeks",
+        duration: "6 weeks",
         subtopics: [
           "Vault architecture and setup",
           "Secrets engines and dynamic secrets",
@@ -358,7 +358,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Kubernetes Security",
         details: "Enforce security and access control in Kubernetes.",
-        duration: "3 weeks",
+        duration: "8 weeks",
         subtopics: [
           "RBAC (Roles and Bindings)",
           "Pod Security Standards (PSS)",
@@ -371,7 +371,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Logging & Monitoring",
         details: "Observe, trace, and analyze workloads effectively.",
-        duration: "3 weeks",
+        duration: "6 weeks",
         subtopics: [
           "Prometheus fundamentals",
           "Grafana dashboards",
@@ -384,7 +384,7 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Ansible Configuration Management",
         details: "Automate infrastructure configuration and provisioning.",
-        duration: "3 weeks",
+        duration: "8 weeks",
         subtopics: [
           "YAML syntax for Ansible",
           "Playbooks and tasks",
