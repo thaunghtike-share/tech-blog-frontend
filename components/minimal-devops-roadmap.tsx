@@ -10,6 +10,7 @@ import {
   Code,
   X,
   Sparkles,
+  Lightbulb,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
@@ -20,6 +21,7 @@ interface RoadmapItem {
   duration: string;
   details: string;
   subtopics: string[];
+  // Removed prerequisites from RoadmapItem as it will now be a separate stage
 }
 
 interface RoadmapStage {
@@ -35,6 +37,87 @@ interface ResourceLink {
 }
 
 const roadmap: RoadmapStage[] = [
+  {
+    key: "prerequisite",
+    label: "Prerequisite",
+    description: [
+      "Build a strong foundation with essential concepts before starting your DevOps journey.",
+      "Crucial for absolute beginners and those new to IT fundamentals.",
+    ],
+    items: [
+      {
+        title: "Python Programming Basic",
+        details:
+          "Learn the core syntax, data types, control structures, functions, and basic programming concepts in Python.",
+        duration: "12 weeks",
+        subtopics: [
+          "Variables and Data Types",
+          "Operators and Expressions",
+          "Control Flow (if, for, while)",
+          "Functions and Scope",
+          "Lists, Tuples, and Dictionaries",
+          "Input/Output and File Handling",
+          "Error Handling (try/except)",
+          "Basic Modules and Packages",
+        ],
+      },
+      {
+        title: "Networking Fundamentals",
+        details:
+          "Learn core networking concepts including protocols, addressing, and how devices communicate across networks.",
+        duration: "4 weeks",
+        subtopics: [
+          "Network Types (LAN, WAN, PAN, MAN)",
+          "OSI & TCP/IP Models",
+          "IP Addressing & Subnetting",
+          "Ports & Protocols (TCP/UDP)",
+          "DNS & DHCP",
+          "MAC Addressing & ARP",
+          "Switches, Routers, and Firewalls",
+          "HTTP vs HTTPS",
+        ],
+      },
+      {
+        title: "Operating System Basics",
+        details:
+          "Understand how operating systems manage resources, processes, memory, and file systems.",
+        duration: "2 weeks",
+        subtopics: [
+          "Processes and Threads",
+          "Memory Management",
+          "File Systems",
+          "User vs Kernel Mode",
+          "Basic Linux & Windows CLI",
+        ],
+      },
+      {
+        title: "Computer Fundamentals",
+        details:
+          "Understand the basics of computers including hardware, software, operating systems, and basic internet concepts.",
+        duration: "6 weeks",
+        subtopics: [
+          "Computer hardware basics",
+          "Operating system concepts",
+          "File management",
+          "Basic software usage",
+          "Internet fundamentals",
+        ],
+      },
+      {
+        title: "Virtualization",
+        details:
+          "Learn the fundamentals of virtualization technology, types, and its role in modern IT infrastructure.",
+        duration: "Ongoing",
+        subtopics: [
+          "Types of virtualization (hardware, software, network, storage)",
+          "Hypervisors (Type 1 and Type 2)",
+          "Virtual Machines (VMs) and Containers",
+          "Benefits and use cases of virtualization",
+          "Basic troubleshooting and management",
+        ],
+      },
+    ],
+  },
   {
     key: "beginner",
     label: "Beginner",
@@ -66,25 +149,13 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "Networking Basics",
-        details: "Learn the essentials of computer networking.",
-        duration: "2 weeks",
-        subtopics: ["IP & Subnets", "Ports", "DNS", "HTTP vs HTTPS"],
-      },
-      {
-        title: "Bash Scripting",
+        title: "Linux Bash Scripting",
         details: "Automate tasks with bash scripts",
         duration: "2-3 weeks",
         subtopics: ["Bash syntax", "Loops & conditionals"],
       },
       {
-        title: "Python Fundamentals",
-        details: "Learn Python Programming Fundamentals",
-        duration: "10 weeks",
-        subtopics: ["Python syntax", "Loops & conditionals"],
-      },
-      {
-        title: "Docker Basics",
+        title: "Docker Fundamentals",
         details: "Understand containerization and Docker CLI.",
         duration: "2 weeks",
         subtopics: ["Images & containers", "Dockerfile", "Volumes & ports"],
@@ -247,6 +318,52 @@ const roadmap: RoadmapStage[] = [
 ];
 
 const resourceLinks: Record<string, ResourceLink[]> = {
+  "Python Programming Basic": [
+    {
+      text: "The official Python tutorial for beginners",
+      url: "https://docs.python.org/3/tutorial/index.html",
+    },
+    {
+      text: " In-depth articles and tutorials on Python best practices",
+      url: "https://realpython.com/",
+    },
+  ],
+  "Networking Fundamentals": [
+    {
+      text: "Networking Basics - Cisco Networking Academy",
+      url: "https://skillsforall.com/course/networking-basics",
+    },
+    {
+      text: "CompTIA Network+ Study Guide – Professor Messer",
+      url: "https://www.professormesser.com/network-plus/n10-008/n10-008-training-course/",
+    },
+  ],
+  "Operating System Basics": [
+    {
+      text: "Operating System Tutorial – GeeksforGeeks",
+      url: "https://www.geeksforgeeks.org/operating-systems/operating-systems/",
+    },
+  ],
+  "Computer Fundamentals": [
+    {
+      text: "Computer Fundamentals – TutorialsPoint",
+      url: "https://www.tutorialspoint.com/computer_fundamentals/index.htm",
+    },
+    {
+      text: "Computer Basics – GCFGlobal",
+      url: "https://edu.gcfglobal.org/en/computerbasics/",
+    },
+  ],
+  Virtualization: [
+    {
+      text: "Virtualization Explained – Red Hat",
+      url: "https://www.redhat.com/en/topics/virtualization",
+    },
+    {
+      text: "Virtualization Concepts – IBM Cloud",
+      url: "https://www.ibm.com/cloud/learn/virtualization-a-complete-guide",
+    },
+  ],
   "Linux Fundamentals": [
     { text: "Linux Journey", url: "https://linuxjourney.com/" },
     {
@@ -355,6 +472,13 @@ const resourceLinks: Record<string, ResourceLink[]> = {
 
 // New stage configuration for consistent styling
 const stageConfig = {
+  prerequisite: {
+    gradient: "from-gray-500 to-slate-600",
+    text: "text-gray-700",
+    border: "border-gray-500",
+    iconBg: "bg-gray-100",
+    iconText: "text-gray-600",
+  },
   beginner: {
     gradient: "from-green-500 to-emerald-600",
     text: "text-green-700",
@@ -380,6 +504,8 @@ const stageConfig = {
 
 const getStageIcon = (stageKey: string) => {
   switch (stageKey) {
+    case "prerequisite":
+      return <Lightbulb className="w-5 h-5" />;
     case "beginner":
       return <BookOpen className="w-5 h-5" />;
     case "intermediate":
@@ -393,7 +519,7 @@ const getStageIcon = (stageKey: string) => {
 
 export function MinimalDevopsRoadmap() {
   const [selectedStageKey, setSelectedStageKey] = useState(
-    roadmap[0]?.key || "beginner"
+    roadmap[0]?.key || "prerequisite"
   );
   const [selectedTopic, setSelectedTopic] = useState<{
     title: string;
@@ -451,8 +577,8 @@ export function MinimalDevopsRoadmap() {
             transition={{ delay: 0.2 }}
             className="text-lg text-gray-600 max-w-3xl mx-auto"
           >
-            A structured learning path from beginner to advanced DevOps concepts
-            and tools.
+            A structured learning path from prerequisite to advanced DevOps
+            concepts and tools.
           </motion.p>
         </div>
         <motion.div

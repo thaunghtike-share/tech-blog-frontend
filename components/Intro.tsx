@@ -84,6 +84,7 @@ export default function Intro() {
         "Networking Basics",
         "Operating System",
         "Computer Fundamentals",
+        "Virtualization"
       ],
       color: "bg-blue-100 text-blue-800",
       frameColor: "bg-blue-500",
