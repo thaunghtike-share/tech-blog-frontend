@@ -14,7 +14,7 @@ import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA"
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection"
 import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
 import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
-import { YouTubePlaylists } from "@/components/YouTubePlaylists"
+import { YouTubePlaylists }  from "@/components/YouTubePlaylists"
 import { FreeLabs } from "@/components/FreeLabs"
 import Intro from "@/components/Intro"
 

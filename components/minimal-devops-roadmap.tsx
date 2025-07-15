@@ -1,25 +1,37 @@
-"use client"
-import { ChevronDown, ChevronRight, Clock, BookOpen, Layers, Shield, Cloud, Code, X, Sparkles } from 'lucide-react'
-import { motion, AnimatePresence } from "framer-motion"
-import { useState, useRef } from "react"
+"use client";
+import {
+  ChevronDown,
+  ChevronRight,
+  Clock,
+  BookOpen,
+  Layers,
+  Shield,
+  Cloud,
+  Code,
+  X,
+  Sparkles,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
 
 interface RoadmapItem {
-  title: string
-  duration: string
-  details: string
-  subtopics: string[]
+  title: string;
+  duration: string;
+  details: string;
+  subtopics: string[];
 }
 
 interface RoadmapStage {
-  key: string
-  label: string
-  description: string[]
-  items: RoadmapItem[]
+  key: string;
+  label: string;
+  description: string[];
+  items: RoadmapItem[];
 }
 
 interface ResourceLink {
-  text: string
-  url: string
+  text: string;
+  url: string;
 }
 
 const roadmap: RoadmapStage[] = [
@@ -35,13 +47,23 @@ const roadmap: RoadmapStage[] = [
         title: "Linux Fundamentals",
         details: "Understand the Linux operating system and shell commands.",
         duration: "2-3 weeks",
-        subtopics: ["File systems & permissions", "Shell navigation", "Process management", "SSH & remote access"],
+        subtopics: [
+          "File systems & permissions",
+          "Shell navigation",
+          "Process management",
+          "SSH & remote access",
+        ],
       },
       {
         title: "Cloud Fundamentals",
         details: "Grasp basic concepts of cloud computing and major providers.",
         duration: "2-3 weeks",
-        subtopics: ["IaaS vs PaaS vs SaaS", "AWS Free Tier", "Azure Basics", "GCP Console"],
+        subtopics: [
+          "IaaS vs PaaS vs SaaS",
+          "AWS Free Tier",
+          "Azure Basics",
+          "GCP Console",
+        ],
       },
       {
         title: "Networking Basics",
@@ -105,31 +127,61 @@ const roadmap: RoadmapStage[] = [
         title: "Kubernetes Essentials Part-I",
         details: "Learn to orchestrate containers at scale.",
         duration: "4 weeks",
-        subtopics: ["Pods & deployments", "Services & Ingress", "Statefulset", "Resource Usage", "Namespaces"],
+        subtopics: [
+          "Pods & deployments",
+          "Services & Ingress",
+          "Statefulset",
+          "Resource Usage",
+          "Namespaces",
+        ],
       },
       {
         title: "Kubernetes Essentials Part-II",
         details: "Learn to orchestrate containers at scale.",
         duration: "4 weeks",
-        subtopics: ["HPA", "Volumes", "Secrets & Configmap", "Health Check Probes", "KEDA", "PDB"],
+        subtopics: [
+          "HPA",
+          "Volumes",
+          "Secrets & Configmap",
+          "Health Check Probes",
+          "KEDA",
+          "PDB",
+        ],
       },
       {
         title: "Kubernetes Advanced",
         details: "Learn to manage kubernetes cluster.",
         duration: "4 weeks",
-        subtopics: ["customize", "rancher", "helm", "Lens", "Dashboard", "Sealed Secrets"],
+        subtopics: [
+          "customize",
+          "rancher",
+          "helm",
+          "Lens",
+          "Dashboard",
+          "Sealed Secrets",
+        ],
       },
       {
         title: "CICD Fundamentals",
         details: "Automate software delivery using pipelines.",
         duration: "3 weeks",
-        subtopics: ["GitHub Actions", "GitLab CI/CD", "Webhooks", "Testing pipelines"],
+        subtopics: [
+          "GitHub Actions",
+          "GitLab CI/CD",
+          "Webhooks",
+          "Testing pipelines",
+        ],
       },
       {
         title: "Container Services (ECS/EKS)",
         details: "Deploy and manage containers on AWS.",
         duration: "3 weeks",
-        subtopics: ["Fargate", "EKS setup", "Service discovery", "Auto-scaling"],
+        subtopics: [
+          "Fargate",
+          "EKS setup",
+          "Service discovery",
+          "Auto-scaling",
+        ],
       },
       {
         title: "Monitoring & Observability",
@@ -151,63 +203,113 @@ const roadmap: RoadmapStage[] = [
         title: "Terraform IaC",
         details: "Provision cloud infrastructure with Terraform.",
         duration: "3-4 weeks",
-        subtopics: ["HCL basics", "Modules & state", "Providers", "Remote backends"],
+        subtopics: [
+          "HCL basics",
+          "Modules & state",
+          "Providers",
+          "Remote backends",
+        ],
       },
       {
         title: "GitOps with ArgoCD",
         details: "Deploy apps declaratively with Git as the source of truth.",
         duration: "2-3 weeks",
-        subtopics: ["ArgoCD install", "App manifests", "Sync policies", "Health checks"],
+        subtopics: [
+          "ArgoCD install",
+          "App manifests",
+          "Sync policies",
+          "Health checks",
+        ],
       },
       {
         title: "Vault & Secrets Management",
         details: "Secure sensitive data in apps and pipelines.",
         duration: "2-3 weeks",
-        subtopics: ["Vault setup", "Token & policy management", "Kubernetes secrets"],
+        subtopics: [
+          "Vault setup",
+          "Token & policy management",
+          "Kubernetes secrets",
+        ],
       },
       {
         title: "Kubernetes Security",
         details: "Enforce security and access control in Kubernetes.",
         duration: "3 weeks",
-        subtopics: ["RBAC", "Pod Security Policies", "OPA Gatekeeper", "Network Policies"],
+        subtopics: [
+          "RBAC",
+          "Pod Security Policies",
+          "OPA Gatekeeper",
+          "Network Policies",
+        ],
       },
     ],
   },
-]
+];
 
 const resourceLinks: Record<string, ResourceLink[]> = {
   "Linux Fundamentals": [
     { text: "Linux Journey", url: "https://linuxjourney.com/" },
-    { text: "Ubuntu CLI Basics", url: "https://ubuntu.com/tutorials/command-line-for-beginners" },
+    {
+      text: "Ubuntu CLI Basics",
+      url: "https://ubuntu.com/tutorials/command-line-for-beginners",
+    },
   ],
   "Cloud Fundamentals": [
-    { text: "AWS Cloud Concepts", url: "https://aws.amazon.com/training/digital/cloud-practitioner/" },
-    { text: "Azure Fundamentals", url: "https://learn.microsoft.com/en-us/training/azure/" },
+    {
+      text: "AWS Cloud Concepts",
+      url: "https://aws.amazon.com/training/digital/cloud-practitioner/",
+    },
+    {
+      text: "Azure Fundamentals",
+      url: "https://learn.microsoft.com/en-us/training/azure/",
+    },
   ],
   "Networking Basics": [
     {
       text: "Cisco Networking Guide",
       url: "https://www.cisco.com/c/en/us/solutions/enterprise-networks/networking-fundamentals.html",
     },
-    { text: "Computer Networking Tutorial", url: "https://www.geeksforgeeks.org/computer-network-tutorials/" },
+    {
+      text: "Computer Networking Tutorial",
+      url: "https://www.geeksforgeeks.org/computer-network-tutorials/",
+    },
   ],
-  "Bash Scripting": [{ text: "Python Beginner Guide", url: "https://www.python.org/about/gettingstarted/" }],
-  "Python Fundamentals": [{ text: "Python Beginner Guide", url: "https://www.python.org/about/gettingstarted/" }],
+  "Bash Scripting": [
+    {
+      text: "Python Beginner Guide",
+      url: "https://www.python.org/about/gettingstarted/",
+    },
+  ],
+  "Python Fundamentals": [
+    {
+      text: "Python Beginner Guide",
+      url: "https://www.python.org/about/gettingstarted/",
+    },
+  ],
   "Git & Version Control": [
     { text: "Git Docs", url: "https://git-scm.com/doc" },
     { text: "Git Branching", url: "https://learngitbranching.js.org/" },
     { text: "GitHub Actions", url: "https://docs.github.com/en/actions" },
   ],
   "Docker Basics": [
-    { text: "Docker Getting Started", url: "https://docs.docker.com/get-started/" },
+    {
+      text: "Docker Getting Started",
+      url: "https://docs.docker.com/get-started/",
+    },
     { text: "Docker Compose", url: "https://docs.docker.com/compose/" },
   ],
   "YAML & JSON": [
-    { text: "YAML Tutorial", url: "https://www.tutorialspoint.com/yaml/index.htm" },
+    {
+      text: "YAML Tutorial",
+      url: "https://www.tutorialspoint.com/yaml/index.htm",
+    },
     { text: "JSON Guide", url: "https://www.json.org/json-en.html" },
   ],
   "Kubernetes Essentials": [
-    { text: "K8s Basics", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
+    {
+      text: "K8s Basics",
+      url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
+    },
     { text: "Helm Charts", url: "https://helm.sh/docs/" },
   ],
   "CI/CD Fundamentals": [
@@ -219,71 +321,109 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     { text: "Grafana Docs", url: "https://grafana.com/docs/" },
   ],
   "Terraform IaC": [
-    { text: "Terraform Basics", url: "https://developer.hashicorp.com/terraform/docs" },
+    {
+      text: "Terraform Basics",
+      url: "https://developer.hashicorp.com/terraform/docs",
+    },
     { text: "Terraform Learn", url: "https://learn.hashicorp.com/terraform" },
   ],
   "GitOps with ArgoCD": [
     { text: "ArgoCD Docs", url: "https://argo-cd.readthedocs.io/en/stable/" },
-    { text: "GitOps by WeaveWorks", url: "https://www.weave.works/technologies/gitops/" },
+    {
+      text: "GitOps by WeaveWorks",
+      url: "https://www.weave.works/technologies/gitops/",
+    },
   ],
   "Vault & Secrets Management": [
     { text: "Vault Docs", url: "https://developer.hashicorp.com/vault/docs" },
-    { text: "Kubernetes Secrets", url: "https://kubernetes.io/docs/concepts/configuration/secret/" },
+    {
+      text: "Kubernetes Secrets",
+      url: "https://kubernetes.io/docs/concepts/configuration/secret/",
+    },
   ],
   "Kubernetes Security": [
-    { text: "K8s RBAC", url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/" },
-    { text: "OPA Gatekeeper", url: "https://open-policy-agent.github.io/gatekeeper/" },
+    {
+      text: "K8s RBAC",
+      url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/",
+    },
+    {
+      text: "OPA Gatekeeper",
+      url: "https://open-policy-agent.github.io/gatekeeper/",
+    },
   ],
-}
+};
+
+// New stage configuration for consistent styling
+const stageConfig = {
+  beginner: {
+    gradient: "from-green-500 to-emerald-600",
+    text: "text-green-700",
+    border: "border-green-500",
+    iconBg: "bg-green-100",
+    iconText: "text-green-600",
+  },
+  intermediate: {
+    gradient: "from-blue-500 to-indigo-600",
+    text: "text-blue-700",
+    border: "border-blue-500",
+    iconBg: "bg-blue-100",
+    iconText: "text-blue-600",
+  },
+  advanced: {
+    gradient: "from-purple-500 to-pink-600",
+    text: "text-purple-700",
+    border: "border-purple-500",
+    iconBg: "bg-purple-100",
+    iconText: "text-purple-600",
+  },
+};
 
 const getStageIcon = (stageKey: string) => {
   switch (stageKey) {
     case "beginner":
-      return <BookOpen className="w-5 h-5" />
+      return <BookOpen className="w-5 h-5" />;
     case "intermediate":
-      return <Layers className="w-5 h-5" />
+      return <Layers className="w-5 h-5" />;
     case "advanced":
-      return <Shield className="w-5 h-5" />
+      return <Shield className="w-5 h-5" />;
     default:
-      return <Code className="w-5 h-5" />
+      return <Code className="w-5 h-5" />;
   }
-}
-
-const getStageGradient = (stageKey: string) => {
-  switch (stageKey) {
-    case "beginner":
-      return "from-green-500 to-emerald-600"
-    case "intermediate":
-      return "from-blue-500 to-indigo-600"
-    case "advanced":
-      return "from-purple-500 to-pink-600"
-    default:
-      return "from-gray-500 to-slate-600"
-  }
-}
+};
 
 export function MinimalDevopsRoadmap() {
-  const [selectedStageKey, setSelectedStageKey] = useState(roadmap[0]?.key || "beginner")
-  const [selectedTopic, setSelectedTopic] = useState<{ title: string; links: { text: string; url: string }[] } | null>(null)
-  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({})
-  const [showAllTopics, setShowAllTopics] = useState(false)
+  const [selectedStageKey, setSelectedStageKey] = useState(
+    roadmap[0]?.key || "beginner"
+  );
+  const [selectedTopic, setSelectedTopic] = useState<{
+    title: string;
+    links: { text: string; url: string }[];
+  } | null>(null);
+  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>(
+    {}
+  );
+  const [showAllTopics, setShowAllTopics] = useState(false);
+  const roadmapRef = useRef<HTMLDivElement>(null);
 
-  const roadmapRef = useRef<HTMLDivElement>(null)
-
-  const selectedStage = roadmap.find((r) => r.key === selectedStageKey) || roadmap[0]
+  const selectedStage =
+    roadmap.find((r) => r.key === selectedStageKey) || roadmap[0];
+  const currentStageConfig =
+    stageConfig[selectedStageKey as keyof typeof stageConfig];
 
   const toggleExpand = (title: string) => {
-    setExpandedTopics((prev) => ({ ...prev, [title]: !prev[title] }))
-  }
+    setExpandedTopics((prev) => ({ ...prev, [title]: !prev[title] }));
+  };
 
-  const displayedItems = showAllTopics ? selectedStage.items : selectedStage.items.slice(0, 6)
-
-  // For the modal icon gradient
-  const modalStageKey = selectedStageKey
+  const displayedItems = showAllTopics
+    ? selectedStage.items
+    : selectedStage.items.slice(0, 6);
 
   return (
     <>
-      <section ref={roadmapRef} className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section
+        ref={roadmapRef}
+        className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      >
         <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -294,11 +434,9 @@ export function MinimalDevopsRoadmap() {
               <Cloud className="w-4 h-4 text-white" />
             </div>
             <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border border-blue-200">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Learning Path
+              <Sparkles className="w-4 h-4 mr-2" /> Learning Path
             </span>
           </motion.div>
-
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -307,17 +445,16 @@ export function MinimalDevopsRoadmap() {
           >
             DevOps Mastery Roadmap
           </motion.h2>
-
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="text-lg text-gray-600 max-w-3xl mx-auto"
           >
-            A structured learning path from beginner to advanced DevOps concepts and tools.
+            A structured learning path from beginner to advanced DevOps concepts
+            and tools.
           </motion.p>
         </div>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -331,13 +468,16 @@ export function MinimalDevopsRoadmap() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
               onClick={() => {
-                setSelectedStageKey(stage.key)
-                setShowAllTopics(false) // reset showAll when switching stages
-                setExpandedTopics({})
+                setSelectedStageKey(stage.key);
+                setShowAllTopics(false); // reset showAll when switching stages
+                setExpandedTopics({});
               }}
               className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl transition-all duration-300 ${
                 selectedStageKey === stage.key
-                  ? `bg-gradient-to-r ${getStageGradient(stage.key)} text-white shadow-lg scale-105`
+                  ? `bg-gradient-to-r ${
+                      stageConfig[stage.key as keyof typeof stageConfig]
+                        .gradient
+                    } text-white shadow-lg scale-105`
                   : "bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white border border-gray-200 shadow-md hover:shadow-lg hover:scale-105"
               }`}
             >
@@ -345,14 +485,19 @@ export function MinimalDevopsRoadmap() {
                 className={`p-1.5 rounded-xl ${
                   selectedStageKey === stage.key
                     ? "bg-white/20"
-                    : `bg-gradient-to-r ${getStageGradient(stage.key)} text-white`
+                    : `bg-gradient-to-r ${
+                        stageConfig[stage.key as keyof typeof stageConfig]
+                          .gradient
+                      } text-white`
                 }`}
               >
                 {getStageIcon(stage.key)}
               </div>
               <div className="text-left">
                 <span className="font-medium text-sm">{stage.label}</span>
-                <div className="text-xs opacity-80">{stage.items.length} topics</div>
+                <div className="text-xs opacity-80">
+                  {stage.items.length} topics
+                </div>
               </div>
               {selectedStageKey === stage.key && (
                 <motion.div
@@ -363,7 +508,6 @@ export function MinimalDevopsRoadmap() {
             </motion.button>
           ))}
         </motion.div>
-
         <motion.div
           key={selectedStageKey}
           initial={{ opacity: 0, y: 20 }}
@@ -373,38 +517,55 @@ export function MinimalDevopsRoadmap() {
         >
           {selectedStage.description?.length > 0 && (
             <div className="">
-              <p className="text-gray-800 text-lg leading-relaxed mb-4 font-medium">{selectedStage.description[0]}</p>
-              {selectedStage.description[1] && <p className="text-gray-800">{selectedStage.description[1]}</p>}
+              <p className="text-gray-800 text-lg leading-relaxed mb-4 font-medium">
+                {selectedStage.description[0]}
+              </p>
+              {selectedStage.description[1] && (
+                <p className="text-gray-800">{selectedStage.description[1]}</p>
+              )}
             </div>
           )}
         </motion.div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayedItems.map(({ title, details, duration, subtopics }, idx) => {
-            const isExpanded = expandedTopics[title]
-            const displaySubtopics = isExpanded ? subtopics : subtopics.slice(0, 4)
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="relative group h-full"
-              >
-                <div className="h-full rounded-3xl overflow-hidden shadow-xl border border-white/50 bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                  <div className={`p-6 bg-gradient-to-r ${getStageGradient(selectedStageKey)} text-white`}>
-                    <div className="flex justify-between items-start mb-3">
-                      <h4 className="text-lg font-bold leading-tight">{title}</h4>
-                      <span className="flex items-center text-xs font-medium bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30">
-                        <Clock className="w-3 h-3 mr-1" />
-                        {duration}
-                      </span>
+          {displayedItems.map(
+            ({ title, details, duration, subtopics }, idx) => {
+              const isExpanded = expandedTopics[title];
+              const displaySubtopics = isExpanded
+                ? subtopics
+                : subtopics.slice(0, 4);
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className={`relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl`} // New: Left border for stage
+                >
+                  <div className="p-5 relative">
+                    {" "}
+                    {/* Adjusted padding */}
+                    <div className="absolute top-3 right-3">
+                      <Badge
+                        className={`px-3 py-1 bg-white/90 backdrop-blur-sm ${currentStageConfig.text} text-xs font-medium rounded-full shadow-sm border border-gray-200`}
+                      >
+                        {selectedStage.label}
+                      </Badge>
                     </div>
-                    <p className="text-white/90 text-sm leading-relaxed">{details}</p>
+                    <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
+                      {title}
+                    </h4>
+                    <span className="flex items-center text-xs font-medium text-gray-600 mb-4">
+                      <Clock className="w-3 h-3 mr-1 text-gray-500" />{" "}
+                      {duration}
+                    </span>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {details}
+                    </p>
                   </div>
-
-                  <div className="p-6 flex-grow">
+                  <div className="p-5 flex-grow">
+                    {" "}
+                    {/* Adjusted padding */}
                     {displaySubtopics?.length > 0 ? (
                       <ul className="space-y-3 mb-4">
                         {displaySubtopics.map((sub, i) => (
@@ -418,15 +579,22 @@ export function MinimalDevopsRoadmap() {
                             <span className="relative flex-shrink-0 mt-1">
                               <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20 animate-pulse"></span>
                               <span
-                                className={`relative flex items-center justify-center w-5 h-5 bg-gradient-to-r ${getStageGradient(selectedStageKey)} rounded-full shadow-lg`}
+                                className={`relative flex items-center justify-center w-5 h-5 ${currentStageConfig.iconBg} rounded-full shadow-sm`} // Use iconBg
                               >
                                 <svg
-                                  className="w-3 h-3 text-white"
+                                  className={`w-3 h-3 ${currentStageConfig.iconText}`}
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
                                 >
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                  {" "}
+                                  {/* Use iconText */}
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={3}
+                                    d="M5 13l4 4L19 7"
+                                  />
                                 </svg>
                               </span>
                             </span>
@@ -437,9 +605,10 @@ export function MinimalDevopsRoadmap() {
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-gray-400 text-sm mb-6">No subtopics listed</p>
+                      <p className="text-gray-400 text-sm mb-6">
+                        No subtopics listed
+                      </p>
                     )}
-
                     {subtopics.length > 4 && (
                       <button
                         onClick={() => toggleExpand(title)}
@@ -447,64 +616,64 @@ export function MinimalDevopsRoadmap() {
                       >
                         {isExpanded ? (
                           <>
-                            <ChevronDown className="w-4 h-4" />
-                            Show Less
+                            <ChevronDown className="w-4 h-4" /> Show Less
                           </>
                         ) : (
                           <>
-                            <ChevronRight className="w-4 h-4" />
-                            See {subtopics.length - 4} More Topics
+                            <ChevronRight className="w-4 h-4" /> See{" "}
+                            {subtopics.length - 4} More Topics
                           </>
                         )}
                       </button>
                     )}
                   </div>
-
-                  <div className="p-6 pt-0">
+                  <div className="p-5 pt-0">
+                    {" "}
+                    {/* Adjusted padding */}
                     <button
-                      onClick={() => setSelectedTopic({ title, links: resourceLinks[title] || [] })}
-                      className={`w-full bg-gradient-to-r ${getStageGradient(selectedStageKey)} hover:shadow-lg text-white px-6 py-3 rounded-2xl text-sm font-medium flex items-center justify-between transition-all duration-300 group/btn shadow-md hover:shadow-xl`}
+                      onClick={() =>
+                        setSelectedTopic({
+                          title,
+                          links: resourceLinks[title] || [],
+                        })
+                      }
+                      className={`w-full bg-gradient-to-r ${currentStageConfig.gradient} hover:shadow-lg text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-between transition-all duration-300 group/btn shadow-md hover:shadow-xl`} // New button style
                     >
                       <span>Explore Resources</span>
                       <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                     </button>
                   </div>
-                </div>
-              </motion.div>
-            )
-          })}
+                </motion.div>
+              );
+            }
+          )}
         </div>
-
- {selectedStage.items.length > 6 && (
-  <div className="flex justify-center mt-8">
-    <button
-      onClick={() => {
-        if (showAllTopics) {
-          setShowAllTopics(false)
-          roadmapRef.current?.scrollIntoView({ behavior: "smooth" })
-        } else {
-          setShowAllTopics(true)
-        }
-      }}
-      className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white font-semibold transition-shadow shadow-md hover:shadow-lg bg-gradient-to-r ${getStageGradient(selectedStageKey)}`}
-    >
-      {showAllTopics ? (
-        <>
-          <ChevronDown className="w-5 h-5" />
-          See Less
-        </>
-      ) : (
-        <>
-          <ChevronRight className="w-5 h-5" />
-          See All Topics
-        </>
-      )}
-    </button>
-  </div>
-)}
-
+        {selectedStage.items.length > 6 && (
+          <div className="flex justify-center mt-8">
+            <motion.button
+              onClick={() => {
+                if (showAllTopics) {
+                  setShowAllTopics(false);
+                  roadmapRef.current?.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  setShowAllTopics(true);
+                }
+              }}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white font-semibold transition-shadow shadow-md hover:shadow-lg bg-gradient-to-r ${currentStageConfig.gradient}`}
+            >
+              {showAllTopics ? (
+                <>
+                  <ChevronDown className="w-5 h-5" /> See Less
+                </>
+              ) : (
+                <>
+                  <ChevronRight className="w-5 h-5" /> See All Topics
+                </>
+              )}
+            </motion.button>
+          </div>
+        )}
       </section>
-
       <AnimatePresence>
         {selectedTopic && (
           <>
@@ -523,11 +692,17 @@ export function MinimalDevopsRoadmap() {
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
                 className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden pointer-events-auto border border-gray-200"
               >
-                <div className={`bg-gradient-to-r ${getStageGradient(selectedStageKey)} p-6 text-white`}>
+                <div
+                  className={`bg-gradient-to-r ${currentStageConfig.gradient} p-6 text-white`}
+                >
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-xl font-bold mb-2">{selectedTopic.title}</h3>
-                      <p className="text-green-100">Curated learning resources</p>
+                      <h3 className="text-xl font-bold mb-2">
+                        {selectedTopic.title}
+                      </h3>
+                      <p className="text-green-100">
+                        Curated learning resources
+                      </p>
                     </div>
                     <button
                       onClick={() => setSelectedTopic(null)}
@@ -537,7 +712,6 @@ export function MinimalDevopsRoadmap() {
                     </button>
                   </div>
                 </div>
-
                 <div className="p-6 overflow-y-auto max-h-[60vh]">
                   {selectedTopic.links.length > 0 ? (
                     <div className="space-y-4">
@@ -553,7 +727,7 @@ export function MinimalDevopsRoadmap() {
                           className="block p-4 rounded-2xl border border-gray-200 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group flex items-start"
                         >
                           <div
-                            className={`bg-gradient-to-r ${getStageGradient(modalStageKey)} p-3 rounded-xl mr-4 group-hover:shadow-lg transition-shadow flex-shrink-0`}
+                            className={`bg-gradient-to-r ${currentStageConfig.gradient} p-3 rounded-xl mr-4 group-hover:shadow-lg transition-shadow flex-shrink-0`}
                           >
                             <BookOpen className="w-5 h-5 text-white" />
                           </div>
@@ -570,16 +744,23 @@ export function MinimalDevopsRoadmap() {
                       ))}
                     </div>
                   ) : (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-12"
+                    >
                       <div className="mx-auto w-20 h-20 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-4">
                         <BookOpen className="w-8 h-8 text-gray-400" />
                       </div>
-                      <h4 className="text-gray-700 font-medium text-lg mb-2">No resources available</h4>
-                      <p className="text-gray-500">We're working on adding resources for this topic</p>
+                      <h4 className="text-gray-700 font-medium text-lg mb-2">
+                        No resources available
+                      </h4>
+                      <p className="text-gray-500">
+                        We're working on adding resources for this topic
+                      </p>
                     </motion.div>
                   )}
                 </div>
-
                 <div className="border-t border-gray-200 p-6 bg-gray-50">
                   <button
                     onClick={() => setSelectedTopic(null)}
@@ -594,5 +775,5 @@ export function MinimalDevopsRoadmap() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
