@@ -25,6 +25,23 @@ export default function AuthorsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith("#author-")) {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Optional: highlight the element temporarily
+        el.classList.add("ring-2", "ring-blue-400");
+
+        setTimeout(() => {
+          el.classList.remove("ring-2", "ring-blue-400");
+        }, 2000);
+      }
+    }
+  }, []);  
+
+  useEffect(() => {
     async function fetchAuthors() {
       try {
         setLoading(true)
@@ -151,6 +168,7 @@ export default function AuthorsPage() {
             {authors.map((author) => (
               <Card
                 key={author.id}
+                id={`author-${author.id}`}
                 className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
               >
                 <CardContent className="flex flex-col items-center space-y-4 p-6">

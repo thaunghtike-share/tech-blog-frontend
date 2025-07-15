@@ -144,7 +144,7 @@ export function MinimalSidebar() {
                   desc: "Modernize with Kubernetes & GitOps",
                   icon: <Cloud className="h-5 w-5" />,
                   gradient: "from-sky-500 to-blue-600",
-                  url: ""
+                  url: "",
                 },
                 {
                   title: "Infrastructure Automation",
@@ -383,8 +383,9 @@ export function MinimalSidebar() {
           ) : (
             <div className="space-y-4">
               {featuredAuthors.map((author) => (
-                <div
+                <Link
                   key={author.id}
+                  href={`/authors#author-${author.id}`}
                   className="group flex items-center gap-4 p-3 hover:bg-white/80 rounded-xl transition-all hover:shadow-md border border-transparent hover:border-blue-100"
                 >
                   <div className="relative">
@@ -419,7 +420,7 @@ export function MinimalSidebar() {
                       </p>
                     )}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
