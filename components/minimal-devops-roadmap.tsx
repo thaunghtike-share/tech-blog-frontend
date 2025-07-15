@@ -135,6 +135,8 @@ const roadmap: RoadmapStage[] = [
           "Shell navigation",
           "Process management",
           "SSH & remote access",
+          "Basic Linux commands",
+          "User and group management",
         ],
       },
       {
@@ -143,28 +145,65 @@ const roadmap: RoadmapStage[] = [
         duration: "2-3 weeks",
         subtopics: [
           "IaaS vs PaaS vs SaaS",
-          "AWS Free Tier",
-          "Azure Basics",
-          "GCP Console",
+          "AWS Free Tier overview",
+          "Azure Basics and portal navigation",
+          "GCP Console introduction",
+          "Cloud regions and availability zones",
+          "Basic cloud security concepts",
         ],
       },
       {
-        title: "Linux Bash Scripting",
-        details: "Automate tasks with bash scripts",
+        title: "Bash Scripting",
+        details: "Automate tasks with bash scripts.",
         duration: "2-3 weeks",
-        subtopics: ["Bash syntax", "Loops & conditionals"],
+        subtopics: [
+          "Bash syntax and variables",
+          "Loops & conditionals",
+          "Functions and script modularity",
+          "Input/output redirection",
+          "Basic debugging techniques",
+          "Scheduling scripts with cron",
+        ],
       },
       {
         title: "Docker Fundamentals",
         details: "Understand containerization and Docker CLI.",
         duration: "2 weeks",
-        subtopics: ["Images & containers", "Dockerfile", "Volumes & ports"],
+        subtopics: [
+          "Images & containers",
+          "Dockerfile basics",
+          "Volumes & ports",
+          "Docker Compose overview",
+          "Container networking basics",
+          "Managing container lifecycle",
+        ],
+      },
+      {
+        title: "CCNA",
+        details:
+          "Prepare for Cisco Certified Network Associate certification with core networking, routing, switching, and device management skills.",
+        duration: "8-12 weeks",
+        subtopics: [
+          "Networking fundamentals (OSI, TCP/IP models)",
+          "IP addressing and subnetting",
+          "Cisco device CLI and configuration",
+          "Routing protocols (RIP, OSPF)",
+          "Switching technologies and VLANs",
+          "Access control lists (ACLs)",
+        ],
       },
       {
         title: "YAML & JSON",
         details: "Work with common configuration formats.",
         duration: "1 week",
-        subtopics: ["YAML syntax", "JSON usage in APIs", "CI/CD configs"],
+        subtopics: [
+          "YAML syntax and structure",
+          "JSON syntax and usage",
+          "Using YAML in CI/CD pipelines",
+          "Parsing JSON data",
+          "Comparing YAML and JSON",
+          "Common pitfalls and best practices",
+        ],
       },
     ],
   },
@@ -367,60 +406,63 @@ const resourceLinks: Record<string, ResourceLink[]> = {
   "Linux Fundamentals": [
     { text: "Linux Journey", url: "https://linuxjourney.com/" },
     {
-      text: "Ubuntu CLI Basics",
+      text: "Ubuntu Command Line Basics",
       url: "https://ubuntu.com/tutorials/command-line-for-beginners",
     },
   ],
   "Cloud Fundamentals": [
     {
-      text: "AWS Cloud Concepts",
-      url: "https://aws.amazon.com/training/digital/cloud-practitioner/",
+      text: "AWS Cloud Practitioner Essentials",
+      url: "https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials/8D79F3AVR7",
     },
     {
-      text: "Azure Fundamentals",
+      text: "Azure Fundamentals Learning Path",
       url: "https://learn.microsoft.com/en-us/training/azure/",
-    },
-  ],
-  "Networking Basics": [
-    {
-      text: "Cisco Networking Guide",
-      url: "https://www.cisco.com/c/en/us/solutions/enterprise-networks/networking-fundamentals.html",
-    },
-    {
-      text: "Computer Networking Tutorial",
-      url: "https://www.geeksforgeeks.org/computer-network-tutorials/",
     },
   ],
   "Bash Scripting": [
     {
-      text: "Python Beginner Guide",
-      url: "https://www.python.org/about/gettingstarted/",
+      text: "Bash Beginner Tutorial",
+      url: "https://ryanstutorials.net/bash-scripting-tutorial/",
+    },
+    {
+      text: "Linux Shell Scripting Tutorial",
+      url: "https://linuxconfig.org/bash-scripting-tutorial-for-beginners",
     },
   ],
-  "Python Fundamentals": [
+  "Docker Fundamentals": [
     {
-      text: "Python Beginner Guide",
-      url: "https://www.python.org/about/gettingstarted/",
-    },
-  ],
-  "Git & Version Control": [
-    { text: "Git Docs", url: "https://git-scm.com/doc" },
-    { text: "Git Branching", url: "https://learngitbranching.js.org/" },
-    { text: "GitHub Actions", url: "https://docs.github.com/en/actions" },
-  ],
-  "Docker Basics": [
-    {
-      text: "Docker Getting Started",
+      text: "Docker Get Started Guide",
       url: "https://docs.docker.com/get-started/",
     },
-    { text: "Docker Compose", url: "https://docs.docker.com/compose/" },
+    {
+      text: "Docker Compose Overview",
+      url: "https://docs.docker.com/compose/",
+    },
   ],
   "YAML & JSON": [
     {
       text: "YAML Tutorial",
       url: "https://www.tutorialspoint.com/yaml/index.htm",
     },
-    { text: "JSON Guide", url: "https://www.json.org/json-en.html" },
+    {
+      text: "JSON Official Guide",
+      url: "https://www.json.org/json-en.html",
+    },
+  ],
+  "CCNA": [
+    {
+      text: "Cisco CCNA Introduction",
+      url: "https://www.netacad.com/courses/ccna-introduction-networks?courseLang=en-US",
+    },
+    {
+      text: "Study CCNA",
+      url: "https://study-ccna.com/",
+    },
+    {
+      text: "Cisco Packet Tracer Tutorials",
+      url: "https://www.netacad.com/courses/packet-tracer",
+    },
   ],
   "Kubernetes Essentials": [
     {

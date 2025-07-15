@@ -90,10 +90,10 @@ export default function HomePage() {
         </div>
 
         {/* Other Sections */}
-        <section id="devops-roadmap" className="-mt-15">
+        <section id="devops-roadmap" className="-mt-12">
           <MinimalDevopsRoadmap />
         </section>
-        <section id="youtube-playlists" className="-mt-10">
+        <section id="youtube-playlists" className="-mt-8">
           <YouTubePlaylists />
         </section>
         <section id="free-labs" className="-mt-10">
