@@ -21,37 +21,55 @@ export function MinimalFooter() {
               <img src="/logo.png" alt="Logo" className="h-20 w-auto" />
             </Link>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Your go-to resource for mastering DevOps, cloud-native technologies, and automation. We provide practical
-              guides, tutorials, and real-world projects.
+              Your go-to resource for mastering DevOps, cloud-native
+              technologies, and automation. We provide practical guides,
+              tutorials, and real-world projects.
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="pl-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/articles" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/articles"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   Articles
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/categories"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="/authors" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/authors"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   Authors
                 </Link>
               </li>
               <li>
-                <Link href="/free-labs" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/free-labs"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   Free Labs
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/about"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   About Us
                 </Link>
               </li>
@@ -60,20 +78,31 @@ export function MinimalFooter() {
 
           {/* Learning Resources */}
           <div className="pl-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Learning</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Learning
+            </h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/learn-devops-on-youtube" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/learn-devops-on-youtube"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   YouTube Playlists
                 </Link>
               </li>
               <li>
-                <Link href="/learn-devops-on-udemy" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/learn-devops-on-udemy"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   Udemy Free Courses
                 </Link>
               </li>
               <li>
-                <Link href="/recommended-paid-courses" className="hover:text-blue-600 transition-colors font-medium">
+                <Link
+                  href="/recommended-paid-courses"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
                   Recommended Paid Courses
                 </Link>
               </li>
@@ -82,12 +111,14 @@ export function MinimalFooter() {
 
           {/* Contact & Social */}
           <div className="pl-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Connect</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Connect
+            </h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center">
                 <Linkedin className="h-5 w-5 mr-2 text-blue-600" />
                 <a
-                  href="https://www.linkedin.com/in/thaung-htike-oo-devops/"
+                  href="https://www.linkedin.com/in/thaung-htike-oo-6672781b1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-600 transition-colors font-medium"
@@ -98,7 +129,7 @@ export function MinimalFooter() {
               <li className="flex items-center">
                 <Github className="h-5 w-5 mr-2 text-gray-700" />
                 <a
-                  href="https://github.com/thaunghtikeoo"
+                  href="https://github.com/thaunghtike-share"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-600 transition-colors font-medium"
@@ -123,9 +154,10 @@ export function MinimalFooter() {
 
         {/* Footer Note */}
         <div className="text-center text-sm text-gray-500 relative z-10">
-          &copy; {new Date().getFullYear()} Learn DevOps Now. All rights reserved.
+          &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
+          reserved.
         </div>
       </div>
     </footer>
-  )
+  );
 }
