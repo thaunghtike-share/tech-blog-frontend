@@ -216,59 +216,68 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "AWS Core Services",
+        title: "AWS DevOps Services",
         details: "Dive into EC2, IAM, S3, and basic networking.",
         duration: "3-4 weeks",
-        subtopics: ["EC2 provisioning", "S3 storage", "IAM roles & policies"],
+        subtopics: [
+          "EC2 provisioning and management",
+          "S3 bucket operations and lifecycle",
+          "IAM roles, users, and policies",
+          "VPC and networking basics",
+          "CloudWatch monitoring",
+          "Infrastructure with AWS CLI",
+        ],
       },
       {
-        title: "Azure Fundamentals",
+        title: "Azure DevOps Services",
         details: "Explore Azure resource groups, VMs, and storage.",
         duration: "3-4 weeks",
-        subtopics: ["Azure Portal", "VNet & Subnets", "Blob storage"],
+        subtopics: [
+          "Azure Portal navigation",
+          "Resource groups & management",
+          "Virtual Network (VNet) and Subnets",
+          "Azure VMs provisioning",
+          "Blob Storage basics",
+          "RBAC and IAM in Azure",
+        ],
       },
       {
-        title: "Git & Version Control",
+        title: "Version Control",
         details: "Track changes and collaborate on code.",
         duration: "2-3 weeks",
-        subtopics: ["Git CLI", "Branches & merging", "GitHub usage"],
+        subtopics: [
+          "Git CLI commands",
+          "Branching and merging",
+          "Pull requests and code review",
+          "Working with GitHub",
+          "Rebasing and conflict resolution",
+          "Git tags and releases",
+        ],
       },
       {
         title: "Kubernetes Essentials Part-I",
         details: "Learn to orchestrate containers at scale.",
         duration: "4 weeks",
         subtopics: [
-          "Pods & deployments",
-          "Services & Ingress",
-          "Statefulset",
-          "Resource Usage",
-          "Namespaces",
+          "Pods and ReplicaSets",
+          "Deployments and rollout strategies",
+          "Cluster networking and Services",
+          "Ingress Controllers",
+          "Namespaces and RBAC",
+          "Resource limits and requests",
         ],
       },
       {
         title: "Kubernetes Essentials Part-II",
-        details: "Learn to orchestrate containers at scale.",
+        details: "Go deeper into Kubernetes with advanced workloads.",
         duration: "4 weeks",
         subtopics: [
-          "HPA",
-          "Volumes",
-          "Secrets & Configmap",
-          "Health Check Probes",
-          "KEDA",
-          "PDB",
-        ],
-      },
-      {
-        title: "Kubernetes Advanced",
-        details: "Learn to manage kubernetes cluster.",
-        duration: "4 weeks",
-        subtopics: [
-          "customize",
-          "rancher",
-          "helm",
-          "Lens",
-          "Dashboard",
-          "Sealed Secrets",
+          "Horizontal Pod Autoscaler (HPA)",
+          "Persistent Volumes and PVCs",
+          "Secrets and ConfigMaps",
+          "Liveness and readiness probes",
+          "KEDA (event-based autoscaling)",
+          "PodDisruptionBudgets (PDB)",
         ],
       },
       {
@@ -276,28 +285,26 @@ const roadmap: RoadmapStage[] = [
         details: "Automate software delivery using pipelines.",
         duration: "3 weeks",
         subtopics: [
-          "GitHub Actions",
-          "GitLab CI/CD",
-          "Webhooks",
-          "Testing pipelines",
+          "CI vs CD concepts",
+          "GitHub Actions basics",
+          "GitLab CI/CD pipelines",
+          "Webhooks integration",
+          "Unit testing in pipelines",
+          "Artifact creation and deployment",
         ],
       },
       {
-        title: "Container Services (ECS/EKS)",
-        details: "Deploy and manage containers on AWS.",
+        title: "Cloud Container Services (AKS/ECS/EKS)",
+        details: "Deploy and manage containers using cloud services.",
         duration: "3 weeks",
         subtopics: [
-          "Fargate",
-          "EKS setup",
-          "Service discovery",
-          "Auto-scaling",
+          "Introduction to managed Kubernetes",
+          "EKS cluster setup",
+          "ECS and Fargate overview",
+          "Service discovery in cloud",
+          "Auto-scaling in container services",
+          "Monitoring with CloudWatch/Container Insights",
         ],
-      },
-      {
-        title: "Monitoring & Observability",
-        details: "Monitor app health and metrics effectively.",
-        duration: "3 weeks",
-        subtopics: ["Prometheus", "Grafana", "CloudWatch", "Loki"],
       },
     ],
   },
@@ -450,7 +457,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://www.json.org/json-en.html",
     },
   ],
-  "CCNA": [
+  CCNA: [
     {
       text: "Cisco CCNA Introduction",
       url: "https://www.netacad.com/courses/ccna-introduction-networks?courseLang=en-US",
@@ -464,20 +471,129 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://www.netacad.com/courses/packet-tracer",
     },
   ],
-  "Kubernetes Essentials": [
+  "AWS DevOps Services": [
     {
-      text: "K8s Basics",
+      text: "AWS DevOps Learning Plan",
+      url: "https://skillbuilder.aws/learning-plan/FMP175FCDT/devops-engineer-learning-plan-includes-labs/P8E3Q12Q6H",
+    },
+    {
+      text: "AWS EC2 Essentials",
+      url: "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
+    },
+    {
+      text: "IAM Best Practices",
+      url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+    },
+    {
+      text: "AWS S3 Documentation",
+      url: "https://docs.aws.amazon.com/s3/index.html",
+    },
+  ],
+
+  "Azure DevOps Services": [
+    {
+      text: "Azure Fundamentals Learning Path",
+      url: "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/",
+    },
+    {
+      text: "Azure Resource Manager Overview",
+      url: "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview",
+    },
+    {
+      text: "Azure Storage Documentation",
+      url: "https://learn.microsoft.com/en-us/azure/storage/",
+    },
+    {
+      text: "Azure Virtual Network",
+      url: "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview",
+    },
+  ],
+
+  "Version Control": [
+    {
+      text: "Git Official Docs",
+      url: "https://git-scm.com/doc",
+    },
+    {
+      text: "Learn Git Branching (Interactive)",
+      url: "https://learngitbranching.js.org/",
+    },
+    {
+      text: "GitHub Docs",
+      url: "https://docs.github.com/en/get-started",
+    },
+    {
+      text: "Pro Git Book (Free)",
+      url: "https://git-scm.com/book/en/v2",
+    },
+  ],
+
+  "Kubernetes Essentials Part-I": [
+    {
+      text: "Kubernetes Basics (Interactive)",
       url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
     },
-    { text: "Helm Charts", url: "https://helm.sh/docs/" },
+    {
+      text: "Pods and Deployments",
+      url: "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+    },
+    {
+      text: "Kubernetes Services and Networking",
+      url: "https://kubernetes.io/docs/concepts/services-networking/service/",
+    },
+    {
+      text: "Ingress Overview",
+      url: "https://kubernetes.io/docs/concepts/services-networking/ingress/",
+    },
   ],
-  "CI/CD Fundamentals": [
-    { text: "CI/CD Guide", url: "https://about.gitlab.com/topics/ci-cd/" },
-    { text: "GitHub Actions", url: "https://docs.github.com/en/actions" },
+
+  "Kubernetes Essentials Part-II": [
+    {
+      text: "Kubernetes HPA",
+      url: "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/",
+    },
+    {
+      text: "ConfigMaps and Secrets",
+      url: "https://kubernetes.io/docs/concepts/configuration/secret/",
+    },
+    {
+      text: "Volumes and Persistent Volumes",
+      url: "https://kubernetes.io/docs/concepts/storage/persistent-volumes/",
+    },
+    {
+      text: "KEDA Autoscaling",
+      url: "https://keda.sh/docs/",
+    },
   ],
-  "Monitoring & Observability": [
-    { text: "Prometheus Docs", url: "https://prometheus.io/docs/" },
-    { text: "Grafana Docs", url: "https://grafana.com/docs/" },
+
+  "CICD Fundamentals": [
+    {
+      text: "GitHub Actions Docs",
+      url: "https://docs.github.com/en/actions",
+    },
+    {
+      text: "GitLab CI/CD Pipelines",
+      url: "https://docs.gitlab.com/ee/ci/",
+    }
+  ],
+
+  "Cloud Container Services (AKS/ECS/EKS)": [
+    {
+      text: "Amazon EKS Workshop",
+      url: "https://www.eksworkshop.com/",
+    },
+    {
+      text: "AWS Fargate Overview",
+      url: "https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html",
+    },
+    {
+      text: "Azure Kubernetes Service (AKS)",
+      url: "https://learn.microsoft.com/en-us/azure/aks/",
+    },
+    {
+      text: "ECS Developer Guide",
+      url: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/",
+    },
   ],
   "Terraform IaC": [
     {

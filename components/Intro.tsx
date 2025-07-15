@@ -106,8 +106,8 @@ export default function Intro() {
       name: "Intermediate",
       icon: <GitMerge className="w-5 h-5" />,
       tools: [
-        "Containerization",
-        "AWS Services",
+        "Azure DevOps Services",
+        "AWS DevOps Services",
         "Version Control",
         "Kubernetes Fundamentals",
         "CICD Pipeline",
