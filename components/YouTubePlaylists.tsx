@@ -8,6 +8,7 @@ import {
   ChevronUp,
   Play,
   Users,
+  Lightbulb,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge"; // Assuming you have a Badge component
@@ -18,7 +19,7 @@ interface Playlist {
   videoId: string;
   playlistUrl: string;
   channel: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  difficulty: "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"; // Updated to include Prerequisite
   estDuration: string;
 }
 
@@ -27,12 +28,21 @@ interface Playlist {
 const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 const difficultyConfig = {
+  Prerequisite: {
+    color: "from-gray-500 to-slate-600",
+    text: "text-gray-700",
+    border: "border-gray-500",
+    iconBg: "bg-gray-100",
+    iconText: "text-gray-600",
+    icon: <Lightbulb className="w-4 h-4" />, // Added icon for Prerequisite
+  },
   Beginner: {
     color: "from-green-500 to-emerald-600",
     text: "text-green-700",
     border: "border-green-500",
     iconBg: "bg-green-100",
     iconText: "text-green-600",
+    icon: <Play className="w-4 h-4" />, // Added icon for Beginner
   },
   Intermediate: {
     color: "from-blue-500 to-indigo-600",
@@ -40,6 +50,7 @@ const difficultyConfig = {
     border: "border-blue-500",
     iconBg: "bg-blue-100",
     iconText: "text-blue-600",
+    icon: <Play className="w-4 h-4" />, // Added icon for Intermediate
   },
   Advanced: {
     color: "from-purple-500 to-pink-600",
@@ -47,14 +58,15 @@ const difficultyConfig = {
     border: "border-purple-500",
     iconBg: "bg-purple-100",
     iconText: "text-purple-600",
+    icon: <Play className="w-4 h-4" />, // Added icon for Advanced
   },
 };
 
 export function YouTubePlaylists() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<
-    "Beginner" | "Intermediate" | "Advanced"
-  >("Beginner");
+    "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"
+  >("Prerequisite"); // Default to Prerequisite
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,14 +91,19 @@ export function YouTubePlaylists() {
           videoId: pl.video_id,
           playlistUrl: pl.playlist_url,
           channel: pl.channel,
+          // IMPORTANT: Assuming your API returns a 'difficulty' field that matches
+          // "Prerequisite", "Beginner", "Intermediate", or "Advanced".
+          // If not, you might need to map or hardcode 'Prerequisite' items.
           difficulty: pl.difficulty,
           estDuration: pl.duration,
         }));
         setPlaylists(mapped);
-        // Set initial selected difficulty to the first available, or default to "Beginner"
-        if (mapped.length > 0) {
-          const firstDifficulty = mapped[0].difficulty;
-          setSelectedDifficulty(firstDifficulty);
+        // Set initial selected difficulty to the first available, or default to "Prerequisite"
+        if (
+          mapped.length > 0 &&
+          !mapped.some((pl) => pl.difficulty === selectedDifficulty)
+        ) {
+          setSelectedDifficulty(mapped[0].difficulty);
         }
       } catch (err) {
         setError("Failed to fetch playlists.");
@@ -105,11 +122,12 @@ export function YouTubePlaylists() {
     ? filteredPlaylists
     : filteredPlaylists.slice(0, 9); // Show up to 9 initially for selected difficulty
 
-  const allDifficulties: ("Beginner" | "Intermediate" | "Advanced")[] = [
-    "Beginner",
-    "Intermediate",
-    "Advanced",
-  ];
+  const allDifficulties: (
+    | "Prerequisite"
+    | "Beginner"
+    | "Intermediate"
+    | "Advanced"
+  )[] = ["Prerequisite", "Beginner", "Intermediate", "Advanced"];
 
   return (
     <section
@@ -201,7 +219,8 @@ export function YouTubePlaylists() {
                         : `${config.iconBg} ${config.iconText}`
                     }`}
                   >
-                    <Play className="w-4 h-4" />
+                    {config.icon}{" "}
+                    {/* Use the specific icon for each difficulty */}
                   </div>
                   <span
                     className={`${isActive ? "text-white" : "text-gray-800"}`}
