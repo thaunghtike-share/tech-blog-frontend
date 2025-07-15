@@ -464,7 +464,7 @@ export function CertificationRoadmap() {
                         </span>
                       </div>
                       <Badge
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${config.bgGradient} ${config.textColor} border border-gray-200`}
+                        className={`inline-flex items-center px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-medium rounded-full shadow-sm border border-yellow-500`}
                       >
                         {config.icon}
                         <span className="ml-1">{cert.difficulty}</span>

@@ -95,10 +95,10 @@ export default function HomePage() {
         <section id="youtube-playlists" className="-mt-8">
           <YouTubePlaylists />
         </section>
-        <section id="free-udemy" className="-mt-12">
+        <section id="free-udemy" className="-mt-6">
           <TopUdemyCourses />
         </section>
-        <section id="free-labs" className="-mt-10">
+        <section id="free-labs" className="-mt-6">
           <FreeLabs />
         </section>
         <div className="-mt-24">
@@ -107,7 +107,7 @@ export default function HomePage() {
         <div className="-mt-24">
           <RecommendedPaidCourses />
         </div>
-        <div className="mt-16 -mt-24">
+        <div className="-mt-18">
           <FreelanceServicesSection />
         </div>
         <div className="-mt-22">
