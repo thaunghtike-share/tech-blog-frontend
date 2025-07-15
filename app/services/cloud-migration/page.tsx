@@ -66,19 +66,19 @@ export default function MonolithicToCloudNativePage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {/* Messenger Floating Button */}
+      {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
+        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 240 240"
           fill="none"
-          className="w-8 h-8 rounded-full"
+          className="w-14 h-14 rounded-full"
         >
           <defs>
             <linearGradient
@@ -99,7 +99,7 @@ export default function MonolithicToCloudNativePage() {
             d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
           />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">
+        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
           Chat?
         </span>
       </a>

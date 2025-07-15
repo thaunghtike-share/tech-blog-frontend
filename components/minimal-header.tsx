@@ -322,7 +322,7 @@ export function MinimalHeader() {
               )}
             </div>
             <Link href="/about" className="hover:text-blue-600">
-              About
+              About Us
             </Link>
           </nav>
 

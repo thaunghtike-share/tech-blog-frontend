@@ -93,32 +93,53 @@ export default function CategoriesPage() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with me on Messenger"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
+        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" className="w-8 h-8 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 240"
+          fill="none"
+          className="w-14 h-14 rounded-full"
+        >
           <defs>
-            <linearGradient id="messengerGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="messengerGradient"
+              x1="0"
+              y1="0"
+              x2="240"
+              y2="240"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#E1306C" />
               <stop offset="1" stopColor="#833AB4" />
             </linearGradient>
           </defs>
           <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path fill="#fff" d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z" />
+          <path
+            fill="#fff"
+            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
+          />
         </svg>
-        <span className="font-medium text-gray-900 select-none text-sm whitespace-nowrap">Chat?</span>
+        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
+          Chat?
+        </span>
       </a>
+      
       <MinimalHeader />
       <main className="max-w-6xl mx-auto px-4 py-12 relative z-10">
         <div className="text-center mb-10">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Article Categories</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Article Categories
+          </h1>
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
-            Explore our comprehensive collection of articles organized by technology and topic areas.
+            Explore our comprehensive collection of articles organized by
+            technology and topic areas.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => {
-            const Icon = getCategoryIcon(category.name)
-            const colors = getCategoryColors(category.name)
+            const Icon = getCategoryIcon(category.name);
+            const colors = getCategoryColors(category.name);
             return (
               <Link key={category.id} href={`/categories/${category.id}`}>
                 <Card className="group hover:shadow-lg transition-all duration-300 border-0 overflow-hidden h-full">
@@ -127,7 +148,9 @@ export default function CategoriesPage() {
                     className={`p-6 bg-gradient-to-br ${colors.bgColor} group-hover:scale-[1.01] transition-transform h-full flex flex-col`}
                   >
                     <div className="flex items-center justify-between mb-4">
-                      <div className={`p-2 rounded-lg bg-gradient-to-r ${colors.color} text-white`}>
+                      <div
+                        className={`p-2 rounded-lg bg-gradient-to-r ${colors.color} text-white`}
+                      >
                         <Icon className="h-5 w-5" />
                       </div>
                     </div>
@@ -135,7 +158,8 @@ export default function CategoriesPage() {
                       {category.name}
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
-                      Explore articles and tutorials related to {category.name.toLowerCase()}.
+                      Explore articles and tutorials related to{" "}
+                      {category.name.toLowerCase()}.
                     </p>
                     <div className="text-blue-600 font-medium text-sm group-hover:translate-x-1 transition-transform">
                       View articles →
@@ -143,11 +167,11 @@ export default function CategoriesPage() {
                   </CardContent>
                 </Card>
               </Link>
-            )
+            );
           })}
         </div>
       </main>
       <MinimalFooter />
     </div>
-  )
+  );
 }
