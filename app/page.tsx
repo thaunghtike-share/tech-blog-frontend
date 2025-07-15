@@ -6,7 +6,6 @@ import { MinimalFooter } from "@/components/minimal-footer"
 import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap"
 import { CertificationRoadmap } from "@/components/CertificationRoadmap"
 import { MinimalFAQs } from "@/components/minimal-faqs"
-import { MinimalFeaturedProjects } from "@/components/minimal-featured-projects"
 import { TopUdemyCourses } from "@/components/TopUdemyCourses"
 import { FreelanceServicesSection } from "@/components/FreelanceServicesSection"
 import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
@@ -112,9 +111,6 @@ export default function HomePage() {
         </div>
         <div className="-mt-22">
           <DevOpsWorkflowExample />
-        </div>
-        <div className="-mt-24">
-          <MinimalFeaturedProjects />
         </div>
         <div className="-mt-24">
           <SuccessStoriesSection />
