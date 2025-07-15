@@ -132,7 +132,7 @@ export function TopUdemyCourses() {
           transition={{ delay: 0.1 }}
           className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
-          Top Free DevOps Courses on Udemy
+          Learn DevOps on Udemy Free
         </motion.h2>
 
         <motion.p

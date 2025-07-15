@@ -97,7 +97,7 @@ export function YouTubePlaylistsMM() {
             <Globe className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-red-50 to-pink-50 text-red-700 border border-red-200">
-            🇲🇲 Burmese Playlist Courses
+            🇲🇲 Burmese Courses
           </span>
         </motion.div>
 
@@ -107,7 +107,7 @@ export function YouTubePlaylistsMM() {
           transition={{ delay: 0.1 }}
           className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-red-800 to-pink-800 bg-clip-text text-transparent mb-4"
         >
-          Top DevOps Playlists in Myanmar
+          Learn DevOps on Youtube
         </motion.h2>
 
         <motion.p
