@@ -13,7 +13,6 @@ import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
 import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA"
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection"
 import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
-import { YouTubePlaylistsMM } from "@/components/YouTubePlaylistsMM"
 import { YouTubePlaylists }  from "@/components/YouTubePlaylists"
 import { FreeLabs } from "@/components/FreeLabs"
 import Intro from "@/components/Intro"
@@ -96,14 +95,11 @@ export default function HomePage() {
         <section id="youtube-playlists" className="-mt-8">
           <YouTubePlaylists />
         </section>
-        <section id="free-labs" className="-mt-10">
-          <FreeLabs />
-        </section>
-        <section id="myanmar-playlists" className="-mt-24">
-          <YouTubePlaylistsMM />
-        </section>
         <section id="free-udemy" className="-mt-12">
           <TopUdemyCourses />
+        </section>
+        <section id="free-labs" className="-mt-10">
+          <FreeLabs />
         </section>
         <div className="-mt-24">
           <CertificationRoadmap />
@@ -136,5 +132,5 @@ export default function HomePage() {
         <MinimalFooter />
       </div>
     </div>
-  )
+  );
 }
