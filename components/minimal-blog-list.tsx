@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface Article {
   id: number;
+  slug: string;
   title: string;
   content: string;
   published_at: string;
@@ -261,7 +262,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                 </div>
 
                 <Link
-                  href={`/articles/${article.id}`}
+                  href={`/articles/${article.slug}`}
                   className="group/link block"
                 >
                   <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">

@@ -20,6 +20,7 @@ import Link from "next/link";
 // Types for your API data
 interface Category {
   id: number;
+  slug: string;
   name: string;
 }
 
@@ -191,7 +192,7 @@ export default function CategoriesPage() {
             const Icon = getCategoryIcon(category.name);
             const colors = getCategoryColors(category.name);
             return (
-              <Link key={category.id} href={`/categories/${category.id}`}>
+              <Link key={category.id} href={`/categories/${category.slug}`}>
                 <Card className="group hover:shadow-lg transition-all duration-300 border-0 overflow-hidden h-full">
                   <div className={`h-1 bg-gradient-to-r ${colors.color}`}></div>
                   <CardContent
