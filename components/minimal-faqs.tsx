@@ -152,7 +152,7 @@ export function MinimalFAQs() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleToggleShowAll}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-700 hover:to-emerald-700  text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
             {showAll ? (
               <>

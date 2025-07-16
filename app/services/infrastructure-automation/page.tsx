@@ -739,7 +739,7 @@ export default function InfraAsCodePage() {
         </section>
         {/* Call to Action */}
         <section className="mb-12">
-          <Card className="relative border border-gray-200 shadow-lg bg-white rounded-2xl overflow-hidden p-8 md:p-10 text-center">
+          <Card className="relative rounded-2xl overflow-hidden p-8 md:p-10 text-center border-0 shadow-none bg-transparent">
             {/* Subtle gradient background */}
             <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-2xl"></div>
             <div className="relative z-10 max-w-3xl mx-auto">

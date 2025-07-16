@@ -326,7 +326,7 @@ export function MinimalHeader() {
               }}
             >
               <button className="flex items-center hover:text-blue-600">
-                Learning <ChevronDown className="ml-1 w-4 h-4" />
+                Learn DevOps <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isLearningOpen && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
@@ -388,6 +388,12 @@ export function MinimalHeader() {
                     Infrastructure as Code
                   </Link>
                   <Link
+                    href="/services/part-time-devops-support"
+                    className="block px-4 py-2 hover:bg-blue-50"
+                  >
+                    Part Time DevOps Support
+                  </Link>
+                  <Link
                     href="/services/web-development"
                     className="block px-4 py-2 hover:bg-blue-50"
                   >
@@ -397,7 +403,7 @@ export function MinimalHeader() {
               )}
             </div>
             <Link href="/about" className="hover:text-blue-600">
-              About Us
+              About
             </Link>
           </nav>
 

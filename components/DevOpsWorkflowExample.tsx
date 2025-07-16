@@ -113,7 +113,7 @@ export function DevOpsWorkflowExample() {
           transition={{ delay: 0.2 }}
           className="text-lg text-gray-600 max-w-3xl mx-auto"
         >
-          DevOps architecture design built for client's company using GitOps and ArgoCD
+          DevOps architecture design built for client's company using GitOps and IAC
         </motion.p>
       </div>
 

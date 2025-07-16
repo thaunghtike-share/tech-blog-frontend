@@ -71,7 +71,7 @@ export function TopUdemyCourses() {
     fetchCourses();
   }, []);
 
-  const displayed = showAll ? courses : courses.slice(0, 9);
+  const displayed = showAll ? courses : courses.slice(0, 6);
 
   const handleToggleShowAll = () => {
     if (showAll) {

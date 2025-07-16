@@ -293,19 +293,6 @@ const roadmap: RoadmapStage[] = [
           "Artifact creation and deployment",
         ],
       },
-      {
-        title: "Cloud Container Services (AKS/ECS/EKS)",
-        details: "Deploy and manage containers using cloud services.",
-        duration: "3 weeks",
-        subtopics: [
-          "Introduction to managed Kubernetes",
-          "EKS cluster setup",
-          "ECS and Fargate overview",
-          "Service discovery in cloud",
-          "Auto-scaling in container services",
-          "Monitoring with CloudWatch/Container Insights",
-        ],
-      },
     ],
   },
   {
@@ -408,6 +395,10 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       text: " In-depth articles and tutorials on Python best practices",
       url: "https://realpython.com/",
     },
+    {
+      text: "W3 Schools",
+      url: "https://www.w3schools.com/python/",
+    },
   ],
   "Networking Fundamentals": [
     {
@@ -423,6 +414,10 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     {
       text: "Operating System Tutorial – GeeksforGeeks",
       url: "https://www.geeksforgeeks.org/operating-systems/operating-systems/",
+    },
+    {
+      text: "Operating System Basic",
+      url: "https://www.netacad.com/courses/operating-systems-basics?courseLang=en-US"
     },
   ],
   "Computer Fundamentals": [
@@ -446,11 +441,17 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     },
   ],
   "Linux Fundamentals": [
-    { text: "Linux Journey", url: "https://linuxjourney.com/" },
+    { text: "Linux Journey", 
+      url: "https://linuxjourney.com/" 
+    },
     {
       text: "Ubuntu Command Line Basics",
       url: "https://ubuntu.com/tutorials/command-line-for-beginners",
     },
+    {
+      text: "TryHackMe | Linux Foundation",
+      url: "https://tryhackme.com/module/linux-fundamentals"
+    }
   ],
   "Cloud Fundamentals": [
     {
@@ -611,25 +612,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://docs.gitlab.com/ee/ci/",
     },
   ],
-
-  "Cloud Container Services (AKS/ECS/EKS)": [
-    {
-      text: "Amazon EKS Workshop",
-      url: "https://www.eksworkshop.com/",
-    },
-    {
-      text: "AWS Fargate Overview",
-      url: "https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html",
-    },
-    {
-      text: "Azure Kubernetes Service (AKS)",
-      url: "https://learn.microsoft.com/en-us/azure/aks/",
-    },
-    {
-      text: "ECS Developer Guide",
-      url: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/",
-    },
-  ],
   "Infrastructure As Code": [
     {
       text: "Terraform Getting Started",
@@ -642,7 +624,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     {
       text: "Terraform Best Practices",
       url: "https://www.terraform-best-practices.com/",
-    }
+    },
   ],
 
   "GitOps with ArgoCD": [

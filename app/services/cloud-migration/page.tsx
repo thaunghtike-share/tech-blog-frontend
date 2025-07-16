@@ -185,7 +185,6 @@ export default function MonolithicToCloudNativePage() {
               </div>
             </CardContent>
           </Card>
-
           {/* Explanation of dinger.png */}
           <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
@@ -301,7 +300,6 @@ export default function MonolithicToCloudNativePage() {
               </p>
             </CardContent>
           </Card>
-
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-0">
             {[
@@ -1672,9 +1670,9 @@ export default function MonolithicToCloudNativePage() {
         </section>
         {/* Call to Action - Redesigned */}
         <section className="mb-12">
-          <Card className="relative border border-gray-200 shadow-lg bg-white rounded-2xl overflow-hidden p-8 md:p-10 text-center">
+          <Card className="relative rounded-2xl overflow-hidden p-8 md:p-10 text-center border-0 shadow-none bg-transparent">
             {/* Subtle gradient background */}
-            <div className="absolute inset-0 bg-gray-50 opacity-20 rounded-xl"></div>
+            <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-2xl"></div>
             <div className="relative z-10 max-w-3xl mx-auto">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-4 py-1.5 rounded-full mb-4 text-sm font-semibold text-gray-700">
                 <Sparkles className="w-4 h-4 mr-1 text-blue-600" />

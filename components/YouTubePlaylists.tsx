@@ -111,12 +111,14 @@ export function YouTubePlaylists() {
     fetchPlaylists();
   }, []);
 
-  const filteredPlaylists = playlists.filter(
-    (pl) => pl.difficulty === selectedDifficulty
-  );
+  // Sort filtered playlists alphabetically by title (A-Z)
+  const filteredPlaylists = playlists
+    .filter((pl) => pl.difficulty === selectedDifficulty)
+    .sort((a, b) => a.title.localeCompare(b.title));
+
   const displayedPlaylists = showAll
     ? filteredPlaylists
-    : filteredPlaylists.slice(0, 9);
+    : filteredPlaylists.slice(0, 6);
 
   const allDifficulties: (
     | "Prerequisite"
@@ -293,7 +295,7 @@ export function YouTubePlaylists() {
                             className="text-xl select-none"
                             title="Burmese"
                           >
-                            🇲🇲 🇲🇲
+                            🇲🇲
                           </span>
                         )}
                       </h3>
@@ -325,7 +327,7 @@ export function YouTubePlaylists() {
             </div>
           )}
 
-          {filteredPlaylists.length > 9 && (
+          {filteredPlaylists.length > 6 && (
             <div className="mt-10 text-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
