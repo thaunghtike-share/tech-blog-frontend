@@ -146,9 +146,10 @@ export function ArticleContent({
 }: ArticleContentProps) {
   const articleUrl = typeof window !== "undefined" ? window.location.href : "";
   const [topReadArticles, setTopReadArticles] = useState<Article[]>([]);
-  const maxReadCount = Math.max(
-    ...topReadArticles.map((a) => a.read_count || 0)
-  );
+  const maxReadCount =
+    topReadArticles.length > 0
+      ? Math.max(...topReadArticles.map((a) => a.read_count || 0))
+      : 1;
 
   useEffect(() => {
     const incrementReadCount = async () => {
@@ -178,7 +179,7 @@ export function ArticleContent({
         );
         if (!res.ok) throw new Error("Failed to fetch top read articles");
         const data = await res.json();
-        console.log("Top Read Response:", data); // <-- check if slug exists
+        console.log("Top Read Response:", data);
         setTopReadArticles(data);
       } catch (err) {
         console.error(err);
