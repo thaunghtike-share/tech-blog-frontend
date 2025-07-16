@@ -8,7 +8,6 @@ import CountUp from "react-countup";
 import { GiscusComments } from "@/components/GiscusComments";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { ShareButtons } from "@/components/share-buttons";
-import type { Element } from "hast";
 import {
   ArrowLeft,
   ArrowRight,
@@ -20,6 +19,8 @@ import {
   User,
   Clipboard,
   Check,
+  Eye,
+  TrendingUp,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -105,13 +106,11 @@ function excerpt(content: string) {
 // CopyButton component for code blocks
 const CopyButton = ({ code }: { code: string }) => {
   const [copied, setCopied] = useState(false);
-
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
   return (
     <Button
       onClick={handleCopy}
@@ -192,8 +191,8 @@ export function ArticleContent({
     return content
       .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2") // Add blank line before code block after headings
       .replace(/([^\n])\n(!\[)/g, "$1\n\n$2") // Add blank line before image if directly after text line
-      .replace(/(!\[.*?\]\(.*?\))\n([^\n])/g, "$1\n\n$2"); // Add blank line after image if directly before text line
-  }  
+      .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2"); // Add blank line after image if directly before text line
+  }
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
@@ -325,14 +324,12 @@ export function ArticleContent({
                 const isShellLike = language === "bash" || language === "shell";
                 const startsWithDollar =
                   isShellLike && lines[0]?.trim().startsWith("$");
-
                 const showCopyButton = [
                   "yaml",
                   "bash",
                   "shell",
                   "hcl",
                 ].includes(language);
-
                 return (
                   <div
                     className="relative mb-6 rounded-lg bg-white text-gray-900 font-mono text-sm shadow-sm border border-blue-300"
@@ -392,45 +389,55 @@ export function ArticleContent({
           />
         </div>
         <GiscusComments />
-        <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-lg">
-          <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
+
+        {/* Written By (Author Card) - Redesigned */}
+        <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-lg relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-10 pointer-events-none"></div>
+          <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6 relative z-10">
             {author?.avatar ? (
               <img
                 src={author.avatar || "/placeholder.svg"}
                 alt={author.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+                className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-xl transition-transform duration-300 hover:scale-105"
               />
             ) : (
-              <div className="w-24 h-24 rounded-full bg-blue-200 flex items-center justify-center border-4 border-white shadow-md">
-                <UserCircle className="w-16 h-16 text-blue-600" />
+              <div className="w-28 h-28 rounded-full bg-blue-200 flex items-center justify-center border-4 border-white shadow-xl">
+                <UserCircle className="w-20 h-20 text-blue-600" />
               </div>
             )}
-            <div className="text-center md:text-left">
-              <h4 className="text-lg font-bold text-gray-900 mb-1">
+            <div className="text-center md:text-left flex-1">
+              <h4 className="text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
                 Written By
               </h4>
-              <p className="text-xl font-semibold text-blue-700 mb-2">
-                {article.author_name || author?.name || "Unknown author"}
+              <p className="text-2xl font-extrabold text-indigo-800 mb-2 leading-tight">
+                {article.author_name || author?.name || "Unknown Author"}
               </p>
               {author?.bio && (
-                <p className="text-gray-700 leading-relaxed text-sm">
+                <p className="text-gray-700 leading-relaxed text-sm max-w-prose mx-auto md:mx-0">
                   {author.bio}
                 </p>
               )}
               {author?.linkedin && (
-                <a
-                  href={author.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 text-blue-800 hover:underline text-sm font-medium transition-colors duration-200 hover:text-blue-900"
+                <Button
+                  asChild
+                  variant="outline"
+                  className="mt-4 text-blue-800 border-blue-300 hover:bg-blue-100 hover:text-blue-900 transition-colors duration-200 bg-transparent"
                 >
-                  <Linkedin className="w-4 h-4" />
-                  <span>LinkedIn</span>
-                </a>
+                  <a
+                    href={author.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                    <span>Connect on LinkedIn</span>
+                  </a>
+                </Button>
               )}
             </div>
           </CardContent>
         </Card>
+
         <div className="mt-6 flex justify-between items-center text-sm text-blue-600 font-medium pt-4">
           {prevArticle ? (
             <Link
@@ -455,7 +462,8 @@ export function ArticleContent({
             <span />
           )}
         </div>
-        {/* Recent Articles */}
+
+        {/* Recent Articles - Redesigned */}
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
@@ -469,7 +477,7 @@ export function ArticleContent({
               View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {recentArticles.map((item) => {
               const date = new Date(item.published_at).toLocaleDateString(
                 "en-US",
@@ -487,35 +495,29 @@ export function ArticleContent({
               return (
                 <Card
                   key={item.id}
-                  className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-200 h-full flex flex-col group hover:border-indigo-200"
+                  className="border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col group bg-white relative z-10 transform hover:-translate-y-1"
                 >
                   <Link
                     href={`/articles/${item.slug}`}
                     className="block flex-grow flex flex-col"
                   >
                     {item.image_url && (
-                      <div className="h-[180px] w-full overflow-hidden bg-gray-50">
+                      <div className="h-[200px] w-full overflow-hidden bg-gray-50">
                         <img
                           src={item.image_url || "/placeholder.svg"}
                           alt={item.title}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                     )}
                     <CardContent className="p-5 flex-grow flex flex-col bg-white">
-                      <Badge
-                        variant="outline"
-                        className="w-fit mb-3 text-xs px-2.5 py-1 bg-indigo-100 text-indigo-800 border-indigo-200 hover:bg-indigo-200"
-                      >
-                        {itemCategory}
-                      </Badge>
-                      <h4 className="font-medium text-gray-800 group-hover:text-indigo-700 transition-colors line-clamp-2 text-[15px] leading-snug">
+                      <h4 className="font-bold text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 text-lg leading-snug mb-2">
                         {item.title}
                       </h4>
-                      <p className="text-sm text-gray-600 line-clamp-2 mt-2 mb-4">
+                      <p className="text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
                         {excerpt(item.content)}
                       </p>
-                      <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
+                      <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-xs text-gray-600">
                           <User className="w-3.5 h-3.5 text-indigo-500" />
                           <span>{itemAuthor}</span>
@@ -533,9 +535,11 @@ export function ArticleContent({
           </div>
         </div>
       </article>
+
       {/* Sidebar */}
       <aside className="hidden lg:block lg:col-span-1 space-y-8">
         <MinimalSidebar />
+
         {/* Table of Contents */}
         <div className="bg-white/90 border border-white/70 shadow rounded-lg p-4 sticky top-4">
           <h3 className="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
@@ -571,67 +575,32 @@ export function ArticleContent({
             ))}
           </nav>
         </div>
-        <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden">
-          {/* Subtle gradient background */}
-          <div className="absolute inset-0 bg-white-50 opacity-70 rounded-xl"></div>
-          <div className="relative z-10 flex items-start justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-600 mb-1">
-                Total Reads
-              </h3>
-              <p className="text-4xl font-extrabold text-gray-900">
-                {typeof readCount === "number" ? (
-                  <CountUp
-                    end={readCount}
-                    duration={2.5}
-                    separator=","
-                    className="text-indigo-700"
-                  />
-                ) : (
-                  "—"
-                )}
-              </p>
+
+        {/* Total Reads - Redesigned */}
+        <div className="bg-white/90 border border-blue-100 rounded-xl p-6 shadow-lg relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/dots.svg')] bg-repeat opacity-10 pointer-events-none"></div>
+          <div className="relative z-10 flex flex-col items-center text-center">
+            <div className="p-4 bg-indigo-600 rounded-full shadow-xl mb-4">
+              <Eye className="h-8 w-8 text-white" />
             </div>
-            <div className="p-3 bg-indigo-100 rounded-full shadow-md">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-7 w-7 text-indigo-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                />
-              </svg>
+            <h3 className="text-sm font-medium text-gray-700 mb-2 uppercase tracking-wide">
+              Total Article Views
+            </h3>
+            <p className="text-5xl font-extrabold text-indigo-800 leading-none">
+              {typeof readCount === "number" ? (
+                <CountUp end={readCount} duration={2.5} separator="," />
+              ) : (
+                "—"
+              )}
+            </p>
+            <div className="mt-4 flex items-center text-sm text-gray-600 font-medium">
+              <TrendingUp className="h-4 w-4 text-green-500 mr-1 animate-pulse" />
+              <span>Consistently gaining traction</span>
             </div>
-          </div>
-          <div className="mt-4 flex items-center text-sm text-gray-600 font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-green-500 mr-1 animate-pulse"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-              />
-            </svg>
-            <span>Consistently gaining traction</span>
           </div>
         </div>
+
+        {/* Top Read Articles - Redesigned (Compact List Style) */}
         <section className="mt-12 bg-white/90 border border-white/70 shadow rounded-lg p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
@@ -658,45 +627,33 @@ export function ArticleContent({
               View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="space-y-4">
-            {topReadArticles.map((article, index) => {
-              const readPercentage = Math.round(
-                ((article.read_count || 0) / maxReadCount) * 100
-              );
-              return (
-                <Link
-                  href={`/articles/${article.slug}`}
-                  key={article.id}
-                  className="block"
-                >
-                  <div className="relative p-4 rounded-lg bg-white border border-gray-100 overflow-hidden group hover:shadow-lg transition-all duration-300">
-                    {/* Background bar */}
-                    <div
-                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-indigo-100 to-blue-100 opacity-70 group-hover:opacity-90 transition-all duration-700 ease-out"
-                      style={{ width: `${readPercentage}%` }}
-                    />
-                    <div className="relative z-10 flex items-center justify-between">
-                      <div className="flex-1 pr-4">
-                        <h4 className="font-semibold text-gray-800 group-hover:text-indigo-700 transition-colors line-clamp-1 text-base">
-                          {article.title}
-                        </h4>
-                        <p className="text-xs text-gray-500 mt-1">
-                          <CountUp
-                            end={article.read_count || 0}
-                            duration={1.5}
-                            separator=","
-                          />{" "}
-                          reads
-                        </p>
-                      </div>
-                      <Badge className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
-                        #{index + 1}
-                      </Badge>
-                    </div>
+          <div className="space-y-3">
+            {topReadArticles.map((article, index) => (
+              <Link
+                href={`/articles/${article.slug}`}
+                key={article.id}
+                className="block"
+              >
+                <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <span className="text-sm font-bold text-indigo-600 w-6 text-center flex-shrink-0">
+                    #{index + 1}
+                  </span>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-800 hover:text-indigo-700 transition-colors line-clamp-1 text-base">
+                      {article.title}
+                    </h4>
                   </div>
-                </Link>
-              );
-            })}
+                  <div className="flex items-center text-xs text-gray-500 flex-shrink-0">
+                    <Eye className="w-3 h-3 mr-1" />
+                    <CountUp
+                      end={article.read_count || 0}
+                      duration={1.5}
+                      separator=","
+                    />
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       </aside>
