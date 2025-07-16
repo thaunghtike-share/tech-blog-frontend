@@ -1,5 +1,6 @@
 "use client";
-import { useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalBlogList } from "@/components/minimal-blog-list";
@@ -9,11 +10,28 @@ import { MinimalFooter } from "@/components/minimal-footer";
 export default function ArticlesPage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const API_BASE_URL = "http://172.20.10.6:8000/api";
 
   useEffect(() => {
-    // On mount, scroll to top to prevent auto scrolling to blog list
-    window.scrollTo(0, 0);
-  }, []);
+    const tagFromUrl = searchParams.get("tags__slug");
+    setSelectedTag(tagFromUrl);
+  }, [searchParams]);
+
+  const updateTagFilter = (tagSlug: string | null) => {
+    const url = new URL(window.location.href);
+    if (tagSlug) {
+      url.searchParams.set("tags__slug", tagSlug);
+    } else {
+      url.searchParams.delete("tags__slug");
+    }
+    if (searchQuery) {
+      url.searchParams.set("search", searchQuery);
+    }
+    window.history.replaceState({}, "", url.toString());
+    setSelectedTag(tagSlug);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
@@ -25,7 +43,8 @@ export default function ArticlesPage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {/* Messenger Support Floating Button */}
+
+      {/* Messenger Chat Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
         target="_blank"
@@ -62,25 +81,27 @@ export default function ArticlesPage() {
           Chat?
         </span>
       </a>
+
       <MinimalHeader />
+
       <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-12">
-          {/* Articles List */}
           <div className="lg:col-span-4 bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
-            <div className="flex items-center justify-between mb-6">
-              {/* Your filters here */}
-            </div>
-            <MinimalBlogList searchQuery={searchQuery} />
-            <div className="flex justify-center mt-10">
-              {/* pagination buttons */}
-            </div>
+            {/* Removed the big tag buttons here */}
+
+            {/* Article List with dropdown filter inside */}
+            <MinimalBlogList
+              searchQuery={searchQuery}
+              filterTagSlug={selectedTag}
+            />
           </div>
-          {/* Sidebar */}
+
           <aside className="lg:col-span-2">
             <MinimalSidebar />
           </aside>
         </div>
       </main>
+
       <MinimalFooter />
     </div>
   );

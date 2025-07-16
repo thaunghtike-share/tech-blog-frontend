@@ -5,9 +5,9 @@ import {
   Clock,
   User,
   ArrowRight,
-  TagIcon,
   Folder,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,6 +33,7 @@ interface Author {
 interface Tag {
   id: number;
   name: string;
+  slug: string;
 }
 
 interface Category {
@@ -43,6 +44,7 @@ interface Category {
 
 interface MinimalBlogListProps {
   searchQuery?: string;
+  filterTagSlug?: string | null; // <-- add this line
 }
 
 const PAGE_SIZE = 5;
@@ -55,6 +57,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterTagSlug, setFilterTagSlug] = useState<string | null>(null);
 
   const topRef = useRef<HTMLHeadingElement>(null);
   const isFirstRender = useRef(true);
@@ -66,10 +69,14 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       try {
         setLoading(true);
         setError(null);
-        let url = `${API_BASE_URL}/articles/`;
-        if (searchQuery.trim()) {
-          url += `?search=${encodeURIComponent(searchQuery.trim())}`;
-        }
+
+        let url = `${API_BASE_URL}/articles/?`;
+        const params = new URLSearchParams();
+
+        if (searchQuery.trim()) params.append("search", searchQuery.trim());
+        if (filterTagSlug) params.append("tags__slug", filterTagSlug);
+
+        url += params.toString();
 
         const articlesResponse = await fetch(url);
         const articlesData = await articlesResponse.json();
@@ -106,7 +113,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
     fetchData();
     setCurrentPage(1);
-  }, [searchQuery]);
+  }, [searchQuery, filterTagSlug]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -116,7 +123,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
-  }, [currentPage]);
+  }, [currentPage, filterTagSlug]);
 
   const totalPages = Math.ceil(articles.length / PAGE_SIZE);
   const paginatedArticles = articles.slice(
@@ -126,8 +133,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   const getAuthor = (id: number) => authors.find((a) => a.id === id);
   const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`;
-  const getTagNames = (ids: number[]) =>
-    ids.map((id) => tags.find((t) => t.id === id)?.name || `Tag ${id}`);
   const getCategoryById = (id: number | null) =>
     categories.find((c) => c.id === id);
 
@@ -197,8 +202,9 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
-      <div className="mb-12">
-        <div className="flex items-center gap-3 mb-4">
+      {/* Articles List Header with Dropdown */}
+      <div className="mb-12 relative flex items-center justify-between">
+        <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
@@ -209,9 +215,43 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
             Latest Articles
           </h2>
         </div>
-        <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+
+        {/* Dropdown with label */}
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor="tagFilter"
+            className="text-gray-600 font-medium text-sm select-none"
+          >
+            Filter by tag:
+          </label>
+          <div className="relative">
+            <select
+              id="tagFilter"
+              value={filterTagSlug || ""}
+              onChange={(e) => {
+                const val = e.target.value || null;
+                setFilterTagSlug(val);
+                setCurrentPage(1);
+              }}
+              className="appearance-none border border-gray-300 rounded-md py-2 pl-3 pr-8 text-gray-700 text-sm font-medium shadow-sm
+                   hover:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">All Tags</option>
+              {tags.map((tag) => (
+                <option key={tag.id} value={tag.slug}>
+                  {tag.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={18}
+              className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400"
+            />
+          </div>
+        </div>
       </div>
 
+      {/* Articles */}
       <div className="grid gap-8">
         <AnimatePresence mode="wait">
           {paginatedArticles.map((article, index) => {
@@ -237,19 +277,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                       {category.name}
                     </Link>
                   )}
-                  <div className="flex flex-wrap gap-2">
-                    {getTagNames(article.tags)
-                      .slice(0, 2)
-                      .map((tag, i) => (
-                        <span
-                          key={i}
-                          className="flex items-center gap-1 text-sm bg-gradient-to-r from-gray-50 to-slate-50 text-gray-700 px-2.5 py-1 rounded-full hover:from-gray-100 hover:to-slate-100 transition-all border border-gray-200"
-                        >
-                          <TagIcon className="w-3.5 h-3.5" />
-                          {tag}
-                        </span>
-                      ))}
-                  </div>
+                  {/* TAG BADGES REMOVED HERE */}
                 </div>
 
                 <Link
@@ -301,6 +329,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         </AnimatePresence>
       </div>
 
+      {/* Pagination */}
       {totalPages > 1 && (
         <nav className="mt-10 flex justify-center items-center gap-2">
           <button
