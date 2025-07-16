@@ -46,19 +46,29 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "Python Programming Basic",
+        title: "Computer Fundamentals",
         details:
-          "Learn the core syntax, data types, control structures, functions, and basic programming concepts in Python.",
-        duration: "12 weeks",
+          "Understand the basics of computers including hardware, software, operating systems, and basic internet concepts.",
+        duration: "4 weeks",
         subtopics: [
-          "Variables and Data Types",
-          "Operators and Expressions",
-          "Control Flow (if, for, while)",
-          "Functions and Scope",
-          "Lists, Tuples, and Dictionaries",
-          "Input/Output and File Handling",
-          "Error Handling (try/except)",
-          "Basic Modules and Packages",
+          "Computer hardware basics",
+          "Operating system concepts",
+          "File management",
+          "Basic software usage",
+          "Internet fundamentals",
+        ],
+      },
+      {
+        title: "Operating System Basics",
+        details:
+          "Understand how operating systems manage resources, processes, memory, and file systems.",
+        duration: "2 weeks",
+        subtopics: [
+          "Processes and Threads",
+          "Memory Management",
+          "File Systems",
+          "User vs Kernel Mode",
+          "Basic Linux & Windows CLI",
         ],
       },
       {
@@ -78,29 +88,19 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "Operating System Basics",
+        title: "Python Programming Basic",
         details:
-          "Understand how operating systems manage resources, processes, memory, and file systems.",
-        duration: "2 weeks",
+          "Learn the core syntax, data types, control structures, functions, and basic programming concepts in Python.",
+        duration: "12 weeks",
         subtopics: [
-          "Processes and Threads",
-          "Memory Management",
-          "File Systems",
-          "User vs Kernel Mode",
-          "Basic Linux & Windows CLI",
-        ],
-      },
-      {
-        title: "Computer Fundamentals",
-        details:
-          "Understand the basics of computers including hardware, software, operating systems, and basic internet concepts.",
-        duration: "4 weeks",
-        subtopics: [
-          "Computer hardware basics",
-          "Operating system concepts",
-          "File management",
-          "Basic software usage",
-          "Internet fundamentals",
+          "Variables and Data Types",
+          "Operators and Expressions",
+          "Control Flow (if, for, while)",
+          "Functions and Scope",
+          "Lists, Tuples, and Dictionaries",
+          "Input/Output and File Handling",
+          "Error Handling (try/except)",
+          "Basic Modules and Packages",
         ],
       },
       {
@@ -140,19 +140,6 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
-        title: "Cloud Fundamentals",
-        details: "Grasp basic concepts of cloud computing and major providers.",
-        duration: "4 weeks",
-        subtopics: [
-          "IaaS vs PaaS vs SaaS",
-          "AWS Free Tier overview",
-          "Azure Basics and portal navigation",
-          "GCP Console introduction",
-          "Cloud regions and availability zones",
-          "Basic cloud security concepts",
-        ],
-      },
-      {
         title: "Bash Scripting",
         details: "Automate tasks with bash scripts.",
         duration: "3 weeks",
@@ -163,19 +150,6 @@ const roadmap: RoadmapStage[] = [
           "Input/output redirection",
           "Basic debugging techniques",
           "Scheduling scripts with cron",
-        ],
-      },
-      {
-        title: "Docker Fundamentals",
-        details: "Understand containerization and Docker CLI.",
-        duration: "2 weeks",
-        subtopics: [
-          "Images & containers",
-          "Dockerfile basics",
-          "Volumes & ports",
-          "Docker Compose overview",
-          "Container networking basics",
-          "Managing container lifecycle",
         ],
       },
       {
@@ -190,6 +164,32 @@ const roadmap: RoadmapStage[] = [
           "Routing protocols (RIP, OSPF)",
           "Switching technologies and VLANs",
           "Access control lists (ACLs)",
+        ],
+      },
+      {
+        title: "Cloud Fundamentals",
+        details: "Grasp basic concepts of cloud computing and major providers.",
+        duration: "4 weeks",
+        subtopics: [
+          "IaaS vs PaaS vs SaaS",
+          "AWS Free Tier overview",
+          "Azure Basics and portal navigation",
+          "GCP Console introduction",
+          "Cloud regions and availability zones",
+          "Basic cloud security concepts",
+        ],
+      },
+      {
+        title: "Docker Fundamentals",
+        details: "Understand containerization and Docker CLI.",
+        duration: "2 weeks",
+        subtopics: [
+          "Images & containers",
+          "Dockerfile basics",
+          "Volumes & ports",
+          "Docker Compose overview",
+          "Container networking basics",
+          "Managing container lifecycle",
         ],
       },
       {
@@ -255,6 +255,19 @@ const roadmap: RoadmapStage[] = [
         ],
       },
       {
+        title: "CICD Fundamentals",
+        details: "Automate software delivery using pipelines.",
+        duration: "3 weeks",
+        subtopics: [
+          "CI vs CD concepts",
+          "GitHub Actions basics",
+          "GitLab CI/CD pipelines",
+          "Webhooks integration",
+          "Unit testing in pipelines",
+          "Artifact creation and deployment",
+        ],
+      },
+      {
         title: "Kubernetes Essentials Part-I",
         details: "Learn to orchestrate containers at scale.",
         duration: "5 weeks",
@@ -280,19 +293,6 @@ const roadmap: RoadmapStage[] = [
           "PodDisruptionBudgets (PDB)",
         ],
       },
-      {
-        title: "CICD Fundamentals",
-        details: "Automate software delivery using pipelines.",
-        duration: "3 weeks",
-        subtopics: [
-          "CI vs CD concepts",
-          "GitHub Actions basics",
-          "GitLab CI/CD pipelines",
-          "Webhooks integration",
-          "Unit testing in pipelines",
-          "Artifact creation and deployment",
-        ],
-      },
     ],
   },
   {
@@ -303,6 +303,32 @@ const roadmap: RoadmapStage[] = [
       "Perfect for engineers aiming for senior/lead roles.",
     ],
     items: [
+      {
+        title: "Logging & Monitoring",
+        details: "Observe, trace, and analyze workloads effectively.",
+        duration: "6 weeks",
+        subtopics: [
+          "Prometheus fundamentals",
+          "Grafana dashboards",
+          "AlertManager setup",
+          "Loki for log aggregation",
+          "ELK vs EFK stacks",
+          "Tracing with OpenTelemetry",
+        ],
+      },
+      {
+        title: "Ansible Configuration Management",
+        details: "Automate infrastructure configuration and provisioning.",
+        duration: "8 weeks",
+        subtopics: [
+          "YAML syntax for Ansible",
+          "Playbooks and tasks",
+          "Inventory files and variables",
+          "Roles and reusable code",
+          "Ansible Vault for secrets",
+          "Ad-hoc commands and idempotency",
+        ],
+      },
       {
         title: "Infrastructure As Code",
         details: "Provision cloud infrastructure with Terraform.",
@@ -355,34 +381,8 @@ const roadmap: RoadmapStage[] = [
           "Runtime security (Seccomp, AppArmor)",
         ],
       },
-      {
-        title: "Logging & Monitoring",
-        details: "Observe, trace, and analyze workloads effectively.",
-        duration: "6 weeks",
-        subtopics: [
-          "Prometheus fundamentals",
-          "Grafana dashboards",
-          "AlertManager setup",
-          "Loki for log aggregation",
-          "ELK vs EFK stacks",
-          "Tracing with OpenTelemetry",
-        ],
-      },
-      {
-        title: "Ansible Configuration Management",
-        details: "Automate infrastructure configuration and provisioning.",
-        duration: "8 weeks",
-        subtopics: [
-          "YAML syntax for Ansible",
-          "Playbooks and tasks",
-          "Inventory files and variables",
-          "Roles and reusable code",
-          "Ansible Vault for secrets",
-          "Ad-hoc commands and idempotency",
-        ],
-      },
     ],
-  }
+  },
 ];
 
 const resourceLinks: Record<string, ResourceLink[]> = {
