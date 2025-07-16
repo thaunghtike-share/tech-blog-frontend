@@ -392,7 +392,7 @@ export function ArticleContent({
 
         {/* Written By (Author Card) - Redesigned */}
         <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-lg relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-10 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
           <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6 relative z-10">
             {author?.avatar ? (
               <img
@@ -578,7 +578,7 @@ export function ArticleContent({
 
         {/* Total Reads - Redesigned */}
         <div className="bg-white/90 border border-blue-100 rounded-xl p-6 shadow-lg relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/dots.svg')] bg-repeat opacity-10 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
           <div className="relative z-10 flex flex-col items-center text-center">
             <div className="p-4 bg-indigo-600 rounded-full shadow-xl mb-4">
               <Eye className="h-8 w-8 text-white" />

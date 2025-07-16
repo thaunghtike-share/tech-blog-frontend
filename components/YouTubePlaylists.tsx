@@ -11,7 +11,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge"; // Assuming you have a Badge component
+import { Badge } from "@/components/ui/badge";
 
 interface Playlist {
   id: number;
@@ -19,12 +19,11 @@ interface Playlist {
   videoId: string;
   playlistUrl: string;
   channel: string;
-  difficulty: "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"; // Updated to include Prerequisite
+  difficulty: "Prerequisite" | "Beginner" | "Intermediate" | "Advanced";
   estDuration: string;
+  is_burmese?: boolean;
 }
 
-// IMPORTANT: For production, replace this with your actual API endpoint.
-// If this is a local IP, it will only work if the client can reach it.
 const API_BASE_URL = "http://172.20.10.6:8000/api";
 
 const difficultyConfig = {
@@ -34,7 +33,7 @@ const difficultyConfig = {
     border: "border-gray-500",
     iconBg: "bg-gray-100",
     iconText: "text-gray-600",
-    icon: <Lightbulb className="w-4 h-4" />, // Added icon for Prerequisite
+    icon: <Lightbulb className="w-4 h-4" />,
   },
   Beginner: {
     color: "from-green-500 to-emerald-600",
@@ -42,7 +41,7 @@ const difficultyConfig = {
     border: "border-green-500",
     iconBg: "bg-green-100",
     iconText: "text-green-600",
-    icon: <Play className="w-4 h-4" />, // Added icon for Beginner
+    icon: <Play className="w-4 h-4" />,
   },
   Intermediate: {
     color: "from-blue-500 to-indigo-600",
@@ -50,7 +49,7 @@ const difficultyConfig = {
     border: "border-blue-500",
     iconBg: "bg-blue-100",
     iconText: "text-blue-600",
-    icon: <Play className="w-4 h-4" />, // Added icon for Intermediate
+    icon: <Play className="w-4 h-4" />,
   },
   Advanced: {
     color: "from-purple-500 to-pink-600",
@@ -58,7 +57,7 @@ const difficultyConfig = {
     border: "border-purple-500",
     iconBg: "bg-purple-100",
     iconText: "text-purple-600",
-    icon: <Play className="w-4 h-4" />, // Added icon for Advanced
+    icon: <Play className="w-4 h-4" />,
   },
 };
 
@@ -66,7 +65,7 @@ export function YouTubePlaylists() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<
     "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"
-  >("Prerequisite"); // Default to Prerequisite
+  >("Prerequisite");
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,14 +90,11 @@ export function YouTubePlaylists() {
           videoId: pl.video_id,
           playlistUrl: pl.playlist_url,
           channel: pl.channel,
-          // IMPORTANT: Assuming your API returns a 'difficulty' field that matches
-          // "Prerequisite", "Beginner", "Intermediate", or "Advanced".
-          // If not, you might need to map or hardcode 'Prerequisite' items.
           difficulty: pl.difficulty,
           estDuration: pl.duration,
+          is_burmese: pl.is_burmese,
         }));
         setPlaylists(mapped);
-        // Set initial selected difficulty to the first available, or default to "Prerequisite"
         if (
           mapped.length > 0 &&
           !mapped.some((pl) => pl.difficulty === selectedDifficulty)
@@ -120,7 +116,7 @@ export function YouTubePlaylists() {
   );
   const displayedPlaylists = showAll
     ? filteredPlaylists
-    : filteredPlaylists.slice(0, 9); // Show up to 9 initially for selected difficulty
+    : filteredPlaylists.slice(0, 9);
 
   const allDifficulties: (
     | "Prerequisite"
@@ -186,7 +182,6 @@ export function YouTubePlaylists() {
             </motion.p>
           </div>
 
-          {/* Difficulty Selection Buttons - New Design */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -204,7 +199,7 @@ export function YouTubePlaylists() {
                   transition={{ delay: index * 0.1 }}
                   onClick={() => {
                     setSelectedDifficulty(difficultyKey);
-                    setShowAll(false); // Reset showAll when switching difficulties
+                    setShowAll(false);
                   }}
                   className={`relative flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-sm font-medium ${
                     isActive
@@ -220,7 +215,6 @@ export function YouTubePlaylists() {
                     }`}
                   >
                     {config.icon}{" "}
-                    {/* Use the specific icon for each difficulty */}
                   </div>
                   <span
                     className={`${isActive ? "text-white" : "text-gray-800"}`}
@@ -277,7 +271,7 @@ export function YouTubePlaylists() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.08 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl`} // New: Left border for difficulty
+                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl`}
                   >
                     <div className="relative aspect-video bg-gray-900 overflow-hidden">
                       <iframe
@@ -288,17 +282,20 @@ export function YouTubePlaylists() {
                         className="w-full h-full transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute top-3 right-3">
-                        <Badge
-                          className={`px-3 py-1 bg-white/90 backdrop-blur-sm ${config.text} text-xs font-medium rounded-full shadow-sm border border-gray-200`}
-                        >
-                          {pl.difficulty}
-                        </Badge>
-                      </div>
                     </div>
                     <div className="p-5">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-red-700 transition-colors">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-red-700 transition-colors flex items-center gap-2">
                         {pl.title}
+                        {pl.is_burmese && (
+                          <span
+                            role="img"
+                            aria-label="Burmese"
+                            className="text-xl select-none"
+                            title="Burmese"
+                          >
+                            🇲🇲 🇲🇲
+                          </span>
+                        )}
                       </h3>
                       <div className="flex items-center gap-2 mb-2 text-sm text-gray-600">
                         <Users className="w-4 h-4 text-gray-500" />

@@ -395,7 +395,7 @@ export function MinimalSidebar() {
                       className="h-12 w-12 rounded-full object-cover border-2 border-white shadow-md group-hover:shadow-lg transition-shadow"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src =
-                          "/default-avatar.png";
+                          "/me.png";
                       }}
                     />
                     <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-1 rounded-full shadow-md">
