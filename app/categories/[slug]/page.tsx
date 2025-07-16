@@ -1,4 +1,3 @@
-// categories/[slug]/page.tsx
 import CategoryPageClient from "./CategoryPageClient";
 
 interface PageProps {
@@ -7,6 +6,7 @@ interface PageProps {
   };
 }
 
-export default function CategoryPage({ params }: PageProps) {
-  return <CategoryPageClient slug={params.slug} />;
+export default async function CategoryPage({ params }: PageProps) {
+  const { slug } = await Promise.resolve(params); // 👈 silence the warning
+  return <CategoryPageClient slug={slug} />;
 }
