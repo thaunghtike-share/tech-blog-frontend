@@ -5,6 +5,7 @@ import { ArticleContent } from "@/components/article-content";
 
 interface Article {
   id: number;
+  slug: string;
   title: string;
   content: string;
   published_at: string;
@@ -88,19 +89,19 @@ function extractHeadings(
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { slug: string };
 }) {
-  // Await the params as per Next.js 15 requirements
-  const { id: idStr } = await params;
-  const id = Number(idStr);
+  const { slug } = params;
 
-  if (!idStr || Number.isNaN(id)) {
+  if (!slug) {
     notFound();
   }
 
-  const res = await fetch(`${API_BASE_URL}/articles/${id}`, {
+  // Fetch article by slug
+  const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
     cache: "no-store",
   });
+
   if (!res.ok) {
     return (
       <div className="p-8 text-center text-red-600">
@@ -108,8 +109,10 @@ export default async function ArticlePage({
       </div>
     );
   }
+
   const article: Article = await res.json();
 
+  // Fetch related data
   const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
     fetchJSON<Article>(`${API_BASE_URL}/articles/`),

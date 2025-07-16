@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 
 interface Article {
   id: number;
+  slug: string;
   title: string;
   content: string;
   published_at: string;
@@ -429,24 +430,24 @@ export function ArticleContent({
         </Card>
         <div className="mt-6 flex justify-between items-center text-sm text-blue-600 font-medium pt-4">
           {prevArticle ? (
-            <a
-              href={`/articles/${prevArticle.id}`}
+            <Link
+              href={`/articles/${prevArticle.slug}`}
               className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>{prevArticle.title}</span>
-            </a>
+            </Link>
           ) : (
             <span />
           )}
           {nextArticle ? (
-            <a
-              href={`/articles/${nextArticle.id}`}
+            <Link
+              href={`/articles/${nextArticle.slug}`}
               className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800"
             >
               <span>{nextArticle.title}</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           ) : (
             <span />
           )}
@@ -486,7 +487,7 @@ export function ArticleContent({
                   className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-200 h-full flex flex-col group hover:border-indigo-200"
                 >
                   <Link
-                    href={`/articles/${item.id}`}
+                    href={`/articles/${item.slug}`}
                     className="block flex-grow flex flex-col"
                   >
                     {item.image_url && (
@@ -661,7 +662,7 @@ export function ArticleContent({
               );
               return (
                 <Link
-                  href={`/articles/${article.id}`}
+                  href={`/articles/${article.slug}`}
                   key={article.id}
                   className="block"
                 >
