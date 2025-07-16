@@ -36,7 +36,7 @@ interface Category {
 
 export const dynamic = "force-dynamic";
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://172.20.10.6:8000/api";
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
@@ -89,15 +89,12 @@ function extractHeadings(
 export default async function ArticlePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params; // await the params promise here
 
-  if (!slug) {
-    notFound();
-  }
+  if (!slug) notFound();
 
-  // Fetch article by slug
   const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
     cache: "no-store",
   });
@@ -112,7 +109,6 @@ export default async function ArticlePage({
 
   const article: Article = await res.json();
 
-  // Fetch related data
   const [author, allArticles, tags, categories, authors] = await Promise.all([
     fetchAuthor(article.author),
     fetchJSON<Article>(`${API_BASE_URL}/articles/`),
@@ -143,7 +139,6 @@ export default async function ArticlePage({
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
-      {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
         style={{
@@ -152,7 +147,6 @@ export default async function ArticlePage({
         }}
       ></div>
 
-      {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
         target="_blank"

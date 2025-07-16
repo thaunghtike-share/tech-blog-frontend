@@ -85,6 +85,13 @@ function flattenChildren(children: any): string {
   return "";
 }
 
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^\w]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function excerpt(content: string) {
   const plainText = content
     .replace(/<[^>]+>/g, "")
@@ -171,6 +178,7 @@ export function ArticleContent({
         );
         if (!res.ok) throw new Error("Failed to fetch top read articles");
         const data = await res.json();
+        console.log("Top Read Response:", data); // <-- check if slug exists
         setTopReadArticles(data);
       } catch (err) {
         console.error(err);
@@ -181,10 +189,10 @@ export function ArticleContent({
 
   function fixMarkdownSpacing(content: string): string {
     return content
-      .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2")
-      .replace(/([^\n])\n(!\[)/g, "$1\n\n$2")
-      .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2");
-  }
+      .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2") // Add blank line before code block after headings
+      .replace(/([^\n])\n(!\[)/g, "$1\n\n$2") // Add blank line before image if directly after text line
+      .replace(/(!\[.*?\]\(.*?\))\n([^\n])/g, "$1\n\n$2"); // Add blank line after image if directly before text line
+  }  
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
@@ -228,9 +236,7 @@ export function ArticleContent({
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
               h1: ({ children, ...props }) => {
-                const id = flattenChildren(children)
-                  .toLowerCase()
-                  .replace(/[^\w]+/g, "-");
+                const id = slugify(flattenChildren(children));
                 return (
                   <h1
                     id={id}
@@ -242,9 +248,7 @@ export function ArticleContent({
                 );
               },
               h2: ({ children, ...props }) => {
-                const id = flattenChildren(children)
-                  .toLowerCase()
-                  .replace(/[^\w]+/g, "-");
+                const id = slugify(flattenChildren(children));
                 return (
                   <h2 id={id} className="text-xl font-semibold my-3" {...props}>
                     {children}
@@ -252,9 +256,7 @@ export function ArticleContent({
                 );
               },
               h3: ({ children, ...props }) => {
-                const id = flattenChildren(children)
-                  .toLowerCase()
-                  .replace(/[^\w]+/g, "-");
+                const id = slugify(flattenChildren(children));
                 return (
                   <h3 id={id} className="text-lg font-semibold my-2" {...props}>
                     {children}

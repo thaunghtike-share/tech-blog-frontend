@@ -1,128 +1,153 @@
-"use client"
-import React, { useState, useEffect, useRef } from "react"
-import { Calendar, Clock, User, ArrowRight, TagIcon, Folder, Sparkles } from 'lucide-react'
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Calendar,
+  Clock,
+  User,
+  ArrowRight,
+  TagIcon,
+  Folder,
+  Sparkles,
+} from "lucide-react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Article {
-  id: number
-  title: string
-  content: string
-  published_at: string
-  category: number | null
-  tags: number[]
-  author: number
+  id: number;
+  title: string;
+  content: string;
+  published_at: string;
+  category: number | null;
+  tags: number[];
+  author: number;
 }
 
 interface Author {
-  id: number
-  name: string
-  avatar?: string
-  username?: string
+  id: number;
+  name: string;
+  avatar?: string;
+  username?: string;
 }
 
 interface Tag {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
 interface Category {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
 interface MinimalBlogListProps {
-  searchQuery?: string
+  searchQuery?: string;
 }
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 5;
 
 export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
-  const [articles, setArticles] = useState<Article[]>([])
-  const [authors, setAuthors] = useState<Author[]>([])
-  const [tags, setTags] = useState<Tag[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const topRef = useRef<HTMLHeadingElement>(null)
-  const isFirstRender = useRef(true)
+  const topRef = useRef<HTMLHeadingElement>(null);
+  const isFirstRender = useRef(true);
 
-  const API_BASE_URL = "http://192.168.1.131:8000/api"
+  const API_BASE_URL = "http://172.20.10.6:8000/api";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
-        setError(null)
-        let url = `${API_BASE_URL}/articles/`
+        setLoading(true);
+        setError(null);
+        let url = `${API_BASE_URL}/articles/`;
         if (searchQuery.trim()) {
-          url += `?search=${encodeURIComponent(searchQuery.trim())}`
+          url += `?search=${encodeURIComponent(searchQuery.trim())}`;
         }
 
-        const articlesResponse = await fetch(url)
-        const articlesData = await articlesResponse.json()
-        setArticles(Array.isArray(articlesData) ? articlesData : articlesData.results || [])
-        setLoading(false)
+        const articlesResponse = await fetch(url);
+        const articlesData = await articlesResponse.json();
+        setArticles(
+          Array.isArray(articlesData)
+            ? articlesData
+            : articlesData.results || []
+        );
+        setLoading(false);
 
-        const authorsResponse = await fetch(`${API_BASE_URL}/authors/`)
-        const authorsData = await authorsResponse.json()
-        setAuthors(Array.isArray(authorsData) ? authorsData : authorsData.results || [])
+        const authorsResponse = await fetch(`${API_BASE_URL}/authors/`);
+        const authorsData = await authorsResponse.json();
+        setAuthors(
+          Array.isArray(authorsData) ? authorsData : authorsData.results || []
+        );
 
-        const tagsResponse = await fetch(`${API_BASE_URL}/tags/`)
-        const tagsData = await tagsResponse.json()
-        setTags(Array.isArray(tagsData) ? tagsData : tagsData.results || [])
+        const tagsResponse = await fetch(`${API_BASE_URL}/tags/`);
+        const tagsData = await tagsResponse.json();
+        setTags(Array.isArray(tagsData) ? tagsData : tagsData.results || []);
 
-        const categoriesResponse = await fetch(`${API_BASE_URL}/categories/`)
-        const categoriesData = await categoriesResponse.json()
-        setCategories(Array.isArray(categoriesData) ? categoriesData : categoriesData.results || [])
+        const categoriesResponse = await fetch(`${API_BASE_URL}/categories/`);
+        const categoriesData = await categoriesResponse.json();
+        setCategories(
+          Array.isArray(categoriesData)
+            ? categoriesData
+            : categoriesData.results || []
+        );
       } catch (err: any) {
-        console.error("Error fetching data:", err)
-        setError(err.message || "Failed to fetch data")
-        setLoading(false)
+        console.error("Error fetching data:", err);
+        setError(err.message || "Failed to fetch data");
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-    setCurrentPage(1)
-  }, [searchQuery])
+    fetchData();
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   // Scroll to the top heading when currentPage changes, but skip on initial load
   useEffect(() => {
     if (isFirstRender.current) {
-      isFirstRender.current = false
+      isFirstRender.current = false;
     } else {
       if (topRef.current) {
-        topRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
+        topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
-  }, [currentPage])
+  }, [currentPage]);
 
-  const totalPages = Math.ceil(articles.length / PAGE_SIZE)
-  const paginatedArticles = articles.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+  const totalPages = Math.ceil(articles.length / PAGE_SIZE);
+  const paginatedArticles = articles.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
 
-  const getAuthor = (id: number) => authors.find((a) => a.id === id)
-  const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`
-  const getTagNames = (ids: number[]) => ids.map((id) => tags.find((t) => t.id === id)?.name || `Tag ${id}`)
-  const getCategoryName = (id: number | null) => categories.find((c) => c.id === id)?.name || "General"
+  const getAuthor = (id: number) => authors.find((a) => a.id === id);
+  const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`;
+  const getTagNames = (ids: number[]) =>
+    ids.map((id) => tags.find((t) => t.id === id)?.name || `Tag ${id}`);
+  const getCategoryName = (id: number | null) =>
+    categories.find((c) => c.id === id)?.name || "General";
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
-    })
+    });
 
-  const calculateReadTime = (text: string) => `${Math.ceil((text.split(" ").length || 1) / 200)} min`
+  const calculateReadTime = (text: string) =>
+    `${Math.ceil((text.split(" ").length || 1) / 200)} min`;
 
   const stripMarkdown = (md: string) =>
     md
       .replace(/<[^>]+>/g, "")
       .replace(/[#_*>!\[\]$$$$~\-]/g, "")
-      .trim()
+      .trim();
 
-  const truncate = (str: string, max = 150) => (str.length <= max ? str : str.slice(0, max) + "...")
+  const truncate = (str: string, max = 150) =>
+    str.length <= max ? str : str.slice(0, max) + "...";
 
   if (loading) {
     return (
@@ -143,11 +168,14 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         </div>
         <div className="grid gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="animate-pulse p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-lg" />
+            <div
+              key={i}
+              className="animate-pulse p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-lg"
+            />
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -155,7 +183,12 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       <div className="max-w-4xl mx-auto text-center">
         <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-6 shadow-lg">
           <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg
+              className="w-6 h-6 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -173,7 +206,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -196,7 +229,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       <div className="grid gap-8">
         <AnimatePresence mode="wait">
           {paginatedArticles.map((article, index) => {
-            const author = getAuthor(article.author)
+            const author = getAuthor(article.author);
             return (
               <motion.article
                 key={article.id}
@@ -227,7 +260,10 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                   </div>
                 </div>
 
-                <Link href={`/articles/${article.id}`} className="group/link block">
+                <Link
+                  href={`/articles/${article.id}`}
+                  className="group/link block"
+                >
                   <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                     {article.title}
                   </h3>
@@ -235,7 +271,8 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                     {truncate(stripMarkdown(article.content), 200)}
                   </p>
                   <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
-                    Read more <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                    Read more{" "}
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                   </div>
                 </Link>
 
@@ -253,7 +290,9 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                         <User className="w-3 h-3 text-white" />
                       </div>
                     )}
-                    <span className="font-medium">{getAuthorName(article.author)}</span>
+                    <span className="font-medium">
+                      {getAuthorName(article.author)}
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4 text-gray-400" />
@@ -265,7 +304,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                   </div>
                 </div>
               </motion.article>
-            )
+            );
           })}
         </AnimatePresence>
       </div>
@@ -304,5 +343,5 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         </nav>
       )}
     </div>
-  )
+  );
 }

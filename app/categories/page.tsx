@@ -1,80 +1,130 @@
-"use client"
-import { useEffect, useState } from "react"
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalFooter } from "@/components/minimal-footer"
-import { Card, CardContent } from "@/components/ui/card"
-import { Server, Brain, Cloud, Cog, BarChart3, Shield, Code, Database, Globe, Zap } from "lucide-react"
-import Link from "next/link"
+"use client";
+import { useEffect, useState } from "react";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalFooter } from "@/components/minimal-footer";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Server,
+  Brain,
+  Cloud,
+  Cog,
+  BarChart3,
+  Shield,
+  Code,
+  Database,
+  Globe,
+  Zap,
+} from "lucide-react";
+import Link from "next/link";
 
 // Types for your API data
 interface Category {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
 // Icon mapping for different categories
 const getCategoryIcon = (categoryName: string) => {
-  const name = categoryName.toLowerCase()
-  if (name.includes("devops")) return Server
-  if (name.includes("python")) return Code
-  if (name.includes("ai") || name.includes("ml")) return Brain
-  if (name.includes("cloud")) return Cloud
-  if (name.includes("automation")) return Cog
-  if (name.includes("monitoring")) return BarChart3
-  if (name.includes("security")) return Shield
-  if (name.includes("database")) return Database
-  if (name.includes("web")) return Globe
-  return Zap // Default icon
-}
+  const name = categoryName.toLowerCase();
+  if (name.includes("devops")) return Server;
+  if (name.includes("python")) return Code;
+  if (name.includes("ai") || name.includes("ml")) return Brain;
+  if (name.includes("cloud")) return Cloud;
+  if (name.includes("automation")) return Cog;
+  if (name.includes("monitoring")) return BarChart3;
+  if (name.includes("security")) return Shield;
+  if (name.includes("database")) return Database;
+  if (name.includes("web")) return Globe;
+  return Zap; // Default icon
+};
 
 // Color mapping for different categories
 const getCategoryColors = (categoryName: string) => {
-  const name = categoryName.toLowerCase()
-  if (name.includes("devops")) return { color: "from-blue-500 to-cyan-500", bgColor: "from-blue-50 to-cyan-50" }
-  if (name.includes("python")) return { color: "from-green-500 to-emerald-500", bgColor: "from-green-50 to-emerald-50" }
+  const name = categoryName.toLowerCase();
+  if (name.includes("devops"))
+    return {
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "from-blue-50 to-cyan-50",
+    };
+  if (name.includes("python"))
+    return {
+      color: "from-green-500 to-emerald-500",
+      bgColor: "from-green-50 to-emerald-50",
+    };
   if (name.includes("ai") || name.includes("ml"))
-    return { color: "from-purple-500 to-pink-500", bgColor: "from-purple-50 to-pink-50" }
-  if (name.includes("cloud")) return { color: "from-orange-500 to-red-500", bgColor: "from-orange-50 to-red-50" }
-  if (name.includes("automation")) return { color: "from-indigo-500 to-blue-500", bgColor: "from-indigo-50 to-blue-50" }
+    return {
+      color: "from-purple-500 to-pink-500",
+      bgColor: "from-purple-50 to-pink-50",
+    };
+  if (name.includes("cloud"))
+    return {
+      color: "from-orange-500 to-red-500",
+      bgColor: "from-orange-50 to-red-50",
+    };
+  if (name.includes("automation"))
+    return {
+      color: "from-indigo-500 to-blue-500",
+      bgColor: "from-indigo-50 to-blue-50",
+    };
   if (name.includes("monitoring"))
-    return { color: "from-yellow-500 to-orange-500", bgColor: "from-yellow-50 to-orange-50" }
-  if (name.includes("security")) return { color: "from-red-500 to-pink-500", bgColor: "from-red-50 to-pink-50" }
-  if (name.includes("database")) return { color: "from-teal-500 to-cyan-500", bgColor: "from-teal-50 to-cyan-50" }
-  if (name.includes("web")) return { color: "from-violet-500 to-purple-500", bgColor: "from-violet-50 to-purple-50" }
-  return { color: "from-slate-500 to-gray-500", bgColor: "from-slate-50 to-gray-50" } // Default colors
-}
+    return {
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "from-yellow-50 to-orange-50",
+    };
+  if (name.includes("security"))
+    return {
+      color: "from-red-500 to-pink-500",
+      bgColor: "from-red-50 to-pink-50",
+    };
+  if (name.includes("database"))
+    return {
+      color: "from-teal-500 to-cyan-500",
+      bgColor: "from-teal-50 to-cyan-50",
+    };
+  if (name.includes("web"))
+    return {
+      color: "from-violet-500 to-purple-500",
+      bgColor: "from-violet-50 to-purple-50",
+    };
+  return {
+    color: "from-slate-500 to-gray-500",
+    bgColor: "from-slate-50 to-gray-50",
+  }; // Default colors
+};
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<Category[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const API_BASE_URL = "http://192.168.1.131:8000/api"
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const API_BASE_URL = "http://172.20.10.6:8000/api";
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        setLoading(true)
-        const response = await fetch(`${API_BASE_URL}/categories/`)
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/categories/`);
         if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`)
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
-        const data = await response.json()
-        setCategories(data.results) // 👈 Important if using DRF pagination
+        const data = await response.json();
+        setCategories(data.results); // 👈 Important if using DRF pagination
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load categories")
+        setError(
+          err instanceof Error ? err.message : "Failed to load categories"
+        );
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchCategories()
-  }, [])
+    };
+    fetchCategories();
+  }, []);
 
   if (loading) {
-    return <div className="p-8 text-center">Loading categories...</div>
+    return <div className="p-8 text-center">Loading categories...</div>;
   }
 
   if (error) {
-    return <div className="p-8 text-center text-red-500">Error: {error}</div>
+    return <div className="p-8 text-center text-red-500">Error: {error}</div>;
   }
 
   return (
@@ -124,7 +174,7 @@ export default function CategoriesPage() {
           Chat?
         </span>
       </a>
-      
+
       <MinimalHeader />
       <main className="max-w-6xl mx-auto px-4 py-12 relative z-10">
         <div className="text-center mb-10">

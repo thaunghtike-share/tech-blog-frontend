@@ -1,28 +1,28 @@
-"use client"
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalFooter } from "@/components/minimal-footer"
-import { Card, CardContent } from "@/components/ui/card"
-import { Linkedin } from "lucide-react"
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalFooter } from "@/components/minimal-footer";
+import { Card, CardContent } from "@/components/ui/card";
+import { Linkedin } from "lucide-react";
 
 interface Author {
-  id: number
-  name: string
-  bio: string
-  avatar: string
-  featured: boolean
-  job_title: string
-  company: string
-  linkedin?: string
+  id: number;
+  name: string;
+  bio: string;
+  avatar: string;
+  featured: boolean;
+  job_title: string;
+  company: string;
+  linkedin?: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api"
+const API_BASE_URL = "http://172.20.10.6:8000/api";
 
 export default function AuthorsPage() {
-  const [authors, setAuthors] = useState<Author[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -39,31 +39,31 @@ export default function AuthorsPage() {
         }, 2000);
       }
     }
-  }, []);  
+  }, []);
 
   useEffect(() => {
     async function fetchAuthors() {
       try {
-        setLoading(true)
-        const res = await fetch(`${API_BASE_URL}/authors`)
-        if (!res.ok) throw new Error("Failed to fetch authors")
-        const data = await res.json()
+        setLoading(true);
+        const res = await fetch(`${API_BASE_URL}/authors`);
+        if (!res.ok) throw new Error("Failed to fetch authors");
+        const data = await res.json();
         if (Array.isArray(data)) {
-          setAuthors(data)
+          setAuthors(data);
         } else if (Array.isArray(data.results)) {
-          setAuthors(data.results)
+          setAuthors(data.results);
         } else {
-          setAuthors([])
-          throw new Error("Unexpected data format from API")
+          setAuthors([]);
+          throw new Error("Unexpected data format from API");
         }
       } catch (err) {
-        setError((err as Error).message)
+        setError((err as Error).message);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-    fetchAuthors()
-  }, [])
+    fetchAuthors();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">

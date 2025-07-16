@@ -16,7 +16,7 @@ interface Tag {
   name: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://172.20.10.6:8000/api";
 
 export default function NewArticlePage() {
   const [token, setToken] = useState<string | null>(null);

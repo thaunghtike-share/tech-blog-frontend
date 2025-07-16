@@ -22,7 +22,7 @@ interface Props {
   id: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://172.20.10.6:8000/api";
 const PAGE_SIZE = 6;
 
 export default function CategoryPageClient({ id }: Props) {
@@ -157,7 +157,7 @@ export default function CategoryPageClient({ id }: Props) {
           Chat?
         </span>
       </a>
-      
+
       <MinimalHeader />
       <div
         className="max-w-7xl mx-auto px-4 py-8 w-full relative z-10"
