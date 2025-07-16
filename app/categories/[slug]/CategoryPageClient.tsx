@@ -263,16 +263,21 @@ export default function CategoryPageClient({ slug }: Props) {
       <MinimalHeader />
       <div className="max-w-4xl mx-auto px-4 py-12 relative z-10">
         <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-start gap-3 mb-4">
             <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
               <Folder className="w-6 h-6 text-white" />
             </div>
-            <h2
-              ref={topRef}
-              className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
-            >
-              {category.name}
-            </h2>
+            <div>
+              <h2
+                ref={topRef}
+                className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent flex items-center gap-2"
+              >
+                {category.name}
+                <span className="text-sm text-gray-500 font-medium">
+                  ({articles.length} article{articles.length !== 1 && "s"})
+                </span>
+              </h2>
+            </div>
           </div>
           <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
           <p className="text-gray-600 mt-4">
