@@ -391,7 +391,7 @@ export function ArticleContent({
         <GiscusComments />
 
         {/* Written By (Author Card) - Redesigned */}
-        <Card className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-lg relative overflow-hidden">
+        <Card className="mt-8 bg-gray-30 border border-blue-100 shadow-lg relative overflow-hidden">
           <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
           <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6 relative z-10">
             {author?.avatar ? (
