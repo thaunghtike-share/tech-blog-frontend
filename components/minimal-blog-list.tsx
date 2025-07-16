@@ -38,6 +38,7 @@ interface Tag {
 interface Category {
   id: number;
   name: string;
+  slug: string;
 }
 
 interface MinimalBlogListProps {
@@ -107,7 +108,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     setCurrentPage(1);
   }, [searchQuery]);
 
-  // Scroll to the top heading when currentPage changes, but skip on initial load
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -128,8 +128,8 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`;
   const getTagNames = (ids: number[]) =>
     ids.map((id) => tags.find((t) => t.id === id)?.name || `Tag ${id}`);
-  const getCategoryName = (id: number | null) =>
-    categories.find((c) => c.id === id)?.name || "General";
+  const getCategoryById = (id: number | null) =>
+    categories.find((c) => c.id === id);
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -183,21 +183,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     return (
       <div className="max-w-4xl mx-auto text-center">
         <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-6 shadow-lg">
-          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-6 h-6 text-red-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-              />
-            </svg>
-          </div>
           <p className="text-red-600 mb-4">Error: {error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -231,6 +216,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
         <AnimatePresence mode="wait">
           {paginatedArticles.map((article, index) => {
             const author = getAuthor(article.author);
+            const category = getCategoryById(article.category);
             return (
               <motion.article
                 key={article.id}
@@ -242,10 +228,15 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
                 className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
                 <div className="flex justify-between flex-wrap mb-4 gap-2">
-                  <div className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100">
-                    <Folder className="w-4 h-4" />
-                    {getCategoryName(article.category)}
-                  </div>
+                  {category && (
+                    <Link
+                      href={`/categories/${category.slug}`}
+                      className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100 hover:text-blue-600"
+                    >
+                      <Folder className="w-4 h-4" />
+                      {category.name}
+                    </Link>
+                  )}
                   <div className="flex flex-wrap gap-2">
                     {getTagNames(article.tags)
                       .slice(0, 2)
