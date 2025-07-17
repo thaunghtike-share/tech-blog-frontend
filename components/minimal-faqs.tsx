@@ -4,11 +4,12 @@ import { ChevronDown, ChevronUp, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type FAQ = {
+  id: number;
   question: string;
   answer: string;
 };
 
-const faqsData: FAQ[] = [
+const rawFaqs = [
   {
     question: "What is LearnDevOpsNow?",
     answer:
@@ -20,7 +21,7 @@ const faqsData: FAQ[] = [
       "Yes! All blog posts, playlists, and learning roadmaps are free and publicly accessible. We also showcase free hands-on labs and learning resources.",
   },
   {
-    question: " Can I contribute my own articles?",
+    question: "Can I contribute my own articles?",
     answer:
       "Currently, article publishing is by invitation. However, if you're an expert and interested in contributing, feel free to contact us via Messenger or LinkedIn.",
   },
@@ -61,25 +62,32 @@ const faqsData: FAQ[] = [
   },
 ];
 
-export function MinimalFAQs() {
-  // store multiple open indexes instead of just one
-  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
-  const [showAll, setShowAll] = useState(false);
+const faqsData: FAQ[] = rawFaqs.map((faq, index) => ({
+  id: index,
+  ...faq,
+}));
 
-  // Ref to the FAQ section
+export function MinimalFAQs() {
+  // Use Set for open FAQ IDs
+  const [openIds, setOpenIds] = useState<Set<number>>(new Set());
+  const [showAll, setShowAll] = useState(false);
   const faqRef = useRef<HTMLElement | null>(null);
 
-  // toggle an index in openIndexes array
-  const toggleFAQ = (index: number) => {
-    setOpenIndexes((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
+  const toggleFAQ = (id: number) => {
+    setOpenIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      console.log("Toggled ID:", id, "Open IDs:", Array.from(newSet));
+      return newSet;
+    });
   };
 
-  // handle show all / less button
   const handleToggleShowAll = () => {
     if (showAll && faqRef.current) {
-      // scroll to top of FAQ section smoothly when collapsing
       faqRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setShowAll(!showAll);
@@ -92,22 +100,21 @@ export function MinimalFAQs() {
       ref={faqRef}
       className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
-      {/* Optionally add a header here */}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {displayedFAQs.map((faq, index) => (
+        {displayedFAQs.map((faq) => (
           <motion.div
-            key={index}
+            key={faq.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.5, delay: faq.id * 0.1 }}
             whileHover={{ y: -5 }}
             className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl"
           >
             <button
+              type="button"
               className="w-full flex flex-col items-center p-6 text-center"
-              onClick={() => toggleFAQ(index)}
-              aria-expanded={openIndexes.includes(index)}
+              onClick={() => toggleFAQ(faq.id)}
+              aria-expanded={openIds.has(faq.id)}
             >
               <div className="w-full">
                 <div className="flex items-center justify-between mb-2">
@@ -115,7 +122,7 @@ export function MinimalFAQs() {
                     {faq.question}
                   </h3>
                   <div className="ml-4 flex-shrink-0">
-                    {openIndexes.includes(index) ? (
+                    {openIds.has(faq.id) ? (
                       <Minus className="w-5 h-5 text-blue-600" />
                     ) : (
                       <Plus className="w-5 h-5 text-gray-500" />
@@ -123,7 +130,7 @@ export function MinimalFAQs() {
                   </div>
                 </div>
                 <AnimatePresence>
-                  {openIndexes.includes(index) && (
+                  {openIds.has(faq.id) && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
@@ -145,14 +152,13 @@ export function MinimalFAQs() {
         ))}
       </div>
 
-      {/* Show More/Less Button */}
       {faqsData.length > 6 && (
         <div className="mt-8 text-center">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleToggleShowAll}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-700 hover:to-emerald-700  text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-white/90 text-bold text-indigo-600 hover:from-indigo-100 hover:to-purple-100 border border-indigo-200 shadow-sm transition-all flex items-center gap-2 mx-auto"
           >
             {showAll ? (
               <>

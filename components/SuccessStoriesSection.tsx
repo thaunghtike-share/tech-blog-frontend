@@ -1,50 +1,56 @@
-"use client"
-import React from "react"
-import { Star, Quote } from 'lucide-react'
-import { motion } from "framer-motion"
+"use client";
+import React, { useEffect, useState, useRef } from "react";
+import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
 
-const testimonials = [
-  {
-    name: "Aung Ko",
-    role: "DevOps Engineer at XYZ",
-    feedback:
-      "This blog helped me understand CI/CD pipelines and Kubernetes. I landed my first DevOps job thanks to the free resources!",
-  },
-  {
-    name: "Thet Oo Naing",
-    role: "Junior DevOps Engineer at XYZ",
-    feedback:
-      "This blog helped me understand CI/CD pipelines and Kubernetes. I landed my first DevOps job thanks to the free resources!",
-  },
-  {
-    name: "Su Su Win",
-    role: "Cloud Intern at ABC",
-    feedback:
-      "As a student from Myanmar, I struggled to find relevant DevOps content. This site was a game-changer for me.",
-  },
-  {
-    name: "Myo Thant",
-    role: "Junior SRE",
-    feedback:
-      "The roadmap and certification guidance gave me the confidence to clear my first cloud cert. Highly recommend!",
-  },
-  {
-    name: "Zwe Man",
-    role: "Junior Developer",
-    feedback:
-      "The roadmap and certification guidance gave me the confidence to clear my first cloud cert. Highly recommend!",
-  },
-  {
-    name: "Ko Ko Naing",
-    role: "Junior DevOps Engineer at XYZ",
-    feedback:
-      "This blog helped me understand CI/CD pipelines and Kubernetes. I landed my first DevOps job thanks to the free resources!",
-  },
-]
+type Testimonial = {
+  name: string;
+  role: string;
+  feedback: string;
+  rating: number;
+};
 
 export function SuccessStoriesSection() {
+  const [feedbacks, setFeedbacks] = useState<Testimonial[]>([]);
+  const [showAll, setShowAll] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/testimonials/")
+      .then(async (res) => {
+        const contentType = res.headers.get("content-type");
+        if (!res.ok || !contentType?.includes("application/json")) {
+          throw new Error("Invalid JSON response");
+        }
+        return res.json();
+      })
+      .then((data) => setFeedbacks(data))
+      .catch((err) => console.error("Failed to fetch testimonials:", err));
+  }, []);
+
+  // Scroll to top of section when collapsing "Show Less"
+  useEffect(() => {
+    if (!showAll && sectionRef.current) {
+      // Delay scroll slightly so DOM updates before scroll
+      const timeout = setTimeout(() => {
+        sectionRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [showAll]);
+
+  // Limit max testimonials to 12 when showing all
+  const displayed = showAll ? feedbacks.slice(0, 12) : feedbacks.slice(0, 6);
+
   return (
-    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section
+      ref={sectionRef}
+      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+    >
+      {/* Header */}
       <div className="text-center mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +65,6 @@ export function SuccessStoriesSection() {
             Success Stories
           </span>
         </motion.div>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,52 +73,103 @@ export function SuccessStoriesSection() {
         >
           Success Stories from Myanmar
         </motion.h2>
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="text-gray-600 max-w-2xl mx-auto text-lg"
         >
-          See how students and junior engineers from Myanmar are growing in the DevOps world.
+          See how students and junior engineers from Myanmar are growing in the
+          DevOps world.
         </motion.p>
       </div>
 
+      {/* Testimonials */}
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {testimonials.map((t, i) => (
+        {displayed.map((t, i) => (
           <motion.div
             key={i}
+            initial="hidden"
+            animate="visible"
             variants={{
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0 },
             }}
-            initial="hidden"
-            animate="visible"
-            transition={{ type: "spring", stiffness: 100, damping: 15, delay: i * 0.15 }}
-            whileHover={{ scale: 1.05, y: -10, boxShadow: "0 8px 15px rgba(0,0,0,0.15)" }}
-            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 text-center flex flex-col justify-between cursor-pointer transition-all duration-300 hover:shadow-2xl"
+            transition={{ delay: i * 0.1 }}
+            whileHover={{ scale: 1.05, y: -10 }}
+            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
           >
-            {/* Quote Icon */}
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl">
                 <Quote className="w-6 h-6 text-indigo-600" />
               </div>
             </div>
-
-            <p className="text-gray-700 text-sm mb-4 leading-relaxed italic">"{t.feedback}"</p>
-
+            <p className="text-gray-700 text-sm mb-4 leading-relaxed italic">
+              "{t.feedback}"
+            </p>
             <div className="mt-auto">
               <div className="text-indigo-600 font-medium">{t.name}</div>
               <div className="text-sm text-gray-500">{t.role}</div>
               <div className="flex justify-center mt-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                {[...Array(t.rating)].map((_, j) => (
+                  <Star
+                    key={j}
+                    className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                  />
                 ))}
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* See More / See Less Button */}
+      {feedbacks.length > 6 && (
+        <div className="mt-12 text-center">
+          <motion.button
+            onClick={() => setShowAll(!showAll)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-white/90 text-bold text-indigo-600 hover:from-indigo-100 hover:to-purple-100 border border-indigo-200 shadow-sm transition-all flex items-center gap-2 mx-auto"
+          >
+            {showAll ? (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 15l-6-6-6 6" />
+                </svg>
+                Show Less
+              </>
+            ) : (
+              <>
+                Show More
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </>
+            )}
+          </motion.button>
+        </div>
+      )}
     </section>
-  )
+  );
 }
