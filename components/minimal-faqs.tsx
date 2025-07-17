@@ -16,11 +16,6 @@ const rawFaqs = [
       "LearnDevOpsNow is a curated platform for learning DevOps, Cloud, Automation, and Infrastructure as Code through real-world articles, tutorials, and expert contributions.",
   },
   {
-    question: "Is this free to use?",
-    answer:
-      "Yes! All blog posts, playlists, and learning roadmaps are free and publicly accessible. We also showcase free hands-on labs and learning resources.",
-  },
-  {
     question: "Can I contribute my own articles?",
     answer:
       "Currently, article publishing is by invitation. However, if you're an expert and interested in contributing, feel free to contact us via Messenger or LinkedIn.",
@@ -49,11 +44,6 @@ const rawFaqs = [
     question: "How are DevOps Engineers different from developers?",
     answer:
       "DevOps Engineers and developers are different from each other, however, their roles complement themselves nicely in the context of software development. Developers focus on writing application code, implementing features, and optimizing performance, while DevOps Engineers ensure that the software runs smoothly in production by managing deployment pipelines, automating infrastructure, and maintaining system reliability. A key difference is that developers primarily work on building and improving applications, whereas DevOps Engineers handle the processes and tools that enable continuous integration, automated testing, and efficient deployments.",
-  },
-  {
-    question: "What is a pipeline in DevOps?",
-    answer:
-      "In DevOps, a pipeline is an automated sequence of processes that takes code from development to production. Often referred to as a CI/CD (Continuous Integration/Continuous Deployment) pipeline, it simplifies the workflow by introducing automation. The main tasks inside a pipeline are building, testing, deployment and monitoring",
   },
   {
     question: "What is the difference between SRE and DevOps?",
@@ -93,7 +83,7 @@ export function MinimalFAQs() {
     setShowAll(!showAll);
   };
 
-  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 6);
+  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 8);
 
   return (
     <section
@@ -151,29 +141,6 @@ export function MinimalFAQs() {
           </motion.div>
         ))}
       </div>
-
-      {faqsData.length > 6 && (
-        <div className="mt-8 text-center">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleToggleShowAll}
-            className="px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-white/90 text-bold text-indigo-600 hover:from-indigo-100 hover:to-purple-100 border border-indigo-200 shadow-sm transition-all flex items-center gap-2 mx-auto"
-          >
-            {showAll ? (
-              <>
-                Show Less
-                <ChevronUp className="w-4 h-4 ml-2" />
-              </>
-            ) : (
-              <>
-                More FAQs
-                <ChevronDown className="w-4 h-4 ml-2" />
-              </>
-            )}
-          </motion.button>
-        </div>
-      )}
     </section>
   );
 }
