@@ -22,6 +22,7 @@ interface Category {
   id: number;
   slug: string;
   name: string;
+  post_count: number; // Added to show total articles
 }
 
 // Icon mapping for different categories
@@ -103,12 +104,14 @@ export default function CategoriesPage() {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/categories/`);
+        const response = await fetch(
+          `${API_BASE_URL}/categories/?count_posts=true`
+        );
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
         const data = await response.json();
-        setCategories(data); // <-- Fix here: data is an array, not paginated with results
+        setCategories(data);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load categories"
@@ -206,9 +209,13 @@ export default function CategoriesPage() {
                         <Icon className="h-5 w-5" />
                       </div>
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-lg font-semibold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">
                       {category.name}
                     </h3>
+                    <p className="text-sm text-gray-500 mb-4">
+                      {category.post_count} article
+                      {category.post_count !== 1 ? "s" : ""}
+                    </p>
                     <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
                       Explore articles and tutorials related to{" "}
                       {category.name.toLowerCase()}.

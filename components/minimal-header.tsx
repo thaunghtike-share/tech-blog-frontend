@@ -28,6 +28,7 @@ export function MinimalHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const API_BASE_URL = "http://192.168.1.131:8000/api";
+  const MAILCHIMP_SIGNUP_URL = "http://eepurl.com/jjolCI";
 
   useEffect(() => {
     return () => {
@@ -133,7 +134,16 @@ export function MinimalHeader() {
           </div>
 
           {/* Bell */}
-          <button className="p-2 rounded-full hover:bg-blue-50 text-blue-600 hover:shadow-md">
+          <button
+            className="p-2 rounded-full hover:bg-blue-50 text-blue-600 hover:shadow-md"
+            onClick={() =>
+              window.open(
+                MAILCHIMP_SIGNUP_URL,
+                "_blank",
+                "width=500,height=600"
+              )
+            }
+          >
             <Bell className="w-5 h-5" />
           </button>
 
@@ -326,7 +336,7 @@ export function MinimalHeader() {
               }}
             >
               <button className="flex items-center hover:text-blue-600">
-                Learn DevOps <ChevronDown className="ml-1 w-4 h-4" />
+                Resources <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isLearningOpen && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
@@ -443,8 +453,17 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-            {/* Replaced Subscribe button with Bell icon */}
-            <button className="text-indigo-600 hover:text-indigo-800 p-2 rounded-full hover:bg-blue-50 transition-shadow">
+            {/* Bell Icon with Mailchimp popup */}
+            <button
+              className="text-indigo-600 hover:text-indigo-800 p-2 rounded-full hover:bg-blue-50 transition-shadow"
+              onClick={() =>
+                window.open(
+                  MAILCHIMP_SIGNUP_URL,
+                  "_blank",
+                  "width=500,height=600"
+                )
+              }
+            >
               <Bell className="w-6 h-7" />
             </button>
           </div>

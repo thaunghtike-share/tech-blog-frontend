@@ -8,6 +8,8 @@ import {
   Folder,
   Sparkles,
   ChevronDown,
+  Tag as TagIcon,
+  AlertTriangle,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -44,7 +46,7 @@ interface Category {
 
 interface MinimalBlogListProps {
   searchQuery?: string;
-  filterTagSlug?: string | null; // <-- add this line
+  filterTagSlug?: string | null;
 }
 
 const PAGE_SIZE = 5;
@@ -58,8 +60,10 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterTagSlug, setFilterTagSlug] = useState<string | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const topRef = useRef<HTMLHeadingElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
 
   const API_BASE_URL = "http://192.168.1.131:8000/api";
@@ -85,7 +89,6 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
             ? articlesData
             : articlesData.results || []
         );
-        setLoading(false);
 
         const authorsResponse = await fetch(`${API_BASE_URL}/authors/`);
         const authorsData = await authorsResponse.json();
@@ -107,6 +110,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       } catch (err: any) {
         console.error("Error fetching data:", err);
         setError(err.message || "Failed to fetch data");
+      } finally {
         setLoading(false);
       }
     };
@@ -114,6 +118,22 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     fetchData();
     setCurrentPage(1);
   }, [searchQuery, filterTagSlug]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -135,6 +155,8 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`;
   const getCategoryById = (id: number | null) =>
     categories.find((c) => c.id === id);
+  const getCurrentTagName = () =>
+    tags.find((tag) => tag.slug === filterTagSlug)?.name || "this tag";
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -202,7 +224,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
-      {/* Articles List Header with Dropdown */}
+      {/* Header with Tag Filter */}
       <div className="mb-12 relative flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
@@ -216,152 +238,216 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
           </h2>
         </div>
 
-        {/* Dropdown with label */}
         <div className="flex items-center gap-2">
-          <label
-            htmlFor="tagFilter"
-            className="text-gray-600 font-medium text-sm select-none"
-          >
-            Filter by tag:
-          </label>
-          <div className="relative">
-            <select
-              id="tagFilter"
-              value={filterTagSlug || ""}
-              onChange={(e) => {
-                const val = e.target.value || null;
-                setFilterTagSlug(val);
-                setCurrentPage(1);
-              }}
-              className="appearance-none border border-gray-300 rounded-md py-2 pl-3 pr-8 text-gray-700 text-sm font-medium shadow-sm
-                   hover:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700"
             >
-              <option value="">All Tags</option>
-              {tags.map((tag) => (
-                <option key={tag.id} value={tag.slug}>
-                  {tag.name}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              size={18}
-              className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400"
-            />
+              <TagIcon className="w-4 h-4 text-gray-500" />
+              {filterTagSlug
+                ? tags.find((t) => t.slug === filterTagSlug)?.name ||
+                  "Filter by tag"
+                : "Filter by tag"}
+              <ChevronDown
+                className={`w-4 h-4 text-gray-500 transition-transform ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                >
+                  <div className="py-1">
+                    <button
+                      onClick={() => {
+                        setFilterTagSlug(null);
+                        setIsDropdownOpen(false);
+                        setCurrentPage(1);
+                      }}
+                      className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 ${
+                        !filterTagSlug
+                          ? "bg-blue-50 text-blue-600"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      All Tags
+                    </button>
+                    {tags.map((tag) => (
+                      <button
+                        key={tag.id}
+                        onClick={() => {
+                          setFilterTagSlug(tag.slug);
+                          setIsDropdownOpen(false);
+                          setCurrentPage(1);
+                        }}
+                        className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 ${
+                          filterTagSlug === tag.slug
+                            ? "bg-blue-50 text-blue-600"
+                            : "text-gray-700 hover:bg-gray-100"
+                        }`}
+                      >
+                        {tag.name}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
 
-      {/* Articles */}
-      <div className="grid gap-8">
-        <AnimatePresence mode="wait">
-          {paginatedArticles.map((article, index) => {
-            const author = getAuthor(article.author);
-            const category = getCategoryById(article.category);
-            return (
-              <motion.article
-                key={article.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <div className="flex justify-between flex-wrap mb-4 gap-2">
-                  {category && (
-                    <Link
-                      href={`/categories/${category.slug}`}
-                      className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100 hover:text-blue-600"
-                    >
-                      <Folder className="w-4 h-4" />
-                      {category.name}
-                    </Link>
-                  )}
-                  {/* TAG BADGES REMOVED HERE */}
-                </div>
-
-                <Link
-                  href={`/articles/${article.slug}`}
-                  className="group/link block"
-                >
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
-                    {truncate(stripMarkdown(article.content), 200)}
-                  </p>
-                  <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
-                    Read more{" "}
-                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-
-                <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                  <div className="flex items-center gap-2">
-                    {author?.avatar ? (
-                      <img
-                        src={author.avatar || "/placeholder.svg"}
-                        alt={author.name}
-                        className="w-5 h-5 rounded-full object-cover border border-gray-200"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                        <User className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                    <span className="font-medium">
-                      {getAuthorName(article.author)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4 text-gray-400" />
-                    <span>{formatDate(article.published_at)}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4 text-gray-400" />
-                    <span>{calculateReadTime(article.content)} read</span>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </AnimatePresence>
-      </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <nav className="mt-10 flex justify-center items-center gap-2">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
-          >
-            Prev
-          </button>
-
-          {Array.from({ length: totalPages }, (_, i) => (
+      {/* Empty State */}
+      {articles.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center py-12"
+        >
+          <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-4 mb-4">
+            <AlertTriangle className="w-10 h-10 text-yellow-600" />
+          </div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            No articles found
+          </h3>
+          <p className="text-gray-600 mb-6">
+            {filterTagSlug
+              ? `No articles match the tag "${getCurrentTagName()}". Try another tag!`
+              : "No articles available. Check back later!"}
+          </p>
+          {filterTagSlug && (
             <button
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 rounded-full text-sm transition-all ${
-                currentPage === i + 1
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                  : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 shadow-sm"
-              }`}
+              onClick={() => setFilterTagSlug(null)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              {i + 1}
+              Show all articles
             </button>
-          ))}
+          )}
+        </motion.div>
+      ) : (
+        <>
+          {/* Articles Grid */}
+          <div className="grid gap-8">
+            <AnimatePresence mode="wait">
+              {paginatedArticles.map((article, index) => {
+                const author = getAuthor(article.author);
+                const category = getCategoryById(article.category);
+                return (
+                  <motion.article
+                    key={article.id}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                  >
+                    <div className="flex justify-between flex-wrap mb-4 gap-2">
+                      {category && (
+                        <Link
+                          href={`/categories/${category.slug}`}
+                          className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100 hover:text-blue-600"
+                        >
+                          <Folder className="w-4 h-4" />
+                          {category.name}
+                        </Link>
+                      )}
+                    </div>
 
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
-          >
-            Next
-          </button>
-        </nav>
+                    <Link
+                      href={`/articles/${article.slug}`}
+                      className="group/link block"
+                    >
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                        {article.title}
+                      </h3>
+                      <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
+                        {truncate(stripMarkdown(article.content), 200)}
+                      </p>
+                      <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
+                        Read more{" "}
+                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                      </div>
+                    </Link>
+
+                    <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-2">
+                        {author?.avatar ? (
+                          <img
+                            src={author.avatar || "/placeholder.svg"}
+                            alt={author.name}
+                            className="w-5 h-5 rounded-full object-cover border border-gray-200"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <User className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                        <span className="font-medium">
+                          {getAuthorName(article.author)}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>{formatDate(article.published_at)}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span>{calculateReadTime(article.content)} read</span>
+                      </div>
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <nav className="mt-10 flex justify-center items-center gap-2">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+              >
+                Prev
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-3 py-1 rounded-full text-sm transition-all ${
+                    currentPage === i + 1
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                      : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 shadow-sm"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(totalPages, p + 1))
+                }
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+              >
+                Next
+              </button>
+            </nav>
+          )}
+        </>
       )}
     </div>
   );
