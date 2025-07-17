@@ -1,15 +1,40 @@
-"use client"
-import React, { useState } from "react"
-import Image from "next/image"
-import { CheckCircle2, GitCommit, Code, Star, Shield, Package, GitPullRequest, Server, Activity, Settings, Sparkles } from 'lucide-react'
-import { motion, AnimatePresence } from "framer-motion"
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import {
+  CheckCircle2,
+  GitCommit,
+  Code,
+  Star,
+  Shield,
+  Package,
+  GitPullRequest,
+  Server,
+  Activity,
+  Settings,
+  Sparkles,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const workflowSteps = [
   {
     id: 1,
     title: "Terraform Provisioning",
     description: "Infrastructure provisioned using Terraform scripts",
-    tools: ["Terraform", "Terragrunt", "Terraformer"],
+    tools: [
+      {
+        name: "Terraform",
+        desc: "Used for defining infrastructure as code (IaC).",
+      },
+      {
+        name: "Terragrunt",
+        desc: "Manages Terraform configurations across environments.",
+      },
+      {
+        name: "Terraformer",
+        desc: "Helps import existing resources into Terraform code.",
+      },
+    ],
     icon: GitPullRequest,
     color: "bg-yellow-100 text-yellow-700",
   },
@@ -17,7 +42,14 @@ const workflowSteps = [
     id: 2,
     title: "Code Commit",
     description: "Code is pushed to GitHub triggering the CI pipeline",
-    tools: ["GitHub", "Git", "VS Code"],
+    tools: [
+      { name: "GitHub", desc: "Source code hosting and CI trigger." },
+      { name: "Git", desc: "Version control system for managing source code." },
+      {
+        name: "VS Code",
+        desc: "Developer IDE for writing and committing code.",
+      },
+    ],
     icon: GitCommit,
     color: "bg-blue-100 text-blue-700",
   },
@@ -25,7 +57,11 @@ const workflowSteps = [
     id: 3,
     title: "Build & Scan",
     description: "Docker image built and scanned using Trivy",
-    tools: ["Docker", "Trivy", "Docker buildx"],
+    tools: [
+      { name: "Docker", desc: "Used for containerizing the application." },
+      { name: "Trivy", desc: "Scans images for vulnerabilities." },
+      { name: "Docker buildx", desc: "Builds multi-platform Docker images." },
+    ],
     icon: Shield,
     color: "bg-green-100 text-green-700",
   },
@@ -33,7 +69,9 @@ const workflowSteps = [
     id: 4,
     title: "Push to Registry",
     description: "Secure images pushed to Azure Container Registry",
-    tools: ["Azure ACR"],
+    tools: [
+      { name: "Azure ACR", desc: "Private container image registry in Azure." },
+    ],
     icon: Package,
     color: "bg-purple-100 text-purple-700",
   },
@@ -41,7 +79,10 @@ const workflowSteps = [
     id: 5,
     title: "Deploy Apps using GitOps with ArgoCD",
     description: "Argo CD deploys apps using Helm charts",
-    tools: ["Argo CD", "Helm"],
+    tools: [
+      { name: "Argo CD", desc: "Automates Kubernetes deployments using Git." },
+      { name: "Helm", desc: "Manages Kubernetes applications via charts." },
+    ],
     icon: Server,
     color: "bg-red-100 text-red-700",
   },
@@ -49,7 +90,13 @@ const workflowSteps = [
     id: 6,
     title: "GitOps Update",
     description: "Image Updater modifies GitOps repo with new tags",
-    tools: ["GitHub", "Argo CD Image Updater"],
+    tools: [
+      { name: "GitHub", desc: "Hosts the GitOps repository." },
+      {
+        name: "Argo CD Image Updater",
+        desc: "Automatically updates image tags in Git.",
+      },
+    ],
     icon: GitPullRequest,
     color: "bg-orange-100 text-orange-700",
   },
@@ -57,11 +104,29 @@ const workflowSteps = [
     id: 7,
     title: "Logging & Monitoring",
     description: "Prometheus and Grafana provide metrics and alerts",
-    tools: ["Prometheus", "Grafana", "Loki", "Azure Monitor", "Elastic Cloud"],
+    tools: [
+      {
+        name: "Prometheus",
+        desc: "Monitors application and infrastructure metrics.",
+      },
+      {
+        name: "Grafana",
+        desc: "Visualizes metrics and alerts from Prometheus.",
+      },
+      { name: "Loki", desc: "Centralized logging solution." },
+      {
+        name: "Azure Monitor",
+        desc: "Cloud-based monitoring for Azure resources.",
+      },
+      {
+        name: "Elastic Cloud",
+        desc: "Managed Elasticsearch, Kibana, and more.",
+      },
+    ],
     icon: Activity,
     color: "bg-indigo-100 text-indigo-700",
   },
-]
+];
 
 const techStack = [
   "GitHub",
@@ -75,14 +140,13 @@ const techStack = [
   "Grafana",
   "Image Updater",
   "Terraform",
-]
+];
 
 export function DevOpsWorkflowExample() {
-  const [currentStep, setCurrentStep] = useState(0)
+  const [currentStep, setCurrentStep] = useState(0);
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Enhanced Header */}
       <div className="text-center mb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -113,11 +177,11 @@ export function DevOpsWorkflowExample() {
           transition={{ delay: 0.2 }}
           className="text-lg text-gray-600 max-w-3xl mx-auto"
         >
-          DevOps architecture design built for client's company using GitOps and IAC
+          DevOps architecture design built for client's company using GitOps and
+          IAC
         </motion.p>
       </div>
 
-      {/* Enhanced Diagram */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -134,9 +198,7 @@ export function DevOpsWorkflowExample() {
         />
       </motion.div>
 
-      {/* Enhanced Workflow + Tech Stack */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Enhanced Workflow Stepper */}
         <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
             <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
@@ -145,11 +207,10 @@ export function DevOpsWorkflowExample() {
             Workflow Steps
           </h3>
 
-          {/* Enhanced Connected Horizontal Stepper */}
           <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center">
             {workflowSteps.map((step, i) => {
-              const Icon = step.icon
-              const isSelected = currentStep === i
+              const Icon = step.icon;
+              const isSelected = currentStep === i;
               return (
                 <React.Fragment key={step.id}>
                   <motion.button
@@ -164,16 +225,14 @@ export function DevOpsWorkflowExample() {
                   >
                     <Icon className="w-4 h-4" />
                   </motion.button>
-                  {/* Enhanced Connector Line */}
                   {i < workflowSteps.length - 1 && (
                     <div className="h-0.5 w-5 bg-gradient-to-r from-blue-300 to-indigo-300 mx-1 flex-shrink-0 rounded-full" />
                   )}
                 </React.Fragment>
-              )
+              );
             })}
           </div>
 
-          {/* Enhanced Step Details */}
           <AnimatePresence mode="wait">
             <motion.div
               key={workflowSteps[currentStep].id}
@@ -185,32 +244,42 @@ export function DevOpsWorkflowExample() {
               <div
                 className={`${workflowSteps[currentStep].color} w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg`}
               >
-                {React.createElement(workflowSteps[currentStep].icon, { className: "w-6 h-6" })}
+                {React.createElement(workflowSteps[currentStep].icon, {
+                  className: "w-6 h-6",
+                })}
               </div>
 
-              <h4 className="text-xl font-bold text-gray-900 mb-3">{workflowSteps[currentStep].title}</h4>
-              <p className="text-gray-700 mb-6">{workflowSteps[currentStep].description}</p>
+              <h4 className="text-xl font-bold text-gray-900 mb-3">
+                {workflowSteps[currentStep].title}
+              </h4>
+              <p className="text-gray-700 mb-6">
+                {workflowSteps[currentStep].description}
+              </p>
 
-              <div className="space-y-2">
-                <h5 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Tools Used</h5>
-                <div className="flex flex-wrap gap-2">
-                  {workflowSteps[currentStep].tools.map((tool) => (
-                    <span
-                      key={tool}
-                      className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 rounded-full text-sm font-medium shadow-sm hover:shadow-md transition-shadow"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <h5 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Tools Used
+              </h5>
+              <ul className="space-y-4">
+                {workflowSteps[currentStep].tools.map((tool, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                  >
+                    <div className="p-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mt-0.5">
+                      <Code className="text-white w-4 h-4 flex-shrink-0" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">{tool.name}</p>
+                      <p className="text-sm text-gray-600">{tool.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Enhanced Tech Stack + Features */}
         <div className="space-y-8">
-          {/* Enhanced Tech Stack */}
           <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
@@ -234,7 +303,6 @@ export function DevOpsWorkflowExample() {
             </div>
           </div>
 
-          {/* Enhanced Key Features */}
           <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
@@ -260,7 +328,7 @@ export function DevOpsWorkflowExample() {
                   className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors"
                 >
                   <div className="p-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mt-0.5">
-                    <CheckCircle2 className="text-white w-4 h-4 flex-shrink-0" />
+                    <Code className="text-white w-4 h-4 flex-shrink-0" />
                   </div>
                   <span className="text-gray-700 font-medium">{feature}</span>
                 </motion.li>
@@ -270,5 +338,5 @@ export function DevOpsWorkflowExample() {
         </div>
       </div>
     </section>
-  )
+  );
 }
