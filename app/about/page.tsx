@@ -417,7 +417,7 @@ export default function AboutPage() {
                     Total Earnings
                   </p>
                   <Badge className="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full">
-                    $14,000+
+                    $17,000+
                   </Badge>
                 </div>
                 <p className="text-sm text-gray-600 leading-relaxed">

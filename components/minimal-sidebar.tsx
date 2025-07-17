@@ -1,6 +1,7 @@
 "use client";
-
 import { Card, CardContent } from "@/components/ui/card";
+import type React from "react";
+
 import {
   Server,
   Code,
@@ -18,6 +19,8 @@ import {
   Folder,
   Star,
   Sparkles,
+  MessageCircle,
+  StarIcon,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -81,13 +84,21 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
     authors: null as string | null,
   });
 
+  // State for feedback form
+  const [feedbackName, setFeedbackName] = useState("");
+  const [feedbackRole, setFeedbackRole] = useState("");
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackRating, setFeedbackRating] = useState(0);
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
+
   const API_BASE_URL = "http://192.168.1.131:8000/api";
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading({ categories: true, tags: true, authors: true });
       setError({ categories: null, tags: null, authors: null });
-
       try {
         const [catRes, tagRes, authorRes] = await Promise.all([
           fetch(`${API_BASE_URL}/categories/?count_posts=true`),
@@ -120,12 +131,54 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
         setLoading({ categories: false, tags: false, authors: false });
       }
     };
-
     fetchData();
   }, []);
 
+  const handleSubmitFeedback = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingFeedback(true);
+    setFeedbackMessage(null);
+    setFeedbackError(null);
+
+    if (feedbackRating === 0) {
+      setFeedbackError("Please provide a rating.");
+      setIsSubmittingFeedback(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/testimonials/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: feedbackName,
+          role: feedbackRole,
+          feedback: feedbackText,
+          rating: feedbackRating,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Failed to submit feedback");
+      }
+
+      setFeedbackMessage("Thank you for your feedback!");
+      setFeedbackName("");
+      setFeedbackRole("");
+      setFeedbackText("");
+      setFeedbackRating(0);
+    } catch (err: any) {
+      setFeedbackError(err.message || "An unexpected error occurred.");
+    } finally {
+      setIsSubmittingFeedback(false);
+    }
+  };
+
   return (
-    <aside className="space-y-6 w-80 max-w-full">
+    <aside className="space-y-6 w-96 max-w-full">
       {/* Services Card */}
       <Card className="border-0 shadow-lg bg-white overflow-hidden">
         <CardContent className="p-0">
@@ -140,7 +193,6 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
               </div>
             </div>
           </div>
-
           <div className="p-6">
             <ul className="space-y-4">
               {[
@@ -189,7 +241,6 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
                 </li>
               ))}
             </ul>
-
             <Link
               href="/services"
               className="mt-6 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2 px-4 rounded-xl font-medium transition-all shadow-lg hover:shadow-xl"
@@ -201,6 +252,7 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
           </div>
         </CardContent>
       </Card>
+
       {/* Categories */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
@@ -215,7 +267,6 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
               <p className="text-sm text-gray-600">Browse by topic</p>
             </div>
           </div>
-
           {loading.categories ? (
             <div className="space-y-3">
               {[...Array(6)].map((_, i) => (
@@ -255,7 +306,6 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
                                 }`}
                               />
                             </div>
-
                             <div className="flex flex-col leading-tight">
                               <span className="text-sm font-medium text-gray-800 hover:text-blue-600 break-words">
                                 {category.name}
@@ -297,55 +347,6 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
         </CardContent>
       </Card>
 
-      {/* Tags Card */}
-      <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
-              <Folder className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900">
-                Popular Tags
-              </h3>
-              <p className="text-sm text-gray-600">Trending topics</p>
-            </div>
-          </div>
-
-          {loading.tags ? (
-            <div className="flex flex-wrap gap-2">
-              {[...Array(10)].map((_, i) => (
-                <div
-                  key={i}
-                  className="h-8 w-20 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 animate-pulse"
-                />
-              ))}
-            </div>
-          ) : error.tags ? (
-            <div className="text-center py-4 bg-red-50 rounded-xl border border-red-100">
-              <p className="text-red-500 text-sm">{error.tags}</p>
-            </div>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {tags.slice(0, 15).map((tag) => (
-                <button
-                  key={tag.id}
-                  onClick={() => onTagClick && onTagClick(tag.slug)} // Use button + call onTagClick
-                  className={`text-xs px-3 py-1 rounded-full font-medium transition-all hover:scale-105 cursor-pointer ${
-                    tag.post_count && tag.post_count > 5
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 shadow-md hover:shadow-lg"
-                      : "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 shadow-sm hover:shadow-md"
-                  }`}
-                  type="button"
-                >
-                  #{tag.name}
-                </button>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
       {/* Featured Authors */}
       <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-blue-50/50 backdrop-blur-sm">
         <CardContent className="p-6">
@@ -360,7 +361,6 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
               <p className="text-sm text-gray-600">Expert contributors</p>
             </div>
           </div>
-
           {loading.authors ? (
             <div className="space-y-4">
               {[...Array(3)].map((_, i) => (
@@ -400,7 +400,7 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
                       alt={author.name}
                       className="h-12 w-12 rounded-full object-cover border-2 border-white shadow-md group-hover:shadow-lg transition-shadow"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/me.png";
+                        (e.target as HTMLImageElement).src = "/placeholder.svg";
                       }}
                     />
                     <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-1 rounded-full shadow-md">
@@ -431,6 +431,177 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
           )}
         </CardContent>
       </Card>
+
+      {/* Give Feedback Form Card */}
+      <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+        <CardContent className="p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
+              <MessageCircle className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900">
+                Give Feedback
+              </h3>
+              <p className="text-sm text-gray-600">
+                Share your thoughts with me
+              </p>
+            </div>
+          </div>
+          <form onSubmit={handleSubmitFeedback} className="space-y-4">
+            <div>
+              <label
+                htmlFor="feedback-name"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Full Name
+              </label>
+              <input
+                id="feedback-name"
+                type="text"
+                placeholder="John Doe"
+                value={feedbackName}
+                onChange={(e) => setFeedbackName(e.target.value)}
+                required
+                className="w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="feedback-role"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Job Title
+              </label>
+              <input
+                id="feedback-role"
+                type="text"
+                placeholder="Developer at XYZ"
+                value={feedbackRole}
+                onChange={(e) => setFeedbackRole(e.target.value)}
+                required
+                className="w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="feedback-text"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Your Feedback
+              </label>
+              <textarea
+                id="feedback-text"
+                placeholder="Tell us what you think..."
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                rows={4}
+                required
+                className="w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <div className="flex justify-center items-center gap-2 text-center">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <StarIcon
+                    key={star}
+                    className={`w-6 h-6 cursor-pointer transition-colors ${
+                      feedbackRating >= star
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                    onClick={() => setFeedbackRating(star)}
+                    aria-label={`Rate ${star} out of 5 stars`}
+                  />
+                ))}
+              </div>
+              {feedbackRating === 0 && feedbackError && (
+                <p className="text-red-500 text-xs mt-1">
+                  Please select a rating.
+                </p>
+              )}
+            </div>
+            {feedbackMessage && (
+              <div className="text-sm text-green-600 bg-green-50 p-3 rounded-md">
+                {feedbackMessage}
+              </div>
+            )}
+            {feedbackError &&
+              feedbackRating !== 0 && ( // Only show general error if rating is selected
+                <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
+                  {feedbackError}
+                </div>
+              )}
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2 px-4 rounded-xl font-medium transition-all shadow-lg hover:shadow-xl"
+              disabled={isSubmittingFeedback}
+            >
+              {isSubmittingFeedback ? (
+                <>
+                  <Sparkles className="h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4" />
+                  Submit Feedback
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Tags Card (still commented out as per previous state)
+    <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+            <Folder className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Popular Tags
+            </h3>
+            <p className="text-sm text-gray-600">Trending topics</p>
+          </div>
+        </div>
+        {loading.tags ? (
+          <div className="flex flex-wrap gap-2">
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={i}
+                className="h-8 w-20 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 animate-pulse"
+              />
+            ))}
+          </div>
+        ) : error.tags ? (
+          <div className="text-center py-4 bg-red-50 rounded-xl border border-red-100">
+            <p className="text-red-500 text-sm">{error.tags}</p>
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {tags.slice(0, 15).map((tag) => (
+              <button
+                key={tag.id}
+                onClick={() => onTagClick && onTagClick(tag.slug)} // Use button + call onTagClick
+                className={`text-xs px-3 py-1 rounded-full font-medium transition-all hover:scale-105 cursor-pointer ${
+                  tag.post_count && tag.post_count > 5
+                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 shadow-md hover:shadow-lg"
+                    : "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 shadow-sm hover:shadow-md"
+                }`}
+                type="button"
+              >
+                #{tag.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+    */}
     </aside>
   );
 }

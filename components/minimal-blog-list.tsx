@@ -50,7 +50,7 @@ interface MinimalBlogListProps {
   filterTagSlug?: string | null;
 }
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 export function MinimalBlogList({
   searchQuery = "",
