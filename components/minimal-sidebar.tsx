@@ -25,6 +25,7 @@ import Link from "next/link";
 interface Category {
   id: number;
   name: string;
+  slug: string;
   post_count?: number;
 }
 
@@ -239,7 +240,7 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
                     return (
                       <li key={category.id} className="w-full">
                         <Link
-                          href={`/categories/${category.id}`}
+                          href={`/categories/${category.slug}`}
                           className="block w-full rounded-xl transition-colors"
                         >
                           <div className="flex items-start gap-3 p-2 rounded-xl border border-transparent bg-white">
