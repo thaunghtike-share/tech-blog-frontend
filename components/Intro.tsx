@@ -38,17 +38,17 @@ export default function Intro() {
   const learningPathItems = [
     { label: "Roadmap", id: "devops-roadmap", desc: "Complete landscape" },
     { label: "YouTube", id: "youtube-playlists", desc: "Expert tutorials" },
-    { label: "Labs", id: "free-labs", desc: "Hands-on practice" },
-    { label: "Local", id: "myanmar-playlists", desc: "Local resources" },
-    { label: "Udemy", id: "free-udemy", desc: "Structured courses" },
+    { label: "Udemy", id: "free-labs", desc: "Structured Courses" },
+    { label: "Labs", id: "myanmar-playlists", desc: "Hands-On Labs" },
+    { label: "Certificate", id: "free-udemy", desc: "Get Certificates" },
   ];
 
   const stepColors = [
     "bg-gradient-to-r from-green-500 to-emerald-600",
     "bg-gradient-to-r from-red-500 to-red-600",
-    "bg-gradient-to-r from-orange-500 to-amber-600",
-    "bg-gradient-to-r from-red-500 to-red-600",
     "bg-gradient-to-r from-purple-500 to-blue-600",
+    "bg-gradient-to-r from-orange-500 to-amber-600",
+    "bg-gradient-to-r from-green-500 to-emerald-600",
   ];
 
   const conceptCards = [
@@ -207,7 +207,7 @@ export default function Intro() {
             <Wrench className="w-5 h-5 text-white" />
           </div>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
-            <Sparkles className="w-3 h-3 mr-1.5" /> DevOps Learning Levels
+            <Sparkles className="w-3 h-3 mr-1.5" />Learning Levels
           </span>
         </motion.div>
 
