@@ -28,7 +28,7 @@ interface UdemyCourse {
   reviews?: Review[];
 }
 
-const API_BASE_URL = "http://172.20.10.6:8000/api";
+const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 export function TopUdemyCourses() {
   const [courses, setCourses] = useState<UdemyCourse[]>([]);
@@ -167,11 +167,6 @@ export function TopUdemyCourses() {
             <div className="p-5 relative">
               {" "}
               {/* Adjusted padding */}
-              <div className="absolute top-3 right-3">
-                <Badge className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-medium rounded-full shadow-sm border border-gray-200">
-                  Free Course
-                </Badge>
-              </div>
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
                 {" "}
                 {/* Icon moved and styled */}

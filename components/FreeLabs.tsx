@@ -24,7 +24,7 @@ interface DevOpsLab {
   difficulty?: string;
 }
 
-const API_BASE_URL = "http://172.20.10.6:8000/api";
+const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 const getPlatformIcon = (platform: string) => {
   const p = platform.toLowerCase();
@@ -134,11 +134,6 @@ export function FreeLabs() {
                   className="group bg-white rounded-xl shadow-lg border-l-4 border-orange-500 overflow-hidden transition-all duration-300 hover:shadow-xl"
                 >
                   <div className="p-5 flex flex-col h-full relative">
-                    <div className="absolute top-3 right-3">
-                      <Badge className="px-3 py-1 bg-white/90 backdrop-blur-sm text-emerald-700 text-xs font-medium rounded-full shadow-sm border border-gray-200">
-                        Free Lab
-                      </Badge>
-                    </div>
                     <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
                       {platformIcon}
                     </div>

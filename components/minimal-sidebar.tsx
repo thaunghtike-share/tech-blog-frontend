@@ -76,7 +76,7 @@ export function MinimalSidebar() {
     authors: null as string | null,
   });
 
-  const API_BASE_URL = "http://172.20.10.6:8000/api";
+  const API_BASE_URL = "http://192.168.1.131:8000/api";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -394,8 +394,7 @@ export function MinimalSidebar() {
                       alt={author.name}
                       className="h-12 w-12 rounded-full object-cover border-2 border-white shadow-md group-hover:shadow-lg transition-shadow"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "/me.png";
+                        (e.target as HTMLImageElement).src = "/me.png";
                       }}
                     />
                     <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-1 rounded-full shadow-md">
