@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react"
 import Image from "next/image"
-import { CheckCircle2, GitCommit, Code, Shield, Package, GitPullRequest, Server, Activity, Settings, Sparkles } from 'lucide-react'
+import { CheckCircle2, GitCommit, Code, Star, Shield, Package, GitPullRequest, Server, Activity, Settings, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from "framer-motion"
 
 const workflowSteps = [
@@ -237,8 +237,8 @@ export function DevOpsWorkflowExample() {
           {/* Enhanced Key Features */}
           <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
-                <CheckCircle2 className="w-5 h-5 text-white" />
+              <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+                <Star className="w-5 h-5 text-white" />
               </div>
               Key Features
             </h3>
@@ -259,7 +259,7 @@ export function DevOpsWorkflowExample() {
                   viewport={{ once: true }}
                   className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors"
                 >
-                  <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mt-0.5">
+                  <div className="p-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mt-0.5">
                     <CheckCircle2 className="text-white w-4 h-4 flex-shrink-0" />
                   </div>
                   <span className="text-gray-700 font-medium">{feature}</span>
