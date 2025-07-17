@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalBlogList } from "@/components/minimal-blog-list";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
@@ -9,10 +9,10 @@ import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
   const searchQuery = searchParams.get("search") || "";
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-
-  const API_BASE_URL = "http://192.168.1.131:8000/api";
 
   useEffect(() => {
     const tagFromUrl = searchParams.get("tags__slug");
@@ -20,16 +20,26 @@ export default function ArticlesPage() {
   }, [searchParams]);
 
   const updateTagFilter = (tagSlug: string | null) => {
-    const url = new URL(window.location.href);
+    const params = new URLSearchParams(searchParams.toString());
+
     if (tagSlug) {
-      url.searchParams.set("tags__slug", tagSlug);
+      params.set("tags__slug", tagSlug);
     } else {
-      url.searchParams.delete("tags__slug");
+      params.delete("tags__slug");
     }
+
+    // Preserve the search query if it exists
     if (searchQuery) {
-      url.searchParams.set("search", searchQuery);
+      params.set("search", searchQuery);
     }
-    window.history.replaceState({}, "", url.toString());
+
+    // Build the new URL path + query string
+    const newUrl = `/articles?${params.toString()}`;
+
+    // Push new URL without reload
+    router.push(newUrl);
+
+    // Update local state
     setSelectedTag(tagSlug);
   };
 
@@ -87,9 +97,7 @@ export default function ArticlesPage() {
       <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-12">
           <div className="lg:col-span-4 bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
-            {/* Removed the big tag buttons here */}
-
-            {/* Article List with dropdown filter inside */}
+            {/* Pass updateTagFilter down to MinimalSidebar for tag clicks */}
             <MinimalBlogList
               searchQuery={searchQuery}
               filterTagSlug={selectedTag}
@@ -97,7 +105,8 @@ export default function ArticlesPage() {
           </div>
 
           <aside className="lg:col-span-2">
-            <MinimalSidebar />
+            {/* Pass updateTagFilter to sidebar so it can update URL on tag click */}
+            <MinimalSidebar onTagClick={updateTagFilter} />
           </aside>
         </div>
       </main>

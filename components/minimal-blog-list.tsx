@@ -10,10 +10,10 @@ import {
   ChevronDown,
   Tag as TagIcon,
   AlertTriangle,
-  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Article {
   id: number;
@@ -47,12 +47,14 @@ interface Category {
 
 interface MinimalBlogListProps {
   searchQuery?: string;
-  filterTagSlug?: string | null;
 }
 
 const PAGE_SIZE = 5;
 
 export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [articles, setArticles] = useState<Article[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -60,7 +62,12 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterTagSlug, setFilterTagSlug] = useState<string | null>(null);
+
+  // Initialize filterTagSlug from URL query param "tag"
+  const [filterTagSlug, setFilterTagSlug] = useState<string | null>(
+    () => searchParams.get("tag") || null
+  );
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const topRef = useRef<HTMLHeadingElement>(null);
@@ -69,6 +76,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   const API_BASE_URL = "http://192.168.1.131:8000/api";
 
+  // Fetch articles, authors, tags, categories on searchQuery or filterTagSlug change
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,6 +128,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     setCurrentPage(1);
   }, [searchQuery, filterTagSlug]);
 
+  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -136,6 +145,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
     };
   }, []);
 
+  // Scroll to top on currentPage or filterTagSlug change (skip first render)
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -145,6 +155,20 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
       }
     }
   }, [currentPage, filterTagSlug]);
+
+  // Sync filterTagSlug state to URL query param "tag"
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (filterTagSlug) {
+      params.set("tag", filterTagSlug);
+    } else {
+      params.delete("tag");
+    }
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    router.replace(newUrl);
+  }, [filterTagSlug, router]);
 
   const totalPages = Math.ceil(articles.length / PAGE_SIZE);
   const paginatedArticles = articles.slice(

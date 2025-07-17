@@ -28,6 +28,10 @@ interface Category {
   post_count?: number;
 }
 
+interface MinimalSidebarProps {
+  onTagClick?: (tagSlug: string | null) => void;
+}
+
 interface FeaturedAuthor {
   id: number;
   name: string;
@@ -60,7 +64,7 @@ const getCategoryIconWithColor = (
   return [Zap, "bg-gray-100 text-gray-600"];
 };
 
-export function MinimalSidebar() {
+export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<any[]>([]);
   const [featuredAuthors, setFeaturedAuthors] = useState<FeaturedAuthor[]>([]);
@@ -292,7 +296,7 @@ export function MinimalSidebar() {
         </CardContent>
       </Card>
 
-      {/* Tags */}
+      {/* Tags Card */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-3 mb-6">
@@ -323,17 +327,18 @@ export function MinimalSidebar() {
           ) : (
             <div className="flex flex-wrap gap-2">
               {tags.slice(0, 15).map((tag) => (
-                <Link
+                <button
                   key={tag.id}
-                  href={`/tag/${tag.id}`}
-                  className={`text-xs px-3 py-1 rounded-full font-medium transition-all hover:scale-105 ${
+                  onClick={() => onTagClick && onTagClick(tag.slug)} // Use button + call onTagClick
+                  className={`text-xs px-3 py-1 rounded-full font-medium transition-all hover:scale-105 cursor-pointer ${
                     tag.post_count && tag.post_count > 5
                       ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 shadow-md hover:shadow-lg"
                       : "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 shadow-sm hover:shadow-md"
                   }`}
+                  type="button"
                 >
                   #{tag.name}
-                </Link>
+                </button>
               ))}
             </div>
           )}
