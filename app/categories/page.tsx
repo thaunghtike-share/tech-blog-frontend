@@ -9,6 +9,7 @@ import {
   Cloud,
   Cog,
   BarChart3,
+  Sparkles,
   Shield,
   Code,
   Database,
@@ -16,6 +17,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 // Types for your API data
 interface Category {
@@ -182,14 +184,30 @@ export default function CategoriesPage() {
 
       <MinimalHeader />
       <main className="max-w-6xl mx-auto px-4 py-12 relative z-10">
-        <div className="text-center mb-10">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Article Categories
-          </h1>
-          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+        {/* Enhanced Header */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <span className="inline-flex items-center text-2xl font-tight">
+              Article Categories
+            </span>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-gray-600 max-w-3xl mx-auto"
+          >
             Explore our comprehensive collection of articles organized by
             technology and topic areas.
-          </p>
+          </motion.p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => {
