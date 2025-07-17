@@ -11,16 +11,6 @@ type FAQ = {
 
 const rawFaqs = [
   {
-    question: "What is LearnDevOpsNow?",
-    answer:
-      "LearnDevOpsNow is a curated platform for learning DevOps, Cloud, Automation, and Infrastructure as Code through real-world articles, tutorials, and expert contributions.",
-  },
-  {
-    question: "Can I contribute my own articles?",
-    answer:
-      "Currently, article publishing is by invitation. However, if you're an expert and interested in contributing, feel free to contact us via Messenger or LinkedIn.",
-  },
-  {
     question: "Do you offer professional DevOps services?",
     answer:
       "Yes! We provide services such as Cloud Migration, Infrastructure Automation, and Cloud-native App Deployment. Visit our Services page to learn more.",
