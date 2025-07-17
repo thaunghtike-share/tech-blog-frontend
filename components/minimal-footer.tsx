@@ -163,26 +163,6 @@ export function MinimalFooter() {
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link
-              href="/sitemap"
-              className="text-xs text-gray-500 hover:text-blue-600"
-            >
-              Sitemap
-            </Link>
-            <Link
-              href="/faq"
-              className="text-xs text-gray-500 hover:text-blue-600"
-            >
-              FAQ
-            </Link>
-            <Link
-              href="/contact"
-              className="text-xs text-gray-500 hover:text-blue-600"
-            >
-              Contact
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

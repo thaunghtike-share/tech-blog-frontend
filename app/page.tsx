@@ -124,7 +124,7 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <div className="-mt-6">
+      <div className="-mt-1">
         <MinimalFooter />
       </div>
     </div>
