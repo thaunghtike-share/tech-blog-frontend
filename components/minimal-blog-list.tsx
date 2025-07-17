@@ -47,11 +47,15 @@ interface Category {
 
 interface MinimalBlogListProps {
   searchQuery?: string;
+  filterTagSlug?: string | null;
 }
 
 const PAGE_SIZE = 5;
 
-export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
+export function MinimalBlogList({
+  searchQuery = "",
+  filterTagSlug: propFilterTagSlug,
+}: MinimalBlogListProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -65,7 +69,7 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
 
   // Initialize filterTagSlug from URL query param "tag"
   const [filterTagSlug, setFilterTagSlug] = useState<string | null>(
-    () => searchParams.get("tag") || null
+    propFilterTagSlug ?? null
   );
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

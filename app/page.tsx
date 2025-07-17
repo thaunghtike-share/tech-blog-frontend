@@ -1,22 +1,52 @@
-"use client"
-import { MinimalHeader } from "@/components/minimal-header"
-import { MinimalBlogList } from "@/components/minimal-blog-list"
-import { MinimalSidebar } from "@/components/minimal-sidebar"
-import { MinimalFooter } from "@/components/minimal-footer"
-import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap"
-import { CertificationRoadmap } from "@/components/CertificationRoadmap"
-import { MinimalFAQs } from "@/components/minimal-faqs"
-import { TopUdemyCourses } from "@/components/TopUdemyCourses"
-import { FreelanceServicesSection } from "@/components/FreelanceServicesSection"
-import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample"
-import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA"
-import { SuccessStoriesSection } from "@/components/SuccessStoriesSection"
-import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses"
-import { YouTubePlaylists }  from "@/components/YouTubePlaylists"
-import { FreeLabs } from "@/components/FreeLabs"
-import Intro from "@/components/Intro"
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalBlogList } from "@/components/minimal-blog-list";
+import { MinimalSidebar } from "@/components/minimal-sidebar";
+import { MinimalFooter } from "@/components/minimal-footer";
+import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap";
+import { CertificationRoadmap } from "@/components/CertificationRoadmap";
+import { MinimalFAQs } from "@/components/minimal-faqs";
+import { TopUdemyCourses } from "@/components/TopUdemyCourses";
+import { FreelanceServicesSection } from "@/components/FreelanceServicesSection";
+import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample";
+import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
+import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
+import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses";
+import { YouTubePlaylists } from "@/components/YouTubePlaylists";
+import { FreeLabs } from "@/components/FreeLabs";
+import Intro from "@/components/Intro";
 
 export default function HomePage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Initialize selectedTag from URL param "tag"
+  const initialTag = searchParams.get("tag") || null;
+  const [selectedTag, setSelectedTag] = useState<string | null>(initialTag);
+
+  // Update URL when selectedTag changes
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (selectedTag) {
+      params.set("tag", selectedTag);
+    } else {
+      params.delete("tag");
+    }
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    router.replace(newUrl);
+  }, [selectedTag, router]);
+
+  // Handler passed to Sidebar and BlogList for tag changes
+  const updateTagFilter = (tagSlug: string | null) => {
+    setSelectedTag(tagSlug);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
       {/* Subtle background pattern */}
@@ -66,10 +96,10 @@ export default function HomePage() {
         </span>
       </a>
 
-      {/* Fixed Header - no shadow on mobile */}
+      {/* Fixed Header */}
       <MinimalHeader />
 
-      {/* Hero Intro with mobile spacing fix */}
+      {/* Hero Intro */}
       <div className="pt-[64px] md:pt-[80px] md:-mt-44">
         <Intro />
       </div>
@@ -79,10 +109,12 @@ export default function HomePage() {
         <div className="-mt-10">
           <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
             <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
-              <MinimalBlogList />
+              {/* Pass tag filter and update function */}
+              <MinimalBlogList filterTagSlug={selectedTag} />
             </div>
             <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
-              <MinimalSidebar />
+              {/* Pass updateTagFilter handler so sidebar can update tag filter */}
+              <MinimalSidebar onTagClick={updateTagFilter} />
             </div>
           </div>
         </div>
