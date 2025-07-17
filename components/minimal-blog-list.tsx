@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Tag as TagIcon,
   AlertTriangle,
+  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -230,12 +231,14 @@ export function MinimalBlogList({ searchQuery = "" }: MinimalBlogListProps) {
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <h2
-            ref={topRef}
-            className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
-          >
-            Latest Articles
-          </h2>
+          <Link href="/articles">
+            <h2
+              ref={topRef}
+              className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all"
+            >
+              Latest Articles
+            </h2>
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
