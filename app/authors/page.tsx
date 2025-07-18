@@ -11,13 +11,14 @@ interface Author {
   name: string;
   bio: string;
   avatar: string;
+  slug: string;
   featured: boolean;
   job_title: string;
   company: string;
   linkedin?: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://localhost:8000/api";
 
 export default function AuthorsPage() {
   const [authors, setAuthors] = useState<Author[]>([]);
@@ -25,27 +26,10 @@ export default function AuthorsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash.startsWith("#author-")) {
-      const el = document.querySelector(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-
-        // Optional: highlight the element temporarily
-        el.classList.add("ring-2", "ring-blue-400");
-
-        setTimeout(() => {
-          el.classList.remove("ring-2", "ring-blue-400");
-        }, 2000);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     async function fetchAuthors() {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/authors`);
+        const res = await fetch(`${API_BASE_URL}/authors/`);
         if (!res.ok) throw new Error("Failed to fetch authors");
         const data = await res.json();
         if (Array.isArray(data)) {
@@ -145,7 +129,7 @@ export default function AuthorsPage() {
                 setError(null);
                 setLoading(true);
                 setAuthors([]);
-                fetch(`${API_BASE_URL}/authors`)
+                fetch(`${API_BASE_URL}/authors/`)
                   .then((res) => res.json())
                   .then((data) => {
                     if (Array.isArray(data)) setAuthors(data);
@@ -167,7 +151,7 @@ export default function AuthorsPage() {
             {authors.map((author) => (
               <Card
                 key={author.id}
-                id={`author-${author.id}`}
+                id={`author-${author.slug}`}
                 className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
               >
                 <CardContent className="flex flex-col items-center space-y-4 p-6">
@@ -177,7 +161,7 @@ export default function AuthorsPage() {
                     className="w-20 h-20 rounded-full object-cover border border-gray-300 shadow-sm"
                   />
                   <Link
-                    href={`/authors/${author.id}`}
+                    href={`/authors/${author.slug}`}
                     className="text-lg font-semibold text-blue-600 hover:underline"
                   >
                     {author.name}
