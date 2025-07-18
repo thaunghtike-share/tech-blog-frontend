@@ -169,7 +169,7 @@ export default function AuthorDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
@@ -302,7 +302,7 @@ export default function AuthorDetailPage() {
                                     {previewText}
                                   </p>
                                 )}
-                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 text- transition-colors">
+                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 text-sm transition-colors">
                                   <span>Read more</span>
                                   <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                                 </div>
