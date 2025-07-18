@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
 import {
   Star,
   GraduationCap,
@@ -10,7 +11,6 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
 
 interface Review {
   username: string;
@@ -28,6 +28,7 @@ interface UdemyCourse {
   reviews?: Review[];
 }
 
+// Replace with your actual API URL
 const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 export function TopUdemyCourses() {
@@ -42,14 +43,16 @@ export function TopUdemyCourses() {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch(`${API_BASE_URL}/udemy-courses/`);
-        if (!response.ok)
-          throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
+        const res = await fetch(`${API_BASE_URL}/udemy-courses/`);
+        if (!res.ok) throw new Error(`Error status: ${res.status}`);
+        const data = await res.json();
+        // Supports API response either as an array or {results: [...]}
         const rawCourses = Array.isArray(data) ? data : data.results;
+
         if (!Array.isArray(rawCourses)) {
-          throw new Error("Invalid data format received from API");
+          throw new Error("Invalid courses data format");
         }
+
         const mapped: UdemyCourse[] = rawCourses.map((course: any) => ({
           id: course.id,
           title: course.title,
@@ -62,7 +65,7 @@ export function TopUdemyCourses() {
         }));
         setCourses(mapped);
       } catch (err) {
-        setError("Failed to fetch Udemy courses.");
+        setError("Failed to load courses.");
         console.error(err);
       } finally {
         setLoading(false);
@@ -71,36 +74,25 @@ export function TopUdemyCourses() {
     fetchCourses();
   }, []);
 
-  const displayed = showAll ? courses : courses.slice(0, 6);
+  // Slice courses if showAll is false, else show all
+  const displayedCourses = showAll ? courses : courses.slice(0, 6);
 
-  const handleToggleShowAll = () => {
+  // Toggle showAll and scroll to top of section on collapse
+  function toggleShowAll() {
     if (showAll) {
-      // Scroll smoothly to top of the courses section when showing less
       sectionRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-    setShowAll(!showAll);
-  };
+    setShowAll((prev) => !prev);
+  }
 
   if (loading) {
     return (
-      <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
-        <div className="text-center mb-12">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl mx-auto mb-4 animate-pulse"></div>
-          <div className="h-8 bg-gray-200 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
-          <div className="h-4 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-xl shadow-lg p-6 animate-pulse"
-            >
-              <div className="h-6 bg-gray-200 rounded mb-3"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-              <div className="h-10 bg-gray-200 rounded-lg"></div>
-            </div>
-          ))}
-        </div>
+      <section
+        ref={sectionRef}
+        className="max-w-7xl mx-auto py-12 px-4"
+        aria-busy="true"
+      >
+        <p className="text-center text-gray-500">Loading courses...</p>
       </section>
     );
   }
@@ -108,26 +100,18 @@ export function TopUdemyCourses() {
   if (error) {
     return (
       <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
-        <div className="text-center bg-red-50 border border-red-200 rounded-3xl p-12">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <GraduationCap className="w-8 h-8 text-red-600" />
-          </div>
-          <h3 className="text-xl font-semibold text-red-800 mb-2">
-            Failed to Load Courses
-          </h3>
-          <p className="text-red-600">Error: {error}</p>
-        </div>
+        <p className="text-center text-red-600 font-semibold">{error}</p>
       </section>
     );
   }
 
   return (
     <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
-      <div className="text-center mb-12">
+      <div className="mb-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-3 mb-4"
+          className="flex justify-center items-center gap-3 mb-4"
         >
           <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
             <GraduationCap className="w-4 h-4 text-white" />
@@ -136,6 +120,7 @@ export function TopUdemyCourses() {
             <BookOpen className="w-4 h-4 mr-2" /> Free DevOps Learning
           </span>
         </motion.div>
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -144,6 +129,7 @@ export function TopUdemyCourses() {
         >
           Learn DevOps on Udemy Free
         </motion.h2>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -154,28 +140,25 @@ export function TopUdemyCourses() {
           practices.
         </motion.p>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {displayed.map((course, idx) => (
+        {displayedCourses.map((course, idx) => (
           <motion.div
             key={course.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8, scale: 1.02 }} // More pronounced hover effect
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl" // New: Left border
+            whileHover={{ y: -8, scale: 1.02 }}
+            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl"
           >
             <div className="p-5 relative">
-              {" "}
-              {/* Adjusted padding */}
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
-                {" "}
-                {/* Icon moved and styled */}
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
                 {course.title}
               </h3>
-              <p className="text-gray-700 mb-4 text-sm leading-relaxed">
+              <p className="text-gray-700 mb-4 text-sm leading-relaxed line-clamp-3">
                 {course.description}
               </p>
               <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
@@ -193,7 +176,7 @@ export function TopUdemyCourses() {
                 <div className="flex items-center gap-1 text-yellow-500 mb-3">
                   <Star className="w-4 h-4 fill-current" />
                   <span className="font-medium text-gray-900 text-sm">
-                    {course.rating}
+                    {course.rating.toFixed(1)}
                   </span>
                 </div>
               )}
@@ -218,35 +201,37 @@ export function TopUdemyCourses() {
                 </div>
               )}
             </div>
+
             <div className="p-5 pt-0">
-              {" "}
-              {/* Adjusted padding */}
               <a
                 href={course.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn" // New button style
+                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01]"
               >
                 <GraduationCap className="w-4 h-4 mr-2" /> Enroll Now
-                <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+                <ExternalLink className="w-4 h-4 ml-2" />
               </a>
             </div>
           </motion.div>
         ))}
       </div>
-      {courses.length > 9 && (
+
+      {/* Show More / Show Less button */}
+      {courses.length > 6 && (
         <div className="mt-10 text-center">
           <motion.button
+            type="button"
+            onClick={toggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={handleToggleShowAll}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            {showAll ? "Show Less" : `See All Courses`}
+            {showAll ? "Show Less" : "See All Courses"}
             {showAll ? (
-              <ChevronUp className="w-4 h-4 ml-2" />
+              <ChevronUp className="w-5 h-5 ml-2" />
             ) : (
-              <ChevronDown className="w-4 h-4 ml-2" />
+              <ChevronDown className="w-5 h-5 ml-2" />
             )}
           </motion.button>
         </div>

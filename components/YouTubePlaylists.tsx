@@ -11,7 +11,6 @@ import {
   Lightbulb,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 
 interface Playlist {
   id: number;
@@ -61,13 +60,18 @@ const difficultyConfig = {
   },
 };
 
+interface YouTubePlaylistsProps {
+  showAll: boolean;
+  setShowAll: (show: boolean) => void;
+}
+
 export function YouTubePlaylists() {
+  const [loading, setLoading] = useState(true); // <-- add this line
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<
     "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"
   >("Prerequisite");
   const [showAll, setShowAll] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -152,6 +156,7 @@ export function YouTubePlaylists() {
       )}
       {!loading && !error && (
         <>
+          {/* === HEADER & DESCRIPTION === */}
           <div className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -184,6 +189,7 @@ export function YouTubePlaylists() {
             </motion.p>
           </div>
 
+          {/* === DIFFICULTY FILTER BUTTONS === */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -216,7 +222,7 @@ export function YouTubePlaylists() {
                         : `${config.iconBg} ${config.iconText}`
                     }`}
                   >
-                    {config.icon}{" "}
+                    {config.icon}
                   </div>
                   <span
                     className={`${isActive ? "text-white" : "text-gray-800"}`}
@@ -246,6 +252,7 @@ export function YouTubePlaylists() {
             })}
           </motion.div>
 
+          {/* === PLAYLISTS GRID OR EMPTY MESSAGE === */}
           {filteredPlaylists.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
@@ -315,7 +322,7 @@ export function YouTubePlaylists() {
                         href={pl.playlistUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r ${config.color} text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
+                        className={`w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r ${config.color} text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01]`}
                       >
                         <Play className="w-4 h-4 mr-2" /> Watch Playlist{" "}
                         <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
@@ -327,6 +334,7 @@ export function YouTubePlaylists() {
             </div>
           )}
 
+          {/* === SHOW MORE / SHOW LESS BUTTON === */}
           {filteredPlaylists.length > 6 && (
             <div className="mt-10 text-center">
               <motion.button

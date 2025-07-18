@@ -1,8 +1,16 @@
 "use client";
+
 import { useState, useRef } from "react";
-import { Star, BookOpen, Play, ExternalLink } from "lucide-react";
+import {
+  Star,
+  BookOpen,
+  Play,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
+import { Badge } from "@/components/ui/badge"; // Make sure you have this or replace with your own badge
 
 interface PaidCourse {
   title: string;
@@ -75,13 +83,14 @@ const paidCourses: PaidCourse[] = [
 export function RecommendedPaidCourses() {
   const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+
   const coursesToShow = showAll ? paidCourses : paidCourses.slice(0, 6);
 
-  const handleToggleShowAll = () => {
+  const toggleShowAll = () => {
     if (showAll) {
       sectionRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-    setShowAll(!showAll);
+    setShowAll((prev) => !prev);
   };
 
   return (
@@ -89,6 +98,7 @@ export function RecommendedPaidCourses() {
       ref={sectionRef}
       className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
+      {/* Header */}
       <div className="text-center mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -102,6 +112,7 @@ export function RecommendedPaidCourses() {
             <BookOpen className="w-4 h-4 mr-2" /> Premium DevOps Learning
           </span>
         </motion.div>
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -110,6 +121,7 @@ export function RecommendedPaidCourses() {
         >
           Recommended Paid DevOps & Kubernetes Courses
         </motion.h2>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -120,6 +132,8 @@ export function RecommendedPaidCourses() {
           career.
         </motion.p>
       </div>
+
+      {/* Courses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {coursesToShow.map((course, idx) => (
           <motion.div
@@ -127,20 +141,16 @@ export function RecommendedPaidCourses() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8, scale: 1.02 }} // More pronounced hover effect
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl" // New: Left border
+            whileHover={{ y: -8, scale: 1.02 }}
+            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative"
           >
-            <div className="p-5 relative">
-              {" "}
-              {/* Adjusted padding */}
+            <div className="p-5">
               <div className="absolute top-3 right-3">
                 <Badge className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-medium rounded-full shadow-sm border border-gray-200">
                   Paid Course
                 </Badge>
               </div>
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
-                {" "}
-                {/* Icon moved and styled */}
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
@@ -149,7 +159,7 @@ export function RecommendedPaidCourses() {
               <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
                 {course.authorImage && (
                   <img
-                    src={course.authorImage || "/placeholder.svg"}
+                    src={course.authorImage}
                     alt={course.author}
                     className="w-6 h-6 rounded-full object-cover border border-gray-200"
                     loading="lazy"
@@ -164,36 +174,43 @@ export function RecommendedPaidCourses() {
                 <div className="flex items-center gap-1 text-yellow-500 mb-3">
                   <Star className="w-4 h-4 fill-current" />
                   <span className="font-medium text-gray-900 text-sm">
-                    {course.rating}
+                    {course.rating.toFixed(1)}
                   </span>
                 </div>
               )}
             </div>
+
             <div className="p-5 pt-0">
-              {" "}
-              {/* Adjusted padding */}
               <a
                 href={course.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn" // New button style
+                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01]"
               >
                 <Play className="w-4 h-4 mr-2" /> Enroll Now
-                <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+                <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </a>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* Toggle Button */}
       {paidCourses.length > 6 && (
         <div className="mt-10 text-center">
           <motion.button
+            type="button"
+            onClick={toggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={handleToggleShowAll}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
             {showAll ? "Show Less" : "See All Courses"}
+            {showAll ? (
+              <ChevronUp className="w-5 h-5 ml-2" />
+            ) : (
+              <ChevronDown className="w-5 h-5 ml-2" />
+            )}
           </motion.button>
         </div>
       )}
