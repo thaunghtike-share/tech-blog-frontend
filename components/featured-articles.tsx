@@ -8,6 +8,7 @@ import {
   Folder,
   AlertTriangle,
   Sparkles,
+  Eye,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,6 +23,7 @@ interface Article {
   tags: number[];
   author: number;
   featured: boolean;
+  read_count: number; // Added read_count to the interface
 }
 
 interface Author {
@@ -227,7 +229,7 @@ export function FeaturedArticlesPage() {
                   transition={{
                     duration: 0.4,
                     delay: index * 0.1,
-                    backgroundColor: { duration: 0 }, // Disable background color animation
+                    backgroundColor: { duration: 0 },
                   }}
                   className={`group bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all ${
                     isScrolling ? "" : "hover:-translate-y-1"
@@ -286,6 +288,27 @@ export function FeaturedArticlesPage() {
                     <div className="flex items-center gap-1">
                       <Clock className="w-4 h-4 text-gray-400" />
                       <span>{calculateReadTime(article.content)} read</span>
+                    </div>
+                    {/* Added Total Reads counter */}
+                    <div className="flex items-center gap-2 ml-auto text-gray-600">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5 text-gray-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
+                        />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      <span className="font-medium">
+                        {article.read_count.toLocaleString()} views
+                      </span>
                     </div>
                   </div>
                 </motion.article>

@@ -9,6 +9,7 @@ import {
   Sparkles,
   ChevronDown,
   Tag as TagIcon,
+  Eye,
   AlertTriangle,
   ChevronLeft,
   ChevronRight,
@@ -21,6 +22,7 @@ interface Article {
   id: number;
   slug: string;
   title: string;
+  read_count: number;
   content: string;
   published_at: string;
   category: number | null;
@@ -439,6 +441,13 @@ export function MinimalBlogList({
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4 text-gray-400" />
                         <span>{calculateReadTime(article.content)} read</span>
+                      </div>
+                      {/* Added view count */}
+                      <div className="flex items-center gap-1 ml-auto">
+                        <Eye className="w-4 h-4 text-gray-400" />
+                        <span className="font-medium">
+                          {article.read_count?.toLocaleString() || 0} views
+                        </span>
                       </div>
                     </div>
                   </motion.article>
