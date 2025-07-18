@@ -10,6 +10,8 @@ import {
   ChevronDown,
   Tag as TagIcon,
   AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,7 +69,6 @@ export function MinimalBlogList({
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Initialize filterTagSlug from URL query param "tag"
   const [filterTagSlug, setFilterTagSlug] = useState<string | null>(
     propFilterTagSlug ?? null
   );
@@ -253,8 +254,8 @@ export function MinimalBlogList({
 
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
-      {/* Header with Tag Filter */}
-      <div className="mb-12 relative flex items-center justify-between">
+      {/* Header with Enhanced Tag Filter */}
+      <div className="mb-12 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-6 h-6 text-white" />
@@ -269,17 +270,21 @@ export function MinimalBlogList({
           </Link>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="relative" ref={dropdownRef}>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="relative w-full sm:w-56" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700"
+              className="flex items-center justify-between w-full px-4 py-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700"
             >
-              <TagIcon className="w-4 h-4 text-gray-500" />
-              {filterTagSlug
-                ? tags.find((t) => t.slug === filterTagSlug)?.name ||
-                  "Filter by tag"
-                : "Filter by tag"}
+              <div className="flex items-center gap-2">
+                <TagIcon className="w-4 h-4 text-gray-500" />
+                <span className="truncate">
+                  {filterTagSlug
+                    ? tags.find((t) => t.slug === filterTagSlug)?.name ||
+                      "Filter by tag"
+                    : "All Tags"}
+                </span>
+              </div>
               <ChevronDown
                 className={`w-4 h-4 text-gray-500 transition-transform ${
                   isDropdownOpen ? "rotate-180" : ""
@@ -294,9 +299,9 @@ export function MinimalBlogList({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                  className="absolute right-0 mt-2 w-full sm:w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 >
-                  <div className="py-1">
+                  <div className="py-1 max-h-60 overflow-y-auto">
                     <button
                       onClick={() => {
                         setFilterTagSlug(null);
@@ -442,40 +447,77 @@ export function MinimalBlogList({
             </AnimatePresence>
           </div>
 
-          {/* Pagination */}
+          {/* Enhanced Pagination */}
           {totalPages > 1 && (
-            <nav className="mt-10 flex justify-center items-center gap-2">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
-              >
-                Prev
-              </button>
-
-              {Array.from({ length: totalPages }, (_, i) => (
+            <nav className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="text-sm text-gray-500">
+                Showing {(currentPage - 1) * PAGE_SIZE + 1} to{" "}
+                {Math.min(currentPage * PAGE_SIZE, articles.length)} of{" "}
+                {articles.length} articles
+              </div>
+              <div className="flex items-center gap-2">
                 <button
-                  key={i}
-                  onClick={() => setCurrentPage(i + 1)}
-                  className={`px-3 py-1 rounded-full text-sm transition-all ${
-                    currentPage === i + 1
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                      : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 shadow-sm"
-                  }`}
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-1 px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
                 >
-                  {i + 1}
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
                 </button>
-              ))}
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
 
-              <button
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(totalPages, p + 1))
-                }
-                disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-full border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
-              >
-                Next
-              </button>
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                          currentPage === pageNum
+                            ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                            : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                  {totalPages > 5 && currentPage < totalPages - 2 && (
+                    <span className="px-2 text-gray-500">...</span>
+                  )}
+                  {totalPages > 5 && currentPage < totalPages - 2 && (
+                    <button
+                      onClick={() => setCurrentPage(totalPages)}
+                      className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                        currentPage === totalPages
+                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                          : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {totalPages}
+                    </button>
+                  )}
+                </div>
+                <button
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="flex items-center gap-1 px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </nav>
           )}
         </>

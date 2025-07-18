@@ -236,7 +236,7 @@ export default function CategoryPageClient({ slug }: Props) {
           {/* Article list */}
           <div className="lg:col-span-4 space-y-8">
             {/* Articles Section */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div className="bg-white/75 relative rounded-2xl p-8 shadow-lg border border-gray-100">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
                   <div className="flex items-center gap-4 mb-6">
@@ -355,10 +355,27 @@ export default function CategoryPageClient({ slug }: Props) {
                                 </div>
                                 {article.read_count && (
                                   <div className="flex items-center gap-2 ml-auto">
-                                    <span className="font-medium text-gray-700">
-                                      {article.read_count.toLocaleString()}{" "}
-                                      views
-                                    </span>
+                                    <div className="flex items-center gap-2 ml-auto text-gray-600">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-5 h-5 text-gray-500"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                      >
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
+                                        />
+                                        <circle cx="12" cy="12" r="3" />
+                                      </svg>
+                                      <span className="font-medium">
+                                        {article.read_count.toLocaleString()}{" "}
+                                        views
+                                      </span>
+                                    </div>
                                   </div>
                                 )}
                               </div>

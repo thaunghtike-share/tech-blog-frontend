@@ -6,7 +6,7 @@ import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
-import { Calendar, Clock, User, Linkedin, Folder, ArrowRight } from "lucide-react";
+import { Calendar, Clock, User, Linkedin, Folder, ArrowRight, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = "http://192.168.1.131:8000/api";
@@ -184,8 +184,8 @@ export default function AuthorDetailPage() {
           {/* Author content */}
           <div className="lg:col-span-4 space-y-8">
             {/* Author Profile Card */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 opacity-30 -z-0"></div>
+            <div className="bg-white/75 rounded-2xl p-8 shadow-lg border border-gray-100 relative">
+              <div className="absolute inset-0 opacity-30 -z-0"></div>
               <div className="relative z-10">
                 <div className="flex flex-col md:flex-row items-start gap-8">
                   <div className="relative shrink-0">
@@ -230,15 +230,21 @@ export default function AuthorDetailPage() {
             </div>
 
             {/* Articles Section */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div className="bg-white/75 rounded-2xl p-8 shadow-lg border border-gray-100 relative z-10">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">
-                    Articles by {author?.name}
-                  </h2>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
+                      <Folder className="w-6 h-6 text-white" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      All Articles
+                    </h2>
+                  </div>
                   <p className="text-gray-600 mt-1">
                     {author?.articles?.length || 0} published article
-                    {author?.articles?.length !== 1 ? "s" : ""}
+                    {author?.articles?.length !== 1 ? "s" : ""} by{" "}
+                    {author?.name}
                   </p>
                 </div>
               </div>
@@ -285,11 +291,10 @@ export default function AuthorDetailPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: index * 0.1 }}
-                            className="group relative overflow-hidden bg-white rounded-xl border border-gray-100 hover:border-blue-100 transition-all hover:shadow-md"
+                            className="group relative overflow-hidden bg-white rounded-xl border border-gray-200 hover:border-blue-100 transition-all hover:shadow-md"
                           >
                             <div className="p-6">
-                              <div className="flex justify-between flex-wrap mb-4 gap-2">
-                              </div>
+                              <div className="flex justify-between flex-wrap mb-4 gap-2"></div>
                               <Link
                                 href={`/articles/${article.slug}`}
                                 className="group/link block"
@@ -309,19 +314,34 @@ export default function AuthorDetailPage() {
                               </Link>
                               <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                                 <div className="flex items-center gap-2">
-                                  <Calendar className="w-4 h-4 text-gray-400" />
+                                  <Calendar className="w-5 h-5 text-gray-500" />
                                   <span>
                                     {formatDate(article.published_at)}
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <Clock className="w-4 h-4 text-gray-400" />
+                                  <Clock className="w-5 h-5 text-gray-500" />
                                   <span>
                                     {calculateReadTime(article.content)}
                                   </span>
                                 </div>
-                                <div className="flex items-center gap-2 ml-auto">
-                                  <span className="font-medium text-gray-700">
+                                <div className="flex items-center gap-2 ml-auto text-gray-600">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-5 h-5 text-gray-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
+                                    />
+                                    <circle cx="12" cy="12" r="3" />
+                                  </svg>
+                                  <span className="font-medium">
                                     {article.read_count.toLocaleString()} views
                                   </span>
                                 </div>

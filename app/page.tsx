@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalBlogList } from "@/components/minimal-blog-list";
+import { FeaturedArticlesPage } from "@/components/featured-articles";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { MinimalDevopsRoadmap } from "@/components/minimal-devops-roadmap";
@@ -110,7 +111,7 @@ export default function HomePage() {
           <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
             <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
               {/* Pass tag filter and update function */}
-              <MinimalBlogList filterTagSlug={selectedTag} />
+              <FeaturedArticlesPage/>
             </div>
             <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
               {/* Pass updateTagFilter handler so sidebar can update tag filter */}

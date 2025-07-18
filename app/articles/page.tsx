@@ -96,7 +96,7 @@ export default function ArticlesPage() {
 
       <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-12">
-          <div className="lg:col-span-4 bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
+          <div className="lg:col-span-4 rounded-xl p-6">
             {/* Pass updateTagFilter down to MinimalSidebar for tag clicks */}
             <MinimalBlogList
               searchQuery={searchQuery}
