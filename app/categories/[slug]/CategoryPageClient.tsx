@@ -244,23 +244,6 @@ export default function CategoryPageClient({ slug }: Props) {
                     {articles.length !== 1 ? "s" : ""}
                   </p>
                 </div>
-                {articles.length > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <span>Show</span>
-                    <select
-                      value={pageSize}
-                      onChange={(e) =>
-                        handlePageSizeChange(Number(e.target.value))
-                      }
-                      className="bg-gray-50 border border-gray-200 rounded-full px-3 py-1"
-                    >
-                      <option value="5">5</option>
-                      <option value="10">10</option>
-                      <option value="20">20</option>
-                    </select>
-                    <span>per page</span>
-                  </div>
-                )}
               </div>
 
               {articles.length === 0 ? (
@@ -309,17 +292,6 @@ export default function CategoryPageClient({ slug }: Props) {
                             className="group relative overflow-hidden bg-white rounded-xl border border-gray-100 hover:border-blue-100 transition-all hover:shadow-md"
                           >
                             <div className="p-6">
-                              <div className="flex justify-between flex-wrap mb-4 gap-2">
-                                {category && (
-                                  <Link
-                                    href={`/categories/${category.slug}`}
-                                    className="flex items-center gap-2 text-blue-600 bg-blue-50 px-4 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                                  >
-                                    <Folder className="w-4 h-4" />
-                                    {category.name}
-                                  </Link>
-                                )}
-                              </div>
                               <Link
                                 href={`/articles/${article.slug}`}
                                 className="group/link block"
@@ -332,8 +304,8 @@ export default function CategoryPageClient({ slug }: Props) {
                                     {previewText}
                                   </p>
                                 )}
-                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 font-medium transition-colors">
-                                  <span>Read article</span>
+                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 font-tight test-xs transition-colors">
+                                  <span>Read more</span>
                                   <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                                 </div>
                               </Link>

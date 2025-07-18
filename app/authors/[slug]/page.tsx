@@ -200,10 +200,10 @@ export default function AuthorDetailPage() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-2">
                       {author?.name}
                     </h1>
-                    <p className="text-lg text-gray-700 font-medium mb-3">
+                    <p className="text-sm text-gray-700 font-medium mb-3">
                       {author?.job_title} at {author?.company}
                     </p>
                     {author?.linkedin && (
@@ -233,7 +233,7 @@ export default function AuthorDetailPage() {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
+                  <h2 className="text-xl font-bold text-gray-900">
                     Articles by {author?.name}
                   </h2>
                   <p className="text-gray-600 mt-1">
@@ -241,23 +241,6 @@ export default function AuthorDetailPage() {
                     {author?.articles?.length !== 1 ? "s" : ""}
                   </p>
                 </div>
-                {author?.articles && author.articles.length > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <span>Show</span>
-                    <select
-                      value={pageSize}
-                      onChange={(e) =>
-                        handlePageSizeChange(Number(e.target.value))
-                      }
-                      className="bg-gray-50 border border-gray-200 rounded-full px-3 py-1"
-                    >
-                      <option value="5">5</option>
-                      <option value="10">10</option>
-                      <option value="20">20</option>
-                    </select>
-                    <span>per page</span>
-                  </div>
-                )}
               </div>
 
               {author?.articles && author.articles.length === 0 ? (
@@ -306,21 +289,12 @@ export default function AuthorDetailPage() {
                           >
                             <div className="p-6">
                               <div className="flex justify-between flex-wrap mb-4 gap-2">
-                                {article.category && (
-                                  <Link
-                                    href={`/categories/${article.category.slug}`}
-                                    className="flex items-center gap-2 text-blue-600 bg-blue-50 px-4 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                                  >
-                                    <Folder className="w-4 h-4" />
-                                    {article.category.name}
-                                  </Link>
-                                )}
                               </div>
                               <Link
                                 href={`/articles/${article.slug}`}
                                 className="group/link block"
                               >
-                                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                                <h3 className="text-large font-medium text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                                   {article.title}
                                 </h3>
                                 {previewText && (
@@ -328,8 +302,8 @@ export default function AuthorDetailPage() {
                                     {previewText}
                                   </p>
                                 )}
-                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 font-medium transition-colors">
-                                  <span>Read article</span>
+                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 text- transition-colors">
+                                  <span>Read more</span>
                                   <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                                 </div>
                               </Link>
