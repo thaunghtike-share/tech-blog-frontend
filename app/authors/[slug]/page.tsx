@@ -122,7 +122,7 @@ export default function AuthorDetailPage() {
         <MinimalHeader />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-6 gap-12">
-            <div className="lg:col-span-4 bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
+            <div className="lg:col-span-4 bg-white rounded-xl p-6 shadow-sm border border-white/50">
               <div className="animate-pulse space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-24 h-24 rounded-full bg-gray-200"></div>
@@ -194,10 +194,10 @@ export default function AuthorDetailPage() {
                     href={author.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-blue-600 text-sm hover:underline mt-2"
+                    className="inline-flex items-center gap-1 text-blue-600 text-sm hover:underline mt-3"
                   >
                     <Linkedin className="w-4 h-4" />
-                    LinkedIn Profile
+                    LinkedIn
                   </a>
                 )}
               </div>
@@ -259,7 +259,7 @@ export default function AuthorDetailPage() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: index * 0.1 }}
-                          className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                          className="group bg-white will-change-transform p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                         >
                           <div className="flex justify-between flex-wrap mb-4 gap-2">
                             {article.category && (
