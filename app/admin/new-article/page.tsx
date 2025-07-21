@@ -377,13 +377,27 @@ export default function NewArticlePage() {
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm"
-                >
-                  {loading ? "Submitting..." : "Submit Article"}
-                </button>
+                <div className="flex justify-between items-center mt-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      localStorage.removeItem("new-article-draft");
+                      setForm((prev) => ({ ...prev, content: "" }));
+                    }}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition"
+                    aria-label="Clear saved draft"
+                  >
+                    Clear Draft
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm"
+                  >
+                    {loading ? "Submitting..." : "Submit Article"}
+                  </button>
+                </div>
 
                 {message && (
                   <p className="mt-4 text-center text-sm">{message}</p>
