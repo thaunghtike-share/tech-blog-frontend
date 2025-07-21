@@ -48,6 +48,7 @@ interface Author {
   id: number;
   name: string;
   bio?: string;
+  slug: string;
   avatar?: string;
   linkedin?: string;
 }
@@ -149,6 +150,7 @@ export function ArticleContent({
     topReadArticles.length > 0
       ? Math.max(...topReadArticles.map((a) => a.read_count || 0))
       : 1;
+  const authorSlug = author?.slug || slugify(author?.name || "unknown");
 
   useEffect(() => {
     const incrementReadCount = async () => {
@@ -219,9 +221,11 @@ export function ArticleContent({
         </div>
         <div className="prose prose-lg">
           <div className="flex flex-wrap gap-2 mb-4">
-            <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full">
-              📂 {categoryName}
-            </span>
+            <Link href={`/categories/${slugify(categoryName)}`}>
+              <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full cursor-pointer inline-block">
+                📂 {categoryName}
+              </span>
+            </Link>
             {tagNames.map((tag, index) => (
               <span
                 key={index}
@@ -389,54 +393,48 @@ export function ArticleContent({
           />
         </div>
         <GiscusComments />
-
-        {/* Written By (Author Card) - Redesigned */}
-        <Card className="mt-8 bg-gray-30 border border-blue-100 shadow-lg relative overflow-hidden">
-          <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
-          <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6 relative z-10">
-            {author?.avatar ? (
-              <img
-                src={author.avatar || "/placeholder.svg"}
-                alt={author.name}
-                className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-xl transition-transform duration-300 hover:scale-105"
-              />
-            ) : (
-              <div className="w-28 h-28 rounded-full bg-blue-200 flex items-center justify-center border-4 border-white shadow-xl">
-                <UserCircle className="w-20 h-20 text-blue-600" />
-              </div>
-            )}
-            <div className="text-center md:text-left flex-1">
-              <h4 className="text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
-                Written By
-              </h4>
-              <p className="text-2xl font-extrabold text-indigo-800 mb-2 leading-tight">
-                {article.author_name || author?.name || "Unknown Author"}
-              </p>
-              {author?.bio && (
-                <p className="text-gray-700 leading-relaxed text-sm max-w-prose mx-auto md:mx-0">
-                  {author.bio}
+        <Link href={`/authors/${authorSlug}`} className="block">
+          <Card className="mt-8 bg-gray-30 border border-blue-100 shadow-lg relative overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
+            <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6 relative z-10">
+              {author?.avatar ? (
+                <img
+                  src={author.avatar || "/placeholder.svg"}
+                  alt={author.name}
+                  className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-xl transition-transform duration-300 hover:scale-105"
+                />
+              ) : (
+                <div className="w-28 h-28 rounded-full bg-blue-200 flex items-center justify-center border-4 border-white shadow-xl">
+                  <UserCircle className="w-20 h-20 text-blue-600" />
+                </div>
+              )}
+              <div className="text-center md:text-left flex-1">
+                <h4 className="text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
+                  Written By
+                </h4>
+                <p className="text-2xl font-extrabold text-indigo-800 mb-2 leading-tight">
+                  {article.author_name || author?.name || "Unknown Author"}
                 </p>
-              )}
-              {author?.linkedin && (
-                <Button
-                  asChild
-                  variant="outline"
-                  className="mt-4 text-blue-800 border-blue-300 hover:bg-blue-100 hover:text-blue-900 transition-colors duration-200 bg-transparent"
-                >
-                  <a
-                    href={author.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium"
+                {author?.bio && (
+                  <p className="text-gray-700 leading-relaxed text-sm max-w-prose mx-auto md:mx-0">
+                    {author.bio}
+                  </p>
+                )}
+                {author?.linkedin && (
+                  <Button
+                    variant="outline"
+                    className="mt-4 text-blue-800 border-blue-300 hover:bg-blue-100 hover:text-blue-900 transition-colors duration-200 bg-transparent pointer-events-none"
                   >
-                    <Linkedin className="w-4 h-4" />
-                    <span>Connect on LinkedIn</span>
-                  </a>
-                </Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+                    <div className="inline-flex items-center gap-2 text-sm font-medium">
+                      <Linkedin className="w-4 h-4" />
+                      <span>Connect on LinkedIn</span>
+                    </div>
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
 
         <div className="mt-6 flex justify-between items-center text-sm text-blue-600 font-medium pt-4">
           {prevArticle ? (
@@ -462,7 +460,6 @@ export function ArticleContent({
             <span />
           )}
         </div>
-
         {/* Recent Articles - Redesigned */}
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
