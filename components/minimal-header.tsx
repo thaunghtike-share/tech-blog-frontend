@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronDown, X, Menu, Bell, Pencil } from "lucide-react";
+import { ChevronDown, X, Menu, Pencil } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,30 +13,27 @@ export function MinimalHeader() {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Dropdown states
   const [isArticlesOpen, setIsArticlesOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isLearningOpen, setIsLearningOpen] = useState(false);
-  const [articlesTimeout, setArticlesTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
-  const [servicesTimeout, setServicesTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
-  const [learningTimeout, setLearningTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Timeout refs for delayed closing
+  const articlesTimeout = useRef<NodeJS.Timeout | null>(null);
+  const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
+  const learningTimeout = useRef<NodeJS.Timeout | null>(null);
+
   const API_BASE_URL = "http://192.168.1.131:8000/api";
-  const MAILCHIMP_SIGNUP_URL = "http://eepurl.com/jjolCI";
 
   useEffect(() => {
     return () => {
-      if (articlesTimeout) clearTimeout(articlesTimeout);
-      if (servicesTimeout) clearTimeout(servicesTimeout);
-      if (learningTimeout) clearTimeout(learningTimeout);
+      if (articlesTimeout.current) clearTimeout(articlesTimeout.current);
+      if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
+      if (learningTimeout.current) clearTimeout(learningTimeout.current);
     };
-  }, [articlesTimeout, servicesTimeout, learningTimeout]);
+  }, []);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -83,19 +80,42 @@ export function MinimalHeader() {
         : "hover:bg-gray-100 hover:shadow-inner"
     }`;
 
+  // Helper to handle hover open/close with delay and cancellation
+  function handleMouseEnter(
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    timeoutRef: React.MutableRefObject<NodeJS.Timeout | null>
+  ) {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setOpen(true);
+  }
+
+  function handleMouseLeave(
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    timeoutRef: React.MutableRefObject<NodeJS.Timeout | null>
+  ) {
+    timeoutRef.current = setTimeout(() => {
+      setOpen(false);
+      timeoutRef.current = null;
+    }, 200);
+  }
+
   return (
     <header className="bg-gray-50 sticky top-0 z-50 md:border-b md:border-gray-200 md:shadow-sm">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 relative">
         {/* Subtle background pattern */}
         <div
-          className="absolute inset-0 z-0 opacity-10"
+          className="absolute inset-0 z-0 opacity-10 pointer-events-none"
           style={{
             backgroundImage:
               "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
           }}
         ></div>
+
         {/* Mobile Header */}
-        <div className="flex items-center justify-between md:hidden py-2 gap-2 relative">
+        <div className="flex items-center justify-between md:hidden py-2 gap-2 relative z-10">
           {/* Logo */}
           <Link href="/" className="flex items-center justify-start">
             <img src="/logo.png" alt="Logo" className="h-28 w-auto" />
@@ -112,13 +132,12 @@ export function MinimalHeader() {
               autoComplete="off"
               spellCheck={false}
             />
-            {/* Show search results dropdown on mobile */}
             {searchQuery && searchResults.length > 0 && (
               <div className="absolute z-50 w-full mt-2 bg-white shadow-lg border border-gray-200 rounded-lg max-h-60 overflow-y-auto">
                 {searchResults.map((article) => (
                   <Link
                     key={article.id}
-                    href={`/articles/${article.id}`}
+                    href={`/articles/${article.slug}`} // changed here to slug
                     className="block px-4 py-2 text-sm hover:bg-blue-50"
                     onClick={() => {
                       handleClear();
@@ -130,22 +149,15 @@ export function MinimalHeader() {
                 ))}
               </div>
             )}
-            {/* No clear (X) button on mobile as requested */}
           </div>
 
-          {/* Bell */}
-          <button
-            className="p-2 rounded-full hover:bg-blue-50 text-blue-600 hover:shadow-md"
-            onClick={() =>
-              window.open(
-                MAILCHIMP_SIGNUP_URL,
-                "_blank",
-                "width=500,height=600"
-              )
-            }
+          {/* Write Button */}
+          <Link
+            href="/admin/new-article"
+            className="inline-flex items-center justify-center p-2 text-blue-600 hover:bg-blue-50 rounded-full"
           >
-            <Bell className="w-5 h-5" />
-          </button>
+            <Pencil className="w-5 h-5" />
+          </Link>
 
           {/* Menu Toggle */}
           <button
@@ -162,20 +174,20 @@ export function MinimalHeader() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-3 space-y-4 pb-6 border-t pt-4 text-sm">
+          <div className="md:hidden mt-3 space-y-4 pb-6 pt-4 text-sm z-10 relative">
             <Link href="/" className={navLinkStyle("/")}>
               Home
             </Link>
+
+            {/* Articles Dropdown */}
             <div>
               <button
-                onClick={() => setIsArticlesOpen(!isArticlesOpen)}
-                className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
+                onClick={() => setIsArticlesOpen((prev) => !prev)}
+                className="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
               >
                 Articles{" "}
                 <ChevronDown
-                  className={`ml-1 w-4 h-4 transition-transform ${
-                    isArticlesOpen ? "rotate-180" : ""
-                  }`}
+                  className={`${isArticlesOpen ? "rotate-180" : ""} w-4 h-4`}
                 />
               </button>
               {isArticlesOpen && (
@@ -195,34 +207,34 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
+
+            {/* Services Dropdown */}
             <div>
               <button
-                onClick={() => setIsServicesOpen(!isServicesOpen)}
-                className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
+                onClick={() => setIsServicesOpen((prev) => !prev)}
+                className="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
               >
                 Services{" "}
                 <ChevronDown
-                  className={`ml-1 w-4 h-4 transition-transform ${
-                    isServicesOpen ? "rotate-180" : ""
-                  }`}
+                  className={`${isServicesOpen ? "rotate-180" : ""} w-4 h-4`}
                 />
               </button>
               {isServicesOpen && (
                 <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-indigo-200 pl-3">
                   <Link
-                    href="/services/monolithic-to-cloud-native-migration"
+                    href="/services/cloud-migration"
                     className="block px-4 py-2 hover:bg-blue-50"
                   >
                     Cloud-Native Migration
                   </Link>
                   <Link
-                    href="/services/infra-as-code"
+                    href="/services/infrastructure-automation"
                     className="block px-4 py-2 hover:bg-blue-50"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
-                    href="/services/website"
+                    href="/services/web-development"
                     className="block px-4 py-2 hover:bg-blue-50"
                   >
                     Website Development
@@ -230,16 +242,16 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
+
+            {/* Learning Dropdown */}
             <div>
               <button
-                onClick={() => setIsLearningOpen(!isLearningOpen)}
-                className="flex items-center justify-between w-full font-medium text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
+                onClick={() => setIsLearningOpen((prev) => !prev)}
+                className="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
               >
                 Learning{" "}
                 <ChevronDown
-                  className={`ml-1 w-4 h-4 transition-transform ${
-                    isLearningOpen ? "rotate-180" : ""
-                  }`}
+                  className={`${isLearningOpen ? "rotate-180" : ""} w-4 h-4`}
                 />
               </button>
               {isLearningOpen && (
@@ -265,6 +277,7 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
+
             <Link href="/about" className={navLinkStyle("/about")}>
               About
             </Link>
@@ -272,7 +285,7 @@ export function MinimalHeader() {
         )}
 
         {/* Desktop Header */}
-        <div className="hidden md:flex items-center justify-between h-26 relative">
+        <div className="hidden md:flex items-center justify-between h-26 relative z-10">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <img src="/logo.png" alt="Logo" className="h-38 w-auto" />
@@ -287,20 +300,26 @@ export function MinimalHeader() {
             {/* Articles Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => {
-                if (articlesTimeout) clearTimeout(articlesTimeout);
-                setIsArticlesOpen(true);
-              }}
-              onMouseLeave={() => {
-                const timeout = setTimeout(() => setIsArticlesOpen(false), 200);
-                setArticlesTimeout(timeout);
-              }}
+              onMouseEnter={() =>
+                handleMouseEnter(setIsArticlesOpen, articlesTimeout)
+              }
+              onMouseLeave={() =>
+                handleMouseLeave(setIsArticlesOpen, articlesTimeout)
+              }
             >
-              <button className="flex items-center hover:text-blue-600">
+              <button className="flex items-center hover:text-blue-600 cursor-pointer select-none">
                 Articles <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isArticlesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                <div
+                  className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded shadow-lg z-50 py-2"
+                  onMouseEnter={() =>
+                    handleMouseEnter(setIsArticlesOpen, articlesTimeout)
+                  }
+                  onMouseLeave={() =>
+                    handleMouseLeave(setIsArticlesOpen, articlesTimeout)
+                  }
+                >
                   <Link
                     href="/articles"
                     className="block px-4 py-2 hover:bg-blue-50"
@@ -326,20 +345,26 @@ export function MinimalHeader() {
             {/* Learning Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => {
-                if (learningTimeout) clearTimeout(learningTimeout);
-                setIsLearningOpen(true);
-              }}
-              onMouseLeave={() => {
-                const timeout = setTimeout(() => setIsLearningOpen(false), 200);
-                setLearningTimeout(timeout);
-              }}
+              onMouseEnter={() =>
+                handleMouseEnter(setIsLearningOpen, learningTimeout)
+              }
+              onMouseLeave={() =>
+                handleMouseLeave(setIsLearningOpen, learningTimeout)
+              }
             >
-              <button className="flex items-center hover:text-blue-600">
+              <button className="flex items-center hover:text-blue-600 cursor-pointer select-none">
                 Resources <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isLearningOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                <div
+                  className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 py-2"
+                  onMouseEnter={() =>
+                    handleMouseEnter(setIsLearningOpen, learningTimeout)
+                  }
+                  onMouseLeave={() =>
+                    handleMouseLeave(setIsLearningOpen, learningTimeout)
+                  }
+                >
                   <Link
                     href="/learn-devops-on-youtube"
                     className="block px-4 py-2 hover:bg-blue-50"
@@ -371,20 +396,26 @@ export function MinimalHeader() {
             {/* Services Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => {
-                if (servicesTimeout) clearTimeout(servicesTimeout);
-                setIsServicesOpen(true);
-              }}
-              onMouseLeave={() => {
-                const timeout = setTimeout(() => setIsServicesOpen(false), 200);
-                setServicesTimeout(timeout);
-              }}
+              onMouseEnter={() =>
+                handleMouseEnter(setIsServicesOpen, servicesTimeout)
+              }
+              onMouseLeave={() =>
+                handleMouseLeave(setIsServicesOpen, servicesTimeout)
+              }
             >
-              <button className="flex items-center hover:text-blue-600">
+              <button className="flex items-center hover:text-blue-600 cursor-pointer select-none">
                 Services <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {isServicesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2">
+                <div
+                  className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 py-2"
+                  onMouseEnter={() =>
+                    handleMouseEnter(setIsServicesOpen, servicesTimeout)
+                  }
+                  onMouseLeave={() =>
+                    handleMouseLeave(setIsServicesOpen, servicesTimeout)
+                  }
+                >
                   <Link
                     href="/services/cloud-migration"
                     className="block px-4 py-2 hover:bg-blue-50"
@@ -412,12 +443,13 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
+
             <Link href="/about" className="hover:text-blue-600">
               About
             </Link>
           </nav>
 
-          {/* Desktop Search + Bell Icon replaces Subscribe button */}
+          {/* Desktop Search + Write Button */}
           <div className="flex items-center space-x-3">
             <div className="relative w-56">
               <Input
@@ -443,7 +475,7 @@ export function MinimalHeader() {
                   {searchResults.map((article) => (
                     <Link
                       key={article.id}
-                      href={`/articles/${article.slug}`} // use slug instead of id
+                      href={`/articles/${article.slug}`}
                       className="block px-4 py-2 text-sm hover:bg-blue-50"
                       onClick={handleClear}
                     >
@@ -453,7 +485,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-            {/* Bell Icon with Mailchimp popup */}
             <Link
               href="/admin/new-article"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all shadow-sm"
