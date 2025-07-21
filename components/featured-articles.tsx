@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Calendar,
   Clock,
@@ -7,16 +7,10 @@ import {
   ArrowRight,
   Folder,
   Sparkles,
-  ChevronDown,
-  Tag as TagIcon,
-  Eye,
   AlertTriangle,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
 
 interface Article {
   id: number;
@@ -37,34 +31,21 @@ interface Author {
   username?: string;
 }
 
-interface Tag {
-  id: number;
-  name: string;
-  slug: string;
-}
-
 interface Category {
   id: number;
   name: string;
   slug: string;
 }
 
-interface MinimalBlogListProps {
-  searchQuery?: string;
-  filterTagSlug?: string | null;
-}
-
-const PAGE_SIZE = 6;
-
 function slugify(text: string) {
   return text
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w-]+/g, "") // Remove all non-word chars
-    .replace(/--+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/, "") // Trim - from start
-    .replace(/-+$/, ""); // Trim - from end
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 }
 
 export function FeaturedArticlesPage() {
@@ -134,7 +115,6 @@ export function FeaturedArticlesPage() {
   }, []);
 
   const getAuthor = (id: number) => authors.find((a) => a.id === id);
-  const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`;
   const getCategoryById = (id: number | null) =>
     categories.find((c) => c.id === id);
 
@@ -151,7 +131,7 @@ export function FeaturedArticlesPage() {
   const stripMarkdown = (md: string) =>
     md
       .replace(/<[^>]+>/g, "")
-      .replace(/[#_*>!\[\]$$$$~\-]/g, "")
+      .replace(/[#_*>\[\]`~\-!]/g, "")
       .trim();
 
   const truncate = (str: string, max = 150) =>
@@ -159,7 +139,7 @@ export function FeaturedArticlesPage() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4">
         <div className="mb-12">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
@@ -193,7 +173,7 @@ export function FeaturedArticlesPage() {
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center px-4">
         <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-6 shadow-lg">
           <p className="text-red-600 mb-4">Error: {error}</p>
           <button
@@ -210,12 +190,12 @@ export function FeaturedArticlesPage() {
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       <div className="mb-12">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between flex-wrap gap-y-2 mb-4 sm:flex-nowrap sm:items-center">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Featured Articles
             </h2>
           </div>
@@ -322,7 +302,6 @@ export function FeaturedArticlesPage() {
                       <Clock className="w-4 h-4 text-gray-400" />
                       <span>{calculateReadTime(article.content)} read</span>
                     </div>
-                    {/* Added Total Reads counter */}
                     <div className="flex items-center gap-2 ml-auto text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
