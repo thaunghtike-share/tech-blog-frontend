@@ -443,7 +443,7 @@ export function MinimalHeader() {
                   {searchResults.map((article) => (
                     <Link
                       key={article.id}
-                      href={`/articles/${article.id}`}
+                      href={`/articles/${article.slug}`} // use slug instead of id
                       className="block px-4 py-2 text-sm hover:bg-blue-50"
                       onClick={handleClear}
                     >
