@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronDown, X, Menu, Bell } from "lucide-react";
+import { ChevronDown, X, Menu, Bell, Pencil } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -454,18 +454,13 @@ export function MinimalHeader() {
               )}
             </div>
             {/* Bell Icon with Mailchimp popup */}
-            <button
-              className="text-indigo-600 hover:text-indigo-800 p-2 rounded-full hover:bg-blue-50 transition-shadow"
-              onClick={() =>
-                window.open(
-                  MAILCHIMP_SIGNUP_URL,
-                  "_blank",
-                  "width=500,height=600"
-                )
-              }
+            <Link
+              href="/admin/new-article"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all shadow-sm"
             >
-              <Bell className="w-6 h-7" />
-            </button>
+              <Pencil className="w-4 h-4" />
+              Write
+            </Link>
           </div>
         </div>
       </div>

@@ -216,6 +216,23 @@ export default function NewArticlePage() {
 
       <main className="flex-grow max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-6 gap-10 relative z-10">
         <section className="lg:col-span-6">
+          {/* 🚧 Invitation-only Notice */}
+          <div className="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded mb-6 flex items-start gap-2 text-sm">
+            🛂{" "}
+            <span>
+              <strong>Writing articles is currently by invitation only.</strong>
+              <br />
+              If you'd like access, please{" "}
+              <a
+                href="https://m.me/learndevopsnowbytho"
+                target="_blank"
+                className="underline text-blue-600 hover:text-blue-800"
+              >
+                contact the admin via Messenger
+              </a>
+              .
+            </span>
+          </div>
           {!token ? (
             <form
               onSubmit={handleLogin}
