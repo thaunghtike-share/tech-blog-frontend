@@ -143,9 +143,6 @@ export default function HomePage() {
         <div className="-mt-24">
           <RecommendedPaidCourses />
         </div>
-        <section id="free-labs" className="-mt-6">
-          <CareerPath />
-        </section>
         <div className="-mt-18">
           <FreelanceServicesSection />
         </div>

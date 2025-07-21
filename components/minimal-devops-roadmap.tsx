@@ -19,9 +19,7 @@ import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
 interface RoadmapItem {
   title: string;
   duration: string;
-  details: string;
-  subtopics: string[];
-  // Removed prerequisites from RoadmapItem as it will now be a separate stage
+  details: string; // Now includes the content previously in subtopics
 }
 
 interface RoadmapStage {
@@ -48,73 +46,32 @@ const roadmap: RoadmapStage[] = [
       {
         title: "Computer Fundamentals",
         details:
-          "Understand the basics of computers including hardware, software, operating systems, and basic internet concepts.",
+          "Gain a solid understanding of computer basics including hardware components, software types, operating system fundamentals, file organization, and essential internet concepts to build your foundational IT knowledge.",
         duration: "4 weeks",
-        subtopics: [
-          "Computer hardware basics",
-          "Operating system concepts",
-          "File management",
-          "Basic software usage",
-          "Internet fundamentals",
-        ],
       },
       {
         title: "Operating System Basics",
         details:
-          "Understand how operating systems manage resources, processes, memory, and file systems.",
+          "Explore how operating systems manage hardware resources, processes, memory, and files. Learn about process lifecycle, threading, user and kernel modes, and get hands-on experience with basic Linux and Windows command-line interfaces.",
         duration: "2 weeks",
-        subtopics: [
-          "Processes and Threads",
-          "Memory Management",
-          "File Systems",
-          "User vs Kernel Mode",
-          "Basic Linux & Windows CLI",
-        ],
       },
       {
         title: "Networking Fundamentals",
         details:
-          "Learn core networking concepts including protocols, addressing, and how devices communicate across networks.",
+          "Learn how computers communicate over networks by studying different network types (LAN, WAN, PAN, MAN), the OSI and TCP/IP models, IP addressing and subnetting, ports and protocols like TCP/UDP, DNS and DHCP services, and network devices including switches, routers, and firewalls. Understand secure web protocols such as HTTP and HTTPS.",
         duration: "4 weeks",
-        subtopics: [
-          "Network Types (LAN, WAN, PAN, MAN)",
-          "OSI & TCP/IP Models",
-          "IP Addressing & Subnetting",
-          "Ports & Protocols (TCP/UDP)",
-          "DNS & DHCP",
-          "MAC Addressing & ARP",
-          "Switches, Routers, and Firewalls",
-          "HTTP vs HTTPS",
-        ],
       },
       {
         title: "Python Programming Basic",
         details:
-          "Learn the core syntax, data types, control structures, functions, and basic programming concepts in Python.",
+          "Develop fundamental Python programming skills, covering variables, data types, operators, control flow structures (if statements, loops), functions, data collections like lists and dictionaries, file handling, error management with try/except, and an introduction to Python modules and packages.",
         duration: "12 weeks",
-        subtopics: [
-          "Variables and Data Types",
-          "Operators and Expressions",
-          "Control Flow (if, for, while)",
-          "Functions and Scope",
-          "Lists, Tuples, and Dictionaries",
-          "Input/Output and File Handling",
-          "Error Handling (try/except)",
-          "Basic Modules and Packages",
-        ],
       },
       {
         title: "Virtualization",
         details:
-          "Learn the fundamentals of virtualization technology, types, and its role in modern IT infrastructure.",
+          "Understand virtualization technologies, including different types such as hardware, software, network, and storage virtualization. Learn about hypervisors (Type 1 and Type 2), how virtual machines and containers work, their benefits in IT infrastructure, and basic management and troubleshooting techniques.",
         duration: "2 weeks",
-        subtopics: [
-          "Types of virtualization (hardware, software, network, storage)",
-          "Hypervisors (Type 1 and Type 2)",
-          "Virtual Machines (VMs) and Containers",
-          "Benefits and use cases of virtualization",
-          "Basic troubleshooting and management",
-        ],
       },
     ],
   },
@@ -128,82 +85,39 @@ const roadmap: RoadmapStage[] = [
     items: [
       {
         title: "Linux Fundamentals",
-        details: "Understand the Linux operating system and shell commands.",
+        details:
+          "Learn to navigate and manage Linux systems by understanding file systems and permissions, mastering shell navigation, process management, secure remote access via SSH, essential Linux commands, and user/group administration.",
         duration: "4 weeks",
-        subtopics: [
-          "File systems & permissions",
-          "Shell navigation",
-          "Process management",
-          "SSH & remote access",
-          "Basic Linux commands",
-          "User and group management",
-        ],
       },
       {
         title: "Bash Scripting",
-        details: "Automate tasks with bash scripts.",
+        details:
+          "Automate repetitive tasks using bash scripting. Topics include bash syntax, variables, loops, conditionals, functions for modularity, input/output redirection, basic debugging, and scheduling scripts with cron jobs.",
         duration: "3 weeks",
-        subtopics: [
-          "Bash syntax and variables",
-          "Loops & conditionals",
-          "Functions and script modularity",
-          "Input/output redirection",
-          "Basic debugging techniques",
-          "Scheduling scripts with cron",
-        ],
       },
       {
         title: "CCNA",
         details:
-          "Prepare for Cisco Certified Network Associate certification with core networking, routing, switching, and device management skills.",
+          "Prepare for Cisco's CCNA certification by mastering core networking concepts such as OSI and TCP/IP models, IP addressing and subnetting, configuring Cisco devices through CLI, routing protocols like RIP and OSPF, VLAN and switching technologies, and implementing access control lists for network security.",
         duration: "8 weeks",
-        subtopics: [
-          "Networking fundamentals (OSI, TCP/IP models)",
-          "IP addressing and subnetting",
-          "Cisco device CLI and configuration",
-          "Routing protocols (RIP, OSPF)",
-          "Switching technologies and VLANs",
-          "Access control lists (ACLs)",
-        ],
       },
       {
         title: "Cloud Fundamentals",
-        details: "Grasp basic concepts of cloud computing and major providers.",
+        details:
+          "Understand cloud computing basics, including service models like IaaS, PaaS, SaaS, and explore major cloud providers (AWS, Azure, GCP). Learn to navigate cloud portals, grasp cloud regions and availability zones, and get introduced to cloud security essentials.",
         duration: "4 weeks",
-        subtopics: [
-          "IaaS vs PaaS vs SaaS",
-          "AWS Free Tier overview",
-          "Azure Basics and portal navigation",
-          "GCP Console introduction",
-          "Cloud regions and availability zones",
-          "Basic cloud security concepts",
-        ],
       },
       {
         title: "Docker Fundamentals",
-        details: "Understand containerization and Docker CLI.",
+        details:
+          "Get familiar with containerization concepts using Docker. Learn about container images and containers, how to write Dockerfiles, managing data with volumes, defining multi-container applications with Docker Compose, basic container networking, and container lifecycle management.",
         duration: "2 weeks",
-        subtopics: [
-          "Images & containers",
-          "Dockerfile basics",
-          "Volumes & ports",
-          "Docker Compose overview",
-          "Container networking basics",
-          "Managing container lifecycle",
-        ],
       },
       {
         title: "YAML & JSON",
-        details: "Work with common configuration formats.",
+        details:
+          "Work effectively with configuration file formats YAML and JSON. Learn their syntax and structure, how they are used in CI/CD pipelines, parsing techniques, key differences, and best practices to avoid common pitfalls.",
         duration: "1 week",
-        subtopics: [
-          "YAML syntax and structure",
-          "JSON syntax and usage",
-          "Using YAML in CI/CD pipelines",
-          "Parsing JSON data",
-          "Comparing YAML and JSON",
-          "Common pitfalls and best practices",
-        ],
       },
     ],
   },
@@ -217,81 +131,39 @@ const roadmap: RoadmapStage[] = [
     items: [
       {
         title: "AWS DevOps Services",
-        details: "Dive into EC2, IAM, S3, and basic networking.",
+        details:
+          "Gain hands-on experience with AWS core services used in DevOps, including provisioning and managing EC2 instances, operating with S3 storage buckets, setting up IAM users and roles for secure access, understanding VPC networking fundamentals, monitoring with CloudWatch, and managing infrastructure via the AWS CLI.",
         duration: "6 weeks",
-        subtopics: [
-          "EC2 provisioning and management",
-          "S3 bucket operations and lifecycle",
-          "IAM roles, users, and policies",
-          "VPC and networking basics",
-          "CloudWatch monitoring",
-          "Infrastructure with AWS CLI",
-        ],
       },
       {
         title: "Azure DevOps Services",
-        details: "Explore Azure resource groups, VMs, and storage.",
+        details:
+          "Explore Azure’s DevOps capabilities by learning resource group management, provisioning virtual machines, configuring virtual networks and subnets, utilizing blob storage, and applying role-based access control (RBAC) for security.",
         duration: "6 weeks",
-        subtopics: [
-          "Azure Portal navigation",
-          "Resource groups & management",
-          "Virtual Network (VNet) and Subnets",
-          "Azure VMs provisioning",
-          "Blob Storage basics",
-          "RBAC and IAM in Azure",
-        ],
       },
       {
         title: "Version Control",
-        details: "Track changes and collaborate on code.",
+        details:
+          "Master version control with Git by learning essential CLI commands, branching and merging workflows, creating and reviewing pull requests, collaborating on GitHub, resolving conflicts through rebasing, and managing release versions with tags.",
         duration: "3 weeks",
-        subtopics: [
-          "Git CLI commands",
-          "Branching and merging",
-          "Pull requests and code review",
-          "Working with GitHub",
-          "Rebasing and conflict resolution",
-          "Git tags and releases",
-        ],
       },
       {
         title: "CICD Fundamentals",
-        details: "Automate software delivery using pipelines.",
+        details:
+          "Automate software delivery processes with continuous integration and continuous deployment. Understand the concepts of CI/CD, set up GitHub Actions and GitLab pipelines, integrate webhooks, implement unit testing within pipelines, and manage build artifacts for deployment.",
         duration: "3 weeks",
-        subtopics: [
-          "CI vs CD concepts",
-          "GitHub Actions basics",
-          "GitLab CI/CD pipelines",
-          "Webhooks integration",
-          "Unit testing in pipelines",
-          "Artifact creation and deployment",
-        ],
       },
       {
         title: "Kubernetes Essentials Part-I",
-        details: "Learn to orchestrate containers at scale.",
+        details:
+          "Learn container orchestration basics with Kubernetes by understanding pods and ReplicaSets, deploying and rolling out applications, networking concepts within clusters, configuring ingress controllers, managing namespaces and access control (RBAC), and setting resource limits and requests for workloads.",
         duration: "5 weeks",
-        subtopics: [
-          "Pods and ReplicaSets",
-          "Deployments and rollout strategies",
-          "Cluster networking and Services",
-          "Ingress Controllers",
-          "Namespaces and RBAC",
-          "Resource limits and requests",
-        ],
       },
       {
         title: "Kubernetes Essentials Part-II",
-        details: "Go deeper into Kubernetes with advanced workloads.",
+        details:
+          "Advance your Kubernetes skills with concepts such as horizontal pod autoscaling, managing persistent storage with volumes and claims, using secrets and config maps for configuration management, implementing liveness and readiness probes for health checks, event-driven autoscaling (KEDA), and maintaining availability with Pod Disruption Budgets.",
         duration: "6 weeks",
-        subtopics: [
-          "Horizontal Pod Autoscaler (HPA)",
-          "Persistent Volumes and PVCs",
-          "Secrets and ConfigMaps",
-          "Liveness and readiness probes",
-          "KEDA (event-based autoscaling)",
-          "PodDisruptionBudgets (PDB)",
-        ],
       },
     ],
   },
@@ -305,81 +177,39 @@ const roadmap: RoadmapStage[] = [
     items: [
       {
         title: "Logging & Monitoring",
-        details: "Observe, trace, and analyze workloads effectively.",
+        details:
+          "Build comprehensive observability for your systems by learning Prometheus for metrics collection, Grafana for dashboard visualization, AlertManager for alerting, Loki for log aggregation, comparing ELK and EFK logging stacks, and distributed tracing using OpenTelemetry.",
         duration: "6 weeks",
-        subtopics: [
-          "Prometheus fundamentals",
-          "Grafana dashboards",
-          "AlertManager setup",
-          "Loki for log aggregation",
-          "ELK vs EFK stacks",
-          "Tracing with OpenTelemetry",
-        ],
       },
       {
-        title: "Ansible Configuration Management",
-        details: "Automate infrastructure configuration and provisioning.",
+        title: "Ansible",
+        details:
+          "Automate and manage infrastructure configuration using Ansible. Learn YAML syntax for playbooks, writing tasks, managing inventories and variables, organizing reusable roles, securing secrets with Ansible Vault, and running ad-hoc commands while ensuring idempotency.",
         duration: "8 weeks",
-        subtopics: [
-          "YAML syntax for Ansible",
-          "Playbooks and tasks",
-          "Inventory files and variables",
-          "Roles and reusable code",
-          "Ansible Vault for secrets",
-          "Ad-hoc commands and idempotency",
-        ],
       },
       {
-        title: "Infrastructure As Code",
-        details: "Provision cloud infrastructure with Terraform.",
+        title: "Terraform",
+        details:
+          "Provision and manage cloud infrastructure declaratively with Terraform. Understand HCL syntax, create reusable modules, configure providers and resources, manage Terraform state effectively, use remote backends (S3, Azure Blob, GCS), and organize environments with workspaces.",
         duration: "7 weeks",
-        subtopics: [
-          "HCL syntax and variables",
-          "Modules and reusability",
-          "Providers and resources",
-          "Terraform state management",
-          "Remote backends (S3, Azure, GCS)",
-          "Workspaces and environments",
-        ],
       },
       {
         title: "GitOps with ArgoCD",
-        details: "Deploy apps declaratively with Git as the source of truth.",
+        details:
+          "Implement GitOps workflows by deploying applications declaratively using ArgoCD. Learn how to install and configure ArgoCD, manage app lifecycles through Git repositories, integrate Helm charts, utilize sync and self-healing features, monitor application health, and configure RBAC for multi-tenant setups.",
         duration: "4 weeks",
-        subtopics: [
-          "Installing and configuring ArgoCD",
-          "Managing applications with Git",
-          "Helm integration",
-          "Sync and self-healing",
-          "App health & status checks",
-          "RBAC and multi-tenancy in ArgoCD",
-        ],
       },
       {
         title: "Vault & Secrets Management",
-        details: "Secure sensitive data in apps and pipelines.",
+        details:
+          "Secure sensitive data in your infrastructure and pipelines by understanding Vault architecture, using secrets engines and dynamic secrets, managing access policies and tokens, integrating with Kubernetes using Vault Agent, enabling audit logging and lease management, and differentiating between KV secrets engine versions.",
         duration: "6 weeks",
-        subtopics: [
-          "Vault architecture and setup",
-          "Secrets engines and dynamic secrets",
-          "Policies and token authentication",
-          "Kubernetes integration with Vault Agent",
-          "Audit logging and leases",
-          "KV Secrets v1 vs v2",
-        ],
       },
       {
         title: "Kubernetes Security",
-        details: "Enforce security and access control in Kubernetes.",
+        details:
+          "Enhance security posture of Kubernetes clusters by mastering role-based access control (RBAC), enforcing Pod Security Standards, implementing network policies with tools like Calico or Cilium, configuring admission controllers, applying OPA Gatekeeper policies, and securing runtimes with technologies such as Seccomp and AppArmor.",
         duration: "8 weeks",
-        subtopics: [
-          "RBAC (Roles and Bindings)",
-          "Pod Security Standards (PSS)",
-          "Network Policies (Calico/Cilium)",
-          "Admission Controllers",
-          "OPA Gatekeeper with constraints",
-          "Runtime security (Seccomp, AppArmor)",
-        ],
       },
     ],
   },
@@ -417,7 +247,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     },
     {
       text: "Operating System Basic",
-      url: "https://www.netacad.com/courses/operating-systems-basics?courseLang=en-US"
+      url: "https://www.netacad.com/courses/operating-systems-basics?courseLang=en-US",
     },
   ],
   "Computer Fundamentals": [
@@ -441,17 +271,15 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     },
   ],
   "Linux Fundamentals": [
-    { text: "Linux Journey", 
-      url: "https://linuxjourney.com/" 
-    },
+    { text: "Linux Journey", url: "https://linuxjourney.com/" },
     {
       text: "Ubuntu Command Line Basics",
       url: "https://ubuntu.com/tutorials/command-line-for-beginners",
     },
     {
       text: "TryHackMe | Linux Foundation",
-      url: "https://tryhackme.com/module/linux-fundamentals"
-    }
+      url: "https://tryhackme.com/module/linux-fundamentals",
+    },
   ],
   "Cloud Fundamentals": [
     {
@@ -525,7 +353,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://docs.aws.amazon.com/s3/index.html",
     },
   ],
-
   "Azure DevOps Services": [
     {
       text: "Azure Fundamentals Learning Path",
@@ -544,7 +371,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview",
     },
   ],
-
   "Version Control": [
     {
       text: "Git Official Docs",
@@ -563,7 +389,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://git-scm.com/book/en/v2",
     },
   ],
-
   "Kubernetes Essentials Part-I": [
     {
       text: "Kubernetes Basics (Interactive)",
@@ -582,7 +407,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://kubernetes.io/docs/concepts/services-networking/ingress/",
     },
   ],
-
   "Kubernetes Essentials Part-II": [
     {
       text: "Kubernetes HPA",
@@ -601,7 +425,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://keda.sh/docs/",
     },
   ],
-
   "CICD Fundamentals": [
     {
       text: "GitHub Actions Docs",
@@ -612,7 +435,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://docs.gitlab.com/ee/ci/",
     },
   ],
-  "Infrastructure As Code": [
+  "Terraform": [
     {
       text: "Terraform Getting Started",
       url: "https://developer.hashicorp.com/terraform/tutorials",
@@ -626,7 +449,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://www.terraform-best-practices.com/",
     },
   ],
-
   "GitOps with ArgoCD": [
     {
       text: "ArgoCD Official Docs",
@@ -641,7 +463,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/",
     },
   ],
-
   "Vault & Secrets Management": [
     {
       text: "Vault Official Learn Guides",
@@ -660,7 +481,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://developer.hashicorp.com/vault/docs/secrets",
     },
   ],
-
   "Kubernetes Security": [
     {
       text: "Kubernetes Security Overview",
@@ -679,7 +499,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
     },
   ],
-
   "Logging & Monitoring": [
     {
       text: "Prometheus Docs",
@@ -698,8 +517,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://opentelemetry.io/docs/",
     },
   ],
-
-  "Ansible Configuration Management": [
+  "Ansible": [
     {
       text: "Ansible Getting Started",
       url: "https://docs.ansible.com/ansible/latest/getting_started/index.html",
@@ -774,9 +592,7 @@ export function MinimalDevopsRoadmap() {
     title: string;
     links: { text: string; url: string }[];
   } | null>(null);
-  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>(
-    {}
-  );
+  // Removed expandedTopics state as subtopics are no longer separate
   const [showAllTopics, setShowAllTopics] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
 
@@ -785,10 +601,7 @@ export function MinimalDevopsRoadmap() {
   const currentStageConfig =
     stageConfig[selectedStageKey as keyof typeof stageConfig];
 
-  const toggleExpand = (title: string) => {
-    setExpandedTopics((prev) => ({ ...prev, [title]: !prev[title] }));
-  };
-
+  // Removed toggleExpand function as subtopics are no longer separate
   const displayedItems = showAllTopics
     ? selectedStage.items
     : selectedStage.items.slice(0, 6);
@@ -845,7 +658,7 @@ export function MinimalDevopsRoadmap() {
               onClick={() => {
                 setSelectedStageKey(stage.key);
                 setShowAllTopics(false); // reset showAll when switching stages
-                setExpandedTopics({});
+                // Removed setExpandedTopics({}) as subtopics are no longer separate
               }}
               className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl transition-all duration-300 ${
                 selectedStageKey === stage.key
@@ -902,126 +715,55 @@ export function MinimalDevopsRoadmap() {
           )}
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayedItems.map(
-            ({ title, details, duration, subtopics }, idx) => {
-              const isExpanded = expandedTopics[title];
-              const displaySubtopics = isExpanded
-                ? subtopics
-                : subtopics.slice(0, 4);
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className={`relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl`} // New: Left border for stage
-                >
-                  <div className="p-5 relative">
-                    {" "}
-                    {/* Adjusted padding */}
-                    <div className="absolute top-3 right-3">
-                      <Badge
-                        className={`px-3 py-1 bg-white/90 backdrop-blur-sm ${currentStageConfig.text} text-xs font-medium rounded-full shadow-sm border border-gray-200`}
-                      >
-                        {selectedStage.label}
-                      </Badge>
-                    </div>
-                    <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
-                      {title}
-                    </h4>
-                    <span className="flex items-center text-xs font-medium text-gray-600 mb-4">
-                      <Clock className="w-3 h-3 mr-1 text-gray-500" />{" "}
-                      {duration}
-                    </span>
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      {details}
-                    </p>
-                  </div>
-                  <div className="p-5 flex-grow">
-                    {" "}
-                    {/* Adjusted padding */}
-                    {displaySubtopics?.length > 0 ? (
-                      <ul className="space-y-3 mb-4">
-                        {displaySubtopics.map((sub, i) => (
-                          <motion.li
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.05 }}
-                            className="flex items-start group/item"
-                          >
-                            <span className="relative flex-shrink-0 mt-1">
-                              <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20 animate-pulse"></span>
-                              <span
-                                className={`relative flex items-center justify-center w-5 h-5 ${currentStageConfig.iconBg} rounded-full shadow-sm`} // Use iconBg
-                              >
-                                <svg
-                                  className={`w-3 h-3 ${currentStageConfig.iconText}`}
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  {" "}
-                                  {/* Use iconText */}
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={3}
-                                    d="M5 13l4 4L19 7"
-                                  />
-                                </svg>
-                              </span>
-                            </span>
-                            <span className="ml-3 text-gray-800 text-sm font-medium leading-tight group-hover/item:text-blue-600 transition-colors">
-                              {sub}
-                            </span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-gray-400 text-sm mb-6">
-                        No subtopics listed
-                      </p>
-                    )}
-                    {subtopics.length > 4 && (
-                      <button
-                        onClick={() => toggleExpand(title)}
-                        className="text-blue-600 text-sm font-medium hover:text-blue-800 focus:outline-none transition-colors flex items-center gap-1"
-                      >
-                        {isExpanded ? (
-                          <>
-                            <ChevronDown className="w-4 h-4" /> Show Less
-                          </>
-                        ) : (
-                          <>
-                            <ChevronRight className="w-4 h-4" /> See{" "}
-                            {subtopics.length - 4} More Topics
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </div>
-                  <div className="p-5 pt-0">
-                    {" "}
-                    {/* Adjusted padding */}
-                    <button
-                      onClick={() =>
-                        setSelectedTopic({
-                          title,
-                          links: resourceLinks[title] || [],
-                        })
-                      }
-                      className={`w-full bg-gradient-to-r ${currentStageConfig.gradient} hover:shadow-lg text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-between transition-all duration-300 group/btn shadow-md hover:shadow-xl`} // New button style
+          {displayedItems.map(({ title, details, duration }, idx) => {
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl`} // New: Left border for stage
+              >
+                <div className="p-5 relative">
+                  {" "}
+                  {/* Adjusted padding */}
+                  <div className="absolute top-3 right-3">
+                    <Badge
+                      className={`px-3 py-1 bg-white/90 backdrop-blur-sm ${currentStageConfig.text} text-xs font-medium rounded-full shadow-sm border border-gray-200`}
                     >
-                      <span>Explore Resources</span>
-                      <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </button>
+                      {selectedStage.label}
+                    </Badge>
                   </div>
-                </motion.div>
-              );
-            }
-          )}
+                  <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
+                    {title}
+                  </h4>
+                  <span className="flex items-center text-xs font-medium text-gray-600 mb-4">
+                    <Clock className="w-3 h-3 mr-1 text-gray-500" /> {duration}
+                  </span>
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    {details}
+                  </p>
+                </div>
+                <div className="p-5 pt-0">
+                  {" "}
+                  {/* Adjusted padding */}
+                  <button
+                    onClick={() =>
+                      setSelectedTopic({
+                        title,
+                        links: resourceLinks[title] || [],
+                      })
+                    }
+                    className={`w-full bg-gradient-to-r ${currentStageConfig.gradient} hover:shadow-lg text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-between transition-all duration-300 group/btn shadow-md hover:shadow-xl`} // New button style
+                  >
+                    <span>Explore Resources</span>
+                    <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
         {selectedStage.items.length > 6 && (
           <div className="flex justify-center mt-8">
