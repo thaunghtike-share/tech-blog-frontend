@@ -175,14 +175,14 @@ export function YouTubePlaylists({
                 <Globe className="w-4 h-4 text-white" />
               </div>
               <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-red-100 text-red-700 border border-red-200">
-                <Play className="w-4 h-4 mr-2" /> DevOps Playlist Courses
+                <Play className="w-4 h-4 mr-2" /> Youtube Playlists
               </span>
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-red-800 to-pink-800 bg-clip-text text-transparent mb-4"
+              className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-red-800 to-pink-800 bg-clip-text text-transparent mb-4"
             >
               Learn DevOps on Youtube
             </motion.h2>

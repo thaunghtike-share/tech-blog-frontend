@@ -108,16 +108,16 @@ export function RecommendedPaidCourses() {
             <Play className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <BookOpen className="w-4 h-4 mr-2" /> Premium DevOps Learning
+            <BookOpen className="w-4 h-4 mr-2" /> Paid Courses
           </span>
         </motion.div>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
-          Recommended Paid DevOps & Kubernetes Courses
+          Recommended Paid Cloud DevOps Courses
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
