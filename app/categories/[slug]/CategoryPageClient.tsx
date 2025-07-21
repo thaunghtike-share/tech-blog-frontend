@@ -29,6 +29,7 @@ interface Article {
 
 interface Author {
   id: number;
+  slug: string;
   name: string;
   avatar?: string;
 }
@@ -289,7 +290,7 @@ export default function CategoryPageClient({ slug }: Props) {
                           stripMarkdown(article.content),
                           200
                         );
-                        const authorName = getAuthorName(article.author);
+                        const author = getAuthor(article.author); // get full author object by id
 
                         return (
                           <motion.article
@@ -317,18 +318,13 @@ export default function CategoryPageClient({ slug }: Props) {
                                   <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                                 </div>
                               </Link>
+
                               <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                                 <div className="flex items-center gap-2">
-                                  {getAuthor(article.author)?.avatar ? (
+                                  {author?.avatar ? (
                                     <img
-                                      src={
-                                        getAuthor(article.author)?.avatar ||
-                                        "/placeholder.svg"
-                                      }
-                                      alt={
-                                        getAuthor(article.author)?.name ||
-                                        "Author"
-                                      }
+                                      src={author.avatar}
+                                      alt={author.name}
                                       className="w-5 h-5 rounded-full object-cover border border-gray-200"
                                       loading="lazy"
                                     />
@@ -337,45 +333,57 @@ export default function CategoryPageClient({ slug }: Props) {
                                       <User className="w-3 h-3 text-white" />
                                     </div>
                                   )}
-                                  <span className="font-medium">
-                                    {authorName}
-                                  </span>
+
+                                  {author ? (
+                                    <Link
+                                      href={`/authors/${author.slug}`}
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                                    >
+                                      {author.name}
+                                    </Link>
+                                  ) : (
+                                    <span className="text-gray-700 font-medium">
+                                      Unknown Author
+                                    </span>
+                                  )}
                                 </div>
+
                                 <div className="flex items-center gap-2">
                                   <Calendar className="w-4 h-4 text-gray-400" />
                                   <span>
                                     {formatDate(article.published_at)}
                                   </span>
                                 </div>
+
                                 <div className="flex items-center gap-2">
                                   <Clock className="w-4 h-4 text-gray-400" />
                                   <span>
                                     {calculateReadTime(article.content)}
                                   </span>
                                 </div>
+
                                 {article.read_count && (
-                                  <div className="flex items-center gap-2 ml-auto">
-                                    <div className="flex items-center gap-2 ml-auto text-gray-600">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-5 h-5 text-gray-500"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth={2}
-                                          d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
-                                        />
-                                        <circle cx="12" cy="12" r="3" />
-                                      </svg>
-                                      <span className="font-medium">
-                                        {article.read_count.toLocaleString()}{" "}
-                                        views
-                                      </span>
-                                    </div>
+                                  <div className="flex items-center gap-2 ml-auto text-gray-600">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="w-5 h-5 text-gray-500"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
+                                      />
+                                      <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <span className="font-medium">
+                                      {article.read_count.toLocaleString()}{" "}
+                                      views
+                                    </span>
                                   </div>
                                 )}
                               </div>

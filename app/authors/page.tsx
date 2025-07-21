@@ -4,7 +4,6 @@ import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Linkedin } from "lucide-react";
 
 interface Author {
   id: number;
@@ -15,7 +14,7 @@ interface Author {
   featured: boolean;
   job_title: string;
   company: string;
-  linkedin?: string;
+  // Removed linkedin
 }
 
 const API_BASE_URL = "http://localhost:8000/api";
@@ -158,7 +157,7 @@ export default function AuthorsPage() {
                   <img
                     src={author.avatar || "/placeholder.svg"}
                     alt={author.name}
-                    className="w-20 h-20 rounded-full object-cover border border-gray-300 shadow-sm"
+                    className="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm"
                   />
                   <Link
                     href={`/authors/${author.slug}`}
@@ -173,18 +172,6 @@ export default function AuthorsPage() {
                     <p className="text-center text-gray-500 text-sm whitespace-pre-line">
                       {author.bio}
                     </p>
-                  )}
-                  {author.linkedin && (
-                    <a
-                      href={author.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-flex items-center space-x-1 text-blue-600 hover:underline text-sm font-medium"
-                      aria-label={`Connect with ${author.name} on LinkedIn`}
-                    >
-                      <Linkedin className="w-4 h-4" />
-                      <span>Connect Me</span>
-                    </a>
                   )}
                 </CardContent>
               </Card>
