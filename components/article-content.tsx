@@ -519,11 +519,11 @@ export function ArticleContent({
                       </p>
                       <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-xs text-gray-600">
-                          <User className="w-3.5 h-3.5 text-indigo-500" />
+                          <User className="w-3.5 h-3.5 text-gray-500" />
                           <span>{itemAuthor}</span>
                         </div>
                         <div className="text-xs text-gray-500 flex items-center gap-1">
-                          <CalendarDays className="w-3.5 h-3.5 text-indigo-500" />
+                          <CalendarDays className="w-3.5 h-3.5 text-gray-500" />
                           <span>{date}</span>
                         </div>
                       </div>
