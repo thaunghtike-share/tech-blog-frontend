@@ -2,7 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ServerCog, ShieldCheck, Cloud, ChevronRight, Sparkles } from "lucide-react";
+import {
+  ServerCog,
+  ShieldCheck,
+  Cloud,
+  ChevronRight,
+  Sparkles,
+} from "lucide-react";
 
 const roles = [
   {
@@ -45,10 +51,9 @@ const roles = [
       "Alertmanager",
       "Linux",
       "Scripting",
-      "Understanding SLIs, SLOs, and SLAs",
       "Cloud monitoring (CloudWatch, Azure Monitor)",
       "Kubernetes basics",
-      "CICD"
+      "CICD",
     ],
     color: "from-green-500 to-emerald-600",
     borderColor: "border-green-500",
@@ -67,12 +72,11 @@ const roles = [
     ],
     skills: [
       "Cloud",
-      "IAM and security best practices",
-      "Cloud CLI tools (AWS CLI, Azure CLI, gcloud)",
-      "Infrastructure as Code (Terraform, CloudFormation)",
-      "Networking basics (VPC, Subnets, Security Groups)",
-      "Scripting for automation",
-      "CICD"
+      "IAM",
+      "IAC (Terraform, CloudFormation)",
+      "Networking Basics (VPC, Subnets, Security Groups)",
+      "Scripting",
+      "CICD",
     ],
     color: "from-amber-500 to-orange-500",
     borderColor: "border-orange-500",
@@ -119,10 +123,10 @@ export function CareerPath() {
         </motion.p>
       </div>
 
-      {/* Horizontal Scrolling Container */}
+      {/* Cards */}
       <div className="relative">
         <div className="flex overflow-x-auto pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar">
-          <div className="flex space-x-6 min-w-max sm:min-w-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-x-0">
+          <div className="flex space-x-6 min-w-max sm:min-w-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-x-0 items-stretch">
             {roles.map((role, idx) => (
               <motion.div
                 key={idx}
@@ -130,20 +134,21 @@ export function CareerPath() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ y: -5 }}
-                className={`w-80 sm:w-auto flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 ${role.borderColor} overflow-hidden transition-all duration-300 hover:shadow-lg group`}
+                className={`w-80 sm:w-auto h-full flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 ${role.borderColor} overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col`}
               >
-                <div className="p-5 h-full flex flex-col">
-                  <div
-                    className={`flex items-center justify-center w-12 h-12 ${role.iconBg} ${role.iconColor} rounded-xl mb-4`}
-                  >
-                    <role.icon className="w-6 h-6" />
-                  </div>
+                <div className="p-5 flex flex-col h-full">
+                  {/* Top */}
+                  <div>
+                    <div
+                      className={`flex items-center justify-center w-12 h-12 ${role.iconBg} ${role.iconColor} rounded-xl mb-4`}
+                    >
+                      <role.icon className="w-6 h-6" />
+                    </div>
 
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">
-                    {role.title}
-                  </h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-3">
+                      {role.title}
+                    </h3>
 
-                  <div className="space-y-4 flex-grow">
                     <div>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
                         Responsibilities & Principles
@@ -161,7 +166,8 @@ export function CareerPath() {
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-100">
+                  {/* Spacer to push skills to bottom */}
+                  <div className="mt-auto pt-6">
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
                       Skills & Tools
                     </h4>

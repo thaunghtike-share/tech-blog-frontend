@@ -229,7 +229,7 @@ const certifications: CertificationItem[] = [
       "Setup Teams, Areas, Iterations",
       "Customize work item templates and workflows",
       "Integrate communication tools (Slack, MS Teams)",
-      "Manage stakeholder feedback and collaboration"
+      "Manage stakeholder feedback and collaboration",
     ],
     examLink:
       "https://learn.microsoft.com/en-us/credentials/certifications/exams/az-400/",
@@ -321,6 +321,7 @@ export function CertificationRoadmap() {
   const [filter, setFilter] = useState<
     "All" | "Beginner" | "Intermediate" | "Advanced"
   >("Beginner");
+
   const filteredCerts = certifications.filter(
     (cert) => cert.difficulty === filter
   );
@@ -426,7 +427,7 @@ export function CertificationRoadmap() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl`} // New: Left border
+                  className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`} // Added flex flex-col
                 >
                   <div className="p-5 relative">
                     {" "}
@@ -451,9 +452,9 @@ export function CertificationRoadmap() {
                     </p>
                   </div>
                   {/* Content */}
-                  <div className="p-5">
+                  <div className="p-5 flex-grow">
                     {" "}
-                    {/* Adjusted padding */}
+                    {/* Added flex-grow */}
                     <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
                       {" "}
                       {/* Adjusted padding/radius */}

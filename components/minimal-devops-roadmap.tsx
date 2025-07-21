@@ -435,7 +435,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://docs.gitlab.com/ee/ci/",
     },
   ],
-  "Terraform": [
+  Terraform: [
     {
       text: "Terraform Getting Started",
       url: "https://developer.hashicorp.com/terraform/tutorials",
@@ -517,7 +517,7 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://opentelemetry.io/docs/",
     },
   ],
-  "Ansible": [
+  Ansible: [
     {
       text: "Ansible Getting Started",
       url: "https://docs.ansible.com/ansible/latest/getting_started/index.html",
@@ -592,7 +592,6 @@ export function MinimalDevopsRoadmap() {
     title: string;
     links: { text: string; url: string }[];
   } | null>(null);
-  // Removed expandedTopics state as subtopics are no longer separate
   const [showAllTopics, setShowAllTopics] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
 
@@ -601,7 +600,6 @@ export function MinimalDevopsRoadmap() {
   const currentStageConfig =
     stageConfig[selectedStageKey as keyof typeof stageConfig];
 
-  // Removed toggleExpand function as subtopics are no longer separate
   const displayedItems = showAllTopics
     ? selectedStage.items
     : selectedStage.items.slice(0, 6);
@@ -658,7 +656,6 @@ export function MinimalDevopsRoadmap() {
               onClick={() => {
                 setSelectedStageKey(stage.key);
                 setShowAllTopics(false); // reset showAll when switching stages
-                // Removed setExpandedTopics({}) as subtopics are no longer separate
               }}
               className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl transition-all duration-300 ${
                 selectedStageKey === stage.key
@@ -723,11 +720,11 @@ export function MinimalDevopsRoadmap() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl`} // New: Left border for stage
+                className={`relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`} // Added flex flex-col
               >
-                <div className="p-5 relative">
+                <div className="p-5 relative flex-grow">
                   {" "}
-                  {/* Adjusted padding */}
+                  {/* Added flex-grow */}
                   <div className="absolute top-3 right-3">
                     <Badge
                       className={`px-3 py-1 bg-white/90 backdrop-blur-sm ${currentStageConfig.text} text-xs font-medium rounded-full shadow-sm border border-gray-200`}
@@ -745,9 +742,9 @@ export function MinimalDevopsRoadmap() {
                     {details}
                   </p>
                 </div>
-                <div className="p-5 pt-0">
+                <div className="p-5">
                   {" "}
-                  {/* Adjusted padding */}
+                  {/* Changed pt-0 to p-5 for consistent padding */}
                   <button
                     onClick={() =>
                       setSelectedTopic({

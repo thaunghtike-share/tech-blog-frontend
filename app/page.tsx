@@ -20,7 +20,7 @@ import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses";
 import { YouTubePlaylists } from "@/components/YouTubePlaylists";
 import { FreeLabs } from "@/components/FreeLabs";
 import Intro from "@/components/Intro";
-import CareerPath from "@/components/CareerPath";
+import { CareerPath } from "@/components/CareerPath";
 
 export default function HomePage() {
   const router = useRouter();

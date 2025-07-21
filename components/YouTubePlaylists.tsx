@@ -188,7 +188,6 @@ export function YouTubePlaylists() {
               Docker, Kubernetes, AWS, Terraform, and more.
             </motion.p>
           </div>
-
           {/* === DIFFICULTY FILTER BUTTONS === */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -251,7 +250,6 @@ export function YouTubePlaylists() {
               );
             })}
           </motion.div>
-
           {/* === PLAYLISTS GRID OR EMPTY MESSAGE === */}
           {filteredPlaylists.length === 0 ? (
             <motion.div
@@ -280,7 +278,7 @@ export function YouTubePlaylists() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.08 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl`}
+                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`} // Added flex flex-col
                   >
                     <div className="relative aspect-video bg-gray-900 overflow-hidden">
                       <iframe
@@ -292,7 +290,9 @@ export function YouTubePlaylists() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <div className="p-5">
+                    <div className="p-5 flex-grow">
+                      {" "}
+                      {/* Added flex-grow */}
                       <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-red-700 transition-colors flex items-center gap-2">
                         {pl.title}
                         {pl.is_burmese && (
@@ -318,6 +318,10 @@ export function YouTubePlaylists() {
                           Estimated: <strong>{pl.estDuration}</strong>
                         </span>
                       </div>
+                    </div>
+                    <div className="p-5 pt-0">
+                      {" "}
+                      {/* Adjusted padding */}
                       <a
                         href={pl.playlistUrl}
                         target="_blank"
@@ -333,7 +337,6 @@ export function YouTubePlaylists() {
               })}
             </div>
           )}
-
           {/* === SHOW MORE / SHOW LESS BUTTON === */}
           {filteredPlaylists.length > 6 && (
             <div className="mt-10 text-center">

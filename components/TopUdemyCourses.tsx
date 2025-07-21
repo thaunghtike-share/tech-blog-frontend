@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Star,
   GraduationCap,
@@ -48,11 +47,9 @@ export function TopUdemyCourses() {
         const data = await res.json();
         // Supports API response either as an array or {results: [...]}
         const rawCourses = Array.isArray(data) ? data : data.results;
-
         if (!Array.isArray(rawCourses)) {
           throw new Error("Invalid courses data format");
         }
-
         const mapped: UdemyCourse[] = rawCourses.map((course: any) => ({
           id: course.id,
           title: course.title,
@@ -120,7 +117,6 @@ export function TopUdemyCourses() {
             <BookOpen className="w-4 h-4 mr-2" /> Free DevOps Learning
           </span>
         </motion.div>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,7 +125,6 @@ export function TopUdemyCourses() {
         >
           Learn DevOps on Udemy Free
         </motion.h2>
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -140,7 +135,6 @@ export function TopUdemyCourses() {
           practices.
         </motion.p>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayedCourses.map((course, idx) => (
           <motion.div
@@ -149,9 +143,11 @@ export function TopUdemyCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl"
+            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col" // Added flex flex-col
           >
-            <div className="p-5 relative">
+            <div className="p-5 relative flex-grow">
+              {" "}
+              {/* Added flex-grow */}
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
@@ -201,7 +197,6 @@ export function TopUdemyCourses() {
                 </div>
               )}
             </div>
-
             <div className="p-5 pt-0">
               <a
                 href={course.url}
@@ -216,7 +211,6 @@ export function TopUdemyCourses() {
           </motion.div>
         ))}
       </div>
-
       {/* Show More / Show Less button */}
       {courses.length > 6 && (
         <div className="mt-10 text-center">

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useRef } from "react";
 import {
   Star,
@@ -112,7 +111,6 @@ export function RecommendedPaidCourses() {
             <BookOpen className="w-4 h-4 mr-2" /> Premium DevOps Learning
           </span>
         </motion.div>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -121,7 +119,6 @@ export function RecommendedPaidCourses() {
         >
           Recommended Paid DevOps & Kubernetes Courses
         </motion.h2>
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -132,7 +129,6 @@ export function RecommendedPaidCourses() {
           career.
         </motion.p>
       </div>
-
       {/* Courses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {coursesToShow.map((course, idx) => (
@@ -142,9 +138,11 @@ export function RecommendedPaidCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative"
+            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative flex flex-col" // Added flex flex-col
           >
-            <div className="p-5">
+            <div className="p-5 flex-grow">
+              {" "}
+              {/* Added flex-grow */}
               <div className="absolute top-3 right-3">
                 <Badge className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-medium rounded-full shadow-sm border border-gray-200">
                   Paid Course
@@ -159,7 +157,7 @@ export function RecommendedPaidCourses() {
               <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
                 {course.authorImage && (
                   <img
-                    src={course.authorImage}
+                    src={course.authorImage || "/placeholder.svg"}
                     alt={course.author}
                     className="w-6 h-6 rounded-full object-cover border border-gray-200"
                     loading="lazy"
@@ -179,7 +177,6 @@ export function RecommendedPaidCourses() {
                 </div>
               )}
             </div>
-
             <div className="p-5 pt-0">
               <a
                 href={course.url}
@@ -194,7 +191,6 @@ export function RecommendedPaidCourses() {
           </motion.div>
         ))}
       </div>
-
       {/* Toggle Button */}
       {paidCourses.length > 6 && (
         <div className="mt-10 text-center">
