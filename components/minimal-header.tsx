@@ -456,7 +456,7 @@ export function MinimalHeader() {
             {/* Bell Icon with Mailchimp popup */}
             <Link
               href="/admin/new-article"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium hover:bg-blue-700 transition-all shadow-sm"
             >
               <Pencil className="w-4 h-4" />
               Write

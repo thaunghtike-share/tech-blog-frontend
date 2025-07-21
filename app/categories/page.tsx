@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -100,7 +100,12 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
+
   const API_BASE_URL = "http://192.168.1.131:8000/api";
+
+  // Ref for the categories container to scroll on toggle
+  const categoriesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -124,6 +129,17 @@ export default function CategoriesPage() {
     };
     fetchCategories();
   }, []);
+
+  // Categories to show, limited to 6 unless showAll is true
+  const displayedCategories = showAll ? categories : categories.slice(0, 6);
+
+  // Handle toggle and scroll on See Less
+  const toggleShowAll = () => {
+    if (showAll && categoriesRef.current) {
+      categoriesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    setShowAll(!showAll);
+  };
 
   if (loading) {
     return <div className="p-8 text-center">Loading categories...</div>;
@@ -209,8 +225,13 @@ export default function CategoriesPage() {
             technology and topic areas.
           </motion.p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((category) => {
+
+        {/* Categories Grid */}
+        <div
+          ref={categoriesRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {displayedCategories.map((category) => {
             const Icon = getCategoryIcon(category.name);
             const colors = getCategoryColors(category.name);
             return (
@@ -247,6 +268,18 @@ export default function CategoriesPage() {
             );
           })}
         </div>
+
+        {/* SEE MORE / SEE LESS BUTTON */}
+        {categories.length > 6 && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={toggleShowAll}
+              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              {showAll ? "See Less" : "See All Categories"}
+            </button>
+          </div>
+        )}
       </main>
       <MinimalFooter />
     </div>
