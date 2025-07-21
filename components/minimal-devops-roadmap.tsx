@@ -87,31 +87,31 @@ const roadmap: RoadmapStage[] = [
         title: "Linux Fundamentals",
         details:
           "Learn to navigate and manage Linux systems by understanding file systems and permissions, mastering shell navigation, process management, secure remote access via SSH, essential Linux commands, and user/group administration.",
-        duration: "4 weeks",
+        duration: "8 weeks",
       },
       {
         title: "Bash Scripting",
         details:
           "Automate repetitive tasks using bash scripting. Topics include bash syntax, variables, loops, conditionals, functions for modularity, input/output redirection, basic debugging, and scheduling scripts with cron jobs.",
-        duration: "3 weeks",
+        duration: "6 weeks",
       },
       {
         title: "CCNA",
         details:
           "Prepare for Cisco's CCNA certification by mastering core networking concepts such as OSI and TCP/IP models, IP addressing and subnetting, configuring Cisco devices through CLI, routing protocols like RIP and OSPF, VLAN and switching technologies, and implementing access control lists for network security.",
-        duration: "8 weeks",
+        duration: "10 weeks",
       },
       {
         title: "Cloud Fundamentals",
         details:
           "Understand cloud computing basics, including service models like IaaS, PaaS, SaaS, and explore major cloud providers (AWS, Azure, GCP). Learn to navigate cloud portals, grasp cloud regions and availability zones, and get introduced to cloud security essentials.",
-        duration: "4 weeks",
+        duration: "6 weeks",
       },
       {
         title: "Docker Fundamentals",
         details:
           "Get familiar with containerization concepts using Docker. Learn about container images and containers, how to write Dockerfiles, managing data with volumes, defining multi-container applications with Docker Compose, basic container networking, and container lifecycle management.",
-        duration: "2 weeks",
+        duration: "3 weeks",
       },
       {
         title: "YAML & JSON",
@@ -151,13 +151,13 @@ const roadmap: RoadmapStage[] = [
         title: "CICD Fundamentals",
         details:
           "Automate software delivery processes with continuous integration and continuous deployment. Understand the concepts of CI/CD, set up GitHub Actions and GitLab pipelines, integrate webhooks, implement unit testing within pipelines, and manage build artifacts for deployment.",
-        duration: "3 weeks",
+        duration: "4 weeks",
       },
       {
         title: "Kubernetes Essentials Part-I",
         details:
           "Learn container orchestration basics with Kubernetes by understanding pods and ReplicaSets, deploying and rolling out applications, networking concepts within clusters, configuring ingress controllers, managing namespaces and access control (RBAC), and setting resource limits and requests for workloads.",
-        duration: "5 weeks",
+        duration: "6 weeks",
       },
       {
         title: "Kubernetes Essentials Part-II",
@@ -185,13 +185,13 @@ const roadmap: RoadmapStage[] = [
         title: "Ansible",
         details:
           "Automate and manage infrastructure configuration using Ansible. Learn YAML syntax for playbooks, writing tasks, managing inventories and variables, organizing reusable roles, securing secrets with Ansible Vault, and running ad-hoc commands while ensuring idempotency.",
-        duration: "8 weeks",
+        duration: "10 weeks",
       },
       {
         title: "Terraform",
         details:
           "Provision and manage cloud infrastructure declaratively with Terraform. Understand HCL syntax, create reusable modules, configure providers and resources, manage Terraform state effectively, use remote backends (S3, Azure Blob, GCS), and organize environments with workspaces.",
-        duration: "7 weeks",
+        duration: "10 weeks",
       },
       {
         title: "GitOps with ArgoCD",
@@ -203,13 +203,13 @@ const roadmap: RoadmapStage[] = [
         title: "Vault & Secrets Management",
         details:
           "Secure sensitive data in your infrastructure and pipelines by understanding Vault architecture, using secrets engines and dynamic secrets, managing access policies and tokens, integrating with Kubernetes using Vault Agent, enabling audit logging and lease management, and differentiating between KV secrets engine versions.",
-        duration: "6 weeks",
+        duration: "4 weeks",
       },
       {
         title: "Kubernetes Security",
         details:
           "Enhance security posture of Kubernetes clusters by mastering role-based access control (RBAC), enforcing Pod Security Standards, implementing network policies with tools like Calico or Cilium, configuring admission controllers, applying OPA Gatekeeper policies, and securing runtimes with technologies such as Seccomp and AppArmor.",
-        duration: "8 weeks",
+        duration: "10 weeks",
       },
     ],
   },
