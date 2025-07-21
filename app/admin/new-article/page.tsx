@@ -174,17 +174,19 @@ export default function NewArticlePage() {
         }}
       ></div>
 
+      {/* Messenger Support Floating Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-3 py-2 cursor-pointer transition-transform hover:scale-105"
+        aria-label="Chat with me on Messenger"
+        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 240 240"
           fill="none"
-          className="w-8 h-8 rounded-full"
+          className="w-14 h-14 rounded-full"
         >
           <defs>
             <linearGradient
@@ -205,7 +207,7 @@ export default function NewArticlePage() {
             d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
           />
         </svg>
-        <span className="font-medium text-gray-900 text-sm whitespace-nowrap">
+        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
           Chat?
         </span>
       </a>
@@ -355,21 +357,24 @@ export default function NewArticlePage() {
                   <label className="block font-semibold mb-1 text-sm">
                     Content (Markdown)
                   </label>
-                  <MDEditor
-                    value={form.content}
-                    onChange={(val) => handleChange("content", val || "")}
-                    height={500}
-                    preview="edit"
-                    textareaProps={{
-                      placeholder: "Write your article content here...",
-                      className:
-                        "text-sm leading-relaxed focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white text-gray-900 transition-shadow",
-                    }}
-                    previewOptions={{
-                      className:
-                        "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
-                    }}
-                  />
+                  <div data-color-mode="light">
+                    <MDEditor
+                      value={form.content}
+                      onChange={(val) => handleChange("content", val || "")}
+                      height={500}
+                      preview="live"
+                      textareaProps={{
+                        placeholder: "Write your article content here...",
+                        className:
+                          "text-sm leading-relaxed bg-white text-gray-900 transition-shadow focus:outline-none focus:ring-4 focus:ring-blue-400",
+                      }}
+                      previewOptions={{
+                        className:
+                          "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
+                      }}
+                      className="rounded-md border border-gray-200 shadow-md"
+                    />
+                  </div>
                 </div>
 
                 <button
