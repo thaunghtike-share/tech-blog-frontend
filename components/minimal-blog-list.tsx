@@ -81,10 +81,12 @@ export function MinimalBlogList({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const tagParam = searchParams.get("tag");
 
-  const [filterTagSlug, setFilterTagSlug] = useState<string | null>(
-    propFilterTagSlug ?? null
-  );
+  const [filterTagSlug, setFilterTagSlug] = useState<string | null>(() => {
+    const tagParam = searchParams.get("tag");
+    return propFilterTagSlug ?? tagParam ?? null;
+  });
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -162,6 +164,14 @@ export function MinimalBlogList({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const tagFromUrl = searchParams.get("tag") ?? null;
+    if (tagFromUrl !== filterTagSlug) {
+      setFilterTagSlug(tagFromUrl);
+      setCurrentPage(1);
+    }
+  }, [searchParams]);  
 
   // Scroll to top on currentPage or filterTagSlug change (skip first render)
   useEffect(() => {
@@ -416,12 +426,13 @@ export function MinimalBlogList({
                           const tag = tags.find((t) => t.id === tagId);
                           if (!tag) return null;
                           return (
-                            <span
+                            <Link
                               key={tag.id}
-                              className="text-xs px-2 py-1 rounded-full bg-gray-200 text-gray-700"
+                              href={`/articles?tag=${tag.slug}`}
+                              className="text-xs px-2 py-1 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
                             >
                               #{tag.name}
-                            </span>
+                            </Link>
                           );
                         })}
                       </div>
