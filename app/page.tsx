@@ -20,6 +20,7 @@ import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses";
 import { YouTubePlaylists } from "@/components/YouTubePlaylists";
 import { FreeLabs } from "@/components/FreeLabs";
 import Intro from "@/components/Intro";
+import CareerPath from "@/components/CareerPath";
 
 export default function HomePage() {
   const router = useRouter();
@@ -111,7 +112,7 @@ export default function HomePage() {
           <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
             <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
               {/* Pass tag filter and update function */}
-              <FeaturedArticlesPage/>
+              <FeaturedArticlesPage />
             </div>
             <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
               {/* Pass updateTagFilter handler so sidebar can update tag filter */}
@@ -136,9 +137,15 @@ export default function HomePage() {
         <div className="-mt-24">
           <CertificationRoadmap />
         </div>
+        <section id="free-labs" className="-mt-6">
+          <CareerPath />
+        </section>
         <div className="-mt-24">
           <RecommendedPaidCourses />
         </div>
+        <section id="free-labs" className="-mt-6">
+          <CareerPath />
+        </section>
         <div className="-mt-18">
           <FreelanceServicesSection />
         </div>
