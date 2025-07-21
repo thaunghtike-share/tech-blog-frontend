@@ -65,7 +65,7 @@ export default function Intro() {
       icon: <Cpu className="w-6 h-6" />,
       title: "Core Practices",
       description:
-        "CICD, Containerization, Version Control, Orchestration, Infrastructure As Code, Monitoring & Logging, and Incident Response",
+        "Core practices include continuous integration and delivery, containerization, version control, orchestration, infrastructure as code, monitoring, and incident response.",
       color: "bg-purple-500",
     },
     {
