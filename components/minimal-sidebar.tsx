@@ -38,6 +38,7 @@ interface MinimalSidebarProps {
 
 interface FeaturedAuthor {
   id: number;
+  slug: string;
   name: string;
   bio: string;
   avatar: string;
@@ -134,6 +135,15 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
     fetchData();
   }, []);
 
+  function slugify(text: string) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-") // Replace all spaces with -
+      .replace(/[^\w-]+/g, "") // Remove all non-word chars except hyphen
+      .replace(/--+/g, "-"); // Replace multiple - with single -
+  }
+
   const handleSubmitFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingFeedback(true);
@@ -205,22 +215,20 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
                 },
                 {
                   title: "Infrastructure Automation",
-                  desc: "Terraform, Ansible, Pulumi",
+                  desc: "Automate your infra with iac tools",
                   icon: <Cog className="h-5 w-5" />,
                   gradient: "from-orange-500 to-red-600",
                 },
                 {
-                  title: "Web Deployment",
-                  desc: "Scalable cloud-native apps",
+                  title: "Part Time DevOps Support",
+                  desc: "Flexible support for your DevOps needs",
                   icon: <Globe className="h-5 w-5" />,
                   gradient: "from-cyan-500 to-blue-600",
                 },
               ].map((service, index) => (
                 <li key={index}>
                   <Link
-                    href={`/services/${service.title
-                      .toLowerCase()
-                      .replace(" ", "-")}`}
+                    href={`/services/${slugify(service.title)}`}
                     className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/80 hover:shadow-md transition-all"
                   >
                     <div
@@ -391,7 +399,7 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
               {featuredAuthors.map((author) => (
                 <Link
                   key={author.id}
-                  href={`/authors#author-${author.id}`}
+                  href={`/authors/${author.slug}`}
                   className="group flex items-center gap-4 p-3 hover:bg-white/80 rounded-xl transition-all hover:shadow-md border border-transparent hover:border-blue-100"
                 >
                   <div className="relative">
