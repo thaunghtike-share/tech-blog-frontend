@@ -227,12 +227,13 @@ export function ArticleContent({
               </span>
             </Link>
             {tagNames.map((tag, index) => (
-              <span
+              <Link
+                href={`/articles?tag=${slugify(tag)}`}
                 key={index}
-                className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-full"
+                className="inline-block bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-full hover:bg-gray-200 cursor-pointer"
               >
                 #{tag}
-              </span>
+              </Link>
             ))}
           </div>
           <ReactMarkdown
