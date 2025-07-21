@@ -102,7 +102,7 @@ export default function HomePage() {
       <MinimalHeader />
 
       {/* Hero Intro */}
-      <div className="pt-[64px] md:pt-[80px] md:-mt-44">
+      <div className="pt-[64px] -mt-46 md:pt-[80px] md:-mt-44">
         <Intro />
       </div>
 
