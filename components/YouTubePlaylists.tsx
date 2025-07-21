@@ -61,19 +61,27 @@ const difficultyConfig = {
 };
 
 interface YouTubePlaylistsProps {
-  showAll: boolean;
-  setShowAll: (show: boolean) => void;
+  showAll?: boolean;
+  setShowAll?: (show: boolean) => void;
 }
 
-export function YouTubePlaylists() {
-  const [loading, setLoading] = useState(true); // <-- add this line
+export function YouTubePlaylists({
+  showAll,
+  setShowAll,
+}: YouTubePlaylistsProps) {
+  const [loading, setLoading] = useState(true);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<
     "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"
   >("Prerequisite");
-  const [showAll, setShowAll] = useState(false);
+  const [internalShowAll, setInternalShowAll] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Use passed props or internal state
+  const actualShowAll = showAll !== undefined ? showAll : internalShowAll;
+  const actualSetShowAll =
+    setShowAll !== undefined ? setShowAll : setInternalShowAll;
 
   useEffect(() => {
     async function fetchPlaylists() {
@@ -113,14 +121,14 @@ export function YouTubePlaylists() {
       }
     }
     fetchPlaylists();
-  }, []);
+  }, [selectedDifficulty]);
 
-  // Sort filtered playlists alphabetically by title (A-Z)
+  // Filter playlists by difficulty, alphabetically sorted
   const filteredPlaylists = playlists
     .filter((pl) => pl.difficulty === selectedDifficulty)
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  const displayedPlaylists = showAll
+  const displayedPlaylists = actualShowAll
     ? filteredPlaylists
     : filteredPlaylists.slice(0, 6);
 
@@ -156,7 +164,7 @@ export function YouTubePlaylists() {
       )}
       {!loading && !error && (
         <>
-          {/* === HEADER & DESCRIPTION === */}
+          {/* Header */}
           <div className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -188,7 +196,8 @@ export function YouTubePlaylists() {
               Docker, Kubernetes, AWS, Terraform, and more.
             </motion.p>
           </div>
-          {/* === DIFFICULTY FILTER BUTTONS === */}
+
+          {/* Difficulty Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -206,7 +215,7 @@ export function YouTubePlaylists() {
                   transition={{ delay: index * 0.1 }}
                   onClick={() => {
                     setSelectedDifficulty(difficultyKey);
-                    setShowAll(false);
+                    actualSetShowAll(false); // Reset showAll when difficulty changes
                   }}
                   className={`relative flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-sm font-medium ${
                     isActive
@@ -250,7 +259,8 @@ export function YouTubePlaylists() {
               );
             })}
           </motion.div>
-          {/* === PLAYLISTS GRID OR EMPTY MESSAGE === */}
+
+          {/* Playlists */}
           {filteredPlaylists.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
@@ -278,7 +288,7 @@ export function YouTubePlaylists() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.08 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`} // Added flex flex-col
+                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
                   >
                     <div className="relative aspect-video bg-gray-900 overflow-hidden">
                       <iframe
@@ -291,8 +301,6 @@ export function YouTubePlaylists() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div className="p-5 flex-grow">
-                      {" "}
-                      {/* Added flex-grow */}
                       <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-red-700 transition-colors flex items-center gap-2">
                         {pl.title}
                         {pl.is_burmese && (
@@ -320,8 +328,6 @@ export function YouTubePlaylists() {
                       </div>
                     </div>
                     <div className="p-5 pt-0">
-                      {" "}
-                      {/* Adjusted padding */}
                       <a
                         href={pl.playlistUrl}
                         target="_blank"
@@ -337,25 +343,26 @@ export function YouTubePlaylists() {
               })}
             </div>
           )}
-          {/* === SHOW MORE / SHOW LESS BUTTON === */}
+
+          {/* Show More / Show Less Button */}
           {filteredPlaylists.length > 6 && (
             <div className="mt-10 text-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
-                  const newState = !showAll;
-                  setShowAll(newState);
+                  const newState = !actualShowAll;
+                  actualSetShowAll(newState);
                   if (!newState && sectionRef.current) {
                     sectionRef.current.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
                 className={`inline-flex items-center px-6 py-3 bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300`}
               >
-                {showAll
+                {actualShowAll
                   ? "Show Less"
                   : `See All ${selectedDifficulty} Playlists`}
-                {showAll ? (
+                {actualShowAll ? (
                   <ChevronUp className="w-4 h-4 ml-2" />
                 ) : (
                   <ChevronDown className="w-4 h-4 ml-2" />
