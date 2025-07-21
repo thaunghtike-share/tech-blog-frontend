@@ -1,29 +1,33 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Calendar,
   Clock,
   User,
   ArrowRight,
   Folder,
-  AlertTriangle,
   Sparkles,
+  ChevronDown,
+  Tag as TagIcon,
   Eye,
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Article {
   id: number;
   slug: string;
   title: string;
+  read_count: number;
   content: string;
   published_at: string;
   category: number | null;
   tags: number[];
   author: number;
-  featured: boolean;
-  read_count: number; // Added read_count to the interface
 }
 
 interface Author {
@@ -33,10 +37,34 @@ interface Author {
   username?: string;
 }
 
+interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 interface Category {
   id: number;
   name: string;
   slug: string;
+}
+
+interface MinimalBlogListProps {
+  searchQuery?: string;
+  filterTagSlug?: string | null;
+}
+
+const PAGE_SIZE = 6;
+
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/--+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start
+    .replace(/-+$/, ""); // Trim - from end
 }
 
 export function FeaturedArticlesPage() {
@@ -277,9 +305,14 @@ export function FeaturedArticlesPage() {
                           <User className="w-3 h-3 text-white" />
                         </div>
                       )}
-                      <span className="font-medium">
-                        {getAuthorName(article.author)}
-                      </span>
+                      <Link
+                        href={`/authors/${
+                          author?.username || slugify(author?.name || "")
+                        }`}
+                        className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                      >
+                        {author?.name || `Author ${article.author}`}
+                      </Link>
                     </div>
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4 text-gray-400" />
