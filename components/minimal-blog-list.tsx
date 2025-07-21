@@ -56,6 +56,17 @@ interface MinimalBlogListProps {
 
 const PAGE_SIZE = 6;
 
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/--+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start
+    .replace(/-+$/, ""); // Trim - from end
+}
+
 export function MinimalBlogList({
   searchQuery = "",
   filterTagSlug: propFilterTagSlug,
@@ -398,6 +409,22 @@ export function MinimalBlogList({
                           {category.name}
                         </Link>
                       )}
+
+                      {/* Just display tags as plain text */}
+                      <div className="flex flex-wrap gap-2 items-center">
+                        {article.tags.map((tagId) => {
+                          const tag = tags.find((t) => t.id === tagId);
+                          if (!tag) return null;
+                          return (
+                            <span
+                              key={tag.id}
+                              className="text-xs px-2 py-1 rounded-full bg-gray-200 text-gray-700"
+                            >
+                              #{tag.name}
+                            </span>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     <Link
@@ -430,9 +457,14 @@ export function MinimalBlogList({
                             <User className="w-3 h-3 text-white" />
                           </div>
                         )}
-                        <span className="font-medium">
-                          {getAuthorName(article.author)}
-                        </span>
+                        <Link
+                          href={`/authors/${
+                            author?.username || slugify(author?.name || "")
+                          }`}
+                          className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                        >
+                          {author?.name || `Author ${article.author}`}
+                        </Link>
                       </div>
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4 text-gray-400" />
