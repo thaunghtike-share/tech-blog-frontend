@@ -420,7 +420,7 @@ export function MinimalBlogList({
                         </Link>
                       )}
 
-                      {/* Just display tags as plain text */}
+                      {/* Just display tags*/}
                       <div className="flex flex-wrap gap-2 items-center">
                         {article.tags.map((tagId) => {
                           const tag = tags.find((t) => t.id === tagId);
@@ -429,7 +429,7 @@ export function MinimalBlogList({
                             <Link
                               key={tag.id}
                               href={`/articles?tag=${tag.slug}`}
-                              className="text-xs px-2 py-1 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+                              className="text-xs px-2 py-1 rounded-full border border-gray-400 text-yellow-700 hover:bg-gray-300 transition-colors"
                             >
                               #{tag.name}
                             </Link>

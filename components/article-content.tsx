@@ -428,7 +428,7 @@ export function ArticleContent({
                   >
                     <div className="inline-flex items-center gap-2 text-sm font-medium">
                       <Linkedin className="w-4 h-4" />
-                      <span>Connect on LinkedIn</span>
+                      <span>LinkedIn</span>
                     </div>
                   </Button>
                 )}
