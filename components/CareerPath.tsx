@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ServerCog, ShieldCheck, Cloud, ChevronRight } from "lucide-react";
+import { ServerCog, ShieldCheck, Cloud, ChevronRight, Sparkles } from "lucide-react";
 
 const roles = [
   {
@@ -95,7 +95,7 @@ export function CareerPath() {
             <ServerCog className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-blue-50 text-blue-700 border border-blue-200">
-            Career Opportunities
+            <Sparkles className="w-4 h-4 mr-2" /> Career Path
           </span>
         </motion.div>
 
@@ -105,7 +105,7 @@ export function CareerPath() {
           transition={{ delay: 0.1 }}
           className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
-          Internships & Junior Positions
+          Internship & Junior Positions
         </motion.h2>
 
         <motion.p

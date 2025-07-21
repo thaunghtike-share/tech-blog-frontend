@@ -38,9 +38,10 @@ export default function Intro() {
   const learningPathItems = [
     { label: "Roadmap", id: "devops-roadmap", desc: "Complete landscape" },
     { label: "YouTube", id: "youtube-playlists", desc: "Expert tutorials" },
-    { label: "Udemy", id: "free-labs", desc: "Structured Courses" },
-    { label: "Labs", id: "myanmar-playlists", desc: "Hands-On Labs" },
-    { label: "Certificate", id: "free-udemy", desc: "Get Certificates" },
+    { label: "Udemy", id: "free-udemy", desc: "Structured Courses" },
+    { label: "Labs", id: "free-labs", desc: "Hands-On Labs" },
+    { label: "Certificate", id: "cert", desc: "Get Certificates" },
+    { label: "Career Path", id: "career", desc: "Junior Postions" },
   ];
 
   const stepColors = [
@@ -49,6 +50,7 @@ export default function Intro() {
     "bg-gradient-to-r from-purple-500 to-blue-600",
     "bg-gradient-to-r from-orange-500 to-amber-600",
     "bg-gradient-to-r from-green-500 to-emerald-600",
+    "bg-gradient-to-r from-purple-500 to-blue-600",
   ];
 
   const conceptCards = [
@@ -286,7 +288,7 @@ export default function Intro() {
 
         <div className="relative">
           <div className="absolute top-5 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
-          <div className="grid grid-cols-5 gap-2 relative z-10">
+          <div className="grid grid-cols-6 gap-2 relative z-10">
             {learningPathItems.map((step, index) => (
               <motion.div
                 key={index}

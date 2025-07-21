@@ -134,10 +134,10 @@ export default function HomePage() {
         <section id="free-labs" className="-mt-6">
           <FreeLabs />
         </section>
-        <div className="-mt-24">
+        <div id="cert" className="-mt-24">
           <CertificationRoadmap />
         </div>
-        <section id="free-labs" className="-mt-6">
+        <section id="career" className="-mt-6">
           <CareerPath />
         </section>
         <div className="-mt-24">
