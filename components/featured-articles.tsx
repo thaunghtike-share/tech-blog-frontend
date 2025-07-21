@@ -267,7 +267,7 @@ export function FeaturedArticlesPage() {
                     {category && (
                       <Link
                         href={`/categories/${category.slug}`}
-                        className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 border border-blue-100 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                        className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
                       >
                         <Folder className="w-4 h-4" />
                         {category.name}

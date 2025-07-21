@@ -413,7 +413,7 @@ export function MinimalBlogList({
                       {category && (
                         <Link
                           href={`/categories/${category.slug}`}
-                          className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-100 hover:text-blue-600"
+                          className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-gray-300 hover:text-blue-600"
                         >
                           <Folder className="w-4 h-4" />
                           {category.name}
