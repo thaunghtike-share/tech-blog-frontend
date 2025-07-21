@@ -41,7 +41,7 @@ export default function Intro() {
     { label: "Udemy", id: "free-udemy", desc: "Structured Courses" },
     { label: "Labs", id: "free-labs", desc: "Hands-On Labs" },
     { label: "Certificate", id: "cert", desc: "Get Certificates" },
-    { label: "Career Path", id: "career", desc: "Junior Postions" },
+    { label: "Jobs", id: "career", desc: "Get Jobs" },
   ];
 
   const stepColors = [
@@ -130,7 +130,7 @@ export default function Intro() {
     <section className="py-16 px-4 max-w-7xl mx-auto">
       {/* ✅ Hero Section */}
       <section className="mt-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="mb-12">
+        <div className="mb-4 md:mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -167,18 +167,19 @@ export default function Intro() {
         </div>
       </section>
 
-      {/* Concept Cards */}
       <motion.div
-        className="mb-8 overflow-x-auto pb-6"
+        className="mb-8 pb-6 overflow-x-auto md:overflow-visible"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <div className="flex gap-6 w-max px-4 mx-auto">
+        <div className="flex flex-col md:flex-row gap-6 px-4 mx-auto max-w-full md:w-max">
           {conceptCards.map((card, i) => (
-            <div
+            <motion.div
               key={i}
-              className="w-72 flex-shrink-0 bg-white rounded-xl shadow-md overflow-hidden border border-gray-100"
+              className="w-full md:w-72 bg-white rounded-xl shadow-md overflow-hidden border border-gray-100"
+              variants={cardVariants}
+              whileHover="hover"
             >
               <div className={`h-2 ${card.color}`}></div>
               <div className="p-6">
@@ -192,13 +193,13 @@ export default function Intro() {
                 </h3>
                 <p className="text-gray-600">{card.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </motion.div>
 
       {/* DevOps Learning Levels */}
-      <div className="mb-14">
+      <div className="mb-8 md:mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -209,7 +210,8 @@ export default function Intro() {
             <Wrench className="w-5 h-5 text-white" />
           </div>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
-            <Sparkles className="w-3 h-3 mr-1.5" />Learning Levels
+            <Sparkles className="w-3 h-3 mr-1.5" />
+            Learning Levels
           </span>
         </motion.div>
 
@@ -223,24 +225,24 @@ export default function Intro() {
           practices through structured stages.
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {toolCategories.map((category, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden"
-              variants={cardVariants}
+              initial="initial"
+              animate="animate"
               whileHover="hover"
+              variants={cardVariants}
+              transition={{ delay: 0.1 * i }}
+              className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden cursor-pointer"
             >
               <div className={`h-2 ${category.frameColor}`} />
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div
-                    className={`p-2 ${category.color.split(" ")[0]} ${
+                    className={`${category.color.split(" ")[0]} ${
                       category.color.split(" ")[1]
-                    } rounded-lg mr-3`}
+                    } rounded-lg p-2 mr-3 flex items-center justify-center`}
                   >
                     {category.icon}
                   </div>
