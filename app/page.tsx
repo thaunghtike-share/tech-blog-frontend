@@ -137,7 +137,7 @@ export default function HomePage() {
         <div id="cert" className="-mt-36 md:-mt-34">
           <CertificationRoadmap />
         </div>
-        <section id="career" className="-mt-10">
+        <section id="career" className="-mt-12 md:-mt-14">
           <CareerPath />
         </section>
         <div className="-mt-36">

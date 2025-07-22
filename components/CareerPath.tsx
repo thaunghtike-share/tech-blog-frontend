@@ -107,7 +107,7 @@ export function CareerPath() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
           Internship & Junior Positions
         </motion.h2>
@@ -116,7 +116,7 @@ export function CareerPath() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           Entry-level roles where you can apply your skills and grow your
           career.
@@ -124,7 +124,7 @@ export function CareerPath() {
       </div>
 
       {/* Cards */}
-      <div className="relative">
+      <div className="relative -mt-5">
         <div className="flex overflow-x-auto pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar">
           <div className="flex space-x-6 min-w-max sm:min-w-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-x-0 items-stretch">
             {roles.map((role, idx) => (
