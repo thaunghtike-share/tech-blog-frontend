@@ -207,16 +207,13 @@ export function YouTubePlaylists({
               onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[selectedDifficulty].border}`}
             >
-              <div className="flex items-center">
+              <div className="flex items-center justify-center w-full gap-2">
                 <div
-                  className={`p-1.5 rounded-full mr-2 ${difficultyConfig[selectedDifficulty].iconBg} ${difficultyConfig[selectedDifficulty].iconText}`}
+                  className={`p-1.5 rounded-full ${difficultyConfig[selectedDifficulty].iconBg} ${difficultyConfig[selectedDifficulty].iconText}`}
                 >
                   {difficultyConfig[selectedDifficulty].icon}
                 </div>
                 <span>{selectedDifficulty}</span>
-                <span className="ml-2 text-xs opacity-80">
-                  ({filteredPlaylists.length} playlists)
-                </span>
               </div>
               <ChevronDown
                 className={`w-4 h-4 transition-transform ${
@@ -309,9 +306,7 @@ export function YouTubePlaylists({
                     className={`text-xs ${
                       isActive ? "text-white/80" : "text-gray-500"
                     }`}
-                  >
-                    ({count})
-                  </span>
+                  ></span>
                   {isActive && (
                     <motion.div
                       layoutId="selected-playlist-indicator"
