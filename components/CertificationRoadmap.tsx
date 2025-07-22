@@ -370,27 +370,27 @@ const difficultyConfig = {
     gradient: "from-green-500 to-emerald-600",
     bgGradient: "from-green-50 to-emerald-50",
     textColor: "text-green-800",
-    icon: <Rocket className="w-4 h-4" />,
-    iconBg: "bg-green-100",
-    iconText: "text-green-600",
+    icon: <Rocket className="w-5 h-5" />,
+    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
+    iconText: "text-white",
     border: "border-green-500",
   },
   Intermediate: {
     gradient: "from-blue-500 to-indigo-600",
     bgGradient: "from-blue-50 to-indigo-50",
     textColor: "text-blue-800",
-    icon: <Gauge className="w-4 h-4" />,
-    iconBg: "bg-blue-100",
-    iconText: "text-blue-600",
+    icon: <Gauge className="w-5 h-5" />,
+    iconBg: "bg-gradient-to-r from-blue-500 to-indigo-600",
+    iconText: "text-white",
     border: "border-blue-500",
   },
   Advanced: {
     gradient: "from-purple-500 to-pink-600",
     bgGradient: "from-purple-50 to-pink-50",
     textColor: "text-purple-800",
-    icon: <Shield className="w-4 h-4" />,
-    iconBg: "bg-purple-100",
-    iconText: "text-purple-600",
+    icon: <Shield className="w-5 h-5" />,
+    iconBg: "bg-gradient-to-r from-purple-500 to-pink-600",
+    iconText: "text-white",
     border: "border-purple-500",
   },
 };
@@ -525,7 +525,7 @@ export function CertificationRoadmap() {
                 }`}
               >
                 <div
-                  className={`p-1.5 rounded-full ${
+                  className={`p-1.5 rounded-xl ${
                     isActive
                       ? "bg-white/20"
                       : `${config.iconBg} ${config.iconText}`

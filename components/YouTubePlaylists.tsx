@@ -36,7 +36,7 @@ const difficultyConfig = {
     border: "border-white-500",
     iconBg: "bg-gradient-to-r from-gray-500 to-slate-600",
     iconText: "text-white",
-    icon: <Lightbulb className="w-4 h-4" />,
+    icon: <Lightbulb className="w-5 h-5" />,
   },
   Beginner: {
     color: "from-green-500 to-emerald-600",
@@ -44,7 +44,7 @@ const difficultyConfig = {
     border: "border-green-500",
     iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
     iconText: "text-white",
-    icon: <Rocket className="w-4 h-4" />,
+    icon: <Rocket className="w-5 h-5" />,
   },
   Intermediate: {
     color: "from-blue-500 to-indigo-600",
@@ -52,7 +52,7 @@ const difficultyConfig = {
     border: "border-blue-500",
     iconBg: "bg-gradient-to-r from-blue-500 to-indigo-600",
     iconText: "text-white",
-    icon: <Gauge className="w-4 h-4" />,
+    icon: <Gauge className="w-5 h-5" />,
   },
   Advanced: {
     color: "from-purple-500 to-pink-600",
@@ -60,7 +60,7 @@ const difficultyConfig = {
     border: "border-purple-500",
     iconBg: "bg-gradient-to-r from-purple-500 to-pink-600",
     iconText: "text-white",
-    icon: <Shield className="w-4 h-4" />,
+    icon: <Shield className="w-5 h-5" />,
   },
 };
 
@@ -248,7 +248,8 @@ export function YouTubePlaylists({
                       }`}
                     >
                       <div
-                          className={`w-7 h-7 flex items-center justify-center rounded-full ${config.iconBg} ${config.iconText}`}                      >
+                        className={`w-7 h-7 flex items-center justify-center rounded-full ${config.iconBg} ${config.iconText}`}
+                      >
                         {config.icon}
                       </div>
                       <span>{level}</span>
@@ -259,7 +260,7 @@ export function YouTubePlaylists({
             )}
           </div>
 
-          {/* Desktop Difficulty Buttons */}
+          {/* Desktop Difficulty Buttons - Updated to match CertificationRoadmap */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -283,14 +284,14 @@ export function YouTubePlaylists({
                     setSelectedDifficulty(difficultyKey);
                     actualSetShowAll(false);
                   }}
-                  className={`relative flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-sm font-medium ${
+                  className={`group relative flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
                     isActive
-                      ? `bg-gradient-to-r ${config.color} text-white shadow-lg scale-105`
+                      ? `bg-gradient-to-r ${config.color} text-white scale-105`
                       : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
                   }`}
                 >
                   <div
-                    className={`p-1.5 rounded-full ${
+                    className={`p-1.5 rounded-xl ${
                       isActive
                         ? "bg-white/20"
                         : `${config.iconBg} ${config.iconText}`
@@ -301,11 +302,6 @@ export function YouTubePlaylists({
                   <span className={isActive ? "text-white" : "text-gray-800"}>
                     {difficultyKey}
                   </span>
-                  <span
-                    className={`text-xs ${
-                      isActive ? "text-white/80" : "text-gray-500"
-                    }`}
-                  ></span>
                   {isActive && (
                     <motion.div
                       layoutId="selected-playlist-indicator"
