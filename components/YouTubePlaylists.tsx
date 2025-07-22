@@ -168,7 +168,7 @@ export function YouTubePlaylists({
       {!loading && !error && (
         <>
           {/* Header */}
-          <div className="text-center mb-6 md:mb-12">
+          <div className="text-center mb-6 md:mb-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -202,7 +202,7 @@ export function YouTubePlaylists({
           </div>
 
           {/* Mobile Dropdown - Matching CertificationRoadmap style */}
-          <div className="sm:hidden mb-4 relative">
+          <div className="sm:hidden mb-7 relative">
             <button
               onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[selectedDifficulty].border}`}
@@ -268,7 +268,7 @@ export function YouTubePlaylists({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="hidden md:flex flex-wrap gap-3 mb-8 md:mb-12 justify-center"
+            className="hidden md:flex flex-wrap gap-3 mb-8 md:mb-10 justify-center"
           >
             {allDifficulties.map((difficultyKey, index) => {
               const config = difficultyConfig[difficultyKey];
