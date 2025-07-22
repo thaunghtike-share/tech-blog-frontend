@@ -27,7 +27,6 @@ interface UdemyCourse {
   reviews?: Review[];
 }
 
-// Replace with your actual API URL
 const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 export function TopUdemyCourses() {
@@ -45,7 +44,6 @@ export function TopUdemyCourses() {
         const res = await fetch(`${API_BASE_URL}/udemy-courses/`);
         if (!res.ok) throw new Error(`Error status: ${res.status}`);
         const data = await res.json();
-        // Supports API response either as an array or {results: [...]}
         const rawCourses = Array.isArray(data) ? data : data.results;
         if (!Array.isArray(rawCourses)) {
           throw new Error("Invalid courses data format");
@@ -71,10 +69,8 @@ export function TopUdemyCourses() {
     fetchCourses();
   }, []);
 
-  // Slice courses if showAll is false, else show all
   const displayedCourses = showAll ? courses : courses.slice(0, 6);
 
-  // Toggle showAll and scroll to top of section on collapse
   function toggleShowAll() {
     if (showAll) {
       sectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -84,11 +80,7 @@ export function TopUdemyCourses() {
 
   if (loading) {
     return (
-      <section
-        ref={sectionRef}
-        className="max-w-7xl mx-auto py-12 px-4"
-        aria-busy="true"
-      >
+      <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
         <p className="text-center text-gray-500">Loading courses...</p>
       </section>
     );
@@ -105,7 +97,6 @@ export function TopUdemyCourses() {
   return (
     <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
       <div className="mb-5 sm:mb-9 text-center">
-        {/* Updated this line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -115,8 +106,8 @@ export function TopUdemyCourses() {
             <GraduationCap className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Udemy
-            Courses
+            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+            Udemy Courses
           </span>
         </motion.div>
         <motion.h2
@@ -137,7 +128,9 @@ export function TopUdemyCourses() {
           practices.
         </motion.p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+      {/* ⚡ Horizontal scroll on mobile */}
+      <div className="flex overflow-x-auto hide-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-4">
         {displayedCourses.map((course, idx) => (
           <motion.div
             key={course.id}
@@ -145,7 +138,7 @@ export function TopUdemyCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col"
+            className="min-w-[20rem] sm:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col"
           >
             <div className="p-5 relative flex-grow">
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
@@ -176,9 +169,9 @@ export function TopUdemyCourses() {
                   </span>
                 </div>
               )}
-              {course.reviews && course.reviews.length > 0 && (
+              {(course.reviews?.length ?? 0) > 0 && (
                 <div className="space-y-2 mb-4">
-                  {course.reviews.slice(0, 2).map((review, i) => (
+                  {course.reviews?.slice(0, 2).map((review, i) => (
                     <div
                       key={i}
                       className="bg-blue-50 p-2 sm:p-3 rounded-lg border border-blue-100"
@@ -204,14 +197,15 @@ export function TopUdemyCourses() {
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] text-sm sm:text-base"
               >
-                <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" /> Enroll
-                Now
+                <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+                Enroll Now
                 <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
               </a>
             </div>
           </motion.div>
         ))}
       </div>
+
       {/* Show More / Show Less button */}
       {courses.length > 6 && (
         <div className="mt-8 sm:mt-10 text-center">
@@ -231,6 +225,17 @@ export function TopUdemyCourses() {
           </motion.button>
         </div>
       )}
+
+      {/* ⛔ Hide scrollbar for mobile scroll */}
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }
