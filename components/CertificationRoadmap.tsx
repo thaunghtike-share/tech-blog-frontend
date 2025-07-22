@@ -339,7 +339,7 @@ export function CertificationRoadmap() {
             </div>
             <span className="inline-flex items-center px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 border border-emerald-200">
               <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />{" "}
-              Certified
+              Certification
             </span>
           </motion.div>
           <motion.h2
@@ -361,24 +361,21 @@ export function CertificationRoadmap() {
         </div>
 
         {/* Mobile Dropdown */}
-        <div className="sm:hidden mb-4 relative">
+        <div className="sm:hidden mb-8 relative">
           <button
             onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[filter].border}`}
+            className={`relative w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[filter].border}`}
           >
-            <div className="flex items-center">
+            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
               <div
                 className={`p-1.5 rounded-full mr-2 ${difficultyConfig[filter].iconBg} ${difficultyConfig[filter].iconText}`}
               >
                 {difficultyConfig[filter].icon}
               </div>
               <span>{filter}</span>
-              <span className="ml-2 text-xs opacity-80">
-                ({filteredCerts.length} certs)
-              </span>
             </div>
             <ChevronDown
-              className={`w-4 h-4 transition-transform ${
+              className={`ml-auto w-4 h-4 transition-transform ${
                 mobileDropdownOpen ? "rotate-180" : ""
               }`}
             />
@@ -413,9 +410,6 @@ export function CertificationRoadmap() {
                       {config.icon}
                     </div>
                     <span>{level}</span>
-                    <span className="ml-auto text-xs text-gray-500">
-                      ({certCount})
-                    </span>
                   </button>
                 );
               })}
@@ -467,7 +461,6 @@ export function CertificationRoadmap() {
                     isActive ? "text-white/80" : "text-gray-500"
                   }`}
                 >
-                  ({certCount} certs)
                 </span>
                 {isActive && (
                   <motion.div
