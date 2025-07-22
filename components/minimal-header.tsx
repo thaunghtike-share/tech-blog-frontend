@@ -115,7 +115,7 @@ export function MinimalHeader() {
         ></div>
 
         {/* Mobile Header */}
-        <div className="flex items-center justify-between md:hidden py-2 gap-2 relative z-10">
+        <div className="flex items-center justify-between md:hidden pt-0.5 pb-1.5 gap-2 relative z-10">
           {/* Logo */}
           <Link href="/" className="flex items-center justify-start">
             <img src="/logo.png" alt="Logo" className="h-28 w-auto" />
