@@ -197,7 +197,7 @@ export function DevOpsWorkflowExample() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Workflow Steps Section */}
-        <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-100">
+        <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl bg-white/50 shadow-lg border border-gray-100">
           <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 flex items-center gap-2">
             <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
               <Settings className="w-5 h-5 text-white" />
@@ -279,7 +279,7 @@ export function DevOpsWorkflowExample() {
 
         <div className="space-y-6 sm:space-y-8">
           {/* Complete Tech Stack Section */}
-          <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-100">
+          <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl bg-white/50 shadow-lg border border-gray-100">
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
                 <Code className="w-5 h-5 text-white" />
@@ -305,7 +305,7 @@ export function DevOpsWorkflowExample() {
           </div>
 
           {/* Key Features Section */}
-          <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-100">
+          <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl bg-white/50 shadow-lg border border-gray-100">
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
                 <Star className="w-5 h-5 text-white" />
