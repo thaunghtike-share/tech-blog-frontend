@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
-import { ChevronDown, ChevronUp, Plus, Minus } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type FAQ = {
@@ -98,7 +98,7 @@ export function MinimalFAQs() {
             >
               <div className="w-full">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-medium text-gray-900 text-left flex-1">
+                  <h3 className="text-sm md:text-lg font-medium text-gray-900 text-left flex-1">
                     {faq.question}
                   </h3>
                   <div className="ml-4 flex-shrink-0">
@@ -119,7 +119,7 @@ export function MinimalFAQs() {
                       className="overflow-hidden"
                     >
                       <div className="pt-4 border-t border-gray-100">
-                        <p className="text-gray-600 text-sm text-left leading-relaxed">
+                        <p className="text-sm text-gray-600 text-left leading-relaxed">
                           {faq.answer}
                         </p>
                       </div>
