@@ -674,7 +674,7 @@ export function MinimalDevopsRoadmap() {
                       value={stage.key}
                       className="text-center"
                     >
-                      {stage.label} ({stage.items.length} topics)
+                      {stage.label}
                     </option>
                   ))}
                 </select>
@@ -705,7 +705,7 @@ export function MinimalDevopsRoadmap() {
                 setSelectedStageKey(stage.key);
                 setShowAllTopics(false);
               }}
-              className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl -mt-4 md:-mt-4 transition-all duration-300 ${
+              className={`group relative flex items-center gap-2 px-4 py-2 rounded-full -mt-4 md:-mt-4 transition-all duration-300 ${
                 selectedStageKey === stage.key
                   ? `bg-gradient-to-r ${
                       stageConfig[stage.key as keyof typeof stageConfig]
@@ -729,7 +729,6 @@ export function MinimalDevopsRoadmap() {
               <div className="text-left">
                 <span className="font-medium text-sm">{stage.label}</span>
                 <div className="text-xs opacity-80">
-                  {stage.items.length} topics
                 </div>
               </div>
               {selectedStageKey === stage.key && (
