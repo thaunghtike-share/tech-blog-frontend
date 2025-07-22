@@ -1,5 +1,4 @@
 "use client";
-import type React from "react";
 import { useState } from "react";
 import {
   Award,
@@ -17,9 +16,11 @@ import {
   ArrowRight,
   Sparkles,
   TrendingUp,
+  BadgeCheck,
+  ChevronDown,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
+import { Badge } from "@/components/ui/badge";
 
 interface CertificationItem {
   title: string;
@@ -290,80 +291,144 @@ const difficultyConfig = {
     bgGradient: "from-green-50 to-emerald-50",
     textColor: "text-green-800",
     icon: <Rocket className="w-4 h-4" />,
-    iconBg: "bg-green-100", // Added for consistency
-    iconText: "text-green-600", // Added for consistency
-    border: "border-green-500", // Added for consistency
+    iconBg: "bg-green-100",
+    iconText: "text-green-600",
+    border: "border-green-500",
   },
   Intermediate: {
     gradient: "from-blue-500 to-indigo-600",
     bgGradient: "from-blue-50 to-indigo-50",
     textColor: "text-blue-800",
     icon: <Gauge className="w-4 h-4" />,
-    iconBg: "bg-blue-100", // Added for consistency
-    iconText: "text-blue-600", // Added for consistency
-    border: "border-blue-500", // Added for consistency
+    iconBg: "bg-blue-100",
+    iconText: "text-blue-600",
+    border: "border-blue-500",
   },
   Advanced: {
     gradient: "from-purple-500 to-pink-600",
     bgGradient: "from-purple-50 to-pink-50",
     textColor: "text-purple-800",
     icon: <Shield className="w-4 h-4" />,
-    iconBg: "bg-purple-100", // Added for consistency
-    iconText: "text-purple-600", // Added for consistency
-    border: "border-purple-500", // Added for consistency
+    iconBg: "bg-purple-100",
+    iconText: "text-purple-600",
+    border: "border-purple-500",
   },
 };
 
 export function CertificationRoadmap() {
-  const [selectedCert, setSelectedCert] = useState<CertificationItem | null>(
-    null
-  );
   const [filter, setFilter] = useState<
-    "All" | "Beginner" | "Intermediate" | "Advanced"
+    "Beginner" | "Intermediate" | "Advanced"
   >("Beginner");
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   const filteredCerts = certifications.filter(
     (cert) => cert.difficulty === filter
   );
 
   return (
-    <div className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="mt-22 sm:mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8 sm:mb-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-4"
+            className="flex items-center justify-center gap-3 mb-3 sm:mb-4"
           >
-            <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl shadow-lg">
-              <GraduationCap className="w-4 h-4 text-white" />
+            <div className="p-2 sm:p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg">
+              <BadgeCheck className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
             </div>
-            <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-yellow-50 to-orange-50 text-orange-700 border border-orange-200">
-              <Sparkles className="w-4 h-4 mr-2" /> Certificate Roadmap
+            <span className="inline-flex items-center px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 border border-emerald-200">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />{" "}
+              Certified
             </span>
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-yellow-800 to-orange-800 bg-clip-text text-transparent mb-4"
+            className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-yellow-800 to-orange-800 bg-clip-text text-transparent mb-2 sm:mb-4"
           >
-            DevOps Certification Roadmap
+            Certification Roadmap
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
           >
             Validate your skills with industry-recognized certifications.
           </motion.p>
         </div>
+
+        {/* Mobile Dropdown */}
+        <div className="sm:hidden mb-4 relative">
+          <button
+            onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[filter].border}`}
+          >
+            <div className="flex items-center">
+              <div
+                className={`p-1.5 rounded-full mr-2 ${difficultyConfig[filter].iconBg} ${difficultyConfig[filter].iconText}`}
+              >
+                {difficultyConfig[filter].icon}
+              </div>
+              <span>{filter}</span>
+              <span className="ml-2 text-xs opacity-80">
+                ({filteredCerts.length} certs)
+              </span>
+            </div>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
+                mobileDropdownOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {mobileDropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200"
+            >
+              {["Beginner", "Intermediate", "Advanced"].map((level) => {
+                const config =
+                  difficultyConfig[level as keyof typeof difficultyConfig];
+                const certCount = certifications.filter(
+                  (cert) => cert.difficulty === level
+                ).length;
+                return (
+                  <button
+                    key={level}
+                    onClick={() => {
+                      setFilter(level as any);
+                      setMobileDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2 text-sm flex items-center hover:bg-gray-50 ${
+                      filter === level ? "bg-gray-100" : ""
+                    }`}
+                  >
+                    <div
+                      className={`p-1.5 rounded-full mr-2 ${config.iconBg} ${config.iconText}`}
+                    >
+                      {config.icon}
+                    </div>
+                    <span>{level}</span>
+                    <span className="ml-auto text-xs text-gray-500">
+                      ({certCount})
+                    </span>
+                  </button>
+                );
+              })}
+            </motion.div>
+          )}
+        </div>
+
+        {/* Desktop Buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="hidden sm:flex flex-wrap justify-center gap-3 mb-8 sm:mb-12"
         >
           {["Beginner", "Intermediate", "Advanced"].map((level, index) => {
             const config =
@@ -379,7 +444,7 @@ export function CertificationRoadmap() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setFilter(level as any)}
-                className={`group relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
+                className={`group relative flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
                   isActive
                     ? `bg-gradient-to-r ${config.gradient} text-white scale-105`
                     : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
@@ -394,9 +459,7 @@ export function CertificationRoadmap() {
                 >
                   {config.icon}
                 </div>
-                <span
-                  className={`${isActive ? "text-white" : "text-gray-800"}`}
-                >
+                <span className={isActive ? "text-white" : "text-gray-800"}>
                   {level}
                 </span>
                 <span
@@ -416,8 +479,9 @@ export function CertificationRoadmap() {
             );
           })}
         </motion.div>
+
         {filteredCerts.length > 0 ? (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredCerts.map((cert, index) => {
               const config = difficultyConfig[cert.difficulty];
               return (
@@ -427,11 +491,9 @@ export function CertificationRoadmap() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`} // Added flex flex-col
+                  className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`}
                 >
                   <div className="p-5 relative">
-                    {" "}
-                    {/* Adjusted padding */}
                     <div className="absolute top-3 right-3">
                       {cert.recommended && (
                         <Badge className="px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-medium rounded-full shadow-sm border border-yellow-500">
@@ -440,9 +502,7 @@ export function CertificationRoadmap() {
                       )}
                     </div>
                     <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg inline-flex mb-4">
-                      {" "}
-                      {/* Icon moved and styled */}
-                      <div className="text-white">{cert.icon}</div>
+                      {cert.icon}
                     </div>
                     <h3 className="text-lg font-bold mb-2 leading-tight text-gray-900 group-hover:text-orange-700 transition-colors">
                       {cert.title}
@@ -451,13 +511,8 @@ export function CertificationRoadmap() {
                       {cert.organization}
                     </p>
                   </div>
-                  {/* Content */}
                   <div className="p-5 flex-grow">
-                    {" "}
-                    {/* Added flex-grow */}
                     <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
-                      {" "}
-                      {/* Adjusted padding/radius */}
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Clock className="w-4 h-4" />
                         <span className="font-medium">
@@ -505,13 +560,11 @@ export function CertificationRoadmap() {
                     </div>
                   </div>
                   <div className="p-5 pt-0">
-                    {" "}
-                    {/* Adjusted padding */}
                     <a
                       href={cert.examLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`} // New button style
+                      className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
                     >
                       <span>View Exam Details</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />

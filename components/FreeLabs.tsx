@@ -12,6 +12,7 @@ import {
   Play,
   Zap,
   Globe,
+  FlaskConical,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +29,7 @@ const API_BASE_URL = "http://192.168.1.131:8000/api";
 
 const getPlatformIcon = (platform: string) => {
   const p = platform.toLowerCase();
-  const commonClass = "w-5 h-5 text-white"; // ⬅️ Uniform icon sizing
+  const commonClass = "w-5 h-5 text-white";
   if (p.includes("docker")) return <Dock className={commonClass} />;
   if (p.includes("git")) return <Github className={commonClass} />;
   if (p.includes("k8s")) return <Cloud className={commonClass} />;
@@ -43,7 +44,7 @@ export function FreeLabs() {
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchLabs() {
@@ -69,7 +70,7 @@ export function FreeLabs() {
   const labsToShow = showAll ? labs : labs.slice(0, 6);
 
   return (
-    <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
+    <div ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
       {loading && (
         <div className="text-center mb-12">
           <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl mx-auto mb-4 animate-pulse"></div>
@@ -90,38 +91,39 @@ export function FreeLabs() {
       )}
       {!loading && !error && (
         <>
-          <div className="text-center mb-12">
+          <div className="text-center mb-4 sm:mb-9">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center justify-center gap-3 mb-4"
             >
               <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl shadow-md">
-                <Globe className="w-4 h-4 text-white" />
+                <FlaskConical className="w-4 h-4 text-white" />
               </div>
-              <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 border border-orange-200">
-                <Zap className="w-4 h-4 mr-2" /> Hands-On Labs
+              <span className="inline-flex items-center px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 border border-orange-200">
+                <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Hands-On
+                Labs
               </span>
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-orange-700 to-amber-700 bg-clip-text text-transparent mb-4"
+              className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-orange-700 to-amber-700 bg-clip-text text-transparent mb-4"
             >
-              Top Free DevOps Labs to Practice Skills
+              Free DevOps Labs to Practice
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-gray-600 max-w-3xl mx-auto"
+              className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
             >
               Explore these practical, free labs and playgrounds to level up
               your DevOps expertise.
             </motion.p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {labsToShow.map((lab, idx) => {
               const platformIcon = getPlatformIcon(lab.platform);
               return (
@@ -137,14 +139,14 @@ export function FreeLabs() {
                     <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
                       {platformIcon}
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
                       {lab.title}
                     </h3>
-                    <p className="text-gray-700 flex-grow text-sm mb-4">
+                    <p className="text-gray-700 flex-grow text-xs sm:text-sm mb-4">
                       {lab.description}
                     </p>
                     {lab.difficulty && (
-                      <div className="mt-auto text-sm text-gray-600">
+                      <div className="mt-auto text-xs sm:text-sm text-gray-600">
                         <strong>Difficulty:</strong> {lab.difficulty}
                       </div>
                     )}
@@ -152,10 +154,10 @@ export function FreeLabs() {
                       href={lab.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-6 w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn"
+                      className="mt-6 w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn text-sm sm:text-base"
                     >
-                      <Play className="w-4 h-4 mr-2" /> Launch Lab
-                      <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+                      <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-2" /> Launch Lab
+                      <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
                     </a>
                   </div>
                 </motion.div>
@@ -163,7 +165,7 @@ export function FreeLabs() {
             })}
           </div>
           {labs.length > 6 && (
-            <div className="mt-10 text-center">
+            <div className="mt-8 sm:mt-10 text-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -174,7 +176,7 @@ export function FreeLabs() {
                     sectionRef.current.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="inline-flex items-center px-5 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
               >
                 {showAll ? "See Less" : `See More Labs`}
               </motion.button>
@@ -182,6 +184,6 @@ export function FreeLabs() {
           )}
         </>
       )}
-    </section>
+    </div>
   );
 }

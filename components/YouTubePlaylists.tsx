@@ -10,8 +10,8 @@ import {
   Users,
   Lightbulb,
 } from "lucide-react";
-import React from "react";
 import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
 
 interface Playlist {
   id: number;
@@ -66,18 +66,20 @@ interface YouTubePlaylistsProps {
   setShowAll?: (show: boolean) => void;
 }
 
+type DifficultyLevel = keyof typeof difficultyConfig;
+
 export function YouTubePlaylists({
   showAll,
   setShowAll,
 }: YouTubePlaylistsProps) {
   const [loading, setLoading] = useState(true);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<
-    "Prerequisite" | "Beginner" | "Intermediate" | "Advanced"
-  >("Prerequisite");
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<DifficultyLevel>("Prerequisite");
   const [internalShowAll, setInternalShowAll] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   const actualShowAll = showAll !== undefined ? showAll : internalShowAll;
   const actualSetShowAll =
@@ -131,12 +133,12 @@ export function YouTubePlaylists({
     ? filteredPlaylists
     : filteredPlaylists.slice(0, 6);
 
-  const allDifficulties: (
-    | "Prerequisite"
-    | "Beginner"
-    | "Intermediate"
-    | "Advanced"
-  )[] = ["Prerequisite", "Beginner", "Intermediate", "Advanced"];
+  const allDifficulties: DifficultyLevel[] = [
+    "Prerequisite",
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+  ];
 
   return (
     <section
@@ -199,55 +201,66 @@ export function YouTubePlaylists({
             </motion.p>
           </div>
 
-          {/* Mobile Dropdown */}
-          <div className="md:hidden mb-8">
-            <div className="relative">
-              <motion.div
-                className={`w-full rounded-2xl border-2 ${difficultyConfig[selectedDifficulty].border} bg-white shadow-md overflow-hidden`}
-                whileTap={{ scale: 0.98 }}
-              >
-                <select
-                  className="w-full appearance-none bg-transparent py-3 pl-12 pr-10 text-center text-sm font-medium focus:outline-none"
-                  value={selectedDifficulty}
-                  onChange={(e) => {
-                    setSelectedDifficulty(e.target.value as any);
-                    actualSetShowAll(false);
-                  }}
-                >
-                  {allDifficulties.map((difficultyKey) => {
-                    const config = difficultyConfig[difficultyKey];
-                    return (
-                      <option key={difficultyKey} value={difficultyKey}>
-                        {difficultyKey} (
-                        {
-                          playlists.filter(
-                            (pl) => pl.difficulty === difficultyKey
-                          ).length
-                        }
-                        )
-                      </option>
-                    );
-                  })}
-                </select>
-              </motion.div>
-              <div
-                className={`absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none`}
-              >
+          {/* Mobile Dropdown - Matching CertificationRoadmap style */}
+          <div className="sm:hidden mb-4 relative">
+            <button
+              onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[selectedDifficulty].border}`}
+            >
+              <div className="flex items-center">
                 <div
-                  className={`p-1 rounded-lg ${difficultyConfig[selectedDifficulty].iconBg}`}
+                  className={`p-1.5 rounded-full mr-2 ${difficultyConfig[selectedDifficulty].iconBg} ${difficultyConfig[selectedDifficulty].iconText}`}
                 >
-                  {React.cloneElement(
-                    difficultyConfig[selectedDifficulty].icon,
-                    {
-                      className: `${difficultyConfig[selectedDifficulty].iconText} w-3 h-3`,
-                    }
-                  )}
+                  {difficultyConfig[selectedDifficulty].icon}
                 </div>
+                <span>{selectedDifficulty}</span>
+                <span className="ml-2 text-xs opacity-80">
+                  ({filteredPlaylists.length} playlists)
+                </span>
               </div>
               <ChevronDown
-                className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 ${difficultyConfig[selectedDifficulty].text} pointer-events-none`}
+                className={`w-4 h-4 transition-transform ${
+                  mobileDropdownOpen ? "rotate-180" : ""
+                }`}
               />
-            </div>
+            </button>
+
+            {mobileDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200"
+              >
+                {allDifficulties.map((level) => {
+                  const config = difficultyConfig[level];
+                  const count = playlists.filter(
+                    (pl) => pl.difficulty === level
+                  ).length;
+                  return (
+                    <button
+                      key={level}
+                      onClick={() => {
+                        setSelectedDifficulty(level);
+                        setMobileDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2 text-sm flex items-center hover:bg-gray-50 ${
+                        selectedDifficulty === level ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      <div
+                        className={`p-1.5 rounded-full mr-2 ${config.iconBg} ${config.iconText}`}
+                      >
+                        {config.icon}
+                      </div>
+                      <span>{level}</span>
+                      <span className="ml-auto text-xs text-gray-500">
+                        ({count})
+                      </span>
+                    </button>
+                  );
+                })}
+              </motion.div>
+            )}
           </div>
 
           {/* Desktop Difficulty Buttons */}
@@ -260,6 +273,10 @@ export function YouTubePlaylists({
             {allDifficulties.map((difficultyKey, index) => {
               const config = difficultyConfig[difficultyKey];
               const isActive = selectedDifficulty === difficultyKey;
+              const count = playlists.filter(
+                (pl) => pl.difficulty === difficultyKey
+              ).length;
+
               return (
                 <motion.button
                   key={difficultyKey}
@@ -293,12 +310,7 @@ export function YouTubePlaylists({
                       isActive ? "text-white/80" : "text-gray-500"
                     }`}
                   >
-                    (
-                    {
-                      playlists.filter((pl) => pl.difficulty === difficultyKey)
-                        .length
-                    }
-                    )
+                    ({count})
                   </span>
                   {isActive && (
                     <motion.div

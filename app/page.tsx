@@ -128,13 +128,13 @@ export default function HomePage() {
         <section id="youtube-playlists" className="-mt-14 md:-mt-12">
           <YouTubePlaylists />
         </section>
-        <section id="free-udemy" className="-mt-12">
+        <section id="free-udemy" className="-mt-12 md:-mt-14">
           <TopUdemyCourses />
         </section>
-        <section id="free-labs" className="-mt-10">
+        <section id="free-labs" className="-mt-14 md:-mt-14">
           <FreeLabs />
         </section>
-        <div id="cert" className="-mt-30">
+        <div id="cert" className="-mt-36 md:-mt-34">
           <CertificationRoadmap />
         </div>
         <section id="career" className="-mt-10">
