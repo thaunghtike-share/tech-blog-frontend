@@ -156,3 +156,22 @@
 html {
   scroll-behavior: smooth;
 }
+
+@media (max-width: 767px) {
+  /* For mobile only */
+
+  .roadmap-mobile-button {
+    padding-left: 0.5rem !important;  /* px-2 */
+    padding-right: 0.5rem !important;
+    padding-top: 0.25rem !important;  /* py-1 */
+    padding-bottom: 0.25rem !important;
+    font-size: 0.75rem !important; /* smaller text */
+    min-width: auto !important;
+    flex-shrink: 1 !important;
+  }
+  .roadmap-mobile-div {
+    overflow-x: visible !important;  /* remove scroll */
+    flex-wrap: nowrap !important;    /* keep in one line */
+    justify-content: flex-start !important;
+  }
+}

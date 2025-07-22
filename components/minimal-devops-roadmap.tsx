@@ -570,17 +570,18 @@ const stageConfig = {
 };
 
 const getStageIcon = (stageKey: string) => {
+  const className = "w-4 h-4 md:w-5 md:h-5";
   switch (stageKey) {
     case "prerequisite":
-      return <Lightbulb className="w-5 h-5" />;
+      return <Lightbulb className={className} />;
     case "beginner":
-      return <BookOpen className="w-5 h-5" />;
+      return <BookOpen className={className} />;
     case "intermediate":
-      return <Layers className="w-5 h-5" />;
+      return <Layers className={className} />;
     case "advanced":
-      return <Shield className="w-5 h-5" />;
+      return <Shield className={className} />;
     default:
-      return <Code className="w-5 h-5" />;
+      return <Code className={className} />;
   }
 };
 
@@ -627,7 +628,7 @@ export function MinimalDevopsRoadmap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4"
+            className="text-xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4"
           >
             DevOps Mastery Roadmap
           </motion.h2>
@@ -635,17 +636,36 @@ export function MinimalDevopsRoadmap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto"
           >
             A structured learning path from prerequisite to advanced DevOps
             concepts and tools.
           </motion.p>
         </div>
+        {/* Mobile Dropdown - show only on mobile, hide md+ */}
+        <div className="mb-8 px-4 md:hidden">
+          <select
+            className="w-full rounded-xl border border-gray-300 py-3 px-4 text-gray-700 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+            value={selectedStageKey}
+            onChange={(e) => {
+              setSelectedStageKey(e.target.value);
+              setShowAllTopics(false);
+            }}
+          >
+            {roadmap.map((stage) => (
+              <option key={stage.key} value={stage.key}>
+                {stage.label} ({stage.items.length} topics)
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Desktop Stage Buttons - hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="flex flex-wrap gap-2 mb-8 justify-center"
+          className="hidden md:flex flex-wrap gap-2 mb-8 justify-center"
         >
           {roadmap.map((stage, index) => (
             <motion.button
@@ -655,9 +675,9 @@ export function MinimalDevopsRoadmap() {
               transition={{ delay: index * 0.1 }}
               onClick={() => {
                 setSelectedStageKey(stage.key);
-                setShowAllTopics(false); // reset showAll when switching stages
+                setShowAllTopics(false);
               }}
-              className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl transition-all duration-300 ${
+              className={`group relative flex items-center gap-2 px-4 py-2 rounded-2xl -mt-4 md:-mt-4 transition-all duration-300 ${
                 selectedStageKey === stage.key
                   ? `bg-gradient-to-r ${
                       stageConfig[stage.key as keyof typeof stageConfig]
@@ -693,6 +713,7 @@ export function MinimalDevopsRoadmap() {
             </motion.button>
           ))}
         </motion.div>
+
         <motion.div
           key={selectedStageKey}
           initial={{ opacity: 0, y: 20 }}
@@ -702,11 +723,13 @@ export function MinimalDevopsRoadmap() {
         >
           {selectedStage.description?.length > 0 && (
             <div className="">
-              <p className="text-gray-800 text-lg leading-relaxed mb-4 font-medium">
+              <p className="text-gray-600 text-sm md:text-lg leading-relaxed mb-4 font-medium">
                 {selectedStage.description[0]}
               </p>
               {selectedStage.description[1] && (
-                <p className="text-gray-800">{selectedStage.description[1]}</p>
+                <p className="text-gray-600 text-xs md:text-base">
+                  {selectedStage.description[1]}
+                </p>
               )}
             </div>
           )}
