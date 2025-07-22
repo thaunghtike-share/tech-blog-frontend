@@ -4,9 +4,7 @@ import {
   ChevronRight,
   Clock,
   BookOpen,
-  Layers,
   Shield,
-  Cloud,
   Code,
   X,
   Sparkles,
@@ -15,7 +13,6 @@ import {
   Rocket,
   Gauge,
 } from "lucide-react";
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
 import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
@@ -599,13 +596,11 @@ export function MinimalDevopsRoadmap() {
   } | null>(null);
   const [showAllTopics, setShowAllTopics] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const selectedStage =
     roadmap.find((r) => r.key === selectedStageKey) || roadmap[0];
   const currentStageConfig =
     stageConfig[selectedStageKey as keyof typeof stageConfig];
-
   const displayedItems = showAllTopics
     ? selectedStage.items
     : selectedStage.items.slice(0, 6);
@@ -641,75 +636,19 @@ export function MinimalDevopsRoadmap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto mb-8" // Adjusted margin-bottom
           >
             A structured learning path from prerequisite to advanced DevOps
             concepts and tools.
           </motion.p>
         </div>
-        {/* Mobile Dropdown - show only on mobile, hide md+ */}
-        <div className="sm:hidden mb-7 relative">
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${currentStageConfig.border}`}
-          >
-            <div className="flex items-center justify-center w-full gap-2">
-              <div
-                className={`p-1.5 rounded-full ${currentStageConfig.iconBg} ${currentStageConfig.iconText}`}
-              >
-                {getStageIcon(selectedStageKey)}
-              </div>
-              <span>
-                {roadmap.find((r) => r.key === selectedStageKey)?.label}
-              </span>
-            </div>
-            <ChevronDown
-              className={`w-4 h-4 transition-transform ${
-                dropdownOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
 
-          {dropdownOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200"
-            >
-              {roadmap.map((stage) => {
-                const config =
-                  stageConfig[stage.key as keyof typeof stageConfig];
-                return (
-                  <button
-                    key={stage.key}
-                    onClick={() => {
-                      setSelectedStageKey(stage.key);
-                      setShowAllTopics(false);
-                      setDropdownOpen(false);
-                    }}
-                    className={`w-full text-left px-4 py-2 text-sm flex items-center hover:bg-gray-50 ${
-                      selectedStageKey === stage.key ? "bg-gray-100" : ""
-                    }`}
-                  >
-                    <div
-                      className={`w-7 h-7 flex items-center justify-center rounded-full ${config.iconBg} ${config.iconText}`}
-                    >
-                      {getStageIcon(stage.key)}
-                    </div>
-                    <span className="ml-3">{stage.label}</span>
-                  </button>
-                );
-              })}
-            </motion.div>
-          )}
-        </div>
-
-        {/* Desktop Stage Buttons - hidden on mobile */}
+        {/* Stage Buttons - Now always visible and horizontally scrollable */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="hidden md:flex flex-wrap gap-2 mb-8 justify-center"
+          className="flex overflow-x-auto flex-nowrap justify-start md:justify-center gap-2 mb-8 pb-4 mt-4" // Added mt-4
         >
           {roadmap.map((stage, index) => (
             <motion.button
@@ -721,7 +660,7 @@ export function MinimalDevopsRoadmap() {
                 setSelectedStageKey(stage.key);
                 setShowAllTopics(false);
               }}
-              className={`group relative flex items-center gap-2 px-4 py-2 rounded-full -mt-4 md:-mt-4 transition-all duration-300 ${
+              className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 ${
                 selectedStageKey === stage.key
                   ? `bg-gradient-to-r ${
                       stageConfig[stage.key as keyof typeof stageConfig]
@@ -755,7 +694,6 @@ export function MinimalDevopsRoadmap() {
             </motion.button>
           ))}
         </motion.div>
-
         <motion.div
           key={selectedStageKey}
           initial={{ opacity: 0, y: 20 }}
@@ -765,7 +703,7 @@ export function MinimalDevopsRoadmap() {
         >
           {selectedStage.description?.length > 0 && <div className=""></div>}
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8">
           {displayedItems.map(({ title, details, duration }, idx) => {
             return (
               <motion.div
@@ -774,7 +712,7 @@ export function MinimalDevopsRoadmap() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`} // Added flex flex-col
+                className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto relative group h-full bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`} // Added flex flex-col
               >
                 <div className="p-5 relative flex-grow">
                   {" "}

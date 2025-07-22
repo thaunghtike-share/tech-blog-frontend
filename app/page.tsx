@@ -60,44 +60,6 @@ export default function HomePage() {
         }}
       ></div>
 
-      {/* Messenger Support Floating Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with me on Messenger"
-        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-14 h-14 rounded-full"
-        >
-          <defs>
-            <linearGradient
-              id="messengerGradient"
-              x1="0"
-              y1="0"
-              x2="240"
-              y2="240"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#E1306C" />
-              <stop offset="1" stopColor="#833AB4" />
-            </linearGradient>
-          </defs>
-          <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
-        </svg>
-        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
-          Chat?
-        </span>
-      </a>
-
       {/* Fixed Header */}
       <MinimalHeader />
 

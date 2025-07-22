@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import type React from "react";
+
 import {
   Award,
   Clock,
@@ -17,7 +19,6 @@ import {
   Sparkles,
   TrendingUp,
   BadgeCheck,
-  ChevronDown,
   Github,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -94,7 +95,7 @@ const certifications: CertificationItem[] = [
       "Markdown formatting",
       "Collaboration workflows",
       "GitHub Pages",
-      "Security basics (Dependabot)"
+      "Security basics (Dependabot)",
     ],
     examLink: "https://github.com/certifications/foundations",
   },
@@ -376,13 +377,13 @@ const difficultyConfig = {
     border: "border-green-500",
   },
   Intermediate: {
-    gradient: "from-blue-500 to-indigo-600",
-    bgGradient: "from-blue-50 to-indigo-50",
-    textColor: "text-blue-800",
+    gradient: "from-orange-500 to-yellow-600", // Changed from blue/indigo
+    bgGradient: "from-orange-50 to-yellow-50", // Changed from blue/indigo
+    textColor: "text-orange-800", // Changed from blue
     icon: <Gauge className="w-5 h-5" />,
-    iconBg: "bg-gradient-to-r from-blue-500 to-indigo-600",
+    iconBg: "bg-gradient-to-r from-orange-500 to-yellow-600", // Changed from blue/indigo
     iconText: "text-white",
-    border: "border-blue-500",
+    border: "border-orange-500", // Changed from blue
   },
   Advanced: {
     gradient: "from-purple-500 to-pink-600",
@@ -399,11 +400,20 @@ export function CertificationRoadmap() {
   const [filter, setFilter] = useState<
     "Beginner" | "Intermediate" | "Advanced"
   >("Beginner");
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>(
+    {}
+  ); // State to manage expanded topics per card
 
   const filteredCerts = certifications.filter(
     (cert) => cert.difficulty === filter
   );
+
+  const toggleTopics = (title: string) => {
+    setExpandedTopics((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
 
   return (
     <div className="mt-22 sm:mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -441,77 +451,17 @@ export function CertificationRoadmap() {
           </motion.p>
         </div>
 
-        {/* Mobile Dropdown */}
-        <div className="sm:hidden mb-8 relative">
-          <button
-            onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-            className={`relative w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[filter].border}`}
-          >
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-              <div
-                className={`p-1.5 rounded-full mr-2 ${difficultyConfig[filter].iconBg} ${difficultyConfig[filter].iconText}`}
-              >
-                {difficultyConfig[filter].icon}
-              </div>
-              <span>{filter}</span>
-            </div>
-            <ChevronDown
-              className={`ml-auto w-4 h-4 transition-transform ${
-                mobileDropdownOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-
-          {mobileDropdownOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200"
-            >
-              {["Beginner", "Intermediate", "Advanced"].map((level) => {
-                const config =
-                  difficultyConfig[level as keyof typeof difficultyConfig];
-                const certCount = certifications.filter(
-                  (cert) => cert.difficulty === level
-                ).length;
-                return (
-                  <button
-                    key={level}
-                    onClick={() => {
-                      setFilter(level as any);
-                      setMobileDropdownOpen(false);
-                    }}
-                    className={`w-full text-left px-4 py-2 text-sm flex items-center hover:bg-gray-50 ${
-                      filter === level ? "bg-gray-100" : ""
-                    }`}
-                  >
-                    <div
-                      className={`p-1.5 rounded-full mr-2 ${config.iconBg} ${config.iconText}`}
-                    >
-                      {config.icon}
-                    </div>
-                    <span>{level}</span>
-                  </button>
-                );
-              })}
-            </motion.div>
-          )}
-        </div>
-
-        {/* Desktop Buttons */}
+        {/* Filter Buttons - Now always visible and horizontally scrollable */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="hidden sm:flex flex-wrap justify-center gap-3 mb-8 sm:mb-12"
+          className="flex overflow-x-auto flex-nowrap justify-start sm:justify-center gap-3 mb-8 sm:mb-12 pb-4"
         >
           {["Beginner", "Intermediate", "Advanced"].map((level, index) => {
             const config =
               difficultyConfig[level as keyof typeof difficultyConfig];
             const isActive = filter === level;
-            const certCount = certifications.filter(
-              (cert) => cert.difficulty === level
-            ).length;
             return (
               <motion.button
                 key={level}
@@ -519,7 +469,7 @@ export function CertificationRoadmap() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setFilter(level as any)}
-                className={`group relative flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
+                className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
                   isActive
                     ? `bg-gradient-to-r ${config.gradient} text-white scale-105`
                     : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
@@ -541,7 +491,9 @@ export function CertificationRoadmap() {
                   className={`text-xs ${
                     isActive ? "text-white/80" : "text-gray-500"
                   }`}
-                ></span>
+                >
+                  {/* Removed cert count as it's not directly used in the design */}
+                </span>
                 {isActive && (
                   <motion.div
                     layoutId="active-filter"
@@ -554,9 +506,14 @@ export function CertificationRoadmap() {
         </motion.div>
 
         {filteredCerts.length > 0 ? (
-          <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8">
             {filteredCerts.map((cert, index) => {
               const config = difficultyConfig[cert.difficulty];
+              const isTopicsExpanded = expandedTopics[cert.title];
+              const topicsToShow = isTopicsExpanded
+                ? cert.topics
+                : cert.topics.slice(0, 4);
+
               return (
                 <motion.div
                   key={index}
@@ -564,7 +521,7 @@ export function CertificationRoadmap() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`}
+                  className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`}
                 >
                   <div className="p-5 relative">
                     <div className="absolute top-3 right-3">
@@ -603,7 +560,7 @@ export function CertificationRoadmap() {
                         <BookOpen className="w-4 h-4" /> Topics Covered
                       </h4>
                       <ul className="space-y-3">
-                        {cert.topics.slice(0, 6).map((topic, i) => (
+                        {topicsToShow.map((topic, i) => (
                           <motion.li
                             key={i}
                             initial={{ opacity: 0, x: -10 }}
@@ -624,6 +581,18 @@ export function CertificationRoadmap() {
                           </motion.li>
                         ))}
                       </ul>
+                      {cert.topics.length > 4 && (
+                        <p className="text-sm text-gray-500 mt-3">
+                          <button
+                            onClick={() => toggleTopics(cert.title)}
+                            className="font-medium text-blue-600 cursor-pointer hover:underline focus:outline-none"
+                          >
+                            {isTopicsExpanded
+                              ? "See less topics"
+                              : "See more topics"}
+                          </button>
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="p-5 pt-0">

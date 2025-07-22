@@ -14,7 +14,6 @@ import {
   Shield,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 
 interface Playlist {
   id: number;
@@ -82,7 +81,6 @@ export function YouTubePlaylists({
   const [internalShowAll, setInternalShowAll] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   const actualShowAll = showAll !== undefined ? showAll : internalShowAll;
   const actualSetShowAll =
@@ -132,9 +130,13 @@ export function YouTubePlaylists({
     .filter((pl) => pl.difficulty === selectedDifficulty)
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  const displayedPlaylists = actualShowAll
-    ? filteredPlaylists
-    : filteredPlaylists.slice(0, 6);
+  // Show all playlists on mobile, otherwise use actualShowAll state for desktop
+  const displayedPlaylists =
+    typeof window !== "undefined" && window.innerWidth < 640
+      ? filteredPlaylists
+      : actualShowAll
+      ? filteredPlaylists
+      : filteredPlaylists.slice(0, 6);
 
   const allDifficulties: DifficultyLevel[] = [
     "Prerequisite",
@@ -155,7 +157,6 @@ export function YouTubePlaylists({
           <div className="h-3 md:h-4 bg-gray-200 rounded w-64 md:w-96 mx-auto animate-pulse"></div>
         </div>
       )}
-
       {error && (
         <div className="text-center bg-red-50 border border-red-200 rounded-3xl p-6 md:p-12">
           <div className="w-12 h-12 md:w-16 md:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
@@ -167,7 +168,6 @@ export function YouTubePlaylists({
           <p className="text-red-600 text-sm md:text-base">{error}</p>
         </div>
       )}
-
       {!loading && !error && (
         <>
           {/* Header */}
@@ -204,76 +204,16 @@ export function YouTubePlaylists({
             </motion.p>
           </div>
 
-          {/* Mobile Dropdown - Matching CertificationRoadmap style */}
-          <div className="sm:hidden mb-7 relative">
-            <button
-              onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${difficultyConfig[selectedDifficulty].border}`}
-            >
-              <div className="flex items-center justify-center w-full gap-2">
-                <div
-                  className={`p-1.5 rounded-full ${difficultyConfig[selectedDifficulty].iconBg} ${difficultyConfig[selectedDifficulty].iconText}`}
-                >
-                  {difficultyConfig[selectedDifficulty].icon}
-                </div>
-                <span>{selectedDifficulty}</span>
-              </div>
-              <ChevronDown
-                className={`w-4 h-4 transition-transform ${
-                  mobileDropdownOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {mobileDropdownOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200"
-              >
-                {allDifficulties.map((level) => {
-                  const config = difficultyConfig[level];
-                  const count = playlists.filter(
-                    (pl) => pl.difficulty === level
-                  ).length;
-                  return (
-                    <button
-                      key={level}
-                      onClick={() => {
-                        setSelectedDifficulty(level);
-                        setMobileDropdownOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-2 text-sm flex items-center hover:bg-gray-50 ${
-                        selectedDifficulty === level ? "bg-gray-100" : ""
-                      }`}
-                    >
-                      <div
-                        className={`w-7 h-7 flex items-center justify-center rounded-full ${config.iconBg} ${config.iconText}`}
-                      >
-                        {config.icon}
-                      </div>
-                      <span className="ml-3">{level}</span>
-                    </button>
-                  );
-                })}
-              </motion.div>
-            )}
-          </div>
-
-          {/* Desktop Difficulty Buttons - Updated to match CertificationRoadmap */}
+          {/* Difficulty Buttons - Now always visible and horizontally scrollable */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="hidden md:flex flex-wrap gap-3 mb-8 md:mb-10 justify-center"
+            className="flex overflow-x-auto sm:overflow-x-visible flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-3 mb-8 md:mb-10 pb-4"
           >
             {allDifficulties.map((difficultyKey, index) => {
               const config = difficultyConfig[difficultyKey];
               const isActive = selectedDifficulty === difficultyKey;
-              const count = playlists.filter(
-                (pl) => pl.difficulty === difficultyKey
-              ).length;
-
               return (
                 <motion.button
                   key={difficultyKey}
@@ -282,11 +222,11 @@ export function YouTubePlaylists({
                   transition={{ delay: index * 0.1 }}
                   onClick={() => {
                     setSelectedDifficulty(difficultyKey);
-                    actualSetShowAll(false);
+                    actualSetShowAll(false); // Reset showAll when difficulty changes
                   }}
-                  className={`group relative flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
+                  className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
                     isActive
-                      ? `bg-gradient-to-r ${config.color} text-white scale-105`
+                      ? `bg-gradient-to-r ${config.color} text-white scale-105` // Added scale-105 back
                       : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
                   }`}
                 >
@@ -331,7 +271,7 @@ export function YouTubePlaylists({
               </p>
             </motion.div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-x-visible lg:snap-none">
               {displayedPlaylists.map((pl, idx) => {
                 const config = difficultyConfig[pl.difficulty];
                 return (
@@ -341,7 +281,7 @@ export function YouTubePlaylists({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.08 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className={`group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
+                    className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
                   >
                     <div className="relative aspect-video bg-gray-900 overflow-hidden">
                       <iframe
@@ -397,10 +337,9 @@ export function YouTubePlaylists({
               })}
             </div>
           )}
-
-          {/* Show More/Less Button */}
+          {/* Show More/Less Button - Hidden on mobile, visible on desktop */}
           {filteredPlaylists.length > 6 && (
-            <div className="mt-8 md:mt-10 text-center">
+            <div className="mt-8 md:mt-10 text-center hidden sm:block">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -411,15 +350,17 @@ export function YouTubePlaylists({
                     sectionRef.current.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                className={`inline-flex items-center px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm md:text-base`}
+                className={`inline-flex items-center gap-2 px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm md:text-base`}
               >
-                {actualShowAll
-                  ? "Show Less"
-                  : `See All ${selectedDifficulty} Playlists`}
                 {actualShowAll ? (
-                  <ChevronUp className="w-4 h-4 ml-2" />
+                  <>
+                    Show Less <ChevronUp className="w-4 h-4 mr-2" />
+                  </>
                 ) : (
-                  <ChevronDown className="w-4 h-4 ml-2" />
+                  <>
+                    See All {selectedDifficulty} Playlists{" "}
+                    <ChevronDown className="w-4 h-4 mr-2" />
+                  </>
                 )}
               </motion.button>
             </div>
