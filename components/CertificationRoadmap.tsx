@@ -18,6 +18,7 @@ import {
   TrendingUp,
   BadgeCheck,
   ChevronDown,
+  Github,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -41,7 +42,7 @@ const certifications: CertificationItem[] = [
     icon: <Award className="w-6 h-6" />,
     organization: "Amazon Web Services",
     examDetails: "65 questions | 90 minutes | $100",
-    preparationTime: "3-4 weeks",
+    preparationTime: "6 weeks",
     difficulty: "Beginner",
     recommended: true,
     topics: [
@@ -49,6 +50,10 @@ const certifications: CertificationItem[] = [
       "Security and compliance",
       "Billing and pricing",
       "AWS core services",
+      "AWS Shared Responsibility Model",
+      "AWS Global Infrastructure (Regions, AZs)",
+      "Well-Architected Framework",
+      "IAM basics and MFA",
     ],
     examLink:
       "https://aws.amazon.com/certification/certified-cloud-practitioner/",
@@ -58,16 +63,40 @@ const certifications: CertificationItem[] = [
     icon: <Award className="w-6 h-6" />,
     organization: "Microsoft",
     examDetails: "40-60 questions | 60 minutes | $99",
-    preparationTime: "3-4 weeks",
+    preparationTime: "6 weeks",
     difficulty: "Beginner",
     topics: [
       "Cloud concepts",
       "Azure architecture",
       "Governance and compliance",
       "Cost management",
+      "Azure resource hierarchy",
+      "Core services (VMs, Blob Storage)",
+      "Azure AD and RBAC",
+      "Monitoring tools",
     ],
     examLink:
       "https://learn.microsoft.com/en-us/certifications/azure-fundamentals/",
+  },
+  {
+    title: "GitHub Foundations",
+    icon: <Github className="w-6 h-6" />, // Assuming you have a GitHub icon component
+    organization: "GitHub",
+    examDetails: "45 questions | 90 minutes | $99",
+    preparationTime: "2-3 weeks",
+    difficulty: "Beginner",
+    recommended: true,
+    topics: [
+      "GitHub basics (Repositories, Branches)",
+      "Pull Requests and Code Review",
+      "GitHub Issues and Projects",
+      "GitHub Actions basics",
+      "Markdown formatting",
+      "Collaboration workflows",
+      "GitHub Pages",
+      "Security basics (Dependabot)"
+    ],
+    examLink: "https://github.com/certifications/foundations",
   },
   {
     title: "Linux Foundation Certified System Administrator (LFCS)",
@@ -81,6 +110,10 @@ const certifications: CertificationItem[] = [
       "User and group management",
       "Storage management",
       "Networking",
+      "Bash scripting",
+      "Process management (systemd)",
+      "Filesystem permissions",
+      "Backup/restore (tar, rsync)",
     ],
     examLink:
       "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/",
@@ -99,6 +132,10 @@ const certifications: CertificationItem[] = [
       "Configuration and secrets",
       "Observability",
       "Pod design",
+      "Multi-container Pods",
+      "Persistent Volumes",
+      "Custom Resource Definitions",
+      "Helm basics",
     ],
     examLink:
       "https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/",
@@ -116,6 +153,10 @@ const certifications: CertificationItem[] = [
       "Installation and configuration",
       "Workloads and scheduling",
       "Networking",
+      "ETCD backup/restore",
+      "Network policies",
+      "RBAC deep dive",
+      "Troubleshooting kubelet",
     ],
     examLink:
       "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/",
@@ -132,6 +173,10 @@ const certifications: CertificationItem[] = [
       "Orchestration basics",
       "Networking and storage",
       "Security best practices",
+      "Multi-stage builds",
+      "Docker Compose networking",
+      "Registry management",
+      "Security scanning",
     ],
     examLink: "https://success.docker.com/certification",
   },
@@ -148,6 +193,10 @@ const certifications: CertificationItem[] = [
       "Secure applications",
       "Performance and cost optimization",
       "Cloud monitoring",
+      "High availability patterns",
+      "VPC advanced design",
+      "Database services comparison",
+      "Serverless architectures",
     ],
     examLink:
       "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
@@ -164,6 +213,10 @@ const certifications: CertificationItem[] = [
       "Application deployment",
       "Sync strategies",
       "Troubleshooting",
+      "Sync waves/hooks",
+      "Custom health checks",
+      "RBAC for ArgoCD",
+      "Kustomize integration",
     ],
     examLink: "https://codefresh.io/certifications/argocd/",
   },
@@ -179,6 +232,10 @@ const certifications: CertificationItem[] = [
       "Alerting rules",
       "PromQL",
       "Service discovery",
+      "Recording rules",
+      "Alertmanager config",
+      "Grafana templating",
+      "Thanos basics",
     ],
     examLink:
       "https://training.linuxfoundation.org/certification/prometheus-certified-associate/",
@@ -197,6 +254,10 @@ const certifications: CertificationItem[] = [
       "Migration planning",
       "Multi-account strategy",
       "Cost management",
+      "Multi-region architectures",
+      "AWS Organizations (SCPs)",
+      "Advanced networking",
+      "Migration strategies (6 Rs)",
     ],
     examLink:
       "https://aws.amazon.com/certification/certified-solutions-architect-professional/",
@@ -214,6 +275,10 @@ const certifications: CertificationItem[] = [
       "Monitoring and logging",
       "Infrastructure as Code",
       "Incident and event response",
+      "CodePipeline/CodeBuild",
+      "CloudFormation/CDK",
+      "CloudWatch Logs Insights",
+      "SSM Run Command",
     ],
     examLink:
       "https://aws.amazon.com/certification/certified-devops-engineer-professional/",
@@ -231,6 +296,9 @@ const certifications: CertificationItem[] = [
       "Customize work item templates and workflows",
       "Integrate communication tools (Slack, MS Teams)",
       "Manage stakeholder feedback and collaboration",
+      "YAML pipelines",
+      "Artifact feeds",
+      "Azure Policy for DevOps",
     ],
     examLink:
       "https://learn.microsoft.com/en-us/credentials/certifications/exams/az-400/",
@@ -240,7 +308,7 @@ const certifications: CertificationItem[] = [
     icon: <GitMerge className="w-6 h-6" />,
     organization: "HashiCorp",
     examDetails: "57 questions | 60 minutes | $70.50",
-    preparationTime: "4-6 weeks",
+    preparationTime: "8 weeks",
     difficulty: "Advanced",
     recommended: true,
     topics: [
@@ -248,6 +316,10 @@ const certifications: CertificationItem[] = [
       "State management",
       "Modules and workspaces",
       "Cloud infrastructure provisioning",
+      "Dynamic blocks",
+      "Terraform Cloud",
+      "Provider aliasing",
+      "Debugging (TF_LOG)",
     ],
     examLink:
       "https://developer.hashicorp.com/certifications/terraform-associate",
@@ -264,6 +336,10 @@ const certifications: CertificationItem[] = [
       "System hardening",
       "Minimize microservice vulnerabilities",
       "Supply chain security",
+      "Pod Security Admission",
+      "Runtime security (Falco)",
+      "CIS Benchmark",
+      "Image signing",
     ],
     examLink:
       "https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist-cks/",
@@ -280,6 +356,10 @@ const certifications: CertificationItem[] = [
       "Security and policies",
       "Observability",
       "Istio architecture",
+      "Telemetry tools",
+      "mTLS configuration",
+      "Canary deployments",
+      "Multi-cluster setups",
     ],
     examLink: "https://academy.tetrate.io/courses/istio-certified-expert",
   },
@@ -512,12 +592,6 @@ export function CertificationRoadmap() {
                           {cert.preparationTime}
                         </span>
                       </div>
-                      <Badge
-                        className={`inline-flex items-center px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-medium rounded-full shadow-sm border border-yellow-500`}
-                      >
-                        {config.icon}
-                        <span className="ml-1">{cert.difficulty}</span>
-                      </Badge>
                     </div>
                     <div className="mb-6">
                       <p className="text-sm text-gray-600 mb-3 font-medium">
