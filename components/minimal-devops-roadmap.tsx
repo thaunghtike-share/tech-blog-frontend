@@ -12,6 +12,8 @@ import {
   Sparkles,
   Lightbulb,
   ListChecks,
+  Rocket,
+  Gauge,
 } from "lucide-react";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -577,9 +579,9 @@ const getStageIcon = (stageKey: string) => {
     case "prerequisite":
       return <Lightbulb className={className} />;
     case "beginner":
-      return <BookOpen className={className} />;
+      return <Rocket className={className} />;
     case "intermediate":
-      return <Layers className={className} />;
+      return <Gauge className={className} />;
     case "advanced":
       return <Shield className={className} />;
     default:
