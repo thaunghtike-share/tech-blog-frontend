@@ -30,11 +30,14 @@ export default function Intro() {
   };
 
   const cardVariants = {
-    initial: { y: 0, boxShadow: "0 0 rgba(0,0,0,0)" },
+    initial: { y: 0 },
     hover: {
       y: -8,
-      boxShadow: "0 10px 20px rgba(0,0,0,0.12)",
-      transition: { duration: 0.3 },
+      transition: {
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 10,
+      },
     },
   };
 
@@ -48,12 +51,12 @@ export default function Intro() {
   ];
 
   const stepColors = [
-    "bg-gradient-to-r from-green-500 to-emerald-600",
-    "bg-gradient-to-r from-red-500 to-red-600",
-    "bg-gradient-to-r from-purple-500 to-blue-600",
-    "bg-gradient-to-r from-orange-500 to-amber-600",
-    "bg-gradient-to-r from-green-500 to-emerald-600",
-    "bg-gradient-to-r from-purple-500 to-blue-600",
+    "bg-gradient-to-r from-green-600 to-emerald-600",
+    "bg-gradient-to-r from-red-600 to-pink-500",
+    "bg-gradient-to-r from-purple-600 to-indigo-500",
+    "bg-gradient-to-r from-orange-600 to-amber-500",
+    "bg-gradient-to-r from-teal-600 to-cyan-500",
+    "bg-gradient-to-r from-violet-600 to-blue-500",
   ];
 
   const conceptCards = [
@@ -62,21 +65,21 @@ export default function Intro() {
       title: "What is DevOps?",
       description:
         "A collaborative approach combining software development (Dev) and IT operations (Ops) to shorten the development lifecycle.",
-      color: "bg-blue-500",
+      color: "from-blue-400 to-blue-600",
     },
     {
       icon: <Cpu className="w-6 h-6" />,
       title: "Core Practices",
       description:
         "Core practices include continuous integration and delivery, containerization, version control, orchestration, infrastructure as code, monitoring, and incident response.",
-      color: "bg-purple-500",
+      color: "from-purple-400 to-purple-600",
     },
     {
       icon: <Cloud className="w-6 h-6" />,
       title: "Cloud Native",
       description:
         "Cloud-native is a way of building and running applications that fully leverage the cloud model — scalable, resilient, flexible, and automated.",
-      color: "bg-amber-500",
+      color: "from-amber-400 to-amber-600",
     },
   ];
 
@@ -89,10 +92,11 @@ export default function Intro() {
         "Networking Basics",
         "Operating System",
         "Computer Fundamentals",
-        "Virtualization"
+        "Virtualization",
       ],
-      color: "bg-blue-100 text-blue-800",
-      frameColor: "bg-blue-500",
+      color: "bg-blue-50 text-blue-800",
+      borderColor: "border-blue-200",
+      frameColor: "bg-gradient-to-r from-blue-400 to-blue-600",
     },
     {
       name: "Beginner",
@@ -104,8 +108,9 @@ export default function Intro() {
         "Cloud Fundamentals",
         "Docker",
       ],
-      color: "bg-purple-100 text-purple-800",
-      frameColor: "bg-purple-500",
+      color: "bg-purple-50 text-purple-800",
+      borderColor: "border-purple-200",
+      frameColor: "bg-gradient-to-r from-purple-400 to-purple-600",
     },
     {
       name: "Intermediate",
@@ -117,15 +122,23 @@ export default function Intro() {
         "Kubernetes Fundamentals",
         "CICD Pipeline",
       ],
-      color: "bg-green-100 text-green-800",
-      frameColor: "bg-green-500",
+      color: "bg-green-50 text-green-800",
+      borderColor: "border-green-200",
+      frameColor: "bg-gradient-to-r from-green-400 to-green-600",
     },
     {
       name: "Advanced",
       icon: <ShieldCheck className="w-5 h-5" />,
-      tools: ["Infrastructure as Code", "Configuration Management", "Security", "GitOps", "Monitoring & Logging"],
-      color: "bg-red-100 text-red-800",
-      frameColor: "bg-red-500",
+      tools: [
+        "Infrastructure as Code",
+        "Configuration Management",
+        "Security",
+        "GitOps",
+        "Monitoring & Logging",
+      ],
+      color: "bg-red-50 text-red-800",
+      borderColor: "border-red-200",
+      frameColor: "bg-gradient-to-r from-red-400 to-red-600",
     },
   ];
 
@@ -137,12 +150,12 @@ export default function Intro() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-6 select-text"
+            className="flex items-center justify-center gap-3 mb-6"
           >
-            <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg select-text">
+            <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg">
               <Rocket className="w-5 h-5 text-white" />
             </div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
               <Sparkles className="w-3 h-3 mr-1.5" /> Introduction
             </span>
           </motion.div>
@@ -162,7 +175,7 @@ export default function Intro() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base select-text"
+            className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base"
           >
             Learn what DevOps really means, why it matters, and what you need to
             know before diving in.
@@ -170,105 +183,43 @@ export default function Intro() {
         </div>
       </section>
 
+      {/* Concept Cards */}
       <motion.div
-        className="mb-8 pb-6 overflow-x-auto md:overflow-visible"
+        className="my-12 md:my-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+        transition={{ delay: 0.2 }}
       >
-        <div className="flex flex-col md:flex-row gap-6 px-4 mx-auto max-w-full md:w-max">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {conceptCards.map((card, i) => (
             <motion.div
               key={i}
-              className="w-full md:w-72 bg-white rounded-xl shadow-md overflow-hidden border border-gray-100"
-              variants={cardVariants}
+              className="group relative"
+              initial="initial"
               whileHover="hover"
+              variants={cardVariants}
             >
-              <div className={`h-2 ${card.color}`}></div>
-              <div className="p-6">
-                <div
-                  className={`${card.color} w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4`}
-                >
-                  {card.icon}
+              <div className="absolute inset-0 bg-gradient-to-br rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md" />
+              <div className="relative h-full bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:border-transparent">
+                <div className={`h-2 bg-gradient-to-r ${card.color}`}></div>
+                <div className="p-6">
+                  <div
+                    className={`bg-gradient-to-r ${card.color} w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4`}
+                  >
+                    {card.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {card.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {card.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-gray-600">{card.description}</p>
               </div>
             </motion.div>
           ))}
         </div>
       </motion.div>
-
-      {/* DevOps Learning Levels */}
-      <div className="mb-8 md:mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mb-6 select-text flex items-center justify-center gap-3"
-        >
-          <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow select-text">
-            <Wrench className="w-5 h-5 text-white" />
-          </div>
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
-            <BarChart3 className="w-3 h-3 mr-1.5" />
-             Levels
-          </span>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base select-text text-center mb-10"
-        >
-          Explore DevOps from foundational knowledge to advanced infrastructure
-          practices through structured stages.
-        </motion.p>
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {toolCategories.map((category, i) => (
-            <motion.div
-              key={i}
-              initial="initial"
-              animate="animate"
-              whileHover="hover"
-              variants={cardVariants}
-              transition={{ delay: 0.1 * i }}
-              className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden cursor-pointer"
-            >
-              <div className={`h-2 ${category.frameColor}`} />
-              <div className="p-6">
-                <div className="flex items-center mb-4">
-                  <div
-                    className={`${category.color.split(" ")[0]} ${
-                      category.color.split(" ")[1]
-                    } rounded-lg p-2 mr-3 flex items-center justify-center`}
-                  >
-                    {category.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {category.name}
-                  </h3>
-                </div>
-                <ul className="space-y-2">
-                  {category.tools.map((tool, j) => (
-                    <li
-                      key={j}
-                      className="flex items-center text-gray-700 text-sm"
-                    >
-                      <ChevronRight className="w-4 h-4 text-gray-400 mr-2" />
-                      {tool}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
 
       {/* Learning Guideline */}
       <div className="max-w-4xl mx-auto">
@@ -276,13 +227,13 @@ export default function Intro() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-6 select-text"
+          className="mb-6"
         >
-          <h4 className="text-2xl font-bold text-gray-900 mb-5 flex items-center justify-center gap-2 select-text">
-            <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg select-text">
+          <h4 className="text-2xl font-bold text-gray-900 mb-5 flex items-center justify-center gap-2">
+            <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
               <ListTodo className="w-5 h-5 text-white" />
             </div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 select-text">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
               <ClipboardList className="w-3 h-3 mr-1.5" /> Guideline
             </span>
           </h4>
