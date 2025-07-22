@@ -247,7 +247,7 @@ export function FeaturedArticlesPage() {
                     {category && (
                       <Link
                         href={`/categories/${category.slug}`}
-                        className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 border border-gray-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-blue-100 transition-colors"
+                        className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 border border-gray-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-xs font-medium hover:bg-blue-100 transition-colors"
                       >
                         <Folder className="w-3 h-3 sm:w-4 sm:h-4" />
                         {category.name}
@@ -259,7 +259,7 @@ export function FeaturedArticlesPage() {
                     href={`/articles/${article.slug}`}
                     className="group/link block"
                   >
-                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                    <h3 className="text-lg sm:text-lg font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                       {article.title}
                     </h3>
                     <p className="text-gray-700 mb-4 line-clamp-2 text-sm sm:text-[15px] leading-relaxed">
