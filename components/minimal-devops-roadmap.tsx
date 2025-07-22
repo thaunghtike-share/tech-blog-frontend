@@ -613,7 +613,7 @@ export function MinimalDevopsRoadmap() {
         ref={roadmapRef}
         className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
       >
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 md:mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -645,7 +645,7 @@ export function MinimalDevopsRoadmap() {
           </motion.p>
         </div>
         {/* Mobile Dropdown - show only on mobile, hide md+ */}
-        <div className="mb-8 px-4 md:hidden">
+        <div className="mb-7 px-4 md:hidden">
           <div className="relative">
             <motion.div
               className={`w-full rounded-2xl border-2 ${currentStageConfig.border} bg-white shadow-md overflow-hidden`}
@@ -747,18 +747,10 @@ export function MinimalDevopsRoadmap() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10 text-center max-w-4xl mx-auto"
+          className="mb-4 md:mb-9 text-center max-w-4xl mx-auto"
         >
           {selectedStage.description?.length > 0 && (
             <div className="">
-              <p className="text-gray-600 text-sm md:text-lg leading-relaxed mb-4 font-medium">
-                {selectedStage.description[0]}
-              </p>
-              {selectedStage.description[1] && (
-                <p className="text-gray-600 text-xs md:text-base">
-                  {selectedStage.description[1]}
-                </p>
-              )}
             </div>
           )}
         </motion.div>
