@@ -33,33 +33,33 @@ const difficultyConfig = {
   Prerequisite: {
     color: "from-gray-500 to-slate-600",
     text: "text-gray-700",
-    border: "border-gray-500",
-    iconBg: "bg-gray-100",
-    iconText: "text-gray-600",
+    border: "border-white-500",
+    iconBg: "bg-gradient-to-r from-gray-500 to-slate-600",
+    iconText: "text-white",
     icon: <Lightbulb className="w-4 h-4" />,
   },
   Beginner: {
     color: "from-green-500 to-emerald-600",
     text: "text-green-700",
     border: "border-green-500",
-    iconBg: "bg-green-100",
-    iconText: "text-green-600",
+    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
+    iconText: "text-white",
     icon: <Rocket className="w-4 h-4" />,
   },
   Intermediate: {
     color: "from-blue-500 to-indigo-600",
     text: "text-blue-700",
     border: "border-blue-500",
-    iconBg: "bg-blue-100",
-    iconText: "text-blue-600",
+    iconBg: "bg-gradient-to-r from-blue-500 to-indigo-600",
+    iconText: "text-white",
     icon: <Gauge className="w-4 h-4" />,
   },
   Advanced: {
     color: "from-purple-500 to-pink-600",
     text: "text-purple-700",
     border: "border-purple-500",
-    iconBg: "bg-purple-100",
-    iconText: "text-purple-600",
+    iconBg: "bg-gradient-to-r from-purple-500 to-pink-600",
+    iconText: "text-white",
     icon: <Shield className="w-4 h-4" />,
   },
 };
@@ -248,8 +248,7 @@ export function YouTubePlaylists({
                       }`}
                     >
                       <div
-                        className={`p-1.5 rounded-full mr-2 ${config.iconBg} ${config.iconText}`}
-                      >
+                          className={`w-7 h-7 flex items-center justify-center rounded-full ${config.iconBg} ${config.iconText}`}                      >
                         {config.icon}
                       </div>
                       <span>{level}</span>
