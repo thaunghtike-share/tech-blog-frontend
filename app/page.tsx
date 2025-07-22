@@ -122,40 +122,40 @@ export default function HomePage() {
         </div>
 
         {/* Other Sections */}
-        <section id="devops-roadmap" className="-mt-12">
+        <section id="devops-roadmap" className="-mt-20">
           <MinimalDevopsRoadmap />
         </section>
-        <section id="youtube-playlists" className="-mt-8">
+        <section id="youtube-playlists" className="-mt-12">
           <YouTubePlaylists />
         </section>
-        <section id="free-udemy" className="-mt-6">
+        <section id="free-udemy" className="-mt-12">
           <TopUdemyCourses />
         </section>
-        <section id="free-labs" className="-mt-6">
+        <section id="free-labs" className="-mt-10">
           <FreeLabs />
         </section>
-        <div id="cert" className="-mt-24">
+        <div id="cert" className="-mt-30">
           <CertificationRoadmap />
         </div>
-        <section id="career" className="-mt-6">
+        <section id="career" className="-mt-10">
           <CareerPath />
         </section>
-        <div className="-mt-24">
+        <div className="-mt-36">
           <RecommendedPaidCourses />
         </div>
-        <div className="-mt-18">
+        <div className="-mt-22">
           <FreelanceServicesSection />
         </div>
-        <div className="-mt-22">
+        <div className="-mt-24">
           <DevOpsWorkflowExample />
         </div>
-        <div className="-mt-24">
+        <div className="-mt-28">
           <SuccessStoriesSection />
         </div>
-        <div className="-mt-24">
+        <div className="-mt-28">
           <AuthorsContributorsCTA />
         </div>
-        <div className="-mt-36">
+        <div className="-mt-38">
           <MinimalFAQs />
         </div>
       </main>
