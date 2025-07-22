@@ -12,6 +12,7 @@ import {
   Sparkles,
   Lightbulb,
 } from "lucide-react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
 import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
@@ -644,20 +645,46 @@ export function MinimalDevopsRoadmap() {
         </div>
         {/* Mobile Dropdown - show only on mobile, hide md+ */}
         <div className="mb-8 px-4 md:hidden">
-          <select
-            className="w-full rounded-xl border border-gray-300 py-3 px-4 text-gray-700 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            value={selectedStageKey}
-            onChange={(e) => {
-              setSelectedStageKey(e.target.value);
-              setShowAllTopics(false);
-            }}
-          >
-            {roadmap.map((stage) => (
-              <option key={stage.key} value={stage.key}>
-                {stage.label} ({stage.items.length} topics)
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <motion.div
+              className={`w-full rounded-2xl border-2 ${currentStageConfig.border} bg-white shadow-md overflow-hidden`}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="relative flex items-center justify-center">
+                {/* Left icon */}
+                <div
+                  className={`absolute left-4 p-1 rounded-lg ${currentStageConfig.iconBg}`}
+                >
+                  {getStageIcon(selectedStageKey)}
+                </div>
+
+                {/* Select element */}
+                <select
+                  className="w-full appearance-none bg-transparent py-4 pl-12 pr-12 text-center text-gray-700 text-base font-medium focus:outline-none"
+                  value={selectedStageKey}
+                  onChange={(e) => {
+                    setSelectedStageKey(e.target.value);
+                    setShowAllTopics(false);
+                  }}
+                >
+                  {roadmap.map((stage) => (
+                    <option
+                      key={stage.key}
+                      value={stage.key}
+                      className="text-center"
+                    >
+                      {stage.label} ({stage.items.length} topics)
+                    </option>
+                  ))}
+                </select>
+
+                {/* Right chevron */}
+                <ChevronDown
+                  className={`absolute right-4 w-5 h-5 ${currentStageConfig.text} pointer-events-none`}
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Desktop Stage Buttons - hidden on mobile */}

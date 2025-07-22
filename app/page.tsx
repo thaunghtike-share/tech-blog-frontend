@@ -122,7 +122,7 @@ export default function HomePage() {
         </div>
 
         {/* Other Sections */}
-        <section id="devops-roadmap" className="-mt-20">
+        <section id="devops-roadmap" className="-mt-26 md:-mt-20">
           <MinimalDevopsRoadmap />
         </section>
         <section id="youtube-playlists" className="-mt-12">

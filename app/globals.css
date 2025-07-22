@@ -175,3 +175,12 @@ html {
     justify-content: flex-start !important;
   }
 }
+
+select {
+  background-image: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+select:focus {
+  outline: none;
+}
