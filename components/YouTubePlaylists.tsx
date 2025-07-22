@@ -358,7 +358,7 @@ export function YouTubePlaylists({
                   </>
                 ) : (
                   <>
-                    See All {selectedDifficulty} Playlists{" "}
+                    See All Playlists{" "}
                     <ChevronDown className="w-4 h-4 mr-2" />
                   </>
                 )}
