@@ -109,7 +109,7 @@ export function FreeLabs() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-orange-700 to-amber-700 bg-clip-text text-transparent mb-4"
+              className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-orange-700 to-amber-700 bg-clip-text text-transparent mb-4"
             >
               Free DevOps Labs to Practice
             </motion.h2>

@@ -98,7 +98,7 @@ export function CareerPath() {
           <div className="p-3 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-2xl shadow-lg">
             <ServerCog className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-blue-50 text-blue-700 border border-blue-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-indigo-50 to-blue-50 text-blue-700 border border-blue-200">
             <Sparkles className="w-4 h-4 mr-2" /> Career Path
           </span>
         </motion.div>
@@ -107,7 +107,7 @@ export function CareerPath() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
           Internship & Junior Positions
         </motion.h2>

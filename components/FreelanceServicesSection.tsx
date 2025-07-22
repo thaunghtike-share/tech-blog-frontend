@@ -69,33 +69,31 @@ export function FreelanceServicesSection() {
           <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
             <Code className="w-6 h-6 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <Sparkles className="w-4 h-4 mr-2" />
-            What I Offer
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+            <Sparkles className="w-4 h-4 mr-2" /> What I Offer
           </span>
         </motion.div>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
           Professional DevOps Services
         </motion.h2>
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text:sm md:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           Comprehensive solutions to accelerate your development and deployment
           workflows
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Services Grid - Horizontal scroll on mobile, 2-column grid on desktop */}
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-4 lg:grid lg:grid-cols-2 lg:overflow-x-visible lg:snap-none">
         {services.map(
           (
             { title, shortDescription, details, icon: Icon, slug, gradient },
@@ -118,9 +116,10 @@ export function FreelanceServicesSection() {
                   stiffness: 100,
                 }}
                 whileHover={{ y: -5 }}
+                className="flex-shrink-0 w-[85vw] snap-center lg:w-auto" // Added flex-shrink-0 and w-[85vw] for mobile horizontal scroll
               >
-                <Card className="h-full border-0 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm">
-                  <CardContent className="p-0">
+                <Card className="h-full border-0 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm flex flex-col">
+                  <CardContent className="p-0 flex-grow">
                     <div
                       className={`p-6 bg-gradient-to-r ${gradient} text-white flex items-center gap-4`}
                     >
@@ -128,29 +127,35 @@ export function FreelanceServicesSection() {
                         <Icon className="h-6 w-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-1">{title}</h3>
-                        <p className="text-blue-100 text-sm">
+                        <h3 className="text-lg md:text-xl font-bold mb-1">
+                          {title}
+                        </h3>{" "}
+                        {/* Reduced text size */}
+                        <p className="text-xs md:text-sm text-blue-100">
                           {shortDescription}
-                        </p>
+                        </p>{" "}
+                        {/* Reduced text size */}
                       </div>
                     </div>
                     <div className="p-6">
-                      <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                      <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
                         {isExpanded ? details : shortText}
-                      </p>
-
+                      </p>{" "}
+                      {/* Reduced text size */}
                       <div className="flex items-center justify-between">
                         <button
                           onClick={() => setExpanded(isExpanded ? null : idx)}
-                          className="text-blue-600 text-sm font-medium hover:underline focus:outline-none"
+                          className="text-xs md:text-sm text-blue-600 font-medium hover:underline focus:outline-none"
                         >
                           {isExpanded ? "Show Less" : "Read More"}
-                        </button>
-
+                        </button>{" "}
+                        {/* Reduced text size */}
                         <Link
                           href={`/services/${slug}`}
-                          className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
+                          className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-xs md:text-sm font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
                         >
+                          {" "}
+                          {/* Reduced text size */}
                           Explore
                           <ExternalLink className="h-4 w-4 ml-2" />
                         </Link>

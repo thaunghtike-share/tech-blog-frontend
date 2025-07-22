@@ -83,7 +83,13 @@ export function RecommendedPaidCourses() {
   const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const coursesToShow = showAll ? paidCourses : paidCourses.slice(0, 6);
+  // Determine courses to show based on screen size and showAll state
+  const coursesToShow =
+    typeof window !== "undefined" && window.innerWidth < 640
+      ? paidCourses // Show all on mobile
+      : showAll
+      ? paidCourses
+      : paidCourses.slice(0, 6); // Limit on desktop unless showAll is true
 
   const toggleShowAll = () => {
     if (showAll) {
@@ -107,7 +113,7 @@ export function RecommendedPaidCourses() {
           <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
             <Play className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
             <BookOpen className="w-4 h-4 mr-2" /> Paid Courses
           </span>
         </motion.div>
@@ -115,22 +121,23 @@ export function RecommendedPaidCourses() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
-          Recommended Paid Cloud DevOps Courses
+          Recommended Paid DevOps Courses
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600 max-w-2xl mx-auto"
+          className="text-sm md:text-lg text-gray-600 max-w-2xl mx-auto"
         >
           Carefully selected paid courses to accelerate your DevOps and Cloud
           career.
         </motion.p>
       </div>
-      {/* Courses Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      {/* Courses Grid - Horizontal scroll on mobile, grid on desktop */}
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:overflow-x-visible lg:snap-none">
         {coursesToShow.map((course, idx) => (
           <motion.div
             key={idx}
@@ -138,7 +145,7 @@ export function RecommendedPaidCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative flex flex-col" // Added flex flex-col
+            className="flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative flex flex-col" // Added flex flex-col
           >
             <div className="p-5 flex-grow">
               {" "}
@@ -191,9 +198,10 @@ export function RecommendedPaidCourses() {
           </motion.div>
         ))}
       </div>
-      {/* Toggle Button */}
+
+      {/* Toggle Button - Hidden on mobile */}
       {paidCourses.length > 6 && (
-        <div className="mt-10 text-center">
+        <div className="mt-10 text-center hidden sm:block">
           <motion.button
             type="button"
             onClick={toggleShowAll}

@@ -156,26 +156,23 @@ export function DevOpsWorkflowExample() {
           <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
             <Code className="w-6 h-6 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <Sparkles className="w-4 h-4 mr-2" />
-            Case Study
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+            <Sparkles className="w-4 h-4 mr-2" /> Case Study
           </span>
         </motion.div>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
           Enterprise GitOps Workflow
         </motion.h2>
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           DevOps architecture design built for client's company using GitOps and
           IAC
@@ -199,15 +196,15 @@ export function DevOpsWorkflowExample() {
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
+        {/* Workflow Steps Section */}
+        <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-100">
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 flex items-center gap-2">
             <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
               <Settings className="w-5 h-5 text-white" />
             </div>
             Workflow Steps
           </h3>
-
-          <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide items-center">
+          <div className="flex overflow-x-auto pb-4 mb-6 sm:mb-8 scrollbar-hide items-center">
             {workflowSteps.map((step, i) => {
               const Icon = step.icon;
               const isSelected = currentStep === i;
@@ -217,7 +214,7 @@ export function DevOpsWorkflowExample() {
                     onClick={() => setCurrentStep(i)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center justify-center w-10 h-10 rounded-full transition-all flex-shrink-0 ${
+                    className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full transition-all flex-shrink-0 ${
                       isSelected
                         ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg scale-110"
                         : "bg-white text-blue-600 border-2 border-blue-300 hover:bg-blue-50 hover:shadow-md"
@@ -226,13 +223,12 @@ export function DevOpsWorkflowExample() {
                     <Icon className="w-4 h-4" />
                   </motion.button>
                   {i < workflowSteps.length - 1 && (
-                    <div className="h-0.5 w-5 bg-gradient-to-r from-blue-300 to-indigo-300 mx-1 flex-shrink-0 rounded-full" />
+                    <div className="h-0.5 w-4 sm:w-5 bg-gradient-to-r from-blue-300 to-indigo-300 mx-1 flex-shrink-0 rounded-full" />
                   )}
                 </React.Fragment>
               );
             })}
           </div>
-
           <AnimatePresence mode="wait">
             <motion.div
               key={workflowSteps[currentStep].id}
@@ -242,35 +238,37 @@ export function DevOpsWorkflowExample() {
               transition={{ duration: 0.3 }}
             >
               <div
-                className={`${workflowSteps[currentStep].color} w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg`}
+                className={`${workflowSteps[currentStep].color} w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg`}
               >
                 {React.createElement(workflowSteps[currentStep].icon, {
-                  className: "w-6 h-6",
+                  className: "w-5 h-5 sm:w-6 sm:h-6",
                 })}
               </div>
-
-              <h4 className="text-xl font-bold text-gray-900 mb-3">
+              <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                 {workflowSteps[currentStep].title}
               </h4>
-              <p className="text-gray-700 mb-6">
+              <p className="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6">
                 {workflowSteps[currentStep].description}
               </p>
-
-              <h5 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+              <h5 className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 sm:mb-3">
                 Tools Used
               </h5>
-              <ul className="space-y-4">
+              <ul className="space-y-3 sm:space-y-4">
                 {workflowSteps[currentStep].tools.map((tool, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                    className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-blue-50 transition-colors"
                   >
                     <div className="p-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mt-0.5">
-                      <Code className="text-white w-4 h-4 flex-shrink-0" />
+                      <Code className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-white" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">{tool.name}</p>
-                      <p className="text-sm text-gray-600">{tool.desc}</p>
+                      <p className="text-sm sm:text-base font-semibold text-gray-800">
+                        {tool.name}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-600">
+                        {tool.desc}
+                      </p>
                     </div>
                   </li>
                 ))}
@@ -279,15 +277,17 @@ export function DevOpsWorkflowExample() {
           </AnimatePresence>
         </div>
 
-        <div className="space-y-8">
-          <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <div className="space-y-6 sm:space-y-8">
+          {/* Complete Tech Stack Section */}
+          <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-100">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
                 <Code className="w-5 h-5 text-white" />
               </div>
               Complete Tech Stack
             </h3>
-            <div className="flex flex-wrap gap-3">
+            {/* Changed to flex-wrap for mobile, removed horizontal scroll classes */}
+            <div className="flex flex-wrap gap-2 sm:gap-3 pb-4">
               {techStack.map((tool, index) => (
                 <motion.div
                   key={tool}
@@ -295,7 +295,8 @@ export function DevOpsWorkflowExample() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.05 }}
-                  className="px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-purple-100 hover:to-pink-100 text-gray-800 hover:text-purple-800 rounded-lg font-medium text-sm shadow-sm hover:shadow-md transition-all"
+                  // Removed w-[45vw] and flex-shrink-0 for mobile wrapping
+                  className="px-2 py-1 sm:px-4 sm:py-2 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-purple-100 hover:to-pink-100 text-gray-800 hover:text-purple-800 rounded-md font-medium text-xs sm:text-sm shadow-sm hover:shadow-md transition-all"
                 >
                   {tool}
                 </motion.div>
@@ -303,14 +304,16 @@ export function DevOpsWorkflowExample() {
             </div>
           </div>
 
-          <div className="p-8 rounded-2xl shadow-lg border border-gray-100">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          {/* Key Features Section */}
+          <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-100">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
                 <Star className="w-5 h-5 text-white" />
               </div>
               Key Features
             </h3>
-            <ul className="space-y-4">
+            {/* Changed to flex-wrap for mobile, removed horizontal scroll classes */}
+            <div className="flex flex-wrap gap-2 sm:gap-4 pb-4">
               {[
                 "End-to-end automated deployment pipeline",
                 "Security scanning integrated in CI",
@@ -325,15 +328,18 @@ export function DevOpsWorkflowExample() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors"
+                  // Removed w-[85vw] and flex-shrink-0 for mobile wrapping
+                  className="flex items-start gap-2 sm:gap-3 p-2 rounded-lg hover:bg-green-50 transition-colors list-none text-sm sm:text-base"
                 >
                   <div className="p-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mt-0.5">
-                    <Code className="text-white w-4 h-4 flex-shrink-0" />
+                    <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-white" />
                   </div>
-                  <span className="text-gray-700 font-medium">{feature}</span>
+                  <span className="text-sm sm:text-base text-gray-700 font-medium">
+                    {feature}
+                  </span>
                 </motion.li>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>
