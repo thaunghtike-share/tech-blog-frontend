@@ -52,11 +52,11 @@ export default function Intro() {
 
   const stepColors = [
     "bg-gradient-to-r from-green-600 to-emerald-600",
-    "bg-gradient-to-r from-red-600 to-pink-500",
-    "bg-gradient-to-r from-purple-600 to-indigo-500",
-    "bg-gradient-to-r from-orange-600 to-amber-500",
-    "bg-gradient-to-r from-teal-600 to-cyan-500",
-    "bg-gradient-to-r from-violet-600 to-blue-500",
+    "bg-gradient-to-r from-red-600 to-pink-600",
+    "bg-gradient-to-r from-purple-600 to-pink-600",
+    "bg-gradient-to-r from-orange-600 to-amber-600",
+    "bg-gradient-to-r from-teal-600 to-gray-600",
+    "bg-gradient-to-r from-violet-600 to-blue-600",
   ];
 
   const conceptCards = [

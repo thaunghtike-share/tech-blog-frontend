@@ -110,7 +110,7 @@ export function SuccessStoriesSection() {
                 <Quote className="w-6 h-6 text-indigo-600" />
               </div>
             </div>
-            <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed italic">
+            <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed">
               "{t.feedback}"
             </p>
             <div className="mt-auto">
