@@ -457,7 +457,7 @@ export function MinimalHeader() {
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10"
+                className="pr-10 border border-gray-400 rounded-full text-sm"
               />
               {searchQuery && (
                 <Button
