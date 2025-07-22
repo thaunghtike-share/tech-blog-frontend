@@ -9,6 +9,9 @@ import {
   Play,
   Users,
   Lightbulb,
+  Rocket,
+  Gauge,
+  Shield,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -41,7 +44,7 @@ const difficultyConfig = {
     border: "border-green-500",
     iconBg: "bg-green-100",
     iconText: "text-green-600",
-    icon: <Play className="w-4 h-4" />,
+    icon: <Rocket className="w-4 h-4" />,
   },
   Intermediate: {
     color: "from-blue-500 to-indigo-600",
@@ -49,7 +52,7 @@ const difficultyConfig = {
     border: "border-blue-500",
     iconBg: "bg-blue-100",
     iconText: "text-blue-600",
-    icon: <Play className="w-4 h-4" />,
+    icon: <Gauge className="w-4 h-4" />,
   },
   Advanced: {
     color: "from-purple-500 to-pink-600",
@@ -57,7 +60,7 @@ const difficultyConfig = {
     border: "border-purple-500",
     iconBg: "bg-purple-100",
     iconText: "text-purple-600",
-    icon: <Play className="w-4 h-4" />,
+    icon: <Shield className="w-4 h-4" />,
   },
 };
 
@@ -250,9 +253,6 @@ export function YouTubePlaylists({
                         {config.icon}
                       </div>
                       <span>{level}</span>
-                      <span className="ml-auto text-xs text-gray-500">
-                        ({count})
-                      </span>
                     </button>
                   );
                 })}
