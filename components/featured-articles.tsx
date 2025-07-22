@@ -214,10 +214,10 @@ export function FeaturedArticlesPage() {
           <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-4 mb-4">
             <AlertTriangle className="w-10 h-10 text-yellow-600" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
             No featured articles available
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 text-sm md:text-base">
             Check back later for featured content
           </p>
         </div>
@@ -239,7 +239,7 @@ export function FeaturedArticlesPage() {
                     delay: index * 0.1,
                     backgroundColor: { duration: 0 },
                   }}
-                  className={`group bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all ${
+                  className={`group bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all ${
                     isScrolling ? "" : "hover:-translate-y-1"
                   }`}
                 >
@@ -247,9 +247,9 @@ export function FeaturedArticlesPage() {
                     {category && (
                       <Link
                         href={`/categories/${category.slug}`}
-                        className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                        className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 border border-gray-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-blue-100 transition-colors"
                       >
-                        <Folder className="w-4 h-4" />
+                        <Folder className="w-3 h-3 sm:w-4 sm:h-4" />
                         {category.name}
                       </Link>
                     )}
@@ -259,10 +259,10 @@ export function FeaturedArticlesPage() {
                     href={`/articles/${article.slug}`}
                     className="group/link block"
                   >
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                       {article.title}
                     </h3>
-                    <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
+                    <p className="text-gray-700 mb-4 line-clamp-2 text-sm sm:text-[15px] leading-relaxed">
                       {truncate(stripMarkdown(article.content), 200)}
                     </p>
                     <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
@@ -271,7 +271,7 @@ export function FeaturedArticlesPage() {
                     </div>
                   </Link>
 
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-gray-500">
                     <div className="flex items-center gap-2">
                       {author?.avatar ? (
                         <img
@@ -295,17 +295,17 @@ export function FeaturedArticlesPage() {
                       </Link>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
                       <span>{formatDate(article.published_at)}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-gray-400" />
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
                       <span>{calculateReadTime(article.content)} read</span>
                     </div>
                     <div className="flex items-center gap-2 ml-auto text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5 text-gray-500"
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
