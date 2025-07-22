@@ -11,6 +11,7 @@ import {
   X,
   Sparkles,
   Lightbulb,
+  ListChecks,
 } from "lucide-react";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -619,10 +620,10 @@ export function MinimalDevopsRoadmap() {
             className="flex items-center justify-center gap-3 mb-4"
           >
             <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg">
-              <Cloud className="w-4 h-4 text-white" />
+              <ListChecks className="w-4 h-4 text-white" />
             </div>
             <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border border-blue-200">
-              <Sparkles className="w-4 h-4 mr-2" /> Learning Path
+              <Sparkles className="w-4 h-4 mr-2" /> RoadMap
             </span>
           </motion.div>
           <motion.h2

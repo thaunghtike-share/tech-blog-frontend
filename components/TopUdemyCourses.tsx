@@ -104,7 +104,8 @@ export function TopUdemyCourses() {
 
   return (
     <section ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
-      <div className="mb-12 text-center">
+      <div className="mb-5 sm:mb-9 text-center">
+        {/* Updated this line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,15 +114,16 @@ export function TopUdemyCourses() {
           <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
             <GraduationCap className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <BookOpen className="w-4 h-4 mr-2" /> Free Courses
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Free
+            Courses
           </span>
         </motion.div>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
         >
           Learn DevOps on Udemy Free
         </motion.h2>
@@ -129,13 +131,13 @@ export function TopUdemyCourses() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           Curated list of free Udemy courses to master DevOps tools and
           practices.
         </motion.p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {displayedCourses.map((course, idx) => (
           <motion.div
             key={course.id}
@@ -143,26 +145,24 @@ export function TopUdemyCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col" // Added flex flex-col
+            className="group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col"
           >
             <div className="p-5 relative flex-grow">
-              {" "}
-              {/* Added flex-grow */}
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
                 {course.title}
               </h3>
-              <p className="text-gray-700 mb-4 text-sm leading-relaxed line-clamp-3">
+              <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3">
                 {course.description}
               </p>
-              <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-4">
                 {course.authorImage && (
                   <img
                     src={course.authorImage || "/placeholder.svg"}
                     alt={course.author}
-                    className="w-6 h-6 rounded-full object-cover border border-gray-200"
+                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-gray-200"
                     loading="lazy"
                   />
                 )}
@@ -170,8 +170,8 @@ export function TopUdemyCourses() {
               </div>
               {course.rating && (
                 <div className="flex items-center gap-1 text-yellow-500 mb-3">
-                  <Star className="w-4 h-4 fill-current" />
-                  <span className="font-medium text-gray-900 text-sm">
+                  <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
+                  <span className="font-medium text-gray-900 text-xs sm:text-sm">
                     {course.rating.toFixed(1)}
                   </span>
                 </div>
@@ -181,7 +181,7 @@ export function TopUdemyCourses() {
                   {course.reviews.slice(0, 2).map((review, i) => (
                     <div
                       key={i}
-                      className="bg-blue-50 p-3 rounded-lg border border-blue-100"
+                      className="bg-blue-50 p-2 sm:p-3 rounded-lg border border-blue-100"
                     >
                       <div className="text-gray-700 text-xs flex items-start gap-2">
                         <MessageSquare className="w-3 h-3 text-blue-500 mt-0.5 flex-shrink-0" />
@@ -202,10 +202,11 @@ export function TopUdemyCourses() {
                 href={course.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01]"
+                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] text-sm sm:text-base"
               >
-                <GraduationCap className="w-4 h-4 mr-2" /> Enroll Now
-                <ExternalLink className="w-4 h-4 ml-2" />
+                <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" /> Enroll
+                Now
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
               </a>
             </div>
           </motion.div>
@@ -213,19 +214,19 @@ export function TopUdemyCourses() {
       </div>
       {/* Show More / Show Less button */}
       {courses.length > 6 && (
-        <div className="mt-10 text-center">
+        <div className="mt-8 sm:mt-10 text-center">
           <motion.button
             type="button"
             onClick={toggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="inline-flex items-center px-5 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
           >
             {showAll ? "Show Less" : "See All Courses"}
             {showAll ? (
-              <ChevronUp className="w-5 h-5 ml-2" />
+              <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
             ) : (
-              <ChevronDown className="w-5 h-5 ml-2" />
+              <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
             )}
           </motion.button>
         </div>
