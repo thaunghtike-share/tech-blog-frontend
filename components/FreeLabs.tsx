@@ -123,47 +123,54 @@ export function FreeLabs() {
               your DevOps expertise.
             </motion.p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {labsToShow.map((lab, idx) => {
-              const platformIcon = getPlatformIcon(lab.platform);
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="group bg-white rounded-xl shadow-lg border-l-4 border-orange-500 overflow-hidden transition-all duration-300 hover:shadow-xl"
-                >
-                  <div className="p-5 flex flex-col h-full relative">
-                    <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
-                      {platformIcon}
-                    </div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
-                      {lab.title}
-                    </h3>
-                    <p className="text-gray-700 flex-grow text-xs sm:text-sm mb-4">
-                      {lab.description}
-                    </p>
-                    {lab.difficulty && (
-                      <div className="mt-auto text-xs sm:text-sm text-gray-600">
-                        <strong>Difficulty:</strong> {lab.difficulty}
-                      </div>
-                    )}
-                    <a
-                      href={lab.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-6 w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn text-sm sm:text-base"
+
+          <div className="relative -mt-0 md:-mt-3">
+            <div className="flex overflow-x-auto pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar">
+              <div className="flex space-x-6 min-w-max sm:min-w-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:space-x-0 items-stretch">
+                {labsToShow.map((lab, idx) => {
+                  const platformIcon = getPlatformIcon(lab.platform);
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className={`w-80 sm:w-auto h-full flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 border-orange-500 overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col`}
                     >
-                      <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-2" /> Launch Lab
-                      <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
-                    </a>
-                  </div>
-                </motion.div>
-              );
-            })}
+                      <div className="p-5 flex flex-col h-full">
+                        <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
+                          {platformIcon}
+                        </div>
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
+                          {lab.title}
+                        </h3>
+                        <p className="text-gray-700 flex-grow text-xs sm:text-sm mb-4">
+                          {lab.description}
+                        </p>
+                        {lab.difficulty && (
+                          <div className="mt-auto text-xs sm:text-sm text-gray-600">
+                            <strong>Difficulty:</strong> {lab.difficulty}
+                          </div>
+                        )}
+                        <a
+                          href={lab.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-6 w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn text-sm sm:text-base"
+                        >
+                          <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-2" /> Launch
+                          Lab
+                          <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+                        </a>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
+
           {labs.length > 6 && (
             <div className="mt-8 sm:mt-10 text-center">
               <motion.button
@@ -184,6 +191,16 @@ export function FreeLabs() {
           )}
         </>
       )}
+
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }

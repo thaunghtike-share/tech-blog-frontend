@@ -428,7 +428,7 @@ export function CertificationRoadmap() {
             transition={{ delay: 0.1 }}
             className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-yellow-800 to-orange-800 bg-clip-text text-transparent mb-2 sm:mb-4"
           >
-            Certification Roadmap
+            DevOps Certification Roadmap
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -436,7 +436,8 @@ export function CertificationRoadmap() {
             transition={{ delay: 0.2 }}
             className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
           >
-            Validate your skills with industry-recognized certifications.
+            Validate your skills with industry-recognized DevOps certifications
+            that showcase your cloud, automation, and infrastructure expertise.
           </motion.p>
         </div>
 
@@ -540,8 +541,7 @@ export function CertificationRoadmap() {
                   className={`text-xs ${
                     isActive ? "text-white/80" : "text-gray-500"
                   }`}
-                >
-                </span>
+                ></span>
                 {isActive && (
                   <motion.div
                     layoutId="active-filter"
