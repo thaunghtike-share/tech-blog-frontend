@@ -115,7 +115,7 @@ export function TopUdemyCourses() {
             <GraduationCap className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Free
+            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Udemy
             Courses
           </span>
         </motion.div>

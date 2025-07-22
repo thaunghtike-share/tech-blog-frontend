@@ -547,29 +547,29 @@ const stageConfig = {
     gradient: "from-gray-500 to-slate-600",
     text: "text-gray-700",
     border: "border-gray-500",
-    iconBg: "bg-gray-100",
-    iconText: "text-gray-600",
+    iconBg: "bg-gradient-to-r from-gray-500 to-slate-600",
+    iconText: "text-white",
   },
   beginner: {
     gradient: "from-green-500 to-emerald-600",
     text: "text-green-700",
     border: "border-green-500",
-    iconBg: "bg-green-100",
-    iconText: "text-green-600",
+    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
+    iconText: "text-white",
   },
   intermediate: {
     gradient: "from-blue-500 to-indigo-600",
     text: "text-blue-700",
     border: "border-blue-500",
-    iconBg: "bg-blue-100",
-    iconText: "text-blue-600",
+    iconBg: "bg-gradient-to-r from-blue-500 to-indigo-600",
+    iconText: "text-white",
   },
   advanced: {
     gradient: "from-purple-500 to-pink-600",
     text: "text-purple-700",
     border: "border-purple-500",
-    iconBg: "bg-purple-100",
-    iconText: "text-purple-600",
+    iconBg: "bg-gradient-to-r from-purple-500 to-pink-600",
+    iconText: "text-white",
   },
 };
 
@@ -599,6 +599,7 @@ export function MinimalDevopsRoadmap() {
   } | null>(null);
   const [showAllTopics, setShowAllTopics] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const selectedStage =
     roadmap.find((r) => r.key === selectedStageKey) || roadmap[0];
@@ -647,47 +648,60 @@ export function MinimalDevopsRoadmap() {
           </motion.p>
         </div>
         {/* Mobile Dropdown - show only on mobile, hide md+ */}
-        <div className="mb-7 px-4 md:hidden">
-          <div className="relative">
-            <motion.div
-              className={`w-full rounded-2xl border-2 ${currentStageConfig.border} bg-white shadow-md overflow-hidden`}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="relative flex items-center justify-center">
-                {/* Left icon */}
-                <div
-                  className={`absolute left-4 p-1 rounded-lg ${currentStageConfig.iconBg}`}
-                >
-                  {getStageIcon(selectedStageKey)}
-                </div>
-
-                {/* Select element */}
-                <select
-                  className="w-full appearance-none bg-transparent py-4 pl-12 pr-12 text-center text-gray-700 text-base font-medium focus:outline-none"
-                  value={selectedStageKey}
-                  onChange={(e) => {
-                    setSelectedStageKey(e.target.value);
-                    setShowAllTopics(false);
-                  }}
-                >
-                  {roadmap.map((stage) => (
-                    <option
-                      key={stage.key}
-                      value={stage.key}
-                      className="text-center"
-                    >
-                      {stage.label}
-                    </option>
-                  ))}
-                </select>
-
-                {/* Right chevron */}
-                <ChevronDown
-                  className={`absolute right-4 w-5 h-5 ${currentStageConfig.text} pointer-events-none`}
-                />
+        <div className="sm:hidden mb-7 relative">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 shadow-md bg-white border ${currentStageConfig.border}`}
+          >
+            <div className="flex items-center justify-center w-full gap-2">
+              <div
+                className={`p-1.5 rounded-full ${currentStageConfig.iconBg} ${currentStageConfig.iconText}`}
+              >
+                {getStageIcon(selectedStageKey)}
               </div>
+              <span>
+                {roadmap.find((r) => r.key === selectedStageKey)?.label}
+              </span>
+            </div>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
+                dropdownOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {dropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200"
+            >
+              {roadmap.map((stage) => {
+                const config =
+                  stageConfig[stage.key as keyof typeof stageConfig];
+                return (
+                  <button
+                    key={stage.key}
+                    onClick={() => {
+                      setSelectedStageKey(stage.key);
+                      setShowAllTopics(false);
+                      setDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2 text-sm flex items-center hover:bg-gray-50 ${
+                      selectedStageKey === stage.key ? "bg-gray-100" : ""
+                    }`}
+                  >
+                    <div
+                      className={`w-7 h-7 flex items-center justify-center rounded-full ${config.iconBg} ${config.iconText}`}
+                    >
+                      {getStageIcon(stage.key)}
+                    </div>
+                    <span className="ml-3">{stage.label}</span>
+                  </button>
+                );
+              })}
             </motion.div>
-          </div>
+          )}
         </div>
 
         {/* Desktop Stage Buttons - hidden on mobile */}
@@ -730,8 +744,7 @@ export function MinimalDevopsRoadmap() {
               </div>
               <div className="text-left">
                 <span className="font-medium text-sm">{stage.label}</span>
-                <div className="text-xs opacity-80">
-                </div>
+                <div className="text-xs opacity-80"></div>
               </div>
               {selectedStageKey === stage.key && (
                 <motion.div
@@ -750,10 +763,7 @@ export function MinimalDevopsRoadmap() {
           transition={{ duration: 0.5 }}
           className="mb-4 md:mb-9 text-center max-w-4xl mx-auto"
         >
-          {selectedStage.description?.length > 0 && (
-            <div className="">
-            </div>
-          )}
+          {selectedStage.description?.length > 0 && <div className=""></div>}
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedItems.map(({ title, details, duration }, idx) => {

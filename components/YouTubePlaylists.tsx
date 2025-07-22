@@ -252,7 +252,7 @@ export function YouTubePlaylists({
                       >
                         {config.icon}
                       </div>
-                      <span>{level}</span>
+                      <span className="ml-3">{level}</span>
                     </button>
                   );
                 })}
