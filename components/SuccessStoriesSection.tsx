@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Star, Quote } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -16,22 +16,25 @@ export function SuccessStoriesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/testimonials/")
+    // Using your specified API endpoint.
+    // Please note: This fetch request to a local/private IP (http://192.168.1.131:8000)
+    // will NOT work in the sandboxed v0 preview environment.
+    // For the preview to display data, your backend needs to be publicly accessible.
+    fetch("http://192.168.1.131:8000/api/testimonials/")
       .then(async (res) => {
         const contentType = res.headers.get("content-type");
         if (!res.ok || !contentType?.includes("application/json")) {
           throw new Error("Invalid JSON response");
         }
-        return res.json();
+        const data = await res.json();
+        console.log("Testimonials fetched:", data);
+        setFeedbacks(data);
       })
-      .then((data) => setFeedbacks(data))
       .catch((err) => console.error("Failed to fetch testimonials:", err));
   }, []);
 
-  // Scroll to top of section when collapsing "Show Less"
   useEffect(() => {
     if (!showAll && sectionRef.current) {
-      // Delay scroll slightly so DOM updates before scroll
       const timeout = setTimeout(() => {
         sectionRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -42,8 +45,13 @@ export function SuccessStoriesSection() {
     }
   }, [showAll]);
 
-  // Limit max testimonials to 12 when showing all
-  const displayed = showAll ? feedbacks.slice(0, 12) : feedbacks.slice(0, 6);
+  // Determine testimonials to display based on screen size and showAll state
+  const displayed =
+    typeof window !== "undefined" && window.innerWidth < 640
+      ? feedbacks // Show all on mobile for horizontal scroll
+      : showAll
+      ? feedbacks.slice(0, 12) // Desktop: show up to 12 if showAll is true
+      : feedbacks.slice(0, 6); // Desktop: show first 6 if showAll is false
 
   return (
     <section
@@ -61,15 +69,14 @@ export function SuccessStoriesSection() {
             <Quote className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 border border-indigo-200">
-            <Star className="w-4 h-4 mr-2" />
-            Success Stories
+            <Star className="w-4 h-4 mr-2" /> Success Stories
           </span>
         </motion.div>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent mb-3"
+          className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent mb-3"
         >
           Success Stories from Myanmar
         </motion.h2>
@@ -77,15 +84,14 @@ export function SuccessStoriesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-600 max-w-2xl mx-auto text-lg"
+          className="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto"
         >
           See how students and junior engineers from Myanmar are growing in the
           DevOps world.
         </motion.p>
       </div>
-
-      {/* Testimonials */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Testimonials - Horizontal scroll on mobile, grid on desktop */}
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 sm:overflow-x-visible sm:snap-none">
         {displayed.map((t, i) => (
           <motion.div
             key={i}
@@ -97,19 +103,21 @@ export function SuccessStoriesSection() {
             }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ scale: 1.05, y: -10 }}
-            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
+            className="flex-shrink-0 w-[85vw] snap-center sm:w-auto bg-white rounded-3xl shadow-xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
           >
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl">
                 <Quote className="w-6 h-6 text-indigo-600" />
               </div>
             </div>
-            <p className="text-gray-700 text-sm mb-4 leading-relaxed italic">
+            <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed italic">
               "{t.feedback}"
             </p>
             <div className="mt-auto">
-              <div className="text-indigo-600 font-medium">{t.name}</div>
-              <div className="text-sm text-gray-500">{t.role}</div>
+              <div className="text-sm sm:text-base text-indigo-600 font-medium">
+                {t.name}
+              </div>
+              <div className="text-xs sm:text-sm text-gray-500">{t.role}</div>
               <div className="flex justify-center mt-2">
                 {[...Array(t.rating)].map((_, j) => (
                   <Star
@@ -122,10 +130,9 @@ export function SuccessStoriesSection() {
           </motion.div>
         ))}
       </div>
-
-      {/* See More / See Less Button */}
+      {/* See More / See Less Button - Hidden on mobile, visible on desktop */}
       {feedbacks.length > 6 && (
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center hidden sm:block">
           <motion.button
             onClick={() => setShowAll(!showAll)}
             whileHover={{ scale: 1.05 }}

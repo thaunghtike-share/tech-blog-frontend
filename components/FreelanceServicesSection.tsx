@@ -93,7 +93,7 @@ export function FreelanceServicesSection() {
       </div>
 
       {/* Services Grid - Horizontal scroll on mobile, 2-column grid on desktop */}
-      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-4 lg:grid lg:grid-cols-2 lg:overflow-x-visible lg:snap-none">
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 scrollbar-hide lg:grid lg:grid-cols-2 lg:overflow-x-visible lg:snap-none">
         {services.map(
           (
             { title, shortDescription, details, icon: Icon, slug, gradient },
@@ -131,7 +131,7 @@ export function FreelanceServicesSection() {
                           {title}
                         </h3>{" "}
                         {/* Reduced text size */}
-                        <p className="text-xs md:text-sm text-blue-100">
+                        <p className="text-sm md:text-sm text-blue-100">
                           {shortDescription}
                         </p>{" "}
                         {/* Reduced text size */}
