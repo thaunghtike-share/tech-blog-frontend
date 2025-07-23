@@ -12,9 +12,13 @@ import {
   GitCommit,
   Code,
   Server,
+  Globe,
+  BookOpen,
+  BadgeCheck,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import React from "react";
+import { Play } from "next/font/google";
 
 export default function Intro() {
   const scrollToSection = (id: string) => {
@@ -41,36 +45,36 @@ export default function Intro() {
       label: "Roadmap",
       id: "devops-roadmap",
       desc: "See Roadmap",
-      icon: GitPullRequest,
-      color: "bg-gradient-to-r from-yellow-400 to-yellow-600",
-    },
-    {
-      label: "Udemy",
-      id: "free-udemy",
-      desc: "Structured Courses",
-      icon: GitCommit,
-      color: "bg-gradient-to-r from-blue-400 to-blue-600",
+      icon: ListTodo,
+      color: "bg-gradient-to-r from-yellow-600 to-orange-600",
     },
     {
       label: "YouTube",
       id: "youtube-playlists",
       desc: "Expert tutorials",
-      icon: Code,
-      color: "bg-gradient-to-r from-green-400 to-green-600",
+      icon: Globe,
+      color: "bg-gradient-to-r from-red-600 to-red-600",
+    },
+    {
+      label: "Udemy",
+      id: "free-udemy",
+      desc: "Structured Courses",
+      icon: BookOpen,
+      color: "bg-gradient-to-r from-blue-600 to-blue-600",
     },
     {
       label: "Certificate",
       id: "cert",
       desc: "Get Certificates",
-      icon: Server,
-      color: "bg-gradient-to-r from-purple-400 to-purple-600",
+      icon: BadgeCheck,
+      color: "bg-gradient-to-r from-purple-600 to-purple-600",
     },
     {
       label: "Jobs",
       id: "career",
       desc: "Get Jobs",
       icon: Rocket,
-      color: "bg-gradient-to-r from-red-400 to-red-600",
+      color: "bg-gradient-to-r from-red-600 to-red-600",
     },
   ];
 
@@ -109,10 +113,10 @@ export default function Intro() {
             className="flex items-center justify-center gap-3 mb-6"
           >
             <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg">
-              <Rocket className="w-5 h-5 text-white" />
+              <Rocket className="w-6 h-6 text-white" />
             </div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
-              <Sparkles className="w-3 h-3 mr-1.5" /> Intro
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-300">
+              <BookOpen className="w-3 h-3 mr-1.5" /> Introduction
             </span>
           </motion.div>
           <motion.h2
@@ -183,7 +187,7 @@ export default function Intro() {
             {conceptCards.map((card, i) => (
               <motion.div
                 key={i}
-                className="group relative w-72 flex-shrink-0"
+                className="group relative w-80 flex-shrink-0 min-w-[320px]"
                 initial="initial"
                 whileHover="hover"
                 variants={cardVariants}
@@ -221,10 +225,10 @@ export default function Intro() {
         >
           <h4 className="text-2xl font-bold text-gray-900 mb-3 flex items-center justify-center gap-2">
             <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
-              <ListTodo className="w-5 h-5 text-white" />
+              <ListTodo className="w-6 h-6 text-white" />
             </div>
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
-              <ClipboardList className="w-3 h-3 mr-1.5" /> Guideline
+              <BadgeCheck className="w-3 h-3 mr-1.5" /> Guideline
             </span>
           </h4>
           <p className="text-gray-700 text-center">
