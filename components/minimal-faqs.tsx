@@ -1,6 +1,7 @@
 "use client";
-import { useState, useRef } from "react";
-import { Plus, Minus } from "lucide-react";
+
+import { useState, useEffect, useRef } from "react";
+import { Plus, Minus, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type FAQ = {
@@ -28,17 +29,17 @@ const rawFaqs = [
   {
     question: "Does a DevOps Engineer know how to code?",
     answer:
-      "A DevOps Engineer usually knows how to code, and not only that but they typically have great coding skills. After all, they use code on pretty much everything they do. DevOps Engineers also write infrastructure-as-code (IaC) using tools like Terraform or CloudFormation, build CI/CD pipelines with scripting languages, and automate system configurations with Ansible, Chef, or Puppet",
+      "A DevOps Engineer usually knows how to code, and not only that but they typically have great coding skills. After all, they use code on pretty much everything they do. DevOps Engineers also write infrastructure-as-code (IaC) using tools like Terraform or CloudFormation, build CI/CD pipelines with scripting languages, and automate system configurations with Ansible, Chef, or Puppet.",
   },
   {
     question: "How are DevOps Engineers different from developers?",
     answer:
-      "DevOps Engineers and developers are different from each other, however, their roles complement themselves nicely in the context of software development. Developers focus on writing application code, implementing features, and optimizing performance, while DevOps Engineers ensure that the software runs smoothly in production by managing deployment pipelines, automating infrastructure, and maintaining system reliability. A key difference is that developers primarily work on building and improving applications, whereas DevOps Engineers handle the processes and tools that enable continuous integration, automated testing, and efficient deployments.",
+      "DevOps Engineers and developers are different from each other, however, their roles complement themselves nicely in the context of software development. Developers focus on writing application code, implementing features, and optimizing performance, while DevOps Engineers ensure that the software runs smoothly in production by managing deployment pipelines, automating infrastructure, and maintaining system reliability.",
   },
   {
     question: "What is the difference between SRE and DevOps?",
     answer:
-      "The difference between DevOps vs SRE lies in focus: DevOps Engineers improve software delivery and infrastructure automation, bridging development and operations, while Site Reliability Engineers (SREs) ensure system reliability and performance, applying software engineering to operations. DevOps emphasizes CI/CD and collaboration, whereas SREs prioritize monitoring, incident response, and scalability.",
+      "The difference between DevOps vs SRE lies in focus: DevOps Engineers improve software delivery and infrastructure automation, bridging development and operations, while Site Reliability Engineers (SREs) ensure system reliability and performance, applying software engineering to operations.",
   },
 ];
 
@@ -48,10 +49,23 @@ const faqsData: FAQ[] = rawFaqs.map((faq, index) => ({
 }));
 
 export function MinimalFAQs() {
-  // Use Set for open FAQ IDs
   const [openIds, setOpenIds] = useState<Set<number>>(new Set());
   const [showAll, setShowAll] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const faqRef = useRef<HTMLElement | null>(null);
+
+  // Detect screen size on mount
+  useEffect(() => {
+    const handleResize = () => {
+      const desktop = window.innerWidth >= 768;
+      setIsDesktop(desktop);
+      if (desktop) setShowAll(true);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleFAQ = (id: number) => {
     setOpenIds((prev) => {
@@ -61,7 +75,6 @@ export function MinimalFAQs() {
       } else {
         newSet.add(id);
       }
-      console.log("Toggled ID:", id, "Open IDs:", Array.from(newSet));
       return newSet;
     });
   };
@@ -73,7 +86,7 @@ export function MinimalFAQs() {
     setShowAll(!showAll);
   };
 
-  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 8);
+  const displayedFAQs = isDesktop || showAll ? faqsData : faqsData.slice(0, 3);
 
   return (
     <section
@@ -131,6 +144,28 @@ export function MinimalFAQs() {
           </motion.div>
         ))}
       </div>
+
+      {/* Show More/Less button - only for mobile */}
+      {!isDesktop && (
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={handleToggleShowAll}
+            className="flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-50 transition-colors"
+          >
+            {showAll ? (
+              <>
+                Show Less
+                <ChevronUp className="ml-2 w-4 h-4" />
+              </>
+            ) : (
+              <>
+                Show More
+                <ChevronDown className="ml-2 w-4 h-4" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
     </section>
   );
 }
