@@ -4,23 +4,17 @@ import {
   Puzzle,
   Cpu,
   Cloud,
-  Code2,
-  Server,
-  GitMerge,
-  Wrench,
-  ShieldCheck,
-  ListTodo,
-  ArrowRight,
   Rocket,
-  BookOpenCheck,
   Sparkles,
-  ChevronRight,
-  BarChart3,
-  ListChecks,
+  ListTodo,
   ClipboardList,
+  GitPullRequest,
+  GitCommit,
+  Code,
+  Server,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import React from "react";
 
 export default function Intro() {
   const scrollToSection = (id: string) => {
@@ -43,19 +37,41 @@ export default function Intro() {
   };
 
   const learningPathItems = [
-    { label: "Roadmap", id: "devops-roadmap", desc: "See Roadmap" },
-    { label: "Udemy", id: "free-udemy", desc: "Structured Courses" },
-    { label: "YouTube", id: "youtube-playlists", desc: "Expert tutorials" },
-    { label: "Certificate", id: "cert", desc: "Get Certificates" },
-    { label: "Jobs", id: "career", desc: "Get Jobs" },
-  ];
-
-  const stepColors = [
-    "bg-gradient-to-r from-green-600 to-emerald-600",
-    "bg-gradient-to-r from-purple-600 to-pink-600",
-    "bg-gradient-to-r from-red-600 to-pink-600",
-    "bg-gradient-to-r from-purple-600 to-blue-600",
-    "bg-gradient-to-r from-purple-600 to-pink-600",
+    {
+      label: "Roadmap",
+      id: "devops-roadmap",
+      desc: "See Roadmap",
+      icon: GitPullRequest,
+      color: "bg-gradient-to-r from-yellow-400 to-yellow-600",
+    },
+    {
+      label: "Udemy",
+      id: "free-udemy",
+      desc: "Structured Courses",
+      icon: GitCommit,
+      color: "bg-gradient-to-r from-blue-400 to-blue-600",
+    },
+    {
+      label: "YouTube",
+      id: "youtube-playlists",
+      desc: "Expert tutorials",
+      icon: Code,
+      color: "bg-gradient-to-r from-green-400 to-green-600",
+    },
+    {
+      label: "Certificate",
+      id: "cert",
+      desc: "Get Certificates",
+      icon: Server,
+      color: "bg-gradient-to-r from-purple-400 to-purple-600",
+    },
+    {
+      label: "Jobs",
+      id: "career",
+      desc: "Get Jobs",
+      icon: Rocket,
+      color: "bg-gradient-to-r from-red-400 to-red-600",
+    },
   ];
 
   const conceptCards = [
@@ -195,7 +211,7 @@ export default function Intro() {
         </div>
       </motion.div>
 
-      {/* Learning Guideline */}
+      {/* Learning Guideline - Workflow Style */}
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -216,71 +232,39 @@ export default function Intro() {
           </p>
         </motion.div>
 
-        {/* Desktop version */}
-        <div className="relative hidden md:block">
-          <div className="absolute top-5 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
-          <div className="grid grid-cols-5 gap-2 relative z-10">
-            {learningPathItems.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
-                className="flex flex-col items-center"
-              >
-                <button
-                  onClick={() => scrollToSection(step.id)}
-                  className="mb-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:underline transition-colors"
-                >
-                  {step.label}
-                </button>
-                <motion.div
-                  onClick={() => scrollToSection(step.id)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`w-10 h-10 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white font-medium cursor-pointer ${stepColors[index]} hover:shadow-xl transition-all`}
-                >
-                  {index + 1}
-                </motion.div>
-                <div className="mt-2 text-xs text-gray-500 text-center">
-                  {step.desc}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile horizontal scroll version */}
-        <div className="md:hidden relative">
-          <div className="absolute top-5 left-0 right-4 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
-          <div className="overflow-x-auto pb-6 -mx-4 px-4">
-            <div className="flex space-x-5 w-max min-w-full px-4 relative z-10">
-              {learningPathItems.map((step, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="flex flex-col items-center w-16 flex-shrink-0"
-                >
-                  <button
-                    onClick={() => scrollToSection(step.id)}
-                    className="mb-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:underline transition-colors"
-                  >
-                    {step.label}
-                  </button>
+        {/* Workflow Step Navigation - Fixed */}
+        <div className="relative">
+          <div className="flex overflow-x-auto pb-4 scrollbar-hide items-center justify-center">
+            <div className="flex items-center px-2">
+              {learningPathItems.map((step, i) => (
+                <React.Fragment key={step.id}>
                   <motion.div
-                    onClick={() => scrollToSection(step.id)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-10 h-10 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white font-medium cursor-pointer ${stepColors[index]} hover:shadow-xl transition-all`}
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * i }}
                   >
-                    {index + 1}
+                    <button
+                      onClick={() => scrollToSection(step.id)}
+                      className="flex flex-col items-center mx-1 md:mx-3" // Adjusted spacing
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg mb-2 ${step.color}`}
+                      >
+                        <step.icon className="w-5 h-5" />
+                      </motion.div>
+                      <span className="text-xs font-medium text-gray-700">
+                        {step.label}
+                      </span>
+                    </button>
                   </motion.div>
-                  <div className="mt-2 text-xs text-gray-500 text-center">
-                    {step.desc}
-                  </div>
-                </motion.div>
+
+                  {i < learningPathItems.length - 1 && (
+                    <div className="h-0.5 w-6 md:w-12 bg-gradient-to-r from-gray-200 to-gray-200 mx-1 flex-shrink-0 rounded-full" />
+                  )}
+                </React.Fragment>
               ))}
             </div>
           </div>

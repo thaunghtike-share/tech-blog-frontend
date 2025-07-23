@@ -320,7 +320,7 @@ export function FeaturedArticlesPage() {
                         }`}
                         className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
                       >
-                        {author?.name.split(" ")[0] ||
+                        {author?.name ||
                           `Author ${article.author}`}
                       </Link>
                     </div>
