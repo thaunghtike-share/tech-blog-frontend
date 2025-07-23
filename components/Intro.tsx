@@ -146,7 +146,7 @@ export default function Intro() {
 
       {/* Concept Cards - Horizontal scroll on mobile */}
       <motion.div
-        className="my-12 md:my-16"
+        className="my-4 md:my-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}

@@ -57,7 +57,7 @@ export default function HomePage() {
       {/* Fixed Header */}
       <MinimalHeader />
       {/* Hero Intro */}
-      <div className="pt-[64px] -mt-48 md:pt-[80px] md:-mt-44">
+      <div className="pt-[66px] -mt-48 md:pt-[80px] md:-mt-44">
         <Intro />
       </div>
       {/* Main Content Section */}
