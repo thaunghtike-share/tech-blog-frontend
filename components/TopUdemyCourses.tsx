@@ -69,7 +69,12 @@ export function TopUdemyCourses() {
     fetchCourses();
   }, []);
 
-  const displayedCourses = showAll ? courses : courses.slice(0, 6);
+  // On mobile, always show all courses
+  // On desktop, show 6 courses by default and all when showAll is true
+  const displayedCourses =
+    showAll || (typeof window !== "undefined" && window.innerWidth < 640)
+      ? courses
+      : courses.slice(0, 6);
 
   function toggleShowAll() {
     if (showAll) {
@@ -195,7 +200,7 @@ export function TopUdemyCourses() {
                 href={course.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] text-sm sm:text-base"
+                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01] text-sm sm:text-base"
               >
                 <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                 Enroll Now
@@ -206,21 +211,21 @@ export function TopUdemyCourses() {
         ))}
       </div>
 
-      {/* Show More / Show Less button */}
+      {/* Show More / Show Less button - Desktop only */}
       {courses.length > 6 && (
-        <div className="mt-8 md:mt-6 text-center">
+        <div className="hidden sm:block mt-8 md:mt-6 text-center">
           <motion.button
             type="button"
             onClick={toggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-5 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg transition-all duration-300 text-base"
           >
             {showAll ? "Show Less" : "See All Courses"}
             {showAll ? (
-              <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+              <ChevronUp className="w-5 h-5 ml-2" />
             ) : (
-              <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+              <ChevronDown className="w-5 h-5 ml-2" />
             )}
           </motion.button>
         </div>
