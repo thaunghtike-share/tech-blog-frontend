@@ -277,7 +277,7 @@ export function DevOpsWorkflowExample() {
           </AnimatePresence>
         </div>
 
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-6 sm:space-y-8 hidden md:block">
           {/* Complete Tech Stack Section */}
           <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl bg-white/50 shadow-lg border border-gray-100">
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2">
@@ -286,7 +286,6 @@ export function DevOpsWorkflowExample() {
               </div>
               Complete Tech Stack
             </h3>
-            {/* Changed to flex-wrap for mobile, removed horizontal scroll classes */}
             <div className="flex flex-wrap gap-2 sm:gap-3 pb-4">
               {techStack.map((tool, index) => (
                 <motion.div
@@ -295,7 +294,6 @@ export function DevOpsWorkflowExample() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.05 }}
-                  // Removed w-[45vw] and flex-shrink-0 for mobile wrapping
                   className="px-2 py-1 sm:px-4 sm:py-2 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-purple-100 hover:to-pink-100 text-gray-800 hover:text-purple-800 rounded-md font-medium text-xs sm:text-sm shadow-sm hover:shadow-md transition-all"
                 >
                   {tool}
@@ -312,7 +310,6 @@ export function DevOpsWorkflowExample() {
               </div>
               Key Features
             </h3>
-            {/* Changed to flex-wrap for mobile, removed horizontal scroll classes */}
             <div className="flex flex-wrap gap-2 sm:gap-4 pb-4">
               {[
                 "End-to-end automated deployment pipeline",
@@ -328,7 +325,6 @@ export function DevOpsWorkflowExample() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
-                  // Removed w-[85vw] and flex-shrink-0 for mobile wrapping
                   className="flex items-start gap-2 sm:gap-3 p-2 rounded-lg hover:bg-green-50 transition-colors list-none text-sm sm:text-base"
                 >
                   <div className="p-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mt-0.5">
