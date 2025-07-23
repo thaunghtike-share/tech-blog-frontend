@@ -145,7 +145,7 @@ export function RecommendedPaidCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="flex-shrink-0 w-[76vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative flex flex-col" // Added flex flex-col
+            className="flex-shrink-0 w-[76vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 relative flex flex-col" // Added flex flex-col
           >
             <div className="p-5 flex-grow">
               {" "}
@@ -189,7 +189,7 @@ export function RecommendedPaidCourses() {
                 href={course.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01]"
+                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01]"
               >
                 <Play className="w-4 h-4 mr-2" /> Enroll Now
                 <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -201,13 +201,13 @@ export function RecommendedPaidCourses() {
 
       {/* Toggle Button - Hidden on mobile */}
       {paidCourses.length > 6 && (
-        <div className="mt-10 text-center hidden sm:block">
+        <div className="mt-6 text-center hidden sm:block">
           <motion.button
             type="button"
             onClick={toggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg transition-all duration-300"
           >
             {showAll ? "Show Less" : "See All Courses"}
             {showAll ? (
