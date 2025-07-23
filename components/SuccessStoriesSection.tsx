@@ -103,7 +103,7 @@ export function SuccessStoriesSection() {
             }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ scale: 1.05, y: -10 }}
-            className="flex-shrink-0 w-[85vw] snap-center sm:w-auto bg-white rounded-3xl shadow-xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
+            className="flex-shrink-0 w-[85vw] snap-center sm:w-auto bg-white rounded-3xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
           >
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl">

@@ -118,7 +118,7 @@ export function FreelanceServicesSection() {
                 whileHover={{ y: -5 }}
                 className="flex-shrink-0 w-[85vw] snap-center lg:w-auto" // Added flex-shrink-0 and w-[85vw] for mobile horizontal scroll
               >
-                <Card className="h-full border-0 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm flex flex-col">
+                <Card className="h-full border-0 hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm flex flex-col">
                   <CardContent className="p-0 flex-grow">
                     <div
                       className={`p-6 bg-gradient-to-r ${gradient} text-white flex items-center gap-4`}
