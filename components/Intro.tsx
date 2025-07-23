@@ -235,35 +235,32 @@ export default function Intro() {
         {/* Workflow Step Navigation - Fixed */}
         <div className="relative">
           <div className="flex overflow-x-auto pb-4 scrollbar-hide items-center justify-center">
-            <div className="flex items-center px-2">
+            <div className="flex items-center justify-center px-2">
               {learningPathItems.map((step, i) => (
                 <React.Fragment key={step.id}>
-                  <motion.div
-                    className="flex flex-col items-center"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * i }}
-                  >
-                    <button
-                      onClick={() => scrollToSection(step.id)}
-                      className="flex flex-col items-center mx-1 md:mx-3" // Adjusted spacing
-                    >
+                  <div className="flex flex-col items-center">
+                    {/* Icon + Line container */}
+                    <div className="flex items-center">
+                      {/* Icon Circle */}
                       <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg mb-2 ${step.color}`}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg ${step.color}`}
                       >
                         <step.icon className="w-5 h-5" />
                       </motion.div>
-                      <span className="text-xs font-medium text-gray-700">
-                        {step.label}
-                      </span>
-                    </button>
-                  </motion.div>
 
-                  {i < learningPathItems.length - 1 && (
-                    <div className="h-0.5 w-6 md:w-12 bg-gradient-to-r from-gray-200 to-gray-200 mx-1 flex-shrink-0 rounded-full" />
-                  )}
+                      {/* Line */}
+                      {i < learningPathItems.length - 1 && (
+                        <div className="h-1 w-6 md:w-12 bg-gradient-to-r from-gray-400 to-gray-500 mx-2 rounded-full" />
+                      )}
+                    </div>
+
+                    {/* Label */}
+                    <span className="text-xs font-medium text-gray-700 mt-2">
+                      {step.label}
+                    </span>
+                  </div>
                 </React.Fragment>
               ))}
             </div>
