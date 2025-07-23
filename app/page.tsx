@@ -62,7 +62,7 @@ export default function HomePage() {
       </div>
       {/* Main Content Section */}
       <main className="max-w-7xl mx-auto px-4 py-8 relative z-10">
-        <div className=" -mt-12 md:-mt-10">
+        <div className="-mt-20 md:-mt-18">
           <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
             <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-4 md:p-6 shadow-lg border border-blue-100">
               <FeaturedArticlesPage />
