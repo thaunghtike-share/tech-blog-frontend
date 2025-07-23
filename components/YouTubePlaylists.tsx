@@ -209,7 +209,7 @@ export function YouTubePlaylists({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex overflow-x-auto sm:overflow-x-visible flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-3 mb-8 md:mb-10 pb-4"
+            className="flex overflow-x-auto sm:overflow-x-visible flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-3 mb-4 md:mb-8 pb-4"
           >
             {allDifficulties.map((difficultyKey, index) => {
               const config = difficultyConfig[difficultyKey];
@@ -339,7 +339,7 @@ export function YouTubePlaylists({
           )}
           {/* Show More/Less Button - Hidden on mobile, visible on desktop */}
           {filteredPlaylists.length > 6 && (
-            <div className="mt-8 md:mt-10 text-center hidden sm:block">
+            <div className="mt-8 md:mt-3 text-center hidden sm:block">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

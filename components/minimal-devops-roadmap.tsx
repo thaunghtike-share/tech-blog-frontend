@@ -699,7 +699,7 @@ export function MinimalDevopsRoadmap() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-4 md:mb-9 text-center max-w-4xl mx-auto"
+          className="-mt-5 md:-mt-5 text-center max-w-4xl mx-auto"
         >
           {selectedStage.description?.length > 0 && <div className=""></div>}
         </motion.div>
@@ -712,18 +712,11 @@ export function MinimalDevopsRoadmap() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
+                className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 flex flex-col`}
               >
                 <div className="p-5 relative flex-grow">
                   {" "}
                   {/* Added flex-grow */}
-                  <div className="absolute top-3 right-3">
-                    <Badge
-                      className={`px-3 py-1 bg-white/90 backdrop-blur-sm ${currentStageConfig.text} text-xs font-medium rounded-full shadow-sm border border-gray-200`}
-                    >
-                      {selectedStage.label}
-                    </Badge>
-                  </div>
                   <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
                     {title}
                   </h4>

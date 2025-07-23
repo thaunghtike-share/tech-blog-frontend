@@ -76,7 +76,7 @@ export default function HomePage() {
         <section id="devops-roadmap" className="-mt-26 md:-mt-20">
           <MinimalDevopsRoadmap />
         </section>
-        <section id="youtube-playlists" className="-mt-14 md:-mt-14">
+        <section id="youtube-playlists" className="-mt-16 md:-mt-16">
           <YouTubePlaylists />
         </section>
         <section id="free-udemy" className="-mt-12 md:-mt-14">
