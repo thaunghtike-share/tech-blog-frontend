@@ -27,7 +27,7 @@ interface UdemyCourse {
   reviews?: Review[];
 }
 
-const API_BASE_URL = "http://20.212.140.239:8000/api";
+const API_BASE_URL = "https://ldn-api.maharbawgammoney.com/api";
 
 export function TopUdemyCourses() {
   const [courses, setCourses] = useState<UdemyCourse[]>([]);

@@ -55,7 +55,7 @@ export function FeaturedArticlesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
-  const API_BASE_URL = "http://20.212.140.239:8000/api";
+  const API_BASE_URL = "https://ldn-api.maharbawgammoney.com/api";
 
   useEffect(() => {
     let scrollTimer: NodeJS.Timeout;
