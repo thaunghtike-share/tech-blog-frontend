@@ -456,7 +456,7 @@ export function CertificationRoadmap() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="flex overflow-x-auto flex-nowrap justify-start sm:justify-center gap-3 mb-8 sm:mb-12 pb-4"
+          className="flex overflow-x-auto flex-nowrap justify-start sm:justify-center gap-3 mb-4 sm:mb-6 pb-4"
         >
           {["Beginner", "Intermediate", "Advanced"].map((level, index) => {
             const config =

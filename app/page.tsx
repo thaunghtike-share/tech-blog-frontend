@@ -82,10 +82,10 @@ export default function HomePage() {
         <section id="free-udemy" className="-mt-16 md:-mt-16">
           <TopUdemyCourses />
         </section>
-        <section id="free-labs" className="-mt-14 md:-mt-14">
+        <section id="free-labs" className="-mt-22 md:-mt-16">
           <FreeLabs />
         </section>
-        <div id="cert" className="-mt-36 md:-mt-34">
+        <div id="cert" className="-mt-40 md:-mt-38">
           <CertificationRoadmap />
         </div>
         <section id="career" className="-mt-12 md:-mt-14">
