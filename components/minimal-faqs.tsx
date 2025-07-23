@@ -150,7 +150,7 @@ export function MinimalFAQs() {
         <div className="mt-8 flex justify-center">
           <button
             onClick={handleToggleShowAll}
-            className="flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-50 transition-colors"
+            className="flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium bg-white/50 text-gray-700 bg-gray-50 hover:bg-gray-50 transition-colors"
           >
             {showAll ? (
               <>
