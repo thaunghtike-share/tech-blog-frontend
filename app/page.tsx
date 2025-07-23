@@ -1,10 +1,7 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { MinimalHeader } from "@/components/minimal-header";
-import { MinimalBlogList } from "@/components/minimal-blog-list";
 import { FeaturedArticlesPage } from "@/components/featured-articles";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -33,13 +30,11 @@ export default function HomePage() {
   // Update URL when selectedTag changes
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-
     if (selectedTag) {
       params.set("tag", selectedTag);
     } else {
       params.delete("tag");
     }
-
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     router.replace(newUrl);
   }, [selectedTag, router]);
@@ -59,30 +54,24 @@ export default function HomePage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-
       {/* Fixed Header */}
       <MinimalHeader />
-
       {/* Hero Intro */}
       <div className="pt-[64px] -mt-48 md:pt-[80px] md:-mt-44">
         <Intro />
       </div>
-
       {/* Main Content Section */}
       <main className="max-w-7xl mx-auto px-4 py-8 relative z-10">
         <div className=" -mt-12 md:-mt-10">
           <div className="flex flex-row gap-6 overflow-x-auto md:overflow-visible scrollbar-hide">
-            <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-100">
-              {/* Pass tag filter and update function */}
+            <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-4 md:p-6 shadow-lg border border-blue-100">
               <FeaturedArticlesPage />
             </div>
             <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
-              {/* Pass updateTagFilter handler so sidebar can update tag filter */}
               <MinimalSidebar onTagClick={updateTagFilter} />
             </div>
           </div>
         </div>
-
         {/* Other Sections */}
         <section id="devops-roadmap" className="-mt-26 md:-mt-20">
           <MinimalDevopsRoadmap />
@@ -121,7 +110,6 @@ export default function HomePage() {
           <MinimalFAQs />
         </div>
       </main>
-
       {/* Footer */}
       <div className="-mt-1">
         <MinimalFooter />
