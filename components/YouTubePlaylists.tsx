@@ -26,7 +26,7 @@ interface Playlist {
   is_burmese?: boolean;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://20.212.140.239:8000/api";
 
 const difficultyConfig = {
   Prerequisite: {
@@ -358,8 +358,7 @@ export function YouTubePlaylists({
                   </>
                 ) : (
                   <>
-                    See All Playlists{" "}
-                    <ChevronDown className="w-4 h-4 mr-2" />
+                    See All Playlists <ChevronDown className="w-4 h-4 mr-2" />
                   </>
                 )}
               </motion.button>

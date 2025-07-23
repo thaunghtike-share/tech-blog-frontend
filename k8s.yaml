@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: learndevopsnow-ui
+  namespace: learndevopsnow
+  labels:
+    app: ldn-ui
+spec:
+  containers:
+    - name: ldn-container
+      image: mahar.azurecr.io/ldn-ui
+      ports:
+        - containerPort: 3000  # adjust if your app uses a different port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: learndevopsnow-ui
+  namespace: learndevopsnow
+spec:
+  type: LoadBalancer
+  selector:
+    app: ldn-ui
+  ports:
+    - protocol: TCP
+      port: 80      # external port
+      targetPort: 3000  # container port your app listens on

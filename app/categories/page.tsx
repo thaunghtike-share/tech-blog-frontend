@@ -102,7 +102,7 @@ export default function CategoriesPage() {
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
 
-  const API_BASE_URL = "http://192.168.1.131:8000/api";
+  const API_BASE_URL = "http://20.212.140.239:8000/api";
 
   // Ref for the categories container to scroll on toggle
   const categoriesRef = useRef<HTMLDivElement>(null);

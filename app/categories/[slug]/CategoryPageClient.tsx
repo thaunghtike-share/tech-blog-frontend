@@ -38,7 +38,7 @@ interface Props {
   slug: string;
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://20.212.140.239:8000/api";
 const DEFAULT_PAGE_SIZE = 5;
 
 export default function CategoryPageClient({ slug }: Props) {

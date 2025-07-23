@@ -55,7 +55,7 @@ export function FeaturedArticlesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
-  const API_BASE_URL = "http://192.168.1.131:8000/api";
+  const API_BASE_URL = "http://20.212.140.239:8000/api";
 
   useEffect(() => {
     let scrollTimer: NodeJS.Timeout;
@@ -320,8 +320,7 @@ export function FeaturedArticlesPage() {
                         }`}
                         className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
                       >
-                        {author?.name ||
-                          `Author ${article.author}`}
+                        {author?.name || `Author ${article.author}`}
                       </Link>
                     </div>
                     <div className="flex items-center gap-1">

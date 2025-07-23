@@ -6,10 +6,18 @@ import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
-import { Calendar, Clock, User, Linkedin, Folder, ArrowRight, Sparkles } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  User,
+  Linkedin,
+  Folder,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = "http://20.212.140.239:8000/api";
 const DEFAULT_PAGE_SIZE = 5;
 
 interface Article {
@@ -112,13 +120,28 @@ export default function AuthorDetailPage() {
         <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl p-8 shadow-lg text-center max-w-2xl mx-auto">
             <div className="bg-red-100 p-4 rounded-full inline-flex items-center justify-center mb-6">
-              <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-10 h-10 text-red-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Oops! Something went wrong</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Oops! Something went wrong
+            </h2>
             <p className="text-gray-600 mb-6">{error}</p>
-            <Link href="/" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+            <Link
+              href="/"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+            >
               Back to Home
             </Link>
           </div>

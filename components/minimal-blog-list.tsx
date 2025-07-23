@@ -94,7 +94,7 @@ export function MinimalBlogList({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
 
-  const API_BASE_URL = "http://192.168.1.131:8000/api";
+  const API_BASE_URL = "http://20.212.140.239:8000/api";
 
   // Fetch articles, authors, tags, categories on searchQuery or filterTagSlug change
   useEffect(() => {
@@ -171,7 +171,7 @@ export function MinimalBlogList({
       setFilterTagSlug(tagFromUrl);
       setCurrentPage(1);
     }
-  }, [searchParams]);  
+  }, [searchParams]);
 
   // Scroll to top on currentPage or filterTagSlug change (skip first render)
   useEffect(() => {
