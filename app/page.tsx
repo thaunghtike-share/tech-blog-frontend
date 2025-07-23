@@ -94,7 +94,7 @@ export default function HomePage() {
         <div className="-mt-40 md:-mt-38">
           <RecommendedPaidCourses />
         </div>
-        <div className="-mt-22">
+        <div className="-mt-31 md:-mt-26">
           <FreelanceServicesSection />
         </div>
         <div className="-mt-24">
