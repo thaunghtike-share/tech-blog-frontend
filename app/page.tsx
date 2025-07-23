@@ -103,15 +103,15 @@ export default function HomePage() {
         <div className="-mt-34 md:-mt-32">
           <SuccessStoriesSection />
         </div>
-        <div className="-mt-28">
+        <div className="-mt-34 md:-mt-32">
           <AuthorsContributorsCTA />
         </div>
-        <div className="-mt-38">
+        <div className="-mt-38 md:-mt-38">
           <MinimalFAQs />
         </div>
       </main>
       {/* Footer */}
-      <div className="-mt-1">
+      <div className="-mt-8 md:-mt-1">
         <MinimalFooter />
       </div>
     </div>
