@@ -147,7 +147,7 @@ export function DevOpsWorkflowExample() {
 
   return (
     <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-16">
+      <div className="text-center mb-4 md:mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -183,7 +183,7 @@ export function DevOpsWorkflowExample() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
-        className="relative w-full aspect-video mb-16 rounded-2xl overflow-hidden shadow-xl"
+        className="relative w-full aspect-video mb-5 md:mb-6 rounded-2xl overflow-hidden shadow-xl"
       >
         <Image
           src="/dinger.png"
