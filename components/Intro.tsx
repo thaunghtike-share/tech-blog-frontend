@@ -238,10 +238,13 @@ export default function Intro() {
             <div className="flex items-center justify-center px-2">
               {learningPathItems.map((step, i) => (
                 <React.Fragment key={step.id}>
-                  <div className="flex flex-col items-center">
-                    {/* Icon + Line container */}
-                    <div className="flex items-center">
-                      {/* Icon Circle */}
+                  {/* Each step: icon + label in vertical stack */}
+                  <div className="flex flex-col items-center mx-2">
+                    <button
+                      onClick={() => scrollToSection(step.id)}
+                      className="flex flex-col items-center focus:outline-none"
+                    >
+                      {/* Icon */}
                       <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
@@ -250,17 +253,17 @@ export default function Intro() {
                         <step.icon className="w-5 h-5" />
                       </motion.div>
 
-                      {/* Line */}
-                      {i < learningPathItems.length - 1 && (
-                        <div className="h-1 w-6 md:w-12 bg-gradient-to-r from-gray-400 to-gray-500 mx-2 rounded-full" />
-                      )}
-                    </div>
-
-                    {/* Label */}
-                    <span className="text-xs font-medium text-gray-700 mt-2">
-                      {step.label}
-                    </span>
+                      {/* Label under icon */}
+                      <span className="mt-2 text-xs font-medium text-gray-700 text-center">
+                        {step.label}
+                      </span>
+                    </button>
                   </div>
+
+                  {/* Connecting line (only if not last) */}
+                  {i < learningPathItems.length - 1 && (
+                    <div className="h-1 w-6 md:w-12 bg-gradient-to-r from-gray-400 to-gray-500 mx-1 flex-shrink-0 rounded-full self-center" />
+                  )}
                 </React.Fragment>
               ))}
             </div>
