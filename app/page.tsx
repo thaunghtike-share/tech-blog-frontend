@@ -79,7 +79,7 @@ export default function HomePage() {
         <section id="youtube-playlists" className="-mt-16 md:-mt-16">
           <YouTubePlaylists />
         </section>
-        <section id="free-udemy" className="-mt-12 md:-mt-14">
+        <section id="free-udemy" className="-mt-16 md:-mt-16">
           <TopUdemyCourses />
         </section>
         <section id="free-labs" className="-mt-14 md:-mt-14">
