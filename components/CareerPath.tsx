@@ -134,7 +134,7 @@ export function CareerPath() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ y: -5 }}
-                className={`w-80 sm:w-auto h-full flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 ${role.borderColor} overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col`}
+                className={`w-87 sm:w-auto h-full flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 ${role.borderColor} overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col`}
               >
                 <div className="p-5 flex flex-col h-full">
                   {/* Top */}

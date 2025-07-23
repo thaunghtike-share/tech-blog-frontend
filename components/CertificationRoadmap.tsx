@@ -521,7 +521,7 @@ export function CertificationRoadmap() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`}
+                  className={`flex-shrink-0 w-[79vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 hover:shadow-xl flex flex-col`}
                 >
                   <div className="p-5 relative">
                     <div className="absolute top-3 right-3">

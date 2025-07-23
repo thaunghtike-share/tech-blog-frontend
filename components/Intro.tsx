@@ -135,7 +135,7 @@ export default function Intro() {
           {conceptCards.map((card, i) => (
             <motion.div
               key={i}
-              className="group relative w-[340px] min-h-[200px]"
+              className="group relative w-[360px] min-h-[200px]"
               initial="initial"
               whileHover="hover"
               variants={cardVariants}

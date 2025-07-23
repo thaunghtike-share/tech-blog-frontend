@@ -145,7 +145,7 @@ export function RecommendedPaidCourses() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative flex flex-col" // Added flex flex-col
+            className="flex-shrink-0 w-[76vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 hover:shadow-xl relative flex flex-col" // Added flex flex-col
           >
             <div className="p-5 flex-grow">
               {" "}
