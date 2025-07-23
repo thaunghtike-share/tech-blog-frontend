@@ -60,16 +60,16 @@ export function FreelanceServicesSection() {
   return (
     <section className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Enhanced Header */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-4 md:mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center gap-3 mb-6"
         >
-          <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
+          <div className="p-2 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl shadow-lg">
             <Code className="w-6 h-6 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-yellow-50 to-orange-50 text-orange-700 border border-orange-200">
             <Sparkles className="w-4 h-4 mr-2" /> What I Offer
           </span>
         </motion.div>
@@ -77,7 +77,7 @@ export function FreelanceServicesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-lg md:text-3xl -mt-3 md:-mt-2 font-bold bg-gradient-to-r from-yellow-900 via-red-800 to-orange-800 bg-clip-text text-transparent mb-2 md:mb-3"
         >
           Professional DevOps Services
         </motion.h2>
