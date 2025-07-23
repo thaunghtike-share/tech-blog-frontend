@@ -295,7 +295,7 @@ const certifications: CertificationItem[] = [
       "Configure organizational structure in Azure DevOps",
       "Setup Teams, Areas, Iterations",
       "Customize work item templates and workflows",
-      "Integrate communication tools (Slack, MS Teams)",
+      "Integrate communication tools",
       "Manage stakeholder feedback and collaboration",
       "YAML pipelines",
       "Artifact feeds",

@@ -135,7 +135,7 @@ export default function Intro() {
           {conceptCards.map((card, i) => (
             <motion.div
               key={i}
-              className="group relative"
+              className="group relative w-[340px] min-h-[200px]"
               initial="initial"
               whileHover="hover"
               variants={cardVariants}
@@ -254,7 +254,7 @@ export default function Intro() {
         <div className="md:hidden relative">
           <div className="absolute top-5 left-0 right-4 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
           <div className="overflow-x-auto pb-6 -mx-4 px-4">
-            <div className="flex space-x-6 w-max min-w-full px-4 relative z-10">
+            <div className="flex space-x-5 w-max min-w-full px-4 relative z-10">
               {learningPathItems.map((step, index) => (
                 <motion.div
                   key={index}

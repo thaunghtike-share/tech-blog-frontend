@@ -712,7 +712,7 @@ export function MinimalDevopsRoadmap() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`flex-shrink-0 w-[70vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
+                className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
               >
                 <div className="p-5 relative flex-grow">
                   {" "}
