@@ -59,7 +59,7 @@ export function SuccessStoriesSection() {
       className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
       {/* Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-4 md:mb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

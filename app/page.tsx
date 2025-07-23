@@ -100,7 +100,7 @@ export default function HomePage() {
         <div className="-mt-32 md:-mt-30">
           <DevOpsWorkflowExample />
         </div>
-        <div className="-mt-28">
+        <div className="-mt-34 md:-mt-32">
           <SuccessStoriesSection />
         </div>
         <div className="-mt-28">
