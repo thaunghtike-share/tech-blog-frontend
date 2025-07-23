@@ -6,8 +6,6 @@ import { MinimalFooter } from "@/components/minimal-footer";
 import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses";
 
 export default function RecommendedPaidCoursesPage() {
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("search") || "";
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">

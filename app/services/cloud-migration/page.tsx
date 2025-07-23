@@ -46,8 +46,6 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
 export default function MonolithicToCloudNativePage() {
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("search") || "";
   const listItemStyle =
     "flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group";
   const iconWrapperStyle = (color: string) =>
