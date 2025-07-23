@@ -97,7 +97,7 @@ export default function HomePage() {
         <div className="-mt-33 md:-mt-28">
           <FreelanceServicesSection />
         </div>
-        <div className="-mt-24">
+        <div className="-mt-32 md:-mt-30">
           <DevOpsWorkflowExample />
         </div>
         <div className="-mt-28">
