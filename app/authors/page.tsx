@@ -5,7 +5,7 @@ import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { Card, CardContent } from "@/components/ui/card";
 
-interface Author {
+interface AuthorSummary {
   id: number;
   name: string;
   bio: string;
@@ -20,7 +20,7 @@ interface Author {
 const API_BASE_URL = "http://localhost:8000/api";
 
 export default function AuthorsPage() {
-  const [authors, setAuthors] = useState<Author[]>([]);
+  const [authors, setAuthors] = useState<AuthorSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

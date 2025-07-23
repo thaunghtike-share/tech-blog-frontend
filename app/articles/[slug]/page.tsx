@@ -18,6 +18,7 @@ interface Article {
 
 interface Author {
   id: number;
+  slug: string; // Added slug here
   name: string;
   bio?: string;
   avatar?: string;
@@ -54,7 +55,14 @@ async function fetchAuthor(id: number): Promise<Author | null> {
       cache: "no-store",
     });
     if (!res.ok) return null;
-    return await res.json();
+    const author: Author = await res.json();
+
+    // Add fallback slug if missing (optional)
+    if (!author.slug) {
+      author.slug = `author-${author.id}`;
+    }
+
+    return author;
   } catch {
     return null;
   }
@@ -91,7 +99,7 @@ export default async function ArticlePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params; // await the params promise here
+  const { slug } = await params;
 
   if (!slug) notFound();
 
