@@ -238,8 +238,10 @@ export default function Intro() {
             <div className="flex items-center justify-center px-2">
               {learningPathItems.map((step, i) => (
                 <React.Fragment key={step.id}>
-                  {/* Each step: icon + label in vertical stack */}
-                  <div className="flex flex-col items-center mx-2">
+                  {/* Button with icon + label in vertical stack */}
+                  <div className="flex flex-col items-center mx-1 md:mx-3">
+                    {" "}
+                    {/* Tighter spacing on mobile */}
                     <button
                       onClick={() => scrollToSection(step.id)}
                       className="flex flex-col items-center focus:outline-none"
@@ -260,9 +262,11 @@ export default function Intro() {
                     </button>
                   </div>
 
-                  {/* Connecting line (only if not last) */}
+                  {/* Connecting line (centered with icon only, not the label) */}
                   {i < learningPathItems.length - 1 && (
-                    <div className="h-1 w-6 md:w-12 bg-gradient-to-r from-gray-400 to-gray-500 mx-1 flex-shrink-0 rounded-full self-center" />
+                    <div className="self-center mt-[-20px] md:mt-0">
+                      <div className="h-1 w-4 md:w-12 bg-gradient-to-r from-gray-400 to-gray-500 mx-1 md:mx-2 rounded-full" />
+                    </div>
                   )}
                 </React.Fragment>
               ))}
