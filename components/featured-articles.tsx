@@ -204,11 +204,11 @@ export function FeaturedArticlesPage() {
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-0 sm:px-4">
       {/* MOBILE HEADER (hidden on desktop) */}
-      <div className="md:hidden sticky top-0 z-10 bg-white/80 backdrop-blur-sm py-3 border-b">
+      <div className="md:hidden sticky top-0 z-10 bg-white/80 backdrop-blur-sm py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-purple-600" />
-            <h2 className="font-bold text-gray-900">Featured</h2>
+            <h2 className="font-bold text-gray-900">Featured Articles</h2>
           </div>
           <Link href="/articles" className="text-blue-600 text-sm font-medium">
             View All
