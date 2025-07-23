@@ -121,7 +121,7 @@ export function RecommendedPaidCourses() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-4"
+          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-2 md:mb-3"
         >
           Recommended Paid DevOps Courses
         </motion.h2>
@@ -137,7 +137,7 @@ export function RecommendedPaidCourses() {
       </div>
 
       {/* Courses Grid - Horizontal scroll on mobile, grid on desktop */}
-      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:overflow-x-visible lg:snap-none">
+      <div className="flex overflow-x-auto -mt-5 md:-mt-5 snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:overflow-x-visible lg:snap-none">
         {coursesToShow.map((course, idx) => (
           <motion.div
             key={idx}

@@ -91,7 +91,7 @@ export default function HomePage() {
         <section id="career" className="-mt-16 md:-mt-18">
           <CareerPath />
         </section>
-        <div className="-mt-36">
+        <div className="-mt-40 md:-mt-38">
           <RecommendedPaidCourses />
         </div>
         <div className="-mt-22">
