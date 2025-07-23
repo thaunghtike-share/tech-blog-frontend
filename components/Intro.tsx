@@ -96,29 +96,30 @@ export default function Intro() {
               <Rocket className="w-5 h-5 text-white" />
             </div>
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
-              <Sparkles className="w-3 h-3 mr-1.5" /> Introduction
+              <Sparkles className="w-3 h-3 mr-1.5" /> Intro
             </span>
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4"
+            className="text-2xl md:text-3xl font-extrabold font-sans bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 tracking-tight"
           >
-            Start Your{" "}
+            learn{" "}
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               DevOps
             </span>{" "}
-            Journey
+            now
           </motion.h2>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base"
           >
-            Learn what DevOps really means, why it matters, and what you need to
-            know before diving in.
+            Unlock DevOps: Learn the concepts transforming modern tech teams and
+            the practical skills you need to boost your IT career
           </motion.p>
         </div>
       </div>
