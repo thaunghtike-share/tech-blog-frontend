@@ -20,6 +20,7 @@ import {
   ClipboardList,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Intro() {
   const scrollToSection = (id: string) => {
@@ -42,21 +43,19 @@ export default function Intro() {
   };
 
   const learningPathItems = [
-    { label: "Roadmap", id: "devops-roadmap", desc: "Complete landscape" },
-    { label: "YouTube", id: "youtube-playlists", desc: "Expert tutorials" },
+    { label: "Roadmap", id: "devops-roadmap", desc: "See Roadmap" },
     { label: "Udemy", id: "free-udemy", desc: "Structured Courses" },
-    { label: "Labs", id: "free-labs", desc: "Hands-On Labs" },
+    { label: "YouTube", id: "youtube-playlists", desc: "Expert tutorials" },
     { label: "Certificate", id: "cert", desc: "Get Certificates" },
     { label: "Jobs", id: "career", desc: "Get Jobs" },
   ];
 
   const stepColors = [
     "bg-gradient-to-r from-green-600 to-emerald-600",
-    "bg-gradient-to-r from-red-600 to-pink-600",
     "bg-gradient-to-r from-purple-600 to-pink-600",
-    "bg-gradient-to-r from-orange-600 to-amber-600",
-    "bg-gradient-to-r from-teal-600 to-gray-600",
-    "bg-gradient-to-r from-violet-600 to-blue-600",
+    "bg-gradient-to-r from-red-600 to-pink-600",
+    "bg-gradient-to-r from-purple-600 to-blue-600",
+    "bg-gradient-to-r from-purple-600 to-pink-600",
   ];
 
   const conceptCards = [
@@ -203,7 +202,7 @@ export default function Intro() {
           transition={{ delay: 0.3 }}
           className="mb-6"
         >
-          <h4 className="text-2xl font-bold text-gray-900 mb-5 flex items-center justify-center gap-2">
+          <h4 className="text-2xl font-bold text-gray-900 mb-3 flex items-center justify-center gap-2">
             <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
               <ListTodo className="w-5 h-5 text-white" />
             </div>
@@ -219,7 +218,7 @@ export default function Intro() {
         {/* Desktop version */}
         <div className="relative hidden md:block">
           <div className="absolute top-5 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
-          <div className="grid grid-cols-6 gap-2 relative z-10">
+          <div className="grid grid-cols-5 gap-2 relative z-10">
             {learningPathItems.map((step, index) => (
               <motion.div
                 key={index}
@@ -254,14 +253,14 @@ export default function Intro() {
         <div className="md:hidden relative">
           <div className="absolute top-5 left-0 right-4 h-1 bg-gradient-to-r from-gray-200 via-blue-200 to-purple-200 rounded-full z-0" />
           <div className="overflow-x-auto pb-6 -mx-4 px-4">
-            <div className="flex space-x-8 w-max min-w-full px-4 relative z-10">
+            <div className="flex space-x-6 w-max min-w-full px-4 relative z-10">
               {learningPathItems.map((step, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + index * 0.1 }}
-                  className="flex flex-col items-center w-20 flex-shrink-0"
+                  className="flex flex-col items-center w-16 flex-shrink-0"
                 >
                   <button
                     onClick={() => scrollToSection(step.id)}
