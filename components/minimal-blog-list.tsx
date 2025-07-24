@@ -278,22 +278,22 @@ export function MinimalBlogList({
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       {/* Header with Enhanced Tag Filter */}
-      <div className="mb-7 relative flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-between gap-4">
+      <div className="mb-12 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
-            <Sparkles className="w-6 h-6 text-white" />
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <Link href="/articles">
             <h2
               ref={topRef}
-              className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all"
+              className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all"
             >
               Latest Articles
             </h2>
           </Link>
         </div>
 
-        <div className="flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto">
+        <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
           <div
             className="relative w-full max-w-[200px] sm:w-56"
             ref={dropdownRef}
@@ -325,7 +325,7 @@ export function MinimalBlogList({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute left-1/2 -translate-x-1/2 sm:right-0 sm:left-auto sm:translate-x-0 mt-2 w-full sm:w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                  className="absolute right-0 mt-2 w-full sm:w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 >
                   <div className="py-1 max-h-60 overflow-y-auto">
                     <button
