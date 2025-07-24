@@ -101,7 +101,6 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
-
   const API_BASE_URL = "http://20.212.140.239:8000/api";
 
   // Ref for the categories container to scroll on toggle
@@ -159,39 +158,36 @@ export default function CategoriesPage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-
       <MinimalHeader />
-      <main className="max-w-6xl mx-auto px-4 py-12 relative z-10">
+      <main className="-mt-7 md:-mt-1 max-w-6xl mx-auto px-4 py-8 relative z-10">
         {/* Enhanced Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-6"
+            className="flex items-center justify-center gap-3 mb-4"
           >
             <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
-              <Sparkles className="w-5 h-5 text-white" />
+              <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white" />
             </div>
-            <span className="inline-flex items-center text-2xl font-tight">
+            <span className="inline-flex items-center text:xl md:text-2xl font-tight">
               Article Categories
             </span>
           </motion.div>
-
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-base text-gray-600 max-w-3xl mx-auto"
           >
             Explore our comprehensive collection of articles organized by
             technology and topic areas.
           </motion.p>
         </div>
-
         {/* Categories Grid */}
         <div
           ref={categoriesRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="-mt-6 md:-mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {displayedCategories.map((category) => {
             const Icon = getCategoryIcon(category.name);
@@ -230,10 +226,9 @@ export default function CategoriesPage() {
             );
           })}
         </div>
-
         {/* SEE MORE / SEE LESS BUTTON */}
         {categories.length > 6 && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-8 flex justify-center">
             <button
               onClick={toggleShowAll}
               className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
