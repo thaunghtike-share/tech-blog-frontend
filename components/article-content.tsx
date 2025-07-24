@@ -23,7 +23,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -174,7 +173,7 @@ export function ArticleContent({
   useEffect(() => {
     const fetchTopReadArticles = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/articles/top-read/?limit=7`);        
+        const res = await fetch(`${API_BASE_URL}/articles/top-read/?limit=7`);
         if (!res.ok) throw new Error("Failed to fetch top read articles");
         const data = await res.json();
         console.log("Top Read Response:", data);
@@ -203,8 +202,8 @@ export function ArticleContent({
             className="w-full h-64 object-cover rounded-md mb-6"
           />
         )}
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">{article.title}</h1>
-        <div className="flex items-center space-x-4 text-gray-600 text-sm mb-6">
+        <h1 className="text-lg md:text-3xl font-bold mb-2">{article.title}</h1>
+        <div className="flex items-center space-x-4 text-gray-600 text-xs md:text-sm mb-6">
           <div className="flex items-center">
             <User className="w-4 h-4 mr-1" />
             <span>
@@ -219,7 +218,7 @@ export function ArticleContent({
         <div className="prose prose-lg">
           <div className="flex flex-wrap gap-2 mb-4">
             <Link href={`/categories/${slugify(categoryName)}`}>
-              <span className="bg-yellow-100 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full cursor-pointer inline-block">
+              <span className="bg-yellow-100 text-yellow-800 text-xs md:text-sm font-medium px-2 py-1 rounded-full cursor-pointer inline-block">
                 📂 {categoryName}
               </span>
             </Link>
@@ -227,7 +226,7 @@ export function ArticleContent({
               <Link
                 href={`/articles?tag=${slugify(tag)}`}
                 key={index}
-                className="inline-block bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-full hover:bg-gray-200 cursor-pointer"
+                className="inline-block bg-gray-100 text-gray-700 text-xs md:text-sm px-2 py-1 rounded-full hover:bg-gray-200 cursor-pointer"
               >
                 #{tag}
               </Link>
@@ -242,7 +241,7 @@ export function ArticleContent({
                 return (
                   <h1
                     id={id}
-                    className="text-2xl font-semibold my-4"
+                    className="text-xl md:text-2xl font-semibold my-4"
                     {...props}
                   >
                     {children}
@@ -252,7 +251,11 @@ export function ArticleContent({
               h2: ({ children, ...props }) => {
                 const id = slugify(flattenChildren(children));
                 return (
-                  <h2 id={id} className="text-xl font-semibold my-3" {...props}>
+                  <h2
+                    id={id}
+                    className="text-lg md:text-xl font-semibold my-3"
+                    {...props}
+                  >
                     {children}
                   </h2>
                 );
@@ -260,7 +263,11 @@ export function ArticleContent({
               h3: ({ children, ...props }) => {
                 const id = slugify(flattenChildren(children));
                 return (
-                  <h3 id={id} className="text-lg font-semibold my-2" {...props}>
+                  <h3
+                    id={id}
+                    className="text-base md:text-lg font-semibold my-2"
+                    {...props}
+                  >
                     {children}
                   </h3>
                 );
@@ -276,7 +283,7 @@ export function ArticleContent({
               a: ({ href, children, ...props }) => (
                 <a
                   href={href}
-                  className="text-blue-600 hover:underline break-words"
+                  className="text-blue-600 hover:underline break-words text-sm md:text-base"
                   target="_blank"
                   rel="noopener noreferrer"
                   {...props}
@@ -285,13 +292,16 @@ export function ArticleContent({
                 </a>
               ),
               ul: ({ children, ...props }) => (
-                <ul className="mb-4 list-none space-y-2 pl-4" {...props}>
+                <ul
+                  className="mb-4 list-none space-y-2 pl-4 text-sm md:text-base"
+                  {...props}
+                >
                   {children}
                 </ul>
               ),
               ol: ({ children, ...props }) => (
                 <ol
-                  className="mb-4 list-decimal space-y-2 pl-6 text-gray-800"
+                  className="mb-4 list-decimal space-y-2 pl-6 text-gray-800 text-sm md:text-base"
                   {...props}
                 >
                   {children}
@@ -364,7 +374,7 @@ export function ArticleContent({
               },
               blockquote: ({ ...props }) => (
                 <blockquote
-                  className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4"
+                  className="border-l-4 border-blue-500 pl-4 italic text-gray-700 my-4 text-sm md:text-base"
                   {...props}
                 />
               ),
@@ -381,7 +391,7 @@ export function ArticleContent({
           </ReactMarkdown>
         </div>
         <div className="mt-10 pt-6 border-t border-gray-200">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">
+          <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">
             Share this article
           </h3>
           <ShareButtons
@@ -394,36 +404,38 @@ export function ArticleContent({
         <Link href={`/authors/${authorSlug}`} className="block">
           <Card className="mt-8 bg-gray-30 border border-blue-100 shadow-lg relative overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
-            <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6 relative z-10">
+
+            <CardContent className="p-4 sm:p-6 flex flex-col md:flex-row items-center gap-4 sm:gap-6 relative z-10">
               {author?.avatar ? (
                 <img
                   src={author.avatar || "/placeholder.svg"}
                   alt={author.name}
-                  className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-xl transition-transform duration-300 hover:scale-105"
+                  className="w-20 h-20 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-white shadow-xl transition-transform duration-300 hover:scale-105"
                 />
               ) : (
-                <div className="w-28 h-28 rounded-full bg-blue-200 flex items-center justify-center border-4 border-white shadow-xl">
-                  <UserCircle className="w-20 h-20 text-blue-600" />
+                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-blue-200 flex items-center justify-center border-4 border-white shadow-xl">
+                  <UserCircle className="w-14 h-14 sm:w-20 sm:h-20 text-blue-600" />
                 </div>
               )}
+
               <div className="text-center md:text-left flex-1">
-                <h4 className="text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
+                <h4 className="text-xs sm:text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
                   Written By
                 </h4>
-                <p className="text-2xl font-extrabold text-indigo-800 mb-2 leading-tight">
+                <p className="text-lg sm:text-2xl font-extrabold text-indigo-800 mb-2 leading-tight">
                   {article.author_name || author?.name || "Unknown Author"}
                 </p>
                 {author?.bio && (
-                  <p className="text-gray-700 leading-relaxed text-sm max-w-prose mx-auto md:mx-0">
+                  <p className="text-gray-700 leading-relaxed text-xs sm:text-sm max-w-prose mx-auto md:mx-0">
                     {author.bio}
                   </p>
                 )}
                 {author?.linkedin && (
                   <Button
                     variant="outline"
-                    className="mt-4 text-blue-800 border-blue-300 hover:bg-blue-100 hover:text-blue-900 transition-colors duration-200 bg-transparent pointer-events-none"
+                    className="mt-3 sm:mt-4 text-blue-800 border-blue-300 hover:bg-blue-100 hover:text-blue-900 transition-colors duration-200 bg-transparent pointer-events-none"
                   >
-                    <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium">
                       <Linkedin className="w-4 h-4" />
                       <span>LinkedIn</span>
                     </div>
@@ -433,12 +445,11 @@ export function ArticleContent({
             </CardContent>
           </Card>
         </Link>
-
         <div className="mt-6 flex justify-between items-center text-sm text-blue-600 font-medium pt-4">
           {prevArticle ? (
             <Link
               href={`/articles/${prevArticle.slug}`}
-              className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800"
+              className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800 text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>{prevArticle.title}</span>
@@ -449,7 +460,7 @@ export function ArticleContent({
           {nextArticle ? (
             <Link
               href={`/articles/${nextArticle.slug}`}
-              className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800"
+              className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800 text-sm"
             >
               <span>{nextArticle.title}</span>
               <ArrowRight className="w-4 h-4" />
@@ -461,7 +472,7 @@ export function ArticleContent({
         {/* Recent Articles - Redesigned */}
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-800 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-indigo-600" />
               <span>Recent Articles</span>
             </h2>
@@ -506,10 +517,10 @@ export function ArticleContent({
                       </div>
                     )}
                     <CardContent className="p-5 flex-grow flex flex-col bg-white">
-                      <h4 className="font-bold text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 text-lg leading-snug mb-2">
+                      <h4 className="font-bold text-base md:text-lg text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 leading-snug mb-2">
                         {item.title}
                       </h4>
-                      <p className="text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
+                      <p className="text-xs md:text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
                         {excerpt(item.content)}
                       </p>
                       <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
@@ -530,14 +541,12 @@ export function ArticleContent({
           </div>
         </div>
       </article>
-
       {/* Sidebar */}
       <aside className="hidden lg:block lg:col-span-1 space-y-8">
         <MinimalSidebar />
-
         {/* Table of Contents */}
         <div className="bg-white/90 border border-white/70 shadow rounded-lg p-4 sticky top-4">
-          <h3 className="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <h3 className="text-base md:text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
             <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg">
               <ListOrdered className="w-4 h-4" />
             </span>
@@ -570,7 +579,6 @@ export function ArticleContent({
             ))}
           </nav>
         </div>
-
         {/* Total Reads - Redesigned */}
         <div className="bg-white/90 border border-blue-100 rounded-xl p-6 shadow-lg relative overflow-hidden">
           <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
@@ -581,7 +589,7 @@ export function ArticleContent({
             <h3 className="text-sm font-medium text-gray-700 mb-2 uppercase tracking-wide">
               Total Article Views
             </h3>
-            <p className="text-5xl font-extrabold text-indigo-800 leading-none">
+            <p className="text-4xl md:text-5xl font-extrabold text-indigo-800 leading-none">
               {typeof readCount === "number" ? (
                 <CountUp end={readCount} duration={2.5} separator="," />
               ) : (
@@ -594,11 +602,10 @@ export function ArticleContent({
             </div>
           </div>
         </div>
-
         {/* Top Read Articles - Redesigned (Compact List Style) */}
         <section className="mt-12 bg-white/90 border border-white/70 shadow rounded-lg p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-800 flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5 text-indigo-600"
@@ -634,7 +641,7 @@ export function ArticleContent({
                     #{index + 1}
                   </span>
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-800 hover:text-indigo-700 transition-colors line-clamp-1 text-base">
+                    <h4 className="font-medium text-sm md:text-base text-gray-800 hover:text-indigo-700 transition-colors line-clamp-1">
                       {article.title}
                     </h4>
                   </div>
