@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils"; // Ensure cn utility is imported
 
 export default function InfraAsCodePage() {
   const listItemStyle =
@@ -42,8 +43,8 @@ export default function InfraAsCodePage() {
   const iconWrapperStyle = (color: string) =>
     `p-2 bg-${color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`;
   const iconStyle = (color: string) => `w-4 h-4 text-${color}-600`;
-  const titleStyle = "font-bold text-gray-900 mb-1 text-base";
-  const descStyle = "text-gray-600 leading-relaxed text-sm";
+  const titleStyle = "font-bold text-sm md:text-base text-gray-900 mb-1"; // Adjusted for mobile
+  const descStyle = "text-xs md:text-sm text-gray-600 leading-relaxed"; // Adjusted for mobile
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
@@ -55,78 +56,47 @@ export default function InfraAsCodePage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {/* Messenger Support Floating Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with me on Messenger"
-        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-14 h-14 rounded-full"
-        >
-          <defs>
-            <linearGradient
-              id="messengerGradient"
-              x1="0"
-              y1="0"
-              x2="240"
-              y2="240"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#E1306C" />
-              <stop offset="1" stopColor="#833AB4" />
-            </linearGradient>
-          </defs>
-          <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
-        </svg>
-        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
-          Chat?
-        </span>
-      </a>
       <MinimalHeader />
-      <main className="mt-4 max-w-7xl mx-auto px-6 py-10 relative z-10">
+      <main className="-mt-10 md:mt-1 max-w-7xl mx-auto px-6 py-10 relative z-10">
         {/* Hero Section */}
-        <section className="text-center mb-20">
+        <section className="text-center mb-12">
+          {" "}
+          {/* Reduced mb-20 to mb-12 */}
           <div className="max-w-5xl mx-auto">
-            <Badge className="mb-4 px-3 py-1 bg-gradient-to-r from-purple-500 to-indigo-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+            <Badge className="mb-4 px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-gradient-to-r from-purple-500 to-indigo-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
               <Code className="w-4 h-4 mr-2" />
               Infrastructure as Code
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+              {" "}
+              {/* Adjusted font size for mobile */}
               Automating Infrastructure with
               <span className="block text-transparent bg-gradient-to-r from-purple-600 to-indigo-700 bg-clip-text">
                 Infrastructure as Code (IaC)
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base md:text-xl text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
+              {" "}
+              {/* Adjusted font size for mobile */}
               As an expert in Infrastructure as Code (IaC), I transform your
               infrastructure management from manual processes to automated,
               version-controlled, and reproducible deployments, ensuring
               efficiency and reliability.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              <Badge className="px-4 py-2 bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-sm md:px-4 md:py-2 md:text-base bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Code className="w-4 h-4 mr-2" />
                 Automation
               </Badge>
-              <Badge className="px-4 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <GitBranch className="w-4 h-4 mr-2" />
                 Version Control
               </Badge>
-              <Badge className="px-4 py-2 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <CheckCircle2 className="w-4 h-4 mr-2" />
                 Consistency
               </Badge>
-              <Badge className="px-4 py-2 bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Zap className="w-4 h-4 mr-2" />
                 Efficiency
               </Badge>
@@ -134,24 +104,32 @@ export default function InfraAsCodePage() {
           </div>
         </section>
         {/* What is IaC? */}
-        <section className="mb-20">
+        <section className="mb-12">
+          {" "}
+          {/* Reduced mb-20 to mb-12 */}
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">?</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 What is Infrastructure as Code (IaC)?
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Defining and managing infrastructure resources using
                 configuration files
               </p>
             </div>
           </div>
-          <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6 space-y-4">
-              <p className="text-gray-700 text-base leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Infrastructure as Code (IaC) is the management of infrastructure
                 (networks, virtual machines, load balancers, and connection
                 topology) in a descriptive model, using the same versioning as
@@ -160,14 +138,18 @@ export default function InfraAsCodePage() {
                 infrastructure, making it easier to edit, distribute, and
                 version control.
               </p>
-              <p className="text-gray-700 text-base leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Instead of manually configuring hardware devices or using
                 interactive tools, IaC allows you to define your infrastructure
                 in human-readable configuration files (e.g., YAML, JSON, HCL).
                 These files are then executed by IaC tools to provision and
                 manage your infrastructure automatically.
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Code,
@@ -182,7 +164,12 @@ export default function InfraAsCodePage() {
                     color: "green",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -197,23 +184,31 @@ export default function InfraAsCodePage() {
           </Card>
         </section>
         {/* Importance of IaC */}
-        <section className="mb-20">
+        <section className="mb-12">
+          {" "}
+          {/* Reduced mb-20 to mb-12 */}
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-green-500 to-teal-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">!</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Why is IaC Important?
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Key benefits for modern cloud environments
               </p>
             </div>
           </div>
-          <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6 space-y-4">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-3">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: CheckCircle2,
@@ -252,7 +247,12 @@ export default function InfraAsCodePage() {
                     color: "teal",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -267,23 +267,31 @@ export default function InfraAsCodePage() {
           </Card>
         </section>
         {/* IaC in Real-World Usage */}
-        <section className="mb-20">
+        <section className="mb-12">
+          {" "}
+          {/* Reduced mb-20 to mb-12 */}
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <BookOpen className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 IaC in Real-World Scenarios
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Practical applications across various industries
               </p>
             </div>
           </div>
-          <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6 space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Cloud,
@@ -322,7 +330,12 @@ export default function InfraAsCodePage() {
                     color: "teal",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -337,23 +350,31 @@ export default function InfraAsCodePage() {
           </Card>
         </section>
         {/* Step-by-Step IaC Implementation */}
-        <section className="mb-20">
+        <section className="mb-12">
+          {" "}
+          {/* Reduced mb-20 to mb-12 */}
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-orange-500 to-amber-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <Workflow className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Step-by-Step IaC Implementation
               </h2>
-              <p className="text-lg text-gray-600">
-                A typical workflow for managing infrastructure with code
+              <p className="text-base md:text-lg text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}A typical workflow for
+                managing infrastructure with code
               </p>
             </div>
           </div>
-          <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6 space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="flex flex-nowrap overflow-x-auto gap-6 pb-4 sm:grid sm:grid-cols-2 lg:grid-cols-4">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     step: "1",
@@ -389,8 +410,10 @@ export default function InfraAsCodePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
+                    className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group min-w-[220px] flex-shrink-0"
                   >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className="w-8 h-8 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mb-2">
                       {item.step}
                     </div>
@@ -410,43 +433,57 @@ export default function InfraAsCodePage() {
           </Card>
         </section>
         {/* IaC Tools Deep Dive */}
-        <section className="mb-20">
+        <section className="mb-12">
+          {" "}
+          {/* Reduced mb-20 to mb-12 */}
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-red-500 to-rose-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <Lightbulb className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 IaC Tools: A Deep Dive
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Exploring popular tools and their applications
               </p>
             </div>
           </div>
           {/* Terraform */}
-          <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <Card className="mb-3 -mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+              <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                   <Cloud className="w-5 h-5 text-purple-600" />
                 </div>
                 Terraform (HashiCorp)
               </CardTitle>
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-xs md:text-sm text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Declarative infrastructure provisioning across multiple cloud
                 providers.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Terraform is an open-source IaC tool that allows you to define
                 and provision datacenter infrastructure using a declarative
                 configuration language called HashiCorp Configuration Language
                 (HCL). It supports a vast ecosystem of providers for various
                 cloud platforms (AWS, Azure, GCP) and on-premises solutions.
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Layers,
@@ -473,7 +510,12 @@ export default function InfraAsCodePage() {
                     color: "purple",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -489,26 +531,34 @@ export default function InfraAsCodePage() {
           {/* Ansible */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+              <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 <div className="p-2 bg-green-100 rounded-lg shadow-sm">
                   <Terminal className="w-5 h-5 text-green-600" />
                 </div>
                 Ansible (Red Hat)
               </CardTitle>
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-xs md:text-sm text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Automation engine for configuration management, application
                 deployment, and orchestration.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Ansible is an open-source automation tool that automates
                 software provisioning, configuration management, and application
                 deployment. It's agentless, meaning it communicates with managed
                 nodes over standard SSH or WinRM, requiring no special software
                 on the client side.
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Zap,
@@ -535,7 +585,12 @@ export default function InfraAsCodePage() {
                     color: "orange",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -551,26 +606,34 @@ export default function InfraAsCodePage() {
           {/* Pulumi */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+              <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 <div className="p-2 bg-teal-100 rounded-lg shadow-sm">
                   <Code className="w-5 h-5 text-teal-600" />
                 </div>
                 Pulumi
               </CardTitle>
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-xs md:text-sm text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 IaC using familiar programming languages (TypeScript, Python,
                 Go, C#).
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Pulumi is an open-source IaC tool that allows developers and
                 operations teams to define, deploy, and manage cloud
                 infrastructure using general-purpose programming languages. This
                 approach enables the use of familiar tools, testing frameworks,
                 and IDEs for infrastructure management.
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Code,
@@ -597,7 +660,12 @@ export default function InfraAsCodePage() {
                     color: "red",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -613,18 +681,24 @@ export default function InfraAsCodePage() {
           {/* AWS CloudFormation */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+              <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 <div className="p-2 bg-orange-100 rounded-lg shadow-sm">
                   <Cloud className="w-5 h-5 text-orange-600" />
                 </div>
                 AWS CloudFormation
               </CardTitle>
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-xs md:text-sm text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 AWS-native service for provisioning and managing AWS resources.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 AWS CloudFormation is an AWS service that helps you model and
                 set up your Amazon Web Services resources so that you can spend
                 less time managing those resources and more time focusing on
@@ -633,7 +707,9 @@ export default function InfraAsCodePage() {
                 instances or Amazon RDS DB instances), and CloudFormation takes
                 care of provisioning and configuring those resources for you.
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Server,
@@ -660,7 +736,12 @@ export default function InfraAsCodePage() {
                     color: "purple",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -676,18 +757,24 @@ export default function InfraAsCodePage() {
           {/* AWS Boto3 */}
           <Card className="mb-8 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+              <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 <div className="p-2 bg-red-100 rounded-lg shadow-sm">
                   <Database className="w-5 h-5 text-red-600" />
                 </div>
                 AWS Boto3 (Python SDK)
               </CardTitle>
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-xs md:text-sm text-gray-600">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Python SDK for programmatic interaction with AWS services.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                {" "}
+                {/* Adjusted font size for mobile */}
                 Boto3 is the Amazon Web Services (AWS) SDK for Python. It allows
                 Python developers to write software that makes use of AWS
                 services like Amazon S3, Amazon EC2, and more. While not a
@@ -696,7 +783,9 @@ export default function InfraAsCodePage() {
                 resources programmatically, and building custom tools that
                 interact with AWS APIs.
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+                {" "}
+                {/* Changed to flex for mobile horizontal scroll */}
                 {[
                   {
                     icon: Code,
@@ -723,7 +812,12 @@ export default function InfraAsCodePage() {
                     color: "purple",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
+                  >
+                    {" "}
+                    {/* Increased min-width */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -738,62 +832,62 @@ export default function InfraAsCodePage() {
           </Card>
         </section>
         {/* Call to Action */}
-        <section className="mb-12">
-          <Card className="relative rounded-2xl overflow-hidden p-8 md:p-10 text-center border-0 shadow-none bg-transparent">
-            {/* Subtle gradient background */}
-            <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-2xl"></div>
+        <section className="-mt-4 mb-2 md:mb-8">
+          <Card className="relative rounded-xl md:rounded-2xl overflow-hidden p-6 md:p-10 text-center border-0 shadow-none bg-transparent">
+            <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-xl md:rounded-2xl"></div>
             <div className="relative z-10 max-w-3xl mx-auto">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-4 py-1.5 rounded-full mb-4 text-sm font-semibold text-gray-700">
-                <Sparkles className="w-4 h-4 mr-1 text-blue-600" />
+              <div className="inline-flex items-center gap-1 md:gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-3 md:px-4 py-1 rounded-full mb-3 md:mb-4 text-sm md:text-sm font-semibold text-gray-700">
+                <Sparkles className="w-4 h-4 md:w-4 md:h-4 mr-1 text-blue-600" />
                 Ready to Transform?
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-4 md:mb-4 leading-tight">
                 Accelerate Your Journey to Cloud-Native
               </h2>
-              <p className="text-base text-gray-600 leading-relaxed mb-8">
+              <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8">
                 Partner with us to seamlessly migrate your monolithic
                 applications and unlock the full potential of scalable,
                 resilient, and cost-efficient cloud solutions.
               </p>
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 border-0"
+                className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white font-semibold px-6 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 border-0"
               >
-                <Rocket className="w-4 h-4 mr-2" />
+                <Rocket className="w-4 h-4 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Schedule a Free Consultation
               </Button>
+
               {/* Trust indicators */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10 pt-6 border-t border-gray-100">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-10 pt-4 md:pt-6 border-t border-gray-100">
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 bg-green-100 rounded-lg md:rounded-xl flex items-center justify-center mb-1 md:mb-2">
+                    <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm md:text-sm">
                     Proven Success
                   </h4>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-sm text-gray-600">
                     100% successful migrations
                   </p>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
-                    <Zap className="w-5 h-5 text-blue-600" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 bg-blue-100 rounded-lg md:rounded-xl flex items-center justify-center mb-1 md:mb-2">
+                    <Zap className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm md:text-sm">
                     Rapid Deployment
                   </h4>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-sm text-gray-600">
                     2-4 week average timeline
                   </p>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-2">
-                    <ShieldCheck className="w-5 h-5 text-purple-600" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 bg-purple-100 rounded-lg md:rounded-xl flex items-center justify-center mb-1 md:mb-2">
+                    <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm md:text-sm">
                     Enterprise-Grade Security
                   </h4>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-sm text-gray-600">
                     Built-in security from day one
                   </p>
                 </div>
@@ -802,7 +896,11 @@ export default function InfraAsCodePage() {
           </Card>
         </section>
       </main>
-      <MinimalFooter />
+      <div className="-mt-4 md:-mt-14">
+        {" "}
+        {/* Reduced negative margin for footer */}
+        <MinimalFooter />
+      </div>
     </div>
   );
 }
