@@ -76,7 +76,7 @@ export default function PartTimeDevOpsSupportPage() {
         }}
       ></div>
       <MinimalHeader />
-      <main className="-mt-10 md:mt-1 max-w-7xl mx-auto px-6 py-10 relative z-10">
+      <main className="-mt-9 md:mt-1 max-w-7xl mx-auto px-6 py-10 relative z-10">
         {/* Hero Section */}
         <section className="text-center mb-10">
           <div className="max-w-5xl mx-auto">

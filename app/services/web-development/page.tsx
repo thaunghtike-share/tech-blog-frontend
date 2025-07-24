@@ -18,7 +18,7 @@ export default function WebsiteDevelopmentPage() {
 
       <MinimalHeader />
 
-      <main className="-mt-10 md:-mt-1 max-w-7xl mx-auto px-6 py-20 relative z-10 flex justify-center">
+      <main className="-mt-9 md:-mt-1 max-w-7xl mx-auto px-6 py-20 relative z-10 flex justify-center">
         <div className="w-full max-w-4xl text-center">
           <Rocket className="mx-auto mb-4 w-12 h-12 text-teal-500 animate-bounce" />
           <h1 className="text-2xl font-semibold text-gray-900 mb-2">
