@@ -10,6 +10,8 @@ type Testimonial = {
   rating: number;
 };
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
 export function SuccessStoriesSection() {
   const [feedbacks, setFeedbacks] = useState<Testimonial[]>([]);
   const [showAll, setShowAll] = useState(false);
@@ -20,7 +22,7 @@ export function SuccessStoriesSection() {
     // Please note: This fetch request to a local/private IP (http://20.212.140.239:8000)
     // will NOT work in the sandboxed v0 preview environment.
     // For the preview to display data, your backend needs to be publicly accessible.
-    fetch("http://192.168.1.131:8000/api/testimonials/")
+    fetch(`${API_BASE_URL}/testimonials/`)
       .then(async (res) => {
         const contentType = res.headers.get("content-type");
         if (!res.ok || !contentType?.includes("application/json")) {

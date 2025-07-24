@@ -27,7 +27,7 @@ interface UdemyCourse {
   reviews?: Review[];
 }
 
-const API_BASE_URL = "http://192.168.1.131:8000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export function TopUdemyCourses() {
   const [courses, setCourses] = useState<UdemyCourse[]>([]);
