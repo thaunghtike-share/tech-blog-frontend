@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -13,7 +12,6 @@ import {
   Linkedin,
   Folder,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -69,7 +67,6 @@ export default function AuthorDetailPage() {
         setLoading(false);
       }
     }
-
     if (slug) fetchAuthor();
   }, [slug]);
 
@@ -86,8 +83,8 @@ export default function AuthorDetailPage() {
   const stripMarkdown = (md?: string) => {
     if (!md) return "";
     let text = md;
-    text = text.replace(/!\[.*?\]\(.*?\)/g, "");
-    text = text.replace(/\[(.*?)\]\(.*?\)/g, "$1");
+    text = text.replace(/!\[.*?\]$$.*?$$/g, "");
+    text = text.replace(/\[(.*?)\]$$.*?$$/g, "$1");
     text = text.replace(/[*_~`]/g, "");
     text = text.replace(/^#+\s+/gm, "");
     text = text.replace(/^>\s+/gm, "");
@@ -155,7 +152,7 @@ export default function AuthorDetailPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
             <div className="lg:col-span-4 bg-white rounded-2xl p-8 shadow-sm">
               <div className="animate-pulse space-y-8">
@@ -202,31 +199,31 @@ export default function AuthorDetailPage() {
         }}
       ></div>
       <MinimalHeader />
-      <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <main className="-mt-8 md:-mt-0 max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
           {/* Author content */}
-          <div className="lg:col-span-4 space-y-8">
+          <div className="col-span-full lg:col-span-4 space-y-8">
             {/* Author Profile Card */}
-            <div className="bg-white/75 rounded-2xl p-8 shadow-lg border border-gray-100 relative">
+            <div className="bg-white/75 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 relative">
               <div className="absolute inset-0 opacity-30 -z-0"></div>
               <div className="relative z-10">
-                <div className="flex flex-col md:flex-row items-start gap-8">
+                <div className="flex flex-col md:flex-row items-start gap-6 sm:gap-8">
                   <div className="relative shrink-0">
                     <img
                       src={author?.avatar || "/placeholder.svg"}
                       alt={author?.name || "Author"}
-                      className="w-28 h-28 rounded-full object-cover shadow-lg border-4 border-purple-300"
+                      className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-lg border-4 border-purple-300"
                       loading="lazy"
                     />
                     <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full p-2 shadow-lg">
-                      <User className="w-5 h-5 text-white" />
+                      <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
                       {author?.name}
                     </h1>
-                    <p className="text-sm text-gray-700 font-medium mb-3">
+                    <p className="text-xs sm:text-sm text-gray-700 font-medium mb-2 sm:mb-3">
                       {author?.job_title} at {author?.company}
                     </p>
                     {author?.linkedin && (
@@ -234,44 +231,43 @@ export default function AuthorDetailPage() {
                         href={author.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors px-4 py-2 bg-blue-50 rounded-full text-sm font-medium"
+                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-50 rounded-full text-xs sm:text-sm font-medium"
                       >
-                        <Linkedin className="w-4 h-4" />
+                        <Linkedin className="w-3 h-3 sm:w-4 sm:h-4" />
                         LinkedIn
                       </a>
                     )}
                   </div>
                 </div>
-
-                <div className="mt-8 pt-8 border-t border-gray-100">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3">
                     About
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">{author?.bio}</p>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {author?.bio}
+                  </p>
                 </div>
               </div>
             </div>
-
             {/* Articles Section */}
-            <div className="bg-white/75 rounded-2xl p-8 shadow-lg border border-gray-100 relative z-10">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+            <div className="bg-white/75 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 relative z-10">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
                 <div>
-                  <div className="flex items-center gap-4 mb-6">
+                  <div className="flex items-center gap-4 mb-4 sm:mb-6">
                     <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
                       <Folder className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                       All Articles
                     </h2>
                   </div>
-                  <p className="text-gray-600 mt-1">
+                  <p className="text-sm text-gray-600 mt-1">
                     {author?.articles?.length || 0} published article
                     {author?.articles?.length !== 1 ? "s" : ""} by{" "}
                     {author?.name}
                   </p>
                 </div>
               </div>
-
               {author?.articles && author.articles.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-5 mb-6">
@@ -290,10 +286,10 @@ export default function AuthorDetailPage() {
                       <line x1="12" y1="17" x2="12.01" y2="17"></line>
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                     No articles published yet
                   </h3>
-                  <p className="text-gray-600 max-w-md mx-auto">
+                  <p className="text-sm sm:text-base text-gray-600 max-w-md mx-auto">
                     This author hasn't published any articles yet. Check back
                     later for updates.
                   </p>
@@ -307,7 +303,6 @@ export default function AuthorDetailPage() {
                           article.excerpt?.trim() ||
                           truncate(stripMarkdown(article.content), 200) ||
                           "No preview available.";
-
                         return (
                           <motion.article
                             key={article.id}
@@ -322,11 +317,11 @@ export default function AuthorDetailPage() {
                                 href={`/articles/${article.slug}`}
                                 className="group/link block"
                               >
-                                <h3 className="text-large font-medium text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                                   {article.title}
                                 </h3>
                                 {previewText && (
-                                  <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
+                                  <p className="text-sm sm:text-[15px] text-gray-700 mb-4 line-clamp-2 leading-relaxed">
                                     {previewText}
                                   </p>
                                 )}
@@ -337,13 +332,13 @@ export default function AuthorDetailPage() {
                               </Link>
                               <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                                 <div className="flex items-center gap-2">
-                                  <Calendar className="w-5 h-5 text-gray-500" />
+                                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
                                   <span>
                                     {formatDate(article.published_at)}
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <Clock className="w-5 h-5 text-gray-500" />
+                                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
                                   <span>
                                     {calculateReadTime(article.content)}
                                   </span>
@@ -351,7 +346,7 @@ export default function AuthorDetailPage() {
                                 <div className="flex items-center gap-2 ml-auto text-gray-600">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="w-5 h-5 text-gray-500"
+                                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -375,11 +370,10 @@ export default function AuthorDetailPage() {
                       })}
                     </AnimatePresence>
                   </div>
-
                   {/* Pagination */}
                   {totalPages > 1 && (
-                    <nav className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
-                      <div className="text-sm text-gray-500">
+                    <nav className="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
+                      <div className="text-xs sm:text-sm text-gray-500">
                         Showing {(currentPage - 1) * pageSize + 1} to{" "}
                         {Math.min(currentPage * pageSize, totalArticles)} of{" "}
                         {totalArticles} articles
@@ -390,7 +384,7 @@ export default function AuthorDetailPage() {
                             setCurrentPage((p) => Math.max(1, p - 1))
                           }
                           disabled={currentPage === 1}
-                          className="px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm flex items-center gap-1"
+                          className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm flex items-center gap-1"
                         >
                           <svg
                             className="w-4 h-4"
@@ -421,12 +415,11 @@ export default function AuthorDetailPage() {
                               } else {
                                 pageNum = currentPage - 2 + i;
                               }
-
                               return (
                                 <button
                                   key={pageNum}
                                   onClick={() => setCurrentPage(pageNum)}
-                                  className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                                     currentPage === pageNum
                                       ? "bg-blue-600 text-white shadow-md"
                                       : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
@@ -443,7 +436,7 @@ export default function AuthorDetailPage() {
                           {totalPages > 5 && currentPage < totalPages - 2 && (
                             <button
                               onClick={() => setCurrentPage(totalPages)}
-                              className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                              className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                                 currentPage === totalPages
                                   ? "bg-blue-600 text-white shadow-md"
                                   : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
@@ -458,7 +451,7 @@ export default function AuthorDetailPage() {
                             setCurrentPage((p) => Math.min(totalPages, p + 1))
                           }
                           disabled={currentPage === totalPages}
-                          className="px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm flex items-center gap-1"
+                          className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm flex items-center gap-1"
                         >
                           Next
                           <svg
@@ -482,9 +475,8 @@ export default function AuthorDetailPage() {
               )}
             </div>
           </div>
-
           {/* Sidebar */}
-          <aside className="lg:col-span-2">
+          <aside className="hidden lg:block lg:col-span-2">
             <MinimalSidebar />
           </aside>
         </div>
