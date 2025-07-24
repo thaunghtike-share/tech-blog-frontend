@@ -40,7 +40,7 @@ const services = [
     details:
       "Our web development services focus on creating fast, SEO-friendly, and highly responsive websites tailored to your business goals. Leveraging the power of Next.js and Tailwind CSS, we build modern frontends that deliver excellent user experience across devices. Additionally, we develop scalable backend APIs that handle your business logic securely and efficiently. Whether you need a landing page or a complex web app, our solutions are designed to maximize conversion and performance.",
     icon: LayoutTemplate,
-    slug: "website-development",
+    slug: "web-development",
     gradient: "from-orange-500 to-red-600",
   },
   {
