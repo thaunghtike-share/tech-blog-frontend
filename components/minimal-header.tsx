@@ -234,7 +234,7 @@ export function MinimalHeader() {
                     Udemy Free Course
                   </Link>
                   <Link
-                    href="/learn-paid-courses"
+                    href="/recommended-paid-courses"
                     className={navLinkStyle("/learn-paid-courses")}
                   >
                     Recommended Paid Course

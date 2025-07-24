@@ -150,11 +150,6 @@ export function RecommendedPaidCourses() {
             <div className="p-5 flex-grow">
               {" "}
               {/* Added flex-grow */}
-              <div className="absolute top-3 right-3">
-                <Badge className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-medium rounded-full shadow-sm border border-gray-200">
-                  Paid Course
-                </Badge>
-              </div>
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
