@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import {
@@ -44,6 +43,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function MonolithicToCloudNativePage() {
   const listItemStyle =
@@ -51,8 +51,8 @@ export default function MonolithicToCloudNativePage() {
   const iconWrapperStyle = (color: string) =>
     `p-2 bg-${color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`;
   const iconStyle = (color: string) => `w-4 h-4 text-${color}-600`;
-  const titleStyle = "font-bold text-gray-900 mb-1 text-base";
-  const descStyle = "text-gray-600 leading-relaxed text-sm";
+  const titleStyle = "font-bold text-sm md:text-base text-gray-900 mb-1";
+  const descStyle = "text-xs md:text-sm text-gray-600 leading-relaxed";
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
@@ -64,41 +64,40 @@ export default function MonolithicToCloudNativePage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-
       <MinimalHeader />
       <main className="-mt-10 md:mt-1 max-w-7xl mx-auto px-6 py-10 relative z-10">
         {/* Hero Section */}
-        <section className="text-center mb-20">
+        <section className="text-center mb-12">
           <div className="max-w-5xl mx-auto">
             <Badge className="mb-4 px-3 py-1 bg-gradient-to-r from-teal-500 to-blue-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
               <Rocket className="w-4 h-4 mr-2" />
               Cloud Migration Service
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
               Seamless Monolithic to Cloud-Native
               <span className="block text-transparent bg-gradient-to-r from-teal-600 to-blue-700 bg-clip-text">
                 Transformation
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base md:text-xl text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
               Empower your business with scalable, resilient, and cost-efficient
               cloud solutions through modern DevOps practices and infrastructure
               automation.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              <Badge className="px-4 py-2 bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Cloud className="w-4 h-4 mr-2" />
                 Cloud-Native
               </Badge>
-              <Badge className="px-4 py-2 bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Layers className="w-4 h-4 mr-2" />
                 Microservices
               </Badge>
-              <Badge className="px-4 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Zap className="w-4 h-4 mr-2" />
                 DevOps Automation
               </Badge>
-              <Badge className="px-4 py-2 bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Lock className="w-4 h-4 mr-2" />
                 Security First
               </Badge>
@@ -106,12 +105,12 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Architecture Overview */}
-        <section className="mb-14 relative min-h-[550px] bg-gray-50 overflow-hidden">
+        <section className="mb-12 relative min-h-[550px] bg-gray-50 overflow-hidden">
           <div className="relative z-10 text-center -mb-0">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-4">
               End-to-End DevOps Architecture
             </h2>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed mb-10">
+            <p className="text-base md:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed mb-10">
               Our comprehensive solution covers every aspect of your cloud
               journey, from infrastructure provisioning to continuous delivery
               and robust monitoring.
@@ -120,7 +119,7 @@ export default function MonolithicToCloudNativePage() {
           {/* Updated dinger.png container with soft border */}
           <Card className="mb-6 overflow-hidden duration-500 border bg-gray-30 border-gray-500 shadow-sm ">
             <CardContent className="p-4">
-              <div className="h-[700px] w-full relative">
+              <div className="h-[300px] md:h-[700px] w-full relative">
                 <Image
                   src="/dinger.png"
                   alt="Complete DevOps Architecture Diagram"
@@ -135,24 +134,24 @@ export default function MonolithicToCloudNativePage() {
           {/* Explanation of dinger.png */}
           <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+              <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                 <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                   <BookOpen className="w-5 h-5 text-purple-600" />
                 </div>
                 Understanding the Architecture
               </CardTitle>
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-xs md:text-sm text-gray-600">
                 A detailed breakdown of our cloud-native solution
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 text-base leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 The diagram above illustrates the end-to-end DevOps architecture
                 we implement for our clients, ensuring a robust, scalable, and
                 secure cloud-native environment. Here's a breakdown of each key
                 component:
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                 {[
                   {
                     icon: GitBranch,
@@ -228,7 +227,11 @@ export default function MonolithicToCloudNativePage() {
                     color: "teal",
                   },
                 ].map((item, index) => (
-                  <div key={index} className={listItemStyle}>
+                  <div
+                    key={index}
+                    className={cn(listItemStyle, "min-w-[320px] flex-shrink-0")}
+                  >
+                    {/* Increased min-width for scrollable area */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -239,7 +242,7 @@ export default function MonolithicToCloudNativePage() {
                   </div>
                 ))}
               </div>
-              <p className="text-gray-700 text-base leading-relaxed mt-4">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed mt-4">
                 This integrated approach ensures that your applications are not
                 only deployed efficiently but also maintained with high
                 availability, security, and cost-effectiveness, reflecting our
@@ -248,7 +251,8 @@ export default function MonolithicToCloudNativePage() {
             </CardContent>
           </Card>
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 -mt-0">
+          <div className="flex flex-nowrap overflow-x-auto gap-6 pt-6 pb-4 md:grid md:grid-cols-4 mt-10">
+            {/* Added mt-10 for vertical spacing */}
             {[
               {
                 value: "99.9%",
@@ -277,7 +281,7 @@ export default function MonolithicToCloudNativePage() {
             ].map((stat, index) => (
               <div
                 key={index}
-                className="text-center group p-4 rounded-lg hover:bg-white transition-colors duration-300"
+                className="text-center group p-4 rounded-lg hover:bg-white transition-colors duration-300 min-w-[150px] flex-shrink-0"
               >
                 <div className="mb-3">
                   <stat.icon
@@ -285,11 +289,11 @@ export default function MonolithicToCloudNativePage() {
                   />
                 </div>
                 <div
-                  className={`text-2xl font-bold text-${stat.color}-700 mb-1`}
+                  className={`text-xl md:text-2xl font-bold text-${stat.color}-700 mb-1`}
                 >
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-600 font-medium">
+                <div className="text-xs md:text-sm text-gray-600 font-medium">
                   {stat.label}
                 </div>
               </div>
@@ -297,36 +301,36 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 1: Terraform Infrastructure */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-teal-500 to-blue-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">1</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Infrastructure as Code with Terraform
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Automated, reproducible cloud infrastructure provisioning
               </p>
             </div>
           </div>
           <div className="space-y-8">
-            {/* Why Terraform Section */}
+            {/* Why Choose Terraform Section */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-teal-100 rounded-lg shadow-sm">
                     <Sparkles className="w-5 h-5 text-teal-600" />
                   </div>
                   Why Choose Terraform?
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   The industry standard for Infrastructure as Code
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Code,
@@ -353,7 +357,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "blue",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -366,17 +376,17 @@ export default function MonolithicToCloudNativePage() {
                 </div>
               </CardContent>
             </Card>
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
               {/* Terraform Modules Section */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                       <Code className="w-5 h-5 text-purple-600" />
                     </div>
                     My Production-Ready Terraform Modules
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Battle-tested, enterprise-grade infrastructure modules
                   </CardDescription>
                 </CardHeader>
@@ -389,10 +399,10 @@ export default function MonolithicToCloudNativePage() {
                             <Cloud className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-gray-900 text-base mb-1">
+                            <h4 className="font-bold text-sm md:text-base text-gray-900 mb-1">
                               Azure Infrastructure Module
                             </h4>
-                            <p className="text-gray-600 mb-2 text-sm">
+                            <p className="text-xs md:text-sm text-gray-600 mb-2">
                               Complete Azure setup with AKS, ACR, VNet, and
                               monitoring.
                             </p>
@@ -421,7 +431,7 @@ export default function MonolithicToCloudNativePage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border-blue-300 text-blue-700 hover:border-blue-500 bg-transparent"
+                          className="w-full md:w-auto group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border-blue-300 text-blue-700 hover:border-blue-500 bg-transparent"
                           onClick={() =>
                             window.open(
                               "https://github.com/thaunghtike-share/terraform-azure",
@@ -441,10 +451,10 @@ export default function MonolithicToCloudNativePage() {
                             <Server className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-gray-900 text-base mb-1">
+                            <h4 className="font-bold text-sm md:text-base text-gray-900 mb-1">
                               AWS EKS Spot Instance Module
                             </h4>
-                            <p className="text-gray-600 mb-2 text-sm">
+                            <p className="text-xs md:text-sm text-gray-600 mb-2">
                               Cost-effective EKS cluster with spot instances and
                               auto-scaling.
                             </p>
@@ -473,7 +483,7 @@ export default function MonolithicToCloudNativePage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 border-orange-300 text-orange-700 hover:border-orange-500 bg-transparent"
+                          className="w-full md:w-auto group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 border-orange-300 text-orange-700 hover:border-orange-500 bg-transparent"
                           onClick={() =>
                             window.open(
                               "https://github.com/thaunghtike-share/terraform-aws-kubespot",
@@ -492,18 +502,18 @@ export default function MonolithicToCloudNativePage() {
               {/* Resources Deployed */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-indigo-100 rounded-lg shadow-sm">
                       <Server className="w-5 h-5 text-indigo-600" />
                     </div>
                     Resources Deployed
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Complete infrastructure stack with security and monitoring
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-nowrap overflow-x-auto gap-3 pb-4 md:grid md:grid-cols-2">
                     {[
                       { icon: Server, label: "AKS Cluster", color: "blue" },
                       {
@@ -530,7 +540,10 @@ export default function MonolithicToCloudNativePage() {
                     ].map((resource, index) => (
                       <div
                         key={index}
-                        className={`flex items-center gap-2 p-3 bg-${resource.color}-50 rounded-lg border border-${resource.color}-200 hover:shadow-md transition-all duration-300 group cursor-pointer`}
+                        className={cn(
+                          `flex items-center gap-2 p-3 bg-${resource.color}-50 rounded-lg border border-${resource.color}-200 hover:shadow-md transition-all duration-300 group cursor-pointer`,
+                          "min-w-[150px] flex-shrink-0"
+                        )}
                       >
                         <resource.icon
                           className={`w-4 h-4 text-${resource.color}-600 group-hover:scale-110 transition-transform duration-300`}
@@ -547,16 +560,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 2: GitHub Actions CI/CD */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-green-500 to-teal-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">2</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 CI/CD Pipeline with GitHub Actions
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Automated build, test, and deployment workflows
               </p>
             </div>
@@ -565,18 +578,18 @@ export default function MonolithicToCloudNativePage() {
             {/* Complete CI/CD Workflow */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-green-100 rounded-lg shadow-sm">
                     <Zap className="w-5 h-5 text-green-600" />
                   </div>
                   Complete CI/CD Workflow
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   From code commit to production deployment
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 sm:grid sm:grid-cols-3 lg:grid-cols-6">
                   {/* Workflow Steps - Horizontal Layout */}
                   {[
                     {
@@ -627,7 +640,7 @@ export default function MonolithicToCloudNativePage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group"
+                      className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group min-w-[180px] flex-shrink-0"
                     >
                       <div className="w-8 h-8 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mb-2">
                         {item.step}
@@ -648,28 +661,28 @@ export default function MonolithicToCloudNativePage() {
                 </div>
               </CardContent>
             </Card>
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
               {/* Self-hosted Runners Explanation */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-blue-100 rounded-lg shadow-sm">
                       <Terminal className="w-5 h-5 text-blue-600" />
                     </div>
                     Self-hosted Runners in CI/CD
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Leveraging custom infrastructure for faster and more
                     controlled builds
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-gray-700 text-sm leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                     Self-hosted runners allow you to run your CI/CD jobs on your
                     own infrastructure, whether it's Kubernetes clusters or
                     Azure VMs. This provides several benefits:
                   </p>
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="flex flex-nowrap overflow-x-auto gap-3 pb-4 md:grid md:grid-cols-1">
                     {[
                       {
                         icon: Zap,
@@ -696,7 +709,13 @@ export default function MonolithicToCloudNativePage() {
                         color: "purple",
                       },
                     ].map((item, index) => (
-                      <div key={index} className={listItemStyle}>
+                      <div
+                        key={index}
+                        className={cn(
+                          listItemStyle,
+                          "min-w-[280px] flex-shrink-0"
+                        )}
+                      >
                         <div className={iconWrapperStyle(item.color)}>
                           <item.icon className={iconStyle(item.color)} />
                         </div>
@@ -707,7 +726,7 @@ export default function MonolithicToCloudNativePage() {
                       </div>
                     ))}
                   </div>
-                  <p className="text-gray-700 text-sm leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                     We configure self-hosted runners as Kubernetes deployments
                     or Azure VM Scale Sets, ensuring scalability and high
                     availability for your CI/CD workloads.
@@ -717,13 +736,13 @@ export default function MonolithicToCloudNativePage() {
               {/* Pipeline Workflow Animation */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                       <Activity className="w-5 h-5 text-purple-600" />
                     </div>
                     Pipeline Workflow Visualization
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Automated deployment pipeline in action
                   </CardDescription>
                 </CardHeader>
@@ -808,22 +827,22 @@ export default function MonolithicToCloudNativePage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
               {/* Key Features */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-orange-100 rounded-lg shadow-sm">
                       <Star className="w-5 h-5 text-orange-600" />
                     </div>
                     Key Pipeline Features
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Enterprise-grade CI/CD capabilities for robust deployments
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="flex flex-nowrap overflow-x-auto gap-3 pb-4 md:grid md:grid-cols-1">
                     {[
                       {
                         icon: Zap,
@@ -850,7 +869,13 @@ export default function MonolithicToCloudNativePage() {
                         color: "orange",
                       },
                     ].map((feature, index) => (
-                      <div key={index} className={listItemStyle}>
+                      <div
+                        key={index}
+                        className={cn(
+                          listItemStyle,
+                          "min-w-[280px] flex-shrink-0"
+                        )}
+                      >
                         <div className={iconWrapperStyle(feature.color)}>
                           <feature.icon className={iconStyle(feature.color)} />
                         </div>
@@ -866,13 +891,13 @@ export default function MonolithicToCloudNativePage() {
               {/* Branch Strategy */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-indigo-100 rounded-lg shadow-sm">
                       <Code className="w-5 h-5 text-indigo-600" />
                     </div>
                     Multi-Environment Strategy
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Automated deployments across development lifecycle
                   </CardDescription>
                 </CardHeader>
@@ -909,15 +934,17 @@ export default function MonolithicToCloudNativePage() {
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-base font-bold text-gray-900">
+                            <span className="text-sm md:text-base font-bold text-gray-900">
                               {item.branch}
                             </span>
                             <span className="text-xs text-gray-500">→</span>
-                            <span className="text-base font-semibold text-gray-800">
+                            <span className="text-sm md:text-base font-semibold text-gray-800">
                               {item.env}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-600">{item.desc}</p>
+                          <p className="text-xs md:text-sm text-gray-600">
+                            {item.desc}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -928,16 +955,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 3: ArgoCD & AKS Sync */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">3</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 GitOps with ArgoCD for AKS Deployments
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Declarative, automated deployments to Azure Kubernetes Service
               </p>
             </div>
@@ -946,18 +973,18 @@ export default function MonolithicToCloudNativePage() {
             {/* What is GitOps and ArgoCD? */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                     <GitBranch className="w-5 h-5 text-purple-600" />
                   </div>
                   What is GitOps and ArgoCD?
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Declarative, automated deployments to Azure Kubernetes Service
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   GitOps is a software engineering practice that uses a Git
                   repository as its single source of truth. Teams commit
                   declarative configurations into Git, and these configurations
@@ -966,7 +993,7 @@ export default function MonolithicToCloudNativePage() {
                   no use of standalone scripts—everything is defined through the
                   Git repository.
                 </p>
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   A basic part of the GitOps process is a pull request. New
                   versions of a configuration are introduced via pull request,
                   merged with the main branch in the Git repository, and then
@@ -977,25 +1004,24 @@ export default function MonolithicToCloudNativePage() {
                   new configurations are correctly deployed to a Kubernetes
                   cluster.
                 </p>
-                {/* Removed argo.png from here */}
               </CardContent>
             </Card>
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
               {/* How ArgoCD Works in Kubernetes */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-blue-100 rounded-lg shadow-sm">
                       <Layers className="w-5 h-5 text-blue-600" />
                     </div>
                     How ArgoCD Works in Kubernetes
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Automated synchronization of desired state from Git
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-gray-700 text-sm leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                     Argo CD is a Kubernetes-native continuous deployment (CD)
                     tool. Unlike external CD tools that only enable push-based
                     deployments, Argo CD can pull updated code from Git
@@ -1012,7 +1038,7 @@ export default function MonolithicToCloudNativePage() {
                       quality={100}
                     />
                   </div>
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="flex flex-nowrap overflow-x-auto gap-3 pb-4 md:grid md:grid-cols-1">
                     {[
                       {
                         icon: CheckCircle2,
@@ -1039,7 +1065,13 @@ export default function MonolithicToCloudNativePage() {
                         color: "purple",
                       },
                     ].map((item, index) => (
-                      <div key={index} className={listItemStyle}>
+                      <div
+                        key={index}
+                        className={cn(
+                          listItemStyle,
+                          "min-w-[280px] flex-shrink-0"
+                        )}
+                      >
                         <div className={iconWrapperStyle(item.color)}>
                           <item.icon className={iconStyle(item.color)} />
                         </div>
@@ -1055,13 +1087,13 @@ export default function MonolithicToCloudNativePage() {
               {/* ArgoCD Admin Portal */}
               <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                     <div className="p-2 bg-blue-100 rounded-lg shadow-sm">
                       <LayoutDashboard className="w-5 h-5 text-blue-600" />
                     </div>
                     ArgoCD Admin Portal
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600">
+                  <CardDescription className="text-xs md:text-sm text-gray-600">
                     Centralized management and visualization of your
                     applications
                   </CardDescription>
@@ -1076,13 +1108,13 @@ export default function MonolithicToCloudNativePage() {
                       quality={100}
                     />
                   </div>
-                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 mt-4 leading-relaxed">
                     The ArgoCD UI provides a comprehensive overview of your
                     applications, their health, and synchronization status. You
                     can easily drill down into individual resources, view logs,
                     and perform manual syncs or rollbacks.
                   </p>
-                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 mt-4 leading-relaxed">
                     The ArgoCD UI provides a comprehensive overview of your
                     applications, their health, and synchronization status. You
                     can easily drill down into individual resources, view logs,
@@ -1094,16 +1126,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 4: ArgoCD Image Updater */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-orange-500 to-amber-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">4</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Automated Image Updates with ArgoCD Image Updater
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Keep your applications up-to-date with the latest container
                 images
               </p>
@@ -1113,18 +1145,18 @@ export default function MonolithicToCloudNativePage() {
             {/* What is ArgoCD Image Updater? */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-orange-100 rounded-lg shadow-sm">
                     <RefreshCw className="w-5 h-5 text-orange-600" />
                   </div>
                   What is ArgoCD Image Updater?
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Seamless Image Rollouts
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   ArgoCD Image Updater is a tool that automatically updates the
                   image tags in your Kubernetes manifests (managed by ArgoCD)
                   whenever a new image is pushed to your container registry.
@@ -1140,7 +1172,7 @@ export default function MonolithicToCloudNativePage() {
                     quality={100}
                   />
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Dock,
@@ -1167,7 +1199,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "orange",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -1183,16 +1221,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 5: Comprehensive Monitoring */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-red-500 to-rose-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">5</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Comprehensive Monitoring
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Real-time insights into your cloud-native applications and
                 infrastructure
               </p>
@@ -1202,19 +1240,19 @@ export default function MonolithicToCloudNativePage() {
             {/* Unified Observability Stack */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-red-100 rounded-lg shadow-sm">
                     <Activity className="w-5 h-5 text-red-600" />
                   </div>
                   Unified Observability Stack
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Prometheus, Grafana, Loki, and Azure Monitor for full
                   visibility
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Activity,
@@ -1241,7 +1279,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "orange",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -1257,16 +1301,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 6: Proactive Alerting & Incident Management */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-red-500 to-rose-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">6</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Proactive Alerting & Incident Management
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Instant notifications and automated responses for critical
                 events
               </p>
@@ -1276,19 +1320,19 @@ export default function MonolithicToCloudNativePage() {
             {/* Configurable Alert Manager Rules */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                     <BellRing className="w-5 h-5 text-purple-600" />
                   </div>
                   Configurable Alert Manager Rules
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Define custom alerts for critical infrastructure and
                   application events
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   Our alerting system, powered by Prometheus Alertmanager,
                   allows for highly customizable rules to detect anomalies and
                   critical states within your Kubernetes cluster and
@@ -1296,7 +1340,7 @@ export default function MonolithicToCloudNativePage() {
                   notified of issues, enabling rapid response and minimizing
                   downtime.
                 </p>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Zap,
@@ -1323,7 +1367,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "green",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -1339,19 +1389,19 @@ export default function MonolithicToCloudNativePage() {
             {/* Proactive Alerting with Google Chat & Slack */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-green-100 rounded-lg shadow-sm">
                     <BellRing className="w-5 h-5 text-green-600" />
                   </div>
                   Proactive Alerting with Google Chat & Slack
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Instant notifications for critical events across your
                   preferred communication channels
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <div className="flex flex-nowrap overflow-x-auto gap-3 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Zap,
@@ -1378,7 +1428,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "blue",
                     },
                   ].map((alert, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(alert.color)}>
                         <alert.icon className={iconStyle(alert.color)} />
                       </div>
@@ -1394,16 +1450,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 7: Centralized Logging & Analytics */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">7</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Centralized Logging & Analytics
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Gain deep insights into application behavior and system health
               </p>
             </div>
@@ -1412,25 +1468,25 @@ export default function MonolithicToCloudNativePage() {
             {/* Key Logging Solutions */}
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                     <FileText className="w-5 h-5 text-purple-600" />
                   </div>
                   Key Logging Solutions
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Leveraging industry-standard tools for comprehensive log
                   management
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   Centralized logging is crucial for monitoring,
                   troubleshooting, and auditing cloud-native applications. We
                   integrate various logging solutions to provide a unified view
                   of your system's behavior.
                 </p>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: MessageSquare,
@@ -1445,7 +1501,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "blue",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -1461,16 +1523,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 8: Autoscaling for Kubernetes */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">8</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Dynamic Autoscaling for Kubernetes
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Ensure optimal performance and cost-efficiency with intelligent
                 scaling
               </p>
@@ -1479,24 +1541,24 @@ export default function MonolithicToCloudNativePage() {
           <div className="space-y-8">
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-blue-100 rounded-lg shadow-sm">
                     <Scale className="w-5 h-5 text-blue-600" />
                   </div>
                   Intelligent Scaling Strategies
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   Automated scaling at node and pod levels for peak performance
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   To handle varying workloads and optimize resource utilization,
                   we implement a multi-faceted autoscaling strategy within your
                   Kubernetes environment. This ensures your applications remain
                   responsive and cost-effective under any load.
                 </p>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Server,
@@ -1523,7 +1585,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "orange",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -1539,16 +1607,16 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 9: Comprehensive Security */}
-        <section className="mb-20">
+        <section className="mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">9</span>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 Comprehensive Security Measures
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-600">
                 Protecting your applications and infrastructure at every layer
               </p>
             </div>
@@ -1556,24 +1624,24 @@ export default function MonolithicToCloudNativePage() {
           <div className="space-y-8">
             <Card className="border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-xl font-semibold text-gray-800">
                   <div className="p-2 bg-purple-100 rounded-lg shadow-sm">
                     <ShieldCheck className="w-5 h-5 text-purple-600" />
                   </div>
                   Multi-Layered Security Approach
                 </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
+                <CardDescription className="text-xs md:text-sm text-gray-600">
                   From code to cloud, ensuring robust protection
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   Security is paramount in cloud-native environments. Our
                   approach integrates security practices throughout the entire
                   DevOps lifecycle, from continuous scanning to strict access
                   controls.
                 </p>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
                   {[
                     {
                       icon: Scan,
@@ -1600,7 +1668,13 @@ export default function MonolithicToCloudNativePage() {
                       color: "orange",
                     },
                   ].map((item, index) => (
-                    <div key={index} className={listItemStyle}>
+                    <div
+                      key={index}
+                      className={cn(
+                        listItemStyle,
+                        "min-w-[280px] flex-shrink-0"
+                      )}
+                    >
                       <div className={iconWrapperStyle(item.color)}>
                         <item.icon className={iconStyle(item.color)} />
                       </div>
@@ -1625,10 +1699,10 @@ export default function MonolithicToCloudNativePage() {
                 <Sparkles className="w-4 h-4 mr-1 text-blue-600" />
                 Ready to Transform?
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                 Accelerate Your Journey to Cloud-Native
               </h2>
-              <p className="text-base text-gray-600 leading-relaxed mb-8">
+              <p className="text-xs md:text-base text-gray-600 leading-relaxed mb-8">
                 Partner with us to seamlessly migrate your monolithic
                 applications and unlock the full potential of scalable,
                 resilient, and cost-efficient cloud solutions.
@@ -1641,34 +1715,34 @@ export default function MonolithicToCloudNativePage() {
                 Schedule a Free Consultation
               </Button>
               {/* Trust indicators */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10 pt-6 border-t border-gray-100">
-                <div className="flex flex-col items-center">
+              <div className="flex flex-nowrap overflow-x-auto gap-6 pt-6 pb-4 sm:grid sm:grid-cols-3 border-t border-gray-100 mt-10">
+                <div className="flex flex-col items-center min-w-[150px] flex-shrink-0">
                   <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-2">
                     <CheckCircle2 className="w-5 h-5 text-green-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h4 className="font-semibold text-sm text-gray-900 mb-1">
                     Proven Success
                   </h4>
                   <p className="text-xs text-gray-600">
                     100% successful migrations
                   </p>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center min-w-[150px] flex-shrink-0">
                   <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
                     <Zap className="w-5 h-5 text-blue-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h4 className="font-semibold text-sm text-gray-900 mb-1">
                     Rapid Deployment
                   </h4>
                   <p className="text-xs text-gray-600">
                     2-4 week average timeline
                   </p>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center min-w-[150px] flex-shrink-0">
                   <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-2">
                     <ShieldCheck className="w-5 h-5 text-purple-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h4 className="font-semibold text-sm text-gray-900 mb-1">
                     Enterprise-Grade Security
                   </h4>
                   <p className="text-xs text-gray-600">
@@ -1680,7 +1754,9 @@ export default function MonolithicToCloudNativePage() {
           </Card>
         </section>
       </main>
-      <div className="-mt-14 md:-mt-14">
+      <div className="-mt-8 md:-mt-14">
+        {" "}
+        {/* Reduced negative margin for footer */}
         <MinimalFooter />
       </div>
     </div>
