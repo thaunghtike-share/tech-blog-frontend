@@ -275,16 +275,16 @@ export function MinimalHeader() {
                     Infrastructure as Code
                   </Link>
                   <Link
-                    href="/services/web-development"
-                    className="block px-4 py-2 hover:bg-blue-50"
-                  >
-                    Website Development
-                  </Link>
-                  <Link
                     href="/services/part-time-devops-support"
                     className="block px-4 py-2 hover:bg-blue-50"
                   >
                     Part Time DevOps Support
+                  </Link>
+                  <Link
+                    href="/services/web-development"
+                    className="block px-4 py-2 hover:bg-blue-50"
+                  >
+                    Website Development
                   </Link>
                 </div>
               )}
