@@ -17,7 +17,7 @@ interface AuthorSummary {
   // Removed linkedin
 }
 
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export default function AuthorsPage() {
   const [authors, setAuthors] = useState<AuthorSummary[]>([]);
@@ -58,45 +58,8 @@ export default function AuthorsPage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {/* Messenger Support Floating Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with me on Messenger"
-        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-14 h-14 rounded-full"
-        >
-          <defs>
-            <linearGradient
-              id="messengerGradient"
-              x1="0"
-              y1="0"
-              x2="240"
-              y2="240"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#E1306C" />
-              <stop offset="1" stopColor="#833AB4" />
-            </linearGradient>
-          </defs>
-          <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
-        </svg>
-        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
-          Chat?
-        </span>
-      </a>
       <MinimalHeader />
-      <section className="bg-gray-50 backdrop-blur-sm py-12 relative z-10">
+      <section className="-mt-11 md:-mt-6 bg-gray-50 backdrop-blur-sm py-12 relative z-10">
         {/* Subtle background pattern */}
         <div
           className="absolute inset-0 z-0 opacity-10"
@@ -110,14 +73,14 @@ export default function AuthorsPage() {
             <span className="text-gray-700">Our </span>
             <span className="text-blue-600">Authors</span>
           </h1>
-          <p className="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
+          <p className="text-base md:text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
             Discover in-depth articles and expertise from passionate authors who
             are pioneering advancements in DevOps, cloud computing, AI, and
             cutting-edge infrastructure technologies
           </p>
         </div>
       </section>
-      <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
+      <main className="-mt-17 max-w-7xl mx-auto px-4 py-12 relative z-10">
         {loading ? (
           <p className="text-center text-gray-600">Loading authors...</p>
         ) : error ? (
@@ -179,7 +142,9 @@ export default function AuthorsPage() {
           </div>
         )}
       </main>
+      <div className="-mt-4 md:-mt-4">
       <MinimalFooter />
+      </div>
     </div>
   );
 }
