@@ -38,7 +38,7 @@ interface Props {
   slug: string;
 }
 
-const API_BASE_URL = "http://20.212.140.239:8000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 const DEFAULT_PAGE_SIZE = 5;
 
 export default function CategoryPageClient({ slug }: Props) {
@@ -222,7 +222,7 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   return (
-    <div className="relative min-h-screen bg-gray-50">
+    <div className="-mt-16 md:-mt-5 relative min-h-screen bg-gray-50">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
@@ -502,12 +502,14 @@ export default function CategoryPageClient({ slug }: Props) {
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:col-span-2">
+          <aside className="hidden lg:block lg:col-span-2">
             <MinimalSidebar onTagClick={onTagClick} />
           </aside>
         </div>
       </main>
-      <MinimalFooter />
+      <div className="-mt-4 md:-mt-4">
+        <MinimalFooter />
+      </div>
     </div>
   );
 }
