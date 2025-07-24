@@ -222,7 +222,7 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   return (
-    <div className="-mt-16 md:-mt-5 relative min-h-screen bg-gray-50">
+    <div className="-mt-14 md:-mt-5 relative min-h-screen bg-gray-50">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
@@ -305,7 +305,7 @@ export default function CategoryPageClient({ slug }: Props) {
                                 href={`/articles/${article.slug}`}
                                 className="group/link block"
                               >
-                                <h3 className="text-large font-medium text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                                <h3 className="text-large font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                                   {article.title}
                                 </h3>
                                 {previewText && (
