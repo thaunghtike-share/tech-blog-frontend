@@ -66,7 +66,7 @@ export default function MonolithicToCloudNativePage() {
       ></div>
 
       <MinimalHeader />
-      <main className="mt-4 max-w-7xl mx-auto px-6 py-10 relative z-10">
+      <main className="-mt-10 md:mt-1 max-w-7xl mx-auto px-6 py-10 relative z-10">
         {/* Hero Section */}
         <section className="text-center mb-20">
           <div className="max-w-5xl mx-auto">
@@ -1680,7 +1680,9 @@ export default function MonolithicToCloudNativePage() {
           </Card>
         </section>
       </main>
-      <MinimalFooter />
+      <div className="-mt-14 md:-mt-14">
+        <MinimalFooter />
+      </div>
     </div>
   );
 }
