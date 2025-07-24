@@ -50,15 +50,17 @@ export default function ArticlesClient() {
 
       <MinimalHeader />
 
-      <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-12">
-          <div className="lg:col-span-4 rounded-xl p-6">
+      <main className="md:-mt-1 -mt-10 max-w-7xl mx-auto px-4 pt-6 pb-10 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
+          <div className="lg:col-span-4 rounded-xl p-4 sm:p-6">
             <MinimalBlogList
               searchQuery={searchQuery}
               filterTagSlug={selectedTag}
             />
           </div>
-          <aside className="lg:col-span-2">
+
+          {/* Sidebar hidden on mobile */}
+          <aside className="hidden lg:block lg:col-span-2">
             <MinimalSidebar onTagClick={updateTagFilter} />
           </aside>
         </div>
