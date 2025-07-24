@@ -1,6 +1,7 @@
 "use client";
-
 import { useEffect, useState, useRef } from "react";
+import type React from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronDown, X, Menu, Pencil } from "lucide-react";
@@ -59,11 +60,9 @@ export function MinimalHeader() {
         setLoading(false);
       }
     };
-
     const delayDebounce = setTimeout(() => {
       fetchResults();
     }, 300);
-
     return () => clearTimeout(delayDebounce);
   }, [searchQuery]);
 
@@ -113,14 +112,12 @@ export function MinimalHeader() {
               "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
           }}
         ></div>
-
         {/* Mobile Header */}
-        <div className="flex items-center justify-between md:hidden pt-0.5 pb-1.5 gap-2 relative z-10">
+        <div className="flex items-center justify-between md:hidden py-2 gap-2 relative z-10">
           {/* Logo */}
           <Link href="/" className="flex items-center justify-start">
-            <img src="/logo.png" alt="Logo" className="h-28 w-auto" />
+            <img src="/logo.png" alt="Logo" className="h-20 w-auto" />
           </Link>
-
           {/* Search */}
           <div className="flex-1 px-1 relative">
             <Input
@@ -150,7 +147,6 @@ export function MinimalHeader() {
               </div>
             )}
           </div>
-
           {/* Write Button */}
           <Link
             href="/admin/new-article"
@@ -158,7 +154,6 @@ export function MinimalHeader() {
           >
             <Pencil className="w-5 h-5" />
           </Link>
-
           {/* Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -171,14 +166,12 @@ export function MinimalHeader() {
             )}
           </button>
         </div>
-
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-3 space-y-4 pb-6 pt-4 text-sm z-10 relative">
+          <div className="md:hidden mt-2 space-y-3 pb-4 text-sm z-10 relative">
             <Link href="/" className={navLinkStyle("/")}>
               Home
             </Link>
-
             {/* Articles Dropdown */}
             <div>
               <button
@@ -207,7 +200,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             {/* Learning Dropdown */}
             <div>
               <button
@@ -248,7 +240,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             {/* Services Dropdown */}
             <div>
               <button
@@ -289,26 +280,22 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             <Link href="/about" className={navLinkStyle("/about")}>
               About
             </Link>
           </div>
         )}
-
         {/* Desktop Header */}
         <div className="hidden md:flex items-center justify-between h-26 relative z-10">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <img src="/logo.png" alt="Logo" className="h-38 w-auto" />
           </Link>
-
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
-
             {/* Articles Dropdown */}
             <div
               className="relative"
@@ -353,7 +340,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             {/* Learning Dropdown */}
             <div
               className="relative"
@@ -404,7 +390,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             {/* Services Dropdown */}
             <div
               className="relative"
@@ -455,12 +440,10 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
             <Link href="/about" className="hover:text-blue-600">
               About
             </Link>
           </nav>
-
           {/* Desktop Search + Write Button */}
           <div className="flex items-center space-x-3">
             <div className="relative w-56">

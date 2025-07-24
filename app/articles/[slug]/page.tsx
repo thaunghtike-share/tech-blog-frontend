@@ -156,7 +156,7 @@ export default async function ArticlePage({
       ></div>
 
       <MinimalHeader />
-      <div className="md:-mt-2 -mt-15">
+      <div className="md:-mt-2 -mt-17">
       <ArticleContent
         article={article}
         author={author}
