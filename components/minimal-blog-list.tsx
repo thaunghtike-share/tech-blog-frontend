@@ -94,7 +94,7 @@ export function MinimalBlogList({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
 
-  const API_BASE_URL = "http://20.212.140.239:8000/api";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
   // Fetch articles, authors, tags, categories on searchQuery or filterTagSlug change
   useEffect(() => {
