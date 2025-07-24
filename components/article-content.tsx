@@ -129,6 +129,8 @@ const CopyButton = ({ code }: { code: string }) => {
   );
 };
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
 export function ArticleContent({
   article,
   author,
@@ -155,16 +157,13 @@ export function ArticleContent({
   useEffect(() => {
     const incrementReadCount = async () => {
       try {
-        await fetch(
-          `http://localhost:8000/api/articles/${article.id}/increment-read/`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({}),
-          }
-        );
+        await fetch(`${API_BASE_URL}/articles/${article.id}/increment-read/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        });
       } catch (error) {
         console.error("Failed to increment read count:", error);
       }
@@ -175,9 +174,7 @@ export function ArticleContent({
   useEffect(() => {
     const fetchTopReadArticles = async () => {
       try {
-        const res = await fetch(
-          "http://localhost:8000/api/articles/top-read/?limit=7"
-        );
+        const res = await fetch(`${API_BASE_URL}/articles/top-read/?limit=7`);        
         if (!res.ok) throw new Error("Failed to fetch top read articles");
         const data = await res.json();
         console.log("Top Read Response:", data);
@@ -279,7 +276,7 @@ export function ArticleContent({
               a: ({ href, children, ...props }) => (
                 <a
                   href={href}
-                  className="text-blue-600 italic hover:underline break-words"
+                  className="text-blue-600 hover:underline break-words"
                   target="_blank"
                   rel="noopener noreferrer"
                   {...props}
