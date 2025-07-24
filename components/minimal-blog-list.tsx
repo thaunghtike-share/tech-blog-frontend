@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Calendar,
   Clock,
@@ -8,7 +8,7 @@ import {
   Folder,
   Sparkles,
   ChevronDown,
-  Tag as TagIcon,
+  TagIcon,
   Eye,
   AlertTriangle,
   ChevronLeft,
@@ -224,7 +224,7 @@ export function MinimalBlogList({
   const stripMarkdown = (md: string) =>
     md
       .replace(/<[^>]+>/g, "")
-      .replace(/[#_*>!\[\]$$$$~\-]/g, "")
+      .replace(/[#_*>![\]$$$$~-]/g, "")
       .trim();
 
   const truncate = (str: string, max = 150) =>
@@ -278,7 +278,7 @@ export function MinimalBlogList({
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       {/* Header with Enhanced Tag Filter */}
-      <div className="mb-12 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mb-7 relative flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-6 h-6 text-white" />
@@ -286,18 +286,21 @@ export function MinimalBlogList({
           <Link href="/articles">
             <h2
               ref={topRef}
-              className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all"
+              className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all"
             >
               Latest Articles
             </h2>
           </Link>
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <div className="relative w-full sm:w-56" ref={dropdownRef}>
+        <div className="flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto">
+          <div
+            className="relative w-full max-w-[200px] sm:w-56"
+            ref={dropdownRef}
+          >
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center justify-between w-full px-4 py-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700"
+              className="flex items-center justify-between w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors text-xs sm:text-sm font-medium text-gray-700"
             >
               <div className="flex items-center gap-2">
                 <TagIcon className="w-4 h-4 text-gray-500" />
@@ -322,7 +325,7 @@ export function MinimalBlogList({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-2 w-full sm:w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                  className="absolute left-1/2 -translate-x-1/2 sm:right-0 sm:left-auto sm:translate-x-0 mt-2 w-full sm:w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 >
                   <div className="py-1 max-h-60 overflow-y-auto">
                     <button
@@ -374,10 +377,10 @@ export function MinimalBlogList({
           <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-4 mb-4">
             <AlertTriangle className="w-10 h-10 text-yellow-600" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
             No articles found
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-sm sm:text-base text-gray-600 mb-6">
             {filterTagSlug
               ? `No articles match the tag "${getCurrentTagName()}". Try another tag!`
               : "No articles available. Check back later!"}
@@ -385,7 +388,7 @@ export function MinimalBlogList({
           {filterTagSlug && (
             <button
               onClick={() => setFilterTagSlug(null)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Show all articles
             </button>
@@ -442,10 +445,10 @@ export function MinimalBlogList({
                       href={`/articles/${article.slug}`}
                       className="group/link block"
                     >
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
                         {article.title}
                       </h3>
-                      <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
+                      <p className="text-sm sm:text-[15px] text-gray-700 mb-4 line-clamp-2 leading-relaxed">
                         {truncate(stripMarkdown(article.content), 200)}
                       </p>
                       <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
@@ -502,7 +505,7 @@ export function MinimalBlogList({
           {/* Enhanced Pagination */}
           {totalPages > 1 && (
             <nav className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="text-sm text-gray-500">
+              <div className="text-xs sm:text-sm text-gray-500">
                 Showing {(currentPage - 1) * PAGE_SIZE + 1} to{" "}
                 {Math.min(currentPage * PAGE_SIZE, articles.length)} of{" "}
                 {articles.length} articles
@@ -511,7 +514,7 @@ export function MinimalBlogList({
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+                  className="flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Previous
@@ -533,7 +536,7 @@ export function MinimalBlogList({
                       <button
                         key={pageNum}
                         onClick={() => setCurrentPage(pageNum)}
-                        className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                        className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                           currentPage === pageNum
                             ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
                             : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
@@ -549,7 +552,7 @@ export function MinimalBlogList({
                   {totalPages > 5 && currentPage < totalPages - 2 && (
                     <button
                       onClick={() => setCurrentPage(totalPages)}
-                      className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                      className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                         currentPage === totalPages
                           ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
                           : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
@@ -564,7 +567,7 @@ export function MinimalBlogList({
                     setCurrentPage((p) => Math.min(totalPages, p + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
+                  className="flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
                 >
                   Next
                   <ChevronRight className="w-4 h-4" />

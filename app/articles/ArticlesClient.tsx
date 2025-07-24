@@ -65,8 +65,9 @@ export default function ArticlesClient() {
           </aside>
         </div>
       </main>
-
-      <MinimalFooter />
+      <div className="-mt-4 md:-mt-5">
+        <MinimalFooter />
+      </div>
     </div>
   );
 }
