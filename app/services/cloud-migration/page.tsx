@@ -73,7 +73,7 @@ export default function MonolithicToCloudNativePage() {
               <Rocket className="w-4 h-4 mr-2" />
               Cloud Migration Service
             </Badge>
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
               Seamless Monolithic to Cloud-Native
               <span className="block text-transparent bg-gradient-to-r from-teal-600 to-blue-700 bg-clip-text">
                 Transformation
@@ -85,7 +85,7 @@ export default function MonolithicToCloudNativePage() {
               automation.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 text-sm md:text-sm bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Cloud className="w-4 h-4 mr-2" />
                 Cloud-Native
               </Badge>
@@ -95,11 +95,11 @@ export default function MonolithicToCloudNativePage() {
               </Badge>
               <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Zap className="w-4 h-4 mr-2" />
-                DevOps Automation
+                Automation
               </Badge>
               <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                 <Lock className="w-4 h-4 mr-2" />
-                Security First
+                Security
               </Badge>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function MonolithicToCloudNativePage() {
           {/* Updated dinger.png container with soft border */}
           <Card className="mb-6 overflow-hidden duration-500 border bg-gray-30 border-gray-500 shadow-sm ">
             <CardContent className="p-4">
-              <div className="h-[300px] md:h-[700px] w-full relative">
+              <div className="h-[250px] md:h-[700px] w-full relative">
                 <Image
                   src="/dinger.png"
                   alt="Complete DevOps Architecture Diagram"
@@ -156,7 +156,7 @@ export default function MonolithicToCloudNativePage() {
                   {
                     icon: GitBranch,
                     title: "Source Control (GitHub)",
-                    desc: "All application code, infrastructure as code (Terraform), and Kubernetes manifests are stored in GitHub repositories, serving as the single source of truth for version control and collaboration.",
+                    desc: "All application code, infrastructure as code (Terraform),and Kubernetes manifests are stored in GitHub repositories, serving as the single source of truth for version control and collaboration.",
                     color: "blue",
                   },
                   {
@@ -229,9 +229,8 @@ export default function MonolithicToCloudNativePage() {
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className={cn(listItemStyle, "min-w-[320px] flex-shrink-0")}
+                    className={cn(listItemStyle, "min-w-[380px] flex-shrink-0")}
                   >
-                    {/* Increased min-width for scrollable area */}
                     <div className={iconWrapperStyle(item.color)}>
                       <item.icon className={iconStyle(item.color)} />
                     </div>
@@ -251,8 +250,7 @@ export default function MonolithicToCloudNativePage() {
             </CardContent>
           </Card>
           {/* Quick Stats */}
-          <div className="flex flex-nowrap overflow-x-auto gap-6 pt-6 pb-4 md:grid md:grid-cols-4 mt-10">
-            {/* Added mt-10 for vertical spacing */}
+          <div className="flex flex-nowrap bg-gray-50 overflow-x-auto gap-6 pt-6 pb-4 md:grid md:grid-cols-4 mt-10">
             {[
               {
                 value: "99.9%",
@@ -281,7 +279,7 @@ export default function MonolithicToCloudNativePage() {
             ].map((stat, index) => (
               <div
                 key={index}
-                className="text-center group p-4 rounded-lg hover:bg-white transition-colors duration-300 min-w-[150px] flex-shrink-0"
+                className="text-center group p-4 rounded-lg bg-gray-50 hover:bg-white transition-colors duration-300 min-w-[180px] flex-shrink-0"
               >
                 <div className="mb-3">
                   <stat.icon
@@ -361,7 +359,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -393,12 +391,13 @@ export default function MonolithicToCloudNativePage() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="group p-4 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                        {/* Changed to flex-col on mobile */}
+                        <div className="flex items-center gap-3 w-full md:w-auto">
                           <div className="p-2 bg-blue-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
                             <Cloud className="w-4 h-4 text-white" />
                           </div>
-                          <div>
+                          <div className="flex-1">
                             <h4 className="font-bold text-sm md:text-base text-gray-900 mb-1">
                               Azure Infrastructure Module
                             </h4>
@@ -445,12 +444,13 @@ export default function MonolithicToCloudNativePage() {
                       </div>
                     </div>
                     <div className="group p-4 bg-orange-50 rounded-xl border border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.01]">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                        {/* Changed to flex-col on mobile */}
+                        <div className="flex items-center gap-3 w-full md:w-auto">
                           <div className="p-2 bg-orange-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
                             <Server className="w-4 h-4 text-white" />
                           </div>
-                          <div>
+                          <div className="flex-1">
                             <h4 className="font-bold text-sm md:text-base text-gray-900 mb-1">
                               AWS EKS Spot Instance Module
                             </h4>
@@ -640,7 +640,7 @@ export default function MonolithicToCloudNativePage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group min-w-[180px] flex-shrink-0"
+                      className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group min-w-[220px] flex-shrink-0"
                     >
                       <div className="w-8 h-8 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mb-2">
                         {item.step}
@@ -713,7 +713,7 @@ export default function MonolithicToCloudNativePage() {
                         key={index}
                         className={cn(
                           listItemStyle,
-                          "min-w-[280px] flex-shrink-0"
+                          "min-w-[350px] flex-shrink-0"
                         )}
                       >
                         <div className={iconWrapperStyle(item.color)}>
@@ -873,7 +873,7 @@ export default function MonolithicToCloudNativePage() {
                         key={index}
                         className={cn(
                           listItemStyle,
-                          "min-w-[280px] flex-shrink-0"
+                          "min-w-[350px] flex-shrink-0"
                         )}
                       >
                         <div className={iconWrapperStyle(feature.color)}>
@@ -1069,7 +1069,7 @@ export default function MonolithicToCloudNativePage() {
                         key={index}
                         className={cn(
                           listItemStyle,
-                          "min-w-[280px] flex-shrink-0"
+                          "min-w-[350px] flex-shrink-0"
                         )}
                       >
                         <div className={iconWrapperStyle(item.color)}>
@@ -1203,7 +1203,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -1283,7 +1283,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -1371,7 +1371,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -1432,7 +1432,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(alert.color)}>
@@ -1505,7 +1505,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -1589,7 +1589,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -1607,7 +1607,7 @@ export default function MonolithicToCloudNativePage() {
           </div>
         </section>
         {/* Step 9: Comprehensive Security */}
-        <section className="mb-12">
+        <section className="mb-9">
           <div className="flex items-center gap-4 mb-10">
             <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <span className="font-bold text-lg">9</span>
@@ -1672,7 +1672,7 @@ export default function MonolithicToCloudNativePage() {
                       key={index}
                       className={cn(
                         listItemStyle,
-                        "min-w-[280px] flex-shrink-0"
+                        "min-w-[350px] flex-shrink-0"
                       )}
                     >
                       <div className={iconWrapperStyle(item.color)}>
@@ -1689,63 +1689,62 @@ export default function MonolithicToCloudNativePage() {
             </Card>
           </div>
         </section>
-        {/* Call to Action - Redesigned */}
-        <section className="mb-12">
-          <Card className="relative rounded-2xl overflow-hidden p-8 md:p-10 text-center border-0 shadow-none bg-transparent">
-            {/* Subtle gradient background */}
-            <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-2xl"></div>
+        <section className="mb-4 md:mb-10">
+          <Card className="relative rounded-xl md:rounded-2xl overflow-hidden p-6 md:p-10 text-center border-0 shadow-none bg-transparent">
+            <div className="absolute inset-0 bg-gray-50 opacity-60 rounded-xl md:rounded-2xl"></div>
             <div className="relative z-10 max-w-3xl mx-auto">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-4 py-1.5 rounded-full mb-4 text-sm font-semibold text-gray-700">
-                <Sparkles className="w-4 h-4 mr-1 text-blue-600" />
+              <div className="inline-flex items-center gap-1 md:gap-2 bg-gradient-to-r from-teal-100 to-blue-100 px-3 md:px-4 py-1 rounded-full mb-3 md:mb-4 text-sm md:text-sm font-semibold text-gray-700">
+                <Sparkles className="w-4 h-4 md:w-4 md:h-4 mr-1 text-blue-600" />
                 Ready to Transform?
               </div>
-              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-4 md:mb-4 leading-tight">
                 Accelerate Your Journey to Cloud-Native
               </h2>
-              <p className="text-xs md:text-base text-gray-600 leading-relaxed mb-8">
+              <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8">
                 Partner with us to seamlessly migrate your monolithic
                 applications and unlock the full potential of scalable,
                 resilient, and cost-efficient cloud solutions.
               </p>
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 border-0"
+                className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white font-semibold px-6 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 border-0"
               >
-                <Rocket className="w-4 h-4 mr-2" />
+                <Rocket className="w-4 h-4 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Schedule a Free Consultation
               </Button>
+
               {/* Trust indicators */}
-              <div className="flex flex-nowrap overflow-x-auto gap-6 pt-6 pb-4 sm:grid sm:grid-cols-3 border-t border-gray-100 mt-10">
-                <div className="flex flex-col items-center min-w-[150px] flex-shrink-0">
-                  <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-10 pt-4 md:pt-6 border-t border-gray-100">
+                <div className="flex flex-col items-center">
+                  <div className="w-9 h-9 md:w-10 md:h-10 bg-green-100 rounded-lg md:rounded-xl flex items-center justify-center mb-1 md:mb-2">
+                    <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
                   </div>
-                  <h4 className="font-semibold text-sm text-gray-900 mb-1">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm md:text-sm">
                     Proven Success
                   </h4>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-sm text-gray-600">
                     100% successful migrations
                   </p>
                 </div>
-                <div className="flex flex-col items-center min-w-[150px] flex-shrink-0">
-                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
-                    <Zap className="w-5 h-5 text-blue-600" />
+                <div className="flex flex-col items-center">
+                  <div className="w-9 h-9 md:w-10 md:h-10 bg-blue-100 rounded-lg md:rounded-xl flex items-center justify-center mb-1 md:mb-2">
+                    <Zap className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
                   </div>
-                  <h4 className="font-semibold text-sm text-gray-900 mb-1">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm md:text-sm">
                     Rapid Deployment
                   </h4>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-sm text-gray-600">
                     2-4 week average timeline
                   </p>
                 </div>
-                <div className="flex flex-col items-center min-w-[150px] flex-shrink-0">
-                  <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-2">
-                    <ShieldCheck className="w-5 h-5 text-purple-600" />
+                <div className="flex flex-col items-center">
+                  <div className="w-9 h-9 md:w-10 md:h-10 bg-purple-100 rounded-lg md:rounded-xl flex items-center justify-center mb-1 md:mb-2">
+                    <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
                   </div>
-                  <h4 className="font-semibold text-sm text-gray-900 mb-1">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm md:text-sm">
                     Enterprise-Grade Security
                   </h4>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-sm text-gray-600">
                     Built-in security from day one
                   </p>
                 </div>
@@ -1754,9 +1753,9 @@ export default function MonolithicToCloudNativePage() {
           </Card>
         </section>
       </main>
-      <div className="-mt-8 md:-mt-14">
+      <div className="-mt-4 md:-mt-14">
         {" "}
-        {/* Reduced negative margin for footer */}
+        {/* Further reduced negative margin for footer */}
         <MinimalFooter />
       </div>
     </div>
