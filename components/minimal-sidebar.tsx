@@ -94,7 +94,7 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [feedbackError, setFeedbackError] = useState<string | null>(null);
 
-  const API_BASE_URL = "https://ldn-api.maharbawgammoney.com/api";
+  const API_BASE_URL = "http://192.168.1.131:8000/api";
 
   useEffect(() => {
     const fetchData = async () => {

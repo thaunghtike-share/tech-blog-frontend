@@ -1,0 +1,56 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    certmanager.k8s.io/acme-challenge-type: dns01
+    certmanager.k8s.io/acme-dns01-provider: cloudflare
+  labels:
+    app: ldn-ui
+  name: ldn-ui-ingress
+  namespace: learndevopsnow
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ldn.maharbawgammoney.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: learndevopsnow-ui
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - ldn.maharbawgammoney.com
+      secretName: tls-secret
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    certmanager.k8s.io/acme-challenge-type: dns01
+    certmanager.k8s.io/acme-dns01-provider: cloudflare
+  labels:
+    app: ldn-backend
+  name: ldn-backend-ingress
+  namespace: learndevopsnow
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ldn-api.maharbawgammoney.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: learndevopsnow-backend
+                port:
+                  number: 8000
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - ldn-api.maharbawgammoney.com
+      secretName: tls-secret      

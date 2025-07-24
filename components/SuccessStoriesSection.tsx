@@ -20,7 +20,7 @@ export function SuccessStoriesSection() {
     // Please note: This fetch request to a local/private IP (http://20.212.140.239:8000)
     // will NOT work in the sandboxed v0 preview environment.
     // For the preview to display data, your backend needs to be publicly accessible.
-    fetch("https://ldn-api.maharbawgammoney.com/api/testimonials/")
+    fetch("http://192.168.1.131:8000/api/testimonials/")
       .then(async (res) => {
         const contentType = res.headers.get("content-type");
         if (!res.ok || !contentType?.includes("application/json")) {

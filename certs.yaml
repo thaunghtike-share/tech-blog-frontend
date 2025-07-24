@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-api-token-secret
+  namespace: learndevopsnow
+type: Opaque
+stringData:
+  api-token: HofjLDodCzM5ng9fRH-Yk0gnT-qpkr6QAP8ppIBn
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: ldn-issuer
+  namespace: learndevopsnow
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: thaunghtikeoo@maharbawgamoney.com
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - dns01:
+        cloudflare:
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard
+  namespace: learndevopsnow
+spec:
+  secretName: tls-secret
+  issuerRef:
+    kind: Issuer
+    name: ldn-issuer
+  commonName: "*.maharbawgammoney.com"
+  dnsNames:
+    - "*.maharbawgammoney.com"
