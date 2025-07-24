@@ -105,7 +105,7 @@ export default function Intro() {
   return (
     <div className="py-16 px-4 max-w-7xl mx-auto">
       {/* Hero Section */}
-      <div className="mt-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="md:mt-15 mt-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-4 md:mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -123,7 +123,7 @@ export default function Intro() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl font-bold font-['Inter'] bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 tracking-normal"
+            className="text-3xl md:text-3xl font-bold font-['Inter'] bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 tracking-normal"
           >
             Learn{" "}
             <span className="font-['Inter'] bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
