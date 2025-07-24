@@ -25,7 +25,7 @@ export function MinimalHeader() {
   const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
   const learningTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const API_BASE_URL = "http://20.212.140.239:8000/api";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
   useEffect(() => {
     return () => {
