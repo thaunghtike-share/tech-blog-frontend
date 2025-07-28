@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Calendar,
   Clock,
@@ -9,6 +9,8 @@ import {
   Sparkles,
   AlertTriangle,
   Tag as TagIcon,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -63,6 +65,7 @@ export function FeaturedArticlesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -76,6 +79,24 @@ export function FeaturedArticlesPage() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -300,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -267,135 +288,181 @@ export function FeaturedArticlesPage() {
           </p>
         </div>
       ) : (
-        <div className="flex gap-4 md:gap-8 overflow-x-auto pb-4 md:grid">
-          <AnimatePresence mode="wait">
-            {articles.map((article, index) => {
-              const author = getAuthor(article.author);
-              const category = getCategoryById(article.category);
-              return (
-                <motion.article
-                  key={article.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: index * 0.1,
-                    backgroundColor: { duration: 0 },
-                  }}
-                  className={`group flex-shrink-0 w-[85vw] sm:w-[calc(50%-0.5rem)] md:w-auto bg-white p-4 md:p-6 rounded-lg md:rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all ${
-                    isScrolling ? "" : "hover:-translate-y-1"
-                  }`}
-                >
-                  <div className="flex justify-between flex-wrap mb-3 md:mb-4 gap-2">
-                    <div className="flex flex-wrap gap-2">
-                      {category && (
-                        <Link
-                          href={`/categories/${category.slug}`}
-                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
-                        >
-                          <Folder className="w-3 h-3" />
-                          <span className="hidden md:inline">
-                            {category.name}
-                          </span>
-                          <span className="md:hidden">
-                            {category.name.split(" ")[0]}
-                          </span>
-                        </Link>
-                      )}
-                      {article.tags.map((tagId) => {
-                        const tag = getTagById(tagId);
-                        if (!tag) return null;
-                        return (
+        <div className="relative">
+          {/* Mobile scroll container */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 md:gap-8 overflow-x-auto pb-4 md:grid hide-scrollbar snap-x snap-mandatory"
+          >
+            <AnimatePresence mode="wait">
+              {articles.map((article, index) => {
+                const author = getAuthor(article.author);
+                const category = getCategoryById(article.category);
+                return (
+                  <motion.article
+                    key={article.id}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: index * 0.1,
+                      backgroundColor: { duration: 0 },
+                    }}
+                    className={`group flex-shrink-0 w-[85vw] sm:w-[calc(50%-0.5rem)] md:w-auto bg-white p-4 md:p-6 rounded-lg md:rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all ${
+                      isScrolling ? "" : "hover:-translate-y-1"
+                    } snap-center`}
+                  >
+                    <div className="flex justify-between flex-wrap mb-3 md:mb-4 gap-2">
+                      <div className="flex flex-wrap gap-2">
+                        {category && (
                           <Link
-                            key={tag.id}
-                            href={`/articles?tag=${tag.slug}`}
-                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
+                            href={`/categories/${category.slug}`}
+                            className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
                           >
-                            <TagIcon className="w-3 h-3" />
-                            <span className="hidden md:inline">{tag.name}</span>
+                            <Folder className="w-3 h-3" />
+                            <span className="hidden md:inline">
+                              {category.name}
+                            </span>
                             <span className="md:hidden">
-                              {tag.name.split(" ")[0]}
+                              {category.name.split(" ")[0]}
                             </span>
                           </Link>
-                        );
-                      })}
+                        )}
+                        {article.tags.map((tagId) => {
+                          const tag = getTagById(tagId);
+                          if (!tag) return null;
+                          return (
+                            <Link
+                              key={tag.id}
+                              href={`/articles?tag=${tag.slug}`}
+                              className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
+                            >
+                              <TagIcon className="w-3 h-3" />
+                              <span className="hidden md:inline">
+                                {tag.name}
+                              </span>
+                              <span className="md:hidden">
+                                {tag.name.split(" ")[0]}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                  <Link
-                    href={`/articles/${article.slug}`}
-                    className="group/link block"
-                  >
-                    <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-2 md:mb-3 group-hover/link:text-blue-600 transition-colors">
-                      {article.title}
-                    </h3>
-                    <p className="text-gray-700 mb-3 md:mb-4 line-clamp-2 text-sm md:text-[15px] leading-relaxed">
-                      {truncate(stripMarkdown(article.content), 200)}
-                    </p>
-                    <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
-                      Read more{" "}
-                      <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                    <Link
+                      href={`/articles/${article.slug}`}
+                      className="group/link block"
+                    >
+                      <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-2 md:mb-3 group-hover/link:text-blue-600 transition-colors">
+                        {article.title}
+                      </h3>
+                      <p className="text-gray-700 mb-3 md:mb-4 line-clamp-2 text-sm md:text-[15px] leading-relaxed">
+                        {truncate(stripMarkdown(article.content), 200)}
+                      </p>
+                      <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
+                        Read more{" "}
+                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                      </div>
+                    </Link>
+                    <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-500">
+                      <div className="flex items-center gap-2">
+                        {author?.avatar ? (
+                          <img
+                            src={author.avatar || "/placeholder.svg"}
+                            alt={author.name}
+                            className="w-4 h-4 md:w-5 md:h-5 rounded-full object-cover border border-gray-200"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <User className="w-2.5 h-2.5 md:w-3 md:h-3 text-white" />
+                          </div>
+                        )}
+                        <Link
+                          href={`/authors/${
+                            author?.username || slugify(author?.name || "")
+                          }`}
+                          className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                        >
+                          {author?.name || `Author ${article.author}`}
+                        </Link>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
+                        <span>{formatDate(article.published_at)}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
+                        <span>{calculateReadTime(article.content)}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 ml-auto text-gray-600">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
+                          />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <span className="font-medium">
+                          {article.read_count.toLocaleString()}
+                        </span>
+                      </div>
                     </div>
-                  </Link>
-                  <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      {author?.avatar ? (
-                        <img
-                          src={author.avatar || "/placeholder.svg"}
-                          alt={author.name}
-                          className="w-4 h-4 md:w-5 md:h-5 rounded-full object-cover border border-gray-200"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                          <User className="w-2.5 h-2.5 md:w-3 md:h-3 text-white" />
-                        </div>
-                      )}
-                      <Link
-                        href={`/authors/${
-                          author?.username || slugify(author?.name || "")
-                        }`}
-                        className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
-                      >
-                        {author?.name || `Author ${article.author}`}
-                      </Link>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
-                      <span>{formatDate(article.published_at)}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
-                      <span>{calculateReadTime(article.content)}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 ml-auto text-gray-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
-                        />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                      <span className="font-medium">
-                        {article.read_count.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </AnimatePresence>
+                  </motion.article>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+
+          {/* Scroll indicators for mobile */}
+          <div className="md:hidden">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+              <motion.button
+                onClick={scrollRight}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
+              >
+                <div className="relative">
+                  <ChevronRight className="w-5 h-5" />
+                  <motion.div
+                    animate={{
+                      x: [0, 4, 0],
+                      opacity: [0.6, 1, 0.6],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 1.5,
+                    }}
+                    className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
+                  />
+                </div>
+              </motion.button>
+            </div>
+          </div>
         </div>
       )}
+
+      {/* Hide scrollbar for mobile scroll */}
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }

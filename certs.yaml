@@ -40,3 +40,18 @@ spec:
   commonName: "*.maharbawgammoney.com"
   dnsNames:
     - "*.maharbawgammoney.com"
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard
+  namespace: learndevopsnow
+spec:
+  secretName: tls-secret-ldn
+  issuerRef:
+    kind: Issuer
+    name: ldn-issuer
+  commonName: "*.learndevopsnow.it.com"
+  dnsNames:
+    - "*.learndevopsnow.it.com"
