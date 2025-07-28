@@ -4,16 +4,16 @@ import { Facebook, Linkedin, Youtube, Github, Mail } from "lucide-react";
 export function MinimalFooter() {
   return (
     <footer className="bg-gradient-to-b from-gray-50 to-gray-100 text-gray-700 py-8 md:py-12 relative z-10 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Subtle background pattern */}
-        <div
-          className="absolute inset-0 z-0 opacity-10"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-          }}
-        ></div>
+      {/* Subtle background pattern - moved to be a sibling of the content container */}
+      <div
+        className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 pb-6 md:pb-8">
           {/* Logo + Description - Full width on mobile */}
           <div className="col-span-2 md:col-span-2 order-1">
@@ -76,7 +76,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/articles"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Articles
                 </Link>
@@ -84,7 +84,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/categories"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Categories
                 </Link>
@@ -92,7 +92,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/authors"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Authors
                 </Link>
@@ -100,7 +100,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/about"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   About
                 </Link>
@@ -117,7 +117,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/learn-devops-on-youtube"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   YouTube Playlists
                 </Link>
@@ -125,7 +125,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/learn-devops-on-udemy"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Udemy Courses
                 </Link>
@@ -133,15 +133,15 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/recommended-paid-courses"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Paid Courses
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/blog"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors"
+                  href="/free-labs"
+                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Free Labs
                 </Link>
