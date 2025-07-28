@@ -13,7 +13,6 @@ import {
   Gauge,
   Shield,
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface Playlist {
   id: number;
@@ -130,7 +129,6 @@ export function YouTubePlaylists({
     .filter((pl) => pl.difficulty === selectedDifficulty)
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  // Show all playlists on mobile, otherwise use actualShowAll state for desktop
   const displayedPlaylists =
     typeof window !== "undefined" && window.innerWidth < 640
       ? filteredPlaylists
@@ -172,11 +170,7 @@ export function YouTubePlaylists({
         <>
           {/* Header */}
           <div className="text-center mb-6 md:mb-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center justify-center gap-2 md:gap-3 mb-4 md:mb-4"
-            >
+            <div className="flex items-center justify-center gap-2 md:gap-3 mb-4 md:mb-4">
               <div className="p-2 md:p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-lg">
                 <Globe className="w-3 h-3 md:w-4 md:h-4 text-white" />
               </div>
@@ -184,50 +178,32 @@ export function YouTubePlaylists({
                 <Play className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" /> Youtube
                 Playlists
               </span>
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-red-800 to-pink-800 bg-clip-text text-transparent mb-4 md:mb-4"
-            >
+            </div>
+            <h2 className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-red-800 to-pink-800 bg-clip-text text-transparent mb-4 md:mb-4">
               Learn DevOps on Youtube
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto"
-            >
+            </h2>
+            <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
               Recommended video playlists to learn DevOps tools like Linux,
               Docker, Kubernetes, AWS, Terraform, and more.
-            </motion.p>
+            </p>
           </div>
 
-          {/* Difficulty Buttons - Now always visible and horizontally scrollable */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex overflow-x-auto sm:overflow-x-visible flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-3 mb-4 md:mb-8 pb-4"
-          >
-            {allDifficulties.map((difficultyKey, index) => {
+          {/* Difficulty Buttons */}
+          <div className="flex overflow-x-auto sm:overflow-x-visible flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-3 mb-4 md:mb-8 pb-4">
+            {allDifficulties.map((difficultyKey) => {
               const config = difficultyConfig[difficultyKey];
               const isActive = selectedDifficulty === difficultyKey;
               return (
-                <motion.button
+                <button
                   key={difficultyKey}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
                   onClick={() => {
                     setSelectedDifficulty(difficultyKey);
-                    actualSetShowAll(false); // Reset showAll when difficulty changes
+                    actualSetShowAll(false);
                   }}
-                  className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${
+                  className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-colors duration-200 ${
                     isActive
-                      ? `bg-gradient-to-r ${config.color} text-white scale-105` // Added scale-105 back
-                      : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
+                      ? `bg-gradient-to-r ${config.color} text-white`
+                      : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200`
                   }`}
                 >
                   <div
@@ -239,27 +215,15 @@ export function YouTubePlaylists({
                   >
                     {config.icon}
                   </div>
-                  <span className={isActive ? "text-white" : "text-gray-800"}>
-                    {difficultyKey}
-                  </span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="selected-playlist-indicator"
-                      className="absolute inset-0 rounded-full border-2 border-white/30"
-                    />
-                  )}
-                </motion.button>
+                  <span>{difficultyKey}</span>
+                </button>
               );
             })}
-          </motion.div>
+          </div>
 
           {/* Playlists */}
           {filteredPlaylists.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-8 md:py-12"
-            >
+            <div className="text-center py-8 md:py-12">
               <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-3 md:mb-4">
                 <Play className="w-6 h-6 md:w-8 md:h-8 text-gray-400" />
               </div>
@@ -269,19 +233,15 @@ export function YouTubePlaylists({
               <p className="text-gray-500 text-sm md:text-base">
                 Please select another difficulty or check back later.
               </p>
-            </motion.div>
+            </div>
           ) : (
             <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-x-visible lg:snap-none">
-              {displayedPlaylists.map((pl, idx) => {
+              {displayedPlaylists.map((pl) => {
                 const config = difficultyConfig[pl.difficulty];
                 return (
-                  <motion.div
+                  <div
                     key={pl.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.08 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col`}
+                    className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-md flex flex-col`}
                   >
                     <div className="relative aspect-video bg-gray-900 overflow-hidden">
                       <iframe
@@ -289,12 +249,11 @@ export function YouTubePlaylists({
                         title={pl.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
-                        className="w-full h-full transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div className="p-4 md:p-5 flex-grow">
-                      <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2 group-hover:text-red-700 transition-colors flex items-center gap-2">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
                         {pl.title}
                         {pl.is_burmese && (
                           <span
@@ -325,24 +284,22 @@ export function YouTubePlaylists({
                         href={pl.playlistUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r ${config.color} text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] text-sm md:text-base`}
+                        className={`w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r ${config.color} text-white font-medium rounded-lg transition-colors duration-200 text-sm md:text-base`}
                       >
                         <Play className="w-3 h-3 md:w-4 md:h-4 mr-2" /> Watch
                         Playlist{" "}
-                        <ExternalLink className="w-3 h-3 md:w-4 md:h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+                        <ExternalLink className="w-3 h-3 md:w-4 md:h-4 ml-2" />
                       </a>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
           )}
-          {/* Show More/Less Button - Hidden on mobile, visible on desktop */}
+          {/* Show More/Less Button */}
           {filteredPlaylists.length > 6 && (
             <div className="mt-8 md:mt-3 text-center hidden sm:block">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => {
                   const newState = !actualShowAll;
                   actualSetShowAll(newState);
@@ -350,7 +307,7 @@ export function YouTubePlaylists({
                     sectionRef.current.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                className={`inline-flex items-center gap-2 px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm md:text-base`}
+                className={`inline-flex items-center gap-2 px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} text-white font-medium rounded-2xl transition-colors duration-200 text-sm md:text-base`}
               >
                 {actualShowAll ? (
                   <>
@@ -361,7 +318,7 @@ export function YouTubePlaylists({
                     See All Playlists <ChevronDown className="w-4 h-4 mr-2" />
                   </>
                 )}
-              </motion.button>
+              </button>
             </div>
           )}
         </>
