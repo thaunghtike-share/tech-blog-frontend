@@ -502,6 +502,22 @@ export function ArticleContent({
                 "General";
               const itemAuthor =
                 authors.find((a) => a.id === item.author)?.name || "Unknown";
+              const itemTags = tagNames.filter((_, index) =>
+                item.tags?.includes(index)
+              );
+
+              const handleCategoryClick = (e: React.MouseEvent) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = `/categories/${slugify(itemCategory)}`;
+              };
+
+              const handleTagClick = (e: React.MouseEvent, tag: string) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = `/articles?tag=${slugify(tag)}`;
+              };
+
               return (
                 <Card
                   key={item.id}
@@ -521,9 +537,31 @@ export function ArticleContent({
                       </div>
                     )}
                     <CardContent className="p-5 flex-grow flex flex-col bg-white">
+                      {/* Category and Tags - Above Title */}
+                      <div className="-mt-5 flex flex-wrap gap-2 mb-2">
+                        <span
+                          onClick={handleCategoryClick}
+                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer"
+                        >
+                          <Folder className="w-3 h-3" />
+                          {itemCategory}
+                        </span>
+                        {itemTags.map((tag, index) => (
+                          <span
+                            key={index}
+                            onClick={(e) => handleTagClick(e, tag)}
+                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors cursor-pointer"
+                          >
+                            <TagIcon className="w-3 h-3" />
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
                       <h4 className="font-bold text-base md:text-lg text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 leading-snug mb-2">
                         {item.title}
                       </h4>
+
                       <p className="text-xs md:text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
                         {excerpt(item.content)}
                       </p>
