@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import {
   ServerCog,
@@ -86,6 +86,17 @@ const roles = [
 ];
 
 export function CareerPath() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header */}
@@ -125,7 +136,35 @@ export function CareerPath() {
 
       {/* Cards */}
       <div className="relative -mt-5">
-        <div className="flex overflow-x-auto pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar">
+        {/* Mobile scroll indicator */}
+        <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+          <motion.button
+            onClick={scrollRight}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
+          >
+            <div className="relative">
+              <ChevronRight className="w-5 h-5" />
+              <motion.div
+                animate={{
+                  x: [0, 4, 0],
+                  opacity: [0.6, 1, 0.6],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                }}
+                className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
+              />
+            </div>
+          </motion.button>
+        </div>
+
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar"
+        >
           <div className="flex space-x-6 min-w-max sm:min-w-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-x-0 items-stretch">
             {roles.map((role, idx) => (
               <motion.div
