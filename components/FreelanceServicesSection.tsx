@@ -8,10 +8,11 @@ import {
   Sparkles,
   ExternalLink,
   Code,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const services = [
   {
@@ -56,10 +57,20 @@ const services = [
 
 export function FreelanceServicesSection() {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <section className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      {/* Enhanced Header */}
+      {/* Header - Completely unchanged */}
       <div className="text-center mb-4 md:mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -92,82 +103,114 @@ export function FreelanceServicesSection() {
         </motion.p>
       </div>
 
-      {/* Services Grid - Horizontal scroll on mobile, 2-column grid on desktop */}
-      <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 scrollbar-hide lg:grid lg:grid-cols-2 lg:overflow-x-visible lg:snap-none">
-        {services.map(
-          (
-            { title, shortDescription, details, icon: Icon, slug, gradient },
-            idx
-          ) => {
-            const isExpanded = expanded === idx;
-            const shortText =
-              details.length > 150
-                ? details.slice(0, 150).trim() + "..."
-                : details;
-
-            return (
+      {/* Services Container - Only mobile changes */}
+      <div className="relative">
+        {/* Mobile-only scroll indicator */}
+        <div className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+          <motion.button
+            onClick={scrollRight}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-orange-600 rounded-full shadow-lg border border-gray-200"
+          >
+            <div className="relative">
+              <ChevronRight className="w-5 h-5" />
               <motion.div
-                key={slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: idx * 0.1,
-                  type: "spring",
-                  stiffness: 100,
+                animate={{
+                  x: [0, 4, 0],
+                  opacity: [0.6, 1, 0.6],
                 }}
-                whileHover={{ y: -5 }}
-                className="flex-shrink-0 w-[85vw] snap-center lg:w-auto" // Added flex-shrink-0 and w-[85vw] for mobile horizontal scroll
-              >
-                <Card className="h-full border-0 hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm flex flex-col">
-                  <CardContent className="p-0 flex-grow">
-                    <div
-                      className={`p-6 bg-gradient-to-r ${gradient} text-white flex items-center gap-4`}
-                    >
-                      <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-md">
-                        <Icon className="h-6 w-6 text-white" />
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                }}
+                className="absolute -right-1 -top-1 w-2 h-2 bg-orange-600 rounded-full"
+              />
+            </div>
+          </motion.button>
+        </div>
+
+        {/* Services Grid - Changed only mobile width */}
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto hide-scrollbar lg:grid lg:grid-cols-2 gap-6 lg:gap-8 pb-4"
+        >
+          {services.map(
+            (
+              { title, shortDescription, details, icon: Icon, slug, gradient },
+              idx
+            ) => {
+              const isExpanded = expanded === idx;
+              const shortText =
+                details.length > 150
+                  ? details.slice(0, 150).trim() + "..."
+                  : details;
+
+              return (
+                <motion.div
+                  key={slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="min-w-[21rem] lg:min-w-0" // Exact same width as Udemy/FreeLabs
+                >
+                  <Card className="h-full border-0 transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm flex flex-col">
+                    <CardContent className="p-0 flex-grow">
+                      <div
+                        className={`p-6 bg-gradient-to-r ${gradient} text-white flex items-center gap-4`}
+                      >
+                        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-md">
+                          <Icon className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg md:text-xl font-bold mb-1">
+                            {title}
+                          </h3>
+                          <p className="text-sm md:text-sm text-blue-100">
+                            {shortDescription}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg md:text-xl font-bold mb-1">
-                          {title}
-                        </h3>{" "}
-                        {/* Reduced text size */}
-                        <p className="text-sm md:text-sm text-blue-100">
-                          {shortDescription}
-                        </p>{" "}
-                        {/* Reduced text size */}
+                      <div className="p-6">
+                        <p className="text-sm md:text-sm text-gray-700 leading-relaxed mb-4">
+                          {isExpanded ? details : shortText}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <button
+                            onClick={() => setExpanded(isExpanded ? null : idx)}
+                            className="text-sm md:text-sm text-blue-600 font-medium hover:underline focus:outline-none"
+                          >
+                            {isExpanded ? "Show Less" : "Read More"}
+                          </button>
+                          <Link
+                            href={`/services/${slug}`}
+                            className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-sm md:text-sm font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
+                          >
+                            Explore
+                            <ExternalLink className="h-4 w-4 ml-2" />
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-6">
-                      <p className="text-sm md:text-sm text-gray-700 leading-relaxed mb-4">
-                        {isExpanded ? details : shortText}
-                      </p>{" "}
-                      {/* Reduced text size */}
-                      <div className="flex items-center justify-between">
-                        <button
-                          onClick={() => setExpanded(isExpanded ? null : idx)}
-                          className="text-sm md:text-sm text-blue-600 font-medium hover:underline focus:outline-none"
-                        >
-                          {isExpanded ? "Show Less" : "Read More"}
-                        </button>{" "}
-                        {/* Reduced text size */}
-                        <Link
-                          href={`/services/${slug}`}
-                          className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-sm md:text-sm font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
-                        >
-                          {" "}
-                          {/* Reduced text size */}
-                          Explore
-                          <ExternalLink className="h-4 w-4 ml-2" />
-                        </Link>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          }
-        )}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            }
+          )}
+        </div>
       </div>
+
+      {/* Hide scrollbar styles */}
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }

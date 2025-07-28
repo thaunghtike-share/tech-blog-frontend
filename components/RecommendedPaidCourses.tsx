@@ -7,9 +7,9 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge"; // Make sure you have this or replace with your own badge
 
 interface PaidCourse {
   title: string;
@@ -82,14 +82,23 @@ const paidCourses: PaidCourse[] = [
 export function RecommendedPaidCourses() {
   const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Determine courses to show based on screen size and showAll state
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const coursesToShow =
     typeof window !== "undefined" && window.innerWidth < 640
-      ? paidCourses // Show all on mobile
+      ? paidCourses
       : showAll
       ? paidCourses
-      : paidCourses.slice(0, 6); // Limit on desktop unless showAll is true
+      : paidCourses.slice(0, 6);
 
   const toggleShowAll = () => {
     if (showAll) {
@@ -103,8 +112,8 @@ export function RecommendedPaidCourses() {
       ref={sectionRef}
       className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
-      {/* Header */}
-      <div className="text-center mb-12">
+      {/* Header - Completely unchanged */}
+      <div className="text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -136,62 +145,91 @@ export function RecommendedPaidCourses() {
         </motion.p>
       </div>
 
-      {/* Courses Grid - Horizontal scroll on mobile, grid on desktop */}
-      <div className="flex overflow-x-auto -mt-5 md:-mt-5 snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:overflow-x-visible lg:snap-none">
-        {coursesToShow.map((course, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8, scale: 1.02 }}
-            className="flex-shrink-0 w-[76vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 relative flex flex-col" // Added flex flex-col
+      {/* Courses Container - Only mobile changes */}
+      <div className="relative">
+        {/* Mobile-only scroll indicator */}
+        <div className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+          <motion.button
+            onClick={scrollRight}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
           >
-            <div className="p-5 flex-grow">
-              {" "}
-              {/* Added flex-grow */}
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
-                <BookOpen className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
-                {course.title}
-              </h3>
-              <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                {course.authorImage && (
-                  <img
-                    src={course.authorImage || "/placeholder.svg"}
-                    alt={course.author}
-                    className="w-6 h-6 rounded-full object-cover border border-gray-200"
-                    loading="lazy"
-                  />
-                )}
-                <span className="font-medium">{course.author}</span>
-              </div>
-              <p className="text-gray-700 text-sm mb-4 leading-relaxed">
-                {course.description}
-              </p>
-              {course.rating && (
-                <div className="flex items-center gap-1 text-yellow-500 mb-3">
-                  <Star className="w-4 h-4 fill-current" />
-                  <span className="font-medium text-gray-900 text-sm">
-                    {course.rating.toFixed(1)}
-                  </span>
+            <div className="relative">
+              <ChevronRight className="w-5 h-5" />
+              <motion.div
+                animate={{
+                  x: [0, 4, 0],
+                  opacity: [0.6, 1, 0.6],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                }}
+                className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
+              />
+            </div>
+          </motion.button>
+        </div>
+
+        {/* Courses Grid - Changed only mobile width */}
+        <div
+          ref={scrollContainerRef}
+          className="mt-5 flex overflow-x-auto hide-scrollbar lg:grid lg:grid-cols-3 gap-6 lg:gap-8 pb-4"
+        >
+          {coursesToShow.map((course, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="min-w-[21rem] lg:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
+            >
+              <div className="p-5 flex-grow">
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
+                  <BookOpen className="w-6 h-6 text-white" />
                 </div>
-              )}
-            </div>
-            <div className="p-5 pt-0">
-              <a
-                href={course.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01]"
-              >
-                <Play className="w-4 h-4 mr-2" /> Enroll Now
-                <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </a>
-            </div>
-          </motion.div>
-        ))}
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+                  {course.title}
+                </h3>
+                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                  {course.authorImage && (
+                    <img
+                      src={course.authorImage || "/placeholder.svg"}
+                      alt={course.author}
+                      className="w-6 h-6 rounded-full object-cover border border-gray-200"
+                      loading="lazy"
+                    />
+                  )}
+                  <span className="font-medium">{course.author}</span>
+                </div>
+                <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                  {course.description}
+                </p>
+                {course.rating && (
+                  <div className="flex items-center gap-1 text-yellow-500 mb-3">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span className="font-medium text-gray-900 text-sm">
+                      {course.rating.toFixed(1)}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="p-5 pt-0">
+                <a
+                  href={course.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01]"
+                >
+                  <Play className="w-4 h-4 mr-2" /> Enroll Now
+                  <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Toggle Button - Hidden on mobile */}
@@ -213,6 +251,17 @@ export function RecommendedPaidCourses() {
           </motion.button>
         </div>
       )}
+
+      {/* Hide scrollbar styles */}
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }

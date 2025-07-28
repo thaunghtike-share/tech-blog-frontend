@@ -90,7 +90,7 @@ export default function HomeClient() {
         <div id="services" className="-mt-33 md:-mt-28">
           <FreelanceServicesSection />
         </div>
-        <div className="-mt-32 md:-mt-30">
+        <div className="-mt-38 md:-mt-32">
           <DevOpsWorkflowExample />
         </div>
         <div className="-mt-34 md:-mt-32">
