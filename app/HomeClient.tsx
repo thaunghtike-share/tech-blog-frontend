@@ -61,7 +61,7 @@ export default function HomeClient() {
             <div className="w-full md:flex-1 md:min-w-0 bg-white/80 backdrop-blur-sm rounded-xl p-4 md:p-6 shadow-lg border border-blue-100">
               <FeaturedArticlesPage />
             </div>
-            <div className="hidden md:block w-[280px] flex-shrink-0 sticky top-6 h-fit">
+            <div className="hidden md:block w-[320px] flex-shrink-0 sticky top-6 h-fit">
               <MinimalSidebar onTagClick={updateTagFilter} />
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function HomeClient() {
           <MinimalFAQs />
         </div>
       </main>
-      <div className="-mt-8 md:-mt-1">
+      <div className="-mt-8 md:-mt-6">
         <MinimalFooter />
       </div>
     </div>
