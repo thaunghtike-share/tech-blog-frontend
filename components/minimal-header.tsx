@@ -116,7 +116,7 @@ export function MinimalHeader() {
         <div className="flex items-center justify-between md:hidden py-2 gap-2 relative z-10">
           {/* Logo */}
           <Link href="/" className="flex items-center justify-start">
-            <img src="/logo.png" alt="Logo" className="h-20 w-auto" />
+            <img src="/logo.png" alt="Logo" className="h-22 w-auto" />
           </Link>
           {/* Search */}
           <div className="flex-1 px-1 relative">

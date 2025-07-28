@@ -596,6 +596,16 @@ export function MinimalDevopsRoadmap() {
   } | null>(null);
   const [showAllTopics, setShowAllTopics] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const selectedStage =
     roadmap.find((r) => r.key === selectedStageKey) || roadmap[0];
@@ -636,19 +646,18 @@ export function MinimalDevopsRoadmap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto mb-8" // Adjusted margin-bottom
+            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto mb-8"
           >
             A structured learning path from prerequisite to advanced DevOps
             concepts and tools.
           </motion.p>
         </div>
 
-        {/* Stage Buttons - Now always visible and horizontally scrollable */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="flex overflow-x-auto flex-nowrap justify-start md:justify-center gap-2 mb-8 pb-4 mt-4" // Added mt-4
+          className="flex overflow-x-auto flex-nowrap justify-start md:justify-center gap-2 mb-8 pb-4 mt-4"
         >
           {roadmap.map((stage, index) => (
             <motion.button
@@ -694,6 +703,7 @@ export function MinimalDevopsRoadmap() {
             </motion.button>
           ))}
         </motion.div>
+
         <motion.div
           key={selectedStageKey}
           initial={{ opacity: 0, y: 20 }}
@@ -703,50 +713,80 @@ export function MinimalDevopsRoadmap() {
         >
           {selectedStage.description?.length > 0 && <div className=""></div>}
         </motion.div>
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8">
-          {displayedItems.map(({ title, details, duration }, idx) => {
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 flex flex-col`}
-              >
-                <div className="p-5 relative flex-grow">
-                  {" "}
-                  {/* Added flex-grow */}
-                  <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
-                    {title}
-                  </h4>
-                  <span className="flex items-center text-xs font-medium text-gray-600 mb-4">
-                    <Clock className="w-3 h-3 mr-1 text-gray-500" /> {duration}
-                  </span>
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    {details}
-                  </p>
-                </div>
-                <div className="p-5">
-                  {" "}
-                  {/* Changed pt-0 to p-5 for consistent padding */}
-                  <button
-                    onClick={() =>
-                      setSelectedTopic({
-                        title,
-                        links: resourceLinks[title] || [],
-                      })
-                    }
-                    className={`w-full bg-gradient-to-r ${currentStageConfig.gradient} hover:shadow-lg text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-between transition-all duration-300 group/btn shadow-md hover:shadow-xl`} // New button style
-                  >
-                    <span>Explore Resources</span>
-                    <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
+
+        <div className="relative">
+          {/* Mobile scroll indicator */}
+          <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+            <motion.button
+              onClick={scrollRight}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
+            >
+              <div className="relative">
+                <ChevronRight className="w-5 h-5" />
+                <motion.div
+                  animate={{
+                    x: [0, 4, 0],
+                    opacity: [0.6, 1, 0.6],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.5,
+                  }}
+                  className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
+                />
+              </div>
+            </motion.button>
+          </div>
+
+          {/* Cards container with scroll ref */}
+          <div
+            ref={scrollContainerRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 hide-scrollbar"
+          >
+            {displayedItems.map(({ title, details, duration }, idx) => {
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 flex flex-col`}
+                >
+                  <div className="p-5 relative flex-grow">
+                    <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
+                      {title}
+                    </h4>
+                    <span className="flex items-center text-xs font-medium text-gray-600 mb-4">
+                      <Clock className="w-3 h-3 mr-1 text-gray-500" />{" "}
+                      {duration}
+                    </span>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {details}
+                    </p>
+                  </div>
+                  <div className="p-5">
+                    <button
+                      onClick={() =>
+                        setSelectedTopic({
+                          title,
+                          links: resourceLinks[title] || [],
+                        })
+                      }
+                      className={`w-full bg-gradient-to-r ${currentStageConfig.gradient} hover:shadow-lg text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-between transition-all duration-300 group/btn shadow-md hover:shadow-xl`}
+                    >
+                      <span>Explore Resources</span>
+                      <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
+
         {selectedStage.items.length > 6 && (
           <div className="flex justify-center mt-8">
             <motion.button
@@ -773,6 +813,7 @@ export function MinimalDevopsRoadmap() {
           </div>
         )}
       </section>
+
       <AnimatePresence>
         {selectedTopic && (
           <>
@@ -873,6 +914,16 @@ export function MinimalDevopsRoadmap() {
           </>
         )}
       </AnimatePresence>
+
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </>
   );
 }

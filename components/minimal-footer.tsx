@@ -22,7 +22,7 @@ export function MinimalFooter() {
                 <img
                   src="/logo.png"
                   alt="Logo"
-                  className="h-29 md:h-32 w-auto md:mr-3"
+                  className="h-30 md:h-32 w-auto md:mr-3"
                 />
               </div>
             </Link>
