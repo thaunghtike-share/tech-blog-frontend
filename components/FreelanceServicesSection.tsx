@@ -85,7 +85,7 @@ export function FreelanceServicesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text:sm md:text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text:xs md:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           Comprehensive solutions to accelerate your development and deployment
           workflows
@@ -138,21 +138,21 @@ export function FreelanceServicesSection() {
                       </div>
                     </div>
                     <div className="p-6">
-                      <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
+                      <p className="text-sm md:text-sm text-gray-700 leading-relaxed mb-4">
                         {isExpanded ? details : shortText}
                       </p>{" "}
                       {/* Reduced text size */}
                       <div className="flex items-center justify-between">
                         <button
                           onClick={() => setExpanded(isExpanded ? null : idx)}
-                          className="text-xs md:text-sm text-blue-600 font-medium hover:underline focus:outline-none"
+                          className="text-sm md:text-sm text-blue-600 font-medium hover:underline focus:outline-none"
                         >
                           {isExpanded ? "Show Less" : "Read More"}
                         </button>{" "}
                         {/* Reduced text size */}
                         <Link
                           href={`/services/${slug}`}
-                          className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-xs md:text-sm font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
+                          className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-sm md:text-sm font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
                         >
                           {" "}
                           {/* Reduced text size */}

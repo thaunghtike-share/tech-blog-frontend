@@ -181,14 +181,14 @@ export function FreeLabs() {
                       <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
                         {platformIcon}
                       </div>
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
+                      <h3 className="text-lg sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
                         {lab.title}
                       </h3>
-                      <p className="text-gray-700 flex-grow text-xs sm:text-sm mb-4">
+                      <p className="text-gray-700 flex-grow text-sm sm:text-sm mb-4">
                         {lab.description}
                       </p>
                       {lab.difficulty && (
-                        <div className="mt-auto text-xs sm:text-sm text-gray-600">
+                        <div className="mt-auto text-sm sm:text-sm text-gray-600">
                           <strong>Difficulty:</strong> {lab.difficulty}
                         </div>
                       )}

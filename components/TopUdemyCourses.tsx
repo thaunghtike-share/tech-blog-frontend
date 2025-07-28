@@ -163,13 +163,13 @@ export function TopUdemyCourses() {
                 <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
                   <BookOpen className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+                <h3 className="text-lg sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
                   {course.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3">
+                <p className="text-sm sm:text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3">
                   {course.description}
                 </p>
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-4">
+                <div className="flex items-center gap-2 text-sm sm:text-sm text-gray-600 mb-4">
                   {course.authorImage && (
                     <img
                       src={course.authorImage || "/placeholder.svg"}
@@ -182,8 +182,8 @@ export function TopUdemyCourses() {
                 </div>
                 {course.rating && (
                   <div className="flex items-center gap-1 text-yellow-500 mb-3">
-                    <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
-                    <span className="font-medium text-gray-900 text-xs sm:text-sm">
+                    <Star className="w-4 h-4 sm:w-4 sm:h-4 fill-current" />
+                    <span className="font-medium text-gray-900 text-sm sm:text-sm">
                       {course.rating.toFixed(1)}
                     </span>
                   </div>

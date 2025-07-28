@@ -112,14 +112,14 @@ export function SuccessStoriesSection() {
                 <Quote className="w-6 h-6 text-indigo-600" />
               </div>
             </div>
-            <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed">
+            <p className="text-sm sm:text-sm text-gray-700 mb-4 leading-relaxed">
               "{t.feedback}"
             </p>
             <div className="mt-auto">
               <div className="text-sm sm:text-base text-indigo-600 font-medium">
                 {t.name}
               </div>
-              <div className="text-xs sm:text-sm text-gray-500">{t.role}</div>
+              <div className="text-sm sm:text-sm text-gray-500">{t.role}</div>
               <div className="flex justify-center mt-2">
                 {[...Array(t.rating)].map((_, j) => (
                   <Star

@@ -253,7 +253,7 @@ export function YouTubePlaylists({
                       />
                     </div>
                     <div className="p-4 md:p-5 flex-grow">
-                      <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <h3 className="text-sm md:text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
                         {pl.title}
                         {pl.is_burmese && (
                           <span
@@ -266,14 +266,14 @@ export function YouTubePlaylists({
                           </span>
                         )}
                       </h3>
-                      <div className="flex items-center gap-2 mb-2 text-xs md:text-sm text-gray-600">
-                        <Users className="w-3 h-3 md:w-4 md:h-4 text-gray-500" />
+                      <div className="flex items-center gap-2 mb-2 text-sm md:text-sm text-gray-600">
+                        <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
                         <span>
                           <strong>{pl.channel}</strong>
                         </span>
                       </div>
-                      <div className="flex items-center text-xs md:text-sm text-gray-500 mb-4 md:mb-5">
-                        <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1 text-red-500" />
+                      <div className="flex items-center text-sm md:text-sm text-gray-500 mb-4 md:mb-5">
+                        <Clock className="w-4 h-4 md:w-4 md:h-4 mr-1 text-red-500" />
                         <span>
                           Estimated: <strong>{pl.estDuration}</strong>
                         </span>
