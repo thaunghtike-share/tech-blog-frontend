@@ -16,11 +16,13 @@ import {
   ListOrdered,
   UserCircle,
   CalendarDays,
+  Folder,
   User,
   Clipboard,
   Check,
   Eye,
   TrendingUp,
+  Tag as TagIcon,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -218,17 +220,19 @@ export function ArticleContent({
         <div className="prose prose-lg">
           <div className="flex flex-wrap gap-2 mb-4">
             <Link href={`/categories/${slugify(categoryName)}`}>
-              <span className="bg-yellow-100 text-yellow-800 text-xs md:text-sm font-medium px-2 py-1 rounded-full cursor-pointer inline-block">
-                📂 {categoryName}
+              <span className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors">
+                <Folder className="w-4 h-4" />
+                {categoryName}
               </span>
             </Link>
             {tagNames.map((tag, index) => (
               <Link
                 href={`/articles?tag=${slugify(tag)}`}
                 key={index}
-                className="inline-block bg-gray-100 text-gray-700 text-xs md:text-sm px-2 py-1 rounded-full hover:bg-gray-200 cursor-pointer"
+                className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
               >
-                #{tag}
+                <TagIcon className="w-4 h-4" />
+                {tag}
               </Link>
             ))}
           </div>

@@ -8,7 +8,7 @@ import {
   Folder,
   Sparkles,
   ChevronDown,
-  TagIcon,
+  Tag as TagIcon,
   Eye,
   AlertTriangle,
   ChevronLeft,
@@ -208,6 +208,7 @@ export function MinimalBlogList({
   const getAuthorName = (id: number) => getAuthor(id)?.name || `Author ${id}`;
   const getCategoryById = (id: number | null) =>
     categories.find((c) => c.id === id);
+  const getTagById = (id: number) => tags.find((t) => t.id === id);
   const getCurrentTagName = () =>
     tags.find((tag) => tag.slug === filterTagSlug)?.name || "this tag";
 
@@ -412,33 +413,30 @@ export function MinimalBlogList({
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                   >
-                    <div className="flex justify-between flex-wrap mb-4 gap-2">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {category && (
                         <Link
                           href={`/categories/${category.slug}`}
-                          className="flex items-center gap-1 text-yellow-600 bg-gradient-to-r from-gray-50 to-black-50 px-3 py-1.5 rounded-full text-sm font-medium border border-gray-300 hover:text-blue-600"
+                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
                         >
                           <Folder className="w-4 h-4" />
                           {category.name}
                         </Link>
                       )}
-
-                      {/* Just display tags*/}
-                      <div className="flex flex-wrap gap-2 items-center">
-                        {article.tags.map((tagId) => {
-                          const tag = tags.find((t) => t.id === tagId);
-                          if (!tag) return null;
-                          return (
-                            <Link
-                              key={tag.id}
-                              href={`/articles?tag=${tag.slug}`}
-                              className="text-xs px-2 py-1 rounded-full border border-gray-400 text-yellow-700 hover:bg-gray-300 transition-colors"
-                            >
-                              #{tag.name}
-                            </Link>
-                          );
-                        })}
-                      </div>
+                      {article.tags.map((tagId) => {
+                        const tag = getTagById(tagId);
+                        if (!tag) return null;
+                        return (
+                          <Link
+                            key={tag.id}
+                            href={`/articles?tag=${tag.slug}`}
+                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                          >
+                            <TagIcon className="w-4 h-4" />
+                            {tag.name}
+                          </Link>
+                        );
+                      })}
                     </div>
 
                     <Link

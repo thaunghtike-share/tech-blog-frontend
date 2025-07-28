@@ -8,6 +8,7 @@ import {
   Folder,
   Sparkles,
   AlertTriangle,
+  Tag as TagIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +32,12 @@ interface Author {
   username?: string;
 }
 
+interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 interface Category {
   id: number;
   name: string;
@@ -52,11 +59,12 @@ export function FeaturedArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
   useEffect(() => {
     let scrollTimer: NodeJS.Timeout;
@@ -74,23 +82,31 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
       try {
         setLoading(true);
         setError(null);
-        const [articlesResponse, authorsResponse, categoriesResponse] =
-          await Promise.all([
-            fetch(`${API_BASE_URL}/articles/?featured=true`),
-            fetch(`${API_BASE_URL}/authors/`),
-            fetch(`${API_BASE_URL}/categories/`),
-          ]);
+        const [
+          articlesResponse,
+          authorsResponse,
+          categoriesResponse,
+          tagsResponse,
+        ] = await Promise.all([
+          fetch(`${API_BASE_URL}/articles/?featured=true`),
+          fetch(`${API_BASE_URL}/authors/`),
+          fetch(`${API_BASE_URL}/categories/`),
+          fetch(`${API_BASE_URL}/tags/`),
+        ]);
 
         if (!articlesResponse.ok) throw new Error("Failed to fetch articles");
         if (!authorsResponse.ok) throw new Error("Failed to fetch authors");
         if (!categoriesResponse.ok)
           throw new Error("Failed to fetch categories");
+        if (!tagsResponse.ok) throw new Error("Failed to fetch tags");
 
-        const [articlesData, authorsData, categoriesData] = await Promise.all([
-          articlesResponse.json(),
-          authorsResponse.json(),
-          categoriesResponse.json(),
-        ]);
+        const [articlesData, authorsData, categoriesData, tagsData] =
+          await Promise.all([
+            articlesResponse.json(),
+            authorsResponse.json(),
+            categoriesResponse.json(),
+            tagsResponse.json(),
+          ]);
 
         setArticles(
           Array.isArray(articlesData)
@@ -105,6 +121,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
             ? categoriesData
             : categoriesData?.results || []
         );
+        setTags(Array.isArray(tagsData) ? tagsData : tagsData?.results || []);
       } catch (err: any) {
         console.error("Error fetching data:", err);
         setError(err.message || "Failed to fetch data");
@@ -118,6 +135,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const getAuthor = (id: number) => authors.find((a) => a.id === id);
   const getCategoryById = (id: number | null) =>
     categories.find((c) => c.id === id);
+  const getTagById = (id: number) => tags.find((t) => t.id === id);
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -154,7 +172,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
             </div>
           ))}
         </div>
-        {/* DESKTOP LOADING (unchanged) */}
+        {/* DESKTOP LOADING */}
         <div className="hidden md:block mb-12">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
@@ -216,7 +234,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
           </Link>
         </div>
       </div>
-      {/* DESKTOP HEADER (unchanged) */}
+      {/* DESKTOP HEADER */}
       <div className="hidden md:block mb-12">
         <div className="flex items-center justify-between flex-wrap gap-y-2 mb-4 sm:flex-nowrap sm:items-center">
           <div className="flex items-center gap-3">
@@ -271,20 +289,39 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
                   }`}
                 >
                   <div className="flex justify-between flex-wrap mb-3 md:mb-4 gap-2">
-                    {category && (
-                      <Link
-                        href={`/categories/${category.slug}`}
-                        className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
-                      >
-                        <Folder className="w-3 h-3" />
-                        <span className="hidden md:inline">
-                          {category.name}
-                        </span>
-                        <span className="md:hidden">
-                          {category.name.split(" ")[0]}
-                        </span>
-                      </Link>
-                    )}
+                    <div className="flex flex-wrap gap-2">
+                      {category && (
+                        <Link
+                          href={`/categories/${category.slug}`}
+                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
+                        >
+                          <Folder className="w-3 h-3" />
+                          <span className="hidden md:inline">
+                            {category.name}
+                          </span>
+                          <span className="md:hidden">
+                            {category.name.split(" ")[0]}
+                          </span>
+                        </Link>
+                      )}
+                      {article.tags.map((tagId) => {
+                        const tag = getTagById(tagId);
+                        if (!tag) return null;
+                        return (
+                          <Link
+                            key={tag.id}
+                            href={`/articles?tag=${tag.slug}`}
+                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
+                          >
+                            <TagIcon className="w-3 h-3" />
+                            <span className="hidden md:inline">{tag.name}</span>
+                            <span className="md:hidden">
+                              {tag.name.split(" ")[0]}
+                            </span>
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
                   <Link
                     href={`/articles/${article.slug}`}
