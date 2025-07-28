@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type React from "react";
-
 import {
   Award,
   Clock,
@@ -20,6 +19,7 @@ import {
   TrendingUp,
   BadgeCheck,
   Github,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -402,7 +402,17 @@ export function CertificationRoadmap() {
   >("Beginner");
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>(
     {}
-  ); // State to manage expanded topics per card
+  );
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const filteredCerts = certifications.filter(
     (cert) => cert.difficulty === filter
@@ -451,7 +461,7 @@ export function CertificationRoadmap() {
           </motion.p>
         </div>
 
-        {/* Filter Buttons - Now always visible and horizontally scrollable */}
+        {/* Filter Buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -505,129 +515,170 @@ export function CertificationRoadmap() {
           })}
         </motion.div>
 
-        {filteredCerts.length > 0 ? (
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8">
-            {filteredCerts.map((cert, index) => {
-              const config = difficultyConfig[cert.difficulty];
-              const isTopicsExpanded = expandedTopics[cert.title];
-              const topicsToShow = isTopicsExpanded
-                ? cert.topics
-                : cert.topics.slice(0, 4);
-
-              return (
+        {/* Mobile scroll indicator */}
+        <div className="relative">
+          <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+            <motion.button
+              onClick={scrollRight}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-orange-600 rounded-full shadow-lg border border-gray-200"
+            >
+              <div className="relative">
+                <ChevronRight className="w-5 h-5" />
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className={`flex-shrink-0 w-[79vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 flex flex-col`}
-                >
-                  <div className="p-5 relative">
-                    <div className="absolute top-3 right-3">
-                      {cert.recommended && (
-                        <Badge className="px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-medium rounded-full shadow-sm border border-yellow-500">
-                          <TrendingUp className="w-3 h-3 mr-1" /> Recommended
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg inline-flex mb-4">
-                      {cert.icon}
-                    </div>
-                    <h3 className="text-lg font-bold mb-2 leading-tight text-gray-900 group-hover:text-orange-700 transition-colors">
-                      {cert.title}
-                    </h3>
-                    <p className="text-gray-700 text-sm font-medium">
-                      {cert.organization}
-                    </p>
-                  </div>
-                  <div className="p-5 flex-grow">
-                    <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Clock className="w-4 h-4" />
-                        <span className="font-medium">
-                          {cert.preparationTime}
-                        </span>
+                  animate={{
+                    x: [0, 4, 0],
+                    opacity: [0.6, 1, 0.6],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.5,
+                  }}
+                  className="absolute -right-1 -top-1 w-2 h-2 bg-orange-600 rounded-full"
+                />
+              </div>
+            </motion.button>
+          </div>
+
+          {/* Cards container with scroll ref */}
+          <div
+            ref={scrollContainerRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 hide-scrollbar"
+          >
+            {filteredCerts.length > 0 ? (
+              filteredCerts.map((cert, index) => {
+                const config = difficultyConfig[cert.difficulty];
+                const isTopicsExpanded = expandedTopics[cert.title];
+                const topicsToShow = isTopicsExpanded
+                  ? cert.topics
+                  : cert.topics.slice(0, 4);
+
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className={`flex-shrink-0 w-[79vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 flex flex-col`}
+                  >
+                    <div className="p-5 relative">
+                      <div className="absolute top-3 right-3">
+                        {cert.recommended && (
+                          <Badge className="px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-medium rounded-full shadow-sm border border-yellow-500">
+                            <TrendingUp className="w-3 h-3 mr-1" /> Recommended
+                          </Badge>
+                        )}
                       </div>
-                    </div>
-                    <div className="mb-6">
-                      <p className="text-sm text-gray-600 mb-3 font-medium">
-                        {cert.examDetails}
+                      <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg inline-flex mb-4">
+                        {cert.icon}
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 leading-tight text-gray-900 group-hover:text-orange-700 transition-colors">
+                        {cert.title}
+                      </h3>
+                      <p className="text-gray-700 text-sm font-medium">
+                        {cert.organization}
                       </p>
                     </div>
-                    <div className="mb-8">
-                      <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <BookOpen className="w-4 h-4" /> Topics Covered
-                      </h4>
-                      <ul className="space-y-3">
-                        {topicsToShow.map((topic, i) => (
-                          <motion.li
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.05 }}
-                            className="flex items-start group/topic"
-                          >
-                            <div
-                              className={`flex-shrink-0 mt-0.5 mr-3 w-4 h-4 ${config.iconBg} rounded-full flex items-center justify-center shadow-sm`}
-                            >
-                              <Check
-                                className={`w-2.5 h-2.5 ${config.iconText}`}
-                              />
-                            </div>
-                            <span className="text-sm text-gray-700 font-medium leading-tight group-hover/topic:text-blue-600 transition-colors">
-                              {topic}
-                            </span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                      {cert.topics.length > 4 && (
-                        <p className="text-sm text-gray-500 mt-3">
-                          <button
-                            onClick={() => toggleTopics(cert.title)}
-                            className="font-medium text-blue-600 cursor-pointer hover:underline focus:outline-none"
-                          >
-                            {isTopicsExpanded
-                              ? "See less topics"
-                              : "See more topics"}
-                          </button>
+                    <div className="p-5 flex-grow">
+                      <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <Clock className="w-4 h-4" />
+                          <span className="font-medium">
+                            {cert.preparationTime}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mb-6">
+                        <p className="text-sm text-gray-600 mb-3 font-medium">
+                          {cert.examDetails}
                         </p>
-                      )}
+                      </div>
+                      <div className="mb-8">
+                        <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                          <BookOpen className="w-4 h-4" /> Topics Covered
+                        </h4>
+                        <ul className="space-y-3">
+                          {topicsToShow.map((topic, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.05 }}
+                              className="flex items-start group/topic"
+                            >
+                              <div
+                                className={`flex-shrink-0 mt-0.5 mr-3 w-4 h-4 ${config.iconBg} rounded-full flex items-center justify-center shadow-sm`}
+                              >
+                                <Check
+                                  className={`w-2.5 h-2.5 ${config.iconText}`}
+                                />
+                              </div>
+                              <span className="text-sm text-gray-700 font-medium leading-tight group-hover/topic:text-blue-600 transition-colors">
+                                {topic}
+                              </span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                        {cert.topics.length > 4 && (
+                          <p className="text-sm text-gray-500 mt-3">
+                            <button
+                              onClick={() => toggleTopics(cert.title)}
+                              className="font-medium text-blue-600 cursor-pointer hover:underline focus:outline-none"
+                            >
+                              {isTopicsExpanded
+                                ? "See less topics"
+                                : "See more topics"}
+                            </button>
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-5 pt-0">
-                    <a
-                      href={cert.examLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
-                    >
-                      <span>View Exam Details</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </a>
-                  </div>
-                </motion.div>
-              );
-            })}
+                    <div className="p-5 pt-0">
+                      <a
+                        href={cert.examLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
+                      >
+                        <span>View Exam Details</span>
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                      </a>
+                    </div>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-16"
+              >
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <GraduationCap className="w-10 h-10 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                  No certifications found
+                </h3>
+                <p className="text-gray-500">
+                  Select a difficulty level to view available certifications.
+                </p>
+              </motion.div>
+            )}
           </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16"
-          >
-            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <GraduationCap className="w-10 h-10 text-gray-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
-              No certifications found
-            </h3>
-            <p className="text-gray-500">
-              Select a difficulty level to view available certifications.
-            </p>
-          </motion.div>
-        )}
+        </div>
       </div>
+
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }
