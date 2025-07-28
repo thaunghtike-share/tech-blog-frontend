@@ -172,10 +172,10 @@ export function YouTubePlaylists({
           <div className="text-center mb-6 md:mb-6">
             <div className="flex items-center justify-center gap-2 md:gap-3 mb-4 md:mb-4">
               <div className="p-2 md:p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-lg">
-                <Globe className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                <Globe className="w-4 h-4 md:w-4 md:h-4 text-white" />
               </div>
-              <span className="inline-flex items-center px-2 py-1 md:px-4 md:py-1 rounded-full text-xs md:text-sm font-medium bg-red-100 text-red-700 border border-red-200">
-                <Play className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" /> Youtube
+              <span className="inline-flex items-center px-2 py-1 md:px-4 md:py-1 rounded-full text-sm md:text-sm font-medium bg-red-100 text-red-700 border border-red-200">
+                <Play className="w-4 h-4 md:w-4 md:h-4 mr-1 md:mr-2" /> Youtube
                 Playlists
               </span>
             </div>

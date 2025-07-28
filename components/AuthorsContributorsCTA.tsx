@@ -14,7 +14,7 @@ export function AuthorsContributorsCTA() {
           <div className="p-3 bg-gradient-to-r from-indigo-500 to-emerald-600 rounded-2xl shadow-lg">
             <Users className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-indigo-50 to-emerald-50 text-indigo-700 border border-indigo-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm md:text-sm font-medium bg-gradient-to-r from-indigo-50 to-emerald-50 text-indigo-700 border border-indigo-200">
             <Heart className="w-4 h-4 mr-2" />
             Join Our Community
           </span>

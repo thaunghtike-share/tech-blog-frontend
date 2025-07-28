@@ -227,8 +227,8 @@ export default function Intro() {
             <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
               <ListTodo className="w-6 h-6 text-white" />
             </div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
-              <BadgeCheck className="w-3 h-3 mr-1.5" /> Guideline
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200">
+              <BadgeCheck className="w-4 h-4 mr-1.5" /> Guideline
             </span>
           </h4>
           <p className="text-gray-700 text-center">

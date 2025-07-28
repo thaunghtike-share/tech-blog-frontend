@@ -69,7 +69,7 @@ export function FreelanceServicesSection() {
           <div className="p-2 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl shadow-lg">
             <Code className="w-6 h-6 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs md:text-sm font-medium bg-gradient-to-r from-yellow-50 to-orange-50 text-orange-700 border border-orange-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm md:text-sm font-medium bg-gradient-to-r from-yellow-50 to-orange-50 text-orange-700 border border-orange-200">
             <Sparkles className="w-4 h-4 mr-2" /> What I Offer
           </span>
         </motion.div>

@@ -100,8 +100,8 @@ export function FreeLabs() {
               <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl shadow-md">
                 <FlaskConical className="w-4 h-4 text-white" />
               </div>
-              <span className="inline-flex items-center px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 border border-orange-200">
-                <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Hands-On
+              <span className="inline-flex items-center px-4 py-1 rounded-full text-sm sm:text-sm font-medium bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 border border-orange-200">
+                <Zap className="w-4 h-4 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Hands-On
                 Labs
               </span>
             </motion.div>

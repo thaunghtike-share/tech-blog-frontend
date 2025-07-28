@@ -425,10 +425,10 @@ export function CertificationRoadmap() {
             className="flex items-center justify-center gap-3 mb-3 sm:mb-4"
           >
             <div className="p-2 sm:p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg">
-              <BadgeCheck className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+              <BadgeCheck className="w-4 h-4 sm:w-4 sm:h-4 text-white" />
             </div>
-            <span className="inline-flex items-center px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 border border-emerald-200">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />{" "}
+            <span className="inline-flex items-center px-3 sm:px-4 py-1 rounded-full text-sm sm:text-sm font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 border border-emerald-200">
+              <Sparkles className="w-4 h-4 sm:w-4 sm:h-4 mr-1 sm:mr-2" />{" "}
               Certification
             </span>
           </motion.div>

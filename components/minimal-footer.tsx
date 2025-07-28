@@ -18,29 +18,29 @@ export function MinimalFooter() {
           {/* Logo + Description - Full width on mobile */}
           <div className="col-span-2 md:col-span-2 order-1">
             <Link href="/" className="inline-block mb-3 md:mb-4">
-              <div className="flex items-center -mt-6 md:-mt-8">
+              <div className="flex items-center -mt-10 md:-mt-8">
                 <img
                   src="/logo.png"
                   alt="Logo"
-                  className="h-30 md:h-32 w-auto mr-2 md:mr-3"
+                  className="h-29 md:h-32 w-auto md:mr-3"
                 />
               </div>
             </Link>
-            <p className="text-xs md:text-sm text-gray-600 -mt-4 md:-mt-10">
+            <p className="text-sm md:text-sm text-gray-600 -mt-8 md:-mt-10">
               Your go-to resource for mastering DevOps, cloud-native
               technologies, and automation. Practical guides, tutorials, and
               real-world projects.
             </p>
 
             {/* Social Icons */}
-            <div className="flex space-x-3 md:space-x-4 mt-4 md:mt-8">
+            <div className="flex space-x-3 md:space-x-4 mt-7 md:mt-8">
               <a
                 href="https://www.linkedin.com/in/thaung-htike-oo-6672781b1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 hover:text-blue-600 transition-colors"
               >
-                <Linkedin className="h-4 w-4 md:h-5 md:w-5" />
+                <Linkedin className="h-5 w-5 md:h-5 md:w-5" />
               </a>
               <a
                 href="https://github.com/thaunghtike-share"
@@ -48,7 +48,7 @@ export function MinimalFooter() {
                 rel="noopener noreferrer"
                 className="text-gray-500 hover:text-gray-800 transition-colors"
               >
-                <Github className="h-4 w-4 md:h-5 md:w-5" />
+                <Github className="h-5 w-5 md:h-5 md:w-5" />
               </a>
               <a
                 href="https://www.facebook.com/learndevopsnowbytho"
@@ -56,27 +56,27 @@ export function MinimalFooter() {
                 rel="noopener noreferrer"
                 className="text-gray-500 hover:text-blue-700 transition-colors"
               >
-                <Facebook className="h-4 w-4 md:h-5 md:w-5" />
+                <Facebook className="h-5 w-5 md:h-5 md:w-5" />
               </a>
               <a
                 href="mailto:thaunghtikeoo.tho1234@gmail.com"
                 className="text-gray-500 hover:text-gray-700 transition-colors"
               >
-                <Mail className="h-4 w-4 md:h-5 md:w-5" />
+                <Mail className="h-5 w-5 md:h-5 md:w-5" />
               </a>
             </div>
           </div>
 
           {/* Quick Links - Stacked on mobile */}
           <div className="order-2 md:order-3">
-            <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
+            <h3 className="text-sm md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
               Quick Links
             </h3>
             <ul className="space-y-1 md:space-y-3">
               <li>
                 <Link
                   href="/articles"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Articles
                 </Link>
@@ -84,7 +84,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/categories"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Categories
                 </Link>
@@ -92,7 +92,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/authors"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Authors
                 </Link>
@@ -100,7 +100,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/about"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   About
                 </Link>
@@ -110,14 +110,14 @@ export function MinimalFooter() {
 
           {/* Learning Resources - Stacked on mobile */}
           <div className="order-4">
-            <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
+            <h3 className="text-sm md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
               Resources
             </h3>
             <ul className="space-y-1 md:space-y-3">
               <li>
                 <Link
                   href="/learn-devops-on-youtube"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   YouTube Playlists
                 </Link>
@@ -125,7 +125,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/learn-devops-on-udemy"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Udemy Courses
                 </Link>
@@ -133,7 +133,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/recommended-paid-courses"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Paid Courses
                 </Link>
@@ -141,7 +141,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/free-labs"
-                  className="text-xs md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
                   Free Labs
                 </Link>
@@ -151,22 +151,22 @@ export function MinimalFooter() {
 
           {/* Contact - Full width on mobile */}
           <div className="col-span-2 md:col-span-1 order-5 mt-4 md:mt-0">
-            <h3 className="text-xs md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
+            <h3 className="text-sm md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
               Contact
             </h3>
             <ul className="space-y-1 md:space-y-3">
-              <li className="text-xs md:text-sm">
+              <li className="text-sm md:text-sm">
                 thaunghtikeoo.tho1234@gmail.com
               </li>
-              <li className="text-xs md:text-sm">+95 9952492359</li>
-              <li className="text-xs md:text-sm">Yangon, Myanmar</li>
+              <li className="text-sm md:text-sm">+95 9952492359</li>
+              <li className="text-sm md:text-sm">Yangon, Myanmar</li>
             </ul>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="border-t border-gray-200 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-gray-500 text-center md:text-left">
+          <p className="text-sm text-gray-500 text-center md:text-left">
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>

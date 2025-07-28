@@ -8,6 +8,7 @@ import {
   MessageSquare,
   ChevronDown,
   ChevronUp,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -35,6 +36,7 @@ export function TopUdemyCourses() {
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -69,8 +71,15 @@ export function TopUdemyCourses() {
     fetchCourses();
   }, []);
 
-  // On mobile, always show all courses
-  // On desktop, show 6 courses by default and all when showAll is true
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const displayedCourses =
     showAll || (typeof window !== "undefined" && window.innerWidth < 640)
       ? courses
@@ -110,8 +119,8 @@ export function TopUdemyCourses() {
           <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
             <GraduationCap className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+            <BookOpen className="w-4 h-4 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
             Udemy Courses
           </span>
         </motion.div>
@@ -134,81 +143,112 @@ export function TopUdemyCourses() {
         </motion.p>
       </div>
 
-      {/* ⚡ Horizontal scroll on mobile */}
-      <div className="flex overflow-x-auto hide-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-4">
-        {displayedCourses.map((course, idx) => (
-          <motion.div
-            key={course.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8, scale: 1.02 }}
-            className="min-w-[21rem] sm:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
-          >
-            <div className="p-5 relative flex-grow">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
-                <BookOpen className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
-                {course.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3">
-                {course.description}
-              </p>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-4">
-                {course.authorImage && (
-                  <img
-                    src={course.authorImage || "/placeholder.svg"}
-                    alt={course.author}
-                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-gray-200"
-                    loading="lazy"
-                  />
+      {/* Mobile scroll container */}
+      <div className="relative">
+        {/* Courses container */}
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto hide-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-4"
+        >
+          {displayedCourses.map((course, idx) => (
+            <motion.div
+              key={course.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="min-w-[21rem] sm:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
+            >
+              <div className="p-5 relative flex-grow">
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
+                  <BookOpen className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+                  {course.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3">
+                  {course.description}
+                </p>
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-4">
+                  {course.authorImage && (
+                    <img
+                      src={course.authorImage || "/placeholder.svg"}
+                      alt={course.author}
+                      className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-gray-200"
+                      loading="lazy"
+                    />
+                  )}
+                  <span className="font-medium">{course.author}</span>
+                </div>
+                {course.rating && (
+                  <div className="flex items-center gap-1 text-yellow-500 mb-3">
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
+                    <span className="font-medium text-gray-900 text-xs sm:text-sm">
+                      {course.rating.toFixed(1)}
+                    </span>
+                  </div>
                 )}
-                <span className="font-medium">{course.author}</span>
-              </div>
-              {course.rating && (
-                <div className="flex items-center gap-1 text-yellow-500 mb-3">
-                  <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
-                  <span className="font-medium text-gray-900 text-xs sm:text-sm">
-                    {course.rating.toFixed(1)}
-                  </span>
-                </div>
-              )}
-              {(course.reviews?.length ?? 0) > 0 && (
-                <div className="space-y-2 mb-4">
-                  {course.reviews?.slice(0, 2).map((review, i) => (
-                    <div
-                      key={i}
-                      className="bg-blue-50 p-2 sm:p-3 rounded-lg border border-blue-100"
-                    >
-                      <div className="text-gray-700 text-xs flex items-start gap-2">
-                        <MessageSquare className="w-3 h-3 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <span>
-                          <strong className="text-blue-700">
-                            {review.username}:
-                          </strong>{" "}
-                          {review.comment}
-                        </span>
+                {(course.reviews?.length ?? 0) > 0 && (
+                  <div className="space-y-2 mb-4">
+                    {course.reviews?.slice(0, 2).map((review, i) => (
+                      <div
+                        key={i}
+                        className="bg-blue-50 p-2 sm:p-3 rounded-lg border border-blue-100"
+                      >
+                        <div className="text-gray-700 text-xs flex items-start gap-2">
+                          <MessageSquare className="w-3 h-3 text-blue-500 mt-0.5 flex-shrink-0" />
+                          <span>
+                            <strong className="text-blue-700">
+                              {review.username}:
+                            </strong>{" "}
+                            {review.comment}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="p-5 pt-0">
+                <a
+                  href={course.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01] text-sm sm:text-base"
+                >
+                  <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+                  Enroll Now
+                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Centered scroll indicator (right side) */}
+        <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+          <motion.button
+            onClick={scrollRight}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
+          >
+            <div className="relative">
+              <ChevronRight className="w-5 h-5" />
+              <motion.div
+                animate={{
+                  x: [0, 4, 0],
+                  opacity: [0.6, 1, 0.6],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                }}
+                className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
+              />
             </div>
-            <div className="p-5 pt-0">
-              <a
-                href={course.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01] text-sm sm:text-base"
-              >
-                <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-                Enroll Now
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
-              </a>
-            </div>
-          </motion.div>
-        ))}
+          </motion.button>
+        </div>
       </div>
 
       {/* Show More / Show Less button - Desktop only */}
@@ -231,7 +271,7 @@ export function TopUdemyCourses() {
         </div>
       )}
 
-      {/* ⛔ Hide scrollbar for mobile scroll */}
+      {/* Hide scrollbar for mobile scroll */}
       <style jsx>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
