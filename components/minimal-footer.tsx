@@ -59,7 +59,7 @@ export function MinimalFooter() {
                 <Facebook className="h-4 w-4 md:h-5 md:w-5" />
               </a>
               <a
-                href="mailto:contact@learndevopsnow.com"
+                href="mailto:thaunghtikeoo.tho1234@gmail.com"
                 className="text-gray-500 hover:text-gray-700 transition-colors"
               >
                 <Mail className="h-4 w-4 md:h-5 md:w-5" />

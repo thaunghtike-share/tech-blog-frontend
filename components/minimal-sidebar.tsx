@@ -250,7 +250,7 @@ export function MinimalSidebar({ onTagClick }: MinimalSidebarProps) {
               ))}
             </ul>
             <Link
-              href="/services"
+              href="#services"
               className="mt-6 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2 px-4 rounded-xl font-medium transition-all shadow-lg hover:shadow-xl"
             >
               <Sparkles className="h-4 w-4" />

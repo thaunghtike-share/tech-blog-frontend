@@ -87,7 +87,7 @@ export default function HomeClient() {
         <div className="-mt-40 md:-mt-38">
           <RecommendedPaidCourses />
         </div>
-        <div className="-mt-33 md:-mt-28">
+        <div id="services" className="-mt-33 md:-mt-28">
           <FreelanceServicesSection />
         </div>
         <div className="-mt-32 md:-mt-30">
