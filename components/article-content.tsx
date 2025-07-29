@@ -405,7 +405,7 @@ export function ArticleContent({
           />
         </div>
         <GiscusComments />
-        <Link href={`/authors/${authorSlug}`} className="block">
+        <Link href={`/authors/${authorSlug}`} className="hidden md:block">
           <Card className="mt-8 bg-gray-30 border border-blue-100 shadow-lg relative overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <div className="absolute inset-0 bg-repeat opacity-10 pointer-events-none"></div>
 
@@ -562,7 +562,7 @@ export function ArticleContent({
                         {item.title}
                       </h4>
 
-                      <p className="text-xs md:text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
+                      <p className="text-sm md:text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
                         {excerpt(item.content)}
                       </p>
                       <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
