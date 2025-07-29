@@ -192,46 +192,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-            {/* Learning Dropdown */}
-            <div>
-              <button
-                onClick={() => setIsLearningOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-100 hover:shadow-inner"
-              >
-                Resources{" "}
-                <ChevronDown
-                  className={`${isLearningOpen ? "rotate-180" : ""} w-4 h-4`}
-                />
-              </button>
-              {isLearningOpen && (
-                <div className="ml-4 mt-2 space-y-1 text-gray-600 border-l border-blue-200 pl-3">
-                  <Link
-                    href="/learn-devops-on-youtube"
-                    className={navLinkStyle("/learn-devops-on-utube")}
-                  >
-                    YouTube
-                  </Link>
-                  <Link
-                    href="/learn-devops-on-udemy"
-                    className={navLinkStyle("/learn-free-udemy")}
-                  >
-                    Udemy Free Course
-                  </Link>
-                  <Link
-                    href="/recommended-paid-courses"
-                    className={navLinkStyle("/learn-paid-courses")}
-                  >
-                    Recommended Paid Course
-                  </Link>
-                  <Link
-                    href="/free-labs"
-                    className={navLinkStyle("/free-labs")}
-                  >
-                    Free Labs
-                  </Link>
-                </div>
-              )}
-            </div>
             {/* Services Dropdown */}
             <div>
               <button
