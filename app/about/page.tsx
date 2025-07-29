@@ -445,13 +445,13 @@ export default function AboutPage() {
                     key={index}
                     className="border-0 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
-                    <CardContent className="-mt-3 p-6">
+                    <CardContent className="md:-mt-4 -mt-7 p-6">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                         <div>
-                          <h4 className="text-xl font-bold text-gray-900 mb-1">
+                          <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-1">
                             {job.position}
                           </h4>
-                          <p className="text-blue-700 font-semibold text-base mb-2">
+                          <p className="text-blue-700 font-semibold text-sm md:text-base mb-2">
                             {job.company}
                           </p>
                         </div>
@@ -481,7 +481,7 @@ export default function AboutPage() {
                           <Badge
                             key={tech}
                             variant="outline"
-                            className="text-sm bg-indigo-100 text-indigo-800 border-indigo-300 px-3 py-1 rounded-full font-medium"
+                            className="text-xs md:text-sm bg-indigo-100 text-indigo-800 border-indigo-300 px-3 py-1 rounded-full font-medium"
                           >
                             {tech}
                           </Badge>
@@ -494,7 +494,7 @@ export default function AboutPage() {
             </div>
             {/* Key Projects */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+              <h3 className="-mt-4 text-xl md:text-2xl font-bold mb-6 flex items-center text-gray-900">
                 <Server className="h-6 w-6 mr-3 text-blue-600" />
                 Key Projects
               </h3>
@@ -505,7 +505,7 @@ export default function AboutPage() {
                     className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
-                      <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      <h4 className="-mt-6 text:lg md:text-xl font-bold text-gray-900 mb-2">
                         {project.name}
                       </h4>
                       <p className="text-gray-700 mb-3 text-sm leading-relaxed">
@@ -529,7 +529,7 @@ export default function AboutPage() {
             </div>
             {/* Education */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+              <h3 className="-mt-5 text-xl md:text-2xl font-bold mb-6 flex items-center text-gray-900">
                 <GraduationCap className="h-6 w-6 mr-3 text-blue-600" />
                 Education
               </h3>
@@ -540,7 +540,7 @@ export default function AboutPage() {
                     className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
-                      <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      <h4 className="-mt-6 text-lg md:text-xl font-bold text-gray-900 mb-2">
                         {edu.degree}
                       </h4>
                       <p className="text-green-700 font-semibold text-base mb-2">
@@ -560,7 +560,7 @@ export default function AboutPage() {
             </div>
             {/* Certifications */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+              <h3 className="-mt-5 text-xl md:text-2xl font-bold mb-6 flex items-center text-gray-900">
                 <Award className="h-6 w-6 mr-3 text-blue-600" />
                 Certifications
               </h3>
@@ -571,13 +571,13 @@ export default function AboutPage() {
                     className="border-0 bg-gray-50 to-red-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
-                      <h4 className="font-bold text-gray-900 mb-2 text-base">
+                      <h4 className="-mt-5 font-bold text-gray-900 mb-2 text-base">
                         {cert.name}
                       </h4>
                       <p className="text-orange-700 font-semibold text-sm mb-2">
                         {cert.issuer}
                       </p>
-                      <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
+                      <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
                         <span>Issued: {cert.year}</span>
                         <span>Valid until: {cert.validUntil}</span>
                       </div>
