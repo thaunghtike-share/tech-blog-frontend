@@ -200,7 +200,7 @@ export default function NewArticlePage() {
               onSubmit={handleLogin}
               className="bg-white p-6 rounded shadow-md max-w-md mx-auto"
             >
-              <h1 className="text-xl font-bold mb-4 text-center">Login</h1>
+              <h1 className="text-xl font-bold text-center">Login</h1>
               <label className="block mb-1 font-semibold text-sm">
                 Username
               </label>
