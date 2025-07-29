@@ -258,48 +258,11 @@ export default function AboutPage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {/* Messenger Support Floating Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with me on Messenger"
-        className="fixed top-[70%] right-1 z-50 flex items-center gap-4 bg-gradient-to-r from-white-600 via-purple-200 to-blue-400 shadow-lg px-3 py-0 rounded-full cursor-pointer transition-transform hover:scale-105"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 240 240"
-          fill="none"
-          className="w-14 h-14 rounded-full"
-        >
-          <defs>
-            <linearGradient
-              id="messengerGradient"
-              x1="0"
-              y1="0"
-              x2="240"
-              y2="240"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#E1306C" />
-              <stop offset="1" stopColor="#833AB4" />
-            </linearGradient>
-          </defs>
-          <circle cx="120" cy="120" r="120" fill="url(#messengerGradient)" />
-          <path
-            fill="#fff"
-            d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-          />
-        </svg>
-        <span className="font-semibold text-white select-none text-lg whitespace-nowrap">
-          Chat?
-        </span>
-      </a>
       <MinimalHeader />
       {/* Page Header */}
-      <section className="bg-gray-50 py-12 border-b border-white/50">
+      <section className="-mt-14 md:-mt-4 bg-gray-50 py-12 border-b border-white/50">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-relaxed">
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 leading-relaxed">
             <span className="text-gray-700">About </span>
             <span className="text-blue-600">Me</span>
           </h1>
@@ -309,7 +272,7 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
-      <main className="max-w-7xl mx-auto px-4 py-12 relative z-10">
+      <main className="-mt-24 md:-mt-10 max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
@@ -467,10 +430,10 @@ export default function AboutPage() {
             </Card>
           </div>
           {/* Experience, Education, Projects, Certifications */}
-          <div className="lg:col-span-2 space-y-10">
+          <div className="-mt-5 md:-mt-5 lg:col-span-2 space-y-10">
             {/* Work Experience */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center text-gray-900">
+              <h3 className="text-2xl font-bold mb-3 flex items-center text-gray-900">
                 <Briefcase className="h-6 w-6 mr-3 text-blue-600" />
                 Work Experience
               </h3>
