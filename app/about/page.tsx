@@ -358,7 +358,7 @@ export default function AboutPage() {
                           <Badge
                             key={skill}
                             variant="secondary"
-                            className="text-xs md:text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium"
+                            className="text-xs md:text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium"
                           >
                             {skill}
                           </Badge>
@@ -481,7 +481,7 @@ export default function AboutPage() {
                           <Badge
                             key={tech}
                             variant="outline"
-                            className="text-xs md:text-sm bg-indigo-100 text-indigo-800 border-indigo-300 px-3 py-1 rounded-full font-medium"
+                            className="text-xs md:text-xs bg-indigo-100 text-indigo-800 border-indigo-300 px-3 py-1 rounded-full font-medium"
                           >
                             {tech}
                           </Badge>
@@ -505,7 +505,7 @@ export default function AboutPage() {
                     className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
                     <CardContent className="p-6">
-                      <h4 className="-mt-6 text:lg md:text-xl font-bold text-gray-900 mb-2">
+                      <h4 className="-mt-8 text:lg md:text-xl font-bold text-gray-900 mb-2">
                         {project.name}
                       </h4>
                       <p className="text-gray-700 mb-3 text-sm leading-relaxed">
@@ -516,7 +516,7 @@ export default function AboutPage() {
                           <Badge
                             key={tech}
                             variant="secondary"
-                            className="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium"
+                            className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium"
                           >
                             {tech}
                           </Badge>
