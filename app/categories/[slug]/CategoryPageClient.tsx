@@ -222,7 +222,7 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   return (
-    <div className="-mt-14 md:-mt-5 relative min-h-screen bg-gray-50">
+    <div className="-mt-17 md:-mt-5 relative min-h-screen bg-gray-50">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
@@ -237,7 +237,7 @@ export default function CategoryPageClient({ slug }: Props) {
           {/* Article list */}
           <div className="lg:col-span-4 space-y-8">
             {/* Articles Section */}
-            <div className="bg-white/75 relative rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div className="bg-gray-50 md:bg-white/90 relative rounded-2xl p-8 shadow-lg border border-gray-100">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
                   <div className="flex items-center gap-4 mb-6">
