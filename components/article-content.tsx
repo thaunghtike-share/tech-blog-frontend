@@ -196,7 +196,7 @@ export function ArticleContent({
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
-      <article className="lg:col-span-2 bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow border border-white/50 max-w-full overflow-x-auto">
+      <article className="lg:col-span-2 bg-gray-50 md:bg-white/90 backdrop-blur-sm rounded-xl p-6 md:shadow md:border md:border-white/50 max-w-full overflow-x-auto">
         {article.image_url && (
           <img
             src={article.image_url || "/placeholder.svg"}
@@ -423,14 +423,14 @@ export function ArticleContent({
               )}
 
               <div className="text-center md:text-left flex-1">
-                <h4 className="text-xs sm:text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
+                <h4 className="text-sm sm:text-sm font-bold text-gray-700 mb-1 uppercase tracking-wide">
                   Written By
                 </h4>
                 <p className="text-lg sm:text-2xl font-extrabold text-indigo-800 mb-2 leading-tight">
                   {article.author_name || author?.name || "Unknown Author"}
                 </p>
                 {author?.bio && (
-                  <p className="text-gray-700 leading-relaxed text-xs sm:text-sm max-w-prose mx-auto md:mx-0">
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-sm max-w-prose mx-auto md:mx-0">
                     {author.bio}
                   </p>
                 )}
@@ -456,7 +456,7 @@ export function ArticleContent({
               className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800 text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>{prevArticle.title}</span>
+              <span>Previous Article</span>
             </Link>
           ) : (
             <span />
@@ -466,7 +466,7 @@ export function ArticleContent({
               href={`/articles/${nextArticle.slug}`}
               className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800 text-sm"
             >
-              <span>{nextArticle.title}</span>
+              <span>Next Article</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           ) : (
