@@ -452,17 +452,17 @@ export function MinimalHeader() {
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 border border-gray-400 rounded-full text-sm"
+                className="pr-10 border-2 md:border-2 border-gray-600 md:border-gray-400 rounded-full text-sm"
               />
               {searchQuery && (
                 <Button
                   size="icon"
                   variant="ghost"
                   onClick={handleClear}
-                  className="absolute top-1 right-1 text-gray-500 hover:text-red-500"
+                  className="absolute top-0 right-1 text-gray-700 hover:bg-transparent hover:text-red-700"
                   aria-label="Clear"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-2 h-2" />
                 </Button>
               )}
               {searchQuery && searchResults.length > 0 && (
