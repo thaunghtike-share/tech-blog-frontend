@@ -317,20 +317,22 @@ export default function AboutPage() {
                 <div className="mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                   <Button
                     size="lg"
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all"
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all 
+               text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                   >
-                    <Download className="h-4 w-4 mr-2" />
+                    <Download className="h-4 w-4" />
                     Download CV
                   </Button>
                   <Button
                     size="lg"
                     variant="outline"
-                    className="flex-1 border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all bg-transparent"
+                    className="flex-1 border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all bg-transparent
+               text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                     onClick={() =>
                       window.open(personalInfo.linkedinUrl, "_blank")
                     }
                   >
-                    <Linkedin className="h-4 w-4 mr-2" />
+                    <Linkedin className="h-4 w-4" />
                     LinkedIn
                   </Button>
                 </div>
@@ -345,7 +347,7 @@ export default function AboutPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 pt-0">
-                <div className="space-y-5">
+                <div className="-mt-5 space-y-5">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
                       <h4 className="text-base font-semibold text-gray-800 mb-2">
@@ -356,7 +358,7 @@ export default function AboutPage() {
                           <Badge
                             key={skill}
                             variant="secondary"
-                            className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium"
+                            className="text-xs md:text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium"
                           >
                             {skill}
                           </Badge>
@@ -374,7 +376,7 @@ export default function AboutPage() {
                   Freelance Earnings (Upwork)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 pt-0 space-y-4">
+              <CardContent className="-mt-6 p-6 pt-0 space-y-4">
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-gray-700 font-medium">
                     Total Earnings
@@ -433,7 +435,7 @@ export default function AboutPage() {
           <div className="-mt-5 md:-mt-5 lg:col-span-2 space-y-10">
             {/* Work Experience */}
             <div>
-              <h3 className="text-2xl font-bold mb-3 flex items-center text-gray-900">
+              <h3 className="text-xl md:text-2xl font-bold mb-3 flex items-center text-gray-900">
                 <Briefcase className="h-6 w-6 mr-3 text-blue-600" />
                 Work Experience
               </h3>
@@ -443,7 +445,7 @@ export default function AboutPage() {
                     key={index}
                     className="border-0 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
                   >
-                    <CardContent className="p-6">
+                    <CardContent className="-mt-3 p-6">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                         <div>
                           <h4 className="text-xl font-bold text-gray-900 mb-1">
