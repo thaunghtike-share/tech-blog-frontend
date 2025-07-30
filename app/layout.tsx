@@ -13,12 +13,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Learn DevOps Now",
-  description: "Learn DevOps Now",
+  title: "Learn DevOps Now - Hands-on Learning",
+  description:
+    "Start your DevOps journey with real-world labs, CI/CD, cloud, and more.",
   icons: {
-    icon: "/devops.png", // or "/logo.png", "/icon.svg"
+    icon: "/devops.png",
+  },
+  openGraph: {
+    title: "Learn DevOps Now",
+    description:
+      "start your devops journey here",
+    url: "https://www.learndevopsnow.it.com",
+    siteName: "Learn DevOps Now",
+    images: [
+      {
+        url: "https://www.learndevopsnow.it.com/images/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Learn DevOps Now - Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Learn DevOps Now - Hands-on Learning",
+    description:
+      "Start your DevOps journey with real-world labs, CI/CD, cloud, and more.",
+    images: ["https://www.learndevopsnow.it.com/images/preview.png"],
   },
 };
+
 
 export default function RootLayout({
   children,
