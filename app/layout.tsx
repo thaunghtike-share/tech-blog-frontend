@@ -13,21 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Learn DevOps Now - Hands-on Learning",
+  title: "Learn DevOps Now",
   description:
-    "Start your DevOps journey with real-world labs, CI/CD, cloud, and more.",
+    "start your devops journey here",
   icons: {
     icon: "/devops.png",
   },
   openGraph: {
-    title: "Learn DevOps Now",
+    title: "Learn DevOps Now - Thaung Htike Oo",
     description:
       "start your devops journey here",
     url: "https://www.learndevopsnow.it.com",
-    siteName: "Learn DevOps Now",
+    siteName: "Learn DevOps Now - Thaung Htike Oo",
     images: [
       {
-        url: "https://www.learndevopsnow.it.com/images/preview.png",
+        url: "https://www.learndevopsnow.it.com/images/mylogo.png",
         width: 1200,
         height: 630,
         alt: "Learn DevOps Now - Preview",
@@ -38,10 +38,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Learn DevOps Now - Hands-on Learning",
+    title: "Learn DevOps Now - Thaung Htike Oo",
     description:
-      "Start your DevOps journey with real-world labs, CI/CD, cloud, and more.",
-    images: ["https://www.learndevopsnow.it.com/images/preview.png"],
+      "start your devops journey here",
+    images: ["https://www.learndevopsnow.it.com/images/mylogo.png"],
   },
 };
 
