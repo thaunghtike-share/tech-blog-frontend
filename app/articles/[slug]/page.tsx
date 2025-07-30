@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Head from "next/head";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import type { Metadata } from "next";
@@ -15,12 +16,12 @@ interface Article {
   author: number;
   featured: boolean;
   read_count?: number;
-  cover_image?: string; // Added cover_image field
+  cover_image?: string;
 }
 
 interface Author {
   id: number;
-  slug: string; // Added slug here
+  slug: string;
   name: string;
   bio?: string;
   avatar?: string;
@@ -58,12 +59,9 @@ async function fetchAuthor(id: number): Promise<Author | null> {
     });
     if (!res.ok) return null;
     const author: Author = await res.json();
-
-    // Add fallback slug if missing (optional)
     if (!author.slug) {
       author.slug = `author-${author.id}`;
     }
-
     return author;
   } catch {
     return null;
@@ -115,10 +113,17 @@ export async function generateMetadata({
     const description =
       article.content
         ?.replace(/[#_*>\[\]()`]/g, "")
-        ?.slice(0, 150)
-        ?.trim() || "Learn DevOps Now";
-    const image =
-      article.cover_image || "https://www.learndevopsnow.it.com/default-og.png";
+        .slice(0, 150)
+        .trim() || "Learn DevOps Now";
+
+    let image =
+      article.cover_image ||
+      "https://www.learndevopsnow.it.com/images/mylogo.jpg";
+    if (image && !image.startsWith("http")) {
+      image = `https://www.learndevopsnow.it.com${
+        image.startsWith("/") ? "" : "/"
+      }${image}`;
+    }
 
     return {
       title,
@@ -128,14 +133,7 @@ export async function generateMetadata({
         description,
         type: "article",
         url: `https://www.learndevopsnow.it.com/articles/${slug}`,
-        images: [
-          {
-            url: image,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
-        ],
+        images: [{ url: image, width: 1200, height: 630, alt: title }],
       },
       twitter: {
         card: "summary_large_image",
@@ -183,6 +181,21 @@ export default async function ArticlePage({
     fetchJSON<Author>(`${API_BASE_URL}/authors/`),
   ]);
 
+  const description =
+    article.content
+      ?.replace(/[#_*>\[\]()`]/g, "")
+      .slice(0, 150)
+      .trim() || "Learn DevOps Now";
+
+  let image =
+    article.cover_image ||
+    "https://www.learndevopsnow.it.com/images/mylogo.jpg";
+  if (image && !image.startsWith("http")) {
+    image = `https://www.learndevopsnow.it.com${
+      image.startsWith("/") ? "" : "/"
+    }${image}`;
+  }
+
   const headings = extractHeadings(article.content);
   const sorted = allArticles.sort(
     (a, b) =>
@@ -204,36 +217,55 @@ export default async function ArticlePage({
     .filter(Boolean) as string[];
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
-      <div
-        className="absolute inset-0 z-0 opacity-10"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        }}
-      ></div>
-
-      <MinimalHeader />
-      <div className="md:-mt-1 -mt-19">
-        <ArticleContent
-          article={article}
-          author={author}
-          headings={headings}
-          prevArticle={prevArticle}
-          nextArticle={nextArticle}
-          recentArticles={recentArticles}
-          sameCategoryArticles={sameCategoryArticles}
-          publishDate={publishDate}
-          categoryName={categoryName}
-          tagNames={tagNames}
-          authors={authors}
-          categories={categories}
-          readCount={article.read_count || 0}
+    <>
+      <Head>
+        <title>{article.title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
+        <meta
+          property="og:url"
+          content={`https://www.learndevopsnow.it.com/articles/${slug}`}
         />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
+      </Head>
+
+      <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
+        <div
+          className="absolute inset-0 z-0 opacity-10"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          }}
+        ></div>
+
+        <MinimalHeader />
+        <div className="md:-mt-1 -mt-19">
+          <ArticleContent
+            article={article}
+            author={author}
+            headings={headings}
+            prevArticle={prevArticle}
+            nextArticle={nextArticle}
+            recentArticles={recentArticles}
+            sameCategoryArticles={sameCategoryArticles}
+            publishDate={publishDate}
+            categoryName={categoryName}
+            tagNames={tagNames}
+            authors={authors}
+            categories={categories}
+            readCount={article.read_count || 0}
+          />
+        </div>
+        <div className="md:-mt-2 -mt-5">
+          <MinimalFooter />
+        </div>
       </div>
-      <div className="md:-mt-2 -mt-5">
-        <MinimalFooter />
-      </div>
-    </div>
+    </>
   );
 }
