@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import { ArticleContent } from "@/components/article-content";
 import type { Metadata } from "next";
+import { ArticleContent } from "@/components/article-content";
 
 interface Article {
   id: number;
@@ -15,6 +15,7 @@ interface Article {
   author: number;
   featured: boolean;
   read_count?: number;
+  cover_image?: string; // Added cover_image field
 }
 
 interface Author {
@@ -98,16 +99,14 @@ function extractHeadings(
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const slug = params.slug;
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+  const { slug } = await params;
 
   try {
     const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
       cache: "no-store",
     });
-
     if (!res.ok) throw new Error("Not found");
 
     const article = await res.json();
@@ -216,24 +215,24 @@ export default async function ArticlePage({
 
       <MinimalHeader />
       <div className="md:-mt-1 -mt-19">
-      <ArticleContent
-        article={article}
-        author={author}
-        headings={headings}
-        prevArticle={prevArticle}
-        nextArticle={nextArticle}
-        recentArticles={recentArticles}
-        sameCategoryArticles={sameCategoryArticles}
-        publishDate={publishDate}
-        categoryName={categoryName}
-        tagNames={tagNames}
-        authors={authors}
-        categories={categories}
-        readCount={article.read_count || 0}
-      />
+        <ArticleContent
+          article={article}
+          author={author}
+          headings={headings}
+          prevArticle={prevArticle}
+          nextArticle={nextArticle}
+          recentArticles={recentArticles}
+          sameCategoryArticles={sameCategoryArticles}
+          publishDate={publishDate}
+          categoryName={categoryName}
+          tagNames={tagNames}
+          authors={authors}
+          categories={categories}
+          readCount={article.read_count || 0}
+        />
       </div>
       <div className="md:-mt-2 -mt-5">
-      <MinimalFooter />
+        <MinimalFooter />
       </div>
     </div>
   );
