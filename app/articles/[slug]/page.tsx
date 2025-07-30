@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { ArticleContent } from "@/components/article-content";
+import type { Metadata } from "next";
 
 interface Article {
   id: number;
@@ -92,6 +93,64 @@ function extractHeadings(
       return { text: rawText, level, id: baseId };
     })
     .filter(Boolean) as { text: string; level: number; id: string }[];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const slug = params.slug;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) throw new Error("Not found");
+
+    const article = await res.json();
+
+    const title = article.title || "Learn DevOps Now";
+    const description =
+      article.content
+        ?.replace(/[#_*>\[\]()`]/g, "")
+        ?.slice(0, 150)
+        ?.trim() || "Learn DevOps Now";
+    const image =
+      article.cover_image || "https://www.learndevopsnow.it.com/default-og.png";
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        type: "article",
+        url: `https://www.learndevopsnow.it.com/articles/${slug}`,
+        images: [
+          {
+            url: image,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [image],
+      },
+    };
+  } catch {
+    return {
+      title: "Article not found",
+      description: "This article does not exist.",
+    };
+  }
 }
 
 export default async function ArticlePage({
