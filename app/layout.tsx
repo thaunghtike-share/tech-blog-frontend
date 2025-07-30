@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Learn DevOps Now - Thaung Htike Oo",
     images: [
       {
-        url: "https://www.learndevopsnow.it.com/images/mylogo.png",
+        url: "https://www.learndevopsnow.it.com/images/mylogo.jpg",
         width: 1200,
         height: 630,
         alt: "Learn DevOps Now - Preview",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Learn DevOps Now - Thaung Htike Oo",
     description:
       "start your devops journey here",
-    images: ["https://www.learndevopsnow.it.com/images/mylogo.png"],
+    images: ["https://www.learndevopsnow.it.com/images/mylogo.jpg"],
   },
 };
 

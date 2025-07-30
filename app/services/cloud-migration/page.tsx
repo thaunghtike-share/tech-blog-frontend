@@ -117,7 +117,7 @@ export default function MonolithicToCloudNativePage() {
             </p>
           </div>
           {/* Updated dinger.png container with soft border */}
-          <Card className="mb-6 overflow-hidden duration-500 border bg-gray-30 border-gray-500 shadow-sm ">
+          <Card className="mb-6 overflow-hidden duration-500 border bg-white/50 border-gray-300 shadow-sm ">
             <CardContent className="p-4">
               <div className="h-[250px] md:h-[700px] w-full relative">
                 <Image
