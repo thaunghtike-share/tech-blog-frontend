@@ -280,7 +280,7 @@ export default function EditArticlePage() {
         }`}
       >
         {!authenticated ? (
-          <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="flex justify-center items-center py-4">
             <form
               onSubmit={handleLogin}
               className="w-full max-w-md bg-white p-8 rounded-lg shadow-md border border-gray-200"
