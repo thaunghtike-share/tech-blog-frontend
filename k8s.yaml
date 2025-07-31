@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: ldn-container
-      image: mahar.azurecr.io/ldn-ui:3.6
+      image: mahar.azurecr.io/ldn-ui:3.8
       ports:
         - containerPort: 3000
         
