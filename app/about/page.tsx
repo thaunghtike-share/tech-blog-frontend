@@ -29,7 +29,7 @@ const personalInfo = {
   phone: "+959952492359",
   summary:
     "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.",
-  avatar: "/me.png?height=150&width=150", // Placeholder for avatar
+  avatar: "/thaung.jpg?height=150&width=150", // Placeholder for avatar
   linkedinUrl: "https://www.linkedin.com/in/thaung-htike-oo-devops/",
 };
 
@@ -281,7 +281,7 @@ export default function AboutPage() {
                 <div className="text-center mb-6">
                   <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg">
                     <Image
-                      src={personalInfo.avatar || "/me.png"}
+                      src={personalInfo.avatar || "/tho.jpg"}
                       alt={personalInfo.name}
                       layout="fill"
                       objectFit="cover"
