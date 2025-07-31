@@ -21,6 +21,7 @@ interface Tag {
 }
 
 export default function EditArticlePage() {
+  const [showPreview, setShowPreview] = useState(false);
   const { slug } = useParams();
   const [token, setToken] = useState<string | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
@@ -500,9 +501,20 @@ export default function EditArticlePage() {
 
               <div className={`${fullscreen ? "flex-grow flex flex-col" : ""}`}>
                 {!fullscreen && (
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Content
-                  </label>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Content
+                    </label>
+                    <div className="flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowPreview(!showPreview)}
+                        className="text-xs bg-blue-700 hover:bg-black text-white px-2 py-1 rounded-xl transition"
+                      >
+                        {showPreview ? "Hide Preview" : "Show Preview"}
+                      </button>
+                    </div>
+                  </div>
                 )}
                 <div
                   ref={editorRef}
@@ -513,7 +525,10 @@ export default function EditArticlePage() {
                     value={form.content}
                     onChange={(val) => setForm({ ...form, content: val || "" })}
                     height={fullscreen ? "100%" : 400}
-                    preview="live"
+                    preview={
+                      fullscreen ? "edit" : showPreview ? "live" : "edit"
+                    }
+                    hideToolbar={false}
                     textareaProps={{
                       placeholder: "Write your article content here...",
                       className:
@@ -534,11 +549,11 @@ export default function EditArticlePage() {
                         keyCommand: "fullscreen",
                         buttonProps: { "aria-label": "Toggle fullscreen" },
                         icon: (
-                          <svg width="12" height="12" viewBox="0 0 512 512">
+                          <svg width="14" height="14" viewBox="0 0 512 512">
                             <path
                               fill="currentColor"
                               d="M396.795 396.8H320V448h128V320h-51.205zm-281.59 0H192V448H64V320h51.205zm0-281.595H64V192h128V64H192zm281.595 0H320V64h128v128h-51.205z"
-                            ></path>
+                            />
                           </svg>
                         ),
                         execute: (state, api) => {
@@ -549,7 +564,6 @@ export default function EditArticlePage() {
                   />
                 </div>
               </div>
-
               {!fullscreen && (
                 <div className="flex justify-between items-center pt-4 border-t border-gray-200">
                   <button
