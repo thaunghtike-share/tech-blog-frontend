@@ -473,7 +473,7 @@ export function ArticleContent({
             <span />
           )}
         </div>
-        {/* Recent Articles - Redesigned */}
+        {/* Recent Articles - Only this section is modified */}
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl md:text-2xl font-semibold text-gray-800 flex items-center gap-2">
@@ -500,8 +500,7 @@ export function ArticleContent({
               const itemCategory =
                 categories.find((c) => c.id === item.category)?.name ||
                 "General";
-              const itemAuthor =
-                authors.find((a) => a.id === item.author)?.name || "Unknown";
+              const itemAuthor = authors.find((a) => a.id === item.author);
               const itemTags = tagNames.filter((_, index) =>
                 item.tags?.includes(index)
               );
@@ -567,8 +566,16 @@ export function ArticleContent({
                       </p>
                       <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-xs text-gray-600">
-                          <User className="w-3.5 h-3.5 text-gray-500" />
-                          <span>{itemAuthor}</span>
+                          {itemAuthor?.avatar ? (
+                            <img
+                              src={itemAuthor.avatar}
+                              alt={itemAuthor.name}
+                              className="w-6 h-6 rounded-full object-cover"
+                            />
+                          ) : (
+                            <User className="w-3.5 h-3.5 text-gray-500" />
+                          )}
+                          <span>{itemAuthor?.name || "Unknown"}</span>
                         </div>
                         <div className="text-xs text-gray-500 flex items-center gap-1">
                           <CalendarDays className="w-3.5 h-3.5 text-gray-500" />
