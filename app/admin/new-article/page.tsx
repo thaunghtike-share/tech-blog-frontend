@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import type React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { MinimalHeader } from "@/components/minimal-header";
@@ -27,6 +27,8 @@ export default function NewArticlePage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [fullscreen, setFullscreen] = useState(false);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   const [form, setForm] = useState({
     title: "",
@@ -44,6 +46,32 @@ export default function NewArticlePage() {
     type: "success" | "error";
   } | null>(null);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
+
+  // Handle fullscreen change
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
+  // Custom fullscreen handler for MDEditor
+  const handleEditorFullscreen = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!editorRef.current) return;
+
+    if (!fullscreen) {
+      editorRef.current.requestFullscreen().catch((err) => {
+        console.error("Error attempting to enable fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
 
   // Load token and draft on initial render
   useEffect(() => {
@@ -219,19 +247,34 @@ export default function NewArticlePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 relative overflow-x-hidden">
-      <div
-        className="absolute inset-0 z-0 opacity-10"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        }}
-      ></div>
+    <div
+      className={`min-h-screen flex flex-col bg-gray-50 relative overflow-x-hidden ${
+        fullscreen ? "overflow-hidden" : ""
+      }`}
+    >
+      {!fullscreen && (
+        <>
+          <div
+            className="absolute inset-0 z-0 opacity-10"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            }}
+          ></div>
+          <MinimalHeader />
+        </>
+      )}
 
-      <MinimalHeader />
-
-      <main className="-mt-10 md:-mt-1 flex-grow max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-6 gap-10 relative z-10">
-        <section className="lg:col-span-6">
+      <main
+        className={`${
+          fullscreen
+            ? "fixed inset-0 z-50 bg-white"
+            : "-mt-10 md:-mt-1 flex-grow max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-6 gap-10 relative z-10"
+        }`}
+      >
+        <section
+          className={`${fullscreen ? "h-full w-full" : "lg:col-span-6"}`}
+        >
           {!token ? (
             <div className="max-w-2xl mx-auto">
               {/* Invitation-only Notice - Only shows before login */}
@@ -300,28 +343,34 @@ export default function NewArticlePage() {
             </div>
           ) : (
             <>
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-800">
-                    New Article Editor
-                  </h1>
-                  <p className="text-sm text-gray-500">
-                    {lastSaved && `Draft auto-saved at ${lastSaved}`}
-                  </p>
+              {!fullscreen && (
+                <div className="flex justify-between items-center mb-6">
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                      New Article Editor
+                    </h1>
+                    <p className="text-sm text-gray-500">
+                      {lastSaved && `Draft auto-saved at ${lastSaved}`}
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-black transition-colors text-sm font-medium"
+                  >
+                    Logout
+                  </button>
                 </div>
-                <button
-                  onClick={handleLogout}
-                  className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-black transition-colors text-sm font-medium"
-                >
-                  Logout
-                </button>
-              </div>
+              )}
 
               <form
                 onSubmit={handleSubmit}
-                className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
+                className={`bg-white ${
+                  fullscreen
+                    ? "h-full"
+                    : "p-6 rounded-lg shadow-md border border-gray-200"
+                }`}
               >
-                {message && (
+                {!fullscreen && message && (
                   <div
                     className={`mb-4 p-3 rounded-md text-sm ${
                       message.type === "success"
@@ -333,111 +382,131 @@ export default function NewArticlePage() {
                   </div>
                 )}
 
-                <div className="space-y-6">
-                  <div>
-                    <label className="block font-medium text-sm text-gray-700 mb-1">
-                      Title <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={form.title}
-                      onChange={(e) => handleChange("title", e.target.value)}
-                      required
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                      placeholder="Enter article title"
-                    />
-                  </div>
+                <div
+                  className={`space-y-6 ${
+                    fullscreen ? "h-full flex flex-col" : ""
+                  }`}
+                >
+                  {!fullscreen && (
+                    <>
+                      <div>
+                        <label className="block font-medium text-sm text-gray-700 mb-1">
+                          Title <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={form.title}
+                          onChange={(e) =>
+                            handleChange("title", e.target.value)
+                          }
+                          required
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                          placeholder="Enter article title"
+                        />
+                      </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block font-medium text-sm text-gray-700 mb-1">
-                        Category <span className="text-red-500">*</span>
-                      </label>
-                      <select
-                        value={form.category}
-                        onChange={(e) =>
-                          handleChange("category", e.target.value)
-                        }
-                        required
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                      >
-                        <option value="">Select category</option>
-                        {categories.map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block font-medium text-sm text-gray-700 mb-1">
-                        Published Date <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="date"
-                        value={form.published_at}
-                        onChange={(e) =>
-                          handleChange("published_at", e.target.value)
-                        }
-                        required
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-medium text-sm text-gray-700 mb-2">
-                      Tags
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {tags.map((tag) => {
-                        const selected = form.tags.includes(tag.id);
-                        return (
-                          <button
-                            type="button"
-                            key={tag.id}
-                            onClick={() => toggleTag(tag.id)}
-                            className={`px-3 py-1 rounded-full border text-sm transition-colors ${
-                              selected
-                                ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
-                                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block font-medium text-sm text-gray-700 mb-1">
+                            Category <span className="text-red-500">*</span>
+                          </label>
+                          <select
+                            value={form.category}
+                            onChange={(e) =>
+                              handleChange("category", e.target.value)
+                            }
+                            required
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                           >
-                            {tag.name}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
+                            <option value="">Select category</option>
+                            {categories.map((cat) => (
+                              <option key={cat.id} value={cat.id}>
+                                {cat.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
 
-                  <div className="flex items-center">
-                    <input
-                      id="featured"
-                      type="checkbox"
-                      checked={form.featured}
-                      onChange={(e) =>
-                        handleChange("featured", e.target.checked)
-                      }
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor="featured"
-                      className="ml-2 block text-sm text-gray-700"
+                        <div>
+                          <label className="block font-medium text-sm text-gray-700 mb-1">
+                            Published Date{" "}
+                            <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="date"
+                            value={form.published_at}
+                            onChange={(e) =>
+                              handleChange("published_at", e.target.value)
+                            }
+                            required
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block font-medium text-sm text-gray-700 mb-2">
+                          Tags
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {tags.map((tag) => {
+                            const selected = form.tags.includes(tag.id);
+                            return (
+                              <button
+                                type="button"
+                                key={tag.id}
+                                onClick={() => toggleTag(tag.id)}
+                                className={`px-3 py-1 rounded-full border text-sm transition-colors ${
+                                  selected
+                                    ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+                                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                                }`}
+                              >
+                                {tag.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center">
+                        <input
+                          id="featured"
+                          type="checkbox"
+                          checked={form.featured}
+                          onChange={(e) =>
+                            handleChange("featured", e.target.checked)
+                          }
+                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        />
+                        <label
+                          htmlFor="featured"
+                          className="ml-2 block text-sm text-gray-700"
+                        >
+                          Featured Article
+                        </label>
+                      </div>
+                    </>
+                  )}
+
+                  <div
+                    className={`${fullscreen ? "flex-grow flex flex-col" : ""}`}
+                  >
+                    {!fullscreen && (
+                      <label className="block font-medium text-sm text-gray-700 mb-1">
+                        Content (Markdown){" "}
+                        <span className="text-red-500">*</span>
+                      </label>
+                    )}
+                    <div
+                      ref={editorRef}
+                      data-color-mode="light"
+                      className={`${fullscreen ? "h-full" : ""}`}
                     >
-                      Featured Article
-                    </label>
-                  </div>
-
-                  <div>
-                    <label className="block font-medium text-sm text-gray-700 mb-1">
-                      Content (Markdown) <span className="text-red-500">*</span>
-                    </label>
-                    <div data-color-mode="light">
                       <MDEditor
                         value={form.content}
                         onChange={(val) => handleChange("content", val || "")}
-                        height={500}
+                        height={fullscreen ? "100%" : 500}
                         preview="live"
                         textareaProps={{
                           placeholder: "Write your article content here...",
@@ -448,54 +517,78 @@ export default function NewArticlePage() {
                           className:
                             "bg-white text-gray-900 rounded-lg p-4 shadow-sm border border-gray-200",
                         }}
-                        className="rounded-md border border-gray-200 shadow-sm"
+                        className={`${
+                          fullscreen
+                            ? "h-full rounded-none"
+                            : "rounded-md border border-gray-200 shadow-sm"
+                        }`}
+                        extraCommands={[
+                          {
+                            name: "fullscreen",
+                            keyCommand: "fullscreen",
+                            buttonProps: { "aria-label": "Toggle fullscreen" },
+                            icon: (
+                              <svg width="12" height="12" viewBox="0 0 512 512">
+                                <path
+                                  fill="currentColor"
+                                  d="M396.795 396.8H320V448h128V320h-51.205zm-281.59 0H192V448H64V320h51.205zm0-281.595H64V192h128V64H192zm281.595 0H320V64h128v128h-51.205z"
+                                ></path>
+                              </svg>
+                            ),
+                            execute: (state, api) => {
+                              handleEditorFullscreen({ preventDefault: () => {}, } as React.MouseEvent);
+                            },
+                          },
+                        ]}
                       />
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center pt-4 border-t border-gray-200">
-                    <button
-                      type="button"
-                      onClick={clearDraft}
-                      className="px-4 py-2 border border-red-300 text-red-700 rounded-md hover:bg-red-50 transition-colors text-sm font-medium"
-                    >
-                      Clear Draft
-                    </button>
+                  {!fullscreen && (
+                    <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                      <button
+                        type="button"
+                        onClick={clearDraft}
+                        className="px-4 py-2 border border-red-300 text-red-700 rounded-md hover:bg-red-50 transition-colors text-sm font-medium"
+                      >
+                        Clear Draft
+                      </button>
 
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {loading ? (
-                        <span className="flex items-center">
-                          <svg
-                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                          Submitting...
-                        </span>
-                      ) : (
-                        "Submit Article"
-                      )}
-                    </button>
-                  </div>
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {loading ? (
+                          <span className="flex items-center">
+                            <svg
+                              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            Submitting...
+                          </span>
+                        ) : (
+                          "Submit Article"
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </form>
             </>
@@ -503,7 +596,7 @@ export default function NewArticlePage() {
         </section>
       </main>
 
-      <MinimalFooter />
+      {!fullscreen && <MinimalFooter />}
     </div>
   );
 }
