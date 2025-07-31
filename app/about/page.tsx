@@ -315,14 +315,16 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <div className="mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                  <Button
-                    size="lg"
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all 
-               text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download CV
-                  </Button>
+                  <a href="/thaung-cv.pdf" download>
+                    <Button
+                      size="lg"
+                      className="flex items-center justify-center gap-2 flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all 
+    text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download CV
+                    </Button>
+                  </a>
                   <Button
                     size="lg"
                     variant="outline"
