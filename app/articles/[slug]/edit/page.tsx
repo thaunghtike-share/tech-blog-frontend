@@ -272,7 +272,7 @@ export default function EditArticlePage() {
               <button
                 onClick={handleLogout}
                 type="button"
-                className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md transition"
+                className="text-sm bg-blue-700 hover:bg-black text-white px-4 py-2 rounded-md transition"
               >
                 Logout
               </button>
