@@ -421,7 +421,7 @@ export default function AboutPage() {
                   className="w-full border-2 border-green-300 text-green-700 hover:bg-green-50 hover:border-green-400 font-semibold transition-all bg-transparent"
                   onClick={() =>
                     window.open(
-                      "https://www.upwork.com/freelancers/~thaunghtike",
+                      "https://www.upwork.com/freelancers/~01e9f0a7b2e737ac90",
                       "_blank"
                     )
                   }
