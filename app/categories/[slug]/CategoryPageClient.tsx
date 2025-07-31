@@ -154,7 +154,11 @@ export default function CategoryPageClient({ slug }: Props) {
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <MinimalHeader />
+        <div className="relative">
+          {" "}
+          {/* Wrapper div */}
+          <MinimalHeader />
+        </div>
         <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl p-8 shadow-lg text-center max-w-2xl mx-auto">
             <div className="bg-red-100 p-4 rounded-full inline-flex items-center justify-center mb-6">
@@ -192,7 +196,11 @@ export default function CategoryPageClient({ slug }: Props) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <MinimalHeader />
+        <div className="relative">
+          {" "}
+          {/* Wrapper div */}
+          <MinimalHeader />
+        </div>
         <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
             <div className="lg:col-span-4 bg-white rounded-2xl p-8 shadow-sm">
@@ -222,16 +230,21 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   return (
-    <div className="-mt-17 md:-mt-5 relative min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      <MinimalHeader />
+
+      {/* Wrapped MinimalHeader in a relative div */}
+      <div className="relative">
+        <MinimalHeader />
+      </div>
+
       <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
           {/* Article list */}
@@ -290,7 +303,7 @@ export default function CategoryPageClient({ slug }: Props) {
                           stripMarkdown(article.content),
                           200
                         );
-                        const author = getAuthor(article.author); // get full author object by id
+                        const author = getAuthor(article.author);
 
                         return (
                           <motion.article
@@ -507,9 +520,7 @@ export default function CategoryPageClient({ slug }: Props) {
           </aside>
         </div>
       </main>
-      <div className="-mt-4 md:-mt-4">
-        <MinimalFooter />
-      </div>
+      <MinimalFooter />
     </div>
   );
 }
