@@ -29,6 +29,7 @@ export default function NewArticlePage() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
+  const [showPreview, setShowPreview] = useState(false); // Start with preview hidden
 
   const [form, setForm] = useState({
     title: "",
@@ -493,10 +494,21 @@ export default function NewArticlePage() {
                     className={`${fullscreen ? "flex-grow flex flex-col" : ""}`}
                   >
                     {!fullscreen && (
-                      <label className="block font-medium text-sm text-gray-700 mb-1">
-                        Content (Markdown){" "}
-                        <span className="text-red-500">*</span>
-                      </label>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Content (Markdown){" "}
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <div className="flex space-x-2">
+                          <button
+                            type="button"
+                            onClick={() => setShowPreview(!showPreview)}
+                            className="text-xs bg-blue-700 hover:bg-black text-white px-2 py-1 rounded-xl transition"
+                          >
+                            {showPreview ? "Hide Preview" : "Show Preview"}
+                          </button>
+                        </div>
+                      </div>
                     )}
                     <div
                       ref={editorRef}
@@ -507,7 +519,10 @@ export default function NewArticlePage() {
                         value={form.content}
                         onChange={(val) => handleChange("content", val || "")}
                         height={fullscreen ? "100%" : 500}
-                        preview="live"
+                        preview={
+                          fullscreen ? "edit" : showPreview ? "live" : "edit"
+                        }
+                        hideToolbar={false}
                         textareaProps={{
                           placeholder: "Write your article content here...",
                           className:
@@ -528,15 +543,17 @@ export default function NewArticlePage() {
                             keyCommand: "fullscreen",
                             buttonProps: { "aria-label": "Toggle fullscreen" },
                             icon: (
-                              <svg width="12" height="12" viewBox="0 0 512 512">
+                              <svg width="14" height="14" viewBox="0 0 512 512">
                                 <path
                                   fill="currentColor"
                                   d="M396.795 396.8H320V448h128V320h-51.205zm-281.59 0H192V448H64V320h51.205zm0-281.595H64V192h128V64H192zm281.595 0H320V64h128v128h-51.205z"
-                                ></path>
+                                />
                               </svg>
                             ),
                             execute: (state, api) => {
-                              handleEditorFullscreen({ preventDefault: () => {}, } as React.MouseEvent);
+                              handleEditorFullscreen({
+                                preventDefault: () => {},
+                              } as React.MouseEvent);
                             },
                           },
                         ]}
