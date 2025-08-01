@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import type React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { MinimalHeader } from "@/components/minimal-header";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 
 interface Category {
@@ -29,7 +28,8 @@ export default function NewArticlePage() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
-  const [showPreview, setShowPreview] = useState(false); // Start with preview hidden
+  const [showPreview, setShowPreview] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -47,6 +47,83 @@ export default function NewArticlePage() {
     type: "success" | "error";
   } | null>(null);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
+
+  // Load Google script and initialize
+  useEffect(() => {
+    const loadGoogleScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = initializeGoogleSignIn;
+      document.body.appendChild(script);
+    };
+
+    const initializeGoogleSignIn = () => {
+      if (!(window as any).google) return;
+
+      (window as any).google.accounts.id.initialize({
+        client_id:
+          "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
+        callback: handleGoogleResponse,
+      });
+
+      const buttonContainer = document.getElementById("google-signin-button");
+      if (buttonContainer) {
+        (window as any).google.accounts.id.renderButton(buttonContainer, {
+          theme: "outline",
+          size: "large",
+        });
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if (!(window as any).google) {
+        loadGoogleScript();
+      } else {
+        initializeGoogleSignIn();
+      }
+    }
+  }, []);
+
+  // Handle Google login response
+  async function handleGoogleResponse(response: any) {
+    setGoogleLoading(true);
+    setLoginError(null);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/google/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id_token: response.credential }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.detail || "Google login failed");
+      }
+
+      const data = await res.json();
+      const authToken = data.token || data.access_token;
+      setToken(authToken);
+      localStorage.setItem("token", authToken);
+      setMessage({ text: "Google login successful", type: "success" });
+
+      // Load draft if exists
+      const draft = localStorage.getItem(DRAFT_KEY);
+      if (draft) {
+        try {
+          setForm(JSON.parse(draft));
+        } catch (error) {
+          console.error("Error parsing draft:", error);
+        }
+      }
+    } catch (error: any) {
+      setLoginError(error.message);
+    } finally {
+      setGoogleLoading(false);
+    }
+  }
 
   // Handle fullscreen change
   useEffect(() => {
@@ -126,8 +203,6 @@ export default function NewArticlePage() {
         setTags(Array.isArray(tagData) ? tagData : tagData.results || []);
       } catch (error) {
         console.error("Error loading dropdown data:", error);
-        setCategories([]);
-        setTags([]);
       }
     }
     fetchData();
@@ -153,6 +228,7 @@ export default function NewArticlePage() {
       localStorage.setItem("token", data.token);
       setUsername("");
       setPassword("");
+      setMessage({ text: "Login successful", type: "success" });
     } catch (error) {
       setLoginError("Login failed");
     }
@@ -161,7 +237,7 @@ export default function NewArticlePage() {
   function handleLogout() {
     setToken(null);
     localStorage.removeItem("token");
-    setMessage(null);
+    setMessage({ text: "Logged out successfully", type: "success" });
   }
 
   function handleChange(field: string, value: any) {
@@ -169,15 +245,12 @@ export default function NewArticlePage() {
   }
 
   function toggleTag(id: number) {
-    setForm((prev) => {
-      const isSelected = prev.tags.includes(id);
-      return {
-        ...prev,
-        tags: isSelected
-          ? prev.tags.filter((tagId) => tagId !== id)
-          : [...prev.tags, id],
-      };
-    });
+    setForm((prev) => ({
+      ...prev,
+      tags: prev.tags.includes(id)
+        ? prev.tags.filter((tagId) => tagId !== id)
+        : [...prev.tags, id],
+    }));
   }
 
   function clearDraft() {
@@ -206,15 +279,6 @@ export default function NewArticlePage() {
     setLoading(true);
     setMessage(null);
 
-    const payload = {
-      title: form.title,
-      category: Number(form.category),
-      tags: form.tags,
-      featured: form.featured,
-      published_at: form.published_at,
-      content: form.content,
-    };
-
     try {
       const res = await fetch(`${API_BASE_URL}/articles/`, {
         method: "POST",
@@ -222,7 +286,14 @@ export default function NewArticlePage() {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          title: form.title,
+          category: Number(form.category),
+          tags: form.tags,
+          featured: form.featured,
+          published_at: form.published_at,
+          content: form.content,
+        }),
       });
 
       if (res.ok) {
@@ -230,26 +301,21 @@ export default function NewArticlePage() {
           text: "Article submitted successfully!",
           type: "success",
         });
-        clearDraft(); // Clear draft on successful submission
+        clearDraft();
       } else {
         const errorData = await res.json();
-        setMessage({
-          text: "Failed to submit article: " + JSON.stringify(errorData),
-          type: "error",
-        });
+        throw new Error(JSON.stringify(errorData));
       }
-    } catch (error) {
-      setMessage({
-        text: "Error submitting article: " + String(error),
-        type: "error",
-      });
+    } catch (error: any) {
+      setMessage({ text: "Error: " + error.message, type: "error" });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
     <div
-      className={`min-h-screen flex flex-col bg-gray-50 relative overflow-x-hidden ${
+      className={`min-h-screen flex flex-col bg-gray-50 relative ${
         fullscreen ? "overflow-hidden" : ""
       }`}
     >
@@ -270,15 +336,12 @@ export default function NewArticlePage() {
         className={`${
           fullscreen
             ? "fixed inset-0 z-50 bg-white"
-            : "-mt-10 md:-mt-1 flex-grow max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-6 gap-10 relative z-10"
+            : "flex-grow max-w-7xl mx-auto px-4 py-10 relative z-10"
         }`}
       >
-        <section
-          className={`${fullscreen ? "h-full w-full" : "lg:col-span-6"}`}
-        >
+        <section className={`${fullscreen ? "h-full w-full" : ""}`}>
           {!token ? (
-            <div className="max-w-2xl mx-auto">
-              {/* Invitation-only Notice - Only shows before login */}
+            <div className="max-w-md mx-auto">
               <div className="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded mb-6 flex items-start gap-2 text-sm">
                 🛂{" "}
                 <span>
@@ -293,19 +356,17 @@ export default function NewArticlePage() {
                     rel="noopener noreferrer"
                     className="underline text-blue-600 hover:text-blue-800"
                   >
-                    contact the admin via Messenger
+                    contact the admin
                   </a>
                   .
                 </span>
               </div>
 
-              {/* Login Form */}
-              <form
-                onSubmit={handleLogin}
-                className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
-              >
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h1 className="text-xl font-bold text-center mb-4">Login</h1>
-                <div className="space-y-4">
+
+                {/* Regular Login Form */}
+                <form onSubmit={handleLogin} className="space-y-4">
                   <div>
                     <label className="block mb-1 font-medium text-sm text-gray-700">
                       Username
@@ -330,20 +391,46 @@ export default function NewArticlePage() {
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                     />
                   </div>
-                  {loginError && (
-                    <p className="text-red-600 text-sm">{loginError}</p>
-                  )}
                   <button
                     type="submit"
                     className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   >
                     Login
                   </button>
+                </form>
+
+                {/* Divider with "or" text */}
+                <div className="flex items-center my-6">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="mx-4 text-gray-500 text-sm">OR</span>
+                  <div className="flex-grow border-t border-gray-300"></div>
                 </div>
-              </form>
+
+                {/* Google Sign-In */}
+                <div className="flex flex-col items-center">
+                  <div id="google-signin-button" className="mb-4" />
+                  {googleLoading && (
+                    <p className="text-blue-600">Logging in with Google...</p>
+                  )}
+                </div>
+
+                {/* Error/Success Messages */}
+                {(loginError || message) && (
+                  <div
+                    className={`mt-4 p-3 rounded-md text-sm ${
+                      loginError || message?.type === "error"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    {loginError || message?.text}
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <>
+              {/* Rest of the editor UI remains the same */}
               {!fullscreen && (
                 <div className="flex justify-between items-center mb-6">
                   <div>
@@ -450,23 +537,20 @@ export default function NewArticlePage() {
                           Tags
                         </label>
                         <div className="flex flex-wrap gap-2">
-                          {tags.map((tag) => {
-                            const selected = form.tags.includes(tag.id);
-                            return (
-                              <button
-                                type="button"
-                                key={tag.id}
-                                onClick={() => toggleTag(tag.id)}
-                                className={`px-3 py-1 rounded-full border text-sm transition-colors ${
-                                  selected
-                                    ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
-                                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                                }`}
-                              >
-                                {tag.name}
-                              </button>
-                            );
-                          })}
+                          {tags.map((tag) => (
+                            <button
+                              type="button"
+                              key={tag.id}
+                              onClick={() => toggleTag(tag.id)}
+                              className={`px-3 py-1 rounded-full border text-sm transition-colors ${
+                                form.tags.includes(tag.id)
+                                  ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+                                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                              }`}
+                            >
+                              {tag.name}
+                            </button>
+                          ))}
                         </div>
                       </div>
 
