@@ -357,7 +357,16 @@ export default function NewArticlePage() {
           text: "Article submitted successfully!",
           type: "success",
         });
-        clearDraft();
+
+        localStorage.removeItem(DRAFT_KEY);
+        setForm({
+          title: "",
+          category: "",
+          tags: [],
+          featured: false,
+          published_at: new Date().toISOString().slice(0, 10),
+          content: "",
+        });
       } else {
         const errorData = await res.json();
         throw new Error(JSON.stringify(errorData));
@@ -398,25 +407,6 @@ export default function NewArticlePage() {
         <section className={`${fullscreen ? "h-full w-full" : ""}`}>
           {!token ? (
             <div className="max-w-md mx-auto">
-              <div className="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded mb-6 flex items-start gap-2 text-sm">
-                🛂{" "}
-                <span>
-                  <strong>
-                    Writing articles is currently by invitation only.
-                  </strong>
-                  <br />
-                  If you'd like access, please{" "}
-                  <a
-                    href="https://m.me/learndevopsnowbytho"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline text-blue-600 hover:text-blue-800"
-                  >
-                    contact the admin
-                  </a>
-                  .
-                </span>
-              </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h1 className="text-xl font-bold text-center mb-4">Login</h1>
