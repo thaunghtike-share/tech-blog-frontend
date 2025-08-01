@@ -1,31 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [tokenVisible, setTokenVisible] = useState(false);
+  const [idToken, setIdToken] = useState<string | null>(null);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  useEffect(() => {
+    const loadGoogleScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => initializeGoogleSignIn();
+      document.body.appendChild(script);
+    };
+
+    const initializeGoogleSignIn = () => {
+      (window as any).google.accounts.id.initialize({
+        client_id:
+          "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
+        callback: handleGoogleResponse,
+      });
+
+      (window as any).google.accounts.id.renderButton(
+        document.getElementById("google-signin-button")!,
+        { theme: "outline", size: "large" }
+      );
+    };
+
+    if (typeof window !== "undefined") {
+      if (!(window as any).google) {
+        loadGoogleScript();
+      } else {
+        initializeGoogleSignIn();
+      }
+    }
+  }, []);
+
+  async function handleGoogleResponse(response: any) {
+    const id_token = response.credential;
+    console.log("Google ID Token:", id_token); // 📌 You'll see this in DevTools console
+
+    setIdToken(id_token); // for testing with curl
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/auth/login/", {
+      const res = await fetch("http://localhost:8000/api/auth/google/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({ id_token }), // <-- MUST use `id_token`
       });
-      if (!res.ok) throw new Error("Login failed");
-      const data = await res.json();
 
-      localStorage.setItem("token", data.access_token || data.token);
-      router.push("/");
-    } catch (error) {
-      alert("Invalid email or password");
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Backend error:", errorData);
+        throw new Error("Google login failed");
+      }
+
+      const data = await res.json();
+      localStorage.setItem("token", data.token || data.access_token);
+      router.push("/admin/new-article");
+    } catch (error: any) {
+      alert("Google login failed. See console for details.");
     } finally {
       setLoading(false);
     }
@@ -33,46 +73,33 @@ export default function LoginPage() {
 
   return (
     <main className="max-w-md mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Login</h1>
+      <h1 className="text-3xl font-bold mb-6">Login with Google</h1>
 
-      {/* Google login redirect button */}
-      <a
-        href="http://localhost:8000/accounts/google/login/"
-        className="block bg-red-600 text-white text-center py-2 rounded mb-8 hover:bg-red-700"
+      <div id="google-signin-button" className="mb-4" />
+
+      {loading && (
+        <p className="text-blue-600 mb-4">Logging in with Google...</p>
+      )}
+
+      <button
+        onClick={() => setTokenVisible((v) => !v)}
+        className="text-sm text-blue-500 underline mb-4"
       >
-        Login with Google
-      </a>
+        {tokenVisible ? "Hide Token" : "Show ID Token for curl"}
+      </button>
 
-      {/* Email/password login form */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="Email or Username"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="p-2 border rounded"
-          autoComplete="username"
+      {tokenVisible && idToken && (
+        <textarea
+          className="w-full h-40 p-2 border border-gray-300 rounded text-xs"
+          value={idToken}
+          readOnly
         />
+      )}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="p-2 border rounded"
-          autoComplete="current-password"
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+      <p className="text-gray-500 text-sm mt-6">
+        Make sure your backend is running at{" "}
+        <code className="bg-gray-100 px-1">http://localhost:8000</code>
+      </p>
     </main>
   );
 }
