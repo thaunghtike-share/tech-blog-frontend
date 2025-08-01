@@ -15,6 +15,12 @@ interface Tag {
   name: string;
 }
 
+interface UserProfile {
+  username: string;
+  email: string;
+  avatar?: string;
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 // Local storage key constants
@@ -30,6 +36,8 @@ export default function NewArticlePage() {
   const editorRef = useRef<HTMLDivElement>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -55,7 +63,10 @@ export default function NewArticlePage() {
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
-      script.onload = initializeGoogleSignIn;
+      script.onload = () => {
+        setGoogleScriptLoaded(true);
+        initializeGoogleSignIn();
+      };
       document.body.appendChild(script);
     };
 
@@ -68,8 +79,12 @@ export default function NewArticlePage() {
         callback: handleGoogleResponse,
       });
 
+      renderGoogleButton();
+    };
+
+    const renderGoogleButton = () => {
       const buttonContainer = document.getElementById("google-signin-button");
-      if (buttonContainer) {
+      if (buttonContainer && (window as any).google) {
         (window as any).google.accounts.id.renderButton(buttonContainer, {
           theme: "outline",
           size: "large",
@@ -81,10 +96,36 @@ export default function NewArticlePage() {
       if (!(window as any).google) {
         loadGoogleScript();
       } else {
+        setGoogleScriptLoaded(true);
         initializeGoogleSignIn();
       }
     }
   }, []);
+
+  // Re-render Google button when token changes (after logout)
+  useEffect(() => {
+    if (googleScriptLoaded && !token) {
+      const initializeGoogleSignIn = () => {
+        if (!(window as any).google) return;
+
+        (window as any).google.accounts.id.initialize({
+          client_id:
+            "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
+          callback: handleGoogleResponse,
+        });
+
+        const buttonContainer = document.getElementById("google-signin-button");
+        if (buttonContainer) {
+          (window as any).google.accounts.id.renderButton(buttonContainer, {
+            theme: "outline",
+            size: "large",
+          });
+        }
+      };
+
+      initializeGoogleSignIn();
+    }
+  }, [token, googleScriptLoaded]);
 
   // Handle Google login response
   async function handleGoogleResponse(response: any) {
@@ -107,6 +148,15 @@ export default function NewArticlePage() {
       const authToken = data.token || data.access_token;
       setToken(authToken);
       localStorage.setItem("token", authToken);
+
+      // Set user profile from Google response
+      const profile = {
+        username: data.user?.username || "Google User",
+        email: data.user?.email || "",
+        avatar: data.user?.avatar,
+      };
+      setUserProfile(profile);
+
       setMessage({ text: "Google login successful", type: "success" });
 
       // Load draft if exists
@@ -151,23 +201,17 @@ export default function NewArticlePage() {
     }
   };
 
-  // Load token and draft on initial render
+  // Load token and user profile on initial render
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedToken = localStorage.getItem("token");
-      setToken(savedToken);
-
       if (savedToken) {
-        const draft = localStorage.getItem(DRAFT_KEY);
-        if (draft) {
-          try {
-            const parsedDraft = JSON.parse(draft);
-            setForm(parsedDraft);
-            setMessage({ text: "Draft loaded automatically", type: "success" });
-          } catch (error) {
-            console.error("Error parsing draft:", error);
-          }
-        }
+        setToken(savedToken);
+        // In a real app, you would fetch user profile here
+        setUserProfile({
+          username: "Logged In User",
+          email: "user@example.com",
+        });
       }
     }
   }, []);
@@ -228,6 +272,13 @@ export default function NewArticlePage() {
       localStorage.setItem("token", data.token);
       setUsername("");
       setPassword("");
+
+      // Set user profile for regular login
+      setUserProfile({
+        username: data.user?.username || username,
+        email: data.user?.email || "",
+      });
+
       setMessage({ text: "Login successful", type: "success" });
     } catch (error) {
       setLoginError("Login failed");
@@ -236,8 +287,13 @@ export default function NewArticlePage() {
 
   function handleLogout() {
     setToken(null);
+    setUserProfile(null);
     localStorage.removeItem("token");
     setMessage({ text: "Logged out successfully", type: "success" });
+
+    // Force re-render of Google button
+    setGoogleScriptLoaded(false);
+    setTimeout(() => setGoogleScriptLoaded(true), 100);
   }
 
   function handleChange(field: string, value: any) {
@@ -430,7 +486,6 @@ export default function NewArticlePage() {
             </div>
           ) : (
             <>
-              {/* Rest of the editor UI remains the same */}
               {!fullscreen && (
                 <div className="flex justify-between items-center mb-6">
                   <div>
@@ -441,12 +496,32 @@ export default function NewArticlePage() {
                       {lastSaved && `Draft auto-saved at ${lastSaved}`}
                     </p>
                   </div>
-                  <button
-                    onClick={handleLogout}
-                    className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-black transition-colors text-sm font-medium"
-                  >
-                    Logout
-                  </button>
+                  <div className="flex items-center space-x-4">
+                    {userProfile && (
+                      <div className="flex items-center">
+                        {userProfile.avatar ? (
+                          <img
+                            src={userProfile.avatar}
+                            alt="User Avatar"
+                            className="w-8 h-8 rounded-full mr-2"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium mr-2">
+                            {userProfile.username.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                        <span className="text-sm font-medium text-gray-700">
+                          {userProfile.username}
+                        </span>
+                      </div>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-black transition-colors text-sm font-medium"
+                    >
+                      Logout
+                    </button>
+                  </div>
                 </div>
               )}
 
