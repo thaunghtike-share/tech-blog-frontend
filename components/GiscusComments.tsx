@@ -4,7 +4,7 @@ import { useState } from "react";
 import Giscus from "@giscus/react";
 
 export function GiscusComments() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   return (
     <section className="max-w-3xl mx-auto my-12">
