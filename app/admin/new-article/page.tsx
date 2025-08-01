@@ -407,7 +407,6 @@ export default function NewArticlePage() {
         <section className={`${fullscreen ? "h-full w-full" : ""}`}>
           {!token ? (
             <div className="max-w-md mx-auto">
-
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h1 className="text-xl font-bold text-center mb-4">Login</h1>
 
@@ -453,8 +452,8 @@ export default function NewArticlePage() {
                 </div>
 
                 {/* Google Sign-In */}
-                <div className="flex flex-col items-center">
-                  <div id="google-signin-button" className="mb-4" />
+                <div className="flex flex-col items-center w-full max-w-sm mx-auto">
+                  <div id="google-signin-button" className="mb-4 w-full" />
                   {googleLoading && (
                     <p className="text-blue-600">Logging in with Google...</p>
                   )}
