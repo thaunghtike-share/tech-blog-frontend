@@ -444,141 +444,166 @@ export default function NewArticlePage() {
     }
   }
 
+  if (showProfileModal) {
+    return (
+      <div className="min-h-screen flex flex-col bg-gray-50">
+        <div
+          className="absolute inset-0 z-0 opacity-10"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          }}
+        ></div>
+        <MinimalHeader />
+
+        <main className="flex-grow max-w-7xl mx-auto px-4 py-10 relative z-10">
+          <div className="max-w-md mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+              <h1 className="text-xl font-bold text-center mb-4">
+                Complete Your Profile
+              </h1>
+              <p className="text-sm text-gray-600 text-center mb-6">
+                Please complete your profile before submitting articles
+              </p>
+
+              <form onSubmit={handleProfileSubmit} className="space-y-4">
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    Display Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={profileFormData.name}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        name: e.target.value,
+                      })
+                    }
+                    required
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    Bio <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    value={profileFormData.bio}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        bio: e.target.value,
+                      })
+                    }
+                    rows={4}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    required
+                    placeholder="Tell us about yourself..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    Job Title
+                  </label>
+                  <input
+                    type="text"
+                    value={profileFormData.job_title}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        job_title: e.target.value,
+                      })
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="Your current position"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    value={profileFormData.company}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        company: e.target.value,
+                      })
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="Where you work"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    LinkedIn URL
+                  </label>
+                  <input
+                    type="url"
+                    value={profileFormData.linkedin}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        linkedin: e.target.value,
+                      })
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="https://linkedin.com/in/your-profile"
+                  />
+                </div>
+
+                {message && (
+                  <div
+                    className={`p-3 rounded-md text-sm ${
+                      message.type === "error"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    {message.text}
+                  </div>
+                )}
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                  >
+                    {submitting ? "Saving..." : "Save Profile"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+
+        <MinimalFooter />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`min-h-screen flex flex-col bg-gray-50 relative ${
         fullscreen ? "overflow-hidden" : ""
       }`}
     >
-      {showProfileModal && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
-            <form onSubmit={handleProfileSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Display Name *
-                </label>
-                <input
-                  type="text"
-                  value={profileFormData.name}
-                  onChange={(e) =>
-                    setProfileFormData({
-                      ...profileFormData,
-                      name: e.target.value,
-                    })
-                  }
-                  required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Bio *
-                </label>
-                <textarea
-                  value={profileFormData.bio}
-                  onChange={(e) =>
-                    setProfileFormData({
-                      ...profileFormData,
-                      bio: e.target.value,
-                    })
-                  }
-                  rows={4}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  required
-                  placeholder="Tell us about yourself..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Job Title
-                </label>
-                <input
-                  type="text"
-                  value={profileFormData.job_title}
-                  onChange={(e) =>
-                    setProfileFormData({
-                      ...profileFormData,
-                      job_title: e.target.value,
-                    })
-                  }
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="Your current position"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  value={profileFormData.company}
-                  onChange={(e) =>
-                    setProfileFormData({
-                      ...profileFormData,
-                      company: e.target.value,
-                    })
-                  }
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="Where you work"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  LinkedIn URL
-                </label>
-                <input
-                  type="url"
-                  value={profileFormData.linkedin}
-                  onChange={(e) =>
-                    setProfileFormData({
-                      ...profileFormData,
-                      linkedin: e.target.value,
-                    })
-                  }
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="https://linkedin.com/in/your-profile"
-                />
-              </div>
-
-              <div className="flex justify-end gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowProfileModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors text-sm font-medium"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
-                >
-                  {submitting ? "Saving..." : "Save Profile"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {!fullscreen && (
-        <>
-          <div
-            className="absolute inset-0 z-0 opacity-10"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-            }}
-          ></div>
-          <MinimalHeader />
-        </>
-      )}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
+      {!fullscreen && <MinimalHeader />}
 
       <main
         className={`${
