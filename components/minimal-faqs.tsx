@@ -106,10 +106,10 @@ export function MinimalFAQs() {
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center gap-3 mb-4"
         >
-          <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-md">
+          <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-indigo-500 to-emerald-600 rounded-2xl shadow-md">
             <HelpCircle className="w-4 h-4 text-white" />
           </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-emerald-50 text-indigo-700 border border-indigo-200">
             <Info className="w-4 h-4 mr-2" /> FAQs
           </span>
         </motion.div>
@@ -117,7 +117,7 @@ export function MinimalFAQs() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-700 bg-clip-text text-transparent mb-2"
+          className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-emerald-800 bg-clip-text text-transparent mb-2"
         >
           Frequently Asked Questions
         </motion.h2>
@@ -140,7 +140,7 @@ export function MinimalFAQs() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: faq.id * 0.1 }}
             whileHover={{ y: -5 }}
-            className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl"
+            className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl"
           >
             <button
               type="button"
@@ -153,7 +153,7 @@ export function MinimalFAQs() {
               </h3>
               <div className="ml-4 flex-shrink-0">
                 {openIds.has(faq.id) ? (
-                  <Minus className="w-5 h-5 text-blue-600" />
+                  <Minus className="w-5 h-5 text-indigo-600" />
                 ) : (
                   <Plus className="w-5 h-5 text-gray-500" />
                 )}
@@ -187,7 +187,7 @@ export function MinimalFAQs() {
             onClick={handleToggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-indigo-700"
+            className="flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-gradient-to-r from-indigo-500 to-emerald-600 text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-emerald-700"
           >
             {showAll ? (
               <>

@@ -183,7 +183,7 @@ export function DevOpsWorkflowExample() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
-        className="relative w-full aspect-video mb-5 md:mb-6 rounded-2xl overflow-hidden shadow-xl"
+        className="relative w-full aspect-video mb-5 bg-white/50 border-gray-100 md:mb-6 rounded-2xl overflow-hidden shadow-xl"
       >
         <Image
           src="/dinger.png"

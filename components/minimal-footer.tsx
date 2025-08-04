@@ -4,7 +4,6 @@ import { Facebook, Linkedin, Youtube, Github, Mail } from "lucide-react";
 export function MinimalFooter() {
   return (
     <footer className="bg-gray-50 md:bg-white/30 text-gray-700 py-8 md:py-12 relative z-10 border-t border-gray-200">
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 pb-6 md:pb-8">
           {/* Logo + Description - Full width on mobile */}
@@ -91,10 +90,10 @@ export function MinimalFooter() {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/faqs"
                   className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
-                  About
+                  FAQs
                 </Link>
               </li>
             </ul>
@@ -147,11 +146,31 @@ export function MinimalFooter() {
               Contact
             </h3>
             <ul className="space-y-1 md:space-y-3">
-              <li className="text-sm md:text-sm">
-                thaunghtikeoo.tho1234@gmail.com
+              <li>
+                <a
+                  href="mailto:thaunghtikeoo.tho1234@gmail.com"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                >
+                  thaunghtikeoo.tho1234@gmail.com
+                </a>
               </li>
-              <li className="text-sm md:text-sm">+95 9952492359</li>
+              <li>
+                <a
+                  href="tel:+959952492359"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                >
+                  +95 9952492359
+                </a>
+              </li>
               <li className="text-sm md:text-sm">Yangon, Myanmar</li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                >
+                  About Me
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
