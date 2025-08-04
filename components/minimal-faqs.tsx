@@ -6,8 +6,6 @@ import {
   Minus,
   ChevronDown,
   ChevronUp,
-  Zap,
-  FlaskConical,
   HelpCircle,
   Info,
 } from "lucide-react";
@@ -60,21 +58,8 @@ const faqsData: FAQ[] = rawFaqs.map((faq, index) => ({
 export function MinimalFAQs() {
   const [openIds, setOpenIds] = useState<Set<number>>(new Set());
   const [showAll, setShowAll] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-  const faqRef = useRef<HTMLElement | null>(null);
-
-  // Detect screen size on mount
-  useEffect(() => {
-    const handleResize = () => {
-      const desktop = window.innerWidth >= 768;
-      setIsDesktop(desktop);
-      if (desktop) setShowAll(true);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const faqRef = useRef<HTMLDivElement>(null);
+  const faqContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleFAQ = (id: number) => {
     setOpenIds((prev) => {
@@ -89,20 +74,32 @@ export function MinimalFAQs() {
   };
 
   const handleToggleShowAll = () => {
-    if (showAll && faqRef.current) {
-      faqRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    setShowAll(!showAll);
+    const newShowAll = !showAll;
+    setShowAll(newShowAll);
+
+    // Wait for the state to update and DOM to render
+    setTimeout(() => {
+      if (faqContainerRef.current) {
+        if (newShowAll) {
+          // Scroll to the last FAQ when showing more
+          const lastFaq = faqContainerRef.current.lastElementChild;
+          lastFaq?.scrollIntoView({ behavior: "smooth" });
+        } else {
+          // Scroll to top of FAQ section when showing less
+          faqRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }, 100);
   };
 
-  const displayedFAQs = isDesktop || showAll ? faqsData : faqsData.slice(0, 3);
+  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 4);
 
   return (
     <section
       ref={faqRef}
       className="mt-20 w-full px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center"
     >
-      {/* FreeLab-style centered header */}
+      {/* Header section */}
       <div className="text-center mb-7 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -134,8 +131,8 @@ export function MinimalFAQs() {
         </motion.p>
       </div>
 
-      {/* Centered single column layout with reduced width */}
-      <div className="w-full max-w-3xl space-y-4">
+      {/* FAQ items container */}
+      <div ref={faqContainerRef} className="w-full max-w-3xl space-y-4">
         {displayedFAQs.map((faq) => (
           <motion.div
             key={faq.id}
@@ -147,52 +144,50 @@ export function MinimalFAQs() {
           >
             <button
               type="button"
-              className="w-full flex flex-col items-center p-6 text-center"
+              className="w-full flex items-center justify-between p-6"
               onClick={() => toggleFAQ(faq.id)}
               aria-expanded={openIds.has(faq.id)}
             >
-              <div className="w-full">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm md:text-lg font-medium text-gray-900 text-left flex-1">
-                    {faq.question}
-                  </h3>
-                  <div className="ml-4 flex-shrink-0">
-                    {openIds.has(faq.id) ? (
-                      <Minus className="w-5 h-5 text-blue-600" />
-                    ) : (
-                      <Plus className="w-5 h-5 text-gray-500" />
-                    )}
-                  </div>
-                </div>
-                <AnimatePresence>
-                  {openIds.has(faq.id) && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-4 border-t border-gray-100">
-                        <p className="text-sm text-gray-600 text-left leading-relaxed">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <h3 className="text-sm md:text-lg font-medium text-gray-900 text-center flex-1">
+                {faq.question}
+              </h3>
+              <div className="ml-4 flex-shrink-0">
+                {openIds.has(faq.id) ? (
+                  <Minus className="w-5 h-5 text-blue-600" />
+                ) : (
+                  <Plus className="w-5 h-5 text-gray-500" />
+                )}
               </div>
             </button>
+            <AnimatePresence>
+              {openIds.has(faq.id) && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-6 pb-6">
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         ))}
       </div>
 
-      {/* Show More/Less button - only for mobile */}
-      {!isDesktop && (
+      {/* Show More/Less button */}
+      {faqsData.length > 4 && (
         <div className="mt-8 flex justify-center">
-          <button
+          <motion.button
             onClick={handleToggleShowAll}
-            className="flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium bg-white/50 text-gray-700 bg-gray-50 hover:bg-gray-50 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-indigo-700"
           >
             {showAll ? (
               <>
@@ -201,11 +196,11 @@ export function MinimalFAQs() {
               </>
             ) : (
               <>
-                Show More
+                Show More FAQs
                 <ChevronDown className="ml-2 w-4 h-4" />
               </>
             )}
-          </button>
+          </motion.button>
         </div>
       )}
     </section>

@@ -179,14 +179,11 @@ export default function HomeClient() {
         <div className="-mt-34 md:-mt-32">
           <SuccessStoriesSection />
         </div>
-        <div className="-mt-34 md:-mt-38">
-          <AuthorsContributorsCTA />
-        </div>
-        <div className="-mt-38 md:-mt-44">
+        <div className="-mt-38 md:-mt-38">
           <MinimalFAQs />
         </div>
       </main>
-      <div className="-mt-11 md:-mt-6">
+      <div className="-mt-11 md:-mt-8">
         <MinimalFooter />
       </div>
     </div>
