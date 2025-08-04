@@ -233,7 +233,7 @@ export function MinimalHeader() {
               )}
             </div>
             <Link href="/about" className={navLinkStyle("/about")}>
-              About
+              About Me
             </Link>
           </div>
         )}
@@ -393,7 +393,7 @@ export function MinimalHeader() {
               )}
             </div>
             <Link href="/about" className="hover:text-blue-600">
-              About
+              About Me
             </Link>
           </nav>
           {/* Desktop Search + Write Button */}
