@@ -27,6 +27,7 @@ interface AuthorProfile {
   company: string;
   linkedin: string;
   avatar: string;
+  slug: string;
   profile_complete: boolean;
 }
 
@@ -55,6 +56,8 @@ export default function NewArticlePage() {
     job_title: "",
     company: "",
     linkedin: "",
+    avatar: "",
+    slug: "",
   });
 
   const [form, setForm] = useState({
@@ -211,6 +214,7 @@ export default function NewArticlePage() {
         company: "",
         linkedin: "",
         avatar: data.user?.avatar || "",
+        slug: "",
         profile_complete: false,
       };
       setAuthorProfile(newAuthorProfile);
@@ -220,6 +224,8 @@ export default function NewArticlePage() {
         job_title: "",
         company: "",
         linkedin: "",
+        avatar: "",
+        slug: "",
       });
       setShowProfileModal(true);
     } catch (error: any) {
@@ -557,6 +563,48 @@ export default function NewArticlePage() {
                     className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                     placeholder="https://linkedin.com/in/your-profile"
                   />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    Avatar URL (GitHub Raw URL)
+                  </label>
+                  <input
+                    type="url"
+                    value={profileFormData.avatar}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        avatar: e.target.value,
+                      })
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="https://raw.githubusercontent.com/username/repo/path/to/image.png"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Use a GitHub raw URL for your avatar image
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-sm text-gray-700">
+                    Profile Slug
+                  </label>
+                  <input
+                    type="text"
+                    value={profileFormData.slug}
+                    onChange={(e) =>
+                      setProfileFormData({
+                        ...profileFormData,
+                        slug: e.target.value,
+                      })
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="your-unique-profile-slug"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    This will be used in your profile URL
+                  </p>
                 </div>
 
                 {message && (
