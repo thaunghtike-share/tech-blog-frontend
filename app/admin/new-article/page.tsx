@@ -49,6 +49,13 @@ export default function NewArticlePage() {
   );
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [profileFormData, setProfileFormData] = useState({
+    name: "",
+    bio: "",
+    job_title: "",
+    company: "",
+    linkedin: "",
+  });
 
   const [form, setForm] = useState({
     title: "",
@@ -84,13 +91,11 @@ export default function NewArticlePage() {
 
     const initializeGoogleSignIn = () => {
       if (!(window as any).google) return;
-
       (window as any).google.accounts.id.initialize({
         client_id:
           "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
         callback: handleGoogleResponse,
       });
-
       renderGoogleButton();
     };
 
@@ -100,6 +105,7 @@ export default function NewArticlePage() {
         (window as any).google.accounts.id.renderButton(buttonContainer, {
           theme: "outline",
           size: "large",
+          width: buttonContainer.clientWidth,
         });
       }
     };
@@ -119,22 +125,20 @@ export default function NewArticlePage() {
     if (googleScriptLoaded && !token) {
       const initializeGoogleSignIn = () => {
         if (!(window as any).google) return;
-
         (window as any).google.accounts.id.initialize({
           client_id:
             "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
           callback: handleGoogleResponse,
         });
-
         const buttonContainer = document.getElementById("google-signin-button");
         if (buttonContainer) {
           (window as any).google.accounts.id.renderButton(buttonContainer, {
             theme: "outline",
             size: "large",
+            width: buttonContainer.clientWidth,
           });
         }
       };
-
       initializeGoogleSignIn();
     }
   }, [token, googleScriptLoaded]);
@@ -156,7 +160,6 @@ export default function NewArticlePage() {
       const profileRes = await fetch(`${API_BASE_URL}/authors/me/`, {
         headers: { Authorization: `Token ${token}` },
       });
-
       if (profileRes.ok) {
         const profileData = await profileRes.json();
         setAuthorProfile(profileData);
@@ -175,7 +178,6 @@ export default function NewArticlePage() {
   async function handleGoogleResponse(response: any) {
     setGoogleLoading(true);
     setLoginError(null);
-
     try {
       const res = await fetch(`${API_BASE_URL}/auth/google/`, {
         method: "POST",
@@ -193,7 +195,7 @@ export default function NewArticlePage() {
       setToken(authToken);
       localStorage.setItem("token", authToken);
 
-      // Set basic user profile
+      // Initialize empty profile
       const profile = {
         username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
@@ -201,30 +203,25 @@ export default function NewArticlePage() {
       };
       setUserProfile(profile);
 
-      // Set author profile
-      setAuthorProfile({
-        name: data.user?.first_name || "New Author",
+      // Set empty author profile
+      const newAuthorProfile = {
+        name: "",
         bio: "",
         job_title: "",
         company: "",
         linkedin: "",
         avatar: data.user?.avatar || "",
         profile_complete: false,
+      };
+      setAuthorProfile(newAuthorProfile);
+      setProfileFormData({
+        name: "",
+        bio: "",
+        job_title: "",
+        company: "",
+        linkedin: "",
       });
-
-      // Force profile completion
       setShowProfileModal(true);
-      setMessage({ text: "Please complete your profile", type: "success" });
-
-      // Load draft if exists
-      const draft = localStorage.getItem(DRAFT_KEY);
-      if (draft) {
-        try {
-          setForm(JSON.parse(draft));
-        } catch (error) {
-          console.error("Error parsing draft:", error);
-        }
-      }
     } catch (error: any) {
       setLoginError(error.message);
     } finally {
@@ -237,7 +234,6 @@ export default function NewArticlePage() {
     const handleFullscreenChange = () => {
       setFullscreen(!!document.fullscreenElement);
     };
-
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
@@ -248,7 +244,6 @@ export default function NewArticlePage() {
   const handleEditorFullscreen = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!editorRef.current) return;
-
     if (!fullscreen) {
       editorRef.current.requestFullscreen().catch((err) => {
         console.error("Error attempting to enable fullscreen:", err);
@@ -261,12 +256,10 @@ export default function NewArticlePage() {
   // Auto-save draft
   useEffect(() => {
     if (!token) return;
-
     const saveDraft = () => {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
       setLastSaved(new Date().toLocaleTimeString());
     };
-
     const interval = setInterval(saveDraft, SAVE_INTERVAL);
     return () => clearInterval(interval);
   }, [form, token]);
@@ -314,13 +307,10 @@ export default function NewArticlePage() {
       localStorage.setItem("token", data.token);
       setUsername("");
       setPassword("");
-
-      // Set user profile for regular login
       setUserProfile({
         username: data.user?.username || username,
         email: data.user?.email || "",
       });
-
       setMessage({ text: "Login successful", type: "success" });
     } catch (error) {
       setLoginError("Login failed");
@@ -333,8 +323,6 @@ export default function NewArticlePage() {
     setAuthorProfile(null);
     localStorage.removeItem("token");
     setMessage({ text: "Logged out successfully", type: "success" });
-
-    // Force re-render of Google button
     setGoogleScriptLoaded(false);
     setTimeout(() => setGoogleScriptLoaded(true), 100);
   }
@@ -365,7 +353,8 @@ export default function NewArticlePage() {
     setMessage({ text: "Draft cleared", type: "success" });
   }
 
-  const handleProfileSubmit = async (profileData: any) => {
+  const handleProfileSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       setSubmitting(true);
       const response = await fetch(`${API_BASE_URL}/authors/me/`, {
@@ -374,7 +363,7 @@ export default function NewArticlePage() {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
         },
-        body: JSON.stringify(profileData),
+        body: JSON.stringify(profileFormData),
       });
 
       if (!response.ok) {
@@ -402,7 +391,6 @@ export default function NewArticlePage() {
 
   async function handleArticleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     if (!authorProfile?.profile_complete) {
       setMessage({
         text: "Please complete your profile first",
@@ -414,7 +402,6 @@ export default function NewArticlePage() {
 
     setLoading(true);
     setMessage(null);
-
     try {
       const res = await fetch(`${API_BASE_URL}/articles/`, {
         method: "POST",
@@ -437,7 +424,6 @@ export default function NewArticlePage() {
           text: "Article submitted successfully!",
           type: "success",
         });
-
         localStorage.removeItem(DRAFT_KEY);
         setForm({
           title: "",
@@ -458,132 +444,128 @@ export default function NewArticlePage() {
     }
   }
 
-  const ProfileCompletionModal = () => {
-    const [formData, setFormData] = useState({
-      name: authorProfile?.name || "",
-      bio: authorProfile?.bio || "",
-      job_title: authorProfile?.job_title || "",
-      company: authorProfile?.company || "",
-      linkedin: authorProfile?.linkedin || "",
-    });
-
-    useEffect(() => {
-      if (authorProfile) {
-        setFormData({
-          name: authorProfile.name || "",
-          bio: authorProfile.bio || "",
-          job_title: authorProfile.job_title || "",
-          company: authorProfile.company || "",
-          linkedin: authorProfile.linkedin || "",
-        });
-      }
-    }, [authorProfile]);
-
-    const handleFormSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      await handleProfileSubmit(formData);
-    };
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-lg max-w-md w-full p-6">
-          <h2 className="text-xl font-bold mb-4">Complete Your Profile</h2>
-
-          <form onSubmit={handleFormSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Display Name *
-              </label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                required
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Bio *
-              </label>
-              <textarea
-                value={formData.bio}
-                onChange={(e) =>
-                  setFormData({ ...formData, bio: e.target.value })
-                }
-                rows={4}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Job Title
-              </label>
-              <input
-                type="text"
-                value={formData.job_title}
-                onChange={(e) =>
-                  setFormData({ ...formData, job_title: e.target.value })
-                }
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Company
-              </label>
-              <input
-                type="text"
-                value={formData.company}
-                onChange={(e) =>
-                  setFormData({ ...formData, company: e.target.value })
-                }
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                LinkedIn URL
-              </label>
-              <input
-                type="url"
-                value={formData.linkedin}
-                onChange={(e) =>
-                  setFormData({ ...formData, linkedin: e.target.value })
-                }
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-
-            <div className="flex justify-end gap-2">
-              <button
-                type="submit"
-                disabled={submitting}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:opacity-50"
-              >
-                {submitting ? "Saving..." : "Save Profile"}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div
       className={`min-h-screen flex flex-col bg-gray-50 relative ${
         fullscreen ? "overflow-hidden" : ""
       }`}
     >
-      {showProfileModal && <ProfileCompletionModal />}
+      {showProfileModal && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
+            <form onSubmit={handleProfileSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Display Name *
+                </label>
+                <input
+                  type="text"
+                  value={profileFormData.name}
+                  onChange={(e) =>
+                    setProfileFormData({
+                      ...profileFormData,
+                      name: e.target.value,
+                    })
+                  }
+                  required
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bio *
+                </label>
+                <textarea
+                  value={profileFormData.bio}
+                  onChange={(e) =>
+                    setProfileFormData({
+                      ...profileFormData,
+                      bio: e.target.value,
+                    })
+                  }
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  required
+                  placeholder="Tell us about yourself..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Job Title
+                </label>
+                <input
+                  type="text"
+                  value={profileFormData.job_title}
+                  onChange={(e) =>
+                    setProfileFormData({
+                      ...profileFormData,
+                      job_title: e.target.value,
+                    })
+                  }
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  placeholder="Your current position"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Company
+                </label>
+                <input
+                  type="text"
+                  value={profileFormData.company}
+                  onChange={(e) =>
+                    setProfileFormData({
+                      ...profileFormData,
+                      company: e.target.value,
+                    })
+                  }
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  placeholder="Where you work"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  LinkedIn URL
+                </label>
+                <input
+                  type="url"
+                  value={profileFormData.linkedin}
+                  onChange={(e) =>
+                    setProfileFormData({
+                      ...profileFormData,
+                      linkedin: e.target.value,
+                    })
+                  }
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  placeholder="https://linkedin.com/in/your-profile"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowProfileModal(false)}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors text-sm font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
+                >
+                  {submitting ? "Saving..." : "Save Profile"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {!fullscreen && (
         <>
@@ -650,10 +632,15 @@ export default function NewArticlePage() {
                   <div className="flex-grow border-t border-gray-300"></div>
                 </div>
 
-                <div className="flex flex-col items-center w-full max-w-sm mx-auto">
-                  <div id="google-signin-button" className="mb-4 w-full" />
+                <div className="flex flex-col items-center w-full">
+                  <div
+                    id="google-signin-button"
+                    className="w-full flex justify-center"
+                  />
                   {googleLoading && (
-                    <p className="text-blue-600">Logging in with Google...</p>
+                    <p className="text-blue-600 mt-2">
+                      Logging in with Google...
+                    </p>
                   )}
                 </div>
 
@@ -703,7 +690,7 @@ export default function NewArticlePage() {
                     )}
                     <button
                       onClick={handleLogout}
-                      className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-black transition-colors text-sm font-medium"
+                      className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md transition-colors text-sm font-medium"
                     >
                       Logout
                     </button>
@@ -848,7 +835,7 @@ export default function NewArticlePage() {
                           <button
                             type="button"
                             onClick={() => setShowPreview(!showPreview)}
-                            className="text-xs bg-blue-700 hover:bg-black text-white px-2 py-1 rounded-xl transition"
+                            className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-md transition"
                           >
                             {showPreview ? "Hide Preview" : "Show Preview"}
                           </button>
