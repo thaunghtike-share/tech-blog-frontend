@@ -25,6 +25,15 @@ export default function HomeClient() {
   const searchParams = useSearchParams();
   const initialTag = searchParams.get("tag") || null;
   const [selectedTag, setSelectedTag] = useState<string | null>(initialTag);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  // Fix for initial load scroll
+  useEffect(() => {
+    if (isInitialLoad) {
+      window.scrollTo(0, 0);
+      setIsInitialLoad(false);
+    }
+  }, [isInitialLoad]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -32,6 +41,8 @@ export default function HomeClient() {
       params.set("tag", selectedTag);
     } else {
       params.delete("tag");
+      // Scroll to top when Home is clicked
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     router.replace(newUrl);
@@ -39,6 +50,10 @@ export default function HomeClient() {
 
   const updateTagFilter = (tagSlug: string | null) => {
     setSelectedTag(tagSlug);
+    if (!tagSlug) {
+      // Scroll to top when Home is clicked
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
@@ -73,15 +88,13 @@ export default function HomeClient() {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 240 240"
-                className="w-8 h-8 relative z-10" // Increased from w-7 h-7
+                className="w-8 h-8 relative z-10"
               >
-                {/* Solid purple circle with better contrast */}
                 <circle cx="120" cy="120" r="120" fill="#5e2ced" />
-                {/* Larger white message icon */}
                 <path
                   fill="#fff"
                   d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-                  transform="scale(1.05)" // Slightly larger message icon
+                  transform="scale(1.05)"
                 />
               </svg>
             </div>
@@ -166,10 +179,10 @@ export default function HomeClient() {
         <div className="-mt-34 md:-mt-32">
           <SuccessStoriesSection />
         </div>
-        <div className="-mt-34 md:-mt-32">
+        <div className="-mt-34 md:-mt-38">
           <AuthorsContributorsCTA />
         </div>
-        <div className="-mt-38 md:-mt-38">
+        <div className="-mt-38 md:-mt-44">
           <MinimalFAQs />
         </div>
       </main>

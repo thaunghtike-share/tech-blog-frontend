@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Plus, Minus, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  ChevronDown,
+  ChevronUp,
+  Zap,
+  FlaskConical,
+  HelpCircle,
+  Info,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type FAQ = {
@@ -91,9 +100,42 @@ export function MinimalFAQs() {
   return (
     <section
       ref={faqRef}
-      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="mt-20 w-full px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* FreeLab-style centered header */}
+      <div className="text-center mb-7 max-w-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-3 mb-4"
+        >
+          <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-md">
+            <HelpCircle className="w-4 h-4 text-white" />
+          </div>
+          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+            <Info className="w-4 h-4 mr-2" /> FAQs
+          </span>
+        </motion.div>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-700 bg-clip-text text-transparent mb-2"
+        >
+          Frequently Asked Questions
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-gray-600"
+        >
+          Find answers to common questions about DevOps and our services
+        </motion.p>
+      </div>
+
+      {/* Centered single column layout with reduced width */}
+      <div className="w-full max-w-3xl space-y-4">
         {displayedFAQs.map((faq) => (
           <motion.div
             key={faq.id}
