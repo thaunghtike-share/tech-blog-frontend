@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import type React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -21,11 +20,19 @@ interface UserProfile {
   avatar?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+interface AuthorProfile {
+  name: string;
+  bio: string;
+  job_title: string;
+  company: string;
+  linkedin: string;
+  avatar: string;
+  profile_complete: boolean;
+}
 
-// Local storage key constants
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 const DRAFT_KEY = "new-article-draft";
-const SAVE_INTERVAL = 5000; // 5 seconds
+const SAVE_INTERVAL = 5000;
 
 export default function NewArticlePage() {
   const [token, setToken] = useState<string | null>(null);
@@ -37,7 +44,11 @@ export default function NewArticlePage() {
   const [showPreview, setShowPreview] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [authorProfile, setAuthorProfile] = useState<AuthorProfile | null>(
+    null
+  );
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -55,8 +66,9 @@ export default function NewArticlePage() {
     type: "success" | "error";
   } | null>(null);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  // Load Google script and initialize
+  // Load Google script
   useEffect(() => {
     const loadGoogleScript = () => {
       const script = document.createElement("script");
@@ -102,7 +114,7 @@ export default function NewArticlePage() {
     }
   }, []);
 
-  // Re-render Google button when token changes (after logout)
+  // Re-render Google button when token changes
   useEffect(() => {
     if (googleScriptLoaded && !token) {
       const initializeGoogleSignIn = () => {
@@ -127,6 +139,38 @@ export default function NewArticlePage() {
     }
   }, [token, googleScriptLoaded]);
 
+  // Load token and user profile on initial render
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedToken = localStorage.getItem("token");
+      if (savedToken) {
+        setToken(savedToken);
+        fetchUserProfile(savedToken);
+      }
+    }
+  }, []);
+
+  // Fetch user profile
+  const fetchUserProfile = async (token: string) => {
+    try {
+      const profileRes = await fetch(`${API_BASE_URL}/authors/me/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+
+      if (profileRes.ok) {
+        const profileData = await profileRes.json();
+        setAuthorProfile(profileData);
+        setUserProfile({
+          username: profileData.name || "Author",
+          email: "",
+          avatar: profileData.avatar,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
   // Handle Google login response
   async function handleGoogleResponse(response: any) {
     setGoogleLoading(true);
@@ -145,19 +189,32 @@ export default function NewArticlePage() {
       }
 
       const data = await res.json();
-      const authToken = data.token || data.access_token;
+      const authToken = data.token;
       setToken(authToken);
       localStorage.setItem("token", authToken);
 
-      // Set user profile from Google response
+      // Set basic user profile
       const profile = {
-        username: data.user?.username || "Google User",
+        username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
-        avatar: data.user?.avatar,
+        avatar: data.author?.avatar,
       };
       setUserProfile(profile);
 
-      setMessage({ text: "Google login successful", type: "success" });
+      // Set author profile
+      setAuthorProfile({
+        name: data.user?.first_name || "New Author",
+        bio: "",
+        job_title: "",
+        company: "",
+        linkedin: "",
+        avatar: data.user?.avatar || "",
+        profile_complete: false,
+      });
+
+      // Force profile completion
+      setShowProfileModal(true);
+      setMessage({ text: "Please complete your profile", type: "success" });
 
       // Load draft if exists
       const draft = localStorage.getItem(DRAFT_KEY);
@@ -200,21 +257,6 @@ export default function NewArticlePage() {
       document.exitFullscreen();
     }
   };
-
-  // Load token and user profile on initial render
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedToken = localStorage.getItem("token");
-      if (savedToken) {
-        setToken(savedToken);
-        // In a real app, you would fetch user profile here
-        setUserProfile({
-          username: "Logged In User",
-          email: "user@example.com",
-        });
-      }
-    }
-  }, []);
 
   // Auto-save draft
   useEffect(() => {
@@ -288,6 +330,7 @@ export default function NewArticlePage() {
   function handleLogout() {
     setToken(null);
     setUserProfile(null);
+    setAuthorProfile(null);
     localStorage.removeItem("token");
     setMessage({ text: "Logged out successfully", type: "success" });
 
@@ -322,13 +365,50 @@ export default function NewArticlePage() {
     setMessage({ text: "Draft cleared", type: "success" });
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleProfileSubmit = async (profileData: any) => {
+    try {
+      setSubmitting(true);
+      const response = await fetch(`${API_BASE_URL}/authors/me/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      const savedProfile = await response.json();
+      setAuthorProfile({
+        ...savedProfile,
+        profile_complete: true,
+      });
+      setUserProfile((prev) => ({
+        ...prev!,
+        username: savedProfile.name || prev?.username || "User",
+        avatar: savedProfile.avatar,
+      }));
+      setShowProfileModal(false);
+      setMessage({ text: "Profile saved successfully", type: "success" });
+    } catch (error: any) {
+      setMessage({ text: `Error: ${error.message}`, type: "error" });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  async function handleArticleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!token) {
+
+    if (!authorProfile?.profile_complete) {
       setMessage({
-        text: "You must be logged in to submit an article.",
+        text: "Please complete your profile first",
         type: "error",
       });
+      setShowProfileModal(true);
       return;
     }
 
@@ -378,12 +458,133 @@ export default function NewArticlePage() {
     }
   }
 
+  const ProfileCompletionModal = () => {
+    const [formData, setFormData] = useState({
+      name: authorProfile?.name || "",
+      bio: authorProfile?.bio || "",
+      job_title: authorProfile?.job_title || "",
+      company: authorProfile?.company || "",
+      linkedin: authorProfile?.linkedin || "",
+    });
+
+    useEffect(() => {
+      if (authorProfile) {
+        setFormData({
+          name: authorProfile.name || "",
+          bio: authorProfile.bio || "",
+          job_title: authorProfile.job_title || "",
+          company: authorProfile.company || "",
+          linkedin: authorProfile.linkedin || "",
+        });
+      }
+    }, [authorProfile]);
+
+    const handleFormSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      await handleProfileSubmit(formData);
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <h2 className="text-xl font-bold mb-4">Complete Your Profile</h2>
+
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Display Name *
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                required
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Bio *
+              </label>
+              <textarea
+                value={formData.bio}
+                onChange={(e) =>
+                  setFormData({ ...formData, bio: e.target.value })
+                }
+                rows={4}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Job Title
+              </label>
+              <input
+                type="text"
+                value={formData.job_title}
+                onChange={(e) =>
+                  setFormData({ ...formData, job_title: e.target.value })
+                }
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Company
+              </label>
+              <input
+                type="text"
+                value={formData.company}
+                onChange={(e) =>
+                  setFormData({ ...formData, company: e.target.value })
+                }
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                LinkedIn URL
+              </label>
+              <input
+                type="url"
+                value={formData.linkedin}
+                onChange={(e) =>
+                  setFormData({ ...formData, linkedin: e.target.value })
+                }
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              />
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:opacity-50"
+              >
+                {submitting ? "Saving..." : "Save Profile"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       className={`min-h-screen flex flex-col bg-gray-50 relative ${
         fullscreen ? "overflow-hidden" : ""
       }`}
     >
+      {showProfileModal && <ProfileCompletionModal />}
+
       {!fullscreen && (
         <>
           <div
@@ -410,7 +611,6 @@ export default function NewArticlePage() {
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h1 className="text-xl font-bold text-center mb-4">Login</h1>
 
-                {/* Regular Login Form */}
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div>
                     <label className="block mb-1 font-medium text-sm text-gray-700">
@@ -444,14 +644,12 @@ export default function NewArticlePage() {
                   </button>
                 </form>
 
-                {/* Divider with "or" text */}
                 <div className="flex items-center my-6">
                   <div className="flex-grow border-t border-gray-300"></div>
                   <span className="mx-4 text-gray-500 text-sm">OR</span>
                   <div className="flex-grow border-t border-gray-300"></div>
                 </div>
 
-                {/* Google Sign-In */}
                 <div className="flex flex-col items-center w-full max-w-sm mx-auto">
                   <div id="google-signin-button" className="mb-4 w-full" />
                   {googleLoading && (
@@ -459,7 +657,6 @@ export default function NewArticlePage() {
                   )}
                 </div>
 
-                {/* Error/Success Messages */}
                 {(loginError || message) && (
                   <div
                     className={`mt-4 p-3 rounded-md text-sm ${
@@ -515,7 +712,7 @@ export default function NewArticlePage() {
               )}
 
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleArticleSubmit}
                 className={`bg-white ${
                   fullscreen
                     ? "h-full"
