@@ -183,7 +183,7 @@ export default function HomeClient() {
           <MinimalFAQs />
         </div>
       </main>
-      <div className="-mt-11 md:-mt-8">
+      <div id="faqs" className="-mt-11 md:-mt-8">
         <MinimalFooter />
       </div>
     </div>
