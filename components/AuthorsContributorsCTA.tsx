@@ -1,5 +1,5 @@
 "use client";
-import { Mail, Users, Heart, Sparkles } from "lucide-react";
+import { Users, Heart, Sparkles, PenSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function AuthorsContributorsCTA() {
@@ -38,6 +38,20 @@ export function AuthorsContributorsCTA() {
           Join our community to share your knowledge, write articles, or help
           improve this website. Your expertise can make a difference!
         </motion.p>
+
+        <motion.a
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          href="/admin/new-article"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-700 hover:to-emerald-700 text-white px-6 py-3 rounded-2xl text-sm md:text-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 shadow-xl"
+        >
+          <PenSquare className="w-5 h-5" />
+          Start Writing
+          <Sparkles className="w-4 h-4 ml-1" />
+        </motion.a>
       </div>
     </section>
   );

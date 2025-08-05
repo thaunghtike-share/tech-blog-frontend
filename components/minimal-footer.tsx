@@ -90,10 +90,10 @@ export function MinimalFooter() {
               </li>
               <li>
                 <Link
-                  href="/faqs"
+                  href="/services/cloud-migration"
                   className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
                 >
-                  FAQs
+                  Cloud Migration Services
                 </Link>
               </li>
             </ul>

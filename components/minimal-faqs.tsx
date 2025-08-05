@@ -8,6 +8,7 @@ import {
   ChevronUp,
   HelpCircle,
   Info,
+  MessageCircleQuestion,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,12 +22,12 @@ const rawFaqs = [
   {
     question: "Do you offer professional DevOps services?",
     answer:
-      "Yes! We provide services such as Cloud Migration, Infrastructure Automation, and Cloud-native App Deployment. Visit our Services page to learn more.",
+      "Yes! We offer a range of professional DevOps services designed to help teams accelerate development, improve deployment reliability, and optimize infrastructure. Our services include Cloud Migration (to AWS, Azure, or GCP), Infrastructure Automation using tools like Terraform and Ansible, CI/CD pipeline setup with GitHub Actions or Jenkins, Kubernetes cluster configuration and management, containerization with Docker, and Cloud-native Application Deployment. Whether you're just starting your cloud journey or looking to scale and automate your operations, we can help you build a robust, secure, and cost-effective DevOps environment tailored to your business goals. Visit our Services page to explore each offering in detail or get in touch for a consultation.",
   },
   {
     question: "How can I request a consultation?",
     answer:
-      "Click the Messenger button at the right side of the site or reach out via our Contact Page.",
+      "You can request a consultation through several channels. Click the Messenger button on the bottom-right corner of the site to chat with us directly. You can also visit our Contact Page to fill out a quick form, reach out via LinkedIn for professional inquiries, or send us an email with your requirements and preferred time slots. We're happy to discuss your DevOps needs and find the best solution for your business.",
   },
   {
     question: "What skills are required to become a DevOps Engineer?",
@@ -100,7 +101,7 @@ export function MinimalFAQs() {
       className="mt-20 w-full px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center"
     >
       {/* Header section */}
-      <div className="text-center mb-7 max-w-3xl">
+      <div className="text-center mb-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -110,7 +111,7 @@ export function MinimalFAQs() {
             <HelpCircle className="w-4 h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-emerald-50 text-indigo-700 border border-indigo-200">
-            <Info className="w-4 h-4 mr-2" /> FAQs
+            <MessageCircleQuestion className="w-4 h-4 mr-2" /> FAQs
           </span>
         </motion.div>
         <motion.h2
@@ -132,7 +133,7 @@ export function MinimalFAQs() {
       </div>
 
       {/* FAQ items container */}
-      <div ref={faqContainerRef} className="w-full max-w-3xl space-y-4">
+      <div ref={faqContainerRef} className="w-full max-w-4xl space-y-4">
         {displayedFAQs.map((faq) => (
           <motion.div
             key={faq.id}
@@ -187,7 +188,7 @@ export function MinimalFAQs() {
             onClick={handleToggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-gradient-to-r from-indigo-500 to-emerald-600 text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-emerald-700"
+            className="flex items-center justify-center px-6 py-3 rounded-2xl text-base font-medium transition-all duration-300 bg-gradient-to-r from-indigo-500 to-emerald-600 text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-emerald-700"
           >
             {showAll ? (
               <>
