@@ -354,7 +354,7 @@ export default function NewArticlePage() {
     setUserProfile(null);
     setAuthorProfile(null);
     localStorage.removeItem("token");
-    setMessage({ text: "Logged out successfully", type: "success" });
+    setMessage(null);
     setGoogleScriptLoaded(false);
     setTimeout(() => setGoogleScriptLoaded(true), 100);
   }
