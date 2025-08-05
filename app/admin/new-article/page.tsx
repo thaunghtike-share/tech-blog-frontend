@@ -59,6 +59,7 @@ export default function NewArticlePage() {
     avatar: "",
     slug: "",
   });
+  const [profileChecked, setProfileChecked] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -152,20 +153,22 @@ export default function NewArticlePage() {
       const savedToken = localStorage.getItem("token");
       if (savedToken) {
         setToken(savedToken);
-        fetchUserProfile(savedToken);
+        checkProfileCompletion(savedToken);
       }
     }
   }, []);
 
-  // Fetch user profile
-  const fetchUserProfile = async (token: string) => {
+  // Check profile completion status
+  const checkProfileCompletion = async (token: string) => {
     try {
       const profileRes = await fetch(`${API_BASE_URL}/authors/me/`, {
         headers: { Authorization: `Token ${token}` },
       });
+
       if (profileRes.ok) {
         const profileData = await profileRes.json();
         setAuthorProfile(profileData);
+
         const userData = {
           username: profileData.name || "Author",
           email: profileData.email || "",
@@ -173,7 +176,6 @@ export default function NewArticlePage() {
         };
         setUserProfile(userData);
 
-        // Always populate form data with existing info
         setProfileFormData({
           name: profileData.name || "",
           bio: profileData.bio || "",
@@ -184,13 +186,14 @@ export default function NewArticlePage() {
           slug: profileData.slug || "",
         });
 
-        // Only show profile modal if profile is incomplete
-        if (!profileData.profile_complete) {
-          setShowProfileModal(true);
-        }
+        return profileData.profile_complete;
       }
+      return false;
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      console.error("Error checking profile:", error);
+      return false;
+    } finally {
+      setProfileChecked(true);
     }
   };
 
@@ -215,7 +218,6 @@ export default function NewArticlePage() {
       setToken(authToken);
       localStorage.setItem("token", authToken);
 
-      // Initialize profile with Google data
       const profile = {
         username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
@@ -223,50 +225,30 @@ export default function NewArticlePage() {
       };
       setUserProfile(profile);
 
-      // Check if profile exists
-      if (data.author) {
-        // Profile exists - set all data
-        setAuthorProfile(data.author);
-        setProfileFormData({
-          name:
-            data.author.name ||
-            data.user?.first_name ||
-            data.user?.username ||
-            "",
-          bio: data.author.bio || "",
-          job_title: data.author.job_title || "",
-          company: data.author.company || "",
-          linkedin: data.author.linkedin || "",
-          avatar: data.author.avatar || data.user?.avatar || "",
-          slug: data.author.slug || "",
-        });
+      const profileComplete = await checkProfileCompletion(authToken);
 
-        // Only show modal if profile is incomplete
-        if (!data.author.profile_complete) {
-          setShowProfileModal(true);
+      if (!profileComplete) {
+        if (!data.author) {
+          setAuthorProfile({
+            name: data.user?.first_name || data.user?.username || "",
+            bio: "",
+            job_title: "",
+            company: "",
+            linkedin: "",
+            avatar: data.user?.avatar || "",
+            slug: "",
+            profile_complete: false,
+          });
+          setProfileFormData({
+            name: data.user?.first_name || data.user?.username || "",
+            bio: "",
+            job_title: "",
+            company: "",
+            linkedin: "",
+            avatar: data.user?.avatar || "",
+            slug: "",
+          });
         }
-      } else {
-        // New user - show modal to complete profile
-        const newAuthorProfile = {
-          name: data.user?.first_name || data.user?.username || "",
-          bio: "",
-          job_title: "",
-          company: "",
-          linkedin: "",
-          avatar: data.user?.avatar || "",
-          slug: "",
-          profile_complete: false,
-        };
-        setAuthorProfile(newAuthorProfile);
-        setProfileFormData({
-          name: data.user?.first_name || data.user?.username || "",
-          bio: "",
-          job_title: "",
-          company: "",
-          linkedin: "",
-          avatar: data.user?.avatar || "",
-          slug: "",
-        });
         setShowProfileModal(true);
       }
     } catch (error: any) {
@@ -350,8 +332,9 @@ export default function NewArticlePage() {
       }
 
       const data = await res.json();
-      setToken(data.token);
-      localStorage.setItem("token", data.token);
+      const authToken = data.token;
+      setToken(authToken);
+      localStorage.setItem("token", authToken);
       setUsername("");
       setPassword("");
       const userData = {
@@ -360,7 +343,7 @@ export default function NewArticlePage() {
       };
       setUserProfile(userData);
       setMessage({ text: "Login successful", type: "success" });
-      fetchUserProfile(data.token);
+      checkProfileCompletion(authToken);
     } catch (error) {
       setLoginError("Login failed");
     }
@@ -412,7 +395,10 @@ export default function NewArticlePage() {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
         },
-        body: JSON.stringify(profileFormData),
+        body: JSON.stringify({
+          ...profileFormData,
+          profile_complete: true,
+        }),
       });
 
       if (!response.ok) {
@@ -424,12 +410,6 @@ export default function NewArticlePage() {
         ...savedProfile,
         profile_complete: true,
       });
-      const userData = {
-        username: savedProfile.name || userProfile?.username || "User",
-        email: userProfile?.email || "",
-        avatar: savedProfile.avatar,
-      };
-      setUserProfile(userData);
       setShowProfileModal(false);
       setMessage({ text: "Profile saved successfully", type: "success" });
     } catch (error: any) {
@@ -440,6 +420,12 @@ export default function NewArticlePage() {
   };
 
   const handleSkipProfile = () => {
+    if (authorProfile) {
+      setAuthorProfile({
+        ...authorProfile,
+        profile_complete: true,
+      });
+    }
     setShowProfileModal(false);
     setMessage({
       text: "You can complete your profile later",
