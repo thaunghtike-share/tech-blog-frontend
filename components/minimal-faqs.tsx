@@ -133,7 +133,7 @@ export function MinimalFAQs() {
       </div>
 
       {/* FAQ items container */}
-      <div ref={faqContainerRef} className="w-full max-w-4xl space-y-4">
+      <div ref={faqContainerRef} className="w-full max-w-4xl space-y-6">
         {displayedFAQs.map((faq) => (
           <motion.div
             key={faq.id}
