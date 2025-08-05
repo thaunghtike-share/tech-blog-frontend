@@ -166,11 +166,28 @@ export default function NewArticlePage() {
       if (profileRes.ok) {
         const profileData = await profileRes.json();
         setAuthorProfile(profileData);
-        setUserProfile({
+        const userData = {
           username: profileData.name || "Author",
-          email: "",
+          email: profileData.email || "",
           avatar: profileData.avatar,
+        };
+        setUserProfile(userData);
+
+        // Always populate form data with existing info
+        setProfileFormData({
+          name: profileData.name || "",
+          bio: profileData.bio || "",
+          job_title: profileData.job_title || "",
+          company: profileData.company || "",
+          linkedin: profileData.linkedin || "",
+          avatar: profileData.avatar || "",
+          slug: profileData.slug || "",
         });
+
+        // Only show profile modal if profile is incomplete
+        if (!profileData.profile_complete) {
+          setShowProfileModal(true);
+        }
       }
     } catch (error) {
       console.error("Error fetching user profile:", error);
@@ -198,36 +215,60 @@ export default function NewArticlePage() {
       setToken(authToken);
       localStorage.setItem("token", authToken);
 
-      // Initialize empty profile
+      // Initialize profile with Google data
       const profile = {
         username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
-        avatar: data.author?.avatar,
+        avatar: data.author?.avatar || data.user?.avatar,
       };
       setUserProfile(profile);
 
-      // Set empty author profile
-      const newAuthorProfile = {
-        name: "",
-        bio: "",
-        job_title: "",
-        company: "",
-        linkedin: "",
-        avatar: data.user?.avatar || "",
-        slug: "",
-        profile_complete: false,
-      };
-      setAuthorProfile(newAuthorProfile);
-      setProfileFormData({
-        name: "",
-        bio: "",
-        job_title: "",
-        company: "",
-        linkedin: "",
-        avatar: "",
-        slug: "",
-      });
-      setShowProfileModal(true);
+      // Check if profile exists
+      if (data.author) {
+        // Profile exists - set all data
+        setAuthorProfile(data.author);
+        setProfileFormData({
+          name:
+            data.author.name ||
+            data.user?.first_name ||
+            data.user?.username ||
+            "",
+          bio: data.author.bio || "",
+          job_title: data.author.job_title || "",
+          company: data.author.company || "",
+          linkedin: data.author.linkedin || "",
+          avatar: data.author.avatar || data.user?.avatar || "",
+          slug: data.author.slug || "",
+        });
+
+        // Only show modal if profile is incomplete
+        if (!data.author.profile_complete) {
+          setShowProfileModal(true);
+        }
+      } else {
+        // New user - show modal to complete profile
+        const newAuthorProfile = {
+          name: data.user?.first_name || data.user?.username || "",
+          bio: "",
+          job_title: "",
+          company: "",
+          linkedin: "",
+          avatar: data.user?.avatar || "",
+          slug: "",
+          profile_complete: false,
+        };
+        setAuthorProfile(newAuthorProfile);
+        setProfileFormData({
+          name: data.user?.first_name || data.user?.username || "",
+          bio: "",
+          job_title: "",
+          company: "",
+          linkedin: "",
+          avatar: data.user?.avatar || "",
+          slug: "",
+        });
+        setShowProfileModal(true);
+      }
     } catch (error: any) {
       setLoginError(error.message);
     } finally {
@@ -313,11 +354,13 @@ export default function NewArticlePage() {
       localStorage.setItem("token", data.token);
       setUsername("");
       setPassword("");
-      setUserProfile({
+      const userData = {
         username: data.user?.username || username,
         email: data.user?.email || "",
-      });
+      };
+      setUserProfile(userData);
       setMessage({ text: "Login successful", type: "success" });
+      fetchUserProfile(data.token);
     } catch (error) {
       setLoginError("Login failed");
     }
@@ -381,11 +424,12 @@ export default function NewArticlePage() {
         ...savedProfile,
         profile_complete: true,
       });
-      setUserProfile((prev) => ({
-        ...prev!,
-        username: savedProfile.name || prev?.username || "User",
+      const userData = {
+        username: savedProfile.name || userProfile?.username || "User",
+        email: userProfile?.email || "",
         avatar: savedProfile.avatar,
-      }));
+      };
+      setUserProfile(userData);
       setShowProfileModal(false);
       setMessage({ text: "Profile saved successfully", type: "success" });
     } catch (error: any) {
@@ -395,11 +439,19 @@ export default function NewArticlePage() {
     }
   };
 
+  const handleSkipProfile = () => {
+    setShowProfileModal(false);
+    setMessage({
+      text: "You can complete your profile later",
+      type: "success",
+    });
+  };
+
   async function handleArticleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!authorProfile?.profile_complete) {
       setMessage({
-        text: "Please complete your profile first",
+        text: "Please complete your profile first. Click here to complete it.",
         type: "error",
       });
       setShowProfileModal(true);
@@ -460,7 +512,9 @@ export default function NewArticlePage() {
               "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
           }}
         ></div>
-        <MinimalHeader />
+        <div className="sticky top-0 z-50">
+          <MinimalHeader />
+        </div>
 
         <main className="flex-grow max-w-7xl mx-auto px-4 py-10 relative z-10">
           <div className="max-w-md mx-auto">
@@ -619,11 +673,18 @@ export default function NewArticlePage() {
                   </div>
                 )}
 
-                <div className="pt-2">
+                <div className="pt-2 flex space-x-3">
+                  <button
+                    type="button"
+                    onClick={handleSkipProfile}
+                    className="flex-1 bg-gray-200 text-gray-800 py-2 rounded-md hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  >
+                    Skip for Now
+                  </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                    className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
                   >
                     {submitting ? "Saving..." : "Save Profile"}
                   </button>
@@ -651,7 +712,11 @@ export default function NewArticlePage() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {!fullscreen && <MinimalHeader />}
+      {!fullscreen && (
+        <div className="sticky top-0 z-50">
+          <MinimalHeader />
+        </div>
+      )}
 
       <main
         className={`${
@@ -763,7 +828,7 @@ export default function NewArticlePage() {
                     )}
                     <button
                       onClick={handleLogout}
-                      className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md transition-colors text-sm font-medium"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium"
                     >
                       Logout
                     </button>
@@ -787,7 +852,17 @@ export default function NewArticlePage() {
                         : "bg-red-100 text-red-800"
                     }`}
                   >
-                    {message.text}
+                    {message.type === "error" &&
+                    message.text.includes("complete your profile") ? (
+                      <button
+                        onClick={() => setShowProfileModal(true)}
+                        className="underline hover:text-red-900"
+                      >
+                        {message.text}
+                      </button>
+                    ) : (
+                      message.text
+                    )}
                   </div>
                 )}
 
@@ -908,7 +983,7 @@ export default function NewArticlePage() {
                           <button
                             type="button"
                             onClick={() => setShowPreview(!showPreview)}
-                            className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-md transition"
+                            className="text-xs bg-blue-600 text-white px-2 py-1 rounded-md hover:bg-blue-700 transition"
                           >
                             {showPreview ? "Hide Preview" : "Show Preview"}
                           </button>
