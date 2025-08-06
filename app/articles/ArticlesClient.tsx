@@ -130,7 +130,7 @@ export default function ArticlesClient() {
           </div>
 
           {/* Sidebar hidden on mobile */}
-          <aside className="hidden lg:block lg:col-span-2 mt-30">
+          <aside className="hidden lg:block lg:col-span-2 mt-26">
             <MinimalSidebar onTagClick={updateTagFilter} />
           </aside>
         </div>

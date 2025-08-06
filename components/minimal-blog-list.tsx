@@ -54,7 +54,7 @@ interface MinimalBlogListProps {
   filterTagSlug?: string | null;
 }
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 7;
 
 function slugify(text: string) {
   return text
@@ -279,7 +279,7 @@ export function MinimalBlogList({
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       {/* Header with Enhanced Tag Filter */}
-      <div className="mb-12 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mb-9 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
