@@ -79,6 +79,30 @@ export default function NewArticlePage() {
   const [lastSaved, setLastSaved] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const fetchAuthorProfile = async () => {
+    try {
+      const profileRes = await fetch(`${API_BASE_URL}/authors/me/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+
+      if (profileRes.ok) {
+        const profileData = await profileRes.json();
+        setProfileFormData({
+          name: profileData.name || "",
+          bio: profileData.bio || "",
+          job_title: profileData.job_title || "",
+          company: profileData.company || "",
+          linkedin: profileData.linkedin || "",
+          avatar: profileData.avatar || "",
+          slug: profileData.slug || "",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      setMessage({ text: "Failed to load profile", type: "error" });
+    }
+  };
+
   // Load Google script
   useEffect(() => {
     const loadGoogleScript = () => {
@@ -158,7 +182,6 @@ export default function NewArticlePage() {
     }
   }, []);
 
-  // Check profile completion status
   const checkProfileCompletion = async (token: string) => {
     try {
       const profileRes = await fetch(`${API_BASE_URL}/authors/me/`, {
@@ -176,6 +199,7 @@ export default function NewArticlePage() {
         };
         setUserProfile(userData);
 
+        // Update profile form data as well
         setProfileFormData({
           name: profileData.name || "",
           bio: profileData.bio || "",
@@ -813,7 +837,10 @@ export default function NewArticlePage() {
                       </div>
                     )}
                     <button
-                      onClick={() => setShowProfileModal(true)}
+                      onClick={async () => {
+                        await checkProfileCompletion(token!);
+                        setShowProfileModal(true);
+                      }}
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-black transition-colors text-sm font-medium"
                     >
                       Edit
