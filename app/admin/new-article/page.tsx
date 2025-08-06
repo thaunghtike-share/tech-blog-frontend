@@ -221,7 +221,6 @@ export default function NewArticlePage() {
     }
   };
 
-  // Handle Google login response
   async function handleGoogleResponse(response: any) {
     setGoogleLoading(true);
     setLoginError(null);
@@ -249,32 +248,34 @@ export default function NewArticlePage() {
       };
       setUserProfile(profile);
 
-      const profileComplete = await checkProfileCompletion(authToken);
+      // Just check the profile completion without showing the modal
+      await checkProfileCompletion(authToken);
 
-      if (!profileComplete) {
-        if (!data.author) {
-          setAuthorProfile({
-            name: data.user?.first_name || data.user?.username || "",
-            bio: "",
-            job_title: "",
-            company: "",
-            linkedin: "",
-            avatar: data.user?.avatar || "",
-            slug: "",
-            profile_complete: false,
-          });
-          setProfileFormData({
-            name: data.user?.first_name || data.user?.username || "",
-            bio: "",
-            job_title: "",
-            company: "",
-            linkedin: "",
-            avatar: data.user?.avatar || "",
-            slug: "",
-          });
-        }
-        setShowProfileModal(true);
-      }
+      // Remove the automatic profile modal display
+      // if (!profileComplete) {
+      //   if (!data.author) {
+      //     setAuthorProfile({
+      //       name: data.user?.first_name || data.user?.username || "",
+      //       bio: "",
+      //       job_title: "",
+      //       company: "",
+      //       linkedin: "",
+      //       avatar: data.user?.avatar || "",
+      //       slug: "",
+      //       profile_complete: false,
+      //     });
+      //     setProfileFormData({
+      //       name: data.user?.first_name || data.user?.username || "",
+      //       bio: "",
+      //       job_title: "",
+      //       company: "",
+      //       linkedin: "",
+      //       avatar: data.user?.avatar || "",
+      //       slug: "",
+      //     });
+      //   }
+      //   setShowProfileModal(true);
+      // }
     } catch (error: any) {
       setLoginError(error.message);
     } finally {
@@ -461,10 +462,9 @@ export default function NewArticlePage() {
     e.preventDefault();
     if (!authorProfile?.profile_complete) {
       setMessage({
-        text: "Please complete your profile first. Click here to complete it.",
+        text: "Your profile is incomplete. Please complete it using the Edit Profile button before submitting articles.",
         type: "error",
       });
-      setShowProfileModal(true);
       return;
     }
 
