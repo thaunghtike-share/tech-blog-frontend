@@ -232,7 +232,7 @@ export default function Intro() {
             </span>
           </h4>
           <p className="text-gray-700 text-center">
-            Follow this structured path to master DevOps
+            Follow this structured path to master your DevOps journey
           </p>
         </motion.div>
 
