@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { Card, CardContent } from "@/components/ui/card";
+import { Linkedin } from "lucide-react";
 
 interface AuthorSummary {
   id: number;
@@ -14,7 +15,7 @@ interface AuthorSummary {
   featured: boolean;
   job_title: string;
   company: string;
-  // Removed linkedin
+  linkedin?: string;
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
@@ -117,11 +118,23 @@ export default function AuthorsPage() {
                 className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
               >
                 <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  <img
-                    src={author.avatar || "/placeholder.svg"}
-                    alt={author.name}
-                    className="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm"
-                  />
+                  <div className="relative">
+                    <img
+                      src={author.avatar || "/placeholder.svg"}
+                      alt={author.name}
+                      className="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm"
+                    />
+                    {author.linkedin && (
+                      <a
+                        href={author.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow"
+                      >
+                        <Linkedin className="w-4 h-4 text-blue-600" />
+                      </a>
+                    )}
+                  </div>
                   <Link
                     href={`/authors/${author.slug}`}
                     className="text-lg font-semibold text-blue-600 hover:underline"
@@ -143,7 +156,7 @@ export default function AuthorsPage() {
         )}
       </main>
       <div className="-mt-4 md:-mt-4">
-      <MinimalFooter />
+        <MinimalFooter />
       </div>
     </div>
   );
