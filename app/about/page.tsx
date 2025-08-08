@@ -342,11 +342,11 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
-      <main className="-mt-24 md:-mt-10 max-w-7xl mx-auto px-4 py-12 relative z-10">
+      <main className="-mt-22 md:-mt-10 max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-0 bg-gray-50 shadow-lg">
+            <Card className="border-0 md:bg-gray-50 shadow-lg">
               <CardContent className="p-6">
                 <div className="text-center mb-6">
                   <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg">
@@ -385,11 +385,17 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <div className="mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                  <a href="/thaung-cv.pdf" download>
+                  <a
+                    href="/thaung-cv.pdf"
+                    download
+                    className="w-full sm:w-auto"
+                  >
+                    {" "}
+                    {/* Add w-full sm:w-auto here */}
                     <Button
                       size="lg"
-                      className="flex items-center justify-center gap-2 flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all 
-    text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
+                      className="flex items-center justify-center gap-2 w-full sm:w-auto bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all 
+      text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                     >
                       <Download className="h-4 w-4" />
                       Download CV
@@ -398,8 +404,8 @@ export default function AboutPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="flex-1 border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all bg-transparent
-               text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
+                    className="w-full sm:w-auto border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all bg-transparent
+    text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                     onClick={() =>
                       window.open(personalInfo.linkedinUrl, "_blank")
                     }

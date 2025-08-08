@@ -32,14 +32,29 @@ export default function AuthorsPage() {
         const res = await fetch(`${API_BASE_URL}/authors/`);
         if (!res.ok) throw new Error("Failed to fetch authors");
         const data = await res.json();
-        if (Array.isArray(data)) {
-          setAuthors(data);
-        } else if (Array.isArray(data.results)) {
-          setAuthors(data.results);
-        } else {
-          setAuthors([]);
-          throw new Error("Unexpected data format from API");
-        }
+
+        // Get the raw authors array from the response
+        const rawAuthors = Array.isArray(data)
+          ? data
+          : Array.isArray(data.results)
+          ? data.results
+          : [];
+
+        // Strict filter for complete profiles
+        const completeAuthors = rawAuthors.filter((author: AuthorSummary) => {
+          return (
+            author.name?.trim() &&
+            author.bio?.trim() &&
+            author.avatar?.trim() &&
+            author.avatar !== "/placeholder.svg" &&
+            author.job_title?.trim() &&
+            author.company?.trim() &&
+            author.slug?.trim() &&
+            author.linkedin?.trim() // Require LinkedIn URL
+          );
+        });
+
+        setAuthors(completeAuthors);
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -50,7 +65,7 @@ export default function AuthorsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
+    <div className="min-h-screen bg-gray-50 overflow-x-hidden">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 z-0 opacity-10"
@@ -60,7 +75,8 @@ export default function AuthorsPage() {
         }}
       ></div>
       <MinimalHeader />
-      <section className="-mt-14 md:-mt-6 bg-gray-50 backdrop-blur-sm py-12 relative z-10">
+      <section className="-mt-14 md:-mt-6 bg-gray-50 backdrop-blur-sm py-12 z-10">
+        {/* Subtle background pattern */}
         <div
           className="absolute inset-0 z-0 opacity-10"
           style={{
@@ -94,9 +110,26 @@ export default function AuthorsPage() {
                 fetch(`${API_BASE_URL}/authors/`)
                   .then((res) => res.json())
                   .then((data) => {
-                    if (Array.isArray(data)) setAuthors(data);
-                    else if (Array.isArray(data.results))
-                      setAuthors(data.results);
+                    const rawAuthors = Array.isArray(data)
+                      ? data
+                      : Array.isArray(data.results)
+                      ? data.results
+                      : [];
+                    const completeAuthors = rawAuthors.filter(
+                      (author: AuthorSummary) => {
+                        return (
+                          author.name?.trim() &&
+                          author.bio?.trim() &&
+                          author.avatar?.trim() &&
+                          author.avatar !== "/placeholder.svg" &&
+                          author.job_title?.trim() &&
+                          author.company?.trim() &&
+                          author.slug?.trim() &&
+                          author.linkedin?.trim()
+                        );
+                      }
+                    );
+                    setAuthors(completeAuthors);
                   })
                   .catch((e) => setError(e.message))
                   .finally(() => setLoading(false));
@@ -107,7 +140,15 @@ export default function AuthorsPage() {
             </button>
           </div>
         ) : authors.length === 0 ? (
-          <p className="text-center text-gray-600">No authors found.</p>
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">
+              No authors with complete profiles found.
+            </p>
+            <p className="text-sm text-gray-500">
+              We only display authors who have completed all profile fields
+              including LinkedIn.
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {authors.map((author) => (
@@ -120,21 +161,23 @@ export default function AuthorsPage() {
                   <div className="relative group">
                     <div className="w-24 h-24 rounded-full border-2 border-white shadow-md overflow-hidden">
                       <img
-                        src={author.avatar || "/placeholder.svg"}
+                        src={author.avatar}
                         alt={author.name}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/placeholder.svg";
+                        }}
                       />
                     </div>
-                    {author.linkedin && (
-                      <a
-                        href={author.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition"
-                      >
-                        <Linkedin className="w-4 h-4 text-blue-600" />
-                      </a>
-                    )}
+                    <a
+                      href={author.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition"
+                    >
+                      <Linkedin className="w-4 h-4 text-blue-600" />
+                    </a>
                   </div>
                   <div className="text-center space-y-2 w-full">
                     <Link
@@ -146,11 +189,9 @@ export default function AuthorsPage() {
                     <p className="text-sm text-gray-600 font-medium">
                       {author.job_title} at {author.company}
                     </p>
-                    {author.bio && (
-                      <p className="text-gray-500 text-sm line-clamp-3">
-                        {author.bio}
-                      </p>
-                    )}
+                    <p className="text-gray-500 text-sm line-clamp-3">
+                      {author.bio}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
