@@ -61,7 +61,6 @@ export default function AuthorsPage() {
       ></div>
       <MinimalHeader />
       <section className="-mt-11 md:-mt-6 bg-gray-50 backdrop-blur-sm py-12 relative z-10">
-        {/* Subtle background pattern */}
         <div
           className="absolute inset-0 z-0 opacity-10"
           style={{
@@ -115,40 +114,44 @@ export default function AuthorsPage() {
               <Card
                 key={author.id}
                 id={`author-${author.slug}`}
-                className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
+                className="border-0 bg-white shadow-sm hover:shadow-md transition cursor-pointer h-full flex flex-col"
               >
-                <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  <div className="relative">
-                    <img
-                      src={author.avatar || "/placeholder.svg"}
-                      alt={author.name}
-                      className="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm"
-                    />
+                <CardContent className="flex flex-col items-center space-y-4 p-6 flex-grow">
+                  <div className="relative group">
+                    <div className="w-24 h-24 rounded-full border-2 border-white shadow-md overflow-hidden">
+                      <img
+                        src={author.avatar || "/placeholder.svg"}
+                        alt={author.name}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
                     {author.linkedin && (
                       <a
                         href={author.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow"
+                        className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition"
                       >
                         <Linkedin className="w-4 h-4 text-blue-600" />
                       </a>
                     )}
                   </div>
-                  <Link
-                    href={`/authors/${author.slug}`}
-                    className="text-lg font-semibold text-blue-600 hover:underline"
-                  >
-                    {author.name}
-                  </Link>
-                  <p className="text-sm text-gray-600 font-medium text-center">
-                    {author.job_title} at {author.company}
-                  </p>
-                  {author.bio && (
-                    <p className="text-center text-gray-500 text-sm whitespace-pre-line">
-                      {author.bio}
+                  <div className="text-center space-y-2 w-full">
+                    <Link
+                      href={`/authors/${author.slug}`}
+                      className="text-lg font-semibold text-blue-600 hover:underline"
+                    >
+                      {author.name}
+                    </Link>
+                    <p className="text-sm text-gray-600 font-medium">
+                      {author.job_title} at {author.company}
                     </p>
-                  )}
+                    {author.bio && (
+                      <p className="text-gray-500 text-sm line-clamp-3">
+                        {author.bio}
+                      </p>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             ))}
