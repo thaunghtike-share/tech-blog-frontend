@@ -27,7 +27,7 @@ export default function HomeClient() {
   const [selectedTag, setSelectedTag] = useState<string | null>(initialTag);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  // Fix for initial load scroll
+  // Handle initial load scroll
   useEffect(() => {
     if (isInitialLoad) {
       window.scrollTo(0, 0);
@@ -35,14 +35,20 @@ export default function HomeClient() {
     }
   }, [isInitialLoad]);
 
+  // Scroll to top when home is selected (tag is cleared)
+  useEffect(() => {
+    if (!selectedTag && !isInitialLoad) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [selectedTag, isInitialLoad]);
+
+  // Update URL when tag changes
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (selectedTag) {
       params.set("tag", selectedTag);
     } else {
       params.delete("tag");
-      // Scroll to top when Home is clicked
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     router.replace(newUrl);
@@ -50,10 +56,6 @@ export default function HomeClient() {
 
   const updateTagFilter = (tagSlug: string | null) => {
     setSelectedTag(tagSlug);
-    if (!tagSlug) {
-      // Scroll to top when Home is clicked
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
   };
 
   return (
@@ -65,7 +67,8 @@ export default function HomeClient() {
             "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-      {/* Enhanced Visibility Messenger Button */}
+
+      {/* Messenger Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
         target="_blank"
@@ -74,17 +77,10 @@ export default function HomeClient() {
         className="fixed top-[70%] right-1 z-50 group"
       >
         <div className="flex items-center gap-2 relative">
-          {/* Glow effect (more subtle) */}
           <div className="absolute -inset-1 bg-[#5e2ced]/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-          {/* Main button container */}
           <div className="flex items-center gap-3 bg-white/75 border border-gray-200 shadow-[0_5px_20px_-5px_rgba(94,44,237,0.3)] px-4 py-2.5 rounded-full cursor-pointer transition-all duration-400 hover:scale-[1.03] hover:shadow-[0_8px_25px_-5px_rgba(94,44,237,0.4)]">
-            {/* Enhanced icon container */}
             <div className="relative w-10 h-10 flex items-center justify-center">
-              {/* Halo effect */}
               <div className="absolute w-full h-full bg-[#5e2ced] rounded-full opacity-10 group-hover:opacity-15 group-hover:scale-110 transition-all duration-500"></div>
-
-              {/* Larger, clearer icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 240 240"
@@ -98,13 +94,9 @@ export default function HomeClient() {
                 />
               </svg>
             </div>
-
-            {/* Text label */}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#5e2ced] font-medium text-sm tracking-wider">
               Chat?
             </span>
-
-            {/* Arrow indicator */}
             <div className="ml-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <path
@@ -117,8 +109,6 @@ export default function HomeClient() {
               </svg>
             </div>
           </div>
-
-          {/* Animated dots - now more visible */}
           <div className="absolute -top-2 -right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
             {[...Array(3)].map((_, i) => (
               <div
