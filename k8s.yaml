@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: learndevopsnow-ui
+  name: ldn-ui-v2
   namespace: learndevopsnow
   labels:
-    app: ldn-ui
+    app: ldn-ui-v2
 spec:
   containers:
     - name: ldn-container
-      image: mahar.azurecr.io/ldn-ui:3.9
+      image: mahar.azurecr.io/ldn-ui-v2:1.1
       ports:
         - containerPort: 3000
         
@@ -16,12 +16,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: learndevopsnow-ui
+  name: ldn-ui-v2
   namespace: learndevopsnow
 spec:
   type: ClusterIP
   selector:
-    app: ldn-ui
+    app: ldn-ui-v2
   ports:
     - protocol: TCP
       port: 80      # external port
