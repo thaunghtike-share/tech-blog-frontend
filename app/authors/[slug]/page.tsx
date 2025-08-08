@@ -205,7 +205,7 @@ export default function AuthorDetailPage() {
       <div className="relative">
         <MinimalHeader />
       </div>
-      <main className="-mt-8 md:mt-1 max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <main className="-mt-10 md:mt-1 max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
           {/* Author content */}
           <div className="col-span-full lg:col-span-4 space-y-8">

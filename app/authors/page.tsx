@@ -60,7 +60,7 @@ export default function AuthorsPage() {
         }}
       ></div>
       <MinimalHeader />
-      <section className="-mt-11 md:-mt-6 bg-gray-50 backdrop-blur-sm py-12 relative z-10">
+      <section className="-mt-14 md:-mt-6 bg-gray-50 backdrop-blur-sm py-12 relative z-10">
         <div
           className="absolute inset-0 z-0 opacity-10"
           style={{

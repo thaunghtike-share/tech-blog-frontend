@@ -120,8 +120,7 @@ export default function NewArticlePage() {
     const initializeGoogleSignIn = () => {
       if (!(window as any).google) return;
       (window as any).google.accounts.id.initialize({
-        client_id:
-          "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
         callback: handleGoogleResponse,
       });
       renderGoogleButton();
@@ -154,8 +153,7 @@ export default function NewArticlePage() {
       const initializeGoogleSignIn = () => {
         if (!(window as any).google) return;
         (window as any).google.accounts.id.initialize({
-          client_id:
-            "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com",
+          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
           callback: handleGoogleResponse,
         });
         const buttonContainer = document.getElementById("google-signin-button");
@@ -732,7 +730,7 @@ export default function NewArticlePage() {
         className={`${
           fullscreen
             ? "fixed inset-0 z-50 bg-white"
-            : "flex-grow max-w-7xl mx-auto px-4 py-10 relative z-10"
+            : "-mt-10 md:-mt-1 flex-grow max-w-7xl mx-auto px-4 py-10 relative z-10"
         }`}
       >
         <section className={`${fullscreen ? "h-full w-full" : ""}`}>

@@ -118,7 +118,7 @@ export function MinimalFAQs() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-emerald-800 bg-clip-text text-transparent mb-2"
+          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-emerald-800 bg-clip-text text-transparent mb-2"
         >
           Frequently Asked Questions
         </motion.h2>
@@ -126,7 +126,7 @@ export function MinimalFAQs() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600"
+          className="text-sm md:text-lg text-gray-600"
         >
           Find answers to common questions about DevOps and our services
         </motion.p>
@@ -188,7 +188,7 @@ export function MinimalFAQs() {
             onClick={handleToggleShowAll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-6 py-3 rounded-2xl text-base font-medium transition-all duration-300 bg-gradient-to-r from-indigo-500 to-emerald-600 text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-emerald-700"
+            className="flex items-center justify-center px-6 py-3 rounded-2xl text-sm md:text-base font-medium transition-all duration-300 bg-gradient-to-r from-indigo-500 to-emerald-600 text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-emerald-700"
           >
             {showAll ? (
               <>

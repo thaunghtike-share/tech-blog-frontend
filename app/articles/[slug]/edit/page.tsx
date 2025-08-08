@@ -34,8 +34,7 @@ interface UserProfile {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 const DRAFT_KEY = "edit-article-draft";
 const SAVE_INTERVAL = 5000;
-const GOOGLE_CLIENT_ID =
-  "588363886976-b1vchi7rt4bif974kpr076dl47po8tor.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
 
 export default function EditArticlePage() {
   const router = useRouter();

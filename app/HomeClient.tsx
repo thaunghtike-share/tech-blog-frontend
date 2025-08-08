@@ -179,7 +179,7 @@ export default function HomeClient() {
         <div className="-mt-34 md:-mt-32">
           <SuccessStoriesSection />
         </div>
-        <div className="-mt-34 md:-mt-38">
+        <div className="-mt-38 md:-mt-38">
           <AuthorsContributorsCTA />
         </div>
         <div className="-mt-38 md:-mt-42">
