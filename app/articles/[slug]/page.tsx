@@ -41,6 +41,8 @@ interface Category {
 export const dynamic = "force-dynamic";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.learndevopsnow.it.com";
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
@@ -97,9 +99,9 @@ function extractHeadings(
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
 
   try {
     const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
@@ -110,36 +112,51 @@ export async function generateMetadata({
     const article = await res.json();
 
     const title = article.title || "Learn DevOps Now";
+    // Improved content extraction
     const description =
       article.content
-        ?.replace(/[#_*>\[\]()`]/g, "")
-        .slice(0, 150)
-        .trim() || "Learn DevOps Now";
+        ?.replace(/[#*_\[\]()>`~]/g, "") // Remove markdown formatting
+        .replace(/\s+/g, " ") // Collapse whitespace
+        .trim()
+        .substring(0, 160) + "..." ||
+      "Learn DevOps Now - DevOps tutorials and articles";
 
-    let image =
-      article.cover_image ||
-      "https://www.learndevopsnow.it.com/images/mylogo.jpg";
-    if (image && !image.startsWith("http")) {
-      image = `https://www.learndevopsnow.it.com${
-        image.startsWith("/") ? "" : "/"
-      }${image}`;
+    // Improved image URL handling
+    let imageUrl = article.cover_image || `${SITE_URL}/images/mylogo.jpg`;
+    if (imageUrl && !imageUrl.startsWith("http")) {
+      imageUrl = imageUrl.startsWith("/")
+        ? `${SITE_URL}${imageUrl}`
+        : `${SITE_URL}/${imageUrl}`;
     }
 
     return {
       title,
       description,
+      metadataBase: new URL(SITE_URL),
+      alternates: {
+        canonical: `/articles/${slug}`,
+      },
       openGraph: {
         title,
         description,
         type: "article",
-        url: `https://www.learndevopsnow.it.com/articles/${slug}`,
-        images: [{ url: image, width: 1200, height: 630, alt: title }],
+        url: `${SITE_URL}/articles/${slug}`,
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+        publishedTime: article.published_at,
+        authors: ["Learn DevOps Now"],
       },
       twitter: {
         card: "summary_large_image",
         title,
         description,
-        images: [image],
+        images: [imageUrl],
       },
     };
   } catch {
@@ -153,9 +170,9 @@ export async function generateMetadata({
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
 
   if (!slug) notFound();
 
