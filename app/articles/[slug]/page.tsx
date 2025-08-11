@@ -41,8 +41,6 @@ interface Category {
 export const dynamic = "force-dynamic";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.learndevopsnow.it.com";
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
@@ -99,9 +97,9 @@ function extractHeadings(
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
@@ -111,52 +109,40 @@ export async function generateMetadata({
 
     const article = await res.json();
 
-    const title = article.title || "Learn DevOps Now";
-    // Improved content extraction
-    const description =
+    const cleanDescription =
       article.content
-        ?.replace(/[#*_\[\]()>`~]/g, "") // Remove markdown formatting
-        .replace(/\s+/g, " ") // Collapse whitespace
-        .trim()
-        .substring(0, 160) + "..." ||
-      "Learn DevOps Now - DevOps tutorials and articles";
+        ?.replace(/[#_*>\[\]()`]/g, "")
+        .slice(0, 150)
+        .trim() || "Learn DevOps Now";
 
-    // Improved image URL handling
-    let imageUrl = article.cover_image || `${SITE_URL}/images/mylogo.jpg`;
-    if (imageUrl && !imageUrl.startsWith("http")) {
-      imageUrl = imageUrl.startsWith("/")
-        ? `${SITE_URL}${imageUrl}`
-        : `${SITE_URL}/${imageUrl}`;
+    const title = article.title || "Learn DevOps Now";
+    const combinedTitle = `${title} - ${cleanDescription}`;
+
+    let image =
+      article.cover_image ||
+      "https://www.learndevopsnow.it.com/images/mylogo.jpg";
+
+    if (image && !image.startsWith("http")) {
+      image = `https://www.learndevopsnow.it.com${
+        image.startsWith("/") ? "" : "/"
+      }${image}`;
     }
 
     return {
-      title,
-      description,
-      metadataBase: new URL(SITE_URL),
-      alternates: {
-        canonical: `/articles/${slug}`,
-      },
+      title: combinedTitle,
+      description: cleanDescription,
       openGraph: {
-        title,
-        description,
+        title: combinedTitle,
+        description: "",
         type: "article",
-        url: `${SITE_URL}/articles/${slug}`,
-        images: [
-          {
-            url: imageUrl,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
-        ],
-        publishedTime: article.published_at,
-        authors: ["Learn DevOps Now"],
+        url: `https://www.learndevopsnow.it.com/articles/${slug}`,
+        images: [{ url: image, width: 1200, height: 630, alt: title }],
       },
       twitter: {
         card: "summary_large_image",
-        title,
-        description,
-        images: [imageUrl],
+        title: combinedTitle,
+        description: "",
+        images: [image],
       },
     };
   } catch {
@@ -170,9 +156,9 @@ export async function generateMetadata({
 export default async function ArticlePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   if (!slug) notFound();
 
@@ -198,15 +184,19 @@ export default async function ArticlePage({
     fetchJSON<Author>(`${API_BASE_URL}/authors/`),
   ]);
 
-  const description =
+  // Prepare combined metadata strings here for <Head>
+  const cleanDescription =
     article.content
       ?.replace(/[#_*>\[\]()`]/g, "")
       .slice(0, 150)
       .trim() || "Learn DevOps Now";
 
+  const combinedTitle = `${article.title} - ${cleanDescription}`;
+
   let image =
     article.cover_image ||
     "https://www.learndevopsnow.it.com/images/mylogo.jpg";
+
   if (image && !image.startsWith("http")) {
     image = `https://www.learndevopsnow.it.com${
       image.startsWith("/") ? "" : "/"
@@ -236,19 +226,23 @@ export default async function ArticlePage({
   return (
     <>
       <Head>
-        <title>{article.title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={description} />
+        <title>{combinedTitle}</title>
+        <meta name="description" content={cleanDescription} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={combinedTitle} />
+        <meta property="og:description" content="" />
         <meta property="og:image" content={image} />
         <meta
           property="og:url"
           content={`https://www.learndevopsnow.it.com/articles/${slug}`}
         />
         <meta property="og:type" content="article" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={description} />
+        <meta name="twitter:title" content={combinedTitle} />
+        <meta name="twitter:description" content="" />
         <meta name="twitter:image" content={image} />
       </Head>
 
