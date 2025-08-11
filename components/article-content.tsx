@@ -83,7 +83,7 @@ interface ArticleContentProps {
 function flattenChildren(children: any): string {
   if (typeof children === "string") return children;
   if (Array.isArray(children)) return children.map(flattenChildren).join("");
-  if (children && typeof children === "object" && "props" in children)
+  if (children?.props?.children)
     return flattenChildren(children.props.children);
   return "";
 }
@@ -188,11 +188,28 @@ export function ArticleContent({
   }, []);
 
   function fixMarkdownSpacing(content: string): string {
-    return content
-      .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2") // Add blank line before code block after headings
-      .replace(/([^\n])\n(!\[)/g, "$1\n\n$2") // Add blank line before image if directly after text line
-      .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2"); // Add blank line after image if directly before text line
+    // First fix general markdown spacing
+    let fixedContent = content
+      .replace(/(#{1,6} .+)\n(```)/g, "$1\n\n$2")
+      .replace(/([^\n])\n(!\[)/g, "$1\n\n$2")
+      .replace(/(!\[.*?\]$$.*?$$)\n([^\n])/g, "$1\n\n$2");
+
+    // Handle list items to keep them on one line while preserving bold markers
+    fixedContent = fixedContent.replace(/^(- .*?)(?=\n-|\n$)/gm, (match) => {
+      // Remove internal newlines but preserve the content
+      return match.replace(/\n/g, " ");
+    });
+
+    return fixedContent;
   }
+
+  function preprocessMarkdown(content: string): string {
+    // Handle lists with bold text
+    return content.replace(/^(- \[?.*?\n?.*?\]?)(?=\n-|\n$)/gm, (match) => {
+      // Remove newlines within list items but keep the markers
+      return match.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+    });
+  }  
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
@@ -311,15 +328,46 @@ export function ArticleContent({
                   {children}
                 </ol>
               ),
-              li: ({ children, ...props }) => (
-                <li
-                  className="flex items-start text-sm text-gray-700 leading-relaxed"
-                  {...props}
-                >
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 mr-2 flex-shrink-0" />
-                  {children}
-                </li>
-              ),
+              li: ({ children, ...props }) => {
+                // Convert children to array if it isn't already
+                const childrenArray = Array.isArray(children)
+                  ? children
+                  : [children];
+
+                return (
+                  <li
+                    className="flex items-start text-sm text-gray-700 leading-relaxed"
+                    {...props}
+                  >
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 mr-2 flex-shrink-0" />
+                    <span>
+                      {childrenArray.map((child, i) => {
+                        if (typeof child === "string") {
+                          // Process string children to handle bold markers
+                          const parts = child.split(/(\*\*.*?\*\*)/g);
+                          return (
+                            <span key={i}>
+                              {parts.map((part, j) => {
+                                if (
+                                  part.startsWith("**") &&
+                                  part.endsWith("**")
+                                ) {
+                                  return (
+                                    <strong key={j}>{part.slice(2, -2)}</strong>
+                                  );
+                                }
+                                return part;
+                              })}
+                            </span>
+                          );
+                        }
+                        // For non-string children (like links, etc.), render as-is
+                        return child;
+                      })}
+                    </span>
+                  </li>
+                );
+              },
               code: ({ inline, className = "", children, ...props }: any) => {
                 if (inline) {
                   return (
