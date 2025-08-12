@@ -38,6 +38,7 @@ interface Article {
   category: number;
   tags: number[];
   author: number;
+  cover_image?: string; // Add this line
   featured: boolean;
   image_url?: string;
   author_name?: string;
@@ -253,6 +254,15 @@ export function ArticleContent({
               </Link>
             ))}
           </div>
+          {article.cover_image && (
+            <div className="my-6">
+              <img
+                src={article.cover_image}
+                alt={article.title}
+                className="w-full h-auto max-h-96 object-cover rounded-lg shadow-md"
+              />
+            </div>
+          )}
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}

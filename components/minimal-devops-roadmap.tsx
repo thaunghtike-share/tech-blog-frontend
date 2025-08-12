@@ -131,16 +131,16 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "AWS DevOps Services",
+        title: "AWS Services",
         details:
           "Gain hands-on experience with AWS core services used in DevOps, including provisioning and managing EC2 instances, operating with S3 storage buckets, setting up IAM users and roles for secure access, understanding VPC networking fundamentals, monitoring with CloudWatch, and managing infrastructure via the AWS CLI.",
         duration: "6 weeks",
       },
       {
-        title: "Azure DevOps Services",
+        title: "Ansible",
         details:
-          "Explore Azure’s DevOps capabilities by learning resource group management, provisioning virtual machines, configuring virtual networks and subnets, utilizing blob storage, and applying role-based access control (RBAC) for security.",
-        duration: "6 weeks",
+          "Automate and manage infrastructure configuration using Ansible. Learn YAML syntax for playbooks, writing tasks, managing inventories and variables, organizing reusable roles, securing secrets with Ansible Vault, and running ad-hoc commands while ensuring idempotency.",
+        duration: "10 weeks",
       },
       {
         title: "Version Control",
@@ -155,16 +155,16 @@ const roadmap: RoadmapStage[] = [
         duration: "4 weeks",
       },
       {
-        title: "Kubernetes Essentials Part-I",
+        title: "Hashicorp Packer",
         details:
-          "Learn container orchestration basics with Kubernetes by understanding pods and ReplicaSets, deploying and rolling out applications, networking concepts within clusters, configuring ingress controllers, managing namespaces and access control (RBAC), and setting resource limits and requests for workloads.",
-        duration: "6 weeks",
+          "Automate the creation of machine images using Packer. Learn how to define image templates, use provisioners for software installation, manage multiple builders for different platforms (AWS, Azure, GCP), and integrate Packer with configuration management tools like Ansible and Chef.",
+        duration: "4 weeks",
       },
       {
-        title: "Kubernetes Essentials Part-II",
+        title: "Cloud Security",
         details:
-          "Advance your Kubernetes skills with concepts such as horizontal pod autoscaling, managing persistent storage with volumes and claims, using secrets and config maps for configuration management, implementing liveness and readiness probes for health checks, event-driven autoscaling (KEDA), and maintaining availability with Pod Disruption Budgets.",
-        duration: "6 weeks",
+          "Implement security best practices in cloud environments by learning about identity and access management (IAM) policies, securing data at rest and in transit, configuring security groups and network ACLs, using cloud-native security tools (AWS GuardDuty, Azure Security Center), and understanding compliance frameworks (CIS benchmarks, GDPR).",
+        duration: "10 weeks",
       },
     ],
   },
@@ -183,10 +183,10 @@ const roadmap: RoadmapStage[] = [
         duration: "6 weeks",
       },
       {
-        title: "Ansible",
+        title: "Kubernetes",
         details:
-          "Automate and manage infrastructure configuration using Ansible. Learn YAML syntax for playbooks, writing tasks, managing inventories and variables, organizing reusable roles, securing secrets with Ansible Vault, and running ad-hoc commands while ensuring idempotency.",
-        duration: "10 weeks",
+          "Learn container orchestration basics with Kubernetes by understanding pods and ReplicaSets, deploying and rolling out applications, networking concepts within clusters, configuring ingress controllers, managing namespaces and access control (RBAC), and setting resource limits and requests for workloads.",
+        duration: "6 weeks",
       },
       {
         title: "Terraform",
@@ -281,6 +281,10 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       text: "TryHackMe | Linux Foundation",
       url: "https://tryhackme.com/module/linux-fundamentals",
     },
+    {
+      text: "Linux Server Administration",
+      url: "https://www.youtube.com/watch?v=acv0fUTDK3g&list=PLS0spxc8nUsDro6iDvLzeC8iDv5y1gDXa",
+    },
   ],
   "Cloud Fundamentals": [
     {
@@ -290,6 +294,14 @@ const resourceLinks: Record<string, ResourceLink[]> = {
     {
       text: "Azure Fundamentals Learning Path",
       url: "https://learn.microsoft.com/en-us/training/azure/",
+    },
+    {
+      text: "AWS Basic",
+      url: "https://www.youtube.com/watch?v=Dn5B-qliqyk&list=PLfFA9b_Mlfz4H8wn2KnPI-u5a3F9UNNVz",
+    },
+    {
+      text: "Azure Basic",
+      url: "https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3",
     },
   ],
   "Bash Scripting": [
@@ -311,6 +323,14 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       text: "Docker Compose Overview",
       url: "https://docs.docker.com/compose/",
     },
+    {
+      text: "Docker Tutorials",
+      url: "https://www.youtube.com/watch?v=zJ6WbK9zFpI&t=11s",
+    },
+    {
+      text: "Docker Crash Course",
+      url: "https://www.youtube.com/playlist?list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7",
+    },
   ],
   "YAML & JSON": [
     {
@@ -324,8 +344,8 @@ const resourceLinks: Record<string, ResourceLink[]> = {
   ],
   CCNA: [
     {
-      text: "Cisco CCNA Introduction",
-      url: "https://www.netacad.com/courses/ccna-introduction-networks?courseLang=en-US",
+      text: "CCNA Basic",
+      url: "https://www.youtube.com/watch?v=iutsJfATykg&list=PLOFIpcUzu6dWs4DjtrVUA2SRwiWOPSCeJ",
     },
     {
       text: "Study CCNA",
@@ -336,40 +356,18 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://www.netacad.com/courses/packet-tracer",
     },
   ],
-  "AWS DevOps Services": [
+  "AWS Services": [
     {
       text: "AWS DevOps Learning Plan",
       url: "https://skillbuilder.aws/learning-plan/FMP175FCDT/devops-engineer-learning-plan-includes-labs/P8E3Q12Q6H",
     },
     {
-      text: "AWS EC2 Essentials",
-      url: "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
+      text: "AWS Core Services",
+      url: "https://www.youtube.com/playlist?list=PLEiEAq2VkUULlNtIFhEQHo8gacvme35rz",
     },
     {
-      text: "IAM Best Practices",
-      url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
-    },
-    {
-      text: "AWS S3 Documentation",
-      url: "https://docs.aws.amazon.com/s3/index.html",
-    },
-  ],
-  "Azure DevOps Services": [
-    {
-      text: "Azure Fundamentals Learning Path",
-      url: "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/",
-    },
-    {
-      text: "Azure Resource Manager Overview",
-      url: "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview",
-    },
-    {
-      text: "Azure Storage Documentation",
-      url: "https://learn.microsoft.com/en-us/azure/storage/",
-    },
-    {
-      text: "Azure Virtual Network",
-      url: "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview",
+      text: "AWS Solutions Architect Associate",
+      url: "https://www.youtube.com/watch?v=YqWuL3an-5o",
     },
   ],
   "Version Control": [
@@ -390,40 +388,18 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://git-scm.com/book/en/v2",
     },
   ],
-  "Kubernetes Essentials Part-I": [
+  "Kubernetes Essentials": [
     {
       text: "Kubernetes Basics (Interactive)",
       url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
     },
     {
-      text: "Pods and Deployments",
-      url: "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+      text: "Kubernetes Course",
+      url: "https://www.youtube.com/watch?v=dfxrdoEQe00&list=PLdpzxOOAlwvJdsW6A0jCz_3VaANuFMLpc",
     },
     {
-      text: "Kubernetes Services and Networking",
-      url: "https://kubernetes.io/docs/concepts/services-networking/service/",
-    },
-    {
-      text: "Ingress Overview",
-      url: "https://kubernetes.io/docs/concepts/services-networking/ingress/",
-    },
-  ],
-  "Kubernetes Essentials Part-II": [
-    {
-      text: "Kubernetes HPA",
-      url: "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/",
-    },
-    {
-      text: "ConfigMaps and Secrets",
-      url: "https://kubernetes.io/docs/concepts/configuration/secret/",
-    },
-    {
-      text: "Volumes and Persistent Volumes",
-      url: "https://kubernetes.io/docs/concepts/storage/persistent-volumes/",
-    },
-    {
-      text: "KEDA Autoscaling",
-      url: "https://keda.sh/docs/",
+      text: "Kubernetes CKA Course",
+      url: "https://www.youtube.com/playlist?list=PLl4APkPHzsUUOkOv3i62UidrLmSB8DcGC",
     },
   ],
   "CICD Fundamentals": [
@@ -435,7 +411,16 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       text: "GitLab CI/CD Pipelines",
       url: "https://docs.gitlab.com/ee/ci/",
     },
+    {
+      text: "GitHub Actions Full Course",
+      url: "https://www.youtube.com/watch?v=-hVG9z0fCac&list=PLArH6NjfKsUhvGHrpag7SuPumMzQRhUKY",
+    },
+    {
+      text: "CICD fundamentals",
+      url: "https://www.youtube.com/playlist?list=PLy7NrYWoggjzSIlwxeBbcgfAdYoxCIrM2",
+    },
   ],
+
   Terraform: [
     {
       text: "Terraform Getting Started",
@@ -446,8 +431,8 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://developer.hashicorp.com/terraform/docs",
     },
     {
-      text: "Terraform Best Practices",
-      url: "https://www.terraform-best-practices.com/",
+      text: "Terraform Full Course",
+      url: "https://www.youtube.com/playlist?list=PLl4APkPHzsUUHlbhuq9V02n9AMLPySoEQ",
     },
   ],
   "GitOps with ArgoCD": [
@@ -460,8 +445,8 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://argo-cd.readthedocs.io/en/stable/user-guide/helm/",
     },
     {
-      text: "ArgoCD RBAC",
-      url: "https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/",
+      text: "GitOps with ArgoCD Course",
+      url: "https://www.youtube.com/watch?v=eTR-gbIeXPw&list=PLdsu0umqbb8P8dNoox7ECgOo_fJ9FBfZl",
     },
   ],
   "Vault & Secrets Management": [
@@ -478,8 +463,8 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://developer.hashicorp.com/vault/docs/platform/k8s",
     },
     {
-      text: "Vault Dynamic Secrets",
-      url: "https://developer.hashicorp.com/vault/docs/secrets",
+      text: "Vault Course",
+      url: "https://www.youtube.com/watch?v=-sU0O82fdZs&list=PL7iMyoQPMtAP7XeXabzWnNKGkCex1C_3C",
     },
   ],
   "Kubernetes Security": [
@@ -488,8 +473,8 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://kubernetes.io/docs/concepts/security/overview/",
     },
     {
-      text: "Pod Security Standards (PSS)",
-      url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
+      text: "Kubernetes Security Course",
+      url: "https://www.youtube.com/watch?v=d9xfB5qaOfg",
     },
     {
       text: "OPA Gatekeeper Docs",
@@ -514,8 +499,44 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://grafana.com/docs/loki/latest/",
     },
     {
-      text: "OpenTelemetry",
-      url: "https://opentelemetry.io/docs/",
+      text: "Filebeat + Elk Stack Tutorial With Kubernetes",
+      url: "https://www.youtube.com/watch?v=SU--XMhbWoY",
+    },
+    {
+      text: "Kubernetes Logging and Monitoring",
+      url: "https://www.youtube.com/watch?v=0POI5E7Uzjo",
+    },
+  ],
+  "Hashicorp Packer": [
+    {
+      text: "Packer Official Docs",
+      url: "https://developer.hashicorp.com/packer/docs",
+    },
+    {
+      text: "Packer with Ansible",
+      url: "https://developer.hashicorp.com/packer/docs/builders/ansible",
+    },
+    {
+      text: "Packer Tutorials",
+      url: "https://www.youtube.com/watch?v=tbv1lTF1wFU&list=PL8VzFQ8k4U1Jp6eWgHSXHiiRWRvPyCKRj",
+    },
+  ],
+  "Cloud Security": [
+    {
+      text: "AWS Security Best Practices",
+      url: "https://aws.amazon.com/whitepapers/aws-security-best-practices/",
+    },
+    {
+      text: "Azure Security Documentation",
+      url: "https://learn.microsoft.com/en-us/azure/security/",
+    },
+    {
+      text: "GCP Security Best Practices",
+      url: "https://cloud.google.com/security/best-practices",
+    },
+    {
+      text: "AWS Security Fundamentals",
+      url: "https://www.youtube.com/watch?v=oGS9FhCT91g",
     },
   ],
   Ansible: [
@@ -532,8 +553,8 @@ const resourceLinks: Record<string, ResourceLink[]> = {
       url: "https://docs.ansible.com/ansible/latest/user_guide/vault.html",
     },
     {
-      text: "Ansible Best Practices",
-      url: "https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html",
+      text: "Ansible Zero to Hero",
+      url: "https://www.youtube.com/playlist?list=PL0lvsZ5ieQicXHPMNNg7qXJJoO2AnE8ej",
     },
   ],
 };
