@@ -305,7 +305,7 @@ export function ArticleContent({
               },
               p: ({ children, ...props }) => (
                 <p
-                  className="mb-3 text-sm leading-relaxed text-gray-800"
+                  className="mb-3 text-base leading-relaxed text-gray-800"
                   {...props}
                 >
                   {children}
@@ -514,7 +514,10 @@ export function ArticleContent({
               className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800 text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Previous Article</span>
+              <span className="hidden md:inline">
+                Previous: {prevArticle.title}
+              </span>
+              <span className="md:hidden">Previous</span>
             </Link>
           ) : (
             <span />
@@ -524,14 +527,17 @@ export function ArticleContent({
               href={`/articles/${nextArticle.slug}`}
               className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800 text-sm"
             >
-              <span>Next Article</span>
+              <span className="hidden md:inline">
+                Next: {nextArticle.title}
+              </span>
+              <span className="md:hidden">Next</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           ) : (
             <span />
           )}
         </div>
-        {/* Recent Articles - Only this section is modified */}
+        {/* Simplified Recent Articles */}
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl md:text-2xl font-semibold text-gray-800 flex items-center gap-2">
@@ -545,7 +551,7 @@ export function ArticleContent({
               View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {recentArticles.map((item) => {
               const date = new Date(item.published_at).toLocaleDateString(
                 "en-US",
@@ -555,90 +561,49 @@ export function ArticleContent({
                   year: "numeric",
                 }
               );
-              const itemCategory =
-                categories.find((c) => c.id === item.category)?.name ||
-                "General";
               const itemAuthor = authors.find((a) => a.id === item.author);
-              const itemTags = tagNames.filter((_, index) =>
-                item.tags?.includes(index)
-              );
-
-              const handleCategoryClick = (e: React.MouseEvent) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.location.href = `/categories/${slugify(itemCategory)}`;
-              };
-
-              const handleTagClick = (e: React.MouseEvent, tag: string) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.location.href = `/articles?tag=${slugify(tag)}`;
-              };
 
               return (
                 <Card
                   key={item.id}
-                  className="border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col group bg-white relative z-10 transform hover:-translate-y-1"
+                  className="border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col group bg-white relative z-10"
                 >
                   <Link
                     href={`/articles/${item.slug}`}
                     className="block flex-grow flex flex-col"
                   >
-                    {item.image_url && (
-                      <div className="h-[200px] w-full overflow-hidden bg-gray-50">
+                    <CardContent className="p-4 flex-grow flex flex-col bg-white">
+                      <h4 className="font-bold text-base text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 leading-snug mb-2">
+                        {item.title}
+                      </h4>
+
+                      {/* Cover image */}
+                      <div className="my-2 w-full h-32 overflow-hidden rounded-lg bg-gray-100">
                         <img
-                          src={item.image_url || "/placeholder.svg"}
+                          src={item.cover_image || "/images/mylogo.jpg"}
                           alt={item.title}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
-                    )}
-                    <CardContent className="p-5 flex-grow flex flex-col bg-white">
-                      {/* Category and Tags - Above Title */}
-                      <div className="-mt-5 flex flex-wrap gap-2 mb-2">
-                        <span
-                          onClick={handleCategoryClick}
-                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer"
-                        >
-                          <Folder className="w-3 h-3" />
-                          {itemCategory}
-                        </span>
-                        {itemTags.map((tag, index) => (
-                          <span
-                            key={index}
-                            onClick={(e) => handleTagClick(e, tag)}
-                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors cursor-pointer"
-                          >
-                            <TagIcon className="w-3 h-3" />
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
 
-                      <h4 className="font-bold text-base md:text-lg text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 leading-snug mb-2">
-                        {item.title}
-                      </h4>
-
-                      <p className="text-sm md:text-sm text-gray-600 line-clamp-3 mt-1 mb-4">
+                      <p className="text-sm text-gray-600 line-clamp-2 mb-3">
                         {excerpt(item.content)}
                       </p>
-                      <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+
+                      <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-xs text-gray-600">
                           {itemAuthor?.avatar ? (
                             <img
                               src={itemAuthor.avatar}
                               alt={itemAuthor.name}
-                              className="w-6 h-6 rounded-full object-cover"
+                              className="w-5 h-5 rounded-full object-cover"
                             />
                           ) : (
                             <User className="w-3.5 h-3.5 text-gray-500" />
                           )}
                           <span>{itemAuthor?.name || "Unknown"}</span>
                         </div>
-                        <div className="text-xs text-gray-500 flex items-center gap-1">
-                          <CalendarDays className="w-3.5 h-3.5 text-gray-500" />
-                          <span>{date}</span>
-                        </div>
+                        <div className="text-xs text-gray-500">{date}</div>
                       </div>
                     </CardContent>
                   </Link>
