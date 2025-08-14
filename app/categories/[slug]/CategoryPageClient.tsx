@@ -2,7 +2,15 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Folder, Calendar, Clock, User, ArrowRight } from "lucide-react";
+import {
+  Folder,
+  Calendar,
+  Clock,
+  User,
+  ArrowRight,
+  Eye,
+  Tag as TagIcon,
+} from "lucide-react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { MinimalSidebar } from "@/components/minimal-sidebar";
@@ -107,8 +115,7 @@ export default function CategoryPageClient({ slug }: Props) {
   }, [currentPage]);
 
   // Helpers
-  const getAuthorName = (id: number) =>
-    authors.find((a) => a.id === id)?.name || `Author ${id}`;
+  const getAuthor = (id: number) => authors.find((a) => a.id === id);
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -116,13 +123,13 @@ export default function CategoryPageClient({ slug }: Props) {
       day: "numeric",
     });
   const calculateReadTime = (text: string) =>
-    `${Math.ceil((text.split(" ").length || 1) / 200)} min read`;
+    `${Math.ceil((text.split(" ").length || 1) / 200)} min`;
   const stripMarkdown = (md: string) =>
     md
       .replace(/<[^>]+>/g, "")
       .replace(/[#_*>[\]~`-]/g, "")
       .trim();
-  const truncate = (str: string, max = 250) =>
+  const truncate = (str: string, max = 150) =>
     str.length <= max ? str : str.slice(0, max) + "...";
 
   const handlePageSizeChange = (size: number) => {
@@ -149,14 +156,10 @@ export default function CategoryPageClient({ slug }: Props) {
     router.push(newUrl);
   };
 
-  const getAuthor = (id: number) => authors.find((a) => a.id === id);
-
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="relative">
-          {" "}
-          {/* Wrapper div */}
           <MinimalHeader />
         </div>
         <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -197,8 +200,6 @@ export default function CategoryPageClient({ slug }: Props) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="relative">
-          {" "}
-          {/* Wrapper div */}
           <MinimalHeader />
         </div>
         <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -230,27 +231,24 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Subtle background pattern */}
+    <div className="min-h-screen relative bg-gradient-to-br from-gray-50 to-gray-100">
       <div
         className="absolute inset-0 z-0 opacity-10"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       ></div>
-
-      {/* Wrapped MinimalHeader in a relative div */}
       <div className="relative">
         <MinimalHeader />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <main className="md:-mt-1 -mt-14 max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
           {/* Article list */}
           <div className="lg:col-span-4 space-y-8">
             {/* Articles Section */}
-            <div className="bg-gray-50 md:bg-white/90 relative rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div className="bg-white/90 relative rounded-2xl p-8 shadow-lg border border-gray-100">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
                   <div className="flex items-center gap-4 mb-6">
@@ -311,88 +309,72 @@ export default function CategoryPageClient({ slug }: Props) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: index * 0.1 }}
-                            className="group relative overflow-hidden bg-white rounded-xl border border-gray-100 hover:border-blue-100 transition-all hover:shadow-md"
+                            className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                           >
-                            <div className="p-6">
+                            {/* Title */}
+                            <Link
+                              href={`/articles/${article.slug}`}
+                              className="group/link block mb-3"
+                            >
+                              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover/link:text-blue-600 transition-colors">
+                                {article.title}
+                              </h3>
+                            </Link>
+
+                            {/* Author and Date */}
+                            <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+                              <div className="flex items-center gap-2">
+                                {author?.avatar ? (
+                                  <img
+                                    src={author.avatar}
+                                    alt={author.name}
+                                    className="w-5 h-5 rounded-full object-cover border border-gray-200"
+                                    loading="lazy"
+                                  />
+                                ) : (
+                                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                                    <User className="w-3 h-3 text-white" />
+                                  </div>
+                                )}
+                                <Link
+                                  href={`/authors/${author?.slug}`}
+                                  className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                                >
+                                  {author?.name || `Author ${article.author}`}
+                                </Link>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Calendar className="w-4 h-4 text-gray-400" />
+                                <span>{formatDate(article.published_at)}</span>
+                              </div>
+                            </div>
+
+                            {/* Content */}
+                            <div className="mb-4">
+                              <p className="text-sm sm:text-[15px] text-gray-700 line-clamp-2 leading-relaxed">
+                                {previewText}
+                              </p>
+                            </div>
+
+                            {/* Read more and stats in one line */}
+                            <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
                               <Link
                                 href={`/articles/${article.slug}`}
-                                className="group/link block"
+                                className="text-sm text-blue-600 flex items-center gap-1 group-hover:gap-2 font-medium transition-all"
                               >
-                                <h3 className="text-large font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
-                                  {article.title}
-                                </h3>
-                                {previewText && (
-                                  <p className="text-gray-700 mb-4 line-clamp-2 text-[15px] leading-relaxed">
-                                    {previewText}
-                                  </p>
-                                )}
-                                <div className="inline-flex items-center text-blue-600 group-hover/link:text-blue-800 text-sm transition-colors">
-                                  <span>Read more</span>
-                                  <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
-                                </div>
+                                Read more{" "}
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                               </Link>
-
-                              <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                                <div className="flex items-center gap-2">
-                                  {author?.avatar ? (
-                                    <img
-                                      src={author.avatar}
-                                      alt={author.name}
-                                      className="w-5 h-5 rounded-full object-cover border border-gray-200"
-                                      loading="lazy"
-                                    />
-                                  ) : (
-                                    <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                                      <User className="w-3 h-3 text-white" />
-                                    </div>
-                                  )}
-
-                                  {author ? (
-                                    <Link
-                                      href={`/authors/${author.slug}`}
-                                      onClick={(e) => e.stopPropagation()}
-                                      className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-                                    >
-                                      {author.name}
-                                    </Link>
-                                  ) : (
-                                    <span className="text-gray-700 font-medium">
-                                      Unknown Author
-                                    </span>
-                                  )}
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                  <Calendar className="w-4 h-4 text-gray-400" />
-                                  <span>
-                                    {formatDate(article.published_at)}
-                                  </span>
-                                </div>
-
-                                <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-4 text-sm text-gray-500">
+                                <div className="flex items-center gap-1">
                                   <Clock className="w-4 h-4 text-gray-400" />
                                   <span>
-                                    {calculateReadTime(article.content)}
+                                    {calculateReadTime(article.content)} read
                                   </span>
                                 </div>
-
                                 {article.read_count && (
-                                  <div className="flex items-center gap-2 ml-auto text-gray-600">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="w-5 h-5 text-gray-500"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke="currentColor"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
-                                      />
-                                      <circle cx="12" cy="12" r="3" />
-                                    </svg>
+                                  <div className="flex items-center gap-1">
+                                    <Eye className="w-4 h-4 text-gray-400" />
                                     <span className="font-medium">
                                       {article.read_count.toLocaleString()}{" "}
                                       views
@@ -409,8 +391,8 @@ export default function CategoryPageClient({ slug }: Props) {
 
                   {/* Pagination */}
                   {totalPages > 1 && (
-                    <nav className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
-                      <div className="text-sm text-gray-500">
+                    <nav className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                      <div className="text-xs sm:text-sm text-gray-500">
                         Showing {(currentPage - 1) * pageSize + 1} to{" "}
                         {Math.min(currentPage * pageSize, totalArticles)} of{" "}
                         {totalArticles} articles
@@ -421,7 +403,7 @@ export default function CategoryPageClient({ slug }: Props) {
                             setCurrentPage((p) => Math.max(1, p - 1))
                           }
                           disabled={currentPage === 1}
-                          className="px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm flex items-center gap-1"
+                          className="flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
                         >
                           <svg
                             className="w-4 h-4"
@@ -457,9 +439,9 @@ export default function CategoryPageClient({ slug }: Props) {
                                 <button
                                   key={pageNum}
                                   onClick={() => setCurrentPage(pageNum)}
-                                  className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                                     currentPage === pageNum
-                                      ? "bg-blue-600 text-white shadow-md"
+                                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
                                       : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                                   }`}
                                 >
@@ -474,9 +456,9 @@ export default function CategoryPageClient({ slug }: Props) {
                           {totalPages > 5 && currentPage < totalPages - 2 && (
                             <button
                               onClick={() => setCurrentPage(totalPages)}
-                              className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
+                              className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                                 currentPage === totalPages
-                                  ? "bg-blue-600 text-white shadow-md"
+                                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
                                   : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                               }`}
                             >
@@ -489,7 +471,7 @@ export default function CategoryPageClient({ slug }: Props) {
                             setCurrentPage((p) => Math.min(totalPages, p + 1))
                           }
                           disabled={currentPage === totalPages}
-                          className="px-4 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm flex items-center gap-1"
+                          className="flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
                         >
                           Next
                           <svg
@@ -515,7 +497,7 @@ export default function CategoryPageClient({ slug }: Props) {
           </div>
 
           {/* Sidebar */}
-          <aside className="hidden lg:block lg:col-span-2">
+          <aside className="hidden relative lg:block lg:col-span-2">
             <MinimalSidebar onTagClick={onTagClick} />
           </aside>
         </div>
