@@ -9,6 +9,7 @@ import {
   Sparkles,
   AlertTriangle,
   Tag as TagIcon,
+  Eye,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -247,10 +248,15 @@ export function FeaturedArticlesPage() {
       <div className="md:hidden sticky top-0 z-10 bg-white/80 backdrop-blur-sm py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-purple-600" />
-            <h2 className="font-bold text-gray-900">Featured Articles</h2>
+            <Sparkles className="w-6 h-6 text-purple-600" />
+            <h2 className="font-bold text-lg text-gray-900">
+              Featured Articles
+            </h2>
           </div>
-          <Link href="/articles" className="text-blue-600 text-sm font-medium">
+          <Link
+            href="/articles"
+            className="text-blue-600 text-base font-medium"
+          >
             View All
           </Link>
         </div>
@@ -262,7 +268,7 @@ export function FeaturedArticlesPage() {
             <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Featured Articles
             </h2>
           </div>
@@ -314,70 +320,29 @@ export function FeaturedArticlesPage() {
                       isScrolling ? "" : "hover:-translate-y-1"
                     } snap-center`}
                   >
-                    <div className="flex justify-between flex-wrap mb-3 md:mb-4 gap-2">
-                      <div className="flex flex-wrap gap-2">
-                        {category && (
-                          <Link
-                            href={`/categories/${category.slug}`}
-                            className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
-                          >
-                            <Folder className="w-3 h-3" />
-                            <span className="hidden md:inline">
-                              {category.name}
-                            </span>
-                            <span className="md:hidden">
-                              {category.name.split(" ")[0]}
-                            </span>
-                          </Link>
-                        )}
-                        {article.tags.map((tagId) => {
-                          const tag = getTagById(tagId);
-                          if (!tag) return null;
-                          return (
-                            <Link
-                              key={tag.id}
-                              href={`/articles?tag=${tag.slug}`}
-                              className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors"
-                            >
-                              <TagIcon className="w-3 h-3" />
-                              <span className="hidden md:inline">
-                                {tag.name}
-                              </span>
-                              <span className="md:hidden">
-                                {tag.name.split(" ")[0]}
-                              </span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
+                    {/* Title */}
                     <Link
                       href={`/articles/${article.slug}`}
-                      className="group/link block"
+                      className="group/link block mb-3"
                     >
-                      <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-2 md:mb-3 group-hover/link:text-blue-600 transition-colors">
+                      <h3 className="text-base md:text-xl font-semibold text-gray-900 group-hover/link:text-blue-600 transition-colors">
                         {article.title}
                       </h3>
-                      <p className="text-gray-700 mb-3 md:mb-4 line-clamp-2 text-sm md:text-[15px] leading-relaxed">
-                        {truncate(stripMarkdown(article.content), 200)}
-                      </p>
-                      <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
-                        Read more{" "}
-                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                      </div>
                     </Link>
-                    <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-500">
-                      <div className="flex items-center gap-2">
+
+                    {/* Author and Date */}
+                    <div className="flex items-center gap-3 mb-3 text-sm">
+                      <div className="flex items-center gap-1">
                         {author?.avatar ? (
                           <img
                             src={author.avatar || "/placeholder.svg"}
                             alt={author.name}
-                            className="w-4 h-4 md:w-5 md:h-5 rounded-full object-cover border border-gray-200"
+                            className="w-4 h-4 rounded-full object-cover border border-gray-200"
                             loading="lazy"
                           />
                         ) : (
-                          <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                            <User className="w-2.5 h-2.5 md:w-3 md:h-3 text-white" />
+                          <div className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <User className="w-2.5 h-2.5 text-white" />
                           </div>
                         )}
                         <Link
@@ -389,33 +354,68 @@ export function FeaturedArticlesPage() {
                           {author?.name || `Author ${article.author}`}
                         </Link>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
+                      <div className="flex items-center gap-1 text-gray-500">
+                        <Calendar className="w-3.5 h-3.5 text-gray-400" />
                         <span>{formatDate(article.published_at)}</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
-                        <span>{calculateReadTime(article.content)}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 ml-auto text-gray-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-500"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                    </div>
+
+                    {/* Category and Tags */}
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {category && (
+                        <Link
+                          href={`/categories/${category.slug}`}
+                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-2 py-1 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"
-                          />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                        <span className="font-medium">
-                          {article.read_count.toLocaleString()}
-                        </span>
+                          <Folder className="w-4 h-4" />
+                          <span>{category.name.split(" ")[0]}</span>
+                        </Link>
+                      )}
+                      {article.tags.map((tagId) => {
+                        const tag = getTagById(tagId);
+                        if (!tag) return null;
+                        return (
+                          <Link
+                            key={tag.id}
+                            href={`/articles?tag=${tag.slug}`}
+                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-2 py-1 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                          >
+                            <TagIcon className="w-4 h-4" />
+                            <span>{tag.name.split(" ")[0]}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+
+                    {/* Content */}
+                    <div className="mb-4">
+                      <p className="text-gray-700 line-clamp-2 text-sm md:text-base leading-relaxed">
+                        {truncate(stripMarkdown(article.content), 200)}
+                      </p>
+                    </div>
+
+                    {/* Read more and stats in one line */}
+                    <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                      <div className="relative">
+                        <Link
+                          href={`/articles/${article.slug}`}
+                          className="text-sm text-blue-600 flex items-center gap-1 group-hover:gap-2 font-medium transition-all"
+                        >
+                          Read more{" "}
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-gray-500">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span>{calculateReadTime(article.content)} read</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Eye className="w-4 h-4 text-gray-400" />
+                          <span className="font-medium">
+                            {article.read_count?.toLocaleString() || 0} views
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </motion.article>

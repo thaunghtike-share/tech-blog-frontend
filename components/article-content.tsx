@@ -222,8 +222,8 @@ export function ArticleContent({
             className="w-full h-64 object-cover rounded-md mb-6"
           />
         )}
-        <h1 className="text-lg md:text-3xl font-bold mb-2">{article.title}</h1>
-        <div className="flex items-center space-x-4 text-gray-600 text-xs md:text-sm mb-6">
+        <h1 className="text-xl md:text-3xl font-bold mb-2">{article.title}</h1>
+        <div className="flex items-center space-x-4 text-gray-600 text-sm md:text-base mb-6">
           <div className="flex items-center">
             <User className="w-4 h-4 mr-1" />
             <span>

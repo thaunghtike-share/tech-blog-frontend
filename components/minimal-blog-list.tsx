@@ -279,7 +279,7 @@ export function MinimalBlogList({
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       {/* Header with Enhanced Tag Filter */}
-      <div className="mb-6 sm:mb-9 relative flex flex-col sm:flex-row items-center sm:items-center justify-between gap-4">
+      <div className="mb-4 sm:mb-9 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -287,7 +287,7 @@ export function MinimalBlogList({
           <Link href="/articles">
             <h2
               ref={topRef}
-              className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all text-center sm:text-left"
+              className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all text-left"
             >
               Latest Articles
             </h2>
@@ -480,11 +480,15 @@ export function MinimalBlogList({
                       })}
                     </div>
 
-                    {/* Content and Read More */}
+                    {/* Content */}
                     <div className="mb-4">
-                      <p className="text-sm sm:text-[15px] text-gray-700 line-clamp-2 leading-relaxed mb-3">
+                      <p className="text-sm sm:text-[15px] text-gray-700 line-clamp-2 leading-relaxed">
                         {truncate(stripMarkdown(article.content), 200)}
                       </p>
+                    </div>
+
+                    {/* Read more and stats in one line */}
+                    <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
                       <Link
                         href={`/articles/${article.slug}`}
                         className="text-sm text-blue-600 flex items-center gap-1 group-hover:gap-2 font-medium transition-all"
@@ -492,19 +496,17 @@ export function MinimalBlogList({
                         Read more{" "}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
-                    </div>
-
-                    {/* Read time and View count */}
-                    <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4 text-gray-400" />
-                        <span>{calculateReadTime(article.content)} read</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Eye className="w-4 h-4 text-gray-400" />
-                        <span className="font-medium">
-                          {article.read_count?.toLocaleString() || 0} views
-                        </span>
+                      <div className="flex items-center gap-4 text-sm text-gray-500">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span>{calculateReadTime(article.content)} read</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Eye className="w-4 h-4 text-gray-400" />
+                          <span className="font-medium">
+                            {article.read_count?.toLocaleString() || 0} views
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </motion.article>
