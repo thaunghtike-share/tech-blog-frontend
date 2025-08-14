@@ -136,14 +136,14 @@ export function SuccessStoriesSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="min-w-[21rem] sm:min-w-0 bg-white rounded-3xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
+              className="min-w-[23.5rem] sm:min-w-0 bg-white rounded-3xl border border-gray-100 p-6 text-center flex flex-col justify-between transition-all"
             >
               <div className="flex justify-center mb-4">
                 <div className="p-3 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl">
                   <Quote className="w-6 h-6 text-indigo-600" />
                 </div>
               </div>
-              <p className="text-sm sm:text-sm text-gray-700 mb-4 leading-relaxed">
+              <p className="text-base sm:text-base text-gray-700 mb-4 leading-relaxed">
                 "{t.feedback}"
               </p>
               <div className="mt-auto">

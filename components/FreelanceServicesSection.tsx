@@ -153,7 +153,7 @@ export function FreelanceServicesSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="min-w-[21rem] lg:min-w-0" // Exact same width as Udemy/FreeLabs
+                  className="min-w-[23.5rem] lg:min-w-0" // Exact same width as Udemy/FreeLabs
                 >
                   <Card className="h-full border-0 transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm flex flex-col">
                     <CardContent className="p-0 flex-grow">
@@ -167,19 +167,19 @@ export function FreelanceServicesSection() {
                           <h3 className="text-lg md:text-xl font-bold mb-1">
                             {title}
                           </h3>
-                          <p className="text-sm md:text-sm text-blue-100">
+                          <p className="text-base md:text-base text-blue-100">
                             {shortDescription}
                           </p>
                         </div>
                       </div>
                       <div className="p-6">
-                        <p className="text-sm md:text-sm text-gray-700 leading-relaxed mb-4">
+                        <p className="text-base text-gray-700 leading-relaxed mb-4">
                           {isExpanded ? details : shortText}
                         </p>
                         <div className="flex items-center justify-between">
                           <button
                             onClick={() => setExpanded(isExpanded ? null : idx)}
-                            className="text-sm md:text-sm text-blue-600 font-medium hover:underline focus:outline-none"
+                            className="text-base text-blue-600 font-medium hover:underline focus:outline-none"
                           >
                             {isExpanded ? "Show Less" : "Read More"}
                           </button>

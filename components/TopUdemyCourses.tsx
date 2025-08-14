@@ -157,7 +157,7 @@ export function TopUdemyCourses() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="min-w-[21rem] sm:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
+              className="min-w-[23.5rem] sm:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
             >
               <div className="p-5 relative flex-grow">
                 <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">

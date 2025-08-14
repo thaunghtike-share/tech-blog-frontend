@@ -651,7 +651,7 @@ export function YouTubePlaylists({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * idx }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-md flex flex-col`}
+                  className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-md flex flex-col`}
                 >
                   <div className="relative aspect-video bg-gray-900 overflow-hidden">
                     <iframe

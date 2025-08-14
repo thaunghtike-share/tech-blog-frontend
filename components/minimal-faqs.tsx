@@ -149,7 +149,7 @@ export function MinimalFAQs() {
               onClick={() => toggleFAQ(faq.id)}
               aria-expanded={openIds.has(faq.id)}
             >
-              <h3 className="text-sm md:text-lg font-medium text-gray-900 text-center flex-1">
+              <h3 className="text-base md:text-lg font-medium text-gray-900 text-center flex-1">
                 {faq.question}
               </h3>
               <div className="ml-4 flex-shrink-0">
@@ -170,7 +170,7 @@ export function MinimalFAQs() {
                   className="overflow-hidden"
                 >
                   <div className="px-6 pb-6">
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-base text-gray-600 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>

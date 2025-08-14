@@ -173,7 +173,7 @@ export function CareerPath() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ y: -5 }}
-                className={`w-87 sm:w-auto h-full flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 ${role.borderColor} overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col`}
+                className={`w-95 sm:w-auto h-full flex-shrink-0 sm:flex-shrink bg-white rounded-xl shadow-md border-l-4 ${role.borderColor} overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col`}
               >
                 <div className="p-5 flex flex-col h-full">
                   {/* Top */}
@@ -189,10 +189,10 @@ export function CareerPath() {
                     </h3>
 
                     <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
+                      <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">
                         Responsibilities & Principles
                       </h4>
-                      <ul className="space-y-2 text-sm">
+                      <ul className="space-y-2 text-base">
                         {role.responsibilities.map((resp, i) => (
                           <li key={i} className="flex items-start">
                             <ChevronRight
@@ -207,14 +207,14 @@ export function CareerPath() {
 
                   {/* Spacer to push skills to bottom */}
                   <div className="mt-auto pt-6">
-                    <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
+                    <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">
                       Skills & Tools
                     </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {role.skills.map((skill, i) => (
                         <span
                           key={i}
-                          className={`px-2 py-1 text-xs font-medium rounded-full ${role.iconBg} ${role.iconColor}`}
+                          className={`px-2 py-1 text-sm font-medium rounded-full ${role.iconBg} ${role.iconColor}`}
                         >
                           {skill}
                         </span>

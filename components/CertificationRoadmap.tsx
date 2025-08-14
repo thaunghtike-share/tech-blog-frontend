@@ -479,7 +479,7 @@ export function CertificationRoadmap() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setFilter(level as any)}
-                className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-lg ${
+                className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-sm font-medium transition-all duration-300 shadow-lg ${
                   isActive
                     ? `bg-gradient-to-r ${config.gradient} text-white scale-105`
                     : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
@@ -561,12 +561,12 @@ export function CertificationRoadmap() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className={`flex-shrink-0 w-[79vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 flex flex-col`}
+                    className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 flex flex-col`}
                   >
                     <div className="p-5 relative">
                       <div className="absolute top-3 right-3">
                         {cert.recommended && (
-                          <Badge className="px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-medium rounded-full shadow-sm border border-yellow-500">
+                          <Badge className="px-3 py-1 bg-yellow-400 text-yellow-900 text-sm font-medium rounded-full shadow-sm border border-yellow-500">
                             <TrendingUp className="w-3 h-3 mr-1" /> Recommended
                           </Badge>
                         )}
@@ -577,21 +577,21 @@ export function CertificationRoadmap() {
                       <h3 className="text-lg font-bold mb-2 leading-tight text-gray-900 group-hover:text-orange-700 transition-colors">
                         {cert.title}
                       </h3>
-                      <p className="text-gray-700 text-sm font-medium">
+                      <p className="text-gray-700 text-base font-medium">
                         {cert.organization}
                       </p>
                     </div>
                     <div className="p-5 flex-grow">
                       <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Clock className="w-4 h-4" />
+                        <div className="flex items-center gap-2 text-base text-gray-600">
+                          <Clock className="w-5 h-5" />
                           <span className="font-medium">
                             {cert.preparationTime}
                           </span>
                         </div>
                       </div>
                       <div className="mb-6">
-                        <p className="text-sm text-gray-600 mb-3 font-medium">
+                        <p className="text-base text-gray-600 mb-3 font-medium">
                           {cert.examDetails}
                         </p>
                       </div>
@@ -612,17 +612,17 @@ export function CertificationRoadmap() {
                                 className={`flex-shrink-0 mt-0.5 mr-3 w-4 h-4 ${config.iconBg} rounded-full flex items-center justify-center shadow-sm`}
                               >
                                 <Check
-                                  className={`w-2.5 h-2.5 ${config.iconText}`}
+                                  className={`w-3 h-3 ${config.iconText}`}
                                 />
                               </div>
-                              <span className="text-sm text-gray-700 font-medium leading-tight group-hover/topic:text-blue-600 transition-colors">
+                              <span className="text-base text-gray-700 font-medium leading-tight group-hover/topic:text-blue-600 transition-colors">
                                 {topic}
                               </span>
                             </motion.li>
                           ))}
                         </ul>
                         {cert.topics.length > 4 && (
-                          <p className="text-sm text-gray-500 mt-3">
+                          <p className="text-base text-gray-500 mt-3">
                             <button
                               onClick={() => toggleTopics(cert.title)}
                               className="font-medium text-blue-600 cursor-pointer hover:underline focus:outline-none"
@@ -640,7 +640,7 @@ export function CertificationRoadmap() {
                         href={cert.examLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
+                        className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-base font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
                       >
                         <span>View Exam Details</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />

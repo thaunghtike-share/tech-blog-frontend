@@ -247,10 +247,10 @@ export function DevOpsWorkflowExample() {
               <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                 {workflowSteps[currentStep].title}
               </h4>
-              <p className="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6">
+              <p className="text-base sm:text-base text-gray-700 mb-4 sm:mb-6">
                 {workflowSteps[currentStep].description}
               </p>
-              <h5 className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 sm:mb-3">
+              <h5 className="text-sm sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 sm:mb-3">
                 Tools Used
               </h5>
               <ul className="space-y-3 sm:space-y-4">
@@ -260,13 +260,13 @@ export function DevOpsWorkflowExample() {
                     className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-blue-50 transition-colors"
                   >
                     <div className="p-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mt-0.5">
-                      <Code className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-white" />
+                      <Code className="w-4 h-4 sm:w-4 sm:h-4 flex-shrink-0 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm sm:text-base font-semibold text-gray-800">
+                      <p className="text-base sm:text-base font-semibold text-gray-800">
                         {tool.name}
                       </p>
-                      <p className="text-xs sm:text-sm text-gray-600">
+                      <p className="text-sm sm:text-sm text-gray-600">
                         {tool.desc}
                       </p>
                     </div>

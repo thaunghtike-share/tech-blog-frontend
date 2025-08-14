@@ -175,7 +175,7 @@ export function FreeLabs() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1 }}
                     whileHover={{ y: -5 }}
-                    className="min-w-[21rem] sm:min-w-0 bg-white rounded-xl shadow-md border-l-4 border-orange-500 overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col"
+                    className="min-w-[23.5rem] sm:min-w-0 bg-white rounded-xl shadow-md border-l-4 border-orange-500 overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col"
                   >
                     <div className="p-5 flex flex-col h-full">
                       <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">

@@ -184,7 +184,7 @@ export function RecommendedPaidCourses() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="min-w-[21rem] lg:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
+              className="min-w-[23.5rem] lg:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
             >
               <div className="p-5 flex-grow">
                 <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
@@ -193,7 +193,7 @@ export function RecommendedPaidCourses() {
                 <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
                   {course.title}
                 </h3>
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                <div className="flex items-center gap-2 text-base text-gray-600 mb-2">
                   {course.authorImage && (
                     <img
                       src={course.authorImage || "/placeholder.svg"}
@@ -204,13 +204,13 @@ export function RecommendedPaidCourses() {
                   )}
                   <span className="font-medium">{course.author}</span>
                 </div>
-                <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                <p className="text-gray-700 text-base mb-4 leading-relaxed">
                   {course.description}
                 </p>
                 {course.rating && (
                   <div className="flex items-center gap-1 text-yellow-500 mb-3">
                     <Star className="w-4 h-4 fill-current" />
-                    <span className="font-medium text-gray-900 text-sm">
+                    <span className="font-medium text-gray-900 text-base">
                       {course.rating.toFixed(1)}
                     </span>
                   </div>
