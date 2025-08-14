@@ -272,7 +272,7 @@ export function ArticleContent({
                 return (
                   <h1
                     id={id}
-                    className="text-xl md:text-2xl font-semibold my-4"
+                    className="text-2xl md:text-3xl font-semibold my-4"
                     {...props}
                   >
                     {children}
@@ -284,7 +284,7 @@ export function ArticleContent({
                 return (
                   <h2
                     id={id}
-                    className="text-lg md:text-xl font-semibold my-3"
+                    className="text-xl md:text-2xl font-semibold my-3"
                     {...props}
                   >
                     {children}
@@ -296,7 +296,7 @@ export function ArticleContent({
                 return (
                   <h3
                     id={id}
-                    className="text-base md:text-lg font-semibold my-2"
+                    className="text-lg md:text-xl font-semibold my-2"
                     {...props}
                   >
                     {children}
@@ -314,7 +314,7 @@ export function ArticleContent({
               a: ({ href, children, ...props }) => (
                 <a
                   href={href}
-                  className="text-blue-600 hover:underline break-words text-sm md:text-base"
+                  className="text-blue-600 hover:underline break-words text-base md:text-lg"
                   target="_blank"
                   rel="noopener noreferrer"
                   {...props}
@@ -346,7 +346,7 @@ export function ArticleContent({
 
                 return (
                   <li
-                    className="flex items-start text-sm text-gray-700 leading-relaxed"
+                    className="flex items-start text-base text-gray-700 leading-relaxed"
                     {...props}
                   >
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 mr-2 flex-shrink-0" />
@@ -382,7 +382,7 @@ export function ArticleContent({
                 if (inline) {
                   return (
                     <code
-                      className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-sm font-mono"
+                      className="bg-gray-100 text-gray-800 rounded px-1 py-0.5 text-base font-mono"
                       {...props}
                     >
                       {children}
@@ -511,26 +511,27 @@ export function ArticleContent({
           {prevArticle ? (
             <Link
               href={`/articles/${prevArticle.slug}`}
-              className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800 text-sm"
+              className="hover:underline flex items-center gap-1 transition-colors duration-200 hover:text-blue-800 text-base md:text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span className="hidden md:inline">
-                Previous: {prevArticle.title}
-              </span>
-              <span className="md:hidden">Previous</span>
+              {/* Desktop: show full title */}
+              <span className="hidden md:inline">{prevArticle.title}</span>
+              {/* Mobile: show "Previous Article" */}
+              <span className="md:hidden">Previous Article</span>
             </Link>
           ) : (
             <span />
           )}
+
           {nextArticle ? (
             <Link
               href={`/articles/${nextArticle.slug}`}
-              className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800 text-sm"
+              className="hover:underline flex items-center gap-1 text-right transition-colors duration-200 hover:text-blue-800 text-base md:text-sm"
             >
-              <span className="hidden md:inline">
-                Next: {nextArticle.title}
-              </span>
-              <span className="md:hidden">Next</span>
+              {/* Desktop: show full title */}
+              <span className="hidden md:inline">{nextArticle.title}</span>
+              {/* Mobile: show "Next Article" */}
+              <span className="md:hidden">Next Article</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           ) : (
@@ -538,11 +539,13 @@ export function ArticleContent({
           )}
         </div>
         {/* Simplified Recent Articles */}
-        <div className="mt-12">
+        <div className="mt-12 hidden md:block">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-800 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-indigo-600" />
-              <span>Recent Articles</span>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-indigo-600 stroke-2" />
+              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                Recent Articles
+              </span>
             </h2>
             <Link
               href="/articles"
@@ -551,7 +554,7 @@ export function ArticleContent({
               View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {recentArticles.map((item) => {
               const date = new Date(item.published_at).toLocaleDateString(
                 "en-US",
@@ -566,44 +569,49 @@ export function ArticleContent({
               return (
                 <Card
                   key={item.id}
-                  className="border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col group bg-white relative z-10"
+                  className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col group"
                 >
                   <Link
                     href={`/articles/${item.slug}`}
                     className="block flex-grow flex flex-col"
                   >
-                    <CardContent className="p-4 flex-grow flex flex-col bg-white">
-                      <h4 className="font-bold text-base text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 leading-snug mb-2">
-                        {item.title}
-                      </h4>
+                    <CardContent className="p-0 flex-grow flex flex-col">
+                      <div className="p-4 flex-grow flex flex-col">
+                        {/* Title with exactly 2 lines */}
+                        <h4 className="font-bold text-lg text-gray-900 group-hover:text-indigo-700 transition-colors line-clamp-2 leading-tight mb-3 min-h-[3rem]">
+                          {item.title}
+                        </h4>
 
-                      {/* Cover image */}
-                      <div className="my-2 w-full h-32 overflow-hidden rounded-lg bg-gray-100">
-                        <img
-                          src={item.cover_image || "/images/mylogo.jpg"}
-                          alt={item.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-
-                      <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                        {excerpt(item.content)}
-                      </p>
-
-                      <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs text-gray-600">
-                          {itemAuthor?.avatar ? (
-                            <img
-                              src={itemAuthor.avatar}
-                              alt={itemAuthor.name}
-                              className="w-5 h-5 rounded-full object-cover"
-                            />
-                          ) : (
-                            <User className="w-3.5 h-3.5 text-gray-500" />
-                          )}
-                          <span>{itemAuthor?.name || "Unknown"}</span>
+                        {/* Cover image with fixed aspect ratio */}
+                        <div className="w-full h-48 overflow-hidden">
+                          <img
+                            src={item.cover_image || "/images/mylogo.jpg"}
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
                         </div>
-                        <div className="text-xs text-gray-500">{date}</div>
+
+                        {/* Excerpt */}
+                        <p className="text-base text-gray-600 line-clamp-2 mb-4">
+                          {excerpt(item.content)}
+                        </p>
+
+                        {/* Author and date */}
+                        <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-xs text-gray-600">
+                            {itemAuthor?.avatar ? (
+                              <img
+                                src={itemAuthor.avatar}
+                                alt={itemAuthor.name}
+                                className="w-5 h-5 rounded-full object-cover"
+                              />
+                            ) : (
+                              <User className="w-3.5 h-3.5 text-gray-500" />
+                            )}
+                            <span>{itemAuthor?.name || "Unknown"}</span>
+                          </div>
+                          <div className="text-xs text-gray-500">{date}</div>
+                        </div>
                       </div>
                     </CardContent>
                   </Link>

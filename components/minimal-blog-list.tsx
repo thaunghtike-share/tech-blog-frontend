@@ -234,8 +234,8 @@ export function MinimalBlogList({
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
+        <div className="mb-8 sm:mb-12">
+          <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
             <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
@@ -246,7 +246,7 @@ export function MinimalBlogList({
               Latest Articles
             </h2>
           </div>
-          <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+          <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto sm:mx-0"></div>
         </div>
         <div className="grid gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -279,7 +279,7 @@ export function MinimalBlogList({
   return (
     <div className="w-full max-w-full md:max-w-4xl mx-auto px-2 sm:px-4">
       {/* Header with Enhanced Tag Filter */}
-      <div className="mb-9 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mb-6 sm:mb-9 relative flex flex-col sm:flex-row items-center sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
             <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -287,14 +287,14 @@ export function MinimalBlogList({
           <Link href="/articles">
             <h2
               ref={topRef}
-              className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all"
+              className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent hover:underline hover:cursor-pointer transition-all text-center sm:text-left"
             >
               Latest Articles
             </h2>
           </Link>
         </div>
 
-        <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
+        <div className="md:block hidden flex items-center justify-end gap-2 w-full sm:w-auto">
           <div
             className="relative w-full max-w-[200px] sm:w-56"
             ref={dropdownRef}
@@ -398,7 +398,7 @@ export function MinimalBlogList({
       ) : (
         <>
           {/* Articles Grid */}
-          <div className="grid gap-8">
+          <div className="grid gap-6 sm:gap-8">
             <AnimatePresence mode="wait">
               {paginatedArticles.map((article, index) => {
                 const author = getAuthor(article.author);
@@ -413,49 +413,18 @@ export function MinimalBlogList({
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                   >
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {category && (
-                        <Link
-                          href={`/categories/${category.slug}`}
-                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                        >
-                          <Folder className="w-4 h-4" />
-                          {category.name}
-                        </Link>
-                      )}
-                      {article.tags.map((tagId) => {
-                        const tag = getTagById(tagId);
-                        if (!tag) return null;
-                        return (
-                          <Link
-                            key={tag.id}
-                            href={`/articles?tag=${tag.slug}`}
-                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                          >
-                            <TagIcon className="w-4 h-4" />
-                            {tag.name}
-                          </Link>
-                        );
-                      })}
-                    </div>
-
+                    {/* Title */}
                     <Link
                       href={`/articles/${article.slug}`}
-                      className="group/link block"
+                      className="group/link block mb-3"
                     >
-                      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 group-hover/link:text-blue-600 transition-colors">
+                      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover/link:text-blue-600 transition-colors">
                         {article.title}
                       </h3>
-                      <p className="text-sm sm:text-[15px] text-gray-700 mb-4 line-clamp-2 leading-relaxed">
-                        {truncate(stripMarkdown(article.content), 200)}
-                      </p>
-                      <div className="text-sm text-blue-600 flex items-center gap-1 group-hover/link:gap-2 font-medium transition-all">
-                        Read more{" "}
-                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                      </div>
                     </Link>
 
-                    <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                    {/* Author and Date */}
+                    <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
                       <div className="flex items-center gap-2">
                         {author?.avatar ? (
                           <img
@@ -482,12 +451,56 @@ export function MinimalBlogList({
                         <Calendar className="w-4 h-4 text-gray-400" />
                         <span>{formatDate(article.published_at)}</span>
                       </div>
+                    </div>
+
+                    {/* Category and Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {category && (
+                        <Link
+                          href={`/categories/${category.slug}`}
+                          className="flex items-center gap-1 text-yellow-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                        >
+                          <Folder className="w-4 h-4" />
+                          {category.name}
+                        </Link>
+                      )}
+                      {article.tags.map((tagId) => {
+                        const tag = getTagById(tagId);
+                        if (!tag) return null;
+                        return (
+                          <Link
+                            key={tag.id}
+                            href={`/articles?tag=${tag.slug}`}
+                            className="flex items-center gap-1 text-blue-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                          >
+                            <TagIcon className="w-4 h-4" />
+                            {tag.name}
+                          </Link>
+                        );
+                      })}
+                    </div>
+
+                    {/* Content and Read More */}
+                    <div className="mb-4">
+                      <p className="text-sm sm:text-[15px] text-gray-700 line-clamp-2 leading-relaxed mb-3">
+                        {truncate(stripMarkdown(article.content), 200)}
+                      </p>
+                      <Link
+                        href={`/articles/${article.slug}`}
+                        className="text-sm text-blue-600 flex items-center gap-1 group-hover:gap-2 font-medium transition-all"
+                      >
+                        Read more{" "}
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+
+                    {/* Read time and View count */}
+                    <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4 text-gray-400" />
                         <span>{calculateReadTime(article.content)} read</span>
                       </div>
-                      {/* Added view count */}
-                      <div className="flex items-center gap-1 ml-auto">
+                      <div className="flex items-center gap-1">
                         <Eye className="w-4 h-4 text-gray-400" />
                         <span className="font-medium">
                           {article.read_count?.toLocaleString() || 0} views
@@ -502,7 +515,7 @@ export function MinimalBlogList({
 
           {/* Enhanced Pagination */}
           {totalPages > 1 && (
-            <nav className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <nav className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
               <div className="text-xs sm:text-sm text-gray-500">
                 Showing {(currentPage - 1) * PAGE_SIZE + 1} to{" "}
                 {Math.min(currentPage * PAGE_SIZE, articles.length)} of{" "}
