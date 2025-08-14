@@ -17,7 +17,7 @@ export function MinimalFooter() {
                 />
               </div>
             </Link>
-            <p className="text-sm md:text-sm text-gray-600 -mt-8 md:-mt-10">
+            <p className="text-base md:text-base text-gray-600 -mt-8 md:-mt-10">
               Your go-to resource for mastering DevOps, cloud-native
               technologies, and automation. Practical guides, tutorials, and
               real-world projects.
@@ -60,14 +60,14 @@ export function MinimalFooter() {
 
           {/* Quick Links - Stacked on mobile */}
           <div className="order-2 md:order-3">
-            <h3 className="text-sm md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
+            <h3 className="text-base font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
               Quick Links
             </h3>
             <ul className="space-y-1 md:space-y-3">
               <li>
                 <Link
                   href="/articles"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Articles
                 </Link>
@@ -75,7 +75,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/categories"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Categories
                 </Link>
@@ -83,7 +83,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/authors"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Authors
                 </Link>
@@ -91,7 +91,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/services/cloud-migration"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Cloud Migration Services
                 </Link>
@@ -101,14 +101,14 @@ export function MinimalFooter() {
 
           {/* Learning Resources - Stacked on mobile */}
           <div className="order-4">
-            <h3 className="text-sm md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
+            <h3 className="text-base font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
               Resources
             </h3>
             <ul className="space-y-1 md:space-y-3">
               <li>
                 <Link
                   href="/learn-devops-on-youtube"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   YouTube Playlists
                 </Link>
@@ -116,7 +116,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/learn-devops-on-udemy"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Udemy Courses
                 </Link>
@@ -124,7 +124,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/recommended-paid-courses"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Paid Courses
                 </Link>
@@ -132,7 +132,7 @@ export function MinimalFooter() {
               <li>
                 <Link
                   href="/free-labs"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   Free Labs
                 </Link>
@@ -142,14 +142,14 @@ export function MinimalFooter() {
 
           {/* Contact - Full width on mobile */}
           <div className="col-span-2 md:col-span-1 order-5 mt-4 md:mt-0">
-            <h3 className="text-sm md:text-sm font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
+            <h3 className="text-base font-semibold text-gray-800 uppercase tracking-wider mb-2 md:mb-4">
               Contact
             </h3>
             <ul className="space-y-1 md:space-y-3">
               <li>
                 <a
                   href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   thaunghtikeoo.tho1234@gmail.com
                 </a>
@@ -157,16 +157,16 @@ export function MinimalFooter() {
               <li>
                 <a
                   href="tel:+959952492359"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   +95 9952492359
                 </a>
               </li>
-              <li className="text-sm md:text-sm">Yangon, Myanmar</li>
+              <li className="text-base">Yangon, Myanmar</li>
               <li>
                 <Link
                   href="/about"
-                  className="text-sm md:text-sm hover:text-blue-600 transition-colors block"
+                  className="text-base hover:text-blue-600 transition-colors block"
                 >
                   About Me
                 </Link>
@@ -177,7 +177,7 @@ export function MinimalFooter() {
 
         {/* Copyright */}
         <div className="border-t border-gray-200 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-500 text-center md:text-left">
+          <p className="text-base text-gray-500 text-center md:text-left">
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>
