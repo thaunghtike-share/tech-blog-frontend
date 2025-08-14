@@ -69,6 +69,21 @@ export function FeaturedArticlesPage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        setScrollPosition(scrollContainerRef.current.scrollLeft);
+      }
+    };
+
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
 
   useEffect(() => {
     let scrollTimer: NodeJS.Timeout;
@@ -424,31 +439,45 @@ export function FeaturedArticlesPage() {
             </AnimatePresence>
           </div>
 
-          {/* Scroll indicators for mobile */}
+          {/* Enhanced scroll indicator for mobile */}
           <div className="md:hidden">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
-              <motion.button
-                onClick={scrollRight}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
-              >
-                <div className="relative">
-                  <ChevronRight className="w-5 h-5" />
-                  <motion.div
-                    animate={{
-                      x: [0, 4, 0],
-                      opacity: [0.6, 1, 0.6],
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 1.5,
-                    }}
-                    className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
-                  />
-                </div>
-              </motion.button>
-            </div>
+            <motion.div
+              className="absolute right-0 top-0 h-full w-12 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: isScrolling ? 0 : 1,
+                transition: { duration: 0.3 },
+              }}
+            >
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                <motion.div
+                  animate={{
+                    y: [0, 5, 0],
+                    opacity: [0.6, 1, 0.6],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.8,
+                    ease: "easeInOut",
+                  }}
+                  className="w-8 h-8 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm border border-gray-100"
+                >
+                  <ChevronRight className="w-5 h-5 text-blue-600" />
+                </motion.div>
+                <motion.div
+                  className="mt-1 text-xs font-medium text-blue-600 bg-white/80 px-2 py-0.5 rounded-full"
+                  animate={{
+                    opacity: [0.7, 1, 0.7],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                  }}
+                >
+                </motion.div>
+              </div>
+              <div className="absolute right-0 top-0 h-full w-4 bg-gradient-to-l from-white to-transparent" />
+            </motion.div>
           </div>
         </div>
       )}

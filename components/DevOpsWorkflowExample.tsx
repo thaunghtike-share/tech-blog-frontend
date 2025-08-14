@@ -172,7 +172,7 @@ export function DevOpsWorkflowExample() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           DevOps architecture design built for client's company using GitOps and
           IAC

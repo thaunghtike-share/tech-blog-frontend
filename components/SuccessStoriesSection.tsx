@@ -90,7 +90,7 @@ export function SuccessStoriesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto"
+          className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
         >
           See how students and junior engineers from Myanmar are growing in the
           DevOps world.

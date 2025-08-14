@@ -136,7 +136,7 @@ export function TopUdemyCourses() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
+          className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"
         >
           Curated list of free Udemy courses to master DevOps tools and
           practices.
@@ -166,10 +166,10 @@ export function TopUdemyCourses() {
                 <h3 className="text-lg sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
                   {course.title}
                 </h3>
-                <p className="text-sm sm:text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3">
+                <p className="text-base sm:text-base text-gray-700 mb-4 leading-relaxed line-clamp-3">
                   {course.description}
                 </p>
-                <div className="flex items-center gap-2 text-sm sm:text-sm text-gray-600 mb-4">
+                <div className="flex items-center gap-2 text-base sm:text-base text-gray-600 mb-4">
                   {course.authorImage && (
                     <img
                       src={course.authorImage || "/placeholder.svg"}

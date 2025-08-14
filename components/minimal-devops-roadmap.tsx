@@ -667,7 +667,7 @@ export function MinimalDevopsRoadmap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto mb-8"
+            className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-8"
           >
             A structured learning path from prerequisite to advanced DevOps
             concepts and tools.
@@ -774,17 +774,17 @@ export function MinimalDevopsRoadmap() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1, duration: 0.5 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`flex-shrink-0 w-[75vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 flex flex-col`}
+                  className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto relative group min-h-[300px] bg-white rounded-xl shadow-lg border-l-4 ${currentStageConfig.border} overflow-hidden transition-all duration-300 flex flex-col`}
                 >
                   <div className="p-5 relative flex-grow">
                     <h4 className="text-lg font-bold leading-tight text-gray-900 mb-2">
                       {title}
                     </h4>
-                    <span className="flex items-center text-xs font-medium text-gray-600 mb-4">
-                      <Clock className="w-3 h-3 mr-1 text-gray-500" />{" "}
+                    <span className="flex items-center text-sm font-medium text-gray-600 mb-4">
+                      <Clock className="w-4 h-4 mr-1 text-gray-500" />{" "}
                       {duration}
                     </span>
-                    <p className="text-gray-700 text-sm leading-relaxed">
+                    <p className="text-gray-700 text-base leading-relaxed">
                       {details}
                     </p>
                   </div>

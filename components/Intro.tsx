@@ -136,7 +136,7 @@ export default function Intro() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-3 text-gray-700 max-w-2xl mx-auto text-sm sm:text-base"
+            className="mt-3 text-gray-700 max-w-2xl mx-auto text-base sm:text-base"
           >
             Unlock DevOps: Learn the concepts transforming modern tech teams and
             the practical skills you need to boost your IT career

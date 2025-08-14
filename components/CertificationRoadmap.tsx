@@ -454,10 +454,10 @@ export function CertificationRoadmap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"
           >
-            Validate your skills with industry-recognized DevOps certifications
-            that showcase your cloud, automation, and infrastructure expertise.
+            Validate your skills with industry-recognized certifications
+            that showcase your devops expertise.
           </motion.p>
         </div>
 

@@ -33,7 +33,7 @@ export function AuthorsContributorsCTA() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-600 max-w-xl mx-auto mb-8 text-sm md:text-lg leading-relaxed"
+          className="text-gray-600 max-w-xl mx-auto mb-8 text-base md:text-lg leading-relaxed"
         >
           Join our community to share your knowledge, write articles, or help
           improve this website. Your expertise can make a difference!

@@ -128,7 +128,7 @@ export function FreeLabs() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-sm sm:text-lg text-gray-600 max-w-3xl mx-auto"
+              className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"
             >
               Explore these practical, free labs and playgrounds to level up
               your DevOps expertise.
@@ -184,11 +184,11 @@ export function FreeLabs() {
                       <h3 className="text-lg sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
                         {lab.title}
                       </h3>
-                      <p className="text-gray-700 flex-grow text-sm sm:text-sm mb-4">
+                      <p className="text-gray-700 flex-grow text-base sm:text-base mb-4">
                         {lab.description}
                       </p>
                       {lab.difficulty && (
-                        <div className="mt-auto text-sm sm:text-sm text-gray-600">
+                        <div className="mt-auto text-base sm:text-base text-gray-600">
                           <strong>Difficulty:</strong> {lab.difficulty}
                         </div>
                       )}

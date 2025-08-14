@@ -68,62 +68,6 @@ export default function HomeClient() {
         }}
       ></div>
 
-      {/* Messenger Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Messenger Support"
-        className="fixed top-[70%] right-1 z-50 group"
-      >
-        <div className="flex items-center gap-2 relative">
-          <div className="absolute -inset-1 bg-[#5e2ced]/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="flex items-center gap-3 bg-white/75 border border-gray-200 shadow-[0_5px_20px_-5px_rgba(94,44,237,0.3)] px-4 py-2.5 rounded-full cursor-pointer transition-all duration-400 hover:scale-[1.03] hover:shadow-[0_8px_25px_-5px_rgba(94,44,237,0.4)]">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute w-full h-full bg-[#5e2ced] rounded-full opacity-10 group-hover:opacity-15 group-hover:scale-110 transition-all duration-500"></div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 240 240"
-                className="w-8 h-8 relative z-10"
-              >
-                <circle cx="120" cy="120" r="120" fill="#5e2ced" />
-                <path
-                  fill="#fff"
-                  d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-                  transform="scale(1.05)"
-                />
-              </svg>
-            </div>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#5e2ced] font-medium text-sm tracking-wider">
-              Chat?
-            </span>
-            <div className="ml-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="#a78bfa"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="absolute -top-2 -right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="w-2 h-2 bg-[#5e2ced] rounded-full animate-bounce"
-                style={{
-                  animationDelay: `${i * 0.1}s`,
-                  boxShadow: "0 0 4px rgba(94,44,237,0.5)",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </a>
-
       <MinimalHeader />
       <div className="pt-[66px] -mt-48 md:pt-[80px] md:-mt-44">
         <Intro />

@@ -126,7 +126,7 @@ export function MinimalFAQs() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-sm md:text-lg text-gray-600"
+          className="text-base md:text-lg text-gray-600"
         >
           Find answers to common questions about DevOps and our services
         </motion.p>
