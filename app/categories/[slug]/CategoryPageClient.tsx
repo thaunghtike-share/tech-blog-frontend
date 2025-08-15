@@ -10,6 +10,8 @@ import {
   ArrowRight,
   Eye,
   Tag as TagIcon,
+  Sparkles,
+  AlertTriangle,
 } from "lucide-react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -42,6 +44,12 @@ interface Author {
   avatar?: string;
 }
 
+interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 interface Props {
   slug: string;
 }
@@ -53,6 +61,7 @@ export default function CategoryPageClient({ slug }: Props) {
   const [category, setCategory] = useState<Category | null>(null);
   const [articles, setArticles] = useState<Article[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -95,6 +104,11 @@ export default function CategoryPageClient({ slug }: Props) {
           Array.isArray(authorsData) ? authorsData : authorsData.results || []
         );
 
+        // Fetch tags
+        const tagsRes = await fetch(`${API_BASE_URL}/tags/`);
+        const tagsData = await tagsRes.json();
+        setTags(Array.isArray(tagsData) ? tagsData : tagsData.results || []);
+
         setLoading(false);
         setCurrentPage(1);
       } catch (err: any) {
@@ -116,6 +130,7 @@ export default function CategoryPageClient({ slug }: Props) {
 
   // Helpers
   const getAuthor = (id: number) => authors.find((a) => a.id === id);
+  const getTagById = (id: number) => tags.find((t) => t.id === id);
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -348,6 +363,26 @@ export default function CategoryPageClient({ slug }: Props) {
                                 <span>{formatDate(article.published_at)}</span>
                               </div>
                             </div>
+
+                            {/* Tags */}
+                            {article.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                {article.tags.map((tagId) => {
+                                  const tag = getTagById(tagId);
+                                  if (!tag) return null;
+                                  return (
+                                    <Link
+                                      key={tag.id}
+                                      href={`/articles?tag=${tag.slug}`}
+                                      className="flex items-center gap-1 text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                                    >
+                                      <TagIcon className="w-4 h-4" />
+                                      <span>{tag.name}</span>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            )}
 
                             {/* Content */}
                             <div className="mb-4">

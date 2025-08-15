@@ -346,18 +346,18 @@ export function FeaturedArticlesPage() {
                     </Link>
 
                     {/* Author and Date */}
-                    <div className="flex items-center gap-3 mb-3 text-sm">
+                    <div className="flex items-center gap-3 mb-4 text-sm">
                       <div className="flex items-center gap-1">
                         {author?.avatar ? (
                           <img
                             src={author.avatar || "/placeholder.svg"}
                             alt={author.name}
-                            className="w-4 h-4 rounded-full object-cover border border-gray-200"
+                            className="w-5 h-5 rounded-full object-cover border border-gray-200"
                             loading="lazy"
                           />
                         ) : (
-                          <div className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                            <User className="w-2.5 h-2.5 text-white" />
+                          <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <User className="w-4 h-4 text-white" />
                           </div>
                         )}
                         <Link
