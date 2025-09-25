@@ -83,10 +83,7 @@ export default function HomeClient() {
             </div>
           </div>
         </div>
-        <section id="devops-roadmap" className="-mt-26 md:-mt-20">
-          <MinimalDevopsRoadmap />
-        </section>
-        <section id="youtube-playlists" className="-mt-16 md:-mt-16">
+        <section id="devops-roadmap" className="-mt-26 md:-mt-2">
           <YouTubePlaylists />
         </section>
         <section id="free-udemy" className="-mt-16 md:-mt-16">

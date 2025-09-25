@@ -28,14 +28,6 @@ interface Playlist {
 }
 
 const difficultyConfig = {
-  Prerequisite: {
-    color: "from-gray-500 to-slate-600",
-    text: "text-gray-700",
-    border: "border-white-500",
-    iconBg: "bg-gradient-to-r from-gray-500 to-slate-600",
-    iconText: "text-white",
-    icon: <Lightbulb className="w-5 h-5" />,
-  },
   Beginner: {
     color: "from-green-500 to-emerald-600",
     text: "text-green-700",
@@ -517,7 +509,6 @@ export function YouTubePlaylists({
     : filteredPlaylists.slice(0, 6); // Show first 6 by default
 
   const allDifficulties: DifficultyLevel[] = [
-    "Prerequisite",
     "Beginner",
     "Intermediate",
     "Advanced",
@@ -643,7 +634,9 @@ export function YouTubePlaylists({
             className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-x-visible lg:snap-none"
           >
             {displayedPlaylists.map((pl, idx) => {
-              const config = difficultyConfig[pl.difficulty];
+                // Skip playlists with "Prerequisite" difficulty
+                if (pl.difficulty === "Prerequisite") return null;
+                const config = difficultyConfig[pl.difficulty as DifficultyLevel];
               return (
                 <motion.div
                   key={pl.id}

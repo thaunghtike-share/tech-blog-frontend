@@ -561,13 +561,6 @@ const resourceLinks: Record<string, ResourceLink[]> = {
 
 // New stage configuration for consistent styling
 const stageConfig = {
-  prerequisite: {
-    gradient: "from-gray-500 to-slate-600",
-    text: "text-gray-700",
-    border: "border-gray-500",
-    iconBg: "bg-gradient-to-r from-gray-500 to-slate-600",
-    iconText: "text-white",
-  },
   beginner: {
     gradient: "from-green-500 to-emerald-600",
     text: "text-green-700",

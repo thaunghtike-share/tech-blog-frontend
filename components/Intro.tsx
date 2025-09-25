@@ -7,18 +7,16 @@ import {
   Rocket,
   Sparkles,
   ListTodo,
-  ClipboardList,
-  GitPullRequest,
-  GitCommit,
-  Code,
-  Server,
   Globe,
   BookOpen,
   BadgeCheck,
+  TrendingUp,
+  Clock,
+  DollarSign,
+  Users,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import React from "react";
-import { Play } from "next/font/google";
 
 export default function Intro() {
   const scrollToSection = (id: string) => {
@@ -41,13 +39,6 @@ export default function Intro() {
   };
 
   const learningPathItems = [
-    {
-      label: "Roadmap",
-      id: "devops-roadmap",
-      desc: "See Roadmap",
-      icon: ListTodo,
-      color: "bg-gradient-to-r from-yellow-600 to-orange-600",
-    },
     {
       label: "YouTube",
       id: "youtube-playlists",
@@ -102,6 +93,33 @@ export default function Intro() {
     },
   ];
 
+  const statistics = [
+    {
+      icon: <TrendingUp className="w-6 h-6" />,
+      value: "80%",
+      label: "Job placement rate",
+      color: "from-green-400 to-green-600",
+    },
+    {
+      icon: <Clock className="w-6 h-6" />,
+      value: "24 weeks",
+      label: "Average to job-ready",
+      color: "from-blue-400 to-blue-600",
+    },
+    {
+      icon: <DollarSign className="w-6 h-6" />,
+      value: "4 lakhs mmk",
+      label: "Average starting salary",
+      color: "from-purple-400 to-purple-600",
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      value: "Active",
+      label: "Community support",
+      color: "from-orange-400 to-orange-600",
+    },
+  ];
+
   return (
     <div className="py-16 px-4 max-w-7xl mx-auto">
       {/* Hero Section */}
@@ -119,18 +137,6 @@ export default function Intro() {
               <BookOpen className="w-4 h-4 mr-1.5" /> Introduction
             </span>
           </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl font-bold font-['Inter'] bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 tracking-normal"
-          >
-            Learn{" "}
-            <span className="font-['Inter'] bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              DevOps
-            </span>{" "}
-            Now
-          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -138,8 +144,8 @@ export default function Intro() {
             transition={{ delay: 0.2 }}
             className="mt-3 text-gray-700 max-w-2xl mx-auto text-base sm:text-base"
           >
-            Unlock DevOps: Learn the concepts transforming modern tech teams and
-            the practical skills you need to boost your IT career
+            Learn core DevOps concepts, tools, and best practices to streamline
+            software delivery and boost your IT career.
           </motion.p>
         </div>
       </div>
@@ -212,6 +218,61 @@ export default function Intro() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="my-8 md:my-12 max-w-6xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <div className="text-center mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-4"
+          >
+            <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 border border-green-300">
+              <Sparkles className="w-4 h-4 mr-1.5" /> Success Metrics
+            </span>
+          </motion.div>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Be a successful DevOps professional who transformed
+            his career with our comprehensive program
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {statistics.map((stat, i) => (
+            <motion.div
+              key={i}
+              className="group relative"
+              initial="initial"
+              whileHover="hover"
+              variants={cardVariants}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md" />
+              <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center transition-all duration-300 group-hover:shadow-lg group-hover:border-transparent">
+                <div
+                  className={`bg-gradient-to-r ${stat.color} w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4 mx-auto`}
+                >
+                  {stat.icon}
+                </div>
+                <div
+                  className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}
+                >
+                  {stat.value}
+                </div>
+                <p className="text-gray-600 text-sm font-medium">
+                  {stat.label}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </motion.div>
 
