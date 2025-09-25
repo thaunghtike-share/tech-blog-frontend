@@ -263,7 +263,7 @@ export default function Intro() {
                   {stat.icon}
                 </div>
                 <div
-                  className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}
+                  className={`text-xl md:text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}
                 >
                   {stat.value}
                 </div>

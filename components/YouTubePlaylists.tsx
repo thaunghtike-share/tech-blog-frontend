@@ -5,16 +5,15 @@ import {
   ExternalLink,
   Clock,
   ChevronDown,
-  ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   Play,
   Users,
-  Lightbulb,
   Rocket,
   Gauge,
   Shield,
-  ChevronRight,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Playlist {
   id: number;
@@ -29,10 +28,10 @@ interface Playlist {
 
 const difficultyConfig = {
   Beginner: {
-    color: "from-green-500 to-emerald-600",
-    text: "text-green-700",
-    border: "border-green-500",
-    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
+    color: "from-red-500 to-red-600",
+    text: "text-red-700",
+    border: "border-red-500",
+    iconBg: "bg-gradient-to-r from-red-500 to-red-600",
     iconText: "text-white",
     icon: <Rocket className="w-5 h-5" />,
   },
@@ -75,7 +74,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PLEiEAq2VkUULlNtIFhEQHo8gacvme35rz",
       channel: "Simplilearn",
       difficulty: "Beginner",
-      estDuration: "3-4 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -85,7 +84,7 @@ export function YouTubePlaylists({
       playlistUrl: "https://www.youtube.com/watch?v=YqWuL3an-5o",
       channel: "Intellipaat",
       difficulty: "Intermediate",
-      estDuration: "3-4 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -96,7 +95,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PLGjZwEtPN7j-Q59JYso3L4_yoCjj2syrM",
       channel: "Adam Marczak - Azure for Everyone",
       difficulty: "Beginner",
-      estDuration: "3-5 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -107,7 +106,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3",
       channel: "John Savill's Technical Training",
       difficulty: "Beginner",
-      estDuration: "2-3 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -118,7 +117,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/watch?v=Wgi-OfbP2Gw&list=PL9ooVrP1hQOH3SvcgkC4Qv2cyCebvs0Ik",
       channel: "Edureka",
       difficulty: "Beginner",
-      estDuration: "3-5 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -129,7 +128,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/watch?v=acv0fUTDK3g&list=PLS0spxc8nUsDro6iDvLzeC8iDv5y1gDXa",
       channel: "Shesh Chauhan IT Trainer",
       difficulty: "Beginner",
-      estDuration: "3-5 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -140,7 +139,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7",
       channel: "Net Ninja",
       difficulty: "Beginner",
-      estDuration: "2-3 weeks",
+      estDuration: "1 weeks",
       is_burmese: false,
     },
     {
@@ -150,7 +149,7 @@ export function YouTubePlaylists({
       playlistUrl: "https://www.youtube.com/watch?v=zJ6WbK9zFpI&t=11s",
       channel: "Kode Kloud",
       difficulty: "Beginner",
-      estDuration: "2-3 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -161,7 +160,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PLl4APkPHzsUUOkOv3i62UidrLmSB8DcGC",
       channel: "Tech Tutorials with Piyush",
       difficulty: "Advanced",
-      estDuration: "8 weeks",
+      estDuration: "5 weeks",
       is_burmese: false,
     },
     {
@@ -172,7 +171,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PLy7NrYWoggjzSIlwxeBbcgfAdYoxCIrM2",
       channel: "TechWorld with Nana",
       difficulty: "Intermediate",
-      estDuration: "3-5 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -183,7 +182,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/watch?v=-hVG9z0fCac&list=PLArH6NjfKsUhvGHrpag7SuPumMzQRhUKY",
       channel: "glich stream",
       difficulty: "Intermediate",
-      estDuration: "3-5 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -193,7 +192,7 @@ export function YouTubePlaylists({
       playlistUrl: "https://www.youtube.com/watch?v=zTjRZNkhiEU",
       channel: "freeCodeCamp.org",
       difficulty: "Intermediate",
-      estDuration: "3-5 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -204,7 +203,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/playlist?list=PLl4APkPHzsUUHlbhuq9V02n9AMLPySoEQ",
       channel: "Tech Tutorials with Piyush",
       difficulty: "Advanced",
-      estDuration: "8-10 weeks",
+      estDuration: "5 weeks",
       is_burmese: false,
     },
     {
@@ -212,10 +211,10 @@ export function YouTubePlaylists({
       title: "Ansible Tutorials",
       videoId: "3RiVKs8GHYQ",
       playlistUrl:
-        "https://www.youtube.com/playlist?list=PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70",
+        "https://www.youtube.com/playlist?list=PLT98CRl2KxKEUHlbhuq9V02n9AMLPySoEQ",
       channel: "Learn Linux TV",
       difficulty: "Intermediate",
-      estDuration: "4-5 weeks",
+      estDuration: "4 weeks",
       is_burmese: false,
     },
     {
@@ -248,7 +247,7 @@ export function YouTubePlaylists({
         "https://www.youtube.com/watch?v=eTR-gbIeXPw&list=PLdsu0umqbb8P8dNoox7ECgOo_fJ9FBfZl",
       channel: "DevOps Hint",
       difficulty: "Advanced",
-      estDuration: "3 weeks",
+      estDuration: "2 weeks",
       is_burmese: false,
     },
     {
@@ -420,7 +419,7 @@ export function YouTubePlaylists({
       title: "Hashicorp Packer",
       videoId: "tbv1lTF1wFU",
       playlistUrl:
-        "https://www.youtube.com/watch?v=tbv1lTF1wFU&list=PL8VzFQ8k4U1Jp6eWgHSXHiiRWRvPyCKRj",
+        "https://www.youtube.com/watch?v=tbv1lTF1wFU&list=PL8VzFQ8k4UdP5OrEUckFdQPHeE05ZeS5z",
       channel: "Sanjeev Thiyagarajan",
       difficulty: "Intermediate",
       estDuration: "2 weeks",
@@ -472,7 +471,7 @@ export function YouTubePlaylists({
       title: "Hashicorp Vault",
       videoId: "-sU0O82fdZs",
       playlistUrl:
-        "https://www.youtube.com/watch?v=-sU0O82fdZs&list=PL7iMyoQPMtAP7XeXabzWnNKGkCex1C_3C",
+        "https://www.youtube.com/watch?v=-sU0O82fdZs&list=PL7iMyoQPMtAP7XeXabzWuPumMzQRhUKC",
       channel: "Rahul Wagh",
       difficulty: "Advanced",
       estDuration: "1 weeks",
@@ -493,8 +492,11 @@ export function YouTubePlaylists({
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<DifficultyLevel>("Beginner");
   const [internalShowAll, setInternalShowAll] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const coursesPerView = 3;
 
   const actualShowAll = showAll !== undefined ? showAll : internalShowAll;
   const actualSetShowAll =
@@ -504,23 +506,42 @@ export function YouTubePlaylists({
     .filter((pl) => pl.difficulty === selectedDifficulty)
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  const displayedPlaylists = actualShowAll
-    ? filteredPlaylists
-    : filteredPlaylists.slice(0, 6); // Show first 6 by default
+  const totalSlides = Math.ceil(filteredPlaylists.length / coursesPerView);
 
-  const allDifficulties: DifficultyLevel[] = [
-    "Beginner",
-    "Intermediate",
-    "Advanced",
-  ];
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+  };
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 300,
-        behavior: "smooth",
-      });
-    }
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const getCurrentCourses = () => {
+    const startIndex = currentIndex * coursesPerView;
+    return filteredPlaylists.slice(startIndex, startIndex + coursesPerView);
+  };
+
+  const getDifficultyStats = (difficulty: DifficultyLevel) => {
+    const playlists = staticPlaylists.filter(
+      (pl) => pl.difficulty === difficulty
+    );
+    const totalHours = playlists.reduce((acc, pl) => {
+      const duration = pl.estDuration;
+      const weeks =
+        Number.parseInt(duration.split("-")[0]) ||
+        Number.parseInt(duration.split(" ")[0]) ||
+        1;
+      return acc + weeks * 10; // Estimate 10 hours per week
+    }, 0);
+    return {
+      count: playlists.length,
+      totalHours,
+      avgWeeks: Math.round(totalHours / 10),
+    };
   };
 
   return (
@@ -535,12 +556,12 @@ export function YouTubePlaylists({
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center gap-2 md:gap-3 mb-4 md:mb-4"
         >
-          <div className="p-2 md:p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-lg">
+          <div className="p-2 md:p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-full shadow-lg">
             <Globe className="w-4 h-4 md:w-4 md:h-4 text-white" />
           </div>
           <span className="inline-flex items-center px-2 py-1 md:px-4 md:py-1 rounded-full text-sm md:text-sm font-medium bg-red-100 text-red-700 border border-red-200">
             <Play className="w-4 h-4 md:w-4 md:h-4 mr-1 md:mr-2" /> Youtube
-            Playlists
+            Courses
           </span>
         </motion.div>
         <motion.h2
@@ -562,53 +583,94 @@ export function YouTubePlaylists({
         </motion.p>
       </div>
 
-      {/* Difficulty Buttons */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="flex overflow-x-auto sm:overflow-x-visible flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-3 mb-4 md:mb-8 pb-4"
+        className="mb-4 md:mb-8 flex justify-center"
       >
-        {allDifficulties.map((difficultyKey) => {
-          const config = difficultyConfig[difficultyKey];
-          const isActive = selectedDifficulty === difficultyKey;
-          const hasPlaylists = staticPlaylists.some(
-            (pl) => pl.difficulty === difficultyKey
-          );
-
-          if (!hasPlaylists) return null;
-
-          return (
-            <motion.button
-              key={difficultyKey}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setSelectedDifficulty(difficultyKey);
-                actualSetShowAll(false);
-              }}
-              className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-colors duration-200 ${
-                isActive
-                  ? `bg-gradient-to-r ${config.color} text-white`
-                  : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200`
-              }`}
+        <div className="relative">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-3 px-6 py-4 bg-white rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 min-w-[280px]"
+          >
+            <div
+              className={`p-2 rounded-xl ${difficultyConfig[selectedDifficulty].iconBg}`}
             >
-              <div
-                className={`p-1.5 rounded-xl ${
-                  isActive
-                    ? "bg-white/20"
-                    : `${config.iconBg} ${config.iconText}`
-                }`}
-              >
-                {config.icon}
+              <div className={difficultyConfig[selectedDifficulty].iconText}>
+                {difficultyConfig[selectedDifficulty].icon}
               </div>
-              <span>{difficultyKey}</span>
-            </motion.button>
-          );
-        })}
+            </div>
+            <div className="flex-1 text-left">
+              <div className="text-sm text-gray-500">Difficulty Level</div>
+              <div className="font-semibold text-gray-900">
+                {selectedDifficulty}
+              </div>
+            </div>
+            <motion.div
+              animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="w-5 h-5 text-gray-400" />
+            </motion.div>
+          </motion.button>
+
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-full mt-2 left-0 right-0 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden z-50"
+              >
+                {["Beginner", "Intermediate", "Advanced"].map(
+                  (difficultyKey) => {
+                    const config = difficultyConfig[difficultyKey as DifficultyLevel];
+                    const hasPlaylists = staticPlaylists.some(
+                      (pl) => pl.difficulty === difficultyKey
+                    );
+                    const stats = getDifficultyStats(difficultyKey as DifficultyLevel);
+
+                    if (!hasPlaylists) return null;
+
+                    return (
+                      <motion.button
+                        key={difficultyKey}
+                        whileHover={{ backgroundColor: "#f9fafb" }}
+                        onClick={() => {
+                                                  setSelectedDifficulty(difficultyKey as DifficultyLevel);
+                                                  setIsDropdownOpen(false);
+                                                  setCurrentIndex(0);
+                                                }}
+                        className="w-full flex items-center gap-3 px-6 py-4 text-left hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className={`p-2 rounded-xl ${config.iconBg}`}>
+                          <div className={config.iconText}>{config.icon}</div>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-900">
+                            {difficultyKey}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {stats.count} courses
+                          </div>
+                        </div>
+                        {selectedDifficulty === difficultyKey && (
+                          <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-green-500 rounded-full"></div>
+                        )}
+                      </motion.button>
+                    );
+                  }
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.div>
 
-      {/* Playlists */}
       {filteredPlaylists.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -628,136 +690,142 @@ export function YouTubePlaylists({
         </motion.div>
       ) : (
         <div className="relative">
-          {/* Mobile scroll container */}
-          <div
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-x-visible lg:snap-none"
-          >
-            {displayedPlaylists.map((pl, idx) => {
-                // Skip playlists with "Prerequisite" difficulty
-                if (pl.difficulty === "Prerequisite") return null;
-                const config = difficultyConfig[pl.difficulty as DifficultyLevel];
-              return (
-                <motion.div
-                  key={pl.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * idx }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-300 hover:shadow-md flex flex-col`}
-                >
-                  <div className="relative aspect-video bg-gray-900 overflow-hidden">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}
-                      title={pl.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="p-4 md:p-5 flex-grow">
-                    <h3 className="text-sm md:text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      {pl.title}
-                      {pl.is_burmese && (
-                        <span
-                          role="img"
-                          aria-label="Burmese"
-                          className="text-xl select-none"
-                          title="Burmese"
-                        >
-                          🇲🇲
-                        </span>
-                      )}
-                    </h3>
-                    <div className="flex items-center gap-2 mb-2 text-sm md:text-sm text-gray-600">
-                      <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
-                      <span>
-                        <strong>{pl.channel}</strong>
-                      </span>
-                    </div>
-                    <div className="flex items-center text-sm md:text-sm text-gray-500 mb-4 md:mb-5">
-                      <Clock className="w-4 h-4 md:w-4 md:h-4 mr-1 text-red-500" />
-                      <span>
-                        Estimated: <strong>{pl.estDuration}</strong>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-4 md:p-5 pt-0">
-                    <a
-                      href={pl.playlistUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r ${config.color} text-white font-medium rounded-lg transition-colors duration-200 text-sm md:text-base`}
-                    >
-                      <Play className="w-3 h-3 md:w-4 md:h-4 mr-2" /> Watch
-                      Playlist{" "}
-                      <ExternalLink className="w-3 h-3 md:w-4 md:h-4 ml-2" />
-                    </a>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Centered scroll indicator (right side) */}
-          {displayedPlaylists.length > 1 && (
-            <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+          {/* Navigation Arrows */}
+          {totalSlides > 1 && (
+            <>
               <motion.button
-                onClick={scrollRight}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-red-600 rounded-full shadow-lg border border-gray-200"
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl transition-all duration-300 -ml-6"
               >
-                <div className="relative">
-                  <ChevronRight className="w-5 h-5" />
-                  <motion.div
-                    animate={{
-                      x: [0, 4, 0],
-                      opacity: [0.6, 1, 0.6],
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 1.5,
-                    }}
-                    className="absolute -right-1 -top-1 w-2 h-2 bg-red-600 rounded-full"
-                  />
-                </div>
+                <ChevronLeft className="w-5 h-5 text-gray-600" />
               </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl transition-all duration-300 -mr-6"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-600" />
+              </motion.button>
+            </>
+          )}
+
+          {/* Carousel Container */}
+          <div className="overflow-hidden rounded-3xl">
+            <motion.div
+              animate={{ x: `-${currentIndex * 100}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="flex"
+            >
+              {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                <div key={slideIndex} className="w-full flex-shrink-0">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
+                    {filteredPlaylists
+                      .slice(
+                        slideIndex * coursesPerView,
+                        (slideIndex + 1) * coursesPerView
+                      )
+                      .map((pl, idx) => {
+                        const config =
+                          difficultyConfig[pl.difficulty as DifficultyLevel];
+                        return (
+                          <motion.div
+                            key={pl.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 * idx }}
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-gray-200 flex flex-col"
+                          >
+                            <div className="relative aspect-video bg-gray-900 overflow-hidden">
+                              <iframe
+                                src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}
+                                title={pl.title}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="w-full h-full"
+                              />
+                              {pl.is_burmese && (
+                                <div className="absolute top-4 right-4">
+                                  <div className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                                    <span
+                                      role="img"
+                                      aria-label="Burmese"
+                                      className="text-lg select-none"
+                                      title="Burmese"
+                                    >
+                                      🇲🇲
+                                    </span>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="p-4 md:p-6 flex-grow">
+                              <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-3 line-clamp-2">
+                                {pl.title}
+                              </h3>
+
+                              <div className="space-y-2 mb-4 md:mb-6">
+                                <div className="flex items-center gap-2 text-sm md:text-sm text-gray-600">
+                                  <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-400" />
+                                  <span className="font-medium text-gray-800">
+                                    {pl.channel}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm md:text-sm text-gray-600">
+                                  <Clock className="w-4 h-4 md:w-4 md:h-4 text-gray-400" />
+                                  <span>
+                                    Duration:{" "}
+                                    <span className="font-medium text-gray-800">
+                                      {pl.estDuration}
+                                    </span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="p-4 md:p-6 pt-0">
+                              <a
+                                href={pl.playlistUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r ${config.color} text-white font-semibold rounded-xl transition-all duration-200 text-sm md:text-base hover:shadow-lg hover:scale-105 group`}
+                              >
+                                <Play className="w-3 h-3 md:w-4 md:h-4 mr-2 group-hover:scale-110 transition-transform" />
+                                View Course
+                                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
+                              </a>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {totalSlides > 1 && (
+            <div className="flex justify-center mt-8 gap-2">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? `bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} shadow-lg`
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
             </div>
           )}
         </div>
-      )}
-      {/* Show More/Less Button */}
-      {filteredPlaylists.length > 6 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mt-8 md:mt-3 text-center hidden sm:block"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const newState = !actualShowAll;
-              actualSetShowAll(newState);
-              if (!newState && sectionRef.current) {
-                sectionRef.current.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
-            className={`inline-flex items-center gap-2 px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} text-white font-medium rounded-2xl transition-colors duration-200 text-sm md:text-base`}
-          >
-            {actualShowAll ? (
-              <>
-                Show Less <ChevronUp className="w-4 h-4 mr-2" />
-              </>
-            ) : (
-              <>
-                See All Playlists <ChevronDown className="w-4 h-4 mr-2" />
-              </>
-            )}
-          </motion.button>
-        </motion.div>
       )}
 
       {/* Hide scrollbar for mobile scroll */}
