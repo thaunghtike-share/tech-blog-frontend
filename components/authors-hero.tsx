@@ -65,10 +65,10 @@ export function AuthorsHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Background pattern with dotted signs */}
+        {/* Background pattern with dotted signs 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-900/10 via-transparent to-orange-900/10" />
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,200,100,0.05)_50%,transparent_75%)] bg-[length:20px_20px]" />
-
+      */}
         <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
           {/* Animated bubble icon */}
           <motion.div
@@ -284,13 +284,6 @@ export function AuthorsHero() {
 
                   {/* Stats with animated dots */}
                   <div className="flex items-center justify-center gap-4 mb-6">
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <Award className="w-4 h-4" />
-                      <span className="text-sm">
-                        {author.post_count || 0}{" "}
-                        {author.post_count === 1 ? "post" : "posts"}
-                      </span>
-                    </div>
                     {/* Animated separator dots */}
                     <div className="flex gap-1">
                       {[...Array(3)].map((_, i) => (

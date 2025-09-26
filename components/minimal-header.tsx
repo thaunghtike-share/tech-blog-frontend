@@ -103,10 +103,10 @@ export function MinimalHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl shadow-2xl">
-      {/* Animated background elements */}
+      {/* Animated background elements 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-purple-900/10" />
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.1)_50%,transparent_75%)] bg-[length:4px_4px]" />
-
+      */}
       <div className="max-w-7xl mx-auto px-4 relative">
         {/* Mobile Header */}
         <div className="flex items-center justify-between md:hidden py-3 gap-3 relative z-10">

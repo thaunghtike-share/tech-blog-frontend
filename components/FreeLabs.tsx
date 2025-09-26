@@ -14,9 +14,11 @@ import {
   Globe,
   FlaskConical,
   ChevronRight,
+  ChevronLeft,
+  Star,
+  Sparkles,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface DevOpsLab {
   title: string;
@@ -42,11 +44,13 @@ const getPlatformIcon = (platform: string) => {
 
 export function FreeLabs() {
   const [labs, setLabs] = useState<DevOpsLab[]>([]);
-  const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const labsPerPage = 3;
+  const totalPages = Math.ceil(labs.length / labsPerPage);
 
   useEffect(() => {
     async function fetchLabs() {
@@ -69,176 +73,336 @@ export function FreeLabs() {
     fetchLabs();
   }, []);
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 300,
-        behavior: "smooth",
-      });
-    }
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalPages);
   };
 
-  const labsToShow = showAll ? labs : labs.slice(0, 6);
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  if (loading) {
+    return (
+      <section ref={sectionRef} className="w-full max-w-7xl mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-2xl shadow-lg">
+              <FlaskConical className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              Free DevOps Playgrounds
+            </h2>
+          </div>
+          <div className="h-1 w-32 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-full mx-auto"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={i}
+              className="animate-pulse bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 shadow-xl"
+            >
+              <div className="h-6 w-3/4 bg-gray-700 rounded mb-4"></div>
+              <div className="h-4 w-full bg-gray-700 rounded mb-2"></div>
+              <div className="h-4 w-5/6 bg-gray-700 rounded mb-4"></div>
+              <div className="flex gap-2 mb-4">
+                <div className="h-6 w-16 bg-gray-700 rounded-full"></div>
+                <div className="h-6 w-20 bg-gray-700 rounded-full"></div>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="h-4 w-24 bg-gray-700 rounded"></div>
+                <div className="h-4 w-16 bg-gray-700 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section ref={sectionRef} className="w-full max-w-7xl mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-r from-red-900/20 to-pink-900/20 border border-red-500/30 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+            <Zap className="w-16 h-16 text-red-400 mx-auto mb-4" />
+            <p className="text-red-400 mb-6 text-lg">Error: {error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all shadow-lg hover:shadow-xl"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div ref={sectionRef} className="max-w-7xl mx-auto py-12 px-4">
-      {loading && (
-        <div className="text-center mb-12">
-          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl mx-auto mb-4 animate-pulse"></div>
-          <div className="h-8 bg-gray-200 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
-          <div className="h-4 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
-        </div>
-      )}
-      {error && (
-        <div className="text-center bg-red-50 border border-red-200 rounded-3xl p-12">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Zap className="w-8 h-8 text-red-600" />
-          </div>
-          <h3 className="text-xl font-semibold text-red-800 mb-2">
-            Failed to Load Labs
-          </h3>
-          <p className="text-red-600">{error}</p>
-        </div>
-      )}
-      {!loading && !error && (
-        <>
-          <div className="text-center mb-4 sm:mb-9">
+    <section ref={sectionRef} className="w-full max-w-7xl mx-auto px-4 py-16">
+      {/* Enhanced Header with Animations */}
+      <motion.div
+        className="text-center mb-16 relative"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
+          {/* Animated bubble icon */}
+          <motion.div
+            className="relative p-4 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-full shadow-2xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+            }}
+          >
+            {/* Bubble effect */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center justify-center gap-3 mb-4"
-            >
-              <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl shadow-md">
-                <FlaskConical className="w-4 h-4 text-white" />
-              </div>
-              <span className="inline-flex items-center px-4 py-1 rounded-full text-sm sm:text-sm font-medium bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 border border-orange-200">
-                <Zap className="w-4 h-4 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> Hands-On
-                Labs
-              </span>
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-orange-700 to-amber-700 bg-clip-text text-transparent mb-4"
-            >
-              Free DevOps Labs to Practice
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"
-            >
-              Explore these practical, free labs and playgrounds to level up
-              your DevOps expertise.
-            </motion.p>
-          </div>
+              className="absolute -inset-2 bg-gradient-to-r from-orange-400/30 to-yellow-500/30 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+              }}
+            />
+            <FlaskConical className="w-10 h-10 text-white relative z-10" />
+          </motion.div>
 
-          <div className="relative">
-            {/* Mobile scroll indicator (right side) */}
-            <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Free DevOps Playgrounds
+          </h2>
+
+          {/* Chevron with dotted trail */}
+          <motion.div
+            className="flex items-center gap-1"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-2 h-2 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
+            <ChevronRight className="w-6 h-6 text-orange-400 ml-2" />
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="h-1 w-32 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-full mx-auto relative"
+          initial={{ width: 0 }}
+          animate={{ width: 128 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          {/* Animated dots on the line */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
+            animate={{ x: [0, 120, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+
+        <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto relative z-10">
+          Explore these practical, free labs and playgrounds to level up your
+          DevOps expertise
+        </p>
+      </motion.div>
+
+      {labs.length === 0 ? (
+        <div className="text-center py-16">
+          <div className="inline-flex items-center justify-center bg-yellow-900/20 rounded-full p-6 mb-6 backdrop-blur-sm border border-yellow-500/30">
+            <BookOpen className="w-12 h-12 text-yellow-400" />
+          </div>
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            No playgrounds available
+          </h3>
+          <p className="text-gray-400 mb-8 text-lg">
+            Check back later for featured labs
+          </p>
+        </div>
+      ) : (
+        <div className="relative">
+          {totalPages > 1 && (
+            <>
               <motion.button
-                onClick={scrollRight}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-orange-600 rounded-full shadow-lg border border-gray-200"
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-orange-500/50 transition-all duration-300 -ml-6"
               >
-                <div className="relative">
-                  <ChevronRight className="w-5 h-5" />
-                  <motion.div
-                    animate={{
-                      x: [0, 4, 0],
-                      opacity: [0.6, 1, 0.6],
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 1.5,
-                    }}
-                    className="absolute -right-1 -top-1 w-2 h-2 bg-orange-600 rounded-full"
-                  />
-                </div>
+                <ChevronLeft className="w-5 h-5 text-orange-400" />
               </motion.button>
-            </div>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-orange-500/50 transition-all duration-300 -mr-6"
+              >
+                <ChevronRight className="w-5 h-5 text-orange-400" />
+              </motion.button>
+            </>
+          )}
 
-            {/* Labs container */}
-            <div
-              ref={scrollContainerRef}
-              className="flex overflow-x-auto hide-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-4"
+          <div className="overflow-hidden rounded-3xl">
+            <motion.div
+              animate={{ x: `-${currentSlide * 100}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="flex"
             >
-              {labsToShow.map((lab, idx) => {
-                const platformIcon = getPlatformIcon(lab.platform);
-                return (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    whileHover={{ y: -5 }}
-                    className="min-w-[23.5rem] sm:min-w-0 bg-white rounded-xl shadow-md border-l-4 border-orange-500 overflow-hidden transition-all duration-300 hover:shadow-lg group flex flex-col"
-                  >
-                    <div className="p-5 flex flex-col h-full">
-                      <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
-                        {platformIcon}
-                      </div>
-                      <h3 className="text-lg sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
-                        {lab.title}
-                      </h3>
-                      <p className="text-gray-700 flex-grow text-base sm:text-base mb-4">
-                        {lab.description}
-                      </p>
-                      {lab.difficulty && (
-                        <div className="mt-auto text-base sm:text-base text-gray-600">
-                          <strong>Difficulty:</strong> {lab.difficulty}
-                        </div>
-                      )}
-                      <a
-                        href={lab.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-6 w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn text-sm sm:text-base"
-                      >
-                        <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-2" /> Launch
-                        Lab
-                        <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
-                      </a>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
+              {Array.from({ length: totalPages }).map((_, slideIndex) => (
+                <div key={slideIndex} className="w-full flex-shrink-0">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-2">
+                    {labs
+                      .slice(
+                        slideIndex * labsPerPage,
+                        (slideIndex + 1) * labsPerPage
+                      )
+                      .map((lab, idx) => {
+                        const platformIcon = getPlatformIcon(lab.platform);
+                        return (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                            className="group relative overflow-hidden"
+                          >
+                            {/* Animated background glow */}
+                            <motion.div
+                              className="absolute -inset-1 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                              animate={{
+                                scale: [1, 1.05, 1],
+                              }}
+                              transition={{
+                                duration: 4,
+                                repeat: Number.POSITIVE_INFINITY,
+                                repeatType: "reverse",
+                              }}
+                            />
+
+                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+                              {/* Platform Icon */}
+                              <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
+                                {platformIcon}
+                              </div>
+
+                              {/* Lab Title */}
+                              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors line-clamp-2">
+                                {lab.title}
+                              </h3>
+
+                              {/* Lab Description */}
+                              <p className="text-gray-400 mb-4 leading-relaxed line-clamp-3 flex-grow">
+                                {lab.description}
+                              </p>
+
+                              {/* Difficulty */}
+                              {lab.difficulty && (
+                                <div className="flex items-center gap-2 mb-4">
+                                  <div className="flex items-center gap-2 px-3 py-2 bg-orange-900/20 rounded-full border border-orange-500/30">
+                                    <div className="p-1 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full">
+                                      <Star className="w-3 h-3 text-white" />
+                                    </div>
+                                    <span className="font-medium text-orange-400 text-sm">
+                                      Difficulty: {lab.difficulty}
+                                    </span>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Platform Info */}
+                              <div className="flex items-center gap-2 mb-4 text-sm text-gray-400">
+                                <span>Platform:</span>
+                                <span className="text-orange-400 font-medium">
+                                  {lab.platform}
+                                </span>
+                              </div>
+
+                              {/* Launch Button */}
+                              <div className="mt-auto pt-4">
+                                <a
+                                  href={lab.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-orange-400/30 group/btn"
+                                >
+                                  <motion.div
+                                    animate={{ rotate: [0, 360] }}
+                                    transition={{
+                                      duration: 3,
+                                      repeat: Number.POSITIVE_INFINITY,
+                                      ease: "linear",
+                                    }}
+                                    className="mr-2"
+                                  >
+                                    <Play className="w-4 h-4" />
+                                  </motion.div>
+                                  Launch Playground
+                                  <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                                </a>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
           </div>
 
-          {labs.length > 6 && (
-            <div className="mt-8 sm:mt-10 text-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  const newState = !showAll;
-                  setShowAll(newState);
-                  if (!newState && sectionRef.current) {
-                    sectionRef.current.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                className="inline-flex items-center px-5 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
-              >
-                {showAll ? "See Less" : `See More Labs`}
-              </motion.button>
-            </div>
+          {/* Pagination Dots */}
+          {totalPages > 1 && (
+            <motion.div
+              className="flex justify-center mt-8 gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentSlide
+                      ? "bg-gradient-to-r from-orange-500 to-yellow-600 shadow-lg"
+                      : "bg-gray-600 hover:bg-gray-500"
+                  }`}
+                />
+              ))}
+            </motion.div>
           )}
-        </>
+        </div>
       )}
-
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-    </div>
+    </section>
   );
 }

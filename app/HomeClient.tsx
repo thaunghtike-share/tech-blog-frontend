@@ -175,36 +175,31 @@ export default function HomeClient() {
 
       <MinimalHeader />
 
-      <main className="relative z-10">
+      <main className="relative -mt-4 z-10">
         <section>
           <DevOpsCyclingHero />
         </section>
 
         {/* Featured Articles Section */}
-        <section className="py-8">
+        <section className="-mt-18">
           <FeaturedArticlesPage />
         </section>
 
-        {/* Services Hero Section */}
-        <section className="py-8">
-          <ServicesHero />
-        </section>
-
         {/* Authors Hero Section */}
-        <section className="py-8">
+        <section className="-mt-18">
           <AuthorsHero />
         </section>
 
         {/* Existing sections with updated spacing */}
-        <section id="devops-roadmap" className="">
+        <section id="devops-roadmap" className="-mt-18">
           <YouTubePlaylists />
         </section>
 
-        <section id="free-udemy" className="">
+        <section id="free-udemy" className="-mt-15">
           <TopUdemyCourses />
         </section>
 
-        <section id="free-labs" className="">
+        <section id="free-labs" className="-mt-15">
           <FreeLabs />
         </section>
 

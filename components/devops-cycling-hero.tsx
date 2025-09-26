@@ -165,10 +165,10 @@ const DevOpsCyclingHero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Background pattern with dotted signs */}
+        {/* Background pattern with dotted signs 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-purple-900/10" />
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.05)_50%,transparent_75%)] bg-[length:20px_20px]" />
-
+        */}
         <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
           {/* Animated bubble icon */}
           <motion.div
@@ -467,14 +467,14 @@ const DevOpsCyclingHero = () => {
           </div>
 
           {/* Title with Animation - reduced font size */}
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               {currentSlideData.title}
             </span>
           </h1>
 
           {/* Description - reduced font size */}
-          <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto animate-fade-in">
+          <p className="text-lg md:text-lg text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto animate-fade-in">
             {currentSlideData.description}
           </p>
 

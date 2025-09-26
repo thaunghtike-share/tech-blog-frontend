@@ -69,10 +69,10 @@ export default function Intro() {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 overflow-hidden">
-      {/* Background Pattern - matching header */}
+      {/* Background Pattern - matching header 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-purple-900/10" />
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.1)_50%,transparent_75%)] bg-[length:4px_4px]" />
-
+      */}
       {/* Floating DevOps Tools */}
       {devopsTools.map((tool, index) => (
         <FloatingTool

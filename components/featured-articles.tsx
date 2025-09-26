@@ -10,6 +10,7 @@ import {
   AlertTriangle,
   TagIcon,
   Eye,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -203,38 +204,91 @@ export function FeaturedArticlesPage() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-16">
+      {/* Updated Header with enhanced animations */}
       <motion.div
-        className="text-center mb-16"
+        className="text-center mb-16 relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center justify-center gap-4 mb-6">
+        <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
+          {/* Enhanced animated bubble icon */}
           <motion.div
-            className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg"
+            className="relative p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-2xl"
             animate={{
-              rotate: [0, 5, -5, 0],
-              scale: [1, 1.05, 1],
+              scale: [1, 1.1, 1],
+              rotate: [0, 10, -10, 0],
             }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               repeat: Number.POSITIVE_INFINITY,
               repeatType: "reverse",
             }}
           >
-            <Sparkles className="w-8 h-8 text-white" />
+            {/* Bubble effect */}
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+              }}
+            />
+            <Sparkles className="w-10 h-10 text-white relative z-10" />
           </motion.div>
+
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Featured Articles
           </h2>
+
+          {/* Chevron with dotted trail */}
+          <motion.div
+            className="flex items-center gap-1"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
+            <ChevronRight className="w-6 h-6 text-blue-400 ml-2" />
+          </motion.div>
         </div>
+
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto"
+          className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto relative"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        ></motion.div>
-        <p className="text-gray-400 mt-4 text-lg">
+        >
+          {/* Animated dots on the line */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
+            animate={{ x: [0, 120, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+
+        <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto relative z-10">
           Discover our most popular and trending content
         </p>
       </motion.div>
@@ -269,101 +323,126 @@ export function FeaturedArticlesPage() {
                       duration: 0.5,
                       delay: index * 0.1,
                     }}
-                    className="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2"
+                    className="group relative overflow-hidden"
                   >
-                    {/* Title */}
-                    <Link
-                      href={`/articles/${article.slug}`}
-                      className="group/link block mb-4"
-                    >
-                      <h3 className="text-xl font-bold text-white group-hover/link:text-blue-400 transition-colors line-clamp-2 leading-tight">
-                        {article.title}
-                      </h3>
-                    </Link>
+                    {/* Animated background glow */}
+                    <motion.div
+                      className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                      animate={{
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Number.POSITIVE_INFINITY,
+                        repeatType: "reverse",
+                      }}
+                    />
 
-                    {/* Author and Date */}
-                    <div className="flex items-center gap-3 mb-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        {author?.avatar ? (
-                          <img
-                            src={author.avatar || "/placeholder.svg"}
-                            alt={author.name}
-                            className="w-6 h-6 rounded-full object-cover border-2 border-gray-600"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                            <User className="w-4 h-4 text-white" />
-                          </div>
-                        )}
-                        <Link
-                          href={`/authors/${
-                            author?.username || slugify(author?.name || "")
-                          }`}
-                          className="font-medium text-gray-300 hover:text-blue-400 transition-colors"
-                        >
-                          {author?.name || `Author ${article.author}`}
-                        </Link>
-                      </div>
-                      <div className="flex items-center gap-1 text-gray-500">
-                        <Calendar className="w-4 h-4" />
-                        <span>{formatDate(article.published_at)}</span>
-                      </div>
-                    </div>
-
-                    {/* Category and Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {category && (
-                        <Link
-                          href={`/categories/${category.slug}`}
-                          className="flex items-center gap-1 text-yellow-400 bg-yellow-900/20 border border-yellow-500/30 px-3 py-1 rounded-full text-sm font-medium hover:bg-yellow-900/30 transition-colors"
-                        >
-                          <Folder className="w-4 h-4" />
-                          <span>{category.name.split(" ")[0]}</span>
-                        </Link>
-                      )}
-                      {article.tags.slice(0, 2).map((tagId) => {
-                        const tag = getTagById(tagId);
-                        if (!tag) return null;
-                        return (
-                          <Link
-                            key={tag.id}
-                            href={`/articles?tag=${tag.slug}`}
-                            className="flex items-center gap-1 text-blue-400 bg-blue-900/20 border border-blue-500/30 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-900/30 transition-colors"
-                          >
-                            <TagIcon className="w-4 h-4" />
-                            <span>{tag.name.split(" ")[0]}</span>
-                          </Link>
-                        );
-                      })}
-                    </div>
-
-                    {/* Content */}
-                    <div className="mb-6">
-                      <p className="text-gray-400 line-clamp-3 text-sm leading-relaxed">
-                        {truncate(stripMarkdown(article.content), 150)}
-                      </p>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="pt-4 border-t border-gray-700 flex items-center justify-between">
+                    <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2">
+                      {/* Title */}
                       <Link
                         href={`/articles/${article.slug}`}
-                        className="text-sm text-blue-400 flex items-center gap-2 group-hover:gap-3 font-medium transition-all hover:text-blue-300"
+                        className="group/link block mb-4"
                       >
-                        Read more
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <h3 className="text-xl font-bold text-white group-hover/link:text-blue-400 transition-colors line-clamp-2 leading-tight">
+                          {article.title}
+                        </h3>
                       </Link>
-                      <div className="flex items-center gap-4 text-sm text-gray-500">
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          <span>{calculateReadTime(article.content)} read</span>
+
+                      {/* Author and Date */}
+                      <div className="flex items-center gap-3 mb-4 text-sm">
+                        <div className="flex items-center gap-2">
+                          {author?.avatar ? (
+                            <img
+                              src={author.avatar || "/placeholder.svg"}
+                              alt={author.name}
+                              className="w-6 h-6 rounded-full object-cover border-2 border-gray-600"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                              <User className="w-4 h-4 text-white" />
+                            </div>
+                          )}
+                          <Link
+                            href={`/authors/${
+                              author?.username || slugify(author?.name || "")
+                            }`}
+                            className="font-medium text-gray-300 hover:text-blue-400 transition-colors"
+                          >
+                            {author?.name || `Author ${article.author}`}
+                          </Link>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Eye className="w-4 h-4" />
-                          <span className="font-medium">
-                            {article.read_count?.toLocaleString() || 0}
-                          </span>
+                        <div className="flex items-center gap-1 text-gray-500">
+                          <Calendar className="w-4 h-4" />
+                          <span>{formatDate(article.published_at)}</span>
+                        </div>
+                      </div>
+
+                      {/* Category and Tags */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {category && (
+                          <Link
+                            href={`/categories/${category.slug}`}
+                            className="flex items-center gap-1 text-yellow-400 bg-yellow-900/20 border border-yellow-500/30 px-3 py-1 rounded-full text-sm font-medium hover:bg-yellow-900/30 transition-colors"
+                          >
+                            <Folder className="w-4 h-4" />
+                            <span>{category.name.split(" ")[0]}</span>
+                          </Link>
+                        )}
+                        {article.tags.slice(0, 2).map((tagId) => {
+                          const tag = getTagById(tagId);
+                          if (!tag) return null;
+                          return (
+                            <Link
+                              key={tag.id}
+                              href={`/articles?tag=${tag.slug}`}
+                              className="flex items-center gap-1 text-blue-400 bg-blue-900/20 border border-blue-500/30 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-900/30 transition-colors"
+                            >
+                              <TagIcon className="w-4 h-4" />
+                              <span>{tag.name.split(" ")[0]}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+
+                      {/* Content */}
+                      <div className="mb-6">
+                        <p className="text-gray-400 line-clamp-3 text-sm leading-relaxed">
+                          {truncate(stripMarkdown(article.content), 150)}
+                        </p>
+                      </div>
+
+                      {/* Footer */}
+                      <div className="pt-4 border-t border-gray-700 flex items-center justify-between">
+                        <Link
+                          href={`/articles/${article.slug}`}
+                          className="text-sm text-blue-400 flex items-center gap-2 group-hover:gap-3 font-medium transition-all hover:text-blue-300"
+                        >
+                          Read more
+                          <motion.div
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Number.POSITIVE_INFINITY,
+                            }}
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </motion.div>
+                        </Link>
+                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            <span>
+                              {calculateReadTime(article.content)} read
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Eye className="w-4 h-4" />
+                            <span className="font-medium">
+                              {article.read_count?.toLocaleString() || 0}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -373,23 +452,50 @@ export function FeaturedArticlesPage() {
             </AnimatePresence>
           </div>
 
-          {articles.length > 6 && (
-            <motion.div
-              className="text-center mt-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+          {/* Enhanced "See All Articles" button with animations */}
+          <motion.div
+            className="text-center mt-12 relative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            {/* Dotted background pattern */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 bg-blue-400/30 rounded-full mx-4"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.3, 0.8, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Number.POSITIVE_INFINITY,
+                    delay: i * 0.3,
+                  }}
+                />
+              ))}
+            </div>
+
+            <Link
+              href="/articles"
+              className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-400/30 z-10"
             >
-              <Link
-                href="/articles"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-400/30"
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{
+                  duration: 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                }}
               >
                 <Sparkles className="w-5 h-5" />
-                View All Articles
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </motion.div>
-          )}
+              </motion.div>
+              See All Articles
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </motion.div>
         </div>
       )}
     </div>
