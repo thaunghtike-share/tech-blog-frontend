@@ -102,7 +102,7 @@ export function MinimalHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl border-b border-gray-700 shadow-2xl">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl shadow-2xl">
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-purple-900/10" />
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.1)_50%,transparent_75%)] bg-[length:4px_4px]" />
@@ -437,10 +437,16 @@ export function MinimalHeader() {
                     YouTube Tutorials
                   </Link>
                   <Link
-                    href="/learn-devops-on-udemy"
+                    href="/free-online-courses"
                     className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
                   >
-                    Udemy Course
+                    Free Online Courses
+                  </Link>
+                  <Link
+                    href="/recommended-paid-courses"
+                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                  >
+                    Recommended Paid Courses
                   </Link>
                   <Link
                     href="/free-labs"
