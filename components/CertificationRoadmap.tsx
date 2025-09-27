@@ -15,14 +15,17 @@ import {
   Rocket,
   Shield,
   ArrowRight,
-  Sparkles,
   TrendingUp,
   BadgeCheck,
   Github,
   ChevronRight,
+  ChevronLeft,
+  Play,
+  ExternalLink,
+  ChevronDown,
+  Users,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CertificationItem {
   title: string;
@@ -81,7 +84,7 @@ const certifications: CertificationItem[] = [
   },
   {
     title: "GitHub Foundations",
-    icon: <Github className="w-6 h-6" />, // Assuming you have a GitHub icon component
+    icon: <Github className="w-6 h-6" />,
     organization: "GitHub",
     examDetails: "45 questions | 90 minutes | $99",
     preparationTime: "2-3 weeks",
@@ -368,317 +371,477 @@ const certifications: CertificationItem[] = [
 
 const difficultyConfig = {
   Beginner: {
-    gradient: "from-green-500 to-emerald-600",
-    bgGradient: "from-green-50 to-emerald-50",
-    textColor: "text-green-800",
-    icon: <Rocket className="w-5 h-5" />,
-    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
+    color: "from-yellow-500 to-orange-600",
+    text: "text-yellow-400",
+    border: "border-yellow-500",
+    iconBg: "bg-gradient-to-r from-yellow-500 to-orange-600",
     iconText: "text-white",
-    border: "border-green-500",
+    icon: <Rocket className="w-5 h-5" />,
   },
   Intermediate: {
-    gradient: "from-orange-500 to-yellow-600", // Changed from blue/indigo
-    bgGradient: "from-orange-50 to-yellow-50", // Changed from blue/indigo
-    textColor: "text-orange-800", // Changed from blue
-    icon: <Gauge className="w-5 h-5" />,
-    iconBg: "bg-gradient-to-r from-orange-500 to-yellow-600", // Changed from blue/indigo
+    color: "from-orange-500 to-red-600",
+    text: "text-orange-400",
+    border: "border-orange-500",
+    iconBg: "bg-gradient-to-r from-orange-500 to-red-600",
     iconText: "text-white",
-    border: "border-orange-500", // Changed from blue
+    icon: <Gauge className="w-5 h-5" />,
   },
   Advanced: {
-    gradient: "from-purple-500 to-pink-600",
-    bgGradient: "from-purple-50 to-pink-50",
-    textColor: "text-purple-800",
-    icon: <Shield className="w-5 h-5" />,
-    iconBg: "bg-gradient-to-r from-purple-500 to-pink-600",
+    color: "from-red-500 to-pink-600",
+    text: "text-red-400",
+    border: "border-red-500",
+    iconBg: "bg-gradient-to-r from-red-500 to-pink-600",
     iconText: "text-white",
-    border: "border-purple-500",
+    icon: <Shield className="w-5 h-5" />,
   },
 };
 
-export function CertificationRoadmap() {
-  const [filter, setFilter] = useState<
-    "Beginner" | "Intermediate" | "Advanced"
-  >("Beginner");
-  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>(
-    {}
-  );
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+type DifficultyLevel = keyof typeof difficultyConfig;
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 300,
-        behavior: "smooth",
-      });
-    }
-  };
+export function CertificationRoadmap() {
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<DifficultyLevel>("Beginner");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const coursesPerView = 3;
 
   const filteredCerts = certifications.filter(
-    (cert) => cert.difficulty === filter
+    (cert) => cert.difficulty === selectedDifficulty
   );
 
-  const toggleTopics = (title: string) => {
-    setExpandedTopics((prev) => ({
-      ...prev,
-      [title]: !prev[title],
-    }));
+  const totalSlides = Math.ceil(filteredCerts.length / coursesPerView);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const getCurrentCourses = () => {
+    const startIndex = currentIndex * coursesPerView;
+    return filteredCerts.slice(startIndex, startIndex + coursesPerView);
+  };
+
+  const getDifficultyStats = (difficulty: DifficultyLevel) => {
+    const certs = certifications.filter((cert) => cert.difficulty === difficulty);
+    const totalWeeks = certs.reduce((acc, cert) => {
+      const weeks = Number.parseInt(cert.preparationTime.split(' ')[0]) || 1;
+      return acc + weeks;
+    }, 0);
+    return {
+      count: certs.length,
+      totalWeeks,
+      avgWeeks: Math.round(totalWeeks / certs.length),
+    };
   };
 
   return (
-    <div className="mt-22 sm:mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8 sm:mb-6">
+    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+      {/* Header with matching YouTube playlists theme */}
+      <div className="text-center mb-6 md:mb-6 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-4 mb-4 md:mb-4 relative z-10"
+        >
+          {/* Animated bubble icon matching YouTube playlists */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-3 sm:mb-4"
+            className="relative p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full shadow-2xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+            }}
           >
-            <div className="p-2 sm:p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg">
-              <BadgeCheck className="w-4 h-4 sm:w-4 sm:h-4 text-white" />
-            </div>
-            <span className="inline-flex items-center px-3 sm:px-4 py-1 rounded-full text-sm sm:text-sm font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 border border-emerald-200">
-              <Sparkles className="w-4 h-4 sm:w-4 sm:h-4 mr-1 sm:mr-2" />{" "}
-              Certification
-            </span>
+            {/* Bubble effect */}
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-yellow-400/30 to-orange-500/30 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+              }}
+            />
+            <Award className="w-10 h-10 text-white relative z-10" />
           </motion.div>
+
+          {/* Title text beside the icon */}
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-yellow-800 to-orange-800 bg-clip-text text-transparent mb-2 sm:mb-4"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
           >
             DevOps Certification Roadmap
           </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"
-          >
-            Validate your skills with industry-recognized certifications
-            that showcase your devops expertise.
-          </motion.p>
-        </div>
 
-        {/* Filter Buttons */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="flex overflow-x-auto flex-nowrap justify-start sm:justify-center gap-3 mb-4 sm:mb-6 pb-4"
-        >
-          {["Beginner", "Intermediate", "Advanced"].map((level, index) => {
-            const config =
-              difficultyConfig[level as keyof typeof difficultyConfig];
-            const isActive = filter === level;
-            return (
-              <motion.button
-                key={level}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                onClick={() => setFilter(level as any)}
-                className={`group relative flex-shrink-0 flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-sm font-medium transition-all duration-300 shadow-lg ${
-                  isActive
-                    ? `bg-gradient-to-r ${config.gradient} text-white scale-105`
-                    : `bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md`
-                }`}
-              >
-                <div
-                  className={`p-1.5 rounded-xl ${
-                    isActive
-                      ? "bg-white/20"
-                      : `${config.iconBg} ${config.iconText}`
-                  }`}
-                >
-                  {config.icon}
-                </div>
-                <span className={isActive ? "text-white" : "text-gray-800"}>
-                  {level}
-                </span>
-                <span
-                  className={`text-xs ${
-                    isActive ? "text-white/80" : "text-gray-500"
-                  }`}
-                >
-                  {/* Removed cert count as it's not directly used in the design */}
-                </span>
-                {isActive && (
-                  <motion.div
-                    layoutId="active-filter"
-                    className="absolute inset-0 rounded-full border-2 border-white/30"
-                  />
-                )}
-              </motion.button>
-            );
-          })}
+          {/* Chevron with dotted trail matching YouTube playlists */}
+          <motion.div
+            className="flex items-center gap-1"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 ml-2" />
+          </motion.div>
         </motion.div>
 
-        {/* Mobile scroll indicator */}
-        <div className="relative">
-          <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
-            <motion.button
-              onClick={scrollRight}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-orange-600 rounded-full shadow-lg border border-gray-200"
-            >
-              <div className="relative">
-                <ChevronRight className="w-5 h-5" />
-                <motion.div
-                  animate={{
-                    x: [0, 4, 0],
-                    opacity: [0.6, 1, 0.6],
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.5,
-                  }}
-                  className="absolute -right-1 -top-1 w-2 h-2 bg-orange-600 rounded-full"
-                />
-              </div>
-            </motion.button>
-          </div>
+        {/* Animated line matching YouTube playlists */}
+        <motion.div
+          className="h-1 w-24 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full mx-auto relative mb-4"
+          initial={{ width: 0 }}
+          animate={{ width: 96 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
+            animate={{ x: [0, 90, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
 
-          {/* Cards container with scroll ref */}
-          <div
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-4 lg:grid lg:grid-cols-3 lg:gap-8 hide-scrollbar"
-          >
-            {filteredCerts.length > 0 ? (
-              filteredCerts.map((cert, index) => {
-                const config = difficultyConfig[cert.difficulty];
-                const isTopicsExpanded = expandedTopics[cert.title];
-                const topicsToShow = isTopicsExpanded
-                  ? cert.topics
-                  : cert.topics.slice(0, 4);
-
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className={`flex-shrink-0 w-[85vw] snap-center sm:w-auto group bg-white rounded-xl shadow-lg border-l-4 ${config.border} overflow-hidden transition-all duration-500 flex flex-col`}
-                  >
-                    <div className="p-5 relative">
-                      <div className="absolute top-3 right-3">
-                        {cert.recommended && (
-                          <Badge className="px-3 py-1 bg-yellow-400 text-yellow-900 text-sm font-medium rounded-full shadow-sm border border-yellow-500">
-                            <TrendingUp className="w-3 h-3 mr-1" /> Recommended
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg inline-flex mb-4">
-                        {cert.icon}
-                      </div>
-                      <h3 className="text-lg font-bold mb-2 leading-tight text-gray-900 group-hover:text-orange-700 transition-colors">
-                        {cert.title}
-                      </h3>
-                      <p className="text-gray-700 text-base font-medium">
-                        {cert.organization}
-                      </p>
-                    </div>
-                    <div className="p-5 flex-grow">
-                      <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-2 text-base text-gray-600">
-                          <Clock className="w-5 h-5" />
-                          <span className="font-medium">
-                            {cert.preparationTime}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="mb-6">
-                        <p className="text-base text-gray-600 mb-3 font-medium">
-                          {cert.examDetails}
-                        </p>
-                      </div>
-                      <div className="mb-8">
-                        <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
-                          <BookOpen className="w-4 h-4" /> Topics Covered
-                        </h4>
-                        <ul className="space-y-3">
-                          {topicsToShow.map((topic, i) => (
-                            <motion.li
-                              key={i}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.05 }}
-                              className="flex items-start group/topic"
-                            >
-                              <div
-                                className={`flex-shrink-0 mt-0.5 mr-3 w-4 h-4 ${config.iconBg} rounded-full flex items-center justify-center shadow-sm`}
-                              >
-                                <Check
-                                  className={`w-3 h-3 ${config.iconText}`}
-                                />
-                              </div>
-                              <span className="text-base text-gray-700 font-medium leading-tight group-hover/topic:text-blue-600 transition-colors">
-                                {topic}
-                              </span>
-                            </motion.li>
-                          ))}
-                        </ul>
-                        {cert.topics.length > 4 && (
-                          <p className="text-base text-gray-500 mt-3">
-                            <button
-                              onClick={() => toggleTopics(cert.title)}
-                              className="font-medium text-blue-600 cursor-pointer hover:underline focus:outline-none"
-                            >
-                              {isTopicsExpanded
-                                ? "See less topics"
-                                : "See more topics"}
-                            </button>
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="p-5 pt-0">
-                      <a
-                        href={cert.examLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`w-full inline-flex items-center justify-between px-6 py-3 bg-gradient-to-r ${config.gradient} text-white rounded-lg text-base font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.01] group/btn`}
-                      >
-                        <span>View Exam Details</span>
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                      </a>
-                    </div>
-                  </motion.div>
-                );
-              })
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-16"
-              >
-                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <GraduationCap className="w-10 h-10 text-gray-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">
-                  No certifications found
-                </h3>
-                <p className="text-gray-500">
-                  Select a difficulty level to view available certifications.
-                </p>
-              </motion.div>
-            )}
-          </div>
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto relative z-10"
+        >
+          Validate your skills with industry-recognized certifications that showcase your DevOps expertise.
+        </motion.p>
       </div>
 
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-    </div>
+      {/* Difficulty Dropdown */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="mb-4 md:mb-8 flex justify-center"
+      >
+        <div className="relative">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-3 px-6 py-4 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 min-w-[280px]"
+          >
+            <div
+              className={`p-2 rounded-xl ${difficultyConfig[selectedDifficulty].iconBg} shadow-lg`}
+            >
+              <div className={difficultyConfig[selectedDifficulty].iconText}>
+                {difficultyConfig[selectedDifficulty].icon}
+              </div>
+            </div>
+            <div className="flex-1 text-left">
+              <div className="text-sm text-gray-400">Difficulty Level</div>
+              <div
+                className={`font-semibold ${difficultyConfig[selectedDifficulty].text}`}
+              >
+                {selectedDifficulty}
+              </div>
+            </div>
+            <motion.div
+              animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="w-5 h-5 text-gray-400" />
+            </motion.div>
+          </motion.button>
+
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-full mt-2 left-0 right-0 bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700 overflow-hidden z-50"
+              >
+                {(
+                  ["Beginner", "Intermediate", "Advanced"] as DifficultyLevel[]
+                ).map((difficultyKey) => {
+                  const config = difficultyConfig[difficultyKey];
+                  const hasCerts = certifications.some(
+                    (cert) => cert.difficulty === difficultyKey
+                  );
+                  const stats = getDifficultyStats(difficultyKey);
+
+                  if (!hasCerts) return null;
+
+                  return (
+                    <motion.button
+                      key={difficultyKey}
+                      whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+                      onClick={() => {
+                        setSelectedDifficulty(difficultyKey);
+                        setIsDropdownOpen(false);
+                        setCurrentIndex(0);
+                      }}
+                      className="w-full flex items-center gap-3 px-6 py-4 text-left hover:bg-gray-700/50 transition-colors duration-200 border-b border-gray-700 last:border-b-0"
+                    >
+                      <div
+                        className={`p-2 rounded-xl ${config.iconBg} shadow-lg`}
+                      >
+                        <div className={config.iconText}>{config.icon}</div>
+                      </div>
+                      <div className="flex-1">
+                        <div className={`font-semibold ${config.text}`}>
+                          {difficultyKey}
+                        </div>
+                        <div className="text-sm text-gray-400">
+                          {stats.count} certifications • {stats.avgWeeks} weeks avg
+                        </div>
+                      </div>
+                      {selectedDifficulty === difficultyKey && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2 h-2 bg-gradient-to-r from-green-400 to-green-500 rounded-full shadow-lg"
+                        />
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+
+      {filteredCerts.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-center py-8 md:py-12"
+        >
+          <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center mb-3 md:mb-4 backdrop-blur-sm border border-gray-600">
+            <Award className="w-6 h-6 md:w-8 md:h-8 text-gray-400" />
+          </div>
+          <h4 className="text-gray-300 font-medium text-base md:text-lg mb-2">
+            No certifications available for this difficulty
+          </h4>
+          <p className="text-gray-500 text-sm md:text-base">
+            Please select another difficulty or check back later.
+          </p>
+        </motion.div>
+      ) : (
+        <div className="relative">
+          {/* Navigation Arrows */}
+          {totalSlides > 1 && (
+            <>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -ml-6"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-300" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -mr-6"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-300" />
+              </motion.button>
+            </>
+          )}
+
+          {/* Carousel Container */}
+          <div className="overflow-hidden rounded-3xl">
+            <motion.div
+              animate={{ x: `-${currentIndex * 100}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="flex"
+            >
+              {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                <div key={slideIndex} className="w-full flex-shrink-0">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
+                    {filteredCerts
+                      .slice(
+                        slideIndex * coursesPerView,
+                        (slideIndex + 1) * coursesPerView
+                      )
+                      .map((cert, idx) => {
+                        const config = difficultyConfig[cert.difficulty];
+                        return (
+                          <motion.div
+                            key={cert.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 * idx }}
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="group relative overflow-hidden"
+                          >
+                            {/* Background glow effect */}
+                            <motion.div
+                              className="absolute -inset-1 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                              animate={{
+                                scale: [1, 1.05, 1],
+                              }}
+                              transition={{
+                                duration: 4,
+                                repeat: Number.POSITIVE_INFINITY,
+                                repeatType: "reverse",
+                              }}
+                            />
+
+                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-yellow-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full">
+                              {/* Header Section */}
+                              <div className="p-6 pb-4">
+                                <div className="flex items-start justify-between mb-4">
+                                  <div className={`p-3 rounded-xl ${config.iconBg} shadow-lg`}>
+                                    {cert.icon}
+                                  </div>
+                                  {cert.recommended && (
+                                    <div className="px-3 py-1 bg-yellow-400 text-yellow-900 text-sm font-medium rounded-full shadow-sm border border-yellow-500">
+                                      <TrendingUp className="w-3 h-3 mr-1 inline" />
+                                      Recommended
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                <h3 className="text-lg md:text-xl font-bold text-white mb-2 line-clamp-2 group-hover:text-yellow-400 transition-colors">
+                                  {cert.title}
+                                </h3>
+                                
+                                <div className="flex items-center gap-2 text-sm text-gray-400">
+                                  <Users className="w-4 h-4 text-gray-500" />
+                                  <span className="font-medium text-gray-300">
+                                    {cert.organization}
+                                  </span>
+                                </div>
+                              </div>
+
+                              {/* Content Section */}
+                              <div className="p-6 pt-0 flex-grow">
+                                <div className="space-y-3 mb-4">
+                                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                                    <Clock className="w-4 h-4 text-gray-500" />
+                                    <span>
+                                      Preparation:{" "}
+                                      <span className="font-medium text-gray-300">
+                                        {cert.preparationTime}
+                                      </span>
+                                    </span>
+                                  </div>
+                                  <div className="text-sm text-gray-400">
+                                    <span className="font-medium text-gray-300">
+                                      {cert.examDetails}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <div className="mb-4">
+                                  <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <BookOpen className="w-4 h-4" /> 
+                                    Key Topics
+                                  </h4>
+                                  <ul className="space-y-2">
+                                    {cert.topics.slice(0, 4).map((topic, i) => (
+                                      <motion.li
+                                        key={i}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                        className="flex items-start group/topic"
+                                      >
+                                        <div
+                                          className={`flex-shrink-0 mt-0.5 mr-3 w-4 h-4 ${config.iconBg} rounded-full flex items-center justify-center shadow-sm`}
+                                        >
+                                          <Check className="w-3 h-3 text-white" />
+                                        </div>
+                                        <span className="text-sm text-gray-300 font-medium leading-tight">
+                                          {topic}
+                                        </span>
+                                      </motion.li>
+                                    ))}
+                                  </ul>
+                                  {cert.topics.length > 4 && (
+                                    <p className="text-sm text-gray-500 mt-2">
+                                      +{cert.topics.length - 4} more topics
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Footer Section */}
+                              <div className="p-6 pt-0">
+                                <a
+                                  href={cert.examLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={`w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r ${config.color} text-white font-semibold rounded-xl transition-all duration-200 text-sm md:text-base hover:shadow-lg hover:scale-105 group border border-transparent hover:border-white/20`}
+                                >
+                                  <ExternalLink className="w-3 h-3 md:w-4 md:h-4 mr-2 group-hover:scale-110 transition-transform" />
+                                  View Exam Details
+                                  <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
+                                </a>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Slide Indicators */}
+          {totalSlides > 1 && (
+            <div className="flex justify-center mt-8 gap-2">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? `bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} shadow-lg`
+                      : "bg-gray-600 hover:bg-gray-500"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </section>
   );
 }

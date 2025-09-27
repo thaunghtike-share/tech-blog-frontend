@@ -457,7 +457,7 @@ const DevOpsCyclingHero = () => {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-32">
         <div className="max-w-4xl mx-auto text-center">
           {/* Animated Icon */}
-          <div className="mb-6 flex justify-center">
+          <div className="-mt-65 mb-6 flex justify-center">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-xl opacity-50 animate-pulse" />
               <div className="relative bg-gradient-to-r from-blue-500 to-purple-500 rounded-full p-5 text-white">
@@ -467,7 +467,7 @@ const DevOpsCyclingHero = () => {
           </div>
 
           {/* Title with Animation - reduced font size */}
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 animate-fade-in">
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               {currentSlideData.title}
             </span>

@@ -29,26 +29,26 @@ interface Playlist {
 
 const difficultyConfig = {
   Beginner: {
-    color: "from-yellow-500 to-orange-600",
-    text: "text-yellow-400",
-    border: "border-yellow-500",
-    iconBg: "bg-gradient-to-r from-yellow-500 to-orange-600",
+    color: "from-red-500 to-red-600",
+    text: "text-red-400",
+    border: "border-red-500",
+    iconBg: "bg-gradient-to-r from-red-500 to-red-600",
     iconText: "text-white",
     icon: <Rocket className="w-5 h-5" />,
   },
   Intermediate: {
-    color: "from-orange-500 to-red-600",
-    text: "text-orange-400",
-    border: "border-orange-500",
-    iconBg: "bg-gradient-to-r from-orange-500 to-red-600",
+    color: "from-red-600 to-red-700",
+    text: "text-red-400",
+    border: "border-red-600",
+    iconBg: "bg-gradient-to-r from-red-600 to-red-700",
     iconText: "text-white",
     icon: <Gauge className="w-5 h-5" />,
   },
   Advanced: {
-    color: "from-red-500 to-pink-600",
+    color: "from-red-700 to-red-800",
     text: "text-red-400",
-    border: "border-red-500",
-    iconBg: "bg-gradient-to-r from-red-500 to-pink-600",
+    border: "border-red-700",
+    iconBg: "bg-gradient-to-r from-red-700 to-red-800",
     iconText: "text-white",
     icon: <Shield className="w-5 h-5" />,
   },
@@ -567,7 +567,7 @@ export function YouTubePlaylists({
         >
           {/* Animated bubble icon matching AuthorsHero */}
           <motion.div
-            className="relative p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full shadow-2xl"
+            className="relative p-3 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -580,7 +580,7 @@ export function YouTubePlaylists({
           >
             {/* Bubble effect */}
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-yellow-400/30 to-orange-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-red-400/30 to-red-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -613,7 +613,7 @@ export function YouTubePlaylists({
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-red-400 to-red-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -625,13 +625,13 @@ export function YouTubePlaylists({
                 }}
               />
             ))}
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-red-400 ml-2" />
           </motion.div>
         </motion.div>
 
         {/* Animated line matching AuthorsHero */}
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full mx-auto relative mb-4"
+          className="h-1 w-24 bg-gradient-to-r from-red-500 to-red-600 rounded-full mx-auto relative mb-4"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -668,7 +668,7 @@ export function YouTubePlaylists({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-3 px-6 py-4 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 min-w-[280px]"
+            className="flex items-center gap-3 px-6 py-4 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700 hover:border-red-500/50 transition-all duration-300 min-w-[280px]"
           >
             <div
               className={`p-2 rounded-xl ${difficultyConfig[selectedDifficulty].iconBg} shadow-lg`}
@@ -734,7 +734,7 @@ export function YouTubePlaylists({
                           {difficultyKey}
                         </div>
                         <div className="text-sm text-gray-400">
-                          {stats.count} courses • {stats.avgWeeks} weeks avg
+                          {stats.count} courses
                         </div>
                       </div>
                       {selectedDifficulty === difficultyKey && (
@@ -778,17 +778,17 @@ export function YouTubePlaylists({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-red-500/50 transition-all duration-300 -ml-6"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-300" />
+                <ChevronLeft className="w-5 h-5 text-red-500" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-red-500/50 transition-all duration-300 -mr-6"
               >
-                <ChevronRight className="w-5 h-5 text-gray-300" />
+                <ChevronRight className="w-5 h-5 text-red-500" />
               </motion.button>
             </>
           )}
@@ -822,7 +822,7 @@ export function YouTubePlaylists({
                           >
                             {/* Background glow effect matching AuthorsHero */}
                             <motion.div
-                              className="absolute -inset-1 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                              className="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-red-500/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
                               animate={{
                                 scale: [1, 1.05, 1],
                               }}
@@ -833,7 +833,7 @@ export function YouTubePlaylists({
                               }}
                             />
 
-                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-yellow-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full">
+                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-red-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full">
                               <div className="relative aspect-video bg-gray-900 overflow-hidden">
                                 <iframe
                                   src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}
@@ -859,7 +859,7 @@ export function YouTubePlaylists({
                               </div>
 
                               <div className="p-4 md:p-6 flex-grow">
-                                <h3 className="text-base md:text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-yellow-400 transition-colors">
+                                <h3 className="text-base md:text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-red-400 transition-colors">
                                   {pl.title}
                                 </h3>
 

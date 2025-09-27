@@ -308,10 +308,6 @@ export function FreeLabs() {
                             />
 
                             <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
-                              {/* Platform Icon */}
-                              <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl shadow-md mb-4">
-                                {platformIcon}
-                              </div>
 
                               {/* Lab Title */}
                               <h3 className="text-xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors line-clamp-2">

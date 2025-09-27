@@ -319,7 +319,7 @@ export function MinimalHeader() {
         )}
 
         {/* Desktop Header - Completely Redesigned */}
-        <div className="hidden md:flex items-center justify-between h-20 relative z-10">
+        <div className="hidden md:flex items-center justify-between h-25 relative z-10">
           {/* Logo Section */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
@@ -327,7 +327,7 @@ export function MinimalHeader() {
               <img
                 src="/newlogo.png"
                 alt="Logo"
-                className="h-32 w-32 relative z-10 transition-transform group-hover:scale-105"
+                className="h-35 w-35 relative z-10 transition-transform group-hover:scale-105"
               />
             </div>
             <div className="h-8 w-px bg-gray-600"></div>

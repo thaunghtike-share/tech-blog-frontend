@@ -8,8 +8,10 @@ import {
   ChevronDown,
   ChevronUp,
   ChevronRight,
+  ChevronLeft,
+  Users,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PaidCourse {
   title: string;
@@ -80,188 +82,278 @@ const paidCourses: PaidCourse[] = [
 ];
 
 export function RecommendedPaidCourses() {
-  const [showAll, setShowAll] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("All");
+  const coursesPerView = 3;
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 300,
-        behavior: "smooth",
-      });
-    }
+  const filteredCourses = paidCourses; // You can add filtering logic later if needed
+  const totalSlides = Math.ceil(filteredCourses.length / coursesPerView);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
   };
 
-  const coursesToShow =
-    typeof window !== "undefined" && window.innerWidth < 640
-      ? paidCourses
-      : showAll
-      ? paidCourses
-      : paidCourses.slice(0, 6);
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
 
-  const toggleShowAll = () => {
-    if (showAll) {
-      sectionRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-    setShowAll((prev) => !prev);
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
   };
 
   return (
-    <section
-      ref={sectionRef}
-      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
-    >
-      {/* Header - Completely unchanged */}
-      <div className="text-center">
+    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+      {/* Header with matching YouTube playlists theme */}
+      <div className="text-center mb-6 md:mb-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-3 mb-4"
+          className="flex items-center justify-center gap-4 mb-4 md:mb-4 relative z-10"
         >
-          <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
-            <Play className="w-4 h-4 text-white" />
-          </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm md:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-            <BookOpen className="w-4 h-4 mr-2" /> Paid Courses
-          </span>
+          {/* Animated bubble icon matching YouTube playlists */}
+          <motion.div
+            className="relative p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full shadow-2xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+            }}
+          >
+            {/* Bubble effect */}
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-yellow-400/30 to-orange-500/30 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+              }}
+            />
+            <BookOpen className="w-10 h-10 text-white relative z-10" />
+          </motion.div>
+
+          {/* Title text beside the icon */}
+          <motion.h2
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+          >
+            Recommended Paid Courses
+          </motion.h2>
+
+          {/* Chevron with dotted trail matching YouTube playlists */}
+          <motion.div
+            className="flex items-center gap-1"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 ml-2" />
+          </motion.div>
         </motion.div>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-2 md:mb-3"
+
+        {/* Animated line matching YouTube playlists */}
+        <motion.div
+          className="h-1 w-24 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full mx-auto relative mb-4"
+          initial={{ width: 0 }}
+          animate={{ width: 96 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          Recommended Paid DevOps Courses
-        </motion.h2>
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
+            animate={{ x: [0, 90, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto"
+          className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
-          Carefully selected paid courses to accelerate your DevOps and Cloud
-          career.
+          Carefully selected paid courses to accelerate your DevOps and Cloud career with hands-on learning.
         </motion.p>
       </div>
 
-      {/* Courses Container - Only mobile changes */}
-      <div className="relative">
-        {/* Mobile-only scroll indicator */}
-        <div className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
-          <motion.button
-            onClick={scrollRight}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full shadow-lg border border-gray-200"
-          >
-            <div className="relative">
-              <ChevronRight className="w-5 h-5" />
-              <motion.div
-                animate={{
-                  x: [0, 4, 0],
-                  opacity: [0.6, 1, 0.6],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 1.5,
-                }}
-                className="absolute -right-1 -top-1 w-2 h-2 bg-blue-600 rounded-full"
-              />
-            </div>
-          </motion.button>
-        </div>
-
-        {/* Courses Grid - Changed only mobile width */}
-        <div
-          ref={scrollContainerRef}
-          className="mt-5 flex overflow-x-auto hide-scrollbar lg:grid lg:grid-cols-3 gap-6 lg:gap-8 pb-4"
+      {filteredCourses.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-center py-8 md:py-12"
         >
-          {coursesToShow.map((course, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              whileHover={{ y: -8, scale: 1.02 }}
-              className="min-w-[23.5rem] lg:min-w-0 group bg-white rounded-xl shadow-lg border-l-4 border-blue-500 overflow-hidden transition-all duration-300 flex flex-col"
-            >
-              <div className="p-5 flex-grow">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg inline-flex mb-4">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
-                  {course.title}
-                </h3>
-                <div className="flex items-center gap-2 text-base text-gray-600 mb-2">
-                  {course.authorImage && (
-                    <img
-                      src={course.authorImage || "/placeholder.svg"}
-                      alt={course.author}
-                      className="w-6 h-6 rounded-full object-cover border border-gray-200"
-                      loading="lazy"
-                    />
-                  )}
-                  <span className="font-medium">{course.author}</span>
-                </div>
-                <p className="text-gray-700 text-base mb-4 leading-relaxed">
-                  {course.description}
-                </p>
-                {course.rating && (
-                  <div className="flex items-center gap-1 text-yellow-500 mb-3">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="font-medium text-gray-900 text-base">
-                      {course.rating.toFixed(1)}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className="p-5 pt-0">
-                <a
-                  href={course.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:scale-[1.01]"
-                >
-                  <Play className="w-4 h-4 mr-2" /> Enroll Now
-                  <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+          <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center mb-3 md:mb-4 backdrop-blur-sm border border-gray-600">
+            <BookOpen className="w-6 h-6 md:w-8 md:h-8 text-gray-400" />
+          </div>
+          <h4 className="text-gray-300 font-medium text-base md:text-lg mb-2">
+            No courses available
+          </h4>
+          <p className="text-gray-500 text-sm md:text-base">
+            Please check back later for new course recommendations.
+          </p>
+        </motion.div>
+      ) : (
+        <div className="relative">
+          {/* Navigation Arrows */}
+          {totalSlides > 1 && (
+            <>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -ml-6"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-300" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -mr-6"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-300" />
+              </motion.button>
+            </>
+          )}
 
-      {/* Toggle Button - Hidden on mobile */}
-      {paidCourses.length > 6 && (
-        <div className="mt-6 text-center hidden sm:block">
-          <motion.button
-            type="button"
-            onClick={toggleShowAll}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-2xl shadow-lg transition-all duration-300"
-          >
-            {showAll ? "Show Less" : "See All Courses"}
-            {showAll ? (
-              <ChevronUp className="w-5 h-5 ml-2" />
-            ) : (
-              <ChevronDown className="w-5 h-5 ml-2" />
-            )}
-          </motion.button>
+          {/* Carousel Container */}
+          <div className="overflow-hidden rounded-3xl">
+            <motion.div
+              animate={{ x: `-${currentIndex * 100}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="flex"
+            >
+              {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                <div key={slideIndex} className="w-full flex-shrink-0">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
+                    {filteredCourses
+                      .slice(
+                        slideIndex * coursesPerView,
+                        (slideIndex + 1) * coursesPerView
+                      )
+                      .map((course, idx) => (
+                        <motion.div
+                          key={course.title}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 * idx }}
+                          whileHover={{ y: -8, scale: 1.02 }}
+                          className="group relative overflow-hidden"
+                        >
+                          {/* Background glow effect */}
+                          <motion.div
+                            className="absolute -inset-1 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                            animate={{
+                              scale: [1, 1.05, 1],
+                            }}
+                            transition={{
+                              duration: 4,
+                              repeat: Number.POSITIVE_INFINITY,
+                              repeatType: "reverse",
+                            }}
+                          />
+
+                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-yellow-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full">
+                            {/* Header Section */}
+                            <div className="p-6 pb-4">
+                              <h3 className="text-lg md:text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-yellow-400 transition-colors">
+                                {course.title}
+                              </h3>
+                              <div className="flex items-start justify-between mb-4">
+                                {course.rating && (
+                                  <div className="flex items-center gap-1 px-3 py-1 bg-yellow-400 text-yellow-900 text-sm font-medium rounded-full shadow-sm border border-yellow-500">
+                                    <Star className="w-3 h-3 fill-current" />
+                                    <span>{course.rating.toFixed(1)}</span>
+                                  </div>
+                                )}
+                              </div>
+                            
+                              
+                              <div className="flex items-center gap-2 text-sm text-gray-400">
+                                <Users className="w-4 h-4 text-gray-500" />
+                                <span className="font-medium text-gray-300">
+                                  {course.author}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Content Section */}
+                            <div className="p-6 pt-0 flex-grow">
+                              <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                                {course.description}
+                              </p>
+                            </div>
+
+                            {/* Footer Section */}
+                            <div className="p-6 pt-0">
+                              <a
+                                href={course.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-semibold rounded-xl transition-all duration-200 text-sm md:text-base hover:shadow-lg hover:scale-105 group border border-transparent hover:border-white/20"
+                              >
+                                <Play className="w-3 h-3 md:w-4 md:h-4 mr-2 group-hover:scale-110 transition-transform" />
+                                Enroll Now
+                                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
+                              </a>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Slide Indicators */}
+          {totalSlides > 1 && (
+            <div className="flex justify-center mt-8 gap-2">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? "bg-gradient-to-r from-yellow-500 to-orange-600 shadow-lg"
+                      : "bg-gray-600 hover:bg-gray-500"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
-
-      {/* Hide scrollbar styles */}
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </section>
   );
 }
