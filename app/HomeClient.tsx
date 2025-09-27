@@ -181,7 +181,7 @@ export default function HomeClient() {
         </section>
 
         {/* Featured Articles Section */}
-        <section className="-mt-99">
+        <section className="-mt-50">
           <FeaturedArticlesPage />
         </section>
 

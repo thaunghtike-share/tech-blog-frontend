@@ -482,18 +482,6 @@ export function TopUdemyCourses() {
                             </div>
 
                             <div className="p-6 flex flex-col flex-grow">
-                              {/* Price Display under cover image */}
-                              <div className="mb-3">
-                                <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
-                                  course.price === "Free" 
-                                    ? "bg-green-900/30 border border-green-500/50 text-green-400" 
-                                    : "bg-purple-900/30 border border-purple-500/50 text-purple-400"
-                                }`}>
-                                  {course.price !== "Free" && <DollarSign className="w-3 h-3 mr-1" />}
-                                  {course.price}
-                                </div>
-                              </div>
-
                               <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
                                 {course.title}
                               </h3>
@@ -600,7 +588,7 @@ export function TopUdemyCourses() {
 
           {totalPages > 1 && (
             <motion.div
-              className="flex justify-center gap-3 mt-8"
+              className="flex justify-center gap-3"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
