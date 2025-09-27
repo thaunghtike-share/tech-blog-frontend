@@ -466,7 +466,7 @@ export function TopUdemyCourses() {
 
                           <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                             
-                            {/* Course Cover Image */}
+                            {/* Course Cover Image - Clean without badges */}
                             <div className="relative h-48 bg-gradient-to-br from-blue-900/50 to-purple-900/50 overflow-hidden">
                               {course.cover_image ? (
                                 <img
@@ -479,33 +479,21 @@ export function TopUdemyCourses() {
                                   <BookOpen className="w-16 h-16 text-blue-400/50" />
                                 </div>
                               )}
-                              
-                              {/* Price Badge */}
-                              <div className="absolute top-4 right-4">
-                                <div className={`px-3 py-2 rounded-full backdrop-blur-sm border ${
-                                  course.price === "Free" 
-                                    ? "bg-green-900/30 border-green-500/50 text-green-400" 
-                                    : "bg-purple-900/30 border-purple-500/50 text-purple-400"
-                                } font-semibold text-sm shadow-lg`}>
-                                  <div className="flex items-center gap-1">
-                                    {course.price !== "Free" && <DollarSign className="w-3 h-3" />}
-                                    {course.price}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Students Count */}
-                              <div className="absolute top-4 left-4">
-                                <div className="px-3 py-2 bg-blue-900/30 backdrop-blur-sm rounded-full border border-blue-500/50 text-blue-400 font-medium text-sm shadow-lg">
-                                  <div className="flex items-center gap-1">
-                                    <Users className="w-3 h-3" />
-                                    {course.students}
-                                  </div>
-                                </div>
-                              </div>
                             </div>
 
                             <div className="p-6 flex flex-col flex-grow">
+                              {/* Price Display under cover image */}
+                              <div className="mb-3">
+                                <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
+                                  course.price === "Free" 
+                                    ? "bg-green-900/30 border border-green-500/50 text-green-400" 
+                                    : "bg-purple-900/30 border border-purple-500/50 text-purple-400"
+                                }`}>
+                                  {course.price !== "Free" && <DollarSign className="w-3 h-3 mr-1" />}
+                                  {course.price}
+                                </div>
+                              </div>
+
                               <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
                                 {course.title}
                               </h3>
@@ -514,7 +502,8 @@ export function TopUdemyCourses() {
                                 {course.description}
                               </p>
 
-                              <div className="flex items-center gap-3 mb-4">
+                              {/* Author and Student Count Row */}
+                              <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-2 px-3 py-2 bg-blue-900/20 rounded-full border border-blue-500/30">
                                   <div className="p-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
                                     <User className="w-3 h-3 text-white" />
@@ -523,27 +512,26 @@ export function TopUdemyCourses() {
                                     {course.author}
                                   </span>
                                 </div>
-                              </div>
 
-                              <div className="flex items-center justify-between mb-4">
-                                {course.rating && (
-                                  <div className="flex items-center gap-2">
-                                    <div className="flex items-center gap-1 text-yellow-400">
-                                      <Star className="w-4 h-4 fill-current" />
-                                      <span className="font-medium text-white text-sm">
-                                        {course.rating.toFixed(1)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                )}
-                                
-                                <div className="flex items-center gap-3 text-gray-400 text-sm">
-                                  <div className="flex items-center gap-1">
-                                    <Users className="w-3 h-3" />
-                                    <span>{course.students}</span>
-                                  </div>
+                                {/* Student Count */}
+                                <div className="flex items-center gap-1 text-gray-400 text-sm">
+                                  <Users className="w-4 h-4" />
+                                  <span>{course.students}</span>
                                 </div>
                               </div>
+
+                              {/* Rating */}
+                              {course.rating && (
+                                <div className="flex items-center gap-2 mb-4">
+                                  <div className="flex items-center gap-1 text-yellow-400">
+                                    <Star className="w-4 h-4 fill-current" />
+                                    <span className="font-medium text-white text-sm">
+                                      {course.rating.toFixed(1)}
+                                    </span>
+                                  </div>
+                                  <span className="text-gray-400 text-sm">rating</span>
+                                </div>
+                              )}
 
                               <AnimatePresence>
                                 {(course.reviews?.length ?? 0) > 0 && (
