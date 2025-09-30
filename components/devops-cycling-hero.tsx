@@ -12,6 +12,7 @@ import {
   Code,
   GraduationCap,
   ChevronLeft,
+  Award,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -22,9 +23,9 @@ const DevOpsCyclingHero = () => {
   const slides = [
     {
       id: "devops",
-      title: "What is DevOps?",
+      title: "Let's Explore DevOps",
       description:
-        "DevOps is a cultural and technical movement that bridges development and operations teams. It emphasizes automation, continuous integration, and rapid deployment to deliver software faster and more reliably.",
+        "Discover how DevOps bridges development and operations teams through automation, continuous integration, and rapid deployment to deliver software faster and more reliably.",
       icon: <Zap className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "devops",
       iconGradient: "from-orange-400 to-yellow-400",
@@ -32,9 +33,9 @@ const DevOpsCyclingHero = () => {
     },
     {
       id: "kubernetes",
-      title: "What is Kubernetes?",
+      title: "Master Kubernetes",
       description:
-        "Kubernetes is an open-source container orchestration platform that automates deployment, scaling, and management of containerized applications across clusters of hosts.",
+        "Learn container orchestration with Kubernetes - the industry standard for automating deployment, scaling, and management of containerized applications.",
       icon: <Container className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "kubernetes",
       iconGradient: "from-blue-400 to-cyan-400",
@@ -42,9 +43,9 @@ const DevOpsCyclingHero = () => {
     },
     {
       id: "cicd",
-      title: "What is CI/CD?",
+      title: "Understand CI/CD",
       description:
-        "Continuous Integration/Continuous Deployment is a practice that enables teams to deliver code changes more frequently and reliably through automated testing and deployment pipelines.",
+        "Explore Continuous Integration and Continuous Deployment - the practices that enable teams to deliver code changes more frequently and reliably through automated pipelines.",
       icon: <GitBranch className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "cicd",
       iconGradient: "from-green-400 to-emerald-400",
@@ -58,9 +59,9 @@ const DevOpsCyclingHero = () => {
     },
     {
       id: "linux",
-      title: "What is Linux?",
+      title: "Learn Linux Fundamentals",
       description:
-        "Linux is an open-source operating system that powers most servers, containers, and cloud infrastructure. It provides the foundation for modern DevOps practices and tools.",
+        "Build your foundation with Linux - the operating system that powers most servers, containers, and cloud infrastructure in modern DevOps environments.",
       icon: <Terminal className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "linux",
       iconGradient: "from-orange-500 to-yellow-500",
@@ -68,9 +69,9 @@ const DevOpsCyclingHero = () => {
     },
     {
       id: "cloud",
-      title: "What is Cloud Computing?",
+      title: "Explore Cloud Computing",
       description:
-        "Cloud computing delivers computing services over the internet, enabling scalable, on-demand access to resources like servers, storage, and applications without managing physical infrastructure.",
+        "Dive into cloud computing - learn how to leverage scalable, on-demand resources like servers, storage, and applications without managing physical infrastructure.",
       icon: <Box className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "cloud",
       iconGradient: "from-sky-400 to-blue-400",
@@ -78,9 +79,9 @@ const DevOpsCyclingHero = () => {
     },
     {
       id: "containerization",
-      title: "What is Containerization?",
+      title: "Get Started with Containerization",
       description:
-        "Containerization packages applications and their dependencies into lightweight, portable containers that run consistently across different environments, from development to production.",
+        "Understand containerization - how to package applications and dependencies into lightweight, portable containers that run consistently across different environments.",
       icon: <Box className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "containerization",
       iconGradient: "from-teal-400 to-green-400",
@@ -88,23 +89,56 @@ const DevOpsCyclingHero = () => {
     },
     {
       id: "iac",
-      title: "What is IAC?",
+      title: "Discover Infrastructure as Code",
       description:
-        "Infrastructure as Code (IaC) manages and provisioning computing infrastructure through machine-readable definition files, enabling version control and automated deployment of infrastructure.",
+        "Master Infrastructure as Code (IaC) - learn to manage and provision computing infrastructure through code for version control and automated deployment.",
       icon: <Code className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "iac",
       iconGradient: "from-violet-400 to-purple-400",
       tools: ["Terraform", "Ansible", "CloudFormation", "Pulumi", "Chef"],
     },
+  ];
+
+  const certifications = [
     {
-      id: "tools",
-      title: "Essential DevOps Tools",
-      description:
-        "Modern DevOps relies on a comprehensive toolchain covering version control, CI/CD, containerization, orchestration, monitoring, and infrastructure management.",
-      icon: <Server className="w-10 h-10 sm:w-12 sm:h-12" />,
-      bgPattern: "tools",
-      iconGradient: "from-purple-400 to-pink-400",
-      tools: ["Docker", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+      title: "AWS Cloud Practitioner",
+      logo: "aws1.png",
+      organization: "AWS",
+    },
+    {
+      title: "Azure Fundamentals",
+      logo: "az900.png",
+      organization: "Microsoft",
+    },
+    {
+      title: "AWS Solutions Architect",
+      logo: "aws2.webp",
+      organization: "AWS",
+    },
+    {
+      title: "GitHub Foundations",
+      logo: "git.png",
+      organization: "GitHub",
+    },
+    {
+      title: "Docker Certified",
+      logo: "docker.png",
+      organization: "Docker",
+    },
+    {
+      title: "Kubernetes Administrator",
+      logo: "cka.webp",
+      organization: "CNCF",
+    },
+    {
+      title: "Terraform Associate",
+      logo: "tf.png",
+      organization: "HashiCorp",
+    },
+    {
+      title: "Kubernetes Developer",
+      logo: "ckad.png",
+      organization: "CNCF",
     },
   ];
 
@@ -134,6 +168,14 @@ const DevOpsCyclingHero = () => {
   }, [slides.length, mounted]);
 
   const currentSlideData = slides[currentSlide];
+
+  // Handle image error - fallback to devops.png
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    const target = e.currentTarget;
+    target.src = "/devops.png";
+  };
 
   return (
     <section className="relative min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl overflow-hidden">
@@ -415,38 +457,13 @@ const DevOpsCyclingHero = () => {
             ))}
           </div>
         </div>
-
-        {/* Tools Background */}
-        <div
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            currentSlideData.bgPattern === "tools" ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900" />
-          {floatingPositions.map((pos, i) => (
-            <div
-              key={`tools-${i}`}
-              className="absolute animate-spin"
-              style={{
-                left: `${pos.left}%`,
-                top: `${pos.top}%`,
-                animationDelay: `${i * 0.25}s`,
-                animationDuration: `${8 + (i % 4)}s`,
-              }}
-            >
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-lg backdrop-blur-sm border border-purple-400/30 flex items-center justify-center">
-                <Server className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-48 sm:pt-56 md:pt-40 lg:pt-32">
         <div className="max-w-4xl mx-auto text-center w-full">
           {/* Animated Icon with Better Spacing */}
-          <div className="mt-37 mb-4 md:mb-4 flex justify-center">
+          <div className="mt-25 mb-4 md:mb-4 flex justify-center">
             <div className="relative">
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${currentSlideData.iconGradient} rounded-full blur-xl opacity-50 animate-pulse`}
@@ -460,7 +477,7 @@ const DevOpsCyclingHero = () => {
           </div>
 
           {/* Title with Better Spacing */}
-          <div className="mb-6 sm:mb-8 md:mb-10">
+          <div className="mb-6 sm:mb-8 md:mb-8">
             <h1 className="text-3xl sm:text-2xl md:text-5xl lg:text-4xl font-bold text-white">
               <span
                 className={`bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent`}
@@ -471,7 +488,7 @@ const DevOpsCyclingHero = () => {
           </div>
 
           {/* Description with Better Spacing */}
-          <div className="mb-8 sm:mb-10 md:mb-12">
+          <div className="mb-8 sm:mb-8 md:mb-8">
             <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto px-2 sm:px-4">
               {currentSlideData.description}
             </p>
@@ -496,7 +513,7 @@ const DevOpsCyclingHero = () => {
           </div>
 
           {/* Progress Indicators */}
-          <div className="flex justify-center space-x-1.5 sm:space-x-2 mb-8">
+          <div className="flex justify-center space-x-1.5 sm:space-x-2 mb-">
             {slides.map((_, index) => (
               <button
                 key={index}
@@ -582,11 +599,22 @@ const DevOpsCyclingHero = () => {
             transform: translateY(0);
           }
         }
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
         .animate-fade-in {
           animation: fade-in 0.8s ease-out forwards;
+        }
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
         }
 
         /* Cross-browser improvements */
