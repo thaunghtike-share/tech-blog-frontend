@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -55,9 +55,7 @@ const faqsData: FAQ[] = rawFaqs.map((faq, index) => ({
 
 export function MinimalFAQs() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const nextFAQ = () => {
     setCurrentIndex((prev) => (prev + 1) % faqsData.length);
@@ -69,24 +67,6 @@ export function MinimalFAQs() {
 
   const goToFAQ = (index: number) => {
     setCurrentIndex(index);
-  };
-
-  // Auto-advance FAQ every 8 seconds
-  useEffect(() => {
-    if (isAutoPlaying) {
-      autoPlayRef.current = setInterval(nextFAQ, 8000);
-    }
-    return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current);
-      }
-    };
-  }, [isAutoPlaying]);
-
-  const handleUserInteraction = () => {
-    setIsAutoPlaying(false);
-    // Resume auto-play after 30 seconds of inactivity
-    setTimeout(() => setIsAutoPlaying(true), 30000);
   };
 
   const currentFAQ = faqsData[currentIndex];
@@ -165,13 +145,10 @@ export function MinimalFAQs() {
       <div className="relative max-w-4xl mx-auto">
         {/* FAQ Content with integrated navigation */}
         <div className="bg-gradient-to-br from-gray-600 to-gray-800 rounded-3xl border border-gray-700 p-8 shadow-xl relative">
-          {/* Navigation Buttons - Positioned on the container card */}
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20">
+          {/* Navigation Buttons - Positioned outside the card */}
+          <div className="absolute -left-16 top-1/2 -translate-y-1/2 z-20">
             <motion.button
-              onClick={() => {
-                prevFAQ();
-                handleUserInteraction();
-              }}
+              onClick={prevFAQ}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 text-sky-400 rounded-full shadow-lg border border-sky-500/30 hover:border-sky-400 transition-all"
@@ -180,12 +157,9 @@ export function MinimalFAQs() {
             </motion.button>
           </div>
 
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
+          <div className="absolute -right-16 top-1/2 -translate-y-1/2 z-20">
             <motion.button
-              onClick={() => {
-                nextFAQ();
-                handleUserInteraction();
-              }}
+              onClick={nextFAQ}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 text-sky-400 rounded-full shadow-lg border border-sky-500/30 hover:border-sky-400 transition-all"
@@ -194,9 +168,6 @@ export function MinimalFAQs() {
             </motion.button>
           </div>
 
-          {/* Top border accent */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-t-3xl" />
-
           <AnimatePresence mode="wait">
             <motion.div
               key={currentFAQ.id}
@@ -204,7 +175,7 @@ export function MinimalFAQs() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5 }}
-              className="text-center px-12"
+              className="text-center px-4"
             >
               {/* Question Icon */}
               <div className="flex justify-center mb-6">
@@ -230,20 +201,6 @@ export function MinimalFAQs() {
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Auto-play Indicator */}
-        <div className="text-center mt-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700/50 rounded-full">
-            <div
-              className={`w-2 h-2 rounded-full ${
-                isAutoPlaying ? "bg-green-400 animate-pulse" : "bg-gray-400"
-              }`}
-            />
-            <span className="text-xs text-gray-400">
-              {isAutoPlaying ? "Auto-advancing" : "Paused"}
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* Quick Navigation Dots */}
@@ -251,10 +208,7 @@ export function MinimalFAQs() {
         {faqsData.map((faq, index) => (
           <motion.button
             key={faq.id}
-            onClick={() => {
-              goToFAQ(index);
-              handleUserInteraction();
-            }}
+            onClick={() => goToFAQ(index)}
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
             className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium transition-all ${

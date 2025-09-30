@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   Facebook,
   Linkedin,
-  Youtube,
   Github,
   Mail,
   MapPin,
@@ -11,21 +10,22 @@ import {
 
 export function MinimalFooter() {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 backdrop-blur-3xl py-12 md:py-16 relative z-10 border-t border-gray-700/50">
-      {/* Background Effects */}
+    <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 py-16 md:py-20 relative z-10">
+      {/* Background Effects - Match homepage exactly */}
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-purple-900/10" />
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(120,119,198,0.05)_50%,transparent_75%)] bg-[length:6px_6px] opacity-30" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-8 md:gap-12 pb-8 md:pb-12">
-          {/* Logo + Description */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-10 md:gap-12 pb-12">
+          {/* Logo + Description - Increased logo size */}
           <div className="md:col-span-2 space-y-6">
             <Link href="/" className="inline-block group">
               <div className="flex items-center">
                 <img
                   src="/newlogo.png"
                   alt="Logo"
-                  className="h-28 w-28 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  className="h-32 w-32 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
                 />
               </div>
             </Link>
@@ -36,7 +36,7 @@ export function MinimalFooter() {
             </p>
 
             {/* Social Icons */}
-            <div className="flex space-x-4 pt-2">
+            <div className="flex space-x-4 pt-4">
               <a
                 href="https://www.linkedin.com/in/thaung-htike-oo-6672781b1"
                 target="_blank"
@@ -70,10 +70,9 @@ export function MinimalFooter() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links - Clean design without dots */}
           <div className="md:col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
-              <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+            <h3 className="text-lg font-semibold text-white mb-6">
               Quick Links
             </h3>
             <ul className="space-y-4">
@@ -86,9 +85,8 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center group"
+                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
                   >
-                    <span className="w-1 h-1 bg-gray-600 rounded-full mr-3 group-hover:bg-blue-500 transition-colors"></span>
                     {link.label}
                   </Link>
                 </li>
@@ -96,10 +94,9 @@ export function MinimalFooter() {
             </ul>
           </div>
 
-          {/* Learning Resources */}
+          {/* Learning Resources - Clean design without dots */}
           <div className="md:col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+            <h3 className="text-lg font-semibold text-white mb-6">
               Resources
             </h3>
             <ul className="space-y-4">
@@ -115,9 +112,8 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center group"
+                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
                   >
-                    <span className="w-1 h-1 bg-gray-600 rounded-full mr-3 group-hover:bg-green-500 transition-colors"></span>
                     {link.label}
                   </Link>
                 </li>
@@ -125,10 +121,9 @@ export function MinimalFooter() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Services - Clean design without dots */}
           <div className="md:col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
-              <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+            <h3 className="text-lg font-semibold text-white mb-6">
               Services
             </h3>
             <ul className="space-y-4">
@@ -146,9 +141,8 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center group"
+                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
                   >
-                    <span className="w-1 h-1 bg-gray-600 rounded-full mr-3 group-hover:bg-orange-500 transition-colors"></span>
                     {link.label}
                   </Link>
                 </li>
@@ -156,49 +150,56 @@ export function MinimalFooter() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact - Clean design */}
           <div className="md:col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
-              <span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+            <h3 className="text-lg font-semibold text-white mb-6">
               Contact
             </h3>
             <ul className="space-y-4">
               <li>
                 <a
                   href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                  className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group"
+                  className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group py-1"
                 >
-                  <Mail className="h-4 w-4 mr-3 text-purple-400 group-hover:scale-110 transition-transform" />
-                  <span className="hover:underline">Email Me</span>
+                  <Mail className="h-4 w-4 mr-3 text-purple-400" />
+                  <span>Email Me</span>
                 </a>
               </li>
               <li>
                 <a
                   href="tel:+959952492359"
-                  className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group"
+                  className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group py-1"
                 >
-                  <Phone className="h-4 w-4 mr-3 text-green-400 group-hover:scale-110 transition-transform" />
-                  <span className="hover:underline">+95 9952492359</span>
+                  <Phone className="h-4 w-4 mr-3 text-green-400" />
+                  <span>+95 9952492359</span>
                 </a>
               </li>
-              <li className="text-gray-400 flex items-center">
+              <li className="text-gray-400 flex items-center group py-1">
                 <MapPin className="h-4 w-4 mr-3 text-red-400" />
-                Yangon, Myanmar
+                <span>Yangon, Myanmar</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-700/50 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        {/* Copyright - Clean design */}
+        <div className="pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-gray-400 text-center md:text-left text-sm">
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>
+          <div className="flex space-x-6 text-xs text-gray-500">
+            <Link href="/privacy" className="hover:text-gray-300 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-gray-300 transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/sitemap" className="hover:text-gray-300 transition-colors">
+              Sitemap
+            </Link>
+          </div>
         </div>
-
-        {/* Bottom decorative element */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
       </div>
     </footer>
   );

@@ -461,7 +461,7 @@ const DevOpsCyclingHero = () => {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-48 sm:pt-56 md:pt-40 lg:pt-32">
         <div className="max-w-4xl mx-auto text-center w-full">
           {/* Animated Icon with Better Spacing */}
-          <div className="mt-25 mb-4 md:mb-4 flex justify-center">
+          <div className="mt-25 2xl:-mt-25 mb-4 md:mb-4 flex justify-center">
             <div className="relative">
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${currentSlideData.iconGradient} rounded-full blur-xl opacity-50 animate-pulse`}

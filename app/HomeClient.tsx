@@ -222,7 +222,7 @@ export default function HomeClient() {
           </section>
 
           {/* Featured Articles Section */}
-          <section className="-mt-10">
+          <section className="-mt-10 2xl:-mt-65">
             <FeaturedArticlesPage />
           </section>
 
