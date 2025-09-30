@@ -1,99 +1,99 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   ServerCog,
   ShieldCheck,
   Cloud,
   ChevronRight,
   ChevronLeft,
-  ChevronDown,
   Users,
-  BookOpen,
+  Zap,
+  Cpu,
+  GitBranch,
 } from "lucide-react";
 
 const roles = [
   {
-    title: "Junior DevOps Engineer",
+    title: "DevOps Engineer",
     icon: ServerCog,
-    responsibilities: [
-      "Build and maintain CI/CD pipelines (Jenkins, GitHub Actions)",
-      "Automate infrastructure provisioning (Terraform, Ansible)",
-      "Collaborate with developers and operations teams",
-      "Ensure configuration management with tools like Ansible or Puppet",
-      "Monitor application deployments and logs",
-    ],
-    skills: [
-      "Linux",
-      "Containerization",
-      "Git",
-      "CICD",
+    description:
+      "Automates software delivery pipelines and infrastructure. Focuses on CI/CD, automation tools, and bridging development with operations for faster deployments.",
+    focus: "Pipeline & Infrastructure Automation",
+    keyDifference:
+      "Builds and maintains the tools and processes for software delivery",
+    coreResponsibilities: [
+      "CI/CD pipeline development",
       "Infrastructure as Code",
-      "Bash Script",
-      "Cloud",
-      "Monitoring",
+      "Configuration management",
+      "Deployment automation",
     ],
-    color: "from-yellow-500 to-orange-600",
-    borderColor: "border-yellow-500",
-    iconBg: "bg-gradient-to-r from-yellow-500 to-orange-600",
-    iconColor: "text-white",
+    tools: [
+      "Jenkins",
+      "GitHub Actions",
+      "Terraform",
+      "Ansible",
+      "Docker",
+      "Kubernetes",
+    ],
+    color: "from-sky-400 to-blue-500",
+    iconBg: "bg-gradient-to-r from-sky-400 to-blue-500",
   },
   {
-    title: "Junior Site Reliability Engineer (SRE)",
+    title: "Site Reliability Engineer",
     icon: ShieldCheck,
-    responsibilities: [
-      "Monitor system and application health using tools like Prometheus",
-      "Manage alerting and incident response",
-      "Analyze system reliability and implement improvements",
-      "Automate repetitive operational tasks",
-      "Define and track Service Level Objectives (SLOs)",
+    description:
+      "Ensures system reliability, scalability, and performance. Focuses on monitoring, incident response, and maintaining service level objectives (SLOs).",
+    focus: "System Reliability & Performance",
+    keyDifference: "Ensures systems are reliable and meet performance targets",
+    coreResponsibilities: [
+      "System monitoring & alerting",
+      "Incident management",
+      "Performance optimization",
+      "Reliability engineering",
     ],
-    skills: [
-      "Monitoring tools",
-      "Alertmanager",
-      "Linux",
-      "Scripting",
-      "Cloud monitoring (CloudWatch, Azure Monitor)",
-      "Kubernetes basics",
-      "CICD",
+    tools: [
+      "Prometheus",
+      "Grafana",
+      "PagerDuty",
+      "Datadog",
+      "SLO/SLI",
+      "Chaos Engineering",
     ],
-    color: "from-orange-500 to-red-600",
-    borderColor: "border-orange-500",
-    iconBg: "bg-gradient-to-r from-orange-500 to-red-600",
-    iconColor: "text-white",
+    color: "from-blue-400 to-indigo-500",
+    iconBg: "bg-gradient-to-r from-blue-400 to-indigo-500",
   },
   {
-    title: "Junior Cloud Engineer",
+    title: "Cloud Engineer",
     icon: Cloud,
-    responsibilities: [
-      "Provision and manage cloud infrastructure",
-      "Implement Identity and Access Management (IAM) policies",
-      "Deploy and configure cloud services (compute, storage, networking)",
-      "Assist in cost optimization and security compliance",
-      "Support cloud migration and automation tasks",
+    description:
+      "Designs, builds, and maintains cloud infrastructure and services. Specializes in cloud platforms, networking, security, and cost optimization.",
+    focus: "Cloud Infrastructure & Services",
+    keyDifference:
+      "Manages and optimizes cloud platform resources and services",
+    coreResponsibilities: [
+      "Cloud resource management",
+      "Network configuration",
+      "Security & compliance",
+      "Cost optimization",
     ],
-    skills: [
-      "Cloud",
+    tools: [
+      "AWS/Azure/GCP",
+      "Terraform",
+      "CloudFormation",
       "IAM",
-      "IAC (Terraform, CloudFormation)",
-      "Networking Basics (VPC, Subnets, Security Groups)",
-      "Scripting",
-      "CICD",
+      "VPC",
+      "Cloud Security",
     ],
-    color: "from-red-500 to-pink-600",
-    borderColor: "border-red-500",
-    iconBg: "bg-gradient-to-r from-red-500 to-pink-600",
-    iconColor: "text-white",
+    color: "from-indigo-400 to-purple-500",
+    iconBg: "bg-gradient-to-r from-indigo-400 to-purple-500",
   },
 ];
 
 export function CareerPath() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("All Roles");
   const coursesPerView = 3;
-
   const totalSlides = Math.ceil(roles.length / coursesPerView);
 
   const nextSlide = () => {
@@ -110,16 +110,15 @@ export function CareerPath() {
 
   return (
     <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8">
-      {/* Header with matching YouTube playlists theme */}
-      <div className="text-center mb-6 md:mb-6 relative">
+      {/* Header */}
+      <div className="text-center mb-12 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-4 mb-4 md:mb-4 relative z-10"
+          className="flex items-center justify-center gap-4 mb-4 relative z-10"
         >
-          {/* Animated bubble icon matching YouTube playlists */}
           <motion.div
-            className="relative p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full shadow-2xl"
+            className="relative p-3 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -130,9 +129,8 @@ export function CareerPath() {
               repeatType: "reverse",
             }}
           >
-            {/* Bubble effect */}
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-yellow-400/30 to-orange-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -146,17 +144,15 @@ export function CareerPath() {
             <Users className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
-          {/* Title text beside the icon */}
           <motion.h2
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
           >
-            Get Jobs
+            Career Paths
           </motion.h2>
 
-          {/* Chevron with dotted trail matching YouTube playlists */}
           <motion.div
             className="flex items-center gap-1"
             animate={{ x: [0, 10, 0] }}
@@ -165,7 +161,7 @@ export function CareerPath() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -177,13 +173,12 @@ export function CareerPath() {
                 }}
               />
             ))}
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-sky-400 ml-2" />
           </motion.div>
         </motion.div>
 
-        {/* Animated line matching YouTube playlists */}
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full mx-auto relative mb-4"
+          className="h-1 w-24 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full mx-auto relative mb-4"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -205,10 +200,11 @@ export function CareerPath() {
           transition={{ delay: 0.2 }}
           className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
-          Entry-level roles where you can apply your skills and grow your DevOps career.
+          Understand the key differences between DevOps roles and choose your
+          specialization path
         </motion.p>
       </div>
-   
+
       {roles.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -235,7 +231,7 @@ export function CareerPath() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-sky-400/50 transition-all duration-300 -ml-6"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-300" />
               </motion.button>
@@ -243,7 +239,7 @@ export function CareerPath() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-yellow-500/50 transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-sky-400/50 transition-all duration-300 -mr-6"
               >
                 <ChevronRight className="w-5 h-5 text-gray-300" />
               </motion.button>
@@ -251,7 +247,7 @@ export function CareerPath() {
           )}
 
           {/* Carousel Container */}
-          <div className="overflow-hidden rounded-3xl">
+          <div className="overflow-hidden">
             <motion.div
               animate={{ x: `-${currentIndex * 100}%` }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -271,75 +267,71 @@ export function CareerPath() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.1 * idx }}
-                          whileHover={{ y: -8, scale: 1.02 }}
-                          className="group relative overflow-hidden"
+                          whileHover={{ y: -4 }}
+                          className="group"
                         >
-                          {/* Background glow effect */}
-                          <motion.div
-                            className="absolute -inset-1 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
-                            animate={{
-                              scale: [1, 1.05, 1],
-                            }}
-                            transition={{
-                              duration: 4,
-                              repeat: Number.POSITIVE_INFINITY,
-                              repeatType: "reverse",
-                            }}
-                          />
-
-                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-yellow-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full">
-                            {/* Header Section */}
-                            <div className="p-6 pb-4">
-                              <div className="flex items-start justify-between mb-4">
-                                <div className={`p-3 rounded-xl ${role.iconBg} shadow-lg`}>
+                          {/* Modern Card Design */}
+                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-sky-400/30 transition-all duration-300 overflow-hidden h-full flex flex-col">
+                            {/* Header with Gradient Accent */}
+                            <div
+                              className={`bg-gradient-to-r ${role.color} p-6 pb-4`}
+                            >
+                              <div className="flex items-center gap-4 mb-3">
+                                <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm">
                                   <role.icon className="w-6 h-6 text-white" />
                                 </div>
+                                <h3 className="text-xl font-bold text-white">
+                                  {role.title}
+                                </h3>
                               </div>
-                              
-                              <h3 className="text-lg md:text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-yellow-400 transition-colors">
-                                {role.title}
-                              </h3>
-                            </div>
-
-                            {/* Content Section */}
-                            <div className="p-6 pt-0 flex-grow">
-                              <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
-                                <BookOpen className="w-4 h-4" />
-                                Responsibilities
-                              </h4>
-                              <ul className="space-y-2 mb-6">
-                                {role.responsibilities.map((resp, i) => (
-                                  <li key={i} className="flex items-start">
-                                    <ChevronRight className="w-4 h-4 mt-0.5 mr-2 flex-shrink-0 text-yellow-400" />
-                                    <span className="text-gray-300 text-sm leading-relaxed">
-                                      {resp}
-                                    </span>
-                                  </li>
-                                ))}
-                              </ul>
-
-                              <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">
-                                Skills & Tools
-                              </h4>
-                              <div className="flex flex-wrap gap-2">
-                                {role.skills.map((skill, i) => (
-                                  <span
-                                    key={i}
-                                    className="px-3 py-1 text-sm font-medium rounded-full bg-gray-700/50 text-gray-300 border border-gray-600"
-                                  >
-                                    {skill}
-                                  </span>
-                                ))}
+                              <div className="bg-black/20 rounded-lg px-3 py-2 backdrop-blur-sm">
+                                <span className="text-white/90 text-sm font-medium">
+                                  {role.focus}
+                                </span>
                               </div>
                             </div>
 
-                            {/* Footer Section */}
-                            <div className="p-6 pt-0">
-                              <button className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-semibold rounded-xl transition-all duration-200 text-sm md:text-base hover:shadow-lg hover:scale-105 group border border-transparent hover:border-white/20">
-                                Learn More
-                                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
-                              </button>
+                            {/* Content Area */}
+                            <div className="p-6 flex-grow">
+                              {/* Description */}
+                              <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                                {role.description}
+                              </p>
+
+                              {/* Key Difference */}
+                              <div className="mb-4 p-3 bg-gray-700/30 rounded-lg border border-gray-600/50">
+                                <p className="text-sky-300 text-xs font-semibold mb-1">
+                                  KEY DIFFERENCE
+                                </p>
+                                <p className="text-gray-300 text-sm">
+                                  {role.keyDifference}
+                                </p>
+                              </div>
+
+                              {/* Core Responsibilities */}
+                              <div className="mb-4">
+                                <h4 className="text-gray-400 text-sm font-semibold mb-3 flex items-center gap-2">
+                                  <Zap className="w-4 h-4 text-sky-400" />
+                                  Core Responsibilities
+                                </h4>
+                                <div className="space-y-2">
+                                  {role.coreResponsibilities.map((resp, i) => (
+                                    <div
+                                      key={i}
+                                      className="flex items-start gap-2"
+                                    >
+                                      <div className="w-1.5 h-1.5 bg-sky-400 rounded-full mt-1.5 flex-shrink-0" />
+                                      <span className="text-gray-300 text-sm">
+                                        {resp}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
+
+                            {/* Hover Glow Effect */}
+                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-sky-400/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                           </div>
                         </motion.div>
                       ))}
@@ -360,7 +352,7 @@ export function CareerPath() {
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? "bg-gradient-to-r from-yellow-500 to-orange-600 shadow-lg"
+                      ? "bg-gradient-to-r from-sky-400 to-blue-500 shadow-lg shadow-sky-400/50"
                       : "bg-gray-600 hover:bg-gray-500"
                   }`}
                 />

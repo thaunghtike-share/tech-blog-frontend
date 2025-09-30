@@ -591,7 +591,7 @@ export function YouTubePlaylists({
                 repeatType: "reverse",
               }}
             />
-            <Play className="w-10 h-10 text-white relative z-10" />
+            <Globe className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
           {/* Title text beside the icon */}

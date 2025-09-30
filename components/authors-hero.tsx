@@ -220,26 +220,6 @@ export function AuthorsHero() {
                 <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:border-yellow-500/50 transition-all duration-300 hover:-translate-y-2 text-center">
                   {/* Avatar with animated bubble rings */}
                   <div className="relative mb-6">
-                    {/* Animated bubble rings */}
-                    <motion.div
-                      className="absolute -inset-4 border-2 border-yellow-400/20 rounded-full"
-                      animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                      transition={{
-                        duration: 8,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                      }}
-                    />
-                    <motion.div
-                      className="absolute -inset-6 border border-orange-400/10 rounded-full"
-                      animate={{ rotate: -360, scale: [1, 1.2, 1] }}
-                      transition={{
-                        duration: 12,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                      }}
-                    />
-
                     <img
                       src={author.avatar || "/placeholder.svg"}
                       alt={author.name}

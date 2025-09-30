@@ -8,6 +8,7 @@ import {
   MessageSquare,
   ChevronLeft,
   ChevronRight,
+  Play,
   User,
   AlertTriangle,
   Users,
@@ -238,7 +239,7 @@ export function TopUdemyCourses() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
-              <GraduationCap className="w-8 h-8 text-white" />
+              <Play className="w-8 h-8 text-white" />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
               Top Udemy Courses
@@ -309,7 +310,7 @@ export function TopUdemyCourses() {
                 repeatType: "reverse",
               }}
             />
-            <GraduationCap className="w-10 h-10 text-white relative z-10" />
+            <Play className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">

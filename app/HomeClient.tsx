@@ -123,9 +123,33 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl relative overflow-x-hidden">
+    <div 
+      className="min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl relative overflow-x-hidden"
+      style={{
+        // Force GPU acceleration and prevent white flashes
+        transform: 'translateZ(0)',
+        backfaceVisibility: 'hidden',
+        perspective: 1000,
+        willChange: 'auto'
+      }}
+    >
+      {/* Pre-render background to prevent white screen */}
+      <div 
+        className="fixed inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 z-0"
+        style={{
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
+        }}
+      />
+      
       {mounted && (
-        <div className="fixed inset-0 pointer-events-none z-0">
+        <div 
+          className="fixed inset-0 pointer-events-none z-0"
+          style={{
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
+          }}
+        >
           {floatingIconPositions.map((pos, i) => {
             const icons = [
               Server,
@@ -147,6 +171,8 @@ export default function HomeClient() {
                   top: `${pos.top}%`,
                   animationDelay: `${i * 0.7}s`,
                   animationDuration: `${15 + (i % 5) * 2}s`,
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden'
                 }}
               >
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-lg backdrop-blur-sm border border-blue-400/30 flex items-center justify-center shadow-lg">
@@ -165,6 +191,8 @@ export default function HomeClient() {
                 top: `${pos.top}%`,
                 animationDelay: `${i * 0.2}s`,
                 animationDuration: `${3 + (i % 3)}s`,
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
               }}
             >
               <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full shadow-lg" />
@@ -173,62 +201,72 @@ export default function HomeClient() {
         </div>
       )}
 
-      <MinimalHeader />
+      <div 
+        className="relative z-10"
+        style={{
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
+        }}
+      >
+        <MinimalHeader />
 
-      <main className="relative z-10">
-        <section className="-mt-13">
-          <DevOpsCyclingHero />
-        </section>
+        <main 
+          className="relative z-10"
+          style={{
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
+          }}
+        >
+          <section className="-mt-13">
+            <DevOpsCyclingHero />
+          </section>
 
-        {/* Featured Articles Section */}
-        <section className="-mt-10">
-          <FeaturedArticlesPage />
-        </section>
+          {/* Featured Articles Section */}
+          <section className="-mt-10">
+            <FeaturedArticlesPage />
+          </section>
 
-        {/* Authors Hero Section */}
-        <section className="-mt-18">
-          <AuthorsHero />
-        </section>
+          {/* Authors Hero Section */}
+          <section className="-mt-18">
+            <AuthorsHero />
+          </section>
 
-        {/* Existing sections with updated spacing */}
-        <section id="devops-roadmap" className="-mt-18">
-          <YouTubePlaylists />
-        </section>
+          {/* Existing sections with updated spacing */}
+          <section id="youtube" className="-mt-18">
+            <YouTubePlaylists />
+          </section>
 
-        <section id="free-udemy" className="-mt-15">
-          <TopUdemyCourses />
-        </section>
+          <section id="online" className="-mt-15">
+            <TopUdemyCourses />
+          </section>
 
-        <section id="free-labs" className="-mt-15">
-          <FreeLabs />
-        </section>
+          <section id="playgrounds" className="-mt-15">
+            <FreeLabs />
+          </section>
 
-        <div id="cert" className="-mt-15">
-          <CertificationRoadmap />
+          <div id="cert" className="-mt-15">
+            <CertificationRoadmap />
+          </div>
+
+          <section id="career" className="-mt-10">
+            <CareerPath />
+          </section>
+
+          <div className="-mt-20">
+            <SuccessStoriesSection />
+          </div>
+
+          <div className="-mt-23">
+            <AuthorsContributorsCTA />
+          </div>
+        </main>
+
+        <div id="faqs" className="">
+          <MinimalFooter />
         </div>
-
-        <section id="career" className="-mt-10">
-          <CareerPath />
-        </section>
-
-        <div id="services" className="">
-          <FreelanceServicesSection />
-        </div>
-
-        <div className="">
-          <SuccessStoriesSection />
-        </div>
-
-        <div className="">
-          <AuthorsContributorsCTA />
-        </div>
-      </main>
-
-      <div id="faqs" className="">
-        <MinimalFooter />
       </div>
 
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes float {
           0%,
           100% {
@@ -246,6 +284,27 @@ export default function HomeClient() {
         }
         .animate-float {
           animation: float 20s ease-in-out infinite;
+        }
+        
+        /* Prevent white flash during quick scrolling */
+        html {
+          background: linear-gradient(to right, #111827, #000, #111827);
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000;
+        }
+        
+        body {
+          background: linear-gradient(to right, #111827, #000, #111827);
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          overflow-x: hidden;
+        }
+        
+        /* Ensure smooth scrolling without white gaps */
+        * {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
       `}</style>
     </div>
