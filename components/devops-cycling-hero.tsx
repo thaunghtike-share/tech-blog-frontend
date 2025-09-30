@@ -188,7 +188,6 @@ const DevOpsCyclingHero = () => {
       >
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 relative z-10">
           {/* Chevron with dotted trail */}
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 ml-2" />
           <motion.div
             className="flex items-center gap-1 mt-2 sm:mt-0"
             animate={{ x: [0, 10, 0] }}
@@ -236,7 +235,6 @@ const DevOpsCyclingHero = () => {
                 }}
               />
             ))}
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 ml-2" />
           </motion.div>
         </div>
 

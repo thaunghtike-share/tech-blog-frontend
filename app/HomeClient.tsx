@@ -123,31 +123,31 @@ export default function HomeClient() {
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl relative overflow-x-hidden"
       style={{
         // Force GPU acceleration and prevent white flashes
-        transform: 'translateZ(0)',
-        backfaceVisibility: 'hidden',
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
         perspective: 1000,
-        willChange: 'auto'
+        willChange: "auto",
       }}
     >
       {/* Pre-render background to prevent white screen */}
-      <div 
+      <div
         className="fixed inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 z-0"
         style={{
-          transform: 'translateZ(0)',
-          backfaceVisibility: 'hidden'
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
         }}
       />
-      
+
       {mounted && (
-        <div 
+        <div
           className="fixed inset-0 pointer-events-none z-0"
           style={{
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden'
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
           }}
         >
           {floatingIconPositions.map((pos, i) => {
@@ -171,8 +171,8 @@ export default function HomeClient() {
                   top: `${pos.top}%`,
                   animationDelay: `${i * 0.7}s`,
                   animationDuration: `${15 + (i % 5) * 2}s`,
-                  transform: 'translateZ(0)',
-                  backfaceVisibility: 'hidden'
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
                 }}
               >
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-lg backdrop-blur-sm border border-blue-400/30 flex items-center justify-center shadow-lg">
@@ -191,8 +191,8 @@ export default function HomeClient() {
                 top: `${pos.top}%`,
                 animationDelay: `${i * 0.2}s`,
                 animationDuration: `${3 + (i % 3)}s`,
-                transform: 'translateZ(0)',
-                backfaceVisibility: 'hidden'
+                transform: "translateZ(0)",
+                backfaceVisibility: "hidden",
               }}
             >
               <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full shadow-lg" />
@@ -201,20 +201,20 @@ export default function HomeClient() {
         </div>
       )}
 
-      <div 
+      <div
         className="relative z-10"
         style={{
-          transform: 'translateZ(0)',
-          backfaceVisibility: 'hidden'
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
         }}
       >
         <MinimalHeader />
 
-        <main 
+        <main
           className="relative z-10"
           style={{
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden'
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
           }}
         >
           <section className="-mt-13">
@@ -256,8 +256,12 @@ export default function HomeClient() {
             <SuccessStoriesSection />
           </div>
 
-          <div className="-mt-23">
+          <div className="-mt-24">
             <AuthorsContributorsCTA />
+          </div>
+
+          <div className="-mt-30">
+            <MinimalFAQs />
           </div>
         </main>
 
@@ -285,7 +289,7 @@ export default function HomeClient() {
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
-        
+
         /* Prevent white flash during quick scrolling */
         html {
           background: linear-gradient(to right, #111827, #000, #111827);
@@ -293,14 +297,14 @@ export default function HomeClient() {
           backface-visibility: hidden;
           perspective: 1000;
         }
-        
+
         body {
           background: linear-gradient(to right, #111827, #000, #111827);
           transform: translateZ(0);
           backface-visibility: hidden;
           overflow-x: hidden;
         }
-        
+
         /* Ensure smooth scrolling without white gaps */
         * {
           -webkit-font-smoothing: antialiased;

@@ -2,12 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import {
-  Plus,
-  Minus,
-  ChevronDown,
-  ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   HelpCircle,
-  Info,
   MessageCircleQuestion,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -57,153 +54,219 @@ const faqsData: FAQ[] = rawFaqs.map((faq, index) => ({
 }));
 
 export function MinimalFAQs() {
-  const [openIds, setOpenIds] = useState<Set<number>>(new Set());
-  const [showAll, setShowAll] = useState(false);
-  const faqRef = useRef<HTMLDivElement>(null);
-  const faqContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
-  const toggleFAQ = (id: number) => {
-    setOpenIds((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      return newSet;
-    });
+  const nextFAQ = () => {
+    setCurrentIndex((prev) => (prev + 1) % faqsData.length);
   };
 
-  const handleToggleShowAll = () => {
-    const newShowAll = !showAll;
-    setShowAll(newShowAll);
-
-    // Wait for the state to update and DOM to render
-    setTimeout(() => {
-      if (faqContainerRef.current) {
-        if (newShowAll) {
-          // Scroll to the last FAQ when showing more
-          const lastFaq = faqContainerRef.current.lastElementChild;
-          lastFaq?.scrollIntoView({ behavior: "smooth" });
-        } else {
-          // Scroll to top of FAQ section when showing less
-          faqRef.current?.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-    }, 100);
+  const prevFAQ = () => {
+    setCurrentIndex((prev) => (prev - 1 + faqsData.length) % faqsData.length);
   };
 
-  const displayedFAQs = showAll ? faqsData : faqsData.slice(0, 4);
+  const goToFAQ = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  // Auto-advance FAQ every 8 seconds
+  useEffect(() => {
+    if (isAutoPlaying) {
+      autoPlayRef.current = setInterval(nextFAQ, 8000);
+    }
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isAutoPlaying]);
+
+  const handleUserInteraction = () => {
+    setIsAutoPlaying(false);
+    // Resume auto-play after 30 seconds of inactivity
+    setTimeout(() => setIsAutoPlaying(true), 30000);
+  };
+
+  const currentFAQ = faqsData[currentIndex];
 
   return (
     <section
-      ref={faqRef}
-      className="mt-20 w-full px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center"
+      ref={sectionRef}
+      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
-      {/* Header section */}
-      <div className="text-center mb-6 max-w-3xl">
+      {/* Enhanced Header */}
+      <motion.div
+        className="text-center mb-16 relative"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
+          {/* Animated bubble icon */}
+          <motion.div
+            className="relative p-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full shadow-2xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+            }}
+          >
+            {/* Bubble effect */}
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+              }}
+            />
+            <HelpCircle className="w-10 h-10 text-white relative z-10" />
+          </motion.div>
+
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-3 mb-4"
+          className="h-1 w-32 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto relative mb-6"
+          initial={{ width: 0 }}
+          animate={{ width: 128 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-indigo-500 to-emerald-600 rounded-2xl shadow-md">
-            <HelpCircle className="w-4 h-4 text-white" />
-          </div>
-          <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-50 to-emerald-50 text-indigo-700 border border-indigo-200">
-            <MessageCircleQuestion className="w-4 h-4 mr-2" /> FAQs
-          </span>
+          {/* Animated dots on the line */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
+            animate={{ x: [0, 120, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
         </motion.div>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-lg md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-emerald-800 bg-clip-text text-transparent mb-2"
-        >
-          Frequently Asked Questions
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-base md:text-lg text-gray-600"
-        >
+
+        <p className="text-gray-400 text-lg max-w-3xl mx-auto relative z-10">
           Find answers to common questions about DevOps and our services
-        </motion.p>
+        </p>
+      </motion.div>
+
+      {/* FAQ Carousel Container */}
+      <div className="relative max-w-4xl mx-auto">
+        {/* FAQ Content with integrated navigation */}
+        <div className="bg-gradient-to-br from-gray-600 to-gray-800 rounded-3xl border border-gray-700 p-8 shadow-xl relative">
+          {/* Navigation Buttons - Positioned on the container card */}
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20">
+            <motion.button
+              onClick={() => {
+                prevFAQ();
+                handleUserInteraction();
+              }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 text-sky-400 rounded-full shadow-lg border border-sky-500/30 hover:border-sky-400 transition-all"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </motion.button>
+          </div>
+
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
+            <motion.button
+              onClick={() => {
+                nextFAQ();
+                handleUserInteraction();
+              }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 text-sky-400 rounded-full shadow-lg border border-sky-500/30 hover:border-sky-400 transition-all"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </motion.button>
+          </div>
+
+          {/* Top border accent */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-t-3xl" />
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentFAQ.id}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              className="text-center px-12"
+            >
+              {/* Question Icon */}
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-gradient-to-r from-sky-500/20 to-blue-600/20 rounded-2xl border border-sky-500/30">
+                  <MessageCircleQuestion className="w-8 h-8 text-sky-400" />
+                </div>
+              </div>
+
+              {/* Question */}
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 leading-tight">
+                {currentFAQ.question}
+              </h3>
+
+              {/* Answer */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="text-gray-200 text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
+              >
+                {currentFAQ.answer}
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Auto-play Indicator */}
+        <div className="text-center mt-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700/50 rounded-full">
+            <div
+              className={`w-2 h-2 rounded-full ${
+                isAutoPlaying ? "bg-green-400 animate-pulse" : "bg-gray-400"
+              }`}
+            />
+            <span className="text-xs text-gray-400">
+              {isAutoPlaying ? "Auto-advancing" : "Paused"}
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* FAQ items container */}
-      <div ref={faqContainerRef} className="w-full max-w-4xl space-y-6">
-        {displayedFAQs.map((faq) => (
-          <motion.div
+      {/* Quick Navigation Dots */}
+      <div className="flex justify-center mt-8 space-x-3">
+        {faqsData.map((faq, index) => (
+          <motion.button
             key={faq.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: faq.id * 0.1 }}
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl"
+            onClick={() => {
+              goToFAQ(index);
+              handleUserInteraction();
+            }}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium transition-all ${
+              index === currentIndex
+                ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
+                : "bg-gray-700 text-gray-400 hover:bg-gray-600"
+            }`}
           >
-            <button
-              type="button"
-              className="w-full flex items-center justify-between p-6"
-              onClick={() => toggleFAQ(faq.id)}
-              aria-expanded={openIds.has(faq.id)}
-            >
-              <h3 className="text-base md:text-lg font-medium text-gray-900 text-center flex-1">
-                {faq.question}
-              </h3>
-              <div className="ml-4 flex-shrink-0">
-                {openIds.has(faq.id) ? (
-                  <Minus className="w-5 h-5 text-indigo-600" />
-                ) : (
-                  <Plus className="w-5 h-5 text-gray-500" />
-                )}
-              </div>
-            </button>
-            <AnimatePresence>
-              {openIds.has(faq.id) && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-6 pb-6">
-                    <p className="text-base text-gray-600 leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+            {index + 1}
+          </motion.button>
         ))}
       </div>
-
-      {/* Show More/Less button */}
-      {faqsData.length > 4 && (
-        <div className="mt-8 flex justify-center">
-          <motion.button
-            onClick={handleToggleShowAll}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-6 py-3 rounded-2xl text-sm md:text-base font-medium transition-all duration-300 bg-gradient-to-r from-indigo-500 to-emerald-600 text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-emerald-700"
-          >
-            {showAll ? (
-              <>
-                Show Less
-                <ChevronUp className="ml-2 w-4 h-4" />
-              </>
-            ) : (
-              <>
-                Show More FAQs
-                <ChevronDown className="ml-2 w-4 h-4" />
-              </>
-            )}
-          </motion.button>
-        </div>
-      )}
     </section>
   );
 }
