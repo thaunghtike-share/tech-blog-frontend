@@ -260,7 +260,7 @@ export default function HomeClient() {
             <AuthorsContributorsCTA />
           </div>
 
-          <div className="-mt-30">
+          <div className="-mt-32">
             <MinimalFAQs />
           </div>
         </main>

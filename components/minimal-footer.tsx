@@ -106,7 +106,6 @@ export function MinimalFooter() {
                   label: "YouTube Tutorials",
                 },
                 { href: "/learn-devops-on-udemy", label: "Free Online Courses" },
-                { href: "/recommended-paid-courses", label: "Recommended Paid Courses" },
                 { href: "/free-labs", label: "Free DevOps Playgrounds" },
               ].map((link) => (
                 <li key={link.href}>
@@ -188,17 +187,6 @@ export function MinimalFooter() {
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>
-          <div className="flex space-x-6 text-xs text-gray-500">
-            <Link href="/privacy" className="hover:text-gray-300 transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-gray-300 transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="/sitemap" className="hover:text-gray-300 transition-colors">
-              Sitemap
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

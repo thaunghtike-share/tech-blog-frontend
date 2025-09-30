@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   ExternalLink,
   Play,
@@ -145,14 +145,6 @@ export function FreeLabs() {
     setCurrentSlide((prev) => (prev - 1 + labs.length) % labs.length);
   };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [labs.length]);
-
   const currentLab = labs[currentSlide];
 
   return (
@@ -195,19 +187,19 @@ export function FreeLabs() {
 
       {/* Single Lab Display */}
       <div className="relative max-w-2xl mx-auto">
-        {/* Navigation Buttons */}
+        {/* Navigation Buttons with Dynamic Colors */}
         <button
           onClick={prevSlide}
-          className={`absolute -left-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-sky-500/50 transition-all duration-300`}
+          className={`absolute -left-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-${currentLab.iconColor.split('-')[1]}-500/50 transition-all duration-300`}
         >
-          <ChevronLeft className="w-6 h-6 text-sky-400" />
+          <ChevronLeft className={`w-6 h-6 ${currentLab.iconColor}`} />
         </button>
 
         <button
           onClick={nextSlide}
-          className={`absolute -right-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-sky-500/50 transition-all duration-300`}
+          className={`absolute -right-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-${currentLab.iconColor.split('-')[1]}-500/50 transition-all duration-300`}
         >
-          <ChevronRight className="w-6 h-6 text-sky-400" />
+          <ChevronRight className={`w-6 h-6 ${currentLab.iconColor}`} />
         </button>
 
         {/* Lab Card */}
