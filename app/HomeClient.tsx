@@ -176,12 +176,12 @@ export default function HomeClient() {
       <MinimalHeader />
 
       <main className="relative z-10">
-        <section className="-mt-4 ">
+        <section className="-mt-13">
           <DevOpsCyclingHero />
         </section>
 
         {/* Featured Articles Section */}
-        <section className="-mt-50">
+        <section className="-mt-17">
           <FeaturedArticlesPage />
         </section>
 
@@ -195,23 +195,19 @@ export default function HomeClient() {
           <YouTubePlaylists />
         </section>
 
-        <section id="free-udemy" className="">
+        <section id="free-udemy" className="-mt-15">
           <TopUdemyCourses />
         </section>
 
-        <section id="free-labs" className="">
+        <section id="free-labs" className="-mt-15">
           <FreeLabs />
         </section>
 
-        <div className="">
-          <RecommendedPaidCourses />
-        </div>
-
-        <div id="cert" className="">
+        <div id="cert" className="-mt-15">
           <CertificationRoadmap />
         </div>
 
-        <section id="career" className="">
+        <section id="career" className="-mt-10">
           <CareerPath />
         </section>
 
@@ -220,19 +216,11 @@ export default function HomeClient() {
         </div>
 
         <div className="">
-          <DevOpsWorkflowExample />
-        </div>
-
-        <div className="">
           <SuccessStoriesSection />
         </div>
 
         <div className="">
           <AuthorsContributorsCTA />
-        </div>
-
-        <div className="">
-          <MinimalFAQs />
         </div>
       </main>
 

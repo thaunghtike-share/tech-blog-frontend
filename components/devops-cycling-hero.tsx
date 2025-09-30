@@ -10,12 +10,8 @@ import {
   Zap,
   Box,
   Code,
-  Globe,
-  BookOpen,
-  BadgeCheck,
-  Rocket,
-  ListTodo,
   GraduationCap,
+  ChevronLeft,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -29,7 +25,7 @@ const DevOpsCyclingHero = () => {
       title: "What is DevOps?",
       description:
         "DevOps is a cultural and technical movement that bridges development and operations teams. It emphasizes automation, continuous integration, and rapid deployment to deliver software faster and more reliably.",
-      icon: <Zap className="w-12 h-12" />,
+      icon: <Zap className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "devops",
       iconGradient: "from-orange-400 to-yellow-400",
       tools: ["Docker", "Jenkins", "AWS", "Terraform", "Ansible"],
@@ -39,7 +35,7 @@ const DevOpsCyclingHero = () => {
       title: "What is Kubernetes?",
       description:
         "Kubernetes is an open-source container orchestration platform that automates deployment, scaling, and management of containerized applications across clusters of hosts.",
-      icon: <Container className="w-12 h-12" />,
+      icon: <Container className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "kubernetes",
       iconGradient: "from-blue-400 to-cyan-400",
       tools: ["Pods", "Services", "Deployments", "Ingress", "ConfigMaps"],
@@ -49,7 +45,7 @@ const DevOpsCyclingHero = () => {
       title: "What is CI/CD?",
       description:
         "Continuous Integration/Continuous Deployment is a practice that enables teams to deliver code changes more frequently and reliably through automated testing and deployment pipelines.",
-      icon: <GitBranch className="w-12 h-12" />,
+      icon: <GitBranch className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "cicd",
       iconGradient: "from-green-400 to-emerald-400",
       tools: [
@@ -65,7 +61,7 @@ const DevOpsCyclingHero = () => {
       title: "What is Linux?",
       description:
         "Linux is an open-source operating system that powers most servers, containers, and cloud infrastructure. It provides the foundation for modern DevOps practices and tools.",
-      icon: <Terminal className="w-12 h-12" />,
+      icon: <Terminal className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "linux",
       iconGradient: "from-orange-500 to-yellow-500",
       tools: ["Ubuntu", "CentOS", "Red Hat", "Debian", "Alpine"],
@@ -75,7 +71,7 @@ const DevOpsCyclingHero = () => {
       title: "What is Cloud Computing?",
       description:
         "Cloud computing delivers computing services over the internet, enabling scalable, on-demand access to resources like servers, storage, and applications without managing physical infrastructure.",
-      icon: <Box className="w-12 h-12" />,
+      icon: <Box className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "cloud",
       iconGradient: "from-sky-400 to-blue-400",
       tools: ["AWS", "Azure", "GCP", "DigitalOcean", "Heroku"],
@@ -85,7 +81,7 @@ const DevOpsCyclingHero = () => {
       title: "What is Containerization?",
       description:
         "Containerization packages applications and their dependencies into lightweight, portable containers that run consistently across different environments, from development to production.",
-      icon: <Box className="w-12 h-12" />,
+      icon: <Box className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "containerization",
       iconGradient: "from-teal-400 to-green-400",
       tools: ["Docker", "Podman", "containerd", "CRI-O", "LXC"],
@@ -95,7 +91,7 @@ const DevOpsCyclingHero = () => {
       title: "What is IAC?",
       description:
         "Infrastructure as Code (IaC) manages and provisioning computing infrastructure through machine-readable definition files, enabling version control and automated deployment of infrastructure.",
-      icon: <Code className="w-12 h-12" />,
+      icon: <Code className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "iac",
       iconGradient: "from-violet-400 to-purple-400",
       tools: ["Terraform", "Ansible", "CloudFormation", "Pulumi", "Chef"],
@@ -105,7 +101,7 @@ const DevOpsCyclingHero = () => {
       title: "Essential DevOps Tools",
       description:
         "Modern DevOps relies on a comprehensive toolchain covering version control, CI/CD, containerization, orchestration, monitoring, and infrastructure management.",
-      icon: <Server className="w-12 h-12" />,
+      icon: <Server className="w-10 h-10 sm:w-12 sm:h-12" />,
       bgPattern: "tools",
       iconGradient: "from-purple-400 to-pink-400",
       tools: ["Docker", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
@@ -139,84 +135,27 @@ const DevOpsCyclingHero = () => {
 
   const currentSlideData = slides[currentSlide];
 
-  if (!mounted) {
-    return (
-      <section className="relative min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl overflow-hidden">
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-8 flex justify-center">
-              <div className="relative bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full p-6 text-white">
-                <Zap className="w-12 h-12" />
-              </div>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              <span className="bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-                What is DevOps?
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
-              DevOps is a cultural and technical movement that bridges
-              development and operations teams.
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="relative min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl overflow-hidden">
-      {/* Header with updated title */}
+      {/* Header Section */}
       <motion.div
-        className="absolute top-20 left-0 right-0 z-20 text-center"
+        className="absolute top-20 md:top-24 left-0 right-0 z-20 text-center px-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
-          {/* Animated bubble icon */}
-          <motion.div
-            className="relative p-4 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-full shadow-2xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, -5, 5, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
-          >
-            {/* Bubble effect */}
-            <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-orange-400/30 to-yellow-500/30 rounded-full blur-lg"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "reverse",
-              }}
-            />
-            <GraduationCap className="w-10 h-10 text-white relative z-10" />
-          </motion.div>
-
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            Our Mission
-          </h2>
-
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 relative z-10">
           {/* Chevron with dotted trail */}
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 ml-2" />
           <motion.div
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 mt-2 sm:mt-0"
             animate={{ x: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
           >
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -228,20 +167,46 @@ const DevOpsCyclingHero = () => {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-orange-400 ml-2" />
+          </motion.div>
+
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Our Mission
+          </h2>
+
+          {/* Chevron with dotted trail */}
+          <motion.div
+            className="flex items-center gap-1 mt-2 sm:mt-0"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 ml-2" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-full mx-auto relative"
+          className="h-1 w-24 sm:w-32 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-full mx-auto relative"
           initial={{ width: 0 }}
-          animate={{ width: 128 }}
+          animate={{ width: "6rem" }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Animated dots on the line */}
           <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 120, 0] }}
+            className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full shadow-lg"
+            animate={{ x: [0, "5.5rem", 0] }}
             transition={{
               duration: 3,
               repeat: Number.POSITIVE_INFINITY,
@@ -250,12 +215,14 @@ const DevOpsCyclingHero = () => {
           />
         </motion.div>
 
-        <p className="text-gray-400 mt-4 text-base max-w-2xl mx-auto relative z-10">
+        <p className="text-gray-400 mt-6 text-sm sm:text-base max-w-2xl mx-auto relative z-10 px-2">
           This website is for developers and students in Myanmar who want to
-          learn DevOps and boost their careers in modern software development and cloud infrastructure.
+          learn DevOps and boost their careers in modern software development
+          and cloud infrastructure.
         </p>
       </motion.div>
 
+      {/* Background Elements */}
       <div className="absolute inset-0">
         {/* DevOps Background */}
         <div
@@ -277,8 +244,8 @@ const DevOpsCyclingHero = () => {
                 animationDuration: `${4 + (i % 3)}s`,
               }}
             >
-              <div className="w-6 h-6 bg-orange-500/20 rounded-lg backdrop-blur-sm border border-orange-400/30 flex items-center justify-center">
-                <Zap className="w-3 h-3 text-orange-400" />
+              <div className="w-4 h-4 sm:w-6 sm:h-6 bg-orange-500/20 rounded-lg backdrop-blur-sm border border-orange-400/30 flex items-center justify-center">
+                <Zap className="w-2 h-2 sm:w-3 sm:h-3 text-orange-400" />
               </div>
             </div>
           ))}
@@ -304,8 +271,8 @@ const DevOpsCyclingHero = () => {
                 animationDuration: `${2 + (i % 2)}s`,
               }}
             >
-              <div className="w-6 h-6 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center">
-                <Container className="w-3 h-3 text-blue-400" />
+              <div className="w-4 h-4 sm:w-6 sm:h-6 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center">
+                <Container className="w-2 h-2 sm:w-3 sm:h-3 text-blue-400" />
               </div>
             </div>
           ))}
@@ -328,12 +295,12 @@ const DevOpsCyclingHero = () => {
                 transform: "rotate(45deg)",
               }}
             >
-              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent" />
+              <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent" />
             </div>
           ))}
         </div>
 
-        {/* Linux Background - Improved to match others */}
+        {/* Linux Background */}
         <div
           className={`absolute inset-0 transition-opacity duration-1000 ${
             currentSlideData.bgPattern === "linux" ? "opacity-100" : "opacity-0"
@@ -351,12 +318,11 @@ const DevOpsCyclingHero = () => {
                 animationDuration: `${3 + (i % 3)}s`,
               }}
             >
-              <div className="w-6 h-6 bg-yellow-500/20 rounded-lg backdrop-blur-sm border border-yellow-400/30 flex items-center justify-center">
-                <Terminal className="w-3 h-3 text-yellow-400" />
+              <div className="w-4 h-4 sm:w-6 sm:h-6 bg-yellow-500/20 rounded-lg backdrop-blur-sm border border-yellow-400/30 flex items-center justify-center">
+                <Terminal className="w-2 h-2 sm:w-3 sm:h-3 text-yellow-400" />
               </div>
             </div>
           ))}
-          {/* Terminal command lines effect */}
           <div className="absolute inset-0 opacity-10">
             {[...Array(8)].map((_, i) => (
               <div
@@ -367,7 +333,7 @@ const DevOpsCyclingHero = () => {
                   top: `${10 + (i % 4) * 25}%`,
                 }}
               >
-                <div className="w-24 h-0.5 bg-orange-400/50" />
+                <div className="w-20 sm:w-24 h-0.5 bg-orange-400/50" />
               </div>
             ))}
           </div>
@@ -390,7 +356,7 @@ const DevOpsCyclingHero = () => {
                   top: `${15 + (i % 4) * 20}%`,
                 }}
               >
-                <div className="w-16 h-0.5 bg-sky-400/50" />
+                <div className="w-12 sm:w-16 h-0.5 bg-sky-400/50" />
               </div>
             ))}
           </div>
@@ -416,8 +382,8 @@ const DevOpsCyclingHero = () => {
                 animationDuration: `${2.5 + (i % 2) * 0.5}s`,
               }}
             >
-              <div className="w-6 h-6 bg-teal-500/20 rounded-md backdrop-blur-sm border border-teal-400/30 flex items-center justify-center">
-                <Box className="w-3 h-3 text-teal-400" />
+              <div className="w-4 h-4 sm:w-6 sm:h-6 bg-teal-500/20 rounded-md backdrop-blur-sm border border-teal-400/30 flex items-center justify-center">
+                <Box className="w-2 h-2 sm:w-3 sm:h-3 text-teal-400" />
               </div>
             </div>
           ))}
@@ -442,8 +408,8 @@ const DevOpsCyclingHero = () => {
                 }}
               >
                 <div className="flex items-center space-x-1">
-                  <Code className="w-4 h-4 text-violet-400" />
-                  <div className="w-12 h-0.5 bg-violet-400/50" />
+                  <Code className="w-3 h-3 sm:w-4 sm:h-4 text-violet-400" />
+                  <div className="w-8 sm:w-12 h-0.5 bg-violet-400/50" />
                 </div>
               </div>
             ))}
@@ -468,8 +434,8 @@ const DevOpsCyclingHero = () => {
                 animationDuration: `${8 + (i % 4)}s`,
               }}
             >
-              <div className="w-8 h-8 bg-purple-500/20 rounded-lg backdrop-blur-sm border border-purple-400/30 flex items-center justify-center">
-                <Server className="w-4 h-4 text-purple-400" />
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-lg backdrop-blur-sm border border-purple-400/30 flex items-center justify-center">
+                <Server className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
               </div>
             </div>
           ))}
@@ -477,53 +443,65 @@ const DevOpsCyclingHero = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-32">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Animated Icon with Orange/Yellow Gradient */}
-          <div className="-mt-20 mb-6 flex justify-center">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-48 sm:pt-56 md:pt-40 lg:pt-32">
+        <div className="max-w-4xl mx-auto text-center w-full">
+          {/* Animated Icon with Better Spacing */}
+          <div className="mt-37 mb-4 md:mb-4 flex justify-center">
             <div className="relative">
-              <div className={`absolute inset-0 bg-gradient-to-r ${currentSlideData.iconGradient} rounded-full blur-xl opacity-50 animate-pulse`} />
-              <div className={`relative bg-gradient-to-r ${currentSlideData.iconGradient} rounded-full p-5 text-white shadow-2xl`}>
+              <div
+                className={`absolute inset-0 bg-gradient-to-r ${currentSlideData.iconGradient} rounded-full blur-xl opacity-50 animate-pulse`}
+              />
+              <div
+                className={`relative bg-gradient-to-r ${currentSlideData.iconGradient} rounded-full p-4 sm:p-5 text-white shadow-2xl`}
+              >
                 {currentSlideData.icon}
               </div>
             </div>
           </div>
 
-          {/* Title with Animation */}
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 animate-fade-in">
-            <span className={`bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent`}>
-              {currentSlideData.title}
-            </span>
-          </h1>
-
-          {/* Description */}
-          <p className="text-lg md:text-lg text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto animate-fade-in">
-            {currentSlideData.description}
-          </p>
-
-          {/* Tools/Technologies */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {currentSlideData.tools.map((tool, index) => (
-              <motion.div
-                key={tool}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-white font-medium text-sm hover:bg-white/20 transition-all duration-300 cursor-pointer"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.3 }}
-                whileHover={{ scale: 1.05 }}
+          {/* Title with Better Spacing */}
+          <div className="mb-6 sm:mb-8 md:mb-10">
+            <h1 className="text-3xl sm:text-2xl md:text-5xl lg:text-4xl font-bold text-white">
+              <span
+                className={`bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent`}
               >
-                {tool}
-              </motion.div>
-            ))}
+                {currentSlideData.title}
+              </span>
+            </h1>
+          </div>
+
+          {/* Description with Better Spacing */}
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto px-2 sm:px-4">
+              {currentSlideData.description}
+            </p>
+          </div>
+
+          {/* Tools/Technologies with Better Spacing */}
+          <div className="mb-12 sm:mb-16">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
+              {currentSlideData.tools.map((tool, index) => (
+                <motion.div
+                  key={tool}
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 text-white font-medium text-xs sm:text-sm hover:bg-white/20 transition-all duration-300 cursor-pointer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1, duration: 0.3 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  {tool}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Progress Indicators */}
-          <div className="flex justify-center space-x-2">
+          <div className="flex justify-center space-x-1.5 sm:space-x-2 mb-8">
             {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
                   index === currentSlide
                     ? `bg-gradient-to-r ${currentSlideData.iconGradient} scale-125`
                     : "bg-white/30 hover:bg-white/50"
@@ -531,55 +509,55 @@ const DevOpsCyclingHero = () => {
               />
             ))}
           </div>
+        </div>
 
-          {/* Animated Chevrons */}
-          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:block">
-            <div className="flex flex-col space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <ChevronRight
-                  key={i}
-                  className="w-6 h-6 text-orange-400/50 animate-pulse"
-                  style={{ animationDelay: `${i * 0.2}s` }}
-                />
-              ))}
-            </div>
+        {/* Side Chevrons - Hidden on mobile, shown on larger screens */}
+        <div className="absolute left-4 sm:left-8 top-1/2 transform -translate-y-1/2 hidden lg:block">
+          <div className="flex flex-col space-y-3 sm:space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <ChevronRight
+                key={i}
+                className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400/50 animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
           </div>
+        </div>
 
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2 rotate-180 hidden lg:block">
-            <div className="flex flex-col space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <ChevronRight
-                  key={i}
-                  className="w-6 h-6 text-yellow-400/50 animate-pulse"
-                  style={{ animationDelay: `${i * 0.2}s` }}
-                />
-              ))}
-            </div>
+        <div className="absolute right-4 sm:right-8 top-1/2 transform -translate-y-1/2 rotate-180 hidden lg:block">
+          <div className="flex flex-col space-y-3 sm:space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <ChevronRight
+                key={i}
+                className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400/50 animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
           </div>
+        </div>
 
-          {/* Dotted Design Elements */}
-          <div className="absolute top-20 left-20 hidden lg:block">
-            <div className="grid grid-cols-3 gap-2">
-              {[...Array(9)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-2 h-2 bg-orange-400/30 rounded-full animate-ping"
-                  style={{ animationDelay: `${i * 0.3}s` }}
-                />
-              ))}
-            </div>
+        {/* Dotted Design Elements - Hidden on mobile */}
+        <div className="absolute top-20 left-4 sm:left-20 hidden lg:block">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+            {[...Array(9)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-400/30 rounded-full animate-ping"
+                style={{ animationDelay: `${i * 0.3}s` }}
+              />
+            ))}
           </div>
+        </div>
 
-          <div className="absolute bottom-20 right-20 hidden lg:block">
-            <div className="grid grid-cols-3 gap-2">
-              {[...Array(9)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-2 h-2 bg-yellow-400/30 rounded-full animate-ping"
-                  style={{ animationDelay: `${i * 0.3}s` }}
-                />
-              ))}
-            </div>
+        <div className="absolute bottom-20 right-4 sm:right-20 hidden lg:block">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+            {[...Array(9)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-400/30 rounded-full animate-ping"
+                style={{ animationDelay: `${i * 0.3}s` }}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -609,6 +587,13 @@ const DevOpsCyclingHero = () => {
         }
         .animate-fade-in {
           animation: fade-in 0.8s ease-out forwards;
+        }
+
+        /* Cross-browser improvements */
+        @supports not (backdrop-filter: blur(12px)) {
+          .backdrop-blur-2xl {
+            background-color: rgba(0, 0, 0, 0.9);
+          }
         }
       `}</style>
     </section>

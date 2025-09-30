@@ -443,12 +443,6 @@ export function MinimalHeader() {
                     Free Online Courses
                   </Link>
                   <Link
-                    href="/recommended-paid-courses"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
-                  >
-                    Recommended Paid Courses
-                  </Link>
-                  <Link
                     href="/free-labs"
                     className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all"
                   >
