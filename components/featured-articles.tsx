@@ -193,7 +193,7 @@ export function FeaturedArticlesPage() {
           <p className="text-red-400 mb-6 text-lg">Error: {error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all shadow-lg hover:shadow-xl"
+            className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl transition-all shadow-lg"
           >
             Retry
           </button>
@@ -338,13 +338,13 @@ export function FeaturedArticlesPage() {
                       }}
                     />
 
-                    <div className="relative bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-2">
+                    <div className="relative bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                       {/* Title */}
                       <Link
                         href={`/articles/${article.slug}`}
-                        className="group/link block mb-4"
+                        className="block mb-4"
                       >
-                        <h3 className="text-xl font-bold text-white group-hover/link:text-blue-300 transition-colors line-clamp-2 leading-tight">
+                        <h3 className="text-xl font-bold text-white transition-colors line-clamp-2 leading-tight">
                           {article.title}
                         </h3>
                       </Link>
@@ -368,7 +368,7 @@ export function FeaturedArticlesPage() {
                             href={`/authors/${
                               author?.username || slugify(author?.name || "")
                             }`}
-                            className="font-medium text-gray-200 hover:text-blue-300 transition-colors"
+                            className="font-medium text-gray-200 transition-colors"
                           >
                             {author?.name || `Author ${article.author}`}
                           </Link>
@@ -384,7 +384,7 @@ export function FeaturedArticlesPage() {
                         {category && (
                           <Link
                             href={`/categories/${category.slug}`}
-                            className="flex items-center gap-1 text-amber-300 bg-amber-900/30 border border-amber-500/40 px-3 py-1 rounded-full text-sm font-medium hover:bg-amber-900/40 transition-colors"
+                            className="flex items-center gap-1 text-amber-300 bg-amber-900/30 border border-amber-500/40 px-3 py-1 rounded-full text-sm font-medium transition-colors"
                           >
                             <Folder className="w-4 h-4" />
                             <span>{category.name.split(" ")[0]}</span>
@@ -397,7 +397,7 @@ export function FeaturedArticlesPage() {
                             <Link
                               key={tag.id}
                               href={`/articles?tag=${tag.slug}`}
-                              className="flex items-center gap-1 text-cyan-300 bg-cyan-900/30 border border-cyan-500/40 px-3 py-1 rounded-full text-sm font-medium hover:bg-cyan-900/40 transition-colors"
+                              className="flex items-center gap-1 text-cyan-300 bg-cyan-900/30 border border-cyan-500/40 px-3 py-1 rounded-full text-sm font-medium transition-colors"
                             >
                               <TagIcon className="w-4 h-4" />
                               <span>{tag.name.split(" ")[0]}</span>
@@ -417,7 +417,7 @@ export function FeaturedArticlesPage() {
                       <div className="pt-4 border-t border-gray-600/50 flex items-center justify-between">
                         <Link
                           href={`/articles/${article.slug}`}
-                          className="text-sm text-blue-300 flex items-center gap-2 group-hover:gap-3 font-medium transition-all hover:text-blue-200"
+                          className="text-sm text-blue-300 flex items-center gap-2 font-medium transition-all"
                         >
                           Read more
                           <motion.div
@@ -480,7 +480,7 @@ export function FeaturedArticlesPage() {
 
             <Link
               href="/articles"
-              className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:via-purple-600 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/30 border border-blue-400/50 z-10"
+              className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-white font-semibold rounded-2xl transition-all shadow-lg border border-blue-400/50 z-10"
             >
               <motion.div
                 animate={{ rotate: [0, 360] }}

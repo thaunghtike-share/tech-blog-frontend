@@ -5,17 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import DevOpsCyclingHero from "@/components/devops-cycling-hero";
 import { FeaturedArticlesPage } from "@/components/featured-articles";
-import { ServicesHero } from "@/components/services-hero";
 import { AuthorsHero } from "@/components/authors-hero";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { CertificationRoadmap } from "@/components/CertificationRoadmap";
 import { MinimalFAQs } from "@/components/minimal-faqs";
 import { TopUdemyCourses } from "@/components/TopUdemyCourses";
 import { FreelanceServicesSection } from "@/components/FreelanceServicesSection";
-import { DevOpsWorkflowExample } from "@/components/DevOpsWorkflowExample";
 import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
-import { RecommendedPaidCourses } from "@/components/RecommendedPaidCourses";
 import { YouTubePlaylists } from "@/components/YouTubePlaylists";
 import { FreeLabs } from "@/components/FreeLabs";
 import { CareerPath } from "@/components/CareerPath";
@@ -222,7 +219,7 @@ export default function HomeClient() {
           </section>
 
           {/* Featured Articles Section */}
-          <section className="-mt-10 2xl:-mt-65">
+          <section className="-mt-30 2xl:-mt-65">
             <FeaturedArticlesPage />
           </section>
 
