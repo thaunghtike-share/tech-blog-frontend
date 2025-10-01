@@ -10,36 +10,12 @@ const DevOpsCyclingHero = () => {
   const slides = [
     {
       id: "devops",
-      title: "Let's Explore DevOps",
+      title: "Required Skills To Be DevOps Engineer",
       description:
         "Discover how DevOps bridges development and operations teams through automation, continuous integration, and rapid deployment to deliver software faster and more reliably.",
       bgPattern: "devops",
       iconGradient: "from-orange-400 to-yellow-400",
       tools: ["Docker", "Jenkins", "AWS", "Terraform", "Ansible"],
-    },
-    {
-      id: "kubernetes",
-      title: "Master Kubernetes",
-      description:
-        "Learn container orchestration with Kubernetes - the industry standard for automating deployment, scaling, and management of containerized applications.",
-      bgPattern: "kubernetes",
-      iconGradient: "from-blue-400 to-cyan-400",
-      tools: ["Pods", "Services", "Deployments", "Ingress", "ConfigMaps"],
-    },
-    {
-      id: "cicd",
-      title: "Understand CI/CD",
-      description:
-        "Explore Continuous Integration and Continuous Deployment - the practices that enable teams to deliver code changes more frequently and reliably through automated pipelines.",
-      bgPattern: "cicd",
-      iconGradient: "from-green-400 to-emerald-400",
-      tools: [
-        "GitHub Actions",
-        "Jenkins",
-        "GitLab CI",
-        "CircleCI",
-        "Azure DevOps",
-      ],
     },
     {
       id: "linux",
@@ -48,6 +24,15 @@ const DevOpsCyclingHero = () => {
         "Build your foundation with Linux - the operating system that powers most servers, containers, and cloud infrastructure in modern DevOps environments.",
       bgPattern: "linux",
       iconGradient: "from-orange-500 to-yellow-500",
+      tools: ["Ubuntu", "CentOS", "Red Hat", "Debian", "Alpine"],
+    },
+    {
+      id: "network",
+      title: "Learn Network Fundamentals",
+      description:
+        "Understand networking basics - the protocols, architectures, and tools that enable communication between computers, servers, and cloud services in DevOps.",
+      bgPattern: "cloud",
+      iconGradient: "from-sky-400 to-blue-400",
       tools: ["Ubuntu", "CentOS", "Red Hat", "Debian", "Alpine"],
     },
     {
@@ -67,6 +52,47 @@ const DevOpsCyclingHero = () => {
       bgPattern: "containerization",
       iconGradient: "from-teal-400 to-green-400",
       tools: ["Docker", "Podman", "containerd", "CRI-O", "LXC"],
+    },
+    {
+      id: "cicd",
+      title: "Understand CI/CD",
+      description:
+        "Explore Continuous Integration and Continuous Deployment - the practices that enable teams to deliver code changes more frequently and reliably through automated pipelines.",
+      bgPattern: "cicd",
+      iconGradient: "from-green-400 to-emerald-400",
+      tools: [
+        "GitHub Actions",
+        "Jenkins",
+        "GitLab CI",
+        "CircleCI",
+        "Azure DevOps",
+      ],
+    },
+    {
+      id: "kubernetes",
+      title: "Master Kubernetes",
+      description:
+        "Learn container orchestration with Kubernetes - the industry standard for automating deployment, scaling, and management of containerized applications.",
+      bgPattern: "kubernetes",
+      iconGradient: "from-blue-400 to-cyan-400",
+      tools: ["Pods", "Services", "Deployments", "Ingress", "ConfigMaps"],
+    },
+    {
+      id: "Monitoring",
+      title: "Explore Monitoring & Logging",
+      description:
+        "Understand the importance of monitoring and logging in DevOps - how to track application performance, detect issues, and gain insights through tools like Prometheus, Grafana, and ELK Stack.",
+      bgPattern: "containerization",
+      iconGradient: "from-teal-400 to-green-400",
+      tools: ["Pods", "Services", "Deployments", "Ingress", "ConfigMaps"],
+    },
+    {
+      id: "git",
+      title: "Master Git & Version Control",
+      description:
+        "Learn Git - the distributed version control system that enables collaboration, branching, and code management in modern software development and DevOps workflows.",
+      bgPattern: "kubernetes",
+      iconGradient: "from-blue-400 to-cyan-400",
     },
     {
       id: "iac",
@@ -120,7 +146,7 @@ const DevOpsCyclingHero = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Our Mission
           </h2>
         </div>
@@ -134,7 +160,7 @@ const DevOpsCyclingHero = () => {
         </motion.div>
 
         {/* Added more vertical spacing here */}
-        <div className="mb-8">
+        <div className="mb-2">
           <p className="text-white/85 text-sm sm:text-lg max-w-2xl mx-auto relative z-10 px-2 leading-relaxed">
             This website is for developers and students in Myanmar who want to
             learn DevOps and boost their careers in modern software development

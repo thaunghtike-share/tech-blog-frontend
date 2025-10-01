@@ -854,7 +854,7 @@ export function YouTubePlaylists({
                                   {pl.title}
                                 </h3>
 
-                                <div className="space-y-2 mb-4 md:mb-6">
+                                <div className="space-y-2 mb-1 md:mb-2">
                                   <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
                                     <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
                                     <span className="font-medium text-gray-300">
