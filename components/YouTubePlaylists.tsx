@@ -636,15 +636,6 @@ export function YouTubePlaylists({
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 90, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
 
         <motion.p
@@ -668,7 +659,7 @@ export function YouTubePlaylists({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-3 px-6 py-4 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700 hover:border-red-500/50 transition-all duration-300 min-w-[280px]"
+            className="flex items-center gap-3 px-6 py-4 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700 transition-all duration-300 min-w-[280px]"
           >
             <div
               className={`p-2 rounded-xl ${difficultyConfig[selectedDifficulty].iconBg} shadow-lg`}
@@ -778,7 +769,7 @@ export function YouTubePlaylists({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-red-500/50 transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center transition-all duration-300 -ml-6"
               >
                 <ChevronLeft className="w-5 h-5 text-red-500" />
               </motion.button>
@@ -786,7 +777,7 @@ export function YouTubePlaylists({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-red-500/50 transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center transition-all duration-300 -mr-6"
               >
                 <ChevronRight className="w-5 h-5 text-red-500" />
               </motion.button>
@@ -822,7 +813,7 @@ export function YouTubePlaylists({
                           >
                             {/* Background glow effect matching AuthorsHero */}
                             <motion.div
-                              className="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-red-500/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                              className="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-red-500/10 rounded-3xl blur opacity-0 transition duration-500"
                               animate={{
                                 scale: [1, 1.05, 1],
                               }}
@@ -833,7 +824,7 @@ export function YouTubePlaylists({
                               }}
                             />
 
-                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-red-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full">
+                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full">
                               <div className="relative aspect-video bg-gray-900 overflow-hidden">
                                 <iframe
                                   src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}
@@ -859,19 +850,19 @@ export function YouTubePlaylists({
                               </div>
 
                               <div className="p-4 md:p-6 flex-grow">
-                                <h3 className="text-base md:text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-red-400 transition-colors">
+                                <h3 className="text-base md:text-lg font-bold text-white mb-3 line-clamp-2 transition-colors">
                                   {pl.title}
                                 </h3>
 
                                 <div className="space-y-2 mb-4 md:mb-6">
                                   <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
-                                    <Users className="w-4 h-4 md:w-4 md:h-4 text-red-500" />
+                                    <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
                                     <span className="font-medium text-gray-300">
                                       {pl.channel}
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
-                                    <Clock className="w-4 h-4 md:w-4 md:h-4 text-red-500" />
+                                    <Clock className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
                                     <span>
                                       Duration:{" "}
                                       <span className="font-medium text-gray-300">

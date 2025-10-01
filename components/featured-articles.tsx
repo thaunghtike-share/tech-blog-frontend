@@ -276,16 +276,6 @@ export function FeaturedArticlesPage() {
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Enhanced animated dots on the line */}
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 120, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
 
         <p className="text-white/85 mt-6 text-lg max-w-2xl mx-auto relative z-10">
@@ -327,7 +317,7 @@ export function FeaturedArticlesPage() {
                   >
                     {/* Enhanced animated background glow */}
                     <motion.div
-                      className="absolute -inset-1 bg-gradient-to-r from-blue-500/30 via-purple-500/20 to-indigo-500/30 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                      className="absolute -inset-1 bg-gradient-to-r from-blue-500/30 via-purple-500/20 to-indigo-500/30 rounded-3xl blur opacity-0 transition duration-500"
                       animate={{
                         scale: [1, 1.05, 1],
                       }}
@@ -338,7 +328,7 @@ export function FeaturedArticlesPage() {
                       }}
                     />
 
-                    <div className="relative bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div className="relative bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2">
                       {/* Title */}
                       <Link
                         href={`/articles/${article.slug}`}

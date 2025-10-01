@@ -134,16 +134,6 @@ export function AuthorsHero() {
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Animated dots on the line */}
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 120, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
 
         <p className="text-white/85 mt-6 text-lg max-w-2xl mx-auto relative z-10">
@@ -206,7 +196,7 @@ export function AuthorsHero() {
 
                 {/* Animated background glow */}
                 <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                  className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-3xl blur opacity-0 transition duration-500"
                   animate={{
                     scale: [1, 1.05, 1],
                   }}
@@ -217,13 +207,13 @@ export function AuthorsHero() {
                   }}
                 />
 
-                <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:border-yellow-500/50 transition-all duration-300 hover:-translate-y-2 text-center">
+                <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
                   {/* Avatar with animated bubble rings */}
                   <div className="relative mb-6">
                     <img
                       src={author.avatar || "/placeholder.svg"}
                       alt={author.name}
-                      className="relative w-20 h-20 rounded-full object-cover border-4 border-gray-600 mx-auto shadow-lg group-hover:shadow-xl transition-shadow z-10"
+                      className="relative w-20 h-20 rounded-full object-cover border-4 border-gray-600 mx-auto shadow-lg transition-shadow z-10"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = "/placeholder.svg";
                       }}

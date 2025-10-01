@@ -381,15 +381,6 @@ export function CertificationRoadmap() {
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 90, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
 
         <motion.p

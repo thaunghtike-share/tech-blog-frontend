@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+import { motion } from "framer-motion";
 import {
   ExternalLink,
   Play,
@@ -151,56 +152,112 @@ export function FreeLabs() {
     <section ref={sectionRef} className="w-full max-w-4xl mx-auto px-4 py-16">
       {/* Enhanced Header */}
       <div className="text-center mb-16 relative">
-        <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
-          {/* Static bubble icon */}
-          <div className="relative p-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full shadow-2xl">
-            <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-4 mb-6 relative z-10"
+        >
+          {/* Animated bubble icon */}
+          <motion.div
+            className="relative p-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full shadow-2xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+            }}
+          >
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+              }}
+            />
             <FlaskConical className="w-10 h-10 text-white relative z-10" />
-          </div>
+          </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <motion.h2
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+          >
             Free DevOps Playgrounds
-          </h2>
+          </motion.h2>
 
-          {/* Static chevron with dotted trail */}
-          <div className="flex items-center gap-1">
+          {/* Animated chevron with trail */}
+          <motion.div
+            className="flex items-center gap-1"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
             {[...Array(3)].map((_, i) => (
-              <div
+              <motion.div
                 key={i}
                 className="w-2 h-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
               />
             ))}
             <ChevronRight className="w-6 h-6 text-sky-400 ml-2" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="h-1 w-32 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto relative mb-6">
-          {/* Static dot on the line */}
-          <div className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg" />
-        </div>
+        <motion.div
+          className="h-1 w-32 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto relative mb-6"
+          initial={{ width: 0 }}
+          animate={{ width: 128 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+        </motion.div>
 
-        <p className="text-white text-lg max-w-2xl mx-auto relative z-10">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-white text-lg max-w-2xl mx-auto relative z-10"
+        >
           Explore these practical, free labs and playgrounds to level up your
           DevOps expertise
-        </p>
+        </motion.p>
       </div>
 
       {/* Single Lab Display */}
       <div className="relative max-w-2xl mx-auto">
         {/* Navigation Buttons with Dynamic Colors */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           onClick={prevSlide}
-          className={`absolute -left-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-${currentLab.iconColor.split('-')[1]}-500/50 transition-all duration-300`}
+          className={`absolute -left-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center transition-all duration-300`}
         >
           <ChevronLeft className={`w-6 h-6 ${currentLab.iconColor}`} />
-        </button>
+        </motion.button>
 
-        <button
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           onClick={nextSlide}
-          className={`absolute -right-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-${currentLab.iconColor.split('-')[1]}-500/50 transition-all duration-300`}
+          className={`absolute -right-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-700 flex items-center justify-center transition-all duration-300`}
         >
           <ChevronRight className={`w-6 h-6 ${currentLab.iconColor}`} />
-        </button>
+        </motion.button>
 
         {/* Lab Card */}
         <div className="relative h-96">
@@ -250,16 +307,26 @@ export function FreeLabs() {
                   </div>
 
                   {/* Launch Button */}
-                  <a
+                  <motion.a
                     href={currentLab.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center justify-center px-8 py-3 ${currentLab.gradient} hover:shadow-xl text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] border border-white/20 group/btn`}
+                    className={`inline-flex items-center justify-center px-8 py-3 ${currentLab.gradient} text-white font-semibold rounded-xl transition-all duration-300 shadow-lg border border-white/20 group/btn`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <Play className="w-4 h-4 mr-2" />
                     Launch Playground
-                    <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                  </a>
+                    <motion.div
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Number.POSITIVE_INFINITY,
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </motion.div>
+                  </motion.a>
                 </div>
               </div>
             </div>
@@ -269,13 +336,15 @@ export function FreeLabs() {
         {/* Progress Dots */}
         <div className="flex justify-center mt-8 gap-3">
           {labs.map((lab, index) => (
-            <button
+            <motion.button
               key={index}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => setCurrentSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide
                   ? `${lab.gradient} shadow-lg scale-125`
-                  : "bg-gray-600 hover:bg-gray-500"
+                  : "bg-gray-600"
               }`}
             />
           ))}

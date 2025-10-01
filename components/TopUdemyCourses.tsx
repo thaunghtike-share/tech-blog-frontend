@@ -348,15 +348,6 @@ export function TopUdemyCourses() {
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 120, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
 
         <p className="text-white/85 mt-6 text-lg max-w-2xl mx-auto relative z-10">
@@ -388,7 +379,7 @@ export function TopUdemyCourses() {
               </div>
               <button
                 onClick={retryFetch}
-                className="flex items-center gap-2 px-4 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-xl transition-all border border-yellow-500/30"
+                className="flex items-center gap-2 px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-xl transition-all border border-yellow-500/30"
               >
                 <RefreshCw className="w-4 h-4" />
                 Retry
@@ -418,7 +409,7 @@ export function TopUdemyCourses() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-sky-500/50 transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center transition-all duration-300 -ml-6"
               >
                 <ChevronLeft className="w-5 h-5 text-sky-400" />
               </motion.button>
@@ -426,7 +417,7 @@ export function TopUdemyCourses() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-blue-500/50 transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center transition-all duration-300 -mr-6"
               >
                 <ChevronRight className="w-5 h-5 text-blue-400" />
               </motion.button>
@@ -456,7 +447,7 @@ export function TopUdemyCourses() {
                           className="group relative overflow-hidden"
                         >
                           <motion.div
-                            className="absolute -inset-1 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                            className="absolute -inset-1 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-3xl blur opacity-0 transition duration-500"
                             animate={{
                               scale: [1, 1.05, 1],
                             }}
@@ -467,7 +458,7 @@ export function TopUdemyCourses() {
                             }}
                           />
 
-                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
+                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                             {/* Course Cover Image - Clean without badges */}
                             <div className="relative h-48 bg-gradient-to-br from-sky-900/50 to-blue-900/50 overflow-hidden">
                               {course.cover_image ? (
@@ -484,7 +475,7 @@ export function TopUdemyCourses() {
                             </div>
 
                             <div className="p-6 flex flex-col flex-grow">
-                              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors line-clamp-2">
+                              <h3 className="text-xl font-bold text-white mb-3 transition-colors line-clamp-2">
                                 {course.title}
                               </h3>
 
@@ -563,7 +554,7 @@ export function TopUdemyCourses() {
                                   href={course.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-sky-400/30 group/btn"
+                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-sky-400/30 group/btn"
                                 >
                                   <motion.div
                                     animate={{ rotate: [0, 360] }}

@@ -148,16 +148,6 @@ export function MinimalFAQs() {
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Animated dots on the line */}
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
-            animate={{ x: [0, 120, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
 
         <p className="text-white/85 text-lg max-w-3xl mx-auto relative z-10">
