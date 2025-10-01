@@ -148,7 +148,7 @@ export function SuccessStoriesSection() {
           />
         </motion.div>
 
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto relative z-10">
+        <p className="text-white text-lg max-w-2xl mx-auto relative z-10">
           See how students and junior engineers from Myanmar are growing in the
           DevOps world.
         </p>
@@ -200,19 +200,19 @@ export function SuccessStoriesSection() {
                   <Quote className="w-6 h-6 text-sky-400" />
                 </div>
               </div>
-              <p className="text-base sm:text-base text-gray-200 mb-4 leading-relaxed">
+              <p className="text-base sm:text-base text-white/85 mb-4 leading-relaxed">
                 "{t.feedback}"
               </p>
               <div className="mt-auto">
-                <div className="text-sm sm:text-base text-sky-400 font-medium">
+                <div className="text-sm sm:text-base text-white/90 font-medium">
                   {t.name}
                 </div>
-                <div className="text-sm sm:text-sm text-gray-400">{t.role}</div>
+                <div className="text-sm sm:text-sm text-white">{t.role}</div>
                 <div className="flex justify-center mt-2">
                   {[...Array(t.rating)].map((_, j) => (
                     <Star
                       key={j}
-                      className="w-4 h-4 text-yellow-600 fill-yello-600"
+                      className="w-4 h-4 text-yellow-700 fill-yello-600"
                     />
                   ))}
                 </div>

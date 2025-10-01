@@ -396,7 +396,7 @@ export function CertificationRoadmap() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto relative z-10"
+          className="text-white/85 text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
           Validate your skills with industry-recognized certifications that
           showcase your DevOps expertise.
@@ -515,7 +515,7 @@ export function CertificationRoadmap() {
                 animate={{ y: isHovered ? 2 : 0 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                <h3 className="text-xs md:text-sm font-semibold text-white line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-orange-200 transition-colors duration-300">
+                <h3 className="text-xs md:text-sm font-semibold text-white/85 line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-orange-200 transition-colors duration-300">
                   {cert.title}
                 </h3>
 
@@ -547,7 +547,7 @@ export function CertificationRoadmap() {
         transition={{ delay: 1 }}
         className="text-center mt-8"
       >
-        <p className="text-gray-400 text-sm">
+        <p className="text-white/85 text-sm">
           💡 Click on any certification to visit the official exam page
         </p>
       </motion.div>

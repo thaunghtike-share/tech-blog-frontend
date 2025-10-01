@@ -37,8 +37,8 @@ const roles = [
       "Docker",
       "Kubernetes",
     ],
-    color: "from-sky-400 to-blue-500",
-    iconBg: "bg-gradient-to-r from-sky-400 to-blue-500",
+    color: "from-orange-400 to-red-500",
+    iconBg: "bg-gradient-to-r from-orange-400 to-red-500",
   },
   {
     title: "Site Reliability Engineer",
@@ -61,14 +61,14 @@ const roles = [
       "SLO/SLI",
       "Chaos Engineering",
     ],
-    color: "from-blue-400 to-indigo-500",
-    iconBg: "bg-gradient-to-r from-blue-400 to-indigo-500",
+    color: "from-green-400 to-emerald-500",
+    iconBg: "bg-gradient-to-r from-green-400 to-emerald-500",
   },
   {
     title: "Cloud Engineer",
     icon: Cloud,
     description:
-      "Designs, builds, and maintains cloud infrastructure and services. Specializes in cloud platforms, networking, security, and cost optimization.",
+      "Designs, builds, and maintains cloud infrastructure and services. Specializes in cloud platforms, networking, security, and especially in cost optimization.",
     focus: "Cloud Infrastructure & Services",
     keyDifference:
       "Manages and optimizes cloud platform resources and services",
@@ -86,8 +86,8 @@ const roles = [
       "VPC",
       "Cloud Security",
     ],
-    color: "from-indigo-400 to-purple-500",
-    iconBg: "bg-gradient-to-r from-indigo-400 to-purple-500",
+    color: "from-purple-400 to-indigo-500",
+    iconBg: "bg-gradient-to-r from-purple-400 to-indigo-500",
   },
 ];
 
@@ -198,7 +198,7 @@ export function CareerPath() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto relative z-10"
+          className="text-white/85 text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
           Understand the key differences between DevOps roles and choose your
           specialization path
@@ -271,7 +271,7 @@ export function CareerPath() {
                           className="group"
                         >
                           {/* Modern Card Design */}
-                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-sky-400/30 transition-all duration-300 overflow-hidden h-full flex flex-col">
+                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden h-full flex flex-col">
                             {/* Header with Gradient Accent */}
                             <div
                               className={`bg-gradient-to-r ${role.color} p-6 pb-4`}
@@ -292,26 +292,33 @@ export function CareerPath() {
                             </div>
 
                             {/* Content Area */}
-                            <div className="p-6 flex-grow">
+                            <div className="p-6 flex-grow flex flex-col">
                               {/* Description */}
-                              <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                              <p className="text-white/85 text-sm leading-relaxed mb-4">
                                 {role.description}
                               </p>
 
-                              {/* Key Difference */}
-                              <div className="mb-4 p-3 bg-gray-700/30 rounded-lg border border-gray-600/50">
-                                <p className="text-sky-300 text-xs font-semibold mb-1">
-                                  KEY DIFFERENCE
+                              {/* Key Difference - Fixed height container */}
+                              <div className="mb-4 p-3 bg-gray-700/30 rounded-lg border border-gray-600/50 flex-grow-0 min-h-[80px] flex flex-col">
+                                <p className="text-xs font-semibold mb-2 flex items-center gap-1">
+                                  <span
+                                    className={`bg-gradient-to-r ${role.color} bg-clip-text text-transparent`}
+                                  >
+                                    KEY DIFFERENCE
+                                  </span>
                                 </p>
-                                <p className="text-gray-300 text-sm">
+                                <p className="text-white/90 text-sm flex-grow">
                                   {role.keyDifference}
                                 </p>
                               </div>
-
-                              {/* Core Responsibilities */}
-                              <div className="mb-4">
-                                <h4 className="text-gray-400 text-sm font-semibold mb-3 flex items-center gap-2">
-                                  <Zap className="w-4 h-4 text-sky-400" />
+                              {/* Core Responsibilities - Fixed height container */}
+                              <div className="mb-4 flex-grow">
+                                <h4 className="text-white/90 text-sm font-semibold mb-3 flex items-center gap-2">
+                                  <div
+                                    className={`p-1 rounded bg-gradient-to-r ${role.color}`}
+                                  >
+                                    <Zap className="w-3 h-3 text-white" />
+                                  </div>
                                   Core Responsibilities
                                 </h4>
                                 <div className="space-y-2">
@@ -320,8 +327,10 @@ export function CareerPath() {
                                       key={i}
                                       className="flex items-start gap-2"
                                     >
-                                      <div className="w-1.5 h-1.5 bg-sky-400 rounded-full mt-1.5 flex-shrink-0" />
-                                      <span className="text-gray-300 text-sm">
+                                      <div
+                                        className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${role.color}`}
+                                      />
+                                      <span className="text-white/90 text-sm">
                                         {resp}
                                       </span>
                                     </div>
@@ -329,9 +338,6 @@ export function CareerPath() {
                                 </div>
                               </div>
                             </div>
-
-                            {/* Hover Glow Effect */}
-                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-sky-400/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                           </div>
                         </motion.div>
                       ))}

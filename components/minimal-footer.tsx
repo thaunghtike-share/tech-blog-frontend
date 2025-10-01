@@ -29,7 +29,7 @@ export function MinimalFooter() {
                 />
               </div>
             </Link>
-            <p className="text-lg text-gray-300 leading-relaxed max-w-md">
+            <p className="text-lg text-white/85 leading-relaxed max-w-md">
               Your go-to resource for mastering DevOps, cloud-native
               technologies, and automation. Practical guides, tutorials, and
               real-world projects.
@@ -85,7 +85,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
+                    className="text-white/80 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
                   >
                     {link.label}
                   </Link>
@@ -111,7 +111,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
+                    className="text-white/80 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
                   >
                     {link.label}
                   </Link>
@@ -140,7 +140,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
+                    className="text-white/80 hover:text-white hover:translate-x-2 transition-all duration-300 block py-1"
                   >
                     {link.label}
                   </Link>
@@ -158,7 +158,7 @@ export function MinimalFooter() {
               <li>
                 <a
                   href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                  className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group py-1"
+                  className="text-white/80 hover:text-white transition-all duration-300 flex items-center group py-1"
                 >
                   <Mail className="h-4 w-4 mr-3 text-purple-400" />
                   <span>Email Me</span>
@@ -167,13 +167,13 @@ export function MinimalFooter() {
               <li>
                 <a
                   href="tel:+959952492359"
-                  className="text-gray-400 hover:text-white transition-all duration-300 flex items-center group py-1"
+                  className="text-white/80 hover:text-white transition-all duration-300 flex items-center group py-1"
                 >
                   <Phone className="h-4 w-4 mr-3 text-green-400" />
                   <span>+95 9952492359</span>
                 </a>
               </li>
-              <li className="text-gray-400 flex items-center group py-1">
+              <li className="text-white/80 flex items-center group py-1">
                 <MapPin className="h-4 w-4 mr-3 text-red-400" />
                 <span>Yangon, Myanmar</span>
               </li>
@@ -183,7 +183,7 @@ export function MinimalFooter() {
 
         {/* Copyright - Clean design */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-gray-400 text-center md:text-left text-sm">
+          <p className="text-white/80 text-center md:text-left text-sm">
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>

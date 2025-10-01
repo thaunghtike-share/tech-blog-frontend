@@ -143,14 +143,12 @@ const DevOpsCyclingHero = () => {
   ];
 
   const floatingPositions = [
-    { left: 10, top: 20 },
-    { left: 80, top: 15 },
-    { left: 25, top: 70 },
-    { left: 90, top: 60 },
-    { left: 5, top: 50 },
-    { left: 70, top: 80 },
-    { left: 15, top: 35 },
-    { left: 85, top: 25 },
+    { left: 15, top: 25 },
+    { left: 75, top: 20 },
+    { left: 30, top: 65 },
+    { left: 85, top: 55 },
+    { left: 10, top: 45 },
+    { left: 65, top: 75 },
   ];
 
   useEffect(() => {
@@ -255,7 +253,7 @@ const DevOpsCyclingHero = () => {
           />
         </motion.div>
 
-        <p className="text-gray-400 mt-6 text-sm sm:text-base max-w-2xl mx-auto relative z-10 px-2">
+        <p className="text-white/85 mt-6 text-sm sm:text-lg max-w-2xl mx-auto relative z-10 px-2">
           This website is for developers and students in Myanmar who want to
           learn DevOps and boost their careers in modern software development
           and cloud infrastructure.

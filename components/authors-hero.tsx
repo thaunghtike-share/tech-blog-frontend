@@ -146,7 +146,7 @@ export function AuthorsHero() {
           />
         </motion.div>
 
-        <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto relative z-10">
+        <p className="text-white/85 mt-6 text-lg max-w-2xl mx-auto relative z-10">
           Meet our expert contributors sharing their DevOps knowledge
         </p>
       </motion.div>

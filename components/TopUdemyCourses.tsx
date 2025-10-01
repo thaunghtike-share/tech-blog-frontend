@@ -48,8 +48,8 @@ const fallbackCourses: UdemyCourse[] = [
     rating: 4.7,
     reviews: [
       { username: "John D.", comment: "Great introduction to GitHub Actions!" },
-      { username: "Sarah M.", comment: "Well explained concepts." }
-    ]
+      { username: "Sarah M.", comment: "Well explained concepts." },
+    ],
   },
   {
     id: 2,
@@ -62,8 +62,8 @@ const fallbackCourses: UdemyCourse[] = [
     rating: 4.7,
     reviews: [
       { username: "Mike T.", comment: "Perfect for beginners" },
-      { username: "Lisa K.", comment: "Clear and concise" }
-    ]
+      { username: "Lisa K.", comment: "Clear and concise" },
+    ],
   },
   {
     id: 3,
@@ -75,8 +75,8 @@ const fallbackCourses: UdemyCourse[] = [
     students: "800+",
     rating: 4.4,
     reviews: [
-      { username: "David L.", comment: "Official Red Hat course - excellent!" }
-    ]
+      { username: "David L.", comment: "Official Red Hat course - excellent!" },
+    ],
   },
   {
     id: 4,
@@ -89,8 +89,8 @@ const fallbackCourses: UdemyCourse[] = [
     rating: 4.6,
     reviews: [
       { username: "Alex P.", comment: "Great hands-on exercises" },
-      { username: "Maria S.", comment: "Well structured content" }
-    ]
+      { username: "Maria S.", comment: "Well structured content" },
+    ],
   },
   {
     id: 5,
@@ -101,9 +101,7 @@ const fallbackCourses: UdemyCourse[] = [
     price: "Free",
     students: "900+",
     rating: 4.3,
-    reviews: [
-      { username: "Tom B.", comment: "Good overview of DevOps" }
-    ]
+    reviews: [{ username: "Tom B.", comment: "Good overview of DevOps" }],
   },
   {
     id: 6,
@@ -116,9 +114,9 @@ const fallbackCourses: UdemyCourse[] = [
     rating: 4.5,
     reviews: [
       { username: "Chris R.", comment: "Excellent AWS foundation" },
-      { username: "Emma W.", comment: "Practical examples" }
-    ]
-  }
+      { username: "Emma W.", comment: "Practical examples" },
+    ],
+  },
 ];
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -140,7 +138,7 @@ export function TopUdemyCourses() {
         setLoading(true);
         setError(null);
         setUsingFallback(false);
-        
+
         // Check if API_BASE_URL is available
         if (!API_BASE_URL) {
           throw new Error("API URL not configured");
@@ -152,11 +150,11 @@ export function TopUdemyCourses() {
         const res = await fetch(`${API_BASE_URL}/udemy-courses/`, {
           signal: controller.signal,
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
         });
-        
+
         clearTimeout(timeoutId);
 
         if (!res.ok) {
@@ -164,10 +162,10 @@ export function TopUdemyCourses() {
         }
 
         const data = await res.json();
-        
+
         // Handle different response formats
         let rawCourses = data;
-        if (data && typeof data === 'object') {
+        if (data && typeof data === "object") {
           if (Array.isArray(data)) {
             rawCourses = data;
           } else if (Array.isArray(data.results)) {
@@ -178,27 +176,30 @@ export function TopUdemyCourses() {
         }
 
         if (!Array.isArray(rawCourses)) {
-          console.warn('Invalid courses data format, using fallback');
+          console.warn("Invalid courses data format, using fallback");
           throw new Error("Invalid data format received");
         }
 
-        const mapped: UdemyCourse[] = rawCourses.map((course: any, index: number) => ({
-          id: course.id || index + 1,
-          title: course.title || 'Untitled Course',
-          description: course.description || 'No description available.',
-          url: course.url || '#',
-          author: course.author || 'Unknown Author',
-          cover_image: course.cover_image || course.image || null,
-          price: course.price || "Free",
-          students: course.students || `${Math.floor(Math.random() * 900) + 100}+`,
-          rating: course.rating || Math.round((Math.random() * 1 + 3.5) * 10) / 10,
-          reviews: course.reviews || [],
-        }));
+        const mapped: UdemyCourse[] = rawCourses.map(
+          (course: any, index: number) => ({
+            id: course.id || index + 1,
+            title: course.title || "Untitled Course",
+            description: course.description || "No description available.",
+            url: course.url || "#",
+            author: course.author || "Unknown Author",
+            cover_image: course.cover_image || course.image || null,
+            price: course.price || "Free",
+            students:
+              course.students || `${Math.floor(Math.random() * 900) + 100}+`,
+            rating:
+              course.rating || Math.round((Math.random() * 1 + 3.5) * 10) / 10,
+            reviews: course.reviews || [],
+          })
+        );
 
         setCourses(mapped.length > 0 ? mapped : fallbackCourses);
-        
       } catch (err) {
-        console.error('Fetch error:', err);
+        console.error("Fetch error:", err);
         setUsingFallback(true);
         setCourses(fallbackCourses);
         setError(err instanceof Error ? err.message : "Failed to load courses");
@@ -238,14 +239,14 @@ export function TopUdemyCourses() {
       <section ref={sectionRef} className="w-full max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-r from-sky-400 to-blue-600 rounded-2xl shadow-lg">
               <Play className="w-8 h-8 text-white" />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
               Top Udemy Courses
             </h2>
           </div>
-          <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto"></div>
+          <div className="h-1 w-32 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -287,7 +288,7 @@ export function TopUdemyCourses() {
         <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
           {/* Animated bubble icon */}
           <motion.div
-            className="relative p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-2xl"
+            className="relative p-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -299,7 +300,7 @@ export function TopUdemyCourses() {
             }}
           >
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -325,7 +326,7 @@ export function TopUdemyCourses() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -337,12 +338,12 @@ export function TopUdemyCourses() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-blue-400 ml-2" />
+            <ChevronRight className="w-6 h-6 text-sky-400 ml-2" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto relative"
+          className="h-1 w-32 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto relative"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -358,8 +359,9 @@ export function TopUdemyCourses() {
           />
         </motion.div>
 
-        <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto relative z-10">
-          Curated list of free online courses to master DevOps tools and practices
+        <p className="text-white/85 mt-6 text-lg max-w-2xl mx-auto relative z-10">
+          Curated list of free online courses to master DevOps tools and
+          practices
           {usingFallback && (
             <span className="text-yellow-400 text-sm block mt-2">
               • Showing demo data (API unavailable)
@@ -398,8 +400,8 @@ export function TopUdemyCourses() {
 
       {courses.length === 0 ? (
         <div className="text-center py-16">
-          <div className="inline-flex items-center justify-center bg-purple-900/20 rounded-full p-6 mb-6 backdrop-blur-sm border border-purple-500/30">
-            <BookOpen className="w-12 h-12 text-purple-400" />
+          <div className="inline-flex items-center justify-center bg-blue-900/20 rounded-full p-6 mb-6 backdrop-blur-sm border border-blue-500/30">
+            <BookOpen className="w-12 h-12 text-blue-400" />
           </div>
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
             No courses available
@@ -416,17 +418,17 @@ export function TopUdemyCourses() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-blue-500/50 transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-sky-500/50 transition-all duration-300 -ml-6"
               >
-                <ChevronLeft className="w-5 h-5 text-blue-400" />
+                <ChevronLeft className="w-5 h-5 text-sky-400" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-purple-500/50 transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center hover:shadow-xl hover:border-blue-500/50 transition-all duration-300 -mr-6"
               >
-                <ChevronRight className="w-5 h-5 text-purple-400" />
+                <ChevronRight className="w-5 h-5 text-blue-400" />
               </motion.button>
             </>
           )}
@@ -454,7 +456,7 @@ export function TopUdemyCourses() {
                           className="group relative overflow-hidden"
                         >
                           <motion.div
-                            className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+                            className="absolute -inset-1 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"
                             animate={{
                               scale: [1, 1.05, 1],
                             }}
@@ -465,10 +467,9 @@ export function TopUdemyCourses() {
                             }}
                           />
 
-                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
-                            
+                          <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                             {/* Course Cover Image - Clean without badges */}
-                            <div className="relative h-48 bg-gradient-to-br from-blue-900/50 to-purple-900/50 overflow-hidden">
+                            <div className="relative h-48 bg-gradient-to-br from-sky-900/50 to-blue-900/50 overflow-hidden">
                               {course.cover_image ? (
                                 <img
                                   src={course.cover_image}
@@ -476,34 +477,34 @@ export function TopUdemyCourses() {
                                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
-                                  <BookOpen className="w-16 h-16 text-blue-400/50" />
+                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sky-900/30 to-blue-900/30">
+                                  <BookOpen className="w-16 h-16 text-sky-400/50" />
                                 </div>
                               )}
                             </div>
 
                             <div className="p-6 flex flex-col flex-grow">
-                              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
+                              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors line-clamp-2">
                                 {course.title}
                               </h3>
 
-                              <p className="text-gray-400 mb-4 leading-relaxed line-clamp-3 flex-grow">
+                              <p className="text-white/75 mb-4 leading-relaxed line-clamp-3 flex-grow">
                                 {course.description}
                               </p>
 
                               {/* Author and Student Count Row */}
                               <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-2 px-3 py-2 bg-blue-900/20 rounded-full border border-blue-500/30">
-                                  <div className="p-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+                                <div className="flex items-center gap-2 px-3 py-2 bg-sky-900/20 rounded-full border border-sky-500/30">
+                                  <div className="p-1 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full">
                                     <User className="w-3 h-3 text-white" />
                                   </div>
-                                  <span className="font-medium text-blue-400 text-sm">
+                                  <span className="font-medium text-sky-400 text-sm">
                                     {course.author}
                                   </span>
                                 </div>
 
                                 {/* Student Count */}
-                                <div className="flex items-center gap-1 text-gray-400 text-sm">
+                                <div className="flex items-center gap-1 text-white/80 text-sm">
                                   <Users className="w-4 h-4" />
                                   <span>{course.students}</span>
                                 </div>
@@ -518,7 +519,9 @@ export function TopUdemyCourses() {
                                       {course.rating.toFixed(1)}
                                     </span>
                                   </div>
-                                  <span className="text-gray-400 text-sm">rating</span>
+                                  <span className="text-white/75 text-sm">
+                                    rating
+                                  </span>
                                 </div>
                               )}
 
@@ -538,12 +541,12 @@ export function TopUdemyCourses() {
                                           initial={{ opacity: 0, x: -20 }}
                                           animate={{ opacity: 1, x: 0 }}
                                           transition={{ delay: i * 0.1 }}
-                                          className="bg-blue-900/20 p-3 rounded-xl border border-blue-500/20"
+                                          className="bg-sky-900/20 p-3 rounded-xl border border-sky-500/20"
                                         >
                                           <div className="text-gray-300 text-sm flex items-start gap-2">
-                                            <MessageSquare className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                                            <MessageSquare className="w-4 h-4 text-sky-400 mt-0.5 flex-shrink-0" />
                                             <span>
-                                              <strong className="text-blue-400">
+                                              <strong className="text-sky-400">
                                                 {review.username}:
                                               </strong>{" "}
                                               {review.comment}
@@ -560,7 +563,7 @@ export function TopUdemyCourses() {
                                   href={course.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-blue-400/30 group/btn"
+                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-sky-400/30 group/btn"
                                 >
                                   <motion.div
                                     animate={{ rotate: [0, 360] }}
@@ -602,7 +605,7 @@ export function TopUdemyCourses() {
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentSlide
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg"
+                      ? "bg-gradient-to-r from-sky-500 to-blue-600 shadow-lg"
                       : "bg-gray-600 hover:bg-gray-500"
                   }`}
                 />

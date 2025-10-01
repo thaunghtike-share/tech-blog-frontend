@@ -179,7 +179,7 @@ export function FreeLabs() {
           <div className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg" />
         </div>
 
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto relative z-10">
+        <p className="text-white text-lg max-w-2xl mx-auto relative z-10">
           Explore these practical, free labs and playgrounds to level up your
           DevOps expertise
         </p>
@@ -230,14 +230,14 @@ export function FreeLabs() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 text-lg leading-relaxed mb-8 flex-grow text-center px-4">
+                <p className="text-white/85 text-lg leading-relaxed mb-8 flex-grow text-center px-4">
                   {currentLab.description}
                 </p>
 
                 {/* Difficulty and Launch Button */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   {/* Difficulty Badge */}
-                  <div className="flex items-center gap-2 text-gray-400">
+                  <div className="flex items-center gap-2 text-white/85">
                     <div
                       className={`w-2 h-2 rounded-full ${currentLab.iconColor.replace(
                         "text",

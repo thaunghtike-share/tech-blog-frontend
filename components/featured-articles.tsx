@@ -288,7 +288,7 @@ export function FeaturedArticlesPage() {
           />
         </motion.div>
 
-        <p className="text-gray-300 mt-6 text-lg max-w-2xl mx-auto relative z-10">
+        <p className="text-white/85 mt-6 text-lg max-w-2xl mx-auto relative z-10">
           Discover our most popular and trending content
         </p>
       </motion.div>

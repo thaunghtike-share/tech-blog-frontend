@@ -651,7 +651,7 @@ export function YouTubePlaylists({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto relative z-10"
+          className="text-white/85 text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
           Recommended video playlists to learn DevOps tools like Linux, Docker,
           Kubernetes, AWS, Terraform, and more.
@@ -678,7 +678,7 @@ export function YouTubePlaylists({
               </div>
             </div>
             <div className="flex-1 text-left">
-              <div className="text-sm text-gray-400">Difficulty Level</div>
+              <div className="text-sm text-white/85">Difficulty Level</div>
               <div
                 className={`font-semibold ${difficultyConfig[selectedDifficulty].text}`}
               >
@@ -864,14 +864,14 @@ export function YouTubePlaylists({
                                 </h3>
 
                                 <div className="space-y-2 mb-4 md:mb-6">
-                                  <div className="flex items-center gap-2 text-sm md:text-sm text-gray-400">
-                                    <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
+                                  <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
+                                    <Users className="w-4 h-4 md:w-4 md:h-4 text-red-500" />
                                     <span className="font-medium text-gray-300">
                                       {pl.channel}
                                     </span>
                                   </div>
-                                  <div className="flex items-center gap-2 text-sm md:text-sm text-gray-400">
-                                    <Clock className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
+                                  <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
+                                    <Clock className="w-4 h-4 md:w-4 md:h-4 text-red-500" />
                                     <span>
                                       Duration:{" "}
                                       <span className="font-medium text-gray-300">

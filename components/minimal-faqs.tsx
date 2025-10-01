@@ -116,6 +116,30 @@ export function MinimalFAQs() {
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h2>
+
+          {/* Chevron with dotted trail */}
+          <motion.div
+            className="flex items-center gap-1"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-2 h-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
+            <ChevronRight className="w-6 h-6 text-sky-400 ml-2" />
+          </motion.div>
         </div>
 
         <motion.div
@@ -136,7 +160,7 @@ export function MinimalFAQs() {
           />
         </motion.div>
 
-        <p className="text-gray-400 text-lg max-w-3xl mx-auto relative z-10">
+        <p className="text-white/85 text-lg max-w-3xl mx-auto relative z-10">
           Find answers to common questions about DevOps and our services
         </p>
       </motion.div>
@@ -214,7 +238,7 @@ export function MinimalFAQs() {
             className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium transition-all ${
               index === currentIndex
                 ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
-                : "bg-gray-700 text-gray-400 hover:bg-gray-600"
+                : "bg-gray-700 text-white/85 hover:bg-gray-600"
             }`}
           >
             {index + 1}
