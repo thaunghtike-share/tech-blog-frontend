@@ -26,6 +26,7 @@ import {
   Box,
   Code,
 } from "lucide-react";
+import { MinimalDevopsRoadmap } from "@/components/devops-roadmap";
 
 export default function HomeClient() {
   const router = useRouter();
@@ -223,8 +224,12 @@ export default function HomeClient() {
             <FeaturedArticlesPage />
           </section>
 
+          <section id="roadmap" className="-mt-17 2xl:-mt-2">
+            <MinimalDevopsRoadmap />
+          </section>
+
           {/* Existing sections with updated spacing */}
-          <section id="youtube" className="-mt-17 2xl:-mt-5">
+          <section id="youtube" className="-mt-17 2xl:-mt-35">
             <YouTubePlaylists />
           </section>
 
