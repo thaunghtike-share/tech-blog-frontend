@@ -223,13 +223,8 @@ export default function HomeClient() {
             <FeaturedArticlesPage />
           </section>
 
-          {/* Authors Hero Section */}
-          <section className="-mt-18">
-            <AuthorsHero />
-          </section>
-
           {/* Existing sections with updated spacing */}
-          <section id="youtube" className="-mt-18">
+          <section id="youtube" className="-mt-17 2xl:-mt-5">
             <YouTubePlaylists />
           </section>
 

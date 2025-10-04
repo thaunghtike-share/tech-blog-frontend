@@ -187,10 +187,10 @@ const DevOpsCyclingHero = () => {
         ))}
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-64 sm:pt-72 md:pt-56 lg:pt-48">
+      {/* Main Content - Improved responsive vertical spacing */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-48 sm:pt-56 md:pt-40 lg:pt-32 xl:pt-28 2xl:pt-24">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 xl:gap-12">
             {/* Left - Further Reduced Size Hero Image */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -216,8 +216,8 @@ const DevOpsCyclingHero = () => {
               className="w-full lg:w-3/5 max-w-2xl"
             >
               {/* Title with better spacing */}
-              <div className="mb-5 sm:mb-7">
-                <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl font-bold text-white leading-tight">
+              <div className="mb-5 sm:mb-6 lg:mb-7">
+                <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight">
                   <span
                     className={`bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent`}
                   >
@@ -227,8 +227,8 @@ const DevOpsCyclingHero = () => {
               </div>
 
               {/* Description with better spacing */}
-              <div className="mb-10 sm:mb-12">
-                <p className="text-base sm:text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mx-auto lg:mx-0">
+              <div className="mb-8 sm:mb-10 lg:mb-12">
+                <p className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl text-white/85 leading-relaxed max-w-3xl mx-auto lg:mx-0">
                   {currentSlideData.description}
                 </p>
               </div>
