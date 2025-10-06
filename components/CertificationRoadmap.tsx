@@ -272,19 +272,19 @@ const certifications: CertificationItem[] = [
 
 const difficultyConfig = {
   Beginner: {
-    labelColor: "bg-gradient-to-r from-orange-500 to-yellow-500",
-    glowColor: "hover:shadow-orange-500/20",
-    borderColor: "border-orange-500/30",
+    labelColor: "bg-gradient-to-r from-blue-500 to-blue-600",
+    glowColor: "hover:shadow-blue-500/20",
+    borderColor: "border-blue-300",
   },
   Intermediate: {
-    labelColor: "bg-gradient-to-r from-sky-600 to-blue-600",
-    glowColor: "hover:shadow-orange-500/30",
-    borderColor: "border-orange-600/30",
+    labelColor: "bg-gradient-to-r from-yellow-500 to-yellow-600",
+    glowColor: "hover:shadow-yellow-500/20",
+    borderColor: "border-yellow-300",
   },
   Advanced: {
-    labelColor: "bg-gradient-to-r from-gray-600 to-gray-800",
-    glowColor: "hover:shadow-orange-500/40",
-    borderColor: "border-orange-700/30",
+    labelColor: "bg-gradient-to-r from-sky-500 to-sky-600",
+    glowColor: "hover:shadow-sky-500/20",
+    borderColor: "border-sky-300",
   },
 };
 
@@ -312,7 +312,7 @@ export function CertificationRoadmap() {
         >
           {/* Animated bubble icon */}
           <motion.div
-            className="relative p-3 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full shadow-2xl"
+            className="relative p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -325,7 +325,7 @@ export function CertificationRoadmap() {
           >
             {/* Bubble effect */}
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -344,7 +344,7 @@ export function CertificationRoadmap() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans"
           >
             DevOps Certification Roadmap
           </motion.h2>
@@ -358,7 +358,7 @@ export function CertificationRoadmap() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full"
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -370,13 +370,13 @@ export function CertificationRoadmap() {
                 }}
               />
             ))}
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-sky-400 ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-blue-500 ml-2" />
           </motion.div>
         </motion.div>
 
         {/* Animated line */}
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto relative mb-4"
+          className="h-1 w-24 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto relative mb-4"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -387,7 +387,7 @@ export function CertificationRoadmap() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-white/85 text-base md:text-lg max-w-3xl mx-auto relative z-10"
+          className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto relative z-10 font-sans"
         >
           Validate your skills with industry-recognized certifications that
           showcase your DevOps expertise.
@@ -433,19 +433,18 @@ export function CertificationRoadmap() {
                 {/* Main Card Container */}
                 <motion.div
                   className={`
-                    bg-gradient-to-br from-gray-600 to-gray-800 backdrop-blur-sm rounded-xl p-3 border 
+                    bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-gray-300
                     transition-all duration-300 relative overflow-hidden
-                    group-hover:shadow-2xl group-hover:border-orange-500/50
+                    group-hover:shadow-2xl group-hover:border-blue-400
                     ${config.glowColor}
-                    ${config.borderColor}
                   `}
                   whileHover={{
-                    boxShadow: "0 20px 40px rgba(245, 158, 11, 0.15)",
+                    boxShadow: "0 20px 40px rgba(59, 130, 246, 0.15)",
                   }}
                 >
                   {/* Hover Gradient Overlay */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     initial={false}
                   />
 
@@ -457,7 +456,7 @@ export function CertificationRoadmap() {
                       scale: isHovered ? 1 : 0.8,
                     }}
                   >
-                    <ExternalLink className="w-4 h-4 text-orange-400" />
+                    <ExternalLink className="w-4 h-4 text-blue-500" />
                   </motion.div>
 
                   {/* Logo */}
@@ -479,7 +478,7 @@ export function CertificationRoadmap() {
                   {/* Pulse Animation on Hover */}
                   {isHovered && (
                     <motion.div
-                      className="absolute inset-0 border-2 border-orange-400/30 rounded-xl"
+                      className="absolute inset-0 border-2 border-blue-400/30 rounded-xl"
                       initial={{ scale: 1, opacity: 0.7 }}
                       animate={{ scale: 1.1, opacity: 0 }}
                       transition={{
@@ -492,7 +491,7 @@ export function CertificationRoadmap() {
 
                 {/* Full Rounded Difficulty Badge */}
                 <motion.div
-                  className={`absolute -top-2 -right-2 px-3 py-1 ${config.labelColor} text-white text-xs font-semibold rounded-full shadow-lg backdrop-blur-sm border border-orange-300/20`}
+                  className={`absolute -top-2 -right-2 px-3 py-1 ${config.labelColor} text-white text-xs font-semibold rounded-full shadow-lg backdrop-blur-sm border border-white/20 font-sans`}
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
@@ -506,13 +505,13 @@ export function CertificationRoadmap() {
                 animate={{ y: isHovered ? 2 : 0 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                <h3 className="text-xs md:text-sm font-semibold text-white/85 line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-orange-200 transition-colors duration-300">
+                <h3 className="text-xs md:text-sm font-semibold text-gray-800 line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-blue-600 transition-colors duration-300 font-sans">
                   {cert.title}
                 </h3>
 
                 {/* Organization on Hover */}
                 <motion.p
-                  className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="text-xs text-gray-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-sans"
                   initial={false}
                 >
                   {cert.organization}
@@ -520,7 +519,7 @@ export function CertificationRoadmap() {
 
                 {/* Exam Details on Hover */}
                 <motion.p
-                  className="text-xs text-orange-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="text-xs text-blue-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-sans"
                   initial={false}
                 >
                   {cert.examDetails.split("|")[0].trim()}
@@ -538,7 +537,7 @@ export function CertificationRoadmap() {
         transition={{ delay: 1 }}
         className="text-center mt-8"
       >
-        <p className="text-white/85 text-sm">
+        <p className="text-gray-700 text-sm font-sans">
           💡 Click on any certification to visit the official exam page
         </p>
       </motion.div>

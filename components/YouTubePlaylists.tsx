@@ -29,34 +29,34 @@ interface Playlist {
 
 const difficultyConfig = {
   Beginner: {
-    color: "from-red-500 to-red-600",
-    text: "text-red-400",
-    border: "border-red-500",
-    iconBg: "bg-gradient-to-r from-red-500 to-red-600",
+    color: "from-blue-500 to-blue-600",
+    text: "text-blue-600",
+    border: "border-blue-500",
+    iconBg: "bg-gradient-to-r from-blue-500 to-blue-600",
     iconText: "text-white",
     icon: <Rocket className="w-5 h-5" />,
   },
   Intermediate: {
-    color: "from-red-600 to-red-700",
-    text: "text-red-400",
-    border: "border-red-600",
-    iconBg: "bg-gradient-to-r from-red-600 to-red-700",
+    color: "from-pink-500 to-purple-600",
+    text: "text-purple-600",
+    border: "border-purple-500",
+    iconBg: "bg-gradient-to-r from-pink-500 to-purple-600",
     iconText: "text-white",
     icon: <Gauge className="w-5 h-5" />,
   },
   Advanced: {
-    color: "from-red-700 to-red-800",
-    text: "text-red-400",
-    border: "border-red-700",
-    iconBg: "bg-gradient-to-r from-red-700 to-red-800",
+    color: "from-sky-500 to-sky-600",
+    text: "text-sky-600",
+    border: "border-sky-500",
+    iconBg: "bg-gradient-to-r from-sky-500 to-sky-600",
     iconText: "text-white",
     icon: <Shield className="w-5 h-5" />,
   },
   Prerequisite: {
-    color: "from-gray-500 to-blue-600",
-    text: "text-gray-400",
+    color: "from-gray-500 to-gray-600",
+    text: "text-gray-600",
     border: "border-gray-500",
-    iconBg: "bg-gradient-to-r from-gray-500 to-blue-600",
+    iconBg: "bg-gradient-to-r from-gray-500 to-gray-600",
     iconText: "text-white",
     icon: <Sparkles className="w-5 h-5" />,
   },
@@ -558,16 +558,16 @@ export function YouTubePlaylists({
       ref={sectionRef}
       className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8"
     >
-      {/* Header with matching AuthorsHero theme - Updated layout */}
+      {/* Header with updated gray theme */}
       <div className="text-center mb-6 md:mb-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center gap-4 mb-4 md:mb-4 relative z-10"
         >
-          {/* Animated bubble icon matching AuthorsHero */}
+          {/* Animated bubble icon */}
           <motion.div
-            className="relative p-3 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-2xl"
+            className="relative p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -580,7 +580,7 @@ export function YouTubePlaylists({
           >
             {/* Bubble effect */}
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-red-400/30 to-red-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -599,12 +599,12 @@ export function YouTubePlaylists({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
           >
             Learn DevOps on YouTube
           </motion.h2>
 
-          {/* Chevron with dotted trail matching AuthorsHero */}
+          {/* Chevron with dotted trail */}
           <motion.div
             className="flex items-center gap-1"
             animate={{ x: [0, 10, 0] }}
@@ -613,7 +613,7 @@ export function YouTubePlaylists({
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-red-400 to-red-500 rounded-full"
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -625,13 +625,13 @@ export function YouTubePlaylists({
                 }}
               />
             ))}
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-red-400 ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-blue-500 ml-2" />
           </motion.div>
         </motion.div>
 
-        {/* Animated line matching AuthorsHero */}
+        {/* Animated line */}
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-red-500 to-red-600 rounded-full mx-auto relative mb-4"
+          className="h-1 w-24 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto relative mb-4"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -642,7 +642,7 @@ export function YouTubePlaylists({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-white/85 text-base md:text-lg max-w-3xl mx-auto relative z-10"
+          className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
           Recommended video playlists to learn DevOps tools like Linux, Docker,
           Kubernetes, AWS, Terraform, and more.
@@ -659,7 +659,7 @@ export function YouTubePlaylists({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-3 px-6 py-4 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-700 transition-all duration-300 min-w-[280px]"
+            className="flex items-center gap-3 px-6 py-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-300 transition-all duration-300 min-w-[280px]"
           >
             <div
               className={`p-2 rounded-xl ${difficultyConfig[selectedDifficulty].iconBg} shadow-lg`}
@@ -669,7 +669,7 @@ export function YouTubePlaylists({
               </div>
             </div>
             <div className="flex-1 text-left">
-              <div className="text-sm text-white/85">Difficulty Level</div>
+              <div className="text-sm text-gray-600">Difficulty Level</div>
               <div
                 className={`font-semibold ${difficultyConfig[selectedDifficulty].text}`}
               >
@@ -680,7 +680,7 @@ export function YouTubePlaylists({
               animate={{ rotate: isDropdownOpen ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronDown className="w-5 h-5 text-gray-400" />
+              <ChevronDown className="w-5 h-5 text-gray-500" />
             </motion.div>
           </motion.button>
 
@@ -691,7 +691,7 @@ export function YouTubePlaylists({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-full mt-2 left-0 right-0 bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700 overflow-hidden z-50"
+                className="absolute top-full mt-2 left-0 right-0 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-300 overflow-hidden z-50"
               >
                 {(
                   ["Beginner", "Intermediate", "Advanced"] as DifficultyLevel[]
@@ -707,13 +707,13 @@ export function YouTubePlaylists({
                   return (
                     <motion.button
                       key={difficultyKey}
-                      whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+                      whileHover={{ backgroundColor: "rgba(0,0,0,0.05)" }}
                       onClick={() => {
                         setSelectedDifficulty(difficultyKey);
                         setIsDropdownOpen(false);
                         setCurrentIndex(0);
                       }}
-                      className="w-full flex items-center gap-3 px-6 py-4 text-left hover:bg-gray-700/50 transition-colors duration-200 border-b border-gray-700 last:border-b-0"
+                      className="w-full flex items-center gap-3 px-6 py-4 text-left hover:bg-gray-100/50 transition-colors duration-200 border-b border-gray-200 last:border-b-0"
                     >
                       <div
                         className={`p-2 rounded-xl ${config.iconBg} shadow-lg`}
@@ -724,7 +724,7 @@ export function YouTubePlaylists({
                         <div className={`font-semibold ${config.text}`}>
                           {difficultyKey}
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-gray-600">
                           {stats.count} courses
                         </div>
                       </div>
@@ -750,13 +750,13 @@ export function YouTubePlaylists({
           transition={{ delay: 0.4 }}
           className="text-center py-8 md:py-12"
         >
-          <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center mb-3 md:mb-4 backdrop-blur-sm border border-gray-600">
-            <Play className="w-6 h-6 md:w-8 md:h-8 text-gray-400" />
+          <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mb-3 md:mb-4 backdrop-blur-sm border border-gray-400">
+            <Play className="w-6 h-6 md:w-8 md:h-8 text-gray-600" />
           </div>
-          <h4 className="text-gray-300 font-medium text-base md:text-lg mb-2">
+          <h4 className="text-gray-700 font-medium text-base md:text-lg mb-2">
             No playlists available for this difficulty
           </h4>
-          <p className="text-gray-500 text-sm md:text-base">
+          <p className="text-gray-600 text-sm md:text-base">
             Please select another difficulty or check back later.
           </p>
         </motion.div>
@@ -769,17 +769,17 @@ export function YouTubePlaylists({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-300 flex items-center justify-center transition-all duration-300 -ml-6"
               >
-                <ChevronLeft className="w-5 h-5 text-red-500" />
+                <ChevronLeft className="w-5 h-5 text-blue-500" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700 flex items-center justify-center transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-300 flex items-center justify-center transition-all duration-300 -mr-6"
               >
-                <ChevronRight className="w-5 h-5 text-red-500" />
+                <ChevronRight className="w-5 h-5 text-blue-500" />
               </motion.button>
             </>
           )}
@@ -811,9 +811,9 @@ export function YouTubePlaylists({
                             whileHover={{ y: -8, scale: 1.02 }}
                             className="group relative overflow-hidden"
                           >
-                            {/* Background glow effect matching AuthorsHero */}
+                            {/* Background glow effect */}
                             <motion.div
-                              className="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-red-500/10 rounded-3xl blur opacity-0 transition duration-500"
+                              className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-blue-500/10 rounded-3xl blur opacity-0 transition duration-500"
                               animate={{
                                 scale: [1, 1.05, 1],
                               }}
@@ -824,7 +824,7 @@ export function YouTubePlaylists({
                               }}
                             />
 
-                            <div className="relative bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full">
+                            <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full">
                               <div className="relative aspect-video bg-gray-900 overflow-hidden">
                                 <iframe
                                   src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}
@@ -850,22 +850,22 @@ export function YouTubePlaylists({
                               </div>
 
                               <div className="p-4 md:p-6 flex-grow">
-                                <h3 className="text-base md:text-lg font-bold text-white mb-3 line-clamp-2 transition-colors">
+                                <h3 className="text-base md:text-lg font-bold text-gray-800 mb-3 line-clamp-2 transition-colors">
                                   {pl.title}
                                 </h3>
 
                                 <div className="space-y-2 mb-1 md:mb-2">
-                                  <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
+                                  <div className="flex items-center gap-2 text-sm md:text-sm text-gray-700">
                                     <Users className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
-                                    <span className="font-medium text-gray-300">
+                                    <span className="font-medium text-gray-800">
                                       {pl.channel}
                                     </span>
                                   </div>
-                                  <div className="flex items-center gap-2 text-sm md:text-sm text-white/85">
+                                  <div className="flex items-center gap-2 text-sm md:text-sm text-gray-700">
                                     <Clock className="w-4 h-4 md:w-4 md:h-4 text-gray-500" />
                                     <span>
                                       Duration:{" "}
-                                      <span className="font-medium text-gray-300">
+                                      <span className="font-medium text-gray-800">
                                         {pl.estDuration}
                                       </span>
                                     </span>
@@ -906,7 +906,7 @@ export function YouTubePlaylists({
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex
                       ? `bg-gradient-to-r ${difficultyConfig[selectedDifficulty].color} shadow-lg`
-                      : "bg-gray-600 hover:bg-gray-500"
+                      : "bg-gray-400 hover:bg-gray-500"
                   }`}
                 />
               ))}

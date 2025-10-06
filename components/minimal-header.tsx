@@ -73,9 +73,9 @@ export function MinimalHeader() {
   };
 
   const navLinkStyle = (href: string) =>
-    `block font-medium text-gray-800 px-3 py-2 rounded-md ${
+    `block font-semibold text-gray-900 px-3 py-2 rounded-md ${
       pathname === href
-        ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 shadow-inner"
+        ? "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 shadow-inner"
         : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:shadow-inner"
     }`;
 
@@ -102,11 +102,13 @@ export function MinimalHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl shadow-2xl">
-      {/* Animated background elements 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-purple-900/10" />
-      <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.1)_50%,transparent_75%)] bg-[length:4px_4px]" />
-      */}
+    // In your MinimalHeader component, change the header element to:
+      <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-50 via-white to-gray-100 backdrop-blur-2xl">
+  {/* Remove the shadow-lg class from above */}
+      {/* Animated background elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-purple-100/20" />
+      <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.03)_50%,transparent_75%)] bg-[length:4px_4px]" />
+      
       <div className="max-w-7xl mx-auto px-4 relative">
         {/* Mobile Header */}
         <div className="flex items-center justify-between md:hidden py-3 gap-3 relative z-10">
@@ -116,7 +118,7 @@ export function MinimalHeader() {
             className="flex items-center justify-start group flex-shrink-0"
           >
             <img
-              src="/newlogo.png"
+              src="/logo.png"
               alt="Logo"
               className="h-16 w-auto transition-transform group-hover:scale-105"
             />
@@ -125,13 +127,13 @@ export function MinimalHeader() {
           {/* Search */}
           <div className="flex-1 relative min-w-0">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
               <Input
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-full text-sm pl-10 pr-8 bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+                className="w-full rounded-full text-sm pl-10 pr-8 bg-white border-gray-200 text-gray-900 placeholder-gray-500 font-medium"
                 autoComplete="off"
                 spellCheck={false}
               />
@@ -140,7 +142,7 @@ export function MinimalHeader() {
                   size="icon"
                   variant="ghost"
                   onClick={handleClear}
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white hover:bg-gray-700 w-6 h-6"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 w-6 h-6"
                   aria-label="Clear"
                 >
                   <X className="w-3 h-3" />
@@ -149,18 +151,18 @@ export function MinimalHeader() {
             </div>
 
             {searchQuery && searchResults.length > 0 && (
-              <div className="absolute z-50 w-full mt-2 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
+              <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                 {searchResults.map((article) => (
                   <Link
                     key={article.id}
                     href={`/articles/${article.slug}`}
-                    className="block px-4 py-3 text-sm text-white hover:bg-gray-700 border-b border-gray-600 last:border-b-0 transition-all"
+                    className="block px-4 py-3 text-sm text-gray-900 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all font-medium"
                     onClick={() => {
                       handleClear();
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <div className="font-medium">{article.title}</div>
+                    <div className="font-semibold">{article.title}</div>
                   </Link>
                 ))}
               </div>
@@ -170,7 +172,7 @@ export function MinimalHeader() {
           {/* Write Button - Mobile */}
           <Link
             href="/admin/new-article"
-            className="inline-flex items-center justify-center p-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-amber-500/25 flex-shrink-0 ml-2"
+            className="inline-flex items-center justify-center p-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-blue-500/25 flex-shrink-0 ml-2"
           >
             <Pencil className="w-4 h-4" />
           </Link>
@@ -178,7 +180,7 @@ export function MinimalHeader() {
           {/* Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2.5 text-gray-300 hover:text-white hover:bg-gray-800 rounded-full transition-all flex-shrink-0 ml-1"
+            className="p-2.5 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all flex-shrink-0 ml-1"
           >
             {isMobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -190,19 +192,19 @@ export function MinimalHeader() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-3 space-y-1 pb-4 text-sm z-10 relative bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-3">
+          <div className="md:hidden mt-3 space-y-1 pb-4 text-sm z-10 relative bg-white border border-gray-200 rounded-xl shadow-lg p-3">
             <Link
               href="/"
-              className={`${navLinkStyle("/")} text-white bg-gray-700`}
+              className={`${navLinkStyle("/")} text-gray-900 bg-gray-50`}
             >
               Home
             </Link>
 
             {/* Articles Dropdown */}
-            <div className="bg-gray-750 rounded-lg">
+            <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsArticlesOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-700 transition-all text-white"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-semibold"
               >
                 Articles
                 <ChevronDown
@@ -212,22 +214,22 @@ export function MinimalHeader() {
                 />
               </button>
               {isArticlesOpen && (
-                <div className="ml-4 mt-1 space-y-1 border-l border-blue-500/30 pl-3 pb-2">
+                <div className="ml-4 mt-1 space-y-1 border-l border-blue-500 pl-3 pb-2">
                   <Link
                     href="/articles"
-                    className={`${navLinkStyle("/articles")} text-gray-200`}
+                    className={`${navLinkStyle("/articles")} text-gray-800 font-medium`}
                   >
                     All Articles
                   </Link>
                   <Link
                     href="/categories"
-                    className={`${navLinkStyle("/categories")} text-gray-200`}
+                    className={`${navLinkStyle("/categories")} text-gray-800 font-medium`}
                   >
                     Categories
                   </Link>
                   <Link
                     href="/authors"
-                    className={`${navLinkStyle("/authors")} text-gray-200`}
+                    className={`${navLinkStyle("/authors")} text-gray-800 font-medium`}
                   >
                     Authors
                   </Link>
@@ -236,10 +238,10 @@ export function MinimalHeader() {
             </div>
 
             {/* Resources Dropdown */}
-            <div className="bg-gray-750 rounded-lg">
+            <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsLearningOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-700 transition-all text-white"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-semibold"
               >
                 Resources
                 <ChevronDown
@@ -249,22 +251,22 @@ export function MinimalHeader() {
                 />
               </button>
               {isLearningOpen && (
-                <div className="ml-4 mt-1 space-y-1 border-l border-green-500/30 pl-3 pb-2">
+                <div className="ml-4 mt-1 space-y-1 border-l border-green-500 pl-3 pb-2">
                   <Link
                     href="/learn-devops-on-youtube"
-                    className="block px-4 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-all"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     YouTube
                   </Link>
                   <Link
                     href="/learn-devops-on-udemy"
-                    className="block px-4 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-all"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Udemy Free Course
                   </Link>
                   <Link
                     href="/free-labs"
-                    className="block px-4 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-all"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Free Labs
                   </Link>
@@ -273,10 +275,10 @@ export function MinimalHeader() {
             </div>
 
             {/* Services Dropdown */}
-            <div className="bg-gray-750 rounded-lg">
+            <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsServicesOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-700 transition-all text-white"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-semibold"
               >
                 Services
                 <ChevronDown
@@ -286,22 +288,22 @@ export function MinimalHeader() {
                 />
               </button>
               {isServicesOpen && (
-                <div className="ml-4 mt-1 space-y-1 border-l border-purple-500/30 pl-3 pb-2">
+                <div className="ml-4 mt-1 space-y-1 border-l border-purple-500 pl-3 pb-2">
                   <Link
                     href="/services/cloud-migration"
-                    className="block px-4 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-all"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Cloud Migration
                   </Link>
                   <Link
                     href="/services/infrastructure-automation"
-                    className="block px-4 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-all"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
                     href="/services/part-time-devops-support"
-                    className="block px-4 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-all"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     DevOps Support
                   </Link>
@@ -311,7 +313,7 @@ export function MinimalHeader() {
 
             <Link
               href="/about"
-              className={`${navLinkStyle("/about")} text-white bg-gray-700`}
+              className={`${navLinkStyle("/about")} text-gray-900 bg-gray-50`}
             >
               About Me
             </Link>
@@ -323,24 +325,24 @@ export function MinimalHeader() {
           {/* Logo Section */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <div className="absolute -inset-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+              <div className="absolute -inset-3 bg-gradient-to-r from-blue-200 to-purple-200 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               <img
-                src="/newlogo.png"
+                src="/logo.png"
                 alt="Logo"
                 className="h-35 w-35 relative z-10 transition-transform group-hover:scale-105"
               />
             </div>
-            <div className="h-8 w-px bg-gray-600"></div>
+            <div className="h-8 w-px bg-gray-300"></div>
           </Link>
 
           {/* Navigation - Centered */}
-          <nav className="flex items-center space-x-1 bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-700 px-2 py-1">
+          <nav className="flex items-center space-x-1 bg-white/90 backdrop-blur-md rounded-2xl border border-gray-200/50 px-2 py-1 shadow-sm">
             <Link
               href="/"
-              className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
                 pathname === "/"
-                  ? "text-white bg-gradient-to-r from-blue-500/20 to-purple-500/20 shadow-lg"
-                  : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                  ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
+                  : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
               <span className="relative z-10">Home</span>
@@ -357,12 +359,12 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-medium transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
                   pathname.includes("/articles") ||
                   pathname.includes("/categories") ||
                   pathname.includes("/authors")
-                    ? "text-white bg-gradient-to-r from-blue-500/20 to-purple-500/20 shadow-lg"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                    ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
+                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 <span className="relative z-10">Articles</span>
@@ -370,7 +372,7 @@ export function MinimalHeader() {
               </button>
               {isArticlesOpen && (
                 <div
-                  className="absolute top-full left-0 mt-3 w-48 bg-gray-800/95 backdrop-blur-xl border border-gray-600 rounded-xl shadow-2xl z-50 py-2"
+                  className="absolute top-full left-0 mt-3 w-48 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
                   onMouseEnter={() =>
                     handleMouseEnter(setIsArticlesOpen, articlesTimeout)
                   }
@@ -380,19 +382,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/articles"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     All Articles
                   </Link>
                   <Link
                     href="/categories"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     Categories
                   </Link>
                   <Link
                     href="/authors"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-medium"
                   >
                     Authors
                   </Link>
@@ -411,10 +413,10 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-medium transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
                   pathname.includes("/learn") || pathname.includes("/free-labs")
-                    ? "text-white bg-gradient-to-r from-green-500/20 to-emerald-500/20 shadow-lg"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                    ? "text-gray-900 bg-gradient-to-r from-green-100 to-emerald-100 shadow-md"
+                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 <span className="relative z-10">Resources</span>
@@ -422,7 +424,7 @@ export function MinimalHeader() {
               </button>
               {isLearningOpen && (
                 <div
-                  className="absolute top-full left-0 mt-3 w-56 bg-gray-800/95 backdrop-blur-xl border border-gray-600 rounded-xl shadow-2xl z-50 py-2"
+                  className="absolute top-full left-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
                   onMouseEnter={() =>
                     handleMouseEnter(setIsLearningOpen, learningTimeout)
                   }
@@ -432,19 +434,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/learn-devops-on-youtube"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     YouTube Tutorials
                   </Link>
                   <Link
                     href="/free-online-courses"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     Free Online Courses
                   </Link>
                   <Link
                     href="/free-labs"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-medium"
                   >
                     Free DevOps Playgrounds
                   </Link>
@@ -463,10 +465,10 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-medium transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
                   pathname.includes("/services")
-                    ? "text-white bg-gradient-to-r from-orange-500/20 to-red-500/20 shadow-lg"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                    ? "text-gray-900 bg-gradient-to-r from-orange-100 to-red-100 shadow-md"
+                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 <span className="relative z-10">Services</span>
@@ -474,7 +476,7 @@ export function MinimalHeader() {
               </button>
               {isServicesOpen && (
                 <div
-                  className="absolute top-full left-0 mt-3 w-64 bg-gray-800/95 backdrop-blur-xl border border-gray-600 rounded-xl shadow-2xl z-50 py-2"
+                  className="absolute top-full left-0 mt-3 w-64 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
                   onMouseEnter={() =>
                     handleMouseEnter(setIsServicesOpen, servicesTimeout)
                   }
@@ -484,19 +486,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/services/cloud-migration"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     Cloud Migration
                   </Link>
                   <Link
                     href="/services/infrastructure-automation"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 border-b border-gray-600 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
                     href="/services/part-time-devops-support"
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-medium"
                   >
                     DevOps Support
                   </Link>
@@ -506,10 +508,10 @@ export function MinimalHeader() {
 
             <Link
               href="/about"
-              className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
                 pathname === "/about"
-                  ? "text-white bg-gradient-to-r from-cyan-500/20 to-blue-500/20 shadow-lg"
-                  : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                  ? "text-gray-900 bg-gradient-to-r from-cyan-100 to-blue-100 shadow-md"
+                  : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
               <span className="relative z-10">About</span>
@@ -521,20 +523,20 @@ export function MinimalHeader() {
             {/* Search */}
             <div className="relative w-64">
               <div className="relative group">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4 z-10" />
                 <Input
                   type="text"
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full pl-10 pr-8 bg-gray-800 border-gray-600 text-white placeholder-gray-400 transition-all group-hover:border-gray-500"
+                  className="w-full rounded-full pl-10 pr-8 bg-white border-gray-200 text-gray-900 placeholder-gray-500 font-medium transition-all group-hover:border-gray-300"
                 />
                 {searchQuery && (
                   <Button
                     size="icon"
                     variant="ghost"
                     onClick={handleClear}
-                    className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white hover:bg-gray-700 w-6 h-6"
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 w-6 h-6"
                     aria-label="Clear"
                   >
                     <X className="w-3 h-3" />
@@ -543,15 +545,15 @@ export function MinimalHeader() {
               </div>
 
               {searchQuery && searchResults.length > 0 && (
-                <div className="absolute z-50 w-full mt-2 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl max-h-72 overflow-y-auto">
+                <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-72 overflow-y-auto">
                   {searchResults.map((article) => (
                     <Link
                       key={article.id}
                       href={`/articles/${article.slug}`}
-                      className="block px-4 py-3 text-white hover:bg-gray-700 border-b border-gray-600 last:border-b-0 transition-all group"
+                      className="block px-4 py-3 text-gray-900 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all group font-medium"
                       onClick={handleClear}
                     >
-                      <div className="font-medium group-hover:text-blue-300 transition-colors">
+                      <div className="font-semibold group-hover:text-blue-700 transition-colors">
                         {article.title}
                       </div>
                     </Link>
@@ -560,12 +562,12 @@ export function MinimalHeader() {
               )}
             </div>
 
-            {/* Write Button - Completely Redesigned */}
+            {/* Write Button - Updated with professional blue/purple theme */}
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
               <Link
                 href="/admin/new-article"
-                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl hover:shadow-amber-500/25 border border-amber-400/30"
+                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30"
               >
                 <Sparkles className="w-4 h-4" />
                 Publish

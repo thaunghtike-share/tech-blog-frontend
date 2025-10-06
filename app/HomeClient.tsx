@@ -122,7 +122,7 @@ export default function HomeClient() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 backdrop-blur-2xl relative overflow-x-hidden"
+      className="min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 backdrop-blur-2xl relative overflow-x-hidden"
       style={{
         // Force GPU acceleration and prevent white flashes
         transform: "translateZ(0)",
@@ -133,7 +133,7 @@ export default function HomeClient() {
     >
       {/* Pre-render background to prevent white screen */}
       <div
-        className="fixed inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 z-0"
+        className="fixed inset-0 bg-gradient-to-r from-gray-50 via-white to-gray-100 z-0"
         style={{
           transform: "translateZ(0)",
           backfaceVisibility: "hidden",
@@ -163,7 +163,7 @@ export default function HomeClient() {
             return (
               <div
                 key={`bg-icon-${i}`}
-                className="absolute animate-float opacity-20"
+                className="absolute animate-float opacity-15"
                 style={{
                   left: `${pos.left}%`,
                   top: `${pos.top}%`,
@@ -173,8 +173,8 @@ export default function HomeClient() {
                   backfaceVisibility: "hidden",
                 }}
               >
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-lg backdrop-blur-sm border border-blue-400/30 flex items-center justify-center shadow-lg">
-                  <IconComponent className="w-5 h-5 text-blue-300" />
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-200/30 to-purple-200/30 rounded-lg backdrop-blur-sm border border-blue-300/40 flex items-center justify-center shadow-sm">
+                  <IconComponent className="w-5 h-5 text-blue-600/60" />
                 </div>
               </div>
             );
@@ -183,7 +183,7 @@ export default function HomeClient() {
           {floatingDotPositions.map((pos, i) => (
             <div
               key={`bg-dot-${i}`}
-              className="absolute animate-pulse opacity-30"
+              className="absolute animate-pulse opacity-20"
               style={{
                 left: `${pos.left}%`,
                 top: `${pos.top}%`,
@@ -193,7 +193,7 @@ export default function HomeClient() {
                 backfaceVisibility: "hidden",
               }}
             >
-              <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full shadow-lg" />
+              <div className="w-3 h-3 bg-gradient-to-r from-blue-300 to-purple-300 rounded-full shadow-sm" />
             </div>
           ))}
         </div>
@@ -215,21 +215,21 @@ export default function HomeClient() {
             backfaceVisibility: "hidden",
           }}
         >
-          <section className="-mt-13">
+          <section className="-mt-5">
             <DevOpsCyclingHero />
           </section>
 
           {/* Featured Articles Section */}
-          <section className="-mt-30 2xl:-mt-65">
+          <section className="-mt-17">
             <FeaturedArticlesPage />
           </section>
 
-          <section id="roadmap" className="-mt-17 2xl:-mt-2">
+          <section id="roadmap" className="-mt-5 2xl:-mt-2">
             <MinimalDevopsRoadmap />
           </section>
 
           {/* Existing sections with updated spacing */}
-          <section id="youtube" className="-mt-17 2xl:-mt-35">
+          <section id="youtube" className="-mt-1 2xl:-mt-35">
             <YouTubePlaylists />
           </section>
 
@@ -287,16 +287,16 @@ export default function HomeClient() {
           animation: float 20s ease-in-out infinite;
         }
 
-        /* Prevent white flash during quick scrolling */
+        /* Update background to white/gray theme */
         html {
-          background: linear-gradient(to right, #111827, #000, #111827);
+          background: linear-gradient(to right, #f9fafb, #ffffff, #f9fafb);
           transform: translateZ(0);
           backface-visibility: hidden;
           perspective: 1000;
         }
 
         body {
-          background: linear-gradient(to right, #111827, #000, #111827);
+          background: linear-gradient(to right, #f9fafb, #ffffff, #f9fafb);
           transform: translateZ(0);
           backface-visibility: hidden;
           overflow-x: hidden;
