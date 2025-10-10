@@ -72,7 +72,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand the importance of monitoring and logging in DevOps - how to track application performance, detect issues, and gain insights through tools like Prometheus, Grafana, and ELK Stack.",
       bgPattern: "containerization",
-      iconGradient: "from-gray-600 to-gray-600",
+      iconGradient: "from-pink-600 to-purple-600",
     },
     {
       id: "git",
@@ -88,7 +88,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Master Infrastructure as Code (IaC) - learn to manage and provision computing infrastructure through code for version control and automated deployment.",
       bgPattern: "iac",
-      iconGradient: "from-violet-600 to-purple-600",
+      iconGradient: "from-sky-600 to-purple-600",
     },
   ];
 
@@ -131,7 +131,7 @@ const DevOpsCyclingHero = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden font-open-sans">
       {/* Header Section - Increased vertical spacing */}
       <motion.div
         className="absolute top-16 md:top-20 left-0 right-0 z-20 text-center px-4"
@@ -140,7 +140,7 @@ const DevOpsCyclingHero = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
             Our Mission
           </h2>
           {/* Chevron with dotted trail */}
@@ -152,7 +152,7 @@ const DevOpsCyclingHero = () => {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-500 to-orange-600 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -164,22 +164,22 @@ const DevOpsCyclingHero = () => {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-yellow-600 ml-2" />
+            <ChevronRight className="w-6 h-6 text-sky-600 ml-2" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-24 sm:w-32 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full mx-auto relative mb-6"
+          className="h-1 w-24 sm:w-32 bg-gradient-to-r from-sky-600 to-blue-500 rounded-full mx-auto relative mb-6"
           initial={{ width: 0 }}
           animate={{ width: "6rem" }}
           transition={{ duration: 0.8, delay: 0.3 }}
         ></motion.div>
 
-        {/* Mission description with increased bottom margin */}
+        {/* Mission description with increased bottom margin - Changed to black text */}
         <div className="mb-8 sm:mb-12 md:mb-16">
           {" "}
           {/* Increased from mb-2 */}
-          <p className="text-gray-700 text-base sm:text-xl max-w-2xl mx-auto relative z-10 px-2 leading-relaxed font-sans">
+          <p className="text-black text-base sm:text-xl max-w-2xl mx-auto relative z-10 px-2 leading-relaxed">
             This website is for developers and students in Myanmar who want to
             learn DevOps and boost their careers in modern software development
             and cloud infrastructure.
@@ -237,7 +237,7 @@ const DevOpsCyclingHero = () => {
             >
               {/* Title with better spacing - Made font bold */}
               <div className="mb-4 sm:mb-5 lg:mb-6">
-                <h1 className="text-4xl font-bold text-gray-800 leading-tight font-sans">
+                <h1 className="text-4xl font-bold text-gray-800 leading-tight">
                   <span
                     className={`bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent font-bold`}
                   >
@@ -246,9 +246,9 @@ const DevOpsCyclingHero = () => {
                 </h1>
               </div>
 
-              {/* Description with better spacing */}
+              {/* Description with better spacing - Changed to black text */}
               <div className="mb-6 sm:mb-8 lg:mb-10">
-                <p className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto lg:mx-0 font-sans">
+                <p className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl text-black leading-relaxed max-w-3xl mx-auto lg:mx-0">
                   {currentSlideData.description}
                 </p>
               </div>
@@ -258,13 +258,13 @@ const DevOpsCyclingHero = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <button
                     onClick={scrollToRoadmap}
-                    className="px-8 py-3 bg-gradient-to-r from-orange-600 to-yellow-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 font-sans"
+                    className="px-8 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   >
                     See Roadmap
                   </button>
                   <Link
                     href="/articles"
-                    className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center font-sans"
+                    className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center"
                   >
                     Read Articles
                   </Link>

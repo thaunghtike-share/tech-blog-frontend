@@ -35,8 +35,8 @@ const roles = [
       "Docker",
       "Kubernetes",
     ],
-    color: "from-blue-500 to-blue-600",
-    iconBg: "bg-gradient-to-r from-blue-500 to-blue-600",
+    color: "from-sky-500 to-blue-600",
+    iconBg: "bg-gradient-to-r from-sky-500 to-blue-600",
   },
   {
     title: "Site Reliability Engineer",
@@ -59,8 +59,8 @@ const roles = [
       "SLO/SLI",
       "Chaos Engineering",
     ],
-    color: "from-pink-500 to-purple-600",
-    iconBg: "bg-gradient-to-r from-pink-500 to-purple-600",
+    color: "from-blue-500 to-purple-600",
+    iconBg: "bg-gradient-to-r from-blue-500 to-purple-600",
   },
   {
     title: "Cloud Engineer",
@@ -84,8 +84,8 @@ const roles = [
       "VPC",
       "Cloud Security",
     ],
-    color: "from-sky-500 to-sky-600",
-    iconBg: "bg-gradient-to-r from-sky-500 to-sky-600",
+    color: "from-green-500 to-emerald-600",
+    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
   },
 ];
 
@@ -107,7 +107,7 @@ export function CareerPath() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
       {/* Header */}
       <div className="text-center mb-12 relative">
         <motion.div
@@ -116,7 +116,7 @@ export function CareerPath() {
           className="flex items-center justify-center gap-4 mb-4 relative z-10"
         >
           <motion.div
-            className="relative p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-2xl"
+            className="relative p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -128,7 +128,7 @@ export function CareerPath() {
             }}
           >
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -146,7 +146,7 @@ export function CareerPath() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent"
           >
             Career Paths
           </motion.h2>
@@ -159,7 +159,7 @@ export function CareerPath() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -171,12 +171,12 @@ export function CareerPath() {
                 }}
               />
             ))}
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-blue-500 ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-sky-600 ml-2" />
           </motion.div>
         </motion.div>
 
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto relative mb-4"
+          className="h-1 w-24 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-4"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -186,7 +186,7 @@ export function CareerPath() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto relative z-10 font-sans"
+          className="text-black text-base md:text-lg max-w-3xl mx-auto relative z-10"
         >
           Understand the key differences between DevOps roles and choose your
           specialization path
@@ -203,10 +203,10 @@ export function CareerPath() {
           <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mb-3 md:mb-4 backdrop-blur-sm border border-gray-400">
             <Users className="w-6 h-6 md:w-8 md:h-8 text-gray-600" />
           </div>
-          <h4 className="text-gray-700 font-medium text-base md:text-lg mb-2 font-sans">
+          <h4 className="text-black font-medium text-base md:text-lg mb-2">
             No roles available
           </h4>
-          <p className="text-gray-600 text-sm md:text-base font-sans">
+          <p className="text-gray-600 text-sm md:text-base">
             Please check back later for new career opportunities.
           </p>
         </motion.div>
@@ -268,12 +268,12 @@ export function CareerPath() {
                                 <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
                                   <role.icon className="w-6 h-6 text-white" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white font-sans">
+                                <h3 className="text-xl font-bold text-white">
                                   {role.title}
                                 </h3>
                               </div>
                               <div className="bg-white/20 rounded-lg px-3 py-2 backdrop-blur-sm">
-                                <span className="text-white/90 text-sm font-medium font-sans">
+                                <span className="text-white/90 text-sm font-medium">
                                   {role.focus}
                                 </span>
                               </div>
@@ -282,27 +282,27 @@ export function CareerPath() {
                             {/* Content Area */}
                             <div className="p-6 flex-grow flex flex-col">
                               {/* Description */}
-                              <p className="text-gray-700 text-sm leading-relaxed mb-4 font-sans">
+                              <p className="text-black text-sm leading-relaxed mb-4">
                                 {role.description}
                               </p>
 
                               {/* Key Difference - Fixed height container */}
                               <div className="mb-4 p-3 bg-gray-100 rounded-lg border border-gray-200 flex-grow-0 min-h-[80px] flex flex-col">
-                                <p className="text-xs font-semibold mb-2 flex items-center gap-1 font-sans">
+                                <p className="text-xs font-semibold mb-2 flex items-center gap-1">
                                   <span
                                     className={`bg-gradient-to-r ${role.color} bg-clip-text text-transparent`}
                                   >
                                     KEY DIFFERENCE
                                   </span>
                                 </p>
-                                <p className="text-gray-800 text-sm flex-grow font-sans">
+                                <p className="text-black text-sm flex-grow">
                                   {role.keyDifference}
                                 </p>
                               </div>
 
                               {/* Core Responsibilities - Fixed height container */}
                               <div className="mb-4 flex-grow">
-                                <h4 className="text-gray-800 text-sm font-semibold mb-3 flex items-center gap-2 font-sans">
+                                <h4 className="text-black text-sm font-semibold mb-3 flex items-center gap-2">
                                   <div
                                     className={`p-1 rounded bg-gradient-to-r ${role.color}`}
                                   >
@@ -319,7 +319,7 @@ export function CareerPath() {
                                       <div
                                         className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${role.color}`}
                                       />
-                                      <span className="text-gray-700 text-sm font-sans">
+                                      <span className="text-black text-sm">
                                         {resp}
                                       </span>
                                     </div>
@@ -347,7 +347,7 @@ export function CareerPath() {
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? "bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg shadow-blue-400/50"
+                      ? "bg-gradient-to-r from-sky-500 to-blue-500 shadow-lg shadow-blue-400/50"
                       : "bg-gray-400 hover:bg-gray-500"
                   }`}
                 />

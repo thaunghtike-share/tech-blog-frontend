@@ -73,7 +73,7 @@ export function MinimalHeader() {
   };
 
   const navLinkStyle = (href: string) =>
-    `block font-semibold text-gray-900 px-3 py-2 rounded-md ${
+    `block font-bold text-gray-900 px-3 py-2 rounded-md ${
       pathname === href
         ? "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 shadow-inner"
         : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:shadow-inner"
@@ -102,13 +102,8 @@ export function MinimalHeader() {
   }
 
   return (
-    // In your MinimalHeader component, change the header element to:
-      <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-50 via-white to-gray-100 backdrop-blur-2xl">
-  {/* Remove the shadow-lg class from above */}
-      {/* Animated background elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-purple-100/20" />
-      <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,100,100,0.03)_50%,transparent_75%)] bg-[length:4px_4px]" />
-      
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-50 via-white to-gray-100">
+
       <div className="max-w-7xl mx-auto px-4 relative">
         {/* Mobile Header */}
         <div className="flex items-center justify-between md:hidden py-3 gap-3 relative z-10">
@@ -133,7 +128,7 @@ export function MinimalHeader() {
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-full text-sm pl-10 pr-8 bg-white border-gray-200 text-gray-900 placeholder-gray-500 font-medium"
+                className="w-full rounded-full text-sm pl-10 pr-8 bg-white border-gray-200 text-gray-900 placeholder-gray-500 font-bold"
                 autoComplete="off"
                 spellCheck={false}
               />
@@ -156,13 +151,13 @@ export function MinimalHeader() {
                   <Link
                     key={article.id}
                     href={`/articles/${article.slug}`}
-                    className="block px-4 py-3 text-sm text-gray-900 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all font-medium"
+                    className="block px-4 py-3 text-sm text-gray-900 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all font-bold"
                     onClick={() => {
                       handleClear();
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <div className="font-semibold">{article.title}</div>
+                    <div className="font-black">{article.title}</div>
                   </Link>
                 ))}
               </div>
@@ -204,7 +199,7 @@ export function MinimalHeader() {
             <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsArticlesOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-semibold"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-bold"
               >
                 Articles
                 <ChevronDown
@@ -217,19 +212,25 @@ export function MinimalHeader() {
                 <div className="ml-4 mt-1 space-y-1 border-l border-blue-500 pl-3 pb-2">
                   <Link
                     href="/articles"
-                    className={`${navLinkStyle("/articles")} text-gray-800 font-medium`}
+                    className={`${navLinkStyle(
+                      "/articles"
+                    )} text-gray-800 font-bold`}
                   >
                     All Articles
                   </Link>
                   <Link
                     href="/categories"
-                    className={`${navLinkStyle("/categories")} text-gray-800 font-medium`}
+                    className={`${navLinkStyle(
+                      "/categories"
+                    )} text-gray-800 font-bold`}
                   >
                     Categories
                   </Link>
                   <Link
                     href="/authors"
-                    className={`${navLinkStyle("/authors")} text-gray-800 font-medium`}
+                    className={`${navLinkStyle(
+                      "/authors"
+                    )} text-gray-800 font-bold`}
                   >
                     Authors
                   </Link>
@@ -241,7 +242,7 @@ export function MinimalHeader() {
             <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsLearningOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-semibold"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-bold"
               >
                 Resources
                 <ChevronDown
@@ -254,19 +255,19 @@ export function MinimalHeader() {
                 <div className="ml-4 mt-1 space-y-1 border-l border-green-500 pl-3 pb-2">
                   <Link
                     href="/learn-devops-on-youtube"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-bold"
                   >
                     YouTube
                   </Link>
                   <Link
                     href="/learn-devops-on-udemy"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-bold"
                   >
                     Udemy Free Course
                   </Link>
                   <Link
                     href="/free-labs"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-bold"
                   >
                     Free Labs
                   </Link>
@@ -278,7 +279,7 @@ export function MinimalHeader() {
             <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsServicesOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-semibold"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-bold"
               >
                 Services
                 <ChevronDown
@@ -291,19 +292,19 @@ export function MinimalHeader() {
                 <div className="ml-4 mt-1 space-y-1 border-l border-purple-500 pl-3 pb-2">
                   <Link
                     href="/services/cloud-migration"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-bold"
                   >
                     Cloud Migration
                   </Link>
                   <Link
                     href="/services/infrastructure-automation"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-bold"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
                     href="/services/part-time-devops-support"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-medium"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md transition-all font-bold"
                   >
                     DevOps Support
                   </Link>
@@ -339,7 +340,7 @@ export function MinimalHeader() {
           <nav className="flex items-center space-x-1 bg-white/90 backdrop-blur-md rounded-2xl border border-gray-200/50 px-2 py-1 shadow-sm">
             <Link
               href="/"
-              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                 pathname === "/"
                   ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                   : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
@@ -359,7 +360,7 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                   pathname.includes("/articles") ||
                   pathname.includes("/categories") ||
                   pathname.includes("/authors")
@@ -382,19 +383,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/articles"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
                     All Articles
                   </Link>
                   <Link
                     href="/categories"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
                     Categories
                   </Link>
                   <Link
                     href="/authors"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-bold"
                   >
                     Authors
                   </Link>
@@ -413,7 +414,7 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                   pathname.includes("/learn") || pathname.includes("/free-labs")
                     ? "text-gray-900 bg-gradient-to-r from-green-100 to-emerald-100 shadow-md"
                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
@@ -434,19 +435,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/learn-devops-on-youtube"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
                     YouTube Tutorials
                   </Link>
                   <Link
                     href="/free-online-courses"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
                     Free Online Courses
                   </Link>
                   <Link
                     href="/free-labs"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-bold"
                   >
                     Free DevOps Playgrounds
                   </Link>
@@ -465,7 +466,7 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                   pathname.includes("/services")
                     ? "text-gray-900 bg-gradient-to-r from-orange-100 to-red-100 shadow-md"
                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
@@ -486,19 +487,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/services/cloud-migration"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
                     Cloud Migration
                   </Link>
                   <Link
                     href="/services/infrastructure-automation"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
                     href="/services/part-time-devops-support"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-medium"
+                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-bold"
                   >
                     DevOps Support
                   </Link>
@@ -508,7 +509,7 @@ export function MinimalHeader() {
 
             <Link
               href="/about"
-              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                 pathname === "/about"
                   ? "text-gray-900 bg-gradient-to-r from-cyan-100 to-blue-100 shadow-md"
                   : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
@@ -529,7 +530,7 @@ export function MinimalHeader() {
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full pl-10 pr-8 bg-white border-gray-200 text-gray-900 placeholder-gray-500 font-medium transition-all group-hover:border-gray-300"
+                  className="w-full rounded-full pl-10 pr-8 bg-white border-gray-200 text-gray-900 placeholder-gray-500 font-bold transition-all group-hover:border-gray-300"
                 />
                 {searchQuery && (
                   <Button
@@ -550,10 +551,10 @@ export function MinimalHeader() {
                     <Link
                       key={article.id}
                       href={`/articles/${article.slug}`}
-                      className="block px-4 py-3 text-gray-900 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all group font-medium"
+                      className="block px-4 py-3 text-gray-900 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all group font-bold"
                       onClick={handleClear}
                     >
-                      <div className="font-semibold group-hover:text-blue-700 transition-colors">
+                      <div className="font-black group-hover:text-blue-700 transition-colors">
                         {article.title}
                       </div>
                     </Link>
@@ -567,7 +568,7 @@ export function MinimalHeader() {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
               <Link
                 href="/admin/new-article"
-                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30"
+                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-black rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30"
               >
                 <Sparkles className="w-4 h-4" />
                 Publish

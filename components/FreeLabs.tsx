@@ -31,11 +31,11 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Interactive browser-based labs that require no installation. Practice Kubernetes, Docker, Linux, and cloud technologies directly in your web browser with step-by-step tutorials.",
     difficulty: "Beginner → Intermediate",
-    color: "from-blue-500 to-cyan-500",
-    gradient: "bg-gradient-to-r from-blue-500 to-cyan-500",
+    color: "from-sky-500 to-blue-600",
+    gradient: "bg-gradient-to-r from-sky-500 to-blue-600",
     iconColor: "text-blue-500",
   },
-    {
+  {
     id: 2,
     title: "KodeKloud",
     platform: "KodeKloud",
@@ -43,9 +43,9 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Hands-on labs with real-world scenarios covering Docker, Kubernetes, Terraform, and more. Perfect for beginners to advanced learners with guided exercises and instant feedback.",
     difficulty: "Beginner → Advanced",
-    color: "from-orange-500 to-red-500",
-    gradient: "bg-gradient-to-r from-orange-500 to-red-500",
-    iconColor: "text-orange-500",
+    color: "from-blue-500 to-purple-600",
+    gradient: "bg-gradient-to-r from-blue-500 to-purple-600",
+    iconColor: "text-purple-500",
   },
   {
     id: 3,
@@ -55,9 +55,9 @@ const staticLabs: DevOpsLab[] = [
     description:
       "A fully functional Kubernetes playground where you can deploy pods, services, and explore cluster operations. Perfect for learning Kubernetes concepts hands-on.",
     difficulty: "Intermediate",
-    color: "from-green-500 to-emerald-500",
-    gradient: "bg-gradient-to-r from-green-500 to-emerald-500",
-    iconColor: "text-green-500",
+    color: "from-green-500 to-emerald-600",
+    gradient: "bg-gradient-to-r from-green-500 to-emerald-600",
+    iconColor: "text-emerald-500",
   },
   {
     id: 4,
@@ -67,8 +67,8 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Master containerization with this interactive Docker playground. Build, run, and manage containers while learning Docker commands and best practices.",
     difficulty: "Intermediate",
-    color: "from-blue-400 to-indigo-500",
-    gradient: "bg-gradient-to-r from-blue-400 to-indigo-500",
+    color: "from-sky-500 to-blue-600",
+    gradient: "bg-gradient-to-r from-sky-500 to-blue-600",
     iconColor: "text-blue-500",
   },
   {
@@ -79,8 +79,8 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Learn Infrastructure as Code with Terraform through practical labs. Create, manage, and deploy cloud resources using declarative configuration files.",
     difficulty: "Beginner",
-    color: "from-purple-500 to-pink-500",
-    gradient: "bg-gradient-to-r from-purple-500 to-pink-500",
+    color: "from-blue-500 to-purple-600",
+    gradient: "bg-gradient-to-r from-blue-500 to-purple-600",
     iconColor: "text-purple-500",
   },
   {
@@ -91,9 +91,9 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Essential Linux commands and administration tasks. Perfect for beginners to learn file systems, permissions, process management, and shell scripting.",
     difficulty: "Beginner",
-    color: "from-yellow-500 to-orange-500",
-    gradient: "bg-gradient-to-r from-yellow-500 to-amber-500",
-    iconColor: "text-yellow-500",
+    color: "from-sky-500 to-blue-600",
+    gradient: "bg-gradient-to-r from-sky-500 to-blue-600",
+    iconColor: "text-blue-500",
   },
   {
     id: 8,
@@ -105,7 +105,7 @@ const staticLabs: DevOpsLab[] = [
     difficulty: "Beginner → Advanced",
     color: "from-sky-500 to-blue-600",
     gradient: "bg-gradient-to-r from-sky-500 to-blue-600",
-    iconColor: "text-sky-500",
+    iconColor: "text-blue-500",
   },
   {
     id: 9,
@@ -115,9 +115,9 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Master version control with interactive Git and GitHub tutorials. Learn branching, merging, pull requests, and collaborative workflows.",
     difficulty: "Beginner → Intermediate",
-    color: "from-gray-600 to-gray-800",
-    gradient: "bg-gradient-to-r from-gray-600 to-gray-800",
-    iconColor: "text-gray-600",
+    color: "from-sky-500 to-blue-600",
+    gradient: "bg-gradient-to-r from-sky-500 to-blue-600",
+    iconColor: "text-blue-500",
   },
   {
     id: 10,
@@ -127,9 +127,9 @@ const staticLabs: DevOpsLab[] = [
     description:
       "Build continuous integration and deployment pipelines with Jenkins. Automate testing, building, and deployment processes with practical examples.",
     difficulty: "Intermediate",
-    color: "from-red-500 to-orange-500",
-    gradient: "bg-gradient-to-r from-red-500 to-orange-500",
-    iconColor: "text-red-500",
+    color: "from-blue-500 to-purple-600",
+    gradient: "bg-gradient-to-r from-blue-500 to-purple-600",
+    iconColor: "text-purple-500",
   },
 ];
 
@@ -149,7 +149,10 @@ export function FreeLabs() {
   const currentLab = labs[currentSlide];
 
   return (
-    <section ref={sectionRef} className="w-full max-w-4xl mx-auto px-4 py-16">
+    <section
+      ref={sectionRef}
+      className="w-full max-w-4xl mx-auto px-4 py-16 font-open-sans"
+    >
       {/* Enhanced Header */}
       <div className="text-center mb-16 relative">
         <motion.div
@@ -159,7 +162,7 @@ export function FreeLabs() {
         >
           {/* Animated bubble icon */}
           <motion.div
-            className="relative p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-2xl"
+            className="relative p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -171,7 +174,7 @@ export function FreeLabs() {
             }}
           >
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -189,7 +192,7 @@ export function FreeLabs() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent"
           >
             Free DevOps Playgrounds
           </motion.h2>
@@ -203,7 +206,7 @@ export function FreeLabs() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -215,23 +218,22 @@ export function FreeLabs() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-blue-500 ml-2" />
+            <ChevronRight className="w-6 h-6 text-sky-600 ml-2" />
           </motion.div>
         </motion.div>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto relative mb-6"
+          className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-6"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-700 text-lg max-w-2xl mx-auto relative z-10 font-sans"
+          className="text-black text-lg max-w-2xl mx-auto relative z-10"
         >
           Explore these practical, free labs and playgrounds to level up your
           DevOps expertise
@@ -272,7 +274,7 @@ export function FreeLabs() {
                 {/* Platform Badge */}
                 <div className="flex justify-center mb-6">
                   <span
-                    className={`inline-flex items-center px-4 py-2 rounded-full ${currentLab.gradient} text-white font-semibold text-sm shadow-lg font-sans`}
+                    className={`inline-flex items-center px-4 py-2 rounded-full ${currentLab.gradient} text-white font-semibold text-sm shadow-lg`}
                   >
                     <Star className="w-4 h-4 mr-2 fill-current" />
                     {currentLab.platform}
@@ -281,13 +283,13 @@ export function FreeLabs() {
 
                 {/* Title */}
                 <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold text-gray-800 font-sans">
+                  <h3 className="text-3xl font-bold text-black">
                     {currentLab.title}
                   </h3>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-700 text-lg leading-relaxed mb-8 flex-grow text-center px-4 font-sans">
+                <p className="text-black text-lg leading-relaxed mb-8 flex-grow text-center px-4">
                   {currentLab.description}
                 </p>
 
@@ -301,7 +303,7 @@ export function FreeLabs() {
                         "bg"
                       )}`}
                     />
-                    <span className="text-sm font-medium font-sans">
+                    <span className="text-sm font-medium">
                       {currentLab.difficulty}
                     </span>
                   </div>
@@ -311,7 +313,7 @@ export function FreeLabs() {
                     href={currentLab.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center justify-center px-8 py-3 ${currentLab.gradient} text-white font-semibold rounded-xl transition-all duration-300 shadow-lg border border-white/20 group/btn font-sans`}
+                    className={`inline-flex items-center justify-center px-8 py-3 ${currentLab.gradient} text-white font-semibold rounded-xl transition-all duration-300 shadow-lg border border-white/20 group/btn`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -351,8 +353,8 @@ export function FreeLabs() {
         </div>
 
         {/* Slide Counter */}
-        <div className="text-center mt-4 text-gray-600 text-sm font-sans">
-          <span className="font-semibold text-gray-800">{currentSlide + 1}</span> /{" "}
+        <div className="text-center mt-4 text-gray-600 text-sm">
+          <span className="font-semibold text-black">{currentSlide + 1}</span> /{" "}
           {labs.length}
         </div>
       </div>

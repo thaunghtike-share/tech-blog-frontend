@@ -62,7 +62,7 @@ export function SuccessStoriesSection() {
   return (
     <section
       ref={sectionRef}
-      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-open-sans"
     >
       {/* Enhanced Header */}
       <motion.div
@@ -74,7 +74,7 @@ export function SuccessStoriesSection() {
         <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
           {/* Animated bubble icon */}
           <motion.div
-            className="relative p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+            className="relative p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -87,7 +87,7 @@ export function SuccessStoriesSection() {
           >
             {/* Bubble effect */}
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -101,7 +101,7 @@ export function SuccessStoriesSection() {
             <Quote className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
             Success Stories
           </h2>
 
@@ -114,7 +114,7 @@ export function SuccessStoriesSection() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -126,19 +126,18 @@ export function SuccessStoriesSection() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-blue-500 ml-2" />
+            <ChevronRight className="w-6 h-6 text-sky-600 ml-2" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto relative mb-6"
+          className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-6"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
-        <p className="text-gray-700 text-lg max-w-2xl mx-auto relative z-10 font-sans">
+        <p className="text-black text-lg max-w-2xl mx-auto relative z-10">
           See how students and junior engineers from Myanmar are growing in the
           DevOps world.
         </p>
@@ -150,8 +149,6 @@ export function SuccessStoriesSection() {
         <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
           <motion.button
             onClick={scrollRight}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
             className="flex items-center justify-center w-10 h-10 bg-white text-blue-500 rounded-full border border-gray-300"
           >
             <div className="relative">
@@ -182,29 +179,44 @@ export function SuccessStoriesSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="min-w-[23.5rem] sm:min-w-0 bg-white rounded-3xl border border-gray-300 p-6 text-center flex flex-col justify-between transition-all"
+              className="min-w-[23.5rem] sm:min-w-0"
             >
-              <div className="flex justify-center mb-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-2xl border border-blue-500/30">
-                  <Quote className="w-6 h-6 text-blue-500" />
+              {/* Card */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-300 p-6 text-center flex flex-col justify-between h-full">
+                {/* Quote Icon */}
+                <div className="flex justify-center mb-4">
+                  <div className="p-3 bg-gradient-to-r from-sky-500/20 to-blue-600/20 rounded-2xl border border-sky-500/30">
+                    <Quote className="w-6 h-6 text-sky-600" />
+                  </div>
                 </div>
-              </div>
-              <p className="text-base sm:text-base text-gray-700 mb-4 leading-relaxed font-sans">
-                "{t.feedback}"
-              </p>
-              <div className="mt-auto">
-                <div className="text-sm sm:text-base text-gray-800 font-medium font-sans">
-                  {t.name}
-                </div>
-                <div className="text-sm sm:text-sm text-gray-700 font-sans">{t.role}</div>
-                <div className="flex justify-center mt-2">
-                  {[...Array(t.rating)].map((_, j) => (
-                    <Star
-                      key={j}
-                      className="w-4 h-4 text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
+
+                {/* Feedback Text */}
+                <p className="text-base sm:text-base text-black mb-4 leading-relaxed line-clamp-5 flex-grow">
+                  "{t.feedback}"
+                </p>
+
+                {/* User Info */}
+                <div className="mt-auto">
+                  <div className="text-sm sm:text-base text-black font-semibold">
+                    {t.name}
+                  </div>
+                  <div className="text-sm sm:text-sm text-gray-700">
+                    {t.role}
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex justify-center mt-3">
+                    {[...Array(5)].map((_, j) => (
+                      <Star
+                        key={j}
+                        className={`w-4 h-4 ${
+                          j < t.rating
+                            ? "text-yellow-500 fill-yellow-500"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -217,9 +229,7 @@ export function SuccessStoriesSection() {
         <div className="mt-12 text-center hidden sm:block">
           <motion.button
             onClick={() => setShowAll(!showAll)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 rounded-full text-sm font-medium bg-white text-blue-600 hover:bg-blue-500/20 border border-blue-500/30 transition-all flex items-center gap-2 mx-auto font-sans"
+            className="px-8 py-3 rounded-xl text-sm font-medium bg-white/80 backdrop-blur-sm text-blue-600 border border-blue-500/30 flex items-center gap-2 mx-auto"
           >
             {showAll ? (
               <>

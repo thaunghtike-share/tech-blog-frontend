@@ -235,17 +235,20 @@ export function TopUdemyCourses() {
 
   if (loading) {
     return (
-      <section ref={sectionRef} className="w-full max-w-7xl mx-auto px-4 py-16">
+      <section
+        ref={sectionRef}
+        className="w-full max-w-7xl mx-auto px-4 py-16 font-open-sans"
+      >
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-2xl shadow-lg">
               <Play className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
               Free Online Courses
             </h2>
           </div>
-          <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto"></div>
+          <div className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -276,7 +279,10 @@ export function TopUdemyCourses() {
   }
 
   return (
-    <section ref={sectionRef} className="w-full max-w-7xl mx-auto px-4 py-16">
+    <section
+      ref={sectionRef}
+      className="w-full max-w-7xl mx-auto px-4 py-16 font-open-sans"
+    >
       {/* Header Section */}
       <motion.div
         className="text-center mb-16 relative"
@@ -287,7 +293,7 @@ export function TopUdemyCourses() {
         <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
           {/* Animated bubble icon */}
           <motion.div
-            className="relative p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-2xl"
+            className="relative p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -299,7 +305,7 @@ export function TopUdemyCourses() {
             }}
           >
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full blur-lg"
+              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.8, 0.5],
@@ -313,7 +319,7 @@ export function TopUdemyCourses() {
             <Play className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
             Free Online Courses
           </h2>
 
@@ -325,7 +331,7 @@ export function TopUdemyCourses() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -337,18 +343,18 @@ export function TopUdemyCourses() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-blue-500 ml-2" />
+            <ChevronRight className="w-6 h-6 text-sky-600 ml-2" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto relative"
+          className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         ></motion.div>
 
-        <p className="text-gray-700 mt-6 text-lg max-w-2xl mx-auto relative z-10 font-sans">
+        <p className="text-black mt-6 text-lg max-w-2xl mx-auto relative z-10">
           Curated list of free online courses to master DevOps tools and
           practices
           {usingFallback && (
@@ -379,7 +385,7 @@ export function TopUdemyCourses() {
               </div>
               <button
                 onClick={retryFetch}
-                className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-xl transition-all border border-yellow-600 hover:bg-yellow-600 font-sans"
+                className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-xl transition-all border border-yellow-600 hover:bg-yellow-600"
               >
                 <RefreshCw className="w-4 h-4" />
                 Retry
@@ -394,10 +400,10 @@ export function TopUdemyCourses() {
           <div className="inline-flex items-center justify-center bg-blue-100 rounded-full p-6 mb-6 backdrop-blur-sm border border-blue-300">
             <BookOpen className="w-12 h-12 text-blue-600" />
           </div>
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 font-sans">
+          <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
             No courses available
           </h3>
-          <p className="text-gray-600 mb-8 text-lg font-sans">
+          <p className="text-gray-600 mb-8 text-lg">
             Check back later for featured courses
           </p>
         </div>
@@ -447,7 +453,7 @@ export function TopUdemyCourses() {
                           className="group relative overflow-hidden"
                         >
                           <motion.div
-                            className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-3xl blur opacity-0 transition duration-500"
+                            className="absolute -inset-1 bg-gradient-to-r from-sky-500/10 to-blue-500/10 rounded-3xl blur opacity-0 transition duration-500"
                             animate={{
                               scale: [1, 1.05, 1],
                             }}
@@ -461,7 +467,7 @@ export function TopUdemyCourses() {
                           {/* Course Card */}
                           <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl transition-all duration-300 hover:border-blue-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                             {/* Course Cover Image - Clean without badges */}
-                            <div className="relative h-48 bg-gradient-to-br from-blue-100 to-blue-200 overflow-hidden">
+                            <div className="relative h-48 bg-gradient-to-br from-sky-100 to-blue-200 overflow-hidden">
                               {course.cover_image ? (
                                 <img
                                   src={course.cover_image || "/placeholder.svg"}
@@ -469,34 +475,34 @@ export function TopUdemyCourses() {
                                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
+                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sky-100 to-blue-200">
                                   <BookOpen className="w-16 h-16 text-blue-400/50" />
                                 </div>
                               )}
                             </div>
 
                             <div className="p-6 flex flex-col flex-grow">
-                              <h3 className="text-xl font-bold text-gray-800 mb-3 transition-colors line-clamp-2 font-sans">
+                              <h3 className="text-xl font-bold text-black mb-3 transition-colors line-clamp-2">
                                 {course.title}
                               </h3>
 
-                              <p className="text-gray-700 mb-4 leading-relaxed line-clamp-3 flex-grow font-sans">
+                              <p className="text-black mb-4 leading-relaxed line-clamp-3 flex-grow">
                                 {course.description}
                               </p>
 
                               {/* Author and Student Count Row */}
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 rounded-full border border-blue-300">
-                                  <div className="p-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full">
+                                  <div className="p-1 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full">
                                     <User className="w-3 h-3 text-white" />
                                   </div>
-                                  <span className="font-medium text-blue-700 text-sm font-sans">
+                                  <span className="font-medium text-blue-700 text-sm">
                                     {course.author}
                                   </span>
                                 </div>
 
                                 {/* Student Count */}
-                                <div className="flex items-center gap-1 text-gray-700 text-sm font-sans">
+                                <div className="flex items-center gap-1 text-gray-700 text-sm">
                                   <Users className="w-4 h-4" />
                                   <span>{course.students}</span>
                                 </div>
@@ -507,11 +513,11 @@ export function TopUdemyCourses() {
                                 <div className="flex items-center gap-2 mb-4">
                                   <div className="flex items-center gap-1 text-yellow-500">
                                     <Star className="w-4 h-4 fill-current" />
-                                    <span className="font-medium text-gray-800 text-sm font-sans">
+                                    <span className="font-medium text-black text-sm">
                                       {course.rating.toFixed(1)}
                                     </span>
                                   </div>
-                                  <span className="text-gray-600 text-sm font-sans">
+                                  <span className="text-gray-600 text-sm">
                                     rating
                                   </span>
                                 </div>
@@ -535,7 +541,7 @@ export function TopUdemyCourses() {
                                           transition={{ delay: i * 0.1 }}
                                           className="bg-blue-50 p-3 rounded-xl border border-blue-200"
                                         >
-                                          <div className="text-gray-700 text-sm flex items-start gap-2 font-sans">
+                                          <div className="text-black text-sm flex items-start gap-2">
                                             <MessageSquare className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
                                             <span>
                                               <strong className="text-blue-600">
@@ -555,7 +561,7 @@ export function TopUdemyCourses() {
                                   href={course.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-blue-400/30 group/btn font-sans"
+                                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:scale-[1.02] hover:shadow-xl border border-blue-400/30 group/btn"
                                 >
                                   <motion.div
                                     animate={{ rotate: [0, 360] }}
@@ -597,7 +603,7 @@ export function TopUdemyCourses() {
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentSlide
-                      ? "bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg"
+                      ? "bg-gradient-to-r from-sky-500 to-blue-500 shadow-lg"
                       : "bg-gray-400 hover:bg-gray-500"
                   }`}
                 />

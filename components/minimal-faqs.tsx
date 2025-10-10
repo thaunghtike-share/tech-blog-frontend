@@ -74,7 +74,7 @@ export function MinimalFAQs() {
   return (
     <section
       ref={sectionRef}
-      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-open-sans"
     >
       {/* Enhanced Header */}
       <motion.div
@@ -86,7 +86,7 @@ export function MinimalFAQs() {
         <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
           {/* Animated bubble icon */}
           <motion.div
-            className="relative p-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full shadow-2xl"
+            className="relative p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 10, -10, 0],
@@ -113,7 +113,7 @@ export function MinimalFAQs() {
             <HelpCircle className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h2>
 
@@ -126,7 +126,7 @@ export function MinimalFAQs() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -138,18 +138,18 @@ export function MinimalFAQs() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-sky-400 ml-2" />
+            <ChevronRight className="w-6 h-6 text-sky-600 ml-2" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mx-auto relative mb-6"
+          className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-6"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         ></motion.div>
 
-        <p className="text-gray-700 text-lg max-w-3xl mx-auto relative z-10 font-sans">
+        <p className="text-black text-lg max-w-3xl mx-auto relative z-10">
           Find answers to common questions about DevOps and our services
         </p>
       </motion.div>
@@ -157,14 +157,14 @@ export function MinimalFAQs() {
       {/* FAQ Carousel Container */}
       <div className="relative max-w-4xl mx-auto">
         {/* FAQ Content with integrated navigation */}
-        <div className="bg-white rounded-3xl border border-gray-300 p-8 shadow-xl relative">
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-300 p-8 shadow-xl relative">
           {/* Navigation Buttons - Positioned outside the card */}
           <div className="absolute -left-16 top-1/2 -translate-y-1/2 z-20">
             <motion.button
               onClick={prevFAQ}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-12 h-12 bg-white text-sky-500 rounded-full shadow-lg border border-gray-300 hover:border-sky-400 transition-all"
+              className="flex items-center justify-center w-12 h-12 bg-white/80 backdrop-blur-sm text-blue-500 rounded-full shadow-lg border border-gray-300 hover:border-blue-400 transition-all"
             >
               <ChevronLeft className="w-6 h-6" />
             </motion.button>
@@ -175,7 +175,7 @@ export function MinimalFAQs() {
               onClick={nextFAQ}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-12 h-12 bg-white text-sky-500 rounded-full shadow-lg border border-gray-300 hover:border-sky-400 transition-all"
+              className="flex items-center justify-center w-12 h-12 bg-white/80 backdrop-blur-sm text-blue-500 rounded-full shadow-lg border border-gray-300 hover:border-blue-400 transition-all"
             >
               <ChevronRight className="w-6 h-6" />
             </motion.button>
@@ -193,12 +193,12 @@ export function MinimalFAQs() {
               {/* Question Icon */}
               <div className="flex justify-center mb-6">
                 <div className="p-4 bg-gradient-to-r from-sky-500/20 to-blue-600/20 rounded-2xl border border-sky-500/30">
-                  <MessageCircleQuestion className="w-8 h-8 text-sky-500" />
+                  <MessageCircleQuestion className="w-8 h-8 text-sky-600" />
                 </div>
               </div>
 
               {/* Question */}
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 leading-tight font-sans">
+              <h3 className="text-xl md:text-2xl font-bold text-black mb-6 leading-tight">
                 {currentFAQ.question}
               </h3>
 
@@ -207,7 +207,7 @@ export function MinimalFAQs() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
-                className="text-gray-700 text-base md:text-lg leading-relaxed max-w-3xl mx-auto font-sans"
+                className="text-black text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
               >
                 {currentFAQ.answer}
               </motion.div>
@@ -226,7 +226,7 @@ export function MinimalFAQs() {
             whileTap={{ scale: 0.9 }}
             className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium transition-all ${
               index === currentIndex
-                ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
+                ? "bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-lg"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >

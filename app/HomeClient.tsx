@@ -215,7 +215,7 @@ export default function HomeClient() {
             backfaceVisibility: "hidden",
           }}
         >
-          <section className="-mt-5">
+          <section className="-mt-9">
             <DevOpsCyclingHero />
           </section>
 
@@ -251,10 +251,6 @@ export default function HomeClient() {
 
           <div className="-mt-20">
             <SuccessStoriesSection />
-          </div>
-
-          <div className="-mt-24">
-            <AuthorsContributorsCTA />
           </div>
 
           <div className="-mt-32">

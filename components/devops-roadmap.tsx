@@ -1,18 +1,18 @@
-"use client"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+"use client";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 interface RoadmapItem {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 
 interface RoadmapStage {
-  key: string
-  label: string
-  description: string[]
-  items: RoadmapItem[]
+  key: string;
+  label: string;
+  description: string[];
+  items: RoadmapItem[];
 }
 
 const roadmap: RoadmapStage[] = [
@@ -25,123 +25,147 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "Linux",
-        description: "Master command line, file systems, and shell scripting fundamentals",
+        title: "Linux Fundamentals",
+        description:
+          "Master command line, file systems, and shell scripting fundamentals",
       },
       {
-        title: "Shell Script",
-        description: "Automate tasks with Bash scripting and command-line tools",
+        title: "Bash Scripting",
+        description:
+          "Automate tasks with Bash scripting and command-line tools",
       },
       {
         title: "CCNA",
-        description: "Understand networking basics, protocols, and infrastructure",
+        description:
+          "Understand networking basics, protocols, and infrastructure",
       },
       {
-        title: "Cloud Basic",
-        description: "Learn cloud computing concepts and service models (IaaS, PaaS, SaaS)",
+        title: "Cloud Computing",
+        description:
+          "Learn cloud computing concepts and service models (IaaS, PaaS, SaaS)",
       },
       {
-        title: "Docker",
-        description: "Containerize applications and manage container lifecycles",
+        title: "Docker Essentials",
+        description:
+          "Containerize applications and manage container lifecycles",
       },
     ],
   },
   {
     key: "intermediate",
     label: "Intermediate",
-    description: ["Build real DevOps workflows and automation", "Infrastructure as code and CI/CD pipelines"],
+    description: [
+      "Build real DevOps workflows and automation",
+      "Infrastructure as code and CI/CD pipelines",
+    ],
     items: [
       {
         title: "AWS Core Services",
-        description: "Master EC2, S3, RDS, Lambda, and essential AWS infrastructure",
+        description:
+          "Master EC2, S3, RDS, Lambda, and essential AWS infrastructure",
       },
       {
         title: "Ansible Automation",
-        description: "Automate configuration management and application deployment",
+        description:
+          "Automate configuration management and application deployment",
       },
       {
         title: "Git & GitHub",
-        description: "Version control, branching strategies, and collaborative workflows",
+        description:
+          "Version control, branching strategies, and collaborative workflows",
       },
       {
         title: "CI/CD Pipelines",
-        description: "Build automated testing and deployment pipelines with Jenkins or GitLab",
+        description:
+          "Build automated testing and deployment pipelines with Jenkins or GitLab",
       },
       {
         title: "Kubernetes",
-        description: "Orchestrate containers at scale with K8s clusters and deployments",
+        description:
+          "Orchestrate containers at scale with K8s clusters and deployments",
       },
     ],
   },
   {
     key: "advanced",
     label: "Advanced",
-    description: ["Master production-grade DevOps and GitOps", "Kubernetes, infrastructure as code, and security"],
+    description: [
+      "Master production-grade DevOps and GitOps",
+      "Kubernetes, infrastructure as code, and security",
+    ],
     items: [
       {
         title: "Terraform",
-        description: "Infrastructure as Code for multi-cloud provisioning and management",
+        description:
+          "Infrastructure as Code for multi-cloud provisioning and management",
       },
       {
         title: "Monitoring & Observability",
-        description: "Implement Prometheus, Grafana, and ELK stack for system insights",
+        description:
+          "Implement Prometheus, Grafana, and ELK stack for system insights",
       },
       {
         title: "GitOps",
-        description: "Declarative infrastructure with ArgoCD and Flux for automated deployments",
+        description:
+          "Declarative infrastructure with ArgoCD and Flux for automated deployments",
       },
       {
         title: "Secrets Management",
-        description: "Secure sensitive data with Vault, AWS Secrets Manager, and encryption",
+        description:
+          "Secure sensitive data with Vault, AWS Secrets Manager, and encryption",
       },
       {
         title: "Kubernetes Security",
-        description: "Implement RBAC, network policies, and security best practices",
+        description:
+          "Implement RBAC, network policies, and security best practices",
       },
     ],
   },
-]
+];
 
 const stageConfig = {
-  beginner: { 
-    gradient: "from-blue-500 to-blue-600", 
-    color: "blue",
-    bgGradient: "from-blue-500 to-blue-600",
-    lightBg: "bg-blue-400/20",
-    border: "border-blue-300/30"
-  },
-  intermediate: { 
-    gradient: "from-pink-500 to-purple-600", 
-    color: "yellow",
-    bgGradient: "from-yellow-500 to-yellow-600",
-    lightBg: "bg-yellow-400/20",
-    border: "border-yellow-300/30"
-  },
-  advanced: { 
-    gradient: "from-sky-500 to-sky-600", 
+  beginner: {
+    gradient: "from-sky-600 to-blue-600",
     color: "sky",
-    bgGradient: "from-sky-500 to-sky-600",
+    bgGradient: "from-sky-600 to-blue-600",
     lightBg: "bg-sky-400/20",
-    border: "border-sky-300/30"
+    border: "border-sky-300/30",
   },
-}
+  intermediate: {
+    gradient: "from-blue-500 to-purple-600",
+    color: "blue",
+    bgGradient: "from-blue-500 to-purple-600",
+    lightBg: "bg-blue-400/20",
+    border: "border-blue-300/30",
+  },
+  advanced: {
+    gradient: "from-green-500 to-emerald-600",
+    color: "green",
+    bgGradient: "from-green-500 to-emerald-600",
+    lightBg: "bg-green-400/20",
+    border: "border-green-300/30",
+  },
+};
 
 export function MinimalDevopsRoadmap() {
-  const [currentStageIndex, setCurrentStageIndex] = useState(0)
+  const [currentStageIndex, setCurrentStageIndex] = useState(0);
 
   const nextStage = () => {
-    setCurrentStageIndex((prev) => (prev + 1) % roadmap.length)
-  }
+    setCurrentStageIndex((prev) => (prev + 1) % roadmap.length);
+  };
 
   const prevStage = () => {
-    setCurrentStageIndex((prev) => (prev - 1 + roadmap.length) % roadmap.length)
-  }
+    setCurrentStageIndex(
+      (prev) => (prev - 1 + roadmap.length) % roadmap.length
+    );
+  };
 
-  const currentStage = roadmap[currentStageIndex]
-  const currentConfig = stageConfig[currentStage.key as keyof typeof stageConfig]
+  const currentStage = roadmap[currentStageIndex];
+  const currentConfig =
+    stageConfig[currentStage.key as keyof typeof stageConfig];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden font-open-sans">
       {/* Background Elements */}
       <div className="absolute inset-0">
         {[
@@ -160,7 +184,9 @@ export function MinimalDevopsRoadmap() {
               animationDuration: `${5 + (i % 2)}s`,
             }}
           >
-            <div className={`w-3 h-3 sm:w-4 sm:h-4 ${currentConfig.lightBg} rounded-full backdrop-blur-sm border ${currentConfig.border}`} />
+            <div
+              className={`w-3 h-3 sm:w-4 sm:h-4 ${currentConfig.lightBg} rounded-full backdrop-blur-sm border ${currentConfig.border}`}
+            />
           </div>
         ))}
       </div>
@@ -175,7 +201,7 @@ export function MinimalDevopsRoadmap() {
         >
           <div className="flex items-center justify-center gap-4 mb-6 relative z-10">
             <motion.div
-              className="relative p-4 bg-gradient-to-r from-blue-500 to-sky-600 rounded-full shadow-2xl"
+              className="relative p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
               animate={{
                 scale: [1, 1.1, 1],
                 rotate: [0, 10, -10, 0],
@@ -187,7 +213,7 @@ export function MinimalDevopsRoadmap() {
               }}
             >
               <motion.div
-                className="absolute -inset-2 bg-gradient-to-r from-blue-400/30 to-sky-500/30 rounded-full blur-lg"
+                className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.5, 0.8, 0.5],
@@ -201,7 +227,7 @@ export function MinimalDevopsRoadmap() {
               <ChevronRight className="w-10 h-10 text-white relative z-10" />
             </motion.div>
 
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
               DevOps Roadmap
             </h2>
 
@@ -213,7 +239,7 @@ export function MinimalDevopsRoadmap() {
               {[...Array(3)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className={`w-2 h-2 bg-gradient-to-r bg-sky-500 bg-blue-500 rounded-full`}
+                  className={`w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full`}
                   animate={{
                     scale: [1, 1.5, 1],
                     opacity: [0.3, 1, 0.3],
@@ -225,19 +251,20 @@ export function MinimalDevopsRoadmap() {
                   }}
                 />
               ))}
-              <ChevronRight className={`w-6 h-6 text-sky-500 ml-2`} />
+              <ChevronRight className={`w-6 h-6 text-sky-600 ml-2`} />
             </motion.div>
           </div>
 
           <motion.div
-            className={`h-1 w-32 bg-gradient-to-r bg-sky-500 bg-blue-500 rounded-full mx-auto relative mb-6`}
+            className={`h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-6`}
             initial={{ width: 0 }}
             animate={{ width: 128 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           />
 
-          <p className="text-gray-700 text-lg max-w-3xl mx-auto relative z-10">
-            A structured learning path to master DevOps from fundamentals to advanced concepts
+          <p className="text-black text-lg max-w-3xl mx-auto relative z-10">
+            A structured learning path to master DevOps from fundamentals to
+            advanced concepts
           </p>
         </motion.div>
 
@@ -268,7 +295,10 @@ export function MinimalDevopsRoadmap() {
                   className="space-y-4"
                 >
                   {currentStage.description.map((desc, index) => (
-                    <p key={index} className="text-gray-600 text-lg leading-relaxed">
+                    <p
+                      key={index}
+                      className="text-black text-lg leading-relaxed"
+                    >
                       {desc}
                     </p>
                   ))}
@@ -290,7 +320,11 @@ export function MinimalDevopsRoadmap() {
                         onClick={() => setCurrentStageIndex(index)}
                         className={`w-3 h-3 rounded-full transition-all duration-300 ${
                           index === currentStageIndex
-                            ? `bg-gradient-to-r ${stageConfig[roadmap[index].key as keyof typeof stageConfig].gradient} scale-125`
+                            ? `bg-gradient-to-r ${
+                                stageConfig[
+                                  roadmap[index].key as keyof typeof stageConfig
+                                ].gradient
+                              } scale-125`
                             : "bg-gray-300 hover:bg-gray-400"
                         }`}
                       />
@@ -326,7 +360,9 @@ export function MinimalDevopsRoadmap() {
                   {/* Modern Timeline */}
                   <div className="relative">
                     {/* Vertical Line */}
-                    <div className={`absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b ${currentConfig.gradient}`} />
+                    <div
+                      className={`absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b ${currentConfig.gradient}`}
+                    />
 
                     {/* Roadmap Items */}
                     <div className="space-y-6">
@@ -350,11 +386,15 @@ export function MinimalDevopsRoadmap() {
                           {/* Content Card */}
                           <div className="flex-1 min-w-0">
                             <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-blue-300 group-hover:-translate-y-1">
-                              <h3 className="text-lg font-bold text-black mb-2">{item.title}</h3>
+                              <h3 className="text-lg font-bold text-black mb-2">
+                                {item.title}
+                              </h3>
                               <div
                                 className={`w-12 h-1 bg-gradient-to-r ${currentConfig.gradient} rounded-full mb-3`}
                               ></div>
-                              <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+                              <p className="text-black text-sm leading-relaxed">
+                                {item.description}
+                              </p>
                             </div>
                           </div>
                         </motion.div>
@@ -395,7 +435,8 @@ export function MinimalDevopsRoadmap() {
 
       <style jsx>{`
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0px);
           }
           50% {
@@ -407,5 +448,5 @@ export function MinimalDevopsRoadmap() {
         }
       `}</style>
     </section>
-  )
+  );
 }
