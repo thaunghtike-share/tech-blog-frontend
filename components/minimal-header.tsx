@@ -201,6 +201,16 @@ export function MinimalHeader() {
               Articles
             </Link>
 
+            {/* DevOps Playground Link */}
+            <Link
+              href="/devops-playground"
+              className={`${navLinkStyle(
+                "/devops-playground"
+              )} text-gray-900 bg-gray-50`}
+            >
+              DevOps Playground
+            </Link>
+
             {/* Resources Dropdown */}
             <div className="bg-gray-50 rounded-lg">
               <button
@@ -293,7 +303,7 @@ export function MinimalHeader() {
               <img
                 src="/logo.png"
                 alt="Logo"
-                className="h-35 w-35 relative z-10 transition-transform group-hover:scale-105"
+                className="h-37 w-35 relative z-10 transition-transform group-hover:scale-105"
               />
             </div>
             <div className="h-8 w-px bg-gray-300"></div>
@@ -324,57 +334,17 @@ export function MinimalHeader() {
               <span className="relative z-10">Articles</span>
             </Link>
 
-            {/* Resources Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() =>
-                handleMouseEnter(setIsLearningOpen, learningTimeout)
-              }
-              onMouseLeave={() =>
-                handleMouseLeave(setIsLearningOpen, learningTimeout)
-              }
+            {/* DevOps Playground Link */}
+            <Link
+              href="/devops-playground"
+              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
+                pathname.includes("/devops-playground")
+                  ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
+                  : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+              }`}
             >
-              <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
-                  pathname.includes("/learn") || pathname.includes("/free-labs")
-                    ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                <span className="relative z-10">Resources</span>
-                <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
-              </button>
-              {isLearningOpen && (
-                <div
-                  className="absolute top-full left-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
-                  onMouseEnter={() =>
-                    handleMouseEnter(setIsLearningOpen, learningTimeout)
-                  }
-                  onMouseLeave={() =>
-                    handleMouseLeave(setIsLearningOpen, learningTimeout)
-                  }
-                >
-                  <Link
-                    href="/learn-devops-on-youtube"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
-                  >
-                    YouTube Tutorials
-                  </Link>
-                  <Link
-                    href="/free-online-courses"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
-                  >
-                    Online Courses
-                  </Link>
-                  <Link
-                    href="/free-labs"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-bold"
-                  >
-                    DevOps Playgrounds
-                  </Link>
-                </div>
-              )}
-            </div>
+              <span className="relative z-10">DevOps Playground</span>
+            </Link>
 
             {/* Services Dropdown */}
             <div
