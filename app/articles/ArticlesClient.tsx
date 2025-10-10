@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalBlogList } from "@/components/minimal-blog-list";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function ArticlesClient() {
@@ -128,11 +127,6 @@ export default function ArticlesClient() {
               filterTagSlug={selectedTag}
             />
           </div>
-
-          {/* Sidebar hidden on mobile */}
-          <aside className="hidden lg:block lg:col-span-2 mt-26">
-            <MinimalSidebar onTagClick={updateTagFilter} />
-          </aside>
         </div>
       </main>
       <div className="-mt-4 md:-mt-5">

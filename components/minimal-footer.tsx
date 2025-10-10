@@ -23,12 +23,13 @@ export function MinimalFooter() {
               real-world projects.
             </p>
 
+            {/* Social Media with colored backgrounds */}
             <div className="flex space-x-3 pt-4">
               <a
                 href="https://www.linkedin.com/in/thaung-htike-oo-6672781b1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white rounded-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 border border-gray-200 hover:border-blue-300"
+                className="p-3 bg-white rounded-xl text-[#0077B5] hover:bg-[#0077B5] hover:text-white transition-all duration-300 border border-gray-200 hover:border-[#0077B5] shadow-sm hover:shadow-md hover:scale-110"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
@@ -36,7 +37,7 @@ export function MinimalFooter() {
                 href="https://github.com/thaunghtike-share"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white rounded-xl text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-all duration-300 border border-gray-200 hover:border-gray-400"
+                className="p-3 bg-white rounded-xl text-gray-800 hover:bg-gray-800 hover:text-white transition-all duration-300 border border-gray-200 hover:border-gray-800 shadow-sm hover:shadow-md hover:scale-110"
               >
                 <Github className="h-5 w-5" />
               </a>
@@ -44,13 +45,13 @@ export function MinimalFooter() {
                 href="https://www.facebook.com/learndevopsnowbytho"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white rounded-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 border border-gray-200 hover:border-blue-300"
+                className="p-3 bg-white rounded-xl text-[#1877F2] hover:bg-[#1877F2] hover:text-white transition-all duration-300 border border-gray-200 hover:border-[#1877F2] shadow-sm hover:shadow-md hover:scale-110"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
                 href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                className="p-3 bg-white rounded-xl text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-300 border border-gray-200 hover:border-red-300"
+                className="p-3 bg-white rounded-xl text-[#EA4335] hover:bg-[#EA4335] hover:text-white transition-all duration-300 border border-gray-200 hover:border-[#EA4335] shadow-sm hover:shadow-md hover:scale-110"
               >
                 <Mail className="h-5 w-5" />
               </a>
@@ -58,20 +59,19 @@ export function MinimalFooter() {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Quick Links
             </h3>
             <ul className="space-y-3">
               {[
                 { href: "/articles", label: "Articles" },
                 { href: "/categories", label: "Categories" },
-                { href: "/authors", label: "Authors" },
                 { href: "/about", label: "About Me" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-700 hover:text-blue-600 transition-all duration-300 block font-medium"
+                    className="text-gray-600 hover:text-blue-700 transition-all duration-300 block font-medium hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -81,7 +81,9 @@ export function MinimalFooter() {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">Resources</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-6 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+              Resources
+            </h3>
             <ul className="space-y-3">
               {[
                 {
@@ -90,14 +92,14 @@ export function MinimalFooter() {
                 },
                 {
                   href: "/learn-devops-on-udemy",
-                  label: "Free Online Courses",
+                  label: "Online Courses",
                 },
-                { href: "/free-labs", label: "Free DevOps Playgrounds" },
+                { href: "/free-labs", label: "DevOps Playgrounds" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-700 hover:text-blue-600 transition-all duration-300 block font-medium"
+                    className="text-gray-600 hover:text-green-700 transition-all duration-300 block font-medium hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -107,7 +109,9 @@ export function MinimalFooter() {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">Services</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-6 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+              Services
+            </h3>
             <ul className="space-y-3">
               {[
                 { href: "/services/cloud-migration", label: "Cloud Migration" },
@@ -123,7 +127,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-700 hover:text-blue-600 transition-all duration-300 block font-medium"
+                    className="text-gray-600 hover:text-orange-700 transition-all duration-300 block font-medium hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -133,27 +137,29 @@ export function MinimalFooter() {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">Contact</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Contact
+            </h3>
             <ul className="space-y-3">
               <li>
                 <a
                   href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                  className="text-gray-700 hover:text-blue-600 transition-all duration-300 flex items-center font-medium"
+                  className="text-gray-600 hover:text-purple-700 transition-all duration-300 flex items-center font-medium hover:translate-x-1"
                 >
-                  <Mail className="h-4 w-4 mr-3 text-blue-500" />
+                  <Mail className="h-4 w-4 mr-3 text-purple-500" />
                   <span>Email Me</span>
                 </a>
               </li>
               <li>
                 <a
                   href="tel:+959952492359"
-                  className="text-gray-700 hover:text-blue-600 transition-all duration-300 flex items-center font-medium"
+                  className="text-gray-600 hover:text-purple-700 transition-all duration-300 flex items-center font-medium hover:translate-x-1"
                 >
                   <Phone className="h-4 w-4 mr-3 text-green-500" />
                   <span>+95 9952492359</span>
                 </a>
               </li>
-              <li className="text-gray-700 flex items-center font-medium">
+              <li className="text-gray-600 flex items-center font-medium">
                 <MapPin className="h-4 w-4 mr-3 text-red-500" />
                 <span>Yangon, Myanmar</span>
               </li>

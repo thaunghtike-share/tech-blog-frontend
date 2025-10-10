@@ -147,35 +147,35 @@ export function FeaturedArticlesPage() {
 
   if (loading) {
     return (
-      <div className="w-full max-w-7xl mx-auto px-4 py-16">
+      <div className="w-full max-w-7xl mx-auto px-4 py-16 font-open-sans">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-2xl">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            <h2 className="text-4xl md:text-5xl font-bold text-black">
               Featured Articles
             </h2>
           </div>
-          <div className="h-1 w-32 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full mx-auto"></div>
+          <div className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="animate-pulse bg-white border border-gray-200 rounded-xl p-6 shadow-sm"
+              className="animate-pulse bg-white/80 backdrop-blur-sm border border-gray-300 rounded-xl p-6"
             >
-              <div className="h-6 w-3/4 bg-gray-200 rounded mb-4"></div>
-              <div className="h-4 w-full bg-gray-200 rounded mb-2"></div>
-              <div className="h-4 w-5/6 bg-gray-200 rounded mb-4"></div>
+              <div className="h-6 w-3/4 bg-gray-300 rounded mb-4"></div>
+              <div className="h-4 w-full bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 w-5/6 bg-gray-300 rounded mb-4"></div>
               <div className="flex gap-2 mb-4">
-                <div className="h-6 w-16 bg-gray-200 rounded-full"></div>
-                <div className="h-6 w-20 bg-gray-200 rounded-full"></div>
+                <div className="h-6 w-16 bg-gray-300 rounded-full"></div>
+                <div className="h-6 w-20 bg-gray-300 rounded-full"></div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="h-4 w-24 bg-gray-200 rounded"></div>
-                <div className="h-4 w-16 bg-gray-200 rounded"></div>
+                <div className="h-4 w-24 bg-gray-300 rounded"></div>
+                <div className="h-4 w-16 bg-gray-300 rounded"></div>
               </div>
             </div>
           ))}
@@ -186,13 +186,13 @@ export function FeaturedArticlesPage() {
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto text-center px-4 py-16">
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto text-center px-4 py-16 font-open-sans">
+        <div className="bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl p-8">
           <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
           <p className="text-red-600 mb-6 text-lg">Error: {error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg transition-all shadow-sm hover:shadow-md"
+            className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg"
           >
             Retry
           </button>
@@ -202,7 +202,7 @@ export function FeaturedArticlesPage() {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-16">
+    <div className="w-full max-w-7xl mx-auto px-4 py-16 font-open-sans">
       {/* Clean Header */}
       <motion.div
         className="text-center mb-16"
@@ -212,7 +212,7 @@ export function FeaturedArticlesPage() {
       >
         <div className="flex items-center justify-center gap-4 mb-6">
           <motion.div
-            className="p-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl shadow-sm"
+            className="p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl"
             animate={{
               scale: [1, 1.05, 1],
             }}
@@ -224,7 +224,7 @@ export function FeaturedArticlesPage() {
             <Sparkles className="w-8 h-8 text-white" />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent">
             Featured Articles
           </h2>
 
@@ -236,7 +236,7 @@ export function FeaturedArticlesPage() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -248,31 +248,31 @@ export function FeaturedArticlesPage() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-purple-600" />
+            <ChevronRight className="w-6 h-6 text-sky-600" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full mx-auto mb-6"
+          className="h-1 w-24 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto mb-6"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         />
 
-        <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+        <p className="text-black text-lg max-w-2xl mx-auto">
           Discover our most popular and trending content
         </p>
       </motion.div>
 
       {articles.length === 0 ? (
         <div className="text-center py-16">
-          <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-6 mb-6 border border-yellow-200">
+          <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-6 mb-6 border border-yellow-300">
             <AlertTriangle className="w-12 h-12 text-yellow-600" />
           </div>
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
             No featured articles available
           </h3>
-          <p className="text-gray-700 mb-8 text-lg">
+          <p className="text-gray-600 mb-8 text-lg">
             Check back later for featured content
           </p>
         </div>
@@ -294,16 +294,29 @@ export function FeaturedArticlesPage() {
                       duration: 0.5,
                       delay: index * 0.1,
                     }}
-                    className="group"
+                    whileHover={{
+                      y: -8,
+                      transition: { duration: 0.3, ease: "easeOut" },
+                    }}
                   >
-                    <div className="bg-white border-2 border-gray-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:border-blue-400 h-full flex flex-col">
+                    <motion.div
+                      className="bg-white/80 backdrop-blur-sm border border-gray-300 rounded-xl p-6 h-full flex flex-col cursor-pointer"
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.3, ease: "easeOut" },
+                      }}
+                    >
                       <Link
                         href={`/articles/${article.slug}`}
                         className="block mb-4 flex-grow"
                       >
-                        <h3 className="text-xl font-bold text-gray-900 transition-colors line-clamp-2 leading-tight group-hover:text-blue-600 mb-4">
+                        <motion.h3
+                          className="text-xl font-bold text-black line-clamp-2 leading-tight mb-4"
+                          whileHover={{ color: "#0369a1" }}
+                          transition={{ duration: 0.2 }}
+                        >
                           {article.title}
-                        </h3>
+                        </motion.h3>
                       </Link>
 
                       <div className="flex items-center gap-3 mb-4 text-sm">
@@ -316,11 +329,11 @@ export function FeaturedArticlesPage() {
                               loading="lazy"
                             />
                           ) : (
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 flex items-center justify-center">
                               <User className="w-4 h-4 text-white" />
                             </div>
                           )}
-                          <span className="font-medium text-gray-800">
+                          <span className="font-medium text-black">
                             {author?.name || `Author ${article.author}`}
                           </span>
                         </div>
@@ -334,7 +347,7 @@ export function FeaturedArticlesPage() {
                         {category && (
                           <Link
                             href={`/categories/${category.slug}`}
-                            className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 border-2 border-blue-300 px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-blue-100"
+                            className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 border border-blue-300 px-3 py-1 rounded-lg text-sm font-medium"
                           >
                             <Folder className="w-4 h-4" />
                             <span>{category.name}</span>
@@ -347,7 +360,7 @@ export function FeaturedArticlesPage() {
                             <Link
                               key={tag.id}
                               href={`/articles?tag=${tag.slug}`}
-                              className="inline-flex items-center gap-1 text-purple-700 bg-purple-50 border-2 border-purple-300 px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-purple-100"
+                              className="inline-flex items-center gap-1 text-purple-700 bg-purple-50 border border-purple-300 px-3 py-1 rounded-lg text-sm font-medium"
                             >
                               <TagIcon className="w-4 h-4" />
                               <span>{tag.name}</span>
@@ -357,19 +370,24 @@ export function FeaturedArticlesPage() {
                       </div>
 
                       <div className="mb-6 flex-grow">
-                        <p className="text-gray-700 line-clamp-3 text-base leading-relaxed">
+                        <p className="text-black line-clamp-3 text-base leading-relaxed">
                           {truncate(stripMarkdown(article.content), 200)}
                         </p>
                       </div>
 
-                      <div className="pt-4 border-t-2 border-gray-200 flex items-center justify-between">
-                        <Link
-                          href={`/articles/${article.slug}`}
-                          className="text-sm text-blue-600 flex items-center gap-2 font-medium transition-all hover:text-blue-700"
+                      <div className="pt-4 border-t border-gray-300 flex items-center justify-between">
+                        <motion.div
+                          whileHover={{ x: 4 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          Read more
-                          <ChevronRight className="w-4 h-4" />
-                        </Link>
+                          <Link
+                            href={`/articles/${article.slug}`}
+                            className="text-sm text-blue-600 flex items-center gap-2 font-medium"
+                          >
+                            Read more
+                            <ChevronRight className="w-4 h-4" />
+                          </Link>
+                        </motion.div>
                         <div className="flex items-center gap-4 text-sm text-gray-600">
                           <div className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
@@ -383,7 +401,7 @@ export function FeaturedArticlesPage() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </motion.article>
                 );
               })}

@@ -16,13 +16,11 @@ export function MinimalHeader() {
   const [error, setError] = useState<string | null>(null);
 
   // Dropdown states
-  const [isArticlesOpen, setIsArticlesOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isLearningOpen, setIsLearningOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Timeout refs for delayed closing
-  const articlesTimeout = useRef<NodeJS.Timeout | null>(null);
   const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
   const learningTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -30,7 +28,6 @@ export function MinimalHeader() {
 
   useEffect(() => {
     return () => {
-      if (articlesTimeout.current) clearTimeout(articlesTimeout.current);
       if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
       if (learningTimeout.current) clearTimeout(learningTimeout.current);
     };
@@ -103,7 +100,6 @@ export function MinimalHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-50 via-white to-gray-100">
-
       <div className="max-w-7xl mx-auto px-4 relative">
         {/* Mobile Header */}
         <div className="flex items-center justify-between md:hidden py-3 gap-3 relative z-10">
@@ -195,48 +191,15 @@ export function MinimalHeader() {
               Home
             </Link>
 
-            {/* Articles Dropdown */}
-            <div className="bg-gray-50 rounded-lg">
-              <button
-                onClick={() => setIsArticlesOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-gray-900 font-bold"
-              >
-                Articles
-                <ChevronDown
-                  className={`${
-                    isArticlesOpen ? "rotate-180" : ""
-                  } w-4 h-4 transition-transform`}
-                />
-              </button>
-              {isArticlesOpen && (
-                <div className="ml-4 mt-1 space-y-1 border-l border-blue-500 pl-3 pb-2">
-                  <Link
-                    href="/articles"
-                    className={`${navLinkStyle(
-                      "/articles"
-                    )} text-gray-800 font-bold`}
-                  >
-                    All Articles
-                  </Link>
-                  <Link
-                    href="/categories"
-                    className={`${navLinkStyle(
-                      "/categories"
-                    )} text-gray-800 font-bold`}
-                  >
-                    Categories
-                  </Link>
-                  <Link
-                    href="/authors"
-                    className={`${navLinkStyle(
-                      "/authors"
-                    )} text-gray-800 font-bold`}
-                  >
-                    Authors
-                  </Link>
-                </div>
-              )}
-            </div>
+            {/* Articles Link - Direct */}
+            <Link
+              href="/articles"
+              className={`${navLinkStyle(
+                "/articles"
+              )} text-gray-900 bg-gray-50`}
+            >
+              Articles
+            </Link>
 
             {/* Resources Dropdown */}
             <div className="bg-gray-50 rounded-lg">
@@ -349,59 +312,17 @@ export function MinimalHeader() {
               <span className="relative z-10">Home</span>
             </Link>
 
-            {/* Articles Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() =>
-                handleMouseEnter(setIsArticlesOpen, articlesTimeout)
-              }
-              onMouseLeave={() =>
-                handleMouseLeave(setIsArticlesOpen, articlesTimeout)
-              }
+            {/* Articles Link - Direct */}
+            <Link
+              href="/articles"
+              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
+                pathname.includes("/articles")
+                  ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
+                  : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+              }`}
             >
-              <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
-                  pathname.includes("/articles") ||
-                  pathname.includes("/categories") ||
-                  pathname.includes("/authors")
-                    ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                <span className="relative z-10">Articles</span>
-                <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
-              </button>
-              {isArticlesOpen && (
-                <div
-                  className="absolute top-full left-0 mt-3 w-48 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
-                  onMouseEnter={() =>
-                    handleMouseEnter(setIsArticlesOpen, articlesTimeout)
-                  }
-                  onMouseLeave={() =>
-                    handleMouseLeave(setIsArticlesOpen, articlesTimeout)
-                  }
-                >
-                  <Link
-                    href="/articles"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
-                  >
-                    All Articles
-                  </Link>
-                  <Link
-                    href="/categories"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
-                  >
-                    Categories
-                  </Link>
-                  <Link
-                    href="/authors"
-                    className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-bold"
-                  >
-                    Authors
-                  </Link>
-                </div>
-              )}
-            </div>
+              <span className="relative z-10">Articles</span>
+            </Link>
 
             {/* Resources Dropdown */}
             <div
@@ -416,7 +337,7 @@ export function MinimalHeader() {
               <button
                 className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                   pathname.includes("/learn") || pathname.includes("/free-labs")
-                    ? "text-gray-900 bg-gradient-to-r from-green-100 to-emerald-100 shadow-md"
+                    ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -443,13 +364,13 @@ export function MinimalHeader() {
                     href="/free-online-courses"
                     className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
                   >
-                    Free Online Courses
+                    Online Courses
                   </Link>
                   <Link
                     href="/free-labs"
                     className="block px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all font-bold"
                   >
-                    Free DevOps Playgrounds
+                    DevOps Playgrounds
                   </Link>
                 </div>
               )}
@@ -468,7 +389,7 @@ export function MinimalHeader() {
               <button
                 className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                   pathname.includes("/services")
-                    ? "text-gray-900 bg-gradient-to-r from-orange-100 to-red-100 shadow-md"
+                    ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -511,7 +432,7 @@ export function MinimalHeader() {
               href="/about"
               className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                 pathname === "/about"
-                  ? "text-gray-900 bg-gradient-to-r from-cyan-100 to-blue-100 shadow-md"
+                  ? "text-gray-900 bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                   : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
@@ -568,7 +489,7 @@ export function MinimalHeader() {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
               <Link
                 href="/admin/new-article"
-                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-black rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30"
+                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white font-black rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30"
               >
                 <Sparkles className="w-4 h-4" />
                 Publish
