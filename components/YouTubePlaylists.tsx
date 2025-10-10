@@ -635,8 +635,7 @@ export function YouTubePlaylists({
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -824,7 +823,7 @@ export function YouTubePlaylists({
                               }}
                             />
 
-                            <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full">
+                            <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl transition-all duration-300 hover:border-blue-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                               <div className="relative aspect-video bg-gray-900 overflow-hidden">
                                 <iframe
                                   src={`https://www.youtube.com/embed/${pl.videoId}?modestbranding=1&rel=0`}

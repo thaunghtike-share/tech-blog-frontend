@@ -4,7 +4,6 @@ import {
   Calendar,
   Clock,
   User,
-  ArrowRight,
   Folder,
   Sparkles,
   AlertTriangle,
@@ -151,14 +150,14 @@ export function FeaturedArticlesPage() {
       <div className="w-full max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl shadow-lg">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-black">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
               Featured Articles
             </h2>
           </div>
-          <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto"></div>
+          <div className="h-1 w-32 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full mx-auto"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -213,7 +212,7 @@ export function FeaturedArticlesPage() {
       >
         <div className="flex items-center justify-center gap-4 mb-6">
           <motion.div
-            className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-sm"
+            className="p-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl shadow-sm"
             animate={{
               scale: [1, 1.05, 1],
             }}
@@ -225,11 +224,10 @@ export function FeaturedArticlesPage() {
             <Sparkles className="w-8 h-8 text-white" />
           </motion.div>
 
-          {/* Changed to text-black for better visibility */}
-          <h2 className="text-4xl md:text-5xl font-bold text-black">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
             Featured Articles
           </h2>
-                    {/* Chevron with dotted trail */}
+
           <motion.div
             className="flex items-center gap-1"
             animate={{ x: [0, 10, 0] }}
@@ -238,7 +236,7 @@ export function FeaturedArticlesPage() {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"
+                className="w-2 h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.3, 1, 0.3],
@@ -250,18 +248,18 @@ export function FeaturedArticlesPage() {
                 }}
               />
             ))}
-            <ChevronRight className="w-6 h-6 text-blue-500 ml-2" />
+            <ChevronRight className="w-6 h-6 text-purple-600" />
           </motion.div>
         </div>
 
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-6"
+          className="h-1 w-24 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full mx-auto mb-6"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         />
 
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+        <p className="text-gray-700 text-lg max-w-2xl mx-auto">
           Discover our most popular and trending content
         </p>
       </motion.div>
@@ -271,10 +269,10 @@ export function FeaturedArticlesPage() {
           <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-6 mb-6 border border-yellow-200">
             <AlertTriangle className="w-12 h-12 text-yellow-600" />
           </div>
-          <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             No featured articles available
           </h3>
-          <p className="text-gray-600 mb-8 text-lg">
+          <p className="text-gray-700 mb-8 text-lg">
             Check back later for featured content
           </p>
         </div>
@@ -298,19 +296,16 @@ export function FeaturedArticlesPage() {
                     }}
                     className="group"
                   >
-                    <div className="bg-white border border-gray-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:border-gray-300 h-full flex flex-col">
-                      {/* Title */}
+                    <div className="bg-white border-2 border-gray-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:border-blue-400 h-full flex flex-col">
                       <Link
                         href={`/articles/${article.slug}`}
                         className="block mb-4 flex-grow"
                       >
-                        {/* Changed article title to black for better visibility */}
-                        <h3 className="text-xl font-bold text-black transition-colors line-clamp-2 leading-tight group-hover:text-blue-600 mb-4">
+                        <h3 className="text-xl font-bold text-gray-900 transition-colors line-clamp-2 leading-tight group-hover:text-blue-600 mb-4">
                           {article.title}
                         </h3>
                       </Link>
 
-                      {/* Author and Date */}
                       <div className="flex items-center gap-3 mb-4 text-sm">
                         <div className="flex items-center gap-2">
                           {author?.avatar ? (
@@ -325,22 +320,21 @@ export function FeaturedArticlesPage() {
                               <User className="w-4 h-4 text-white" />
                             </div>
                           )}
-                          <span className="font-medium text-gray-700">
+                          <span className="font-medium text-gray-800">
                             {author?.name || `Author ${article.author}`}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1 text-gray-500">
+                        <div className="flex items-center gap-1 text-gray-600">
                           <Calendar className="w-4 h-4" />
                           <span>{formatDate(article.published_at)}</span>
                         </div>
                       </div>
 
-                      {/* Clean Category and Tags */}
                       <div className="flex flex-wrap gap-2 mb-4">
                         {category && (
                           <Link
                             href={`/categories/${category.slug}`}
-                            className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-blue-100"
+                            className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 border-2 border-blue-300 px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-blue-100"
                           >
                             <Folder className="w-4 h-4" />
                             <span>{category.name}</span>
@@ -353,7 +347,7 @@ export function FeaturedArticlesPage() {
                             <Link
                               key={tag.id}
                               href={`/articles?tag=${tag.slug}`}
-                              className="inline-flex items-center gap-1 text-purple-700 bg-purple-50 border border-purple-200 px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-purple-100"
+                              className="inline-flex items-center gap-1 text-purple-700 bg-purple-50 border-2 border-purple-300 px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-purple-100"
                             >
                               <TagIcon className="w-4 h-4" />
                               <span>{tag.name}</span>
@@ -362,15 +356,13 @@ export function FeaturedArticlesPage() {
                         })}
                       </div>
 
-                      {/* Content */}
                       <div className="mb-6 flex-grow">
-                        <p className="text-gray-600 line-clamp-3 text-sm leading-relaxed">
-                          {truncate(stripMarkdown(article.content), 150)}
+                        <p className="text-gray-700 line-clamp-3 text-base leading-relaxed">
+                          {truncate(stripMarkdown(article.content), 200)}
                         </p>
                       </div>
 
-                      {/* Clean Footer */}
-                      <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <div className="pt-4 border-t-2 border-gray-200 flex items-center justify-between">
                         <Link
                           href={`/articles/${article.slug}`}
                           className="text-sm text-blue-600 flex items-center gap-2 font-medium transition-all hover:text-blue-700"
@@ -378,14 +370,16 @@ export function FeaturedArticlesPage() {
                           Read more
                           <ChevronRight className="w-4 h-4" />
                         </Link>
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
                           <div className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
                             <span>{calculateReadTime(article.content)}</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Eye className="w-4 h-4" />
-                            <span>{article.read_count?.toLocaleString() || 0}</span>
+                            <span>
+                              {article.read_count?.toLocaleString() || 0}
+                            </span>
                           </div>
                         </div>
                       </div>

@@ -113,7 +113,7 @@ export function MinimalFAQs() {
             <HelpCircle className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
             Frequently Asked Questions
           </h2>
 
@@ -147,10 +147,9 @@ export function MinimalFAQs() {
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
-        <p className="text-white/85 text-lg max-w-3xl mx-auto relative z-10">
+        <p className="text-gray-700 text-lg max-w-3xl mx-auto relative z-10 font-sans">
           Find answers to common questions about DevOps and our services
         </p>
       </motion.div>
@@ -158,14 +157,14 @@ export function MinimalFAQs() {
       {/* FAQ Carousel Container */}
       <div className="relative max-w-4xl mx-auto">
         {/* FAQ Content with integrated navigation */}
-        <div className="bg-gradient-to-br from-gray-600 to-gray-800 rounded-3xl border border-gray-700 p-8 shadow-xl relative">
+        <div className="bg-white rounded-3xl border border-gray-300 p-8 shadow-xl relative">
           {/* Navigation Buttons - Positioned outside the card */}
           <div className="absolute -left-16 top-1/2 -translate-y-1/2 z-20">
             <motion.button
               onClick={prevFAQ}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 text-sky-400 rounded-full shadow-lg border border-sky-500/30 hover:border-sky-400 transition-all"
+              className="flex items-center justify-center w-12 h-12 bg-white text-sky-500 rounded-full shadow-lg border border-gray-300 hover:border-sky-400 transition-all"
             >
               <ChevronLeft className="w-6 h-6" />
             </motion.button>
@@ -176,7 +175,7 @@ export function MinimalFAQs() {
               onClick={nextFAQ}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 text-sky-400 rounded-full shadow-lg border border-sky-500/30 hover:border-sky-400 transition-all"
+              className="flex items-center justify-center w-12 h-12 bg-white text-sky-500 rounded-full shadow-lg border border-gray-300 hover:border-sky-400 transition-all"
             >
               <ChevronRight className="w-6 h-6" />
             </motion.button>
@@ -194,12 +193,12 @@ export function MinimalFAQs() {
               {/* Question Icon */}
               <div className="flex justify-center mb-6">
                 <div className="p-4 bg-gradient-to-r from-sky-500/20 to-blue-600/20 rounded-2xl border border-sky-500/30">
-                  <MessageCircleQuestion className="w-8 h-8 text-sky-400" />
+                  <MessageCircleQuestion className="w-8 h-8 text-sky-500" />
                 </div>
               </div>
 
               {/* Question */}
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 leading-tight">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 leading-tight font-sans">
                 {currentFAQ.question}
               </h3>
 
@@ -208,7 +207,7 @@ export function MinimalFAQs() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
-                className="text-gray-200 text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
+                className="text-gray-700 text-base md:text-lg leading-relaxed max-w-3xl mx-auto font-sans"
               >
                 {currentFAQ.answer}
               </motion.div>
@@ -228,7 +227,7 @@ export function MinimalFAQs() {
             className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium transition-all ${
               index === currentIndex
                 ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
-                : "bg-gray-700 text-white/85 hover:bg-gray-600"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
             {index + 1}

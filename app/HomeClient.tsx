@@ -229,7 +229,7 @@ export default function HomeClient() {
           </section>
 
           {/* Existing sections with updated spacing */}
-          <section id="youtube" className="-mt-1 2xl:-mt-35">
+          <section id="youtube" className="-mt-1">
             <YouTubePlaylists />
           </section>
 

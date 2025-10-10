@@ -12,7 +12,6 @@ import {
   User,
   AlertTriangle,
   Users,
-  DollarSign,
   RefreshCw,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -347,8 +346,7 @@ export function TopUdemyCourses() {
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
         <p className="text-gray-700 mt-6 text-lg max-w-2xl mx-auto relative z-10 font-sans">
           Curated list of free online courses to master DevOps tools and
@@ -372,7 +370,9 @@ export function TopUdemyCourses() {
             <div className="flex items-center gap-4">
               <AlertTriangle className="w-8 h-8 text-yellow-600 flex-shrink-0" />
               <div className="flex-1">
-                <p className="text-yellow-700 mb-2 font-medium">Unable to load live data</p>
+                <p className="text-yellow-700 mb-2 font-medium">
+                  Unable to load live data
+                </p>
                 <p className="text-gray-600 text-sm">
                   {error} - Showing demo courses instead.
                 </p>
@@ -458,12 +458,13 @@ export function TopUdemyCourses() {
                             }}
                           />
 
-                          <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
+                          {/* Course Card */}
+                          <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl transition-all duration-300 hover:border-blue-300 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                             {/* Course Cover Image - Clean without badges */}
                             <div className="relative h-48 bg-gradient-to-br from-blue-100 to-blue-200 overflow-hidden">
                               {course.cover_image ? (
                                 <img
-                                  src={course.cover_image}
+                                  src={course.cover_image || "/placeholder.svg"}
                                   alt={course.title}
                                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />

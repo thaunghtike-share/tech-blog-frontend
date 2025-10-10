@@ -1,5 +1,5 @@
 "use client";
-import { Users, Heart, Sparkles, PenSquare, ChevronRight } from "lucide-react";
+import { Users, Sparkles, PenSquare, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function AuthorsContributorsCTA() {
@@ -42,7 +42,7 @@ export function AuthorsContributorsCTA() {
             <Users className="w-10 h-10 text-white relative z-10" />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent font-sans">
             Want to Become Author?
           </h2>
 
@@ -76,14 +76,13 @@ export function AuthorsContributorsCTA() {
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-white/85 text-lg max-w-2xl mx-auto relative z-10 mb-8"
+          className="text-gray-700 text-lg max-w-2xl mx-auto relative z-10 mb-8 font-sans"
         >
           Join our community to share your knowledge, write articles, or help
           improve this website. Your expertise can make a difference!

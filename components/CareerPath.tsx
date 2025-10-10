@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ServerCog,
@@ -10,8 +10,6 @@ import {
   ChevronLeft,
   Users,
   Zap,
-  Cpu,
-  GitBranch,
 } from "lucide-react";
 
 const roles = [
@@ -182,8 +180,7 @@ export function CareerPath() {
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -262,7 +259,7 @@ export function CareerPath() {
                           className="group"
                         >
                           {/* Modern Card Design */}
-                          <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden h-full flex flex-col">
+                          <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl hover:border-blue-300 transition-all duration-300 overflow-hidden h-full flex flex-col">
                             {/* Header with Gradient Accent */}
                             <div
                               className={`bg-gradient-to-r ${role.color} p-6 pb-4`}

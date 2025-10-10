@@ -16,7 +16,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Discover how DevOps bridges development and operations teams through automation, continuous integration, and rapid deployment to deliver software faster and more reliably.",
       bgPattern: "devops",
-      iconGradient: "from-orange-500 to-yellow-500",
+      iconGradient: "from-orange-600 to-yellow-600",
     },
     {
       id: "linux",
@@ -32,7 +32,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand networking basics - the protocols, architectures, and tools that enable communication between computers, servers, and cloud services in DevOps.",
       bgPattern: "cloud",
-      iconGradient: "from-sky-500 to-blue-500",
+      iconGradient: "from-sky-600 to-blue-600",
     },
     {
       id: "cloud",
@@ -40,7 +40,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Dive into cloud computing - learn how to leverage scalable, on-demand resources like servers, storage, and applications without managing physical infrastructure.",
       bgPattern: "cloud",
-      iconGradient: "from-sky-500 to-blue-500",
+      iconGradient: "from-sky-600 to-blue-600",
     },
     {
       id: "containerization",
@@ -48,7 +48,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand containerization - how to package applications and dependencies into lightweight, portable containers that run consistently across different environments.",
       bgPattern: "containerization",
-      iconGradient: "from-pink-500 to-purple-500",
+      iconGradient: "from-pink-600 to-purple-600",
     },
     {
       id: "cicd",
@@ -56,7 +56,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Explore Continuous Integration and Continuous Deployment - the practices that enable teams to deliver code changes more frequently and reliably through automated pipelines.",
       bgPattern: "cicd",
-      iconGradient: "from-orange-500 to-yellow-500",
+      iconGradient: "from-orange-600 to-yellow-600",
     },
     {
       id: "kubernetes",
@@ -64,7 +64,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Learn container orchestration with Kubernetes - the industry standard for automating deployment, scaling, and management of containerized applications.",
       bgPattern: "kubernetes",
-      iconGradient: "from-blue-500 to-cyan-500",
+      iconGradient: "from-blue-600 to-cyan-600",
     },
     {
       id: "Monitoring",
@@ -72,7 +72,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand the importance of monitoring and logging in DevOps - how to track application performance, detect issues, and gain insights through tools like Prometheus, Grafana, and ELK Stack.",
       bgPattern: "containerization",
-      iconGradient: "from-gray-400 to-gray-600",
+      iconGradient: "from-gray-600 to-gray-600",
     },
     {
       id: "git",
@@ -80,7 +80,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Learn Git - the distributed version control system that enables collaboration, branching, and code management in modern software development and DevOps workflows.",
       bgPattern: "kubernetes",
-      iconGradient: "from-blue-500 to-cyan-500",
+      iconGradient: "from-blue-600 to-cyan-600",
     },
     {
       id: "iac",
@@ -88,7 +88,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Master Infrastructure as Code (IaC) - learn to manage and provision computing infrastructure through code for version control and automated deployment.",
       bgPattern: "iac",
-      iconGradient: "from-violet-500 to-purple-500",
+      iconGradient: "from-violet-600 to-purple-600",
     },
   ];
 
@@ -132,7 +132,7 @@ const DevOpsCyclingHero = () => {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden">
-      {/* Header Section - Improved Vertical Spacing */}
+      {/* Header Section - Increased vertical spacing */}
       <motion.div
         className="absolute top-16 md:top-20 left-0 right-0 z-20 text-center px-4"
         initial={{ opacity: 0, y: 20 }}
@@ -173,12 +173,13 @@ const DevOpsCyclingHero = () => {
           initial={{ width: 0 }}
           animate={{ width: "6rem" }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        >
-        </motion.div>
+        ></motion.div>
 
-        {/* Added more vertical spacing here */}
-        <div className="mb-2">
-          <p className="text-gray-700 text-sm sm:text-lg max-w-2xl mx-auto relative z-10 px-2 leading-relaxed font-sans">
+        {/* Mission description with increased bottom margin */}
+        <div className="mb-8 sm:mb-12 md:mb-16">
+          {" "}
+          {/* Increased from mb-2 */}
+          <p className="text-gray-700 text-base sm:text-xl max-w-2xl mx-auto relative z-10 px-2 leading-relaxed font-sans">
             This website is for developers and students in Myanmar who want to
             learn DevOps and boost their careers in modern software development
             and cloud infrastructure.
@@ -204,8 +205,10 @@ const DevOpsCyclingHero = () => {
         ))}
       </div>
 
-      {/* Main Content - Improved responsive vertical spacing */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-48 sm:pt-56 md:pt-40 lg:pt-32 xl:pt-28 2xl:pt-24">
+      {/* Main Content - Increased top padding to create more space between mission and content */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-64 sm:pt-72 md:pt-56 lg:pt-48 xl:pt-44 2xl:pt-40">
+        {" "}
+        {/* Increased pt values */}
         <div className="max-w-7xl mx-auto w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 xl:gap-12">
             {/* Left - Further Reduced Size Hero Image */}
@@ -233,8 +236,8 @@ const DevOpsCyclingHero = () => {
               className="w-full lg:w-3/5 max-w-2xl"
             >
               {/* Title with better spacing - Made font bold */}
-              <div className="mb-5 sm:mb-6 lg:mb-7">
-                <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-gray-800 leading-tight font-sans">
+              <div className="mb-4 sm:mb-5 lg:mb-6">
+                <h1 className="text-4xl font-bold text-gray-800 leading-tight font-sans">
                   <span
                     className={`bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent font-bold`}
                   >
@@ -255,11 +258,11 @@ const DevOpsCyclingHero = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <button
                     onClick={scrollToRoadmap}
-                    className="px-8 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 font-sans"
+                    className="px-8 py-3 bg-gradient-to-r from-orange-600 to-yellow-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 font-sans"
                   >
                     See Roadmap
                   </button>
-                  <Link 
+                  <Link
                     href="/articles"
                     className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center font-sans"
                   >
