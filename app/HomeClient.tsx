@@ -215,21 +215,21 @@ export default function HomeClient() {
             backfaceVisibility: "hidden",
           }}
         >
-          <section className="-mt-9">
+          <section className="-mt-9 2xl:-mt-4">
             <DevOpsCyclingHero />
           </section>
 
-          {/* Featured Articles Section */}
-          <section className="-mt-17">
+          {/* Featured Articles Section - Only this section updated for 2xl 
+          <section className="-mt-17 2xl:-mt-12 2xl:-mt-10">
             <FeaturedArticlesPage />
-          </section>
+          </section> */}
 
+          {/* All other sections remain exactly the same */}
           <section id="roadmap" className="-mt-5 2xl:-mt-2">
             <MinimalDevopsRoadmap />
           </section>
 
-          {/* Existing sections with updated spacing */}
-          <section id="youtube" className="-mt-1">
+          <section id="youtube" className="-mt-1 2xl:-10">
             <YouTubePlaylists />
           </section>
 

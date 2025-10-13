@@ -132,7 +132,7 @@ const DevOpsCyclingHero = () => {
 
   return (
     <section className="relative min-h-screen bg-white/95 overflow-hidden font-open-sans">
-      {/* Header Section - Increased vertical spacing */}
+      {/* Header Section - Only reduced the bottom margin of mission text for 2xl */}
       <motion.div
         className="absolute top-16 md:top-20 left-0 right-0 z-20 text-center px-4"
         initial={{ opacity: 0, y: 20 }}
@@ -175,10 +175,8 @@ const DevOpsCyclingHero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
         ></motion.div>
 
-        {/* Mission description with increased bottom margin - Changed to black text */}
-        <div className="mb-8 sm:mb-12 md:mb-16">
-          {" "}
-          {/* Increased from mb-2 */}
+        {/* Mission description - ONLY this part changed for 2xl */}
+        <div className="mb-8 sm:mb-12 md:mb-16 2xl:mb-6">
           <p className="text-black text-base sm:text-xl max-w-2xl mx-auto relative z-10 px-2 leading-relaxed">
             This website is for developers and students in Myanmar who want to
             learn DevOps and boost their careers in modern software development
@@ -205,10 +203,8 @@ const DevOpsCyclingHero = () => {
         ))}
       </div>
 
-      {/* Main Content - Increased top padding to create more space between mission and content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-64 sm:pt-72 md:pt-56 lg:pt-48 xl:pt-44 2xl:pt-40">
-        {" "}
-        {/* Increased pt values */}
+      {/* Main Content - Reduced top padding ONLY for 2xl screens */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-64 sm:pt-72 md:pt-56 lg:pt-48 xl:pt-44 2xl:pt-36">
         <div className="max-w-7xl mx-auto w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 xl:gap-12">
             {/* Left - Further Reduced Size Hero Image */}
@@ -228,14 +224,14 @@ const DevOpsCyclingHero = () => {
               </div>
             </motion.div>
 
-            {/* Right - Explore DevOps Content with Better Spacing */}
+            {/* Right - Explore DevOps Content - No changes here */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="w-full lg:w-3/5 max-w-2xl"
             >
-              {/* Title with better spacing - Made font bold */}
+              {/* Title with better spacing */}
               <div className="mb-4 sm:mb-5 lg:mb-6">
                 <h1 className="text-4xl font-bold text-gray-800 leading-tight">
                   <span
@@ -246,14 +242,14 @@ const DevOpsCyclingHero = () => {
                 </h1>
               </div>
 
-              {/* Description with better spacing - Changed to black text */}
+              {/* Description with better spacing */}
               <div className="mb-6 sm:mb-8 lg:mb-10">
                 <p className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl text-black leading-relaxed max-w-3xl mx-auto lg:mx-0">
                   {currentSlideData.description}
                 </p>
               </div>
 
-              {/* Buttons Section - Replaced tools with the two buttons */}
+              {/* Buttons Section */}
               <div className="mb-6 sm:mb-8 lg:mb-10">
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <button
