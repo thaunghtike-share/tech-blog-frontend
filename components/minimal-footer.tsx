@@ -3,7 +3,7 @@ import { Facebook, Linkedin, Github, Mail, MapPin, Phone } from "lucide-react";
 
 export function MinimalFooter() {
   return (
-    <footer className="bg-gradient-to-r from-gray-50 via-white to-gray-100 py-16 md:py-20 relative z-10">
+    <footer className="bg-white/95 py-16 md:py-20 relative z-10">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 md:gap-12 pb-12">
           {/* Logo + Description */}

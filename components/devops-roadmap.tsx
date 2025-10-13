@@ -1,11 +1,12 @@
 "use client";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 interface RoadmapItem {
   title: string;
   description: string;
+  tags: string[];
 }
 
 interface RoadmapStage {
@@ -28,26 +29,42 @@ const roadmap: RoadmapStage[] = [
         title: "Linux Fundamentals",
         description:
           "Master command line, file systems, and shell scripting fundamentals",
+        tags: [
+          "command-line",
+          "file-system",
+          "permissions",
+          "processes",
+          "networking",
+        ],
       },
       {
         title: "Bash Scripting",
         description:
           "Automate tasks with Bash scripting and command-line tools",
+        tags: ["variables", "loops", "functions", "automation", "debugging"],
       },
       {
         title: "CCNA",
         description:
           "Understand networking basics, protocols, and infrastructure",
+        tags: ["tcp-ip", "subnetting", "routing", "switching", "vlans"],
       },
       {
         title: "Cloud Computing",
         description:
           "Learn cloud computing concepts and service models (IaaS, PaaS, SaaS)",
+        tags: [
+          "virtualization",
+          "scalability",
+          "availability",
+          "cost-management",
+        ],
       },
       {
         title: "Docker Essentials",
         description:
           "Containerize applications and manage container lifecycles",
+        tags: ["containers", "images", "dockerfile", "volumes", "networking"],
       },
     ],
   },
@@ -63,26 +80,31 @@ const roadmap: RoadmapStage[] = [
         title: "AWS Core Services",
         description:
           "Master EC2, S3, RDS, Lambda, and essential AWS infrastructure",
+        tags: ["ec2", "s3", "rds", "lambda", "vpc", "iam"],
       },
       {
         title: "Ansible Automation",
         description:
           "Automate configuration management and application deployment",
+        tags: ["playbooks", "inventory", "roles", "variables", "modules"],
       },
       {
         title: "Git & GitHub",
         description:
           "Version control, branching strategies, and collaborative workflows",
+        tags: ["branches", "merge", "rebase", "pull-requests", "workflows"],
       },
       {
         title: "CI/CD Pipelines",
         description:
           "Build automated testing and deployment pipelines with Jenkins or GitLab",
+        tags: ["jenkins", "gitlab-ci", "stages", "artifacts", "testing"],
       },
       {
         title: "Kubernetes",
         description:
           "Orchestrate containers at scale with K8s clusters and deployments",
+        tags: ["pods", "services", "deployments", "configmaps", "helm"],
       },
     ],
   },
@@ -98,26 +120,31 @@ const roadmap: RoadmapStage[] = [
         title: "Terraform",
         description:
           "Infrastructure as Code for multi-cloud provisioning and management",
+        tags: ["modules", "state", "providers", "workspaces", "cdktf"],
       },
       {
         title: "Monitoring & Observability",
         description:
           "Implement Prometheus, Grafana, and ELK stack for system insights",
+        tags: ["metrics", "logs", "alerts", "dashboards", "tracing"],
       },
       {
         title: "GitOps",
         description:
           "Declarative infrastructure with ArgoCD and Flux for automated deployments",
+        tags: ["argocd", "flux", "sync", "rollback", "automation"],
       },
       {
         title: "Secrets Management",
         description:
           "Secure sensitive data with Vault, AWS Secrets Manager, and encryption",
+        tags: ["vault", "secrets", "encryption", "pki", "authentication"],
       },
       {
         title: "Kubernetes Security",
         description:
           "Implement RBAC, network policies, and security best practices",
+        tags: ["rbac", "network-policies", "pod-security", "opa", "audit"],
       },
     ],
   },
@@ -149,23 +176,31 @@ const stageConfig = {
 
 export function MinimalDevopsRoadmap() {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
 
   const nextStage = () => {
     setCurrentStageIndex((prev) => (prev + 1) % roadmap.length);
+    setExpanded(false);
   };
 
   const prevStage = () => {
     setCurrentStageIndex(
       (prev) => (prev - 1 + roadmap.length) % roadmap.length
     );
+    setExpanded(false);
   };
 
   const currentStage = roadmap[currentStageIndex];
   const currentConfig =
     stageConfig[currentStage.key as keyof typeof stageConfig];
 
+  // Show only first 3 items when not expanded, show all when expanded
+  const visibleItems = expanded
+    ? currentStage.items
+    : currentStage.items.slice(0, 3);
+
   return (
-    <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden font-open-sans">
+    <section className="relative min-h-screen bg-white/95 overflow-hidden font-open-sans">
       {/* Background Elements */}
       <div className="absolute inset-0">
         {[
@@ -366,7 +401,7 @@ export function MinimalDevopsRoadmap() {
 
                     {/* Roadmap Items */}
                     <div className="space-y-6">
-                      {currentStage.items.map((item, index) => (
+                      {visibleItems.map((item, index) => (
                         <motion.div
                           key={`item-${item.title}`}
                           initial={{ opacity: 0, x: 20 }}
@@ -392,14 +427,53 @@ export function MinimalDevopsRoadmap() {
                               <div
                                 className={`w-12 h-1 bg-gradient-to-r ${currentConfig.gradient} rounded-full mb-3`}
                               ></div>
-                              <p className="text-black text-sm leading-relaxed">
+                              <p className="text-black text-sm leading-relaxed mb-4">
                                 {item.description}
                               </p>
+
+                              {/* Tags */}
+                              <div className="flex flex-wrap gap-2">
+                                {item.tags.map((tag, tagIndex) => (
+                                  <span
+                                    key={tagIndex}
+                                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${currentConfig.lightBg} border ${currentConfig.border} text-gray-700`}
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </motion.div>
                       ))}
                     </div>
+
+                    {/* Expand/Collapse Button */}
+                    {currentStage.items.length > 3 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="flex justify-center mt-8"
+                      >
+                        <button
+                          onClick={() => setExpanded(!expanded)}
+                          className={`flex items-center gap-2 px-6 py-3 rounded-full ${currentConfig.lightBg} border ${currentConfig.border} text-gray-700 font-medium hover:shadow-md transition-all duration-300 hover:scale-105`}
+                        >
+                          {expanded ? (
+                            <>
+                              <Minus className="w-4 h-4" />
+                              Show Less
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="w-4 h-4" />
+                              Show All {currentStage.items.length} Topics
+                            </>
+                          )}
+                        </button>
+                      </motion.div>
+                    )}
                   </div>
                 </motion.div>
               </AnimatePresence>

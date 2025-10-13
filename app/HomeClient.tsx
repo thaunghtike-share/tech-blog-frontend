@@ -122,7 +122,7 @@ export default function HomeClient() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 backdrop-blur-2xl relative overflow-x-hidden"
+      className="min-h-screen bg-white backdrop-blur-2xl relative overflow-x-hidden"
       style={{
         // Force GPU acceleration and prevent white flashes
         transform: "translateZ(0)",
@@ -133,7 +133,7 @@ export default function HomeClient() {
     >
       {/* Pre-render background to prevent white screen */}
       <div
-        className="fixed inset-0 bg-gradient-to-r from-gray-50 via-white to-gray-100 z-0"
+        className="fixed inset-0 bg-white z-0"
         style={{
           transform: "translateZ(0)",
           backfaceVisibility: "hidden",
@@ -163,7 +163,7 @@ export default function HomeClient() {
             return (
               <div
                 key={`bg-icon-${i}`}
-                className="absolute animate-float opacity-15"
+                className="absolute animate-float opacity-10"
                 style={{
                   left: `${pos.left}%`,
                   top: `${pos.top}%`,
@@ -173,8 +173,8 @@ export default function HomeClient() {
                   backfaceVisibility: "hidden",
                 }}
               >
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-200/30 to-purple-200/30 rounded-lg backdrop-blur-sm border border-blue-300/40 flex items-center justify-center shadow-sm">
-                  <IconComponent className="w-5 h-5 text-blue-600/60" />
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-100/20 to-purple-100/20 rounded-lg backdrop-blur-sm border border-blue-200/30 flex items-center justify-center shadow-sm">
+                  <IconComponent className="w-5 h-5 text-blue-500/40" />
                 </div>
               </div>
             );
@@ -183,7 +183,7 @@ export default function HomeClient() {
           {floatingDotPositions.map((pos, i) => (
             <div
               key={`bg-dot-${i}`}
-              className="absolute animate-pulse opacity-20"
+              className="absolute animate-pulse opacity-15"
               style={{
                 left: `${pos.left}%`,
                 top: `${pos.top}%`,
@@ -193,7 +193,7 @@ export default function HomeClient() {
                 backfaceVisibility: "hidden",
               }}
             >
-              <div className="w-3 h-3 bg-gradient-to-r from-blue-300 to-purple-300 rounded-full shadow-sm" />
+              <div className="w-3 h-3 bg-gradient-to-r from-blue-200 to-purple-200 rounded-full shadow-sm" />
             </div>
           ))}
         </div>
@@ -283,16 +283,16 @@ export default function HomeClient() {
           animation: float 20s ease-in-out infinite;
         }
 
-        /* Update background to white/gray theme */
+        /* Update background to white theme */
         html {
-          background: linear-gradient(to right, #f9fafb, #ffffff, #f9fafb);
+          background: #ffffff;
           transform: translateZ(0);
           backface-visibility: hidden;
           perspective: 1000;
         }
 
         body {
-          background: linear-gradient(to right, #f9fafb, #ffffff, #f9fafb);
+          background: #ffffff;
           transform: translateZ(0);
           backface-visibility: hidden;
           overflow-x: hidden;

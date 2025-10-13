@@ -131,7 +131,7 @@ const DevOpsCyclingHero = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-r from-gray-50 via-white to-gray-100 overflow-hidden font-open-sans">
+    <section className="relative min-h-screen bg-white/95 overflow-hidden font-open-sans">
       {/* Header Section - Increased vertical spacing */}
       <motion.div
         className="absolute top-16 md:top-20 left-0 right-0 z-20 text-center px-4"
@@ -258,13 +258,13 @@ const DevOpsCyclingHero = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <button
                     onClick={scrollToRoadmap}
-                    className="px-8 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    className="px-8 py-3 bg-gradient-to-r from-sky-700 to-blue-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   >
                     See Roadmap
                   </button>
                   <Link
                     href="/articles"
-                    className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center"
+                    className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center"
                   >
                     Read Articles
                   </Link>
