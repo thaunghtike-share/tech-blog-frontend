@@ -547,7 +547,6 @@ const learningPaths = {
       { title: "Git", icon: "📦" },
       { title: "CICD ", icon: "🔄" },
       { title: "Ansible", icon: "⚙️" },
-      { title: "AWS Security", icon: "🔒" },
       { title: "Packer", icon: "📦" },
     ],
     duration: "12-16 weeks",
@@ -562,7 +561,6 @@ const learningPaths = {
       { title: "Terraform", icon: "🏗️" },
       { title: "GitOps", icon: "🔄" }, // Added GitOps
       { title: "Monitoring", icon: "📊" },
-      { title: "DevSecOps", icon: "🛡️" },
       { title: "Hashicorp Vault", icon: "🔐" },
     ],
     duration: "16-20 weeks",

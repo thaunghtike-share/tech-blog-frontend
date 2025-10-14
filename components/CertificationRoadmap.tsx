@@ -303,95 +303,43 @@ export function CertificationRoadmap() {
 
   return (
     <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
-      {/* Header with updated color theme */}
-      <div className="text-center mb-12 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-4 mb-4 relative z-10"
-        >
-          {/* Animated bubble icon */}
-          <motion.div
-            className="relative p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
-          >
-            {/* Bubble effect */}
-            <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "reverse",
-              }}
-            />
-            <Award className="w-10 h-10 text-white relative z-10" />
-          </motion.div>
-
-          {/* Title text beside the icon */}
+      {/* Left Aligned Header */}
+      <motion.div
+        className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="flex-1">
           <motion.h2
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
           >
-            DevOps Certification Roadmap
+            Advance Your Career with
+            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              DevOps Certifications
+            </span>
           </motion.h2>
 
-          {/* Chevron with dotted trail */}
           <motion.div
-            className="flex items-center gap-1"
-            animate={{ x: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+            className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: 128 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          />
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-600 mt-4 text-lg max-w-2xl"
           >
-            {[...Array(3)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="w-1 h-1 md:w-2 md:h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.3, 1, 0.3],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  delay: i * 0.2,
-                }}
-              />
-            ))}
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-sky-600 ml-2" />
-          </motion.div>
-        </motion.div>
-
-        {/* Animated line */}
-        <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-4"
-          initial={{ width: 0 }}
-          animate={{ width: 96 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        ></motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-black text-base md:text-lg max-w-3xl mx-auto relative z-10"
-        >
-          Validate your skills with industry-recognized certifications that
-          showcase your DevOps expertise.
-        </motion.p>
-      </div>
+            Validate your skills with industry-recognized certifications that
+            showcase your DevOps expertise and boost your career prospects.
+          </motion.p>
+        </div>
+      </motion.div>
 
       {/* Certification Logos - 8 per row */}
       <motion.div

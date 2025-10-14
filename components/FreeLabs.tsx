@@ -153,92 +153,41 @@ export function FreeLabs() {
       ref={sectionRef}
       className="w-full max-w-4xl mx-auto px-4 py-16 font-open-sans"
     >
-      {/* Enhanced Header */}
-      <div className="text-center mb-16 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      {/* Centered Header */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-4 mb-6 relative z-10"
+          className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
         >
-          {/* Animated bubble icon */}
-          <motion.div
-            className="relative p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full shadow-2xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
-          >
-            <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-full blur-lg"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "reverse",
-              }}
-            />
-            <FlaskConical className="w-10 h-10 text-white relative z-10" />
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-800 to-blue-800 bg-clip-text text-transparent"
-          >
-            Free DevOps Playgrounds
-          </motion.h2>
-
-          {/* Animated chevron with trail */}
-          <motion.div
-            className="flex items-center gap-1"
-            animate={{ x: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-          >
-            {[...Array(3)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="w-2 h-2 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.3, 1, 0.3],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  delay: i * 0.2,
-                }}
-              />
-            ))}
-            <ChevronRight className="w-6 h-6 text-sky-600 ml-2" />
-          </motion.div>
-        </motion.div>
+          Practice DevOps with
+          <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+            Interactive Labs
+          </span>
+        </motion.h2>
 
         <motion.div
-          className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto relative mb-6"
+          className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full mx-auto mb-6"
           initial={{ width: 0 }}
           animate={{ width: 128 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-        ></motion.div>
+        />
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-black text-lg max-w-2xl mx-auto relative z-10"
+          transition={{ delay: 0.1 }}
+          className="text-gray-600 text-lg max-w-2xl mx-auto"
         >
-          Explore these practical, free labs and playgrounds to level up your
-          DevOps expertise
+          Hands-on learning through free interactive playgrounds and real
+          environments
         </motion.p>
-      </div>
+      </motion.div>
 
       {/* Single Lab Display */}
       <div className="relative max-w-2xl mx-auto">

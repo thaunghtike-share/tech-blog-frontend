@@ -240,37 +240,42 @@ export function MinimalDevopsRoadmap() {
     <section className="relative min-h-screen bg-white/95 overflow-hidden font-open-sans">
       <div className="relative z-10 min-h-screen py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header Section - Left Aligned like YouTube/Udemy */}
           <motion.div
-            className="text-center mb-12"
+            className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-            >
-              <span className="bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-black">
-                DevOps Roadmap
-              </span>
-            </motion.h2>
+            <div className="flex-1">
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+              >
+                DevOps Roadmap with
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  Structured Learning Path
+                </span>
+              </motion.h2>
 
-            <motion.div
-              className="h-1 w-20 bg-gradient-to-r from-sky-600 to-blue-500 rounded-full mx-auto mb-6"
-              initial={{ width: 0 }}
-              animate={{ width: "5rem" }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            />
+              <motion.div
+                className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: "8rem" }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-lg text-gray-600 max-w-2xl mx-auto"
-            >
-              A structured learning path to master DevOps from fundamentals to
-              advanced concepts
-            </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-gray-600 mt-4 text-lg max-w-2xl"
+              >
+                Follow our comprehensive DevOps roadmap designed to take you
+                from complete beginner to advanced practitioner with hands-on
+                projects and real-world scenarios
+              </motion.p>
+            </div>
           </motion.div>
         </div>
 
