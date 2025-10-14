@@ -1,5 +1,7 @@
 "use client";
 import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import type React from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
@@ -7,6 +9,7 @@ interface RoadmapItem {
   title: string;
   description: string;
   tags: string[];
+  image?: string;
 }
 
 interface RoadmapStage {
@@ -36,35 +39,46 @@ const roadmap: RoadmapStage[] = [
           "processes",
           "networking",
         ],
+        image: "linux.webp",
       },
       {
         title: "Bash Scripting",
         description:
           "Automate tasks with Bash scripting and command-line tools",
         tags: ["variables", "loops", "functions", "automation", "debugging"],
+        image: "bash.png",
       },
       {
         title: "CCNA",
         description:
           "Understand networking basics, protocols, and infrastructure",
         tags: ["tcp-ip", "subnetting", "routing", "switching", "vlans"],
+        image: "ccna.png",
       },
       {
-        title: "Cloud Computing",
+        title: "AWS Practitioner",
         description:
-          "Learn cloud computing concepts and service models (IaaS, PaaS, SaaS)",
+          "AWS cloud fundamentals, services overview, and basic architecture",
+        tags: [
+          "cloud-concepts",
+          "pricing",
+          "support",
+          "architecture",
+          "security",
+        ],
+        image: "aws.png",
+      },
+      {
+        title: "Azure Fundamentals",
+        description:
+          "Microsoft Azure core services, solutions, and management tools",
         tags: [
           "virtualization",
           "scalability",
           "availability",
           "cost-management",
         ],
-      },
-      {
-        title: "Docker Essentials",
-        description:
-          "Containerize applications and manage container lifecycles",
-        tags: ["containers", "images", "dockerfile", "volumes", "networking"],
+        image: "azure.png",
       },
     ],
   },
@@ -77,34 +91,45 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
-        title: "AWS Core Services",
+        title: "Docker Essentials",
         description:
-          "Master EC2, S3, RDS, Lambda, and essential AWS infrastructure",
-        tags: ["ec2", "s3", "rds", "lambda", "vpc", "iam"],
-      },
-      {
-        title: "Ansible Automation",
-        description:
-          "Automate configuration management and application deployment",
-        tags: ["playbooks", "inventory", "roles", "variables", "modules"],
+          "Containerize applications and manage container lifecycles",
+        tags: ["containers", "images", "dockerfile", "volumes", "networking"],
+        image: "docker.png",
       },
       {
         title: "Git & GitHub",
         description:
           "Version control, branching strategies, and collaborative workflows",
         tags: ["branches", "merge", "rebase", "pull-requests", "workflows"],
+        image: "git.png",
       },
       {
         title: "CI/CD Pipelines",
         description:
           "Build automated testing and deployment pipelines with Jenkins or GitLab",
         tags: ["jenkins", "gitlab-ci", "stages", "artifacts", "testing"],
+        image: "cicd.png",
       },
       {
-        title: "Kubernetes",
+        title: "Ansible Automation",
         description:
-          "Orchestrate containers at scale with K8s clusters and deployments",
-        tags: ["pods", "services", "deployments", "configmaps", "helm"],
+          "Automate configuration management and application deployment",
+        tags: ["playbooks", "inventory", "roles", "variables", "modules"],
+        image: "ansible.png",
+      },
+      {
+        title: "Packer",
+        description:
+          "Create machine images for multiple platforms from a single source configuration",
+        tags: [
+          "images",
+          "automation",
+          "multi-platform",
+          "provisioners",
+          "builders",
+        ],
+        image: "packer.png",
       },
     ],
   },
@@ -117,34 +142,39 @@ const roadmap: RoadmapStage[] = [
     ],
     items: [
       {
+        title: "Kubernetes",
+        description:
+          "Orchestrate containers at scale with K8s clusters and deployments",
+        tags: ["pods", "services", "deployments", "configmaps", "helm", "rbac"],
+        image: "kubernetes.png",
+      },
+      {
         title: "Terraform",
         description:
           "Infrastructure as Code for multi-cloud provisioning and management",
         tags: ["modules", "state", "providers", "workspaces", "cdktf"],
+        image: "terraform.png",
       },
       {
         title: "Monitoring & Observability",
         description:
           "Implement Prometheus, Grafana, and ELK stack for system insights",
         tags: ["metrics", "logs", "alerts", "dashboards", "tracing"],
+        image: "monitoring.png",
       },
       {
         title: "GitOps",
         description:
           "Declarative infrastructure with ArgoCD and Flux for automated deployments",
         tags: ["argocd", "flux", "sync", "rollback", "automation"],
+        image: "gitops.png",
       },
       {
-        title: "Secrets Management",
+        title: "Hashicorp Vault",
         description:
-          "Secure sensitive data with Vault, AWS Secrets Manager, and encryption",
+          "Secure sensitive data with Vault, secrets management, and encryption",
         tags: ["vault", "secrets", "encryption", "pki", "authentication"],
-      },
-      {
-        title: "Kubernetes Security",
-        description:
-          "Implement RBAC, network policies, and security best practices",
-        tags: ["rbac", "network-policies", "pod-security", "opa", "audit"],
+        image: "vault.png",
       },
     ],
   },
@@ -199,35 +229,16 @@ export function MinimalDevopsRoadmap() {
     ? currentStage.items
     : currentStage.items.slice(0, 3);
 
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    const target = e.currentTarget;
+    target.src = "/new.png";
+  };
+
   return (
     <section className="relative min-h-screen bg-white/95 overflow-hidden font-open-sans">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        {[
-          { left: 10, top: 20 },
-          { left: 90, top: 15 },
-          { left: 15, top: 80 },
-          { left: 95, top: 70 },
-        ].map((pos, i) => (
-          <div
-            key={`float-${i}`}
-            className="absolute animate-float"
-            style={{
-              left: `${pos.left}%`,
-              top: `${pos.top}%`,
-              animationDelay: `${i * 0.4}s`,
-              animationDuration: `${5 + (i % 2)}s`,
-            }}
-          >
-            <div
-              className={`w-3 h-3 sm:w-4 sm:h-4 ${currentConfig.lightBg} rounded-full backdrop-blur-sm border ${currentConfig.border}`}
-            />
-          </div>
-        ))}
-      </div>
-
       <div className="relative z-10 min-h-screen py-8">
-        {/* Header - Title in Center */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12"
@@ -239,7 +250,7 @@ export function MinimalDevopsRoadmap() {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
             >
-              <span className="bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-black">
                 DevOps Roadmap
               </span>
             </motion.h2>
@@ -263,10 +274,8 @@ export function MinimalDevopsRoadmap() {
           </motion.div>
         </div>
 
-        {/* Content - Exchanged positions: Level on left, Timeline on right */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-12">
-            {/* Left Side - Level Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -278,7 +287,7 @@ export function MinimalDevopsRoadmap() {
                   key={currentStage.key}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`text-3xl md:text-4xl font-bold bg-gradient-to-r ${currentConfig.gradient} bg-clip-text text-transparent`}
+                  className={`text-3xl md:text-4xl font-bold bg-clip-text text-black`}
                 >
                   {currentStage.label}
                 </motion.h3>
@@ -300,7 +309,34 @@ export function MinimalDevopsRoadmap() {
                   ))}
                 </motion.div>
 
-                {/* Navigation */}
+                <motion.div
+                  key={`logos-${currentStage.key}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex flex-wrap gap-4 pt-4"
+                >
+                  {currentStage.items.map((item, index) => (
+                    <motion.div
+                      key={`logo-${index}`}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 + index * 0.1 }}
+                      className="relative group flex flex-col items-center gap-2"
+                    >
+                      <img
+                        src={`/${item.image}`}
+                        alt={item.title}
+                        className="w-24 h-24 object-contain rounded-lg bg-white p-2 shadow-sm border border-gray-200 group-hover:shadow-md transition-all duration-300 group-hover:scale-110"
+                        onError={handleImageError}
+                      />
+                      <span className="text-xs text-gray-700 text-center font-medium max-w-[96px] leading-tight">
+                        {item.title}
+                      </span>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
                 <div className="flex items-center gap-4 pt-4">
                   <button
                     onClick={prevStage}
@@ -337,7 +373,6 @@ export function MinimalDevopsRoadmap() {
               </div>
             </motion.div>
 
-            {/* Right Side - Timeline Roadmap */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -353,14 +388,11 @@ export function MinimalDevopsRoadmap() {
                   transition={{ duration: 0.5 }}
                   className="relative"
                 >
-                  {/* Modern Timeline */}
                   <div className="relative">
-                    {/* Vertical Line */}
                     <div
                       className={`absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b ${currentConfig.gradient}`}
                     />
 
-                    {/* Roadmap Items */}
                     <div className="space-y-6">
                       {visibleItems.map((item, index) => (
                         <motion.div
@@ -370,7 +402,6 @@ export function MinimalDevopsRoadmap() {
                           transition={{ delay: index * 0.1, duration: 0.5 }}
                           className="flex items-start gap-6 group"
                         >
-                          {/* Step Circle */}
                           <div className="flex-shrink-0 relative z-10">
                             <div
                               className={`w-12 h-12 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-bold text-sm shadow-lg group-hover:scale-110 transition-transform duration-300`}
@@ -379,7 +410,6 @@ export function MinimalDevopsRoadmap() {
                             </div>
                           </div>
 
-                          {/* Content Card */}
                           <div className="flex-1 min-w-0">
                             <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-blue-300 group-hover:-translate-y-1">
                               <h3 className="text-lg font-bold text-black mb-2">
@@ -392,7 +422,6 @@ export function MinimalDevopsRoadmap() {
                                 {item.description}
                               </p>
 
-                              {/* Tags */}
                               <div className="flex flex-wrap gap-2">
                                 {item.tags.map((tag, tagIndex) => (
                                   <span
@@ -409,7 +438,6 @@ export function MinimalDevopsRoadmap() {
                       ))}
                     </div>
 
-                    {/* Expand/Collapse Button */}
                     {currentStage.items.length > 3 && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -442,46 +470,6 @@ export function MinimalDevopsRoadmap() {
           </div>
         </div>
       </div>
-
-      {/* Background Dots */}
-      <div className="absolute top-20 left-4 sm:left-20 hidden lg:block">
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-          {[...Array(9)].map((_, i) => (
-            <div
-              key={i}
-              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 ${currentConfig.lightBg} rounded-full animate-ping`}
-              style={{ animationDelay: `${i * 0.3}s` }}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute bottom-20 right-4 sm:right-20 hidden lg:block">
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-          {[...Array(9)].map((_, i) => (
-            <div
-              key={i}
-              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 ${currentConfig.lightBg} rounded-full animate-ping`}
-              style={{ animationDelay: `${i * 0.3}s` }}
-            />
-          ))}
-        </div>
-      </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-15px);
-          }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 }

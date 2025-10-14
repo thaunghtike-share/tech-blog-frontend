@@ -53,16 +53,15 @@ const youtubePlaylists = [
   },
   {
     id: 35,
-    title: "Linux (Burmese)",
-    videoId: "zYlTspttLEI",
-    playlistUrl:
-      "https://www.youtube.com/watch?v=zYlTspttLEI&list=PL7HEkIrH_rEphNhhbFZV5Wq1dudUD10hP",
-    channel: "Linux Ninja",
+    title: "Bash Scripting",
+    videoId: "e7BufAVwDiM",
+    playlistUrl: "https://www.youtube.com/watch?v=e7BufAVwDiM",
+    channel: "LinuxHint",
     difficulty: "Beginner",
-    estDuration: "4 weeks",
+    estDuration: "2 weeks",
     is_burmese: true,
     recommended: false,
-    description: "Linux fundamentals in Burmese",
+    description: "Bash scripting basics",
     order: 1,
   },
 
@@ -526,8 +525,8 @@ const learningPaths = {
       "Begin with foundational concepts and essential tools. Master Linux, networking, and cloud basics to build a solid foundation for your DevOps career.",
     learningPath: [
       { title: "Linux", icon: "🐧" },
+      { title: "Bash", icon: "💻" },
       { title: "CCNA", icon: "🌐" },
-      { title: "Cloud", icon: "☁️" },
       { title: "AWS", icon: "🔶" },
       { title: "Azure", icon: "🔷" },
     ],

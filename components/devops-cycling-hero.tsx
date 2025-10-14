@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -136,7 +138,7 @@ const DevOpsCyclingHero = () => {
           transition={{
             duration: 6,
             delay: item.delay,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatType: "reverse",
             ease: "easeInOut",
           }}
@@ -216,33 +218,24 @@ const DevOpsCyclingHero = () => {
                 </motion.p>
               </div>
 
-              {/* Buttons */}
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 pt-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-              >
-                <motion.button
-                  onClick={scrollToRoadmap}
-                  className="px-5 py-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  See Roadmap
-                </motion.button>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link
-                    href="/articles"
-                    className="px-5 py-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 text-center block"
-                  >
-                    Read Articles
-                  </Link>
-                </motion.div>
-              </motion.div>
+              <div className="flex items-center gap-2 pt-2">
+                {slides.map((_, index) => (
+                  <motion.div
+                    key={index}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide
+                        ? "w-8 bg-gradient-to-r from-sky-600 to-blue-600"
+                        : "w-2 bg-gray-300"
+                    }`}
+                    initial={{ scale: 0.8 }}
+                    animate={{
+                      scale: index === currentSlide ? 1 : 0.8,
+                      opacity: index === currentSlide ? 1 : 0.5,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                ))}
+              </div>
             </motion.div>
           </div>
 
@@ -260,7 +253,7 @@ const DevOpsCyclingHero = () => {
               }}
               transition={{
                 duration: 4,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 repeatType: "reverse",
                 ease: "easeInOut",
               }}
