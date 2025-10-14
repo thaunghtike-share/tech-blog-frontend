@@ -215,7 +215,7 @@ export default function HomeClient() {
             backfaceVisibility: "hidden",
           }}
         >
-          <section className="-mt-9 2xl:-mt-4">
+          <section className="-mt-16 2xl:-mt-4">
             <DevOpsCyclingHero />
           </section>
 
@@ -225,11 +225,11 @@ export default function HomeClient() {
           </section> */}
 
           {/* All other sections remain exactly the same */}
-          <section id="roadmap" className="-mt-5 2xl:-mt-2">
+          <section id="roadmap" className="-mt-15 2xl:-mt-2">
             <MinimalDevopsRoadmap />
           </section>
 
-          <section id="youtube" className="-mt-1 2xl:-10">
+          <section id="youtube" className="">
             <YouTubePlaylists />
           </section>
 

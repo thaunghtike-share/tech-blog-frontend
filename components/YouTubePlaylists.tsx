@@ -549,6 +549,7 @@ const learningPaths = {
       { title: "CICD ", icon: "🔄" },
       { title: "Ansible", icon: "⚙️" },
       { title: "AWS Security", icon: "🔒" },
+      { title: "Packer", icon: "📦" },
     ],
     duration: "12-16 weeks",
     skills: ["Docker", "CI/CD", "Git", "Ansible", "AWS Security"],
@@ -560,6 +561,8 @@ const learningPaths = {
     learningPath: [
       { title: "Kubernetes", icon: "☸️" },
       { title: "Terraform", icon: "🏗️" },
+      { title: "GitOps", icon: "🔄" }, // Added GitOps
+      { title: "Monitoring", icon: "📊" },
       { title: "DevSecOps", icon: "🛡️" },
       { title: "Hashicorp Vault", icon: "🔐" },
     ],
@@ -659,7 +662,8 @@ export function YouTubePlaylists() {
   }
 
   // Get the current config for selected difficulty
-  const currentConfig = difficultyConfig[selectedDifficulty as keyof typeof difficultyConfig];
+  const currentConfig =
+    difficultyConfig[selectedDifficulty as keyof typeof difficultyConfig];
   const IconComponent = currentConfig.icon;
 
   return (
@@ -690,8 +694,8 @@ export function YouTubePlaylists() {
               transition={{ delay: 0.1 }}
               className="text-lg text-gray-600 mb-6 leading-relaxed max-w-2xl"
             >
-              Curated learning paths from fundamentals to advanced production skills. 
-              Follow structured roadmaps with the best YouTube content.
+              Curated learning paths from fundamentals to advanced production
+              skills. Follow structured roadmaps with the best YouTube content.
             </motion.p>
 
             {/* Search Bar */}
@@ -829,25 +833,23 @@ export function YouTubePlaylists() {
                         <span className="text-sm font-semibold text-sky-600 uppercase tracking-wide">
                           Recommended Learning Path
                         </span>
-                        <div className="flex items-center gap-2 flex-wrap">
+                        {/* Updated Learning Path - All in one line */}
+                        <div className="flex items-center gap-1 flex-nowrap overflow-x-auto py-2 scrollbar-hide">
                           {path.learningPath.map((step, index) => (
                             <div
                               key={index}
-                              className="flex items-center gap-2"
+                              className="flex items-center gap-1 flex-shrink-0"
                             >
                               <div
                                 className={`flex items-center gap-2 bg-white border-2 ${config.borderColor} rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
                               >
                                 <span className="text-lg">{step.icon}</span>
-                                <span className="text-sm font-semibold text-gray-700">
-                                  {step.title
-                                    .split(" ")
-                                    .slice(0, 2)
-                                    .join(" ")}
+                                <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">
+                                  {step.title.split(" ").slice(0, 2).join(" ")}
                                 </span>
                               </div>
                               {index < path.learningPath.length - 1 && (
-                                <ArrowRight className="w-4 h-4 text-gray-400" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
                               )}
                             </div>
                           ))}
@@ -960,10 +962,11 @@ function HorizontalScrollSection({
 
   return (
     <div className="relative">
+      {/* Updated Chevron Buttons - Positioned higher */}
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -left-4 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -973,7 +976,7 @@ function HorizontalScrollSection({
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -right-4 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-5 h-5 text-gray-700" />
