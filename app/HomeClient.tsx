@@ -215,7 +215,7 @@ export default function HomeClient() {
             backfaceVisibility: "hidden",
           }}
         >
-          <section className="-mt-16 2xl:-mt-4">
+          <section className="">
             <DevOpsCyclingHero />
           </section>
 
@@ -225,7 +225,7 @@ export default function HomeClient() {
           </section> */}
 
           {/* All other sections remain exactly the same */}
-          <section id="roadmap" className="mt-5">
+          <section id="roadmap" className="">
             <MinimalDevopsRoadmap />
           </section>
 
@@ -233,7 +233,7 @@ export default function HomeClient() {
             <YouTubePlaylists />
           </section>
 
-          <section id="online" className="-mt-15">
+          <section id="online" className="-mt-25">
             <TopUdemyCourses />
           </section>
 
@@ -241,15 +241,15 @@ export default function HomeClient() {
             <FreeLabs />
           </section>
 
-          <div id="cert" className="-mt-15">
+          <div id="cert" className="-mt-10">
             <CertificationRoadmap />
           </div>
 
-          <section id="career" className="-mt-10">
+          <section id="career" className="-mt-1">
             <CareerPath />
           </section>
 
-          <div className="-mt-20">
+          <div className="">
             <SuccessStoriesSection />
           </div>
 

@@ -272,7 +272,7 @@ export function TopUdemyCourses() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-white/95 py-20 overflow-hidden"
+      className="relative w-full bg-white/95 py-14 overflow-hidden"
     >
       {/* Subtle background pattern */}
 

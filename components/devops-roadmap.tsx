@@ -188,6 +188,11 @@ const stageConfig = {
     lightBg: "bg-sky-50",
     border: "border-sky-200",
     textColor: "text-sky-700",
+    tagBg: "bg-gray-100",
+    tagBorder: "border-gray-300",
+    tagText: "text-gray-700",
+    tagHover: "hover:bg-gray-200",
+    buttonBg: "bg-sky-600 hover:bg-sky-700",
   },
   intermediate: {
     gradient: "from-blue-500 to-purple-600",
@@ -196,6 +201,11 @@ const stageConfig = {
     lightBg: "bg-blue-50",
     border: "border-blue-200",
     textColor: "text-blue-700",
+    tagBg: "bg-gray-100",
+    tagBorder: "border-gray-300",
+    tagText: "text-gray-700",
+    tagHover: "hover:bg-gray-200",
+    buttonBg: "bg-blue-600 hover:bg-blue-700",
   },
   advanced: {
     gradient: "from-green-500 to-emerald-600",
@@ -204,6 +214,11 @@ const stageConfig = {
     lightBg: "bg-green-50",
     border: "border-green-200",
     textColor: "text-green-700",
+    tagBg: "bg-gray-100",
+    tagBorder: "border-gray-300",
+    tagText: "text-gray-700",
+    tagHover: "hover:bg-gray-200",
+    buttonBg: "bg-green-600 hover:bg-green-700",
   },
 };
 
@@ -238,13 +253,12 @@ export function MinimalDevopsRoadmap() {
   };
 
   return (
-    <section className="relative min-h-screen bg-white/95 overflow-hidden">
-
-      <div className="relative z-10 min-h-screen py-20">
+    <section className="relative bg-white/95 overflow-hidden">
+      <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section */}
           <motion.div
-            className="mb-20"
+            className="mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -306,7 +320,7 @@ export function MinimalDevopsRoadmap() {
                         Stage {currentStageIndex + 1} of {roadmap.length}
                       </span>
                       <h3
-                        className={`text-4xl md:text-5xl font-bold mt-2 tracking-tight bg-gradient-to-r ${currentConfig.gradient} bg-clip-text text-transparent`}
+                        className={`text-3xl md:text-4xl font-bold mt-2 tracking-tight bg-gradient-to-r ${currentConfig.gradient} bg-clip-text text-transparent`}
                       >
                         {currentStage.label}
                       </h3>
@@ -316,7 +330,7 @@ export function MinimalDevopsRoadmap() {
                       {currentStage.description.map((desc, index) => (
                         <p
                           key={index}
-                          className="text-black text-lg leading-relaxed"
+                          className="text-base text-black leading-relaxed"
                         >
                           {desc}
                         </p>
@@ -333,15 +347,15 @@ export function MinimalDevopsRoadmap() {
                           transition={{ delay: 0.4 + index * 0.05 }}
                           className="group flex flex-col items-center gap-2"
                         >
-                          <div className="w-20 h-20 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden group-hover:border-gray-400 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
+                          <div className="w-16 h-16 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden group-hover:border-gray-400 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
                             <img
                               src={`/${item.image}`}
                               alt={item.title}
-                              className="w-14 h-14 object-contain"
+                              className="w-12 h-12 object-contain"
                               onError={handleImageError}
                             />
                           </div>
-                          <span className="text-xs text-gray-700 text-center font-medium max-w-[80px] leading-tight">
+                          <span className="text-xs text-gray-700 text-center font-medium max-w-[70px] leading-tight">
                             {item.title}
                           </span>
                         </motion.div>
@@ -397,7 +411,7 @@ export function MinimalDevopsRoadmap() {
               </div>
             </motion.div>
 
-            {/* Right Side - Course Items */}
+            {/* Right Side - Course Items - Polished Design */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -414,45 +428,66 @@ export function MinimalDevopsRoadmap() {
                   className="relative"
                 >
                   <div className="relative">
-                    <div
-                      className={`absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b ${currentConfig.gradient} rounded-full`}
-                    />
+                    {/* Enhanced Timeline line */}
+                    <div className="absolute left-6 top-0 bottom-0 flex flex-col items-center">
+                      <div
+                        className={`w-1 h-full bg-gradient-to-b ${currentConfig.gradient} rounded-full shadow-sm`}
+                      />
+                      <div
+                        className={`absolute top-0 w-3 h-3 rounded-full bg-gradient-to-r ${currentConfig.gradient} shadow-md`}
+                      />
+                      <div
+                        className={`absolute bottom-0 w-3 h-3 rounded-full bg-gradient-to-r ${currentConfig.gradient} shadow-md`}
+                      />
+                    </div>
 
-                    <div className="space-y-8">
+                    <div className="space-y-4">
                       {visibleItems.map((item, index) => (
                         <motion.div
                           key={`item-${item.title}`}
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1, duration: 0.5 }}
-                          className="flex items-start gap-6 group"
+                          className="flex items-start gap-4 group"
                         >
+                          {/* Enhanced Timeline dot */}
                           <div className="flex-shrink-0 relative z-10">
-                            <div
-                              className={`w-12 h-12 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-bold text-sm shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                            >
-                              {index + 1}
+                            <div className="relative">
+                              <div
+                                className={`w-4 h-4 rounded-full bg-gradient-to-r ${currentConfig.gradient} mt-4 group-hover:scale-125 transition-all duration-300 shadow-md`}
+                              />
+                              <div
+                                className={`absolute inset-0 w-4 h-4 rounded-full bg-gradient-to-r ${currentConfig.gradient} opacity-50 animate-ping mt-4`}
+                              />
                             </div>
                           </div>
 
-                          {/* Content Card */}
+                          {/* Enhanced Content Card */}
                           <div className="flex-1 min-w-0">
-                            <div className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
-                              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                                {item.title}
-                              </h3>
-                              <div
-                                className={`w-16 h-1 bg-gradient-to-r ${currentConfig.gradient} rounded-full mb-4`}
-                              />
-                              <p className="text-black text-sm leading-relaxed mb-4">
+                            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1 shadow-sm">
+                              <div className="flex items-start justify-between mb-4">
+                                <h3 className="text-lg font-semibold text-gray-900 leading-tight">
+                                  {item.title}
+                                </h3>
+                                <div className="flex-shrink-0 ml-4">
+                                  <div
+                                    className={`w-9 h-9 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-semibold text-sm shadow-md`}
+                                  >
+                                    {index + 1}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <p className="text-sm text-gray-700 leading-relaxed mb-4">
                                 {item.description}
                               </p>
 
+                              {/* Enhanced Tags */}
                               <div className="flex flex-wrap gap-2">
                                 {item.tags.map((tag, tagIndex) => (
                                   <span
                                     key={tagIndex}
-                                    className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${currentConfig.lightBg} border ${currentConfig.border} ${currentConfig.textColor}`}
+                                    className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium ${currentConfig.tagBg} border ${currentConfig.tagBorder} ${currentConfig.tagText} transition-all duration-200 hover:scale-105 ${currentConfig.tagHover} shadow-sm`}
                                   >
                                     {tag}
                                   </span>
@@ -464,7 +499,7 @@ export function MinimalDevopsRoadmap() {
                       ))}
                     </div>
 
-                    {/* Expand/Collapse Button */}
+                    {/* Enhanced Expand/Collapse Button */}
                     {currentStage.items.length > 3 && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -474,16 +509,16 @@ export function MinimalDevopsRoadmap() {
                       >
                         <button
                           onClick={() => setExpanded(!expanded)}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-full ${currentConfig.lightBg} border-2 ${currentConfig.border} ${currentConfig.textColor} font-medium hover:shadow-md transition-all duration-300 hover:scale-105`}
+                          className={`flex items-center gap-3 px-6 py-3 rounded-xl text-white ${currentConfig.buttonBg} font-medium transition-all duration-300 hover:shadow-xl hover:scale-105 shadow-lg backdrop-blur-sm`}
                         >
                           {expanded ? (
                             <>
-                              <Minus className="w-4 h-4" />
+                              <Minus className="w-5 h-5" />
                               Show Less
                             </>
                           ) : (
                             <>
-                              <Plus className="w-4 h-4" />
+                              <Plus className="w-5 h-5" />
                               Show All {currentStage.items.length} Topics
                             </>
                           )}

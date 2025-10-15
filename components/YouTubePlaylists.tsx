@@ -663,7 +663,6 @@ export function YouTubePlaylists() {
   return (
     <section className="relative min-h-screen bg-white/95 overflow-hidden">
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
       <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
         {/* Header Section */}
@@ -675,6 +674,12 @@ export function YouTubePlaylists() {
           >
             {/* Left Content */}
             <div className="flex-1 text-left">
+              <motion.div
+                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-4"
+                initial={{ width: 0 }}
+                animate={{ width: "6rem" }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -728,7 +733,7 @@ export function YouTubePlaylists() {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="lg:w-96 flex-shrink-0"
+              className="py-14 lg:w-96 flex-shrink-0"
             >
               <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
                 <div className="flex items-center gap-3 mb-4">

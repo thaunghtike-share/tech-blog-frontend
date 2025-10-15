@@ -152,8 +152,6 @@ export function FreeLabs() {
       ref={sectionRef}
       className="relative min-h-screen bg-white/95 overflow-hidden"
     >
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
       <div className="relative w-full max-w-4xl mx-auto px-4 py-16 font-open-sans">
         {/* Centered Header */}

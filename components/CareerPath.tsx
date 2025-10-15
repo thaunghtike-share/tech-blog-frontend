@@ -120,6 +120,12 @@ export function CareerPath() {
 
         {/* Title on right */}
         <div className="w-full lg:w-1/2 lg:text-right">
+          <motion.div
+            className="h-1 w-32 mb-4 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full ml-auto"
+            initial={{ width: 0 }}
+            animate={{ width: 128 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          />
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -130,13 +136,6 @@ export function CareerPath() {
               DevOps Careers
             </span>
           </motion.h2>
-
-          <motion.div
-            className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full ml-auto"
-            initial={{ width: 0 }}
-            animate={{ width: 128 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          />
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}

@@ -65,9 +65,8 @@ export function SuccessStoriesSection() {
       className="relative min-h-screen bg-white/95 overflow-hidden"
     >
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-      <div className="relative mt-20 w-full">
+      <div className="relative mt-3 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-open-sans">
           {/* Left Aligned Header */}
           <motion.div
@@ -77,6 +76,12 @@ export function SuccessStoriesSection() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex-1">
+              <motion.div
+                className="h-1 w-32 mb-4 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: 128 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              />
               <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -87,13 +92,6 @@ export function SuccessStoriesSection() {
                   Our Community
                 </span>
               </motion.h2>
-
-              <motion.div
-                className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: 128 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              />
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}

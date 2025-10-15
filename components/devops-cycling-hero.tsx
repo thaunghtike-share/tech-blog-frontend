@@ -115,20 +115,19 @@ const DevOpsCyclingHero = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-white/95 overflow-hidden">
-      {/* Subtle background pattern */}
+    <section className="relative bg-white/95 overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between min-h-screen py-20 gap-16">
+        <div className="flex flex-col lg:flex-row items-center justify-between py-8 gap-8">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="w-full lg:w-1/2 space-y-10"
+            className="w-full lg:w-1/2 space-y-6"
           >
-            <div className="space-y-6 text-center lg:text-left">
+            <div className="space-y-4 text-center lg:text-left">
               <motion.div
                 className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mx-auto lg:mx-0"
                 initial={{ width: 0 }}
@@ -154,13 +153,13 @@ const DevOpsCyclingHero = () => {
                 transition={{ delay: 0.2 }}
                 className="text-lg text-black leading-relaxed max-w-xl mx-auto lg:mx-0"
               >
-                This website is for developers and students in Myanmar who want
+                This website is for students and developers in Myanmar who want
                 to learn DevOps and boost their careers in modern software
                 development and cloud infrastructure.
               </motion.p>
             </div>
 
-            {/* Image with floating animation */}
+            {/* Image with floating animation - Increased size */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -170,7 +169,7 @@ const DevOpsCyclingHero = () => {
               <motion.div
                 className="relative w-full max-w-md"
                 animate={{
-                  y: [0, -15, 0],
+                  y: [0, -10, 0],
                 }}
                 transition={{
                   duration: 4,
@@ -189,12 +188,12 @@ const DevOpsCyclingHero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Cycling Slides */}
+          {/* Right Content - Cycling Slides - Positioned lower */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="w-full lg:w-1/2"
+            className="w-full lg:w-1/2 mt-8"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -203,10 +202,11 @@ const DevOpsCyclingHero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="space-y-8"
+                className="space-y-6"
               >
-                <div className="space-y-6">
-                  <div className="inline-block">
+                <div className="space-y-4">
+                  {/* Topic indicator positioned lower */}
+                  <div className="inline-block mb-4">
                     <span className="text-xs font-mono text-gray-500 tracking-wider uppercase">
                       Topic {currentSlide + 1} of {slides.length}
                     </span>
@@ -222,7 +222,7 @@ const DevOpsCyclingHero = () => {
                     {currentSlideData.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-4">
+                  <div className="flex flex-wrap gap-2 pt-3">
                     {currentSlideData.tags.map((tag, index) => (
                       <motion.span
                         key={tag}
@@ -238,7 +238,7 @@ const DevOpsCyclingHero = () => {
                 </div>
 
                 {/* Progress Indicators with gradient */}
-                <div className="flex items-center gap-2 pt-6">
+                <div className="flex items-center gap-2 pt-4">
                   {slides.map((slide, index) => (
                     <button
                       key={index}

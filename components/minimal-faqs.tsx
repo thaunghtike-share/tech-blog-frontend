@@ -83,9 +83,9 @@ export function MinimalFAQs() {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
         >
-          Frequently
+          Frequently Asked
           <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-            Asked Questions
+            Questions
           </span>
         </motion.h2>
 
