@@ -185,22 +185,25 @@ const stageConfig = {
     gradient: "from-sky-600 to-blue-600",
     color: "sky",
     bgGradient: "from-sky-600 to-blue-600",
-    lightBg: "bg-sky-400/20",
-    border: "border-sky-300/30",
+    lightBg: "bg-sky-50",
+    border: "border-sky-200",
+    textColor: "text-sky-700",
   },
   intermediate: {
     gradient: "from-blue-500 to-purple-600",
     color: "blue",
     bgGradient: "from-blue-500 to-purple-600",
-    lightBg: "bg-blue-400/20",
-    border: "border-blue-300/30",
+    lightBg: "bg-blue-50",
+    border: "border-blue-200",
+    textColor: "text-blue-700",
   },
   advanced: {
     gradient: "from-green-500 to-emerald-600",
     color: "green",
     bgGradient: "from-green-500 to-emerald-600",
-    lightBg: "bg-green-400/20",
-    border: "border-green-300/30",
+    lightBg: "bg-green-50",
+    border: "border-green-200",
+    textColor: "text-green-700",
   },
 };
 
@@ -223,8 +226,6 @@ export function MinimalDevopsRoadmap() {
   const currentStage = roadmap[currentStageIndex];
   const currentConfig =
     stageConfig[currentStage.key as keyof typeof stageConfig];
-
-  // Show only first 3 items when not expanded, show all when expanded
   const visibleItems = expanded
     ? currentStage.items
     : currentStage.items.slice(0, 3);
@@ -237,20 +238,29 @@ export function MinimalDevopsRoadmap() {
   };
 
   return (
-    <section className="relative min-h-screen bg-white/95 overflow-hidden font-open-sans">
-      <div className="relative z-10 min-h-screen py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header Section - Left Aligned like YouTube/Udemy */}
+    <section className="relative min-h-screen bg-white/95 overflow-hidden">
+
+      <div className="relative z-10 min-h-screen py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header Section */}
           <motion.div
-            className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
+            className="mb-20"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="flex-1">
+            <div className="max-w-3xl">
+              <motion.div
+                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"
+                initial={{ width: 0 }}
+                animate={{ width: "6rem" }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+
               <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                transition={{ delay: 0.1 }}
+                className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
               >
                 DevOps Roadmap with
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -258,18 +268,11 @@ export function MinimalDevopsRoadmap() {
                 </span>
               </motion.h2>
 
-              <motion.div
-                className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: "8rem" }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              />
-
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-gray-600 mt-4 text-lg max-w-2xl"
+                transition={{ delay: 0.2 }}
+                className="text-lg text-black leading-relaxed"
               >
                 Follow our comprehensive DevOps roadmap designed to take you
                 from complete beginner to advanced practitioner with hands-on
@@ -279,105 +282,122 @@ export function MinimalDevopsRoadmap() {
           </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-12">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-16 lg:gap-20">
+            {/* Left Side - Stage Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="w-full lg:w-2/5"
             >
-              <div className="space-y-6">
-                <motion.h3
-                  key={currentStage.key}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`text-3xl md:text-4xl font-bold bg-clip-text text-black`}
-                >
-                  {currentStage.label}
-                </motion.h3>
-
-                <motion.div
-                  key={`desc-${currentStage.key}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="space-y-4"
-                >
-                  {currentStage.description.map((desc, index) => (
-                    <p
-                      key={index}
-                      className="text-black text-lg leading-relaxed"
-                    >
-                      {desc}
-                    </p>
-                  ))}
-                </motion.div>
-
-                <motion.div
-                  key={`logos-${currentStage.key}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex flex-wrap gap-4 pt-4"
-                >
-                  {currentStage.items.map((item, index) => (
-                    <motion.div
-                      key={`logo-${index}`}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.4 + index * 0.1 }}
-                      className="relative group flex flex-col items-center gap-2"
-                    >
-                      <img
-                        src={`/${item.image}`}
-                        alt={item.title}
-                        className="w-24 h-24 object-contain rounded-lg bg-white p-2 shadow-sm border border-gray-200 group-hover:shadow-md transition-all duration-300 group-hover:scale-110"
-                        onError={handleImageError}
-                      />
-                      <span className="text-xs text-gray-700 text-center font-medium max-w-[96px] leading-tight">
-                        {item.title}
+              <div className="space-y-8">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStage.key}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-6"
+                  >
+                    <div>
+                      <span className="text-xs font-mono text-gray-500 tracking-wider uppercase">
+                        Stage {currentStageIndex + 1} of {roadmap.length}
                       </span>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                      <h3
+                        className={`text-4xl md:text-5xl font-bold mt-2 tracking-tight bg-gradient-to-r ${currentConfig.gradient} bg-clip-text text-transparent`}
+                      >
+                        {currentStage.label}
+                      </h3>
+                    </div>
 
+                    <div className="space-y-4">
+                      {currentStage.description.map((desc, index) => (
+                        <p
+                          key={index}
+                          className="text-black text-lg leading-relaxed"
+                        >
+                          {desc}
+                        </p>
+                      ))}
+                    </div>
+
+                    {/* Technology Logos */}
+                    <div className="flex flex-wrap gap-4 pt-4">
+                      {currentStage.items.map((item, index) => (
+                        <motion.div
+                          key={`logo-${index}`}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.4 + index * 0.05 }}
+                          className="group flex flex-col items-center gap-2"
+                        >
+                          <div className="w-20 h-20 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden group-hover:border-gray-400 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
+                            <img
+                              src={`/${item.image}`}
+                              alt={item.title}
+                              className="w-14 h-14 object-contain"
+                              onError={handleImageError}
+                            />
+                          </div>
+                          <span className="text-xs text-gray-700 text-center font-medium max-w-[80px] leading-tight">
+                            {item.title}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Navigation */}
                 <div className="flex items-center gap-4 pt-4">
                   <button
                     onClick={prevStage}
-                    className="p-3 rounded-full bg-white hover:bg-gray-50 text-gray-600 transition-all duration-300 hover:scale-110 border border-gray-200 shadow-sm"
+                    className="p-3 rounded-full bg-white hover:bg-gray-50 text-gray-700 transition-all duration-200 border-2 border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md"
+                    aria-label="Previous stage"
                   >
-                    <ChevronLeft className="w-6 h-6" />
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
 
-                  <div className="flex space-x-2">
-                    {roadmap.map((_, index) => (
+                  <div className="flex gap-2">
+                    {roadmap.map((stage, index) => (
                       <button
                         key={index}
-                        onClick={() => setCurrentStageIndex(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                          index === currentStageIndex
-                            ? `bg-gradient-to-r ${
-                                stageConfig[
-                                  roadmap[index].key as keyof typeof stageConfig
-                                ].gradient
-                              } scale-125`
-                            : "bg-gray-300 hover:bg-gray-400"
-                        }`}
-                      />
+                        onClick={() => {
+                          setCurrentStageIndex(index);
+                          setExpanded(false);
+                        }}
+                        className="group"
+                        aria-label={`Go to stage ${index + 1}`}
+                      >
+                        <div
+                          className={`h-2 rounded-full transition-all duration-300 ${
+                            index === currentStageIndex
+                              ? `w-10 bg-gradient-to-r ${
+                                  stageConfig[
+                                    stage.key as keyof typeof stageConfig
+                                  ].gradient
+                                }`
+                              : "w-2 bg-gray-300 group-hover:bg-gray-400"
+                          }`}
+                        />
+                      </button>
                     ))}
                   </div>
 
                   <button
                     onClick={nextStage}
-                    className="p-3 rounded-full bg-white hover:bg-gray-50 text-gray-600 transition-all duration-300 hover:scale-110 border border-gray-200 shadow-sm"
+                    className="p-3 rounded-full bg-white hover:bg-gray-50 text-gray-700 transition-all duration-200 border-2 border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md"
+                    aria-label="Next stage"
                   >
-                    <ChevronRight className="w-6 h-6" />
+                    <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
               </div>
             </motion.div>
 
+            {/* Right Side - Course Items */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -395,10 +415,10 @@ export function MinimalDevopsRoadmap() {
                 >
                   <div className="relative">
                     <div
-                      className={`absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b ${currentConfig.gradient}`}
+                      className={`absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b ${currentConfig.gradient} rounded-full`}
                     />
 
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                       {visibleItems.map((item, index) => (
                         <motion.div
                           key={`item-${item.title}`}
@@ -415,14 +435,15 @@ export function MinimalDevopsRoadmap() {
                             </div>
                           </div>
 
+                          {/* Content Card */}
                           <div className="flex-1 min-w-0">
-                            <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-blue-300 group-hover:-translate-y-1">
-                              <h3 className="text-lg font-bold text-black mb-2">
+                            <div className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
+                              <h3 className="text-xl font-bold text-gray-900 mb-3">
                                 {item.title}
                               </h3>
                               <div
-                                className={`w-12 h-1 bg-gradient-to-r ${currentConfig.gradient} rounded-full mb-3`}
-                              ></div>
+                                className={`w-16 h-1 bg-gradient-to-r ${currentConfig.gradient} rounded-full mb-4`}
+                              />
                               <p className="text-black text-sm leading-relaxed mb-4">
                                 {item.description}
                               </p>
@@ -431,7 +452,7 @@ export function MinimalDevopsRoadmap() {
                                 {item.tags.map((tag, tagIndex) => (
                                   <span
                                     key={tagIndex}
-                                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${currentConfig.lightBg} border ${currentConfig.border} text-gray-700`}
+                                    className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${currentConfig.lightBg} border ${currentConfig.border} ${currentConfig.textColor}`}
                                   >
                                     {tag}
                                   </span>
@@ -443,6 +464,7 @@ export function MinimalDevopsRoadmap() {
                       ))}
                     </div>
 
+                    {/* Expand/Collapse Button */}
                     {currentStage.items.length > 3 && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -452,7 +474,7 @@ export function MinimalDevopsRoadmap() {
                       >
                         <button
                           onClick={() => setExpanded(!expanded)}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-full ${currentConfig.lightBg} border ${currentConfig.border} text-gray-700 font-medium hover:shadow-md transition-all duration-300 hover:scale-105`}
+                          className={`flex items-center gap-2 px-6 py-3 rounded-full ${currentConfig.lightBg} border-2 ${currentConfig.border} ${currentConfig.textColor} font-medium hover:shadow-md transition-all duration-300 hover:scale-105`}
                         >
                           {expanded ? (
                             <>

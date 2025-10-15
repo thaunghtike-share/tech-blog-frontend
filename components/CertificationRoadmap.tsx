@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import { Award, ChevronRight, ExternalLink } from "lucide-react";
+import type React from "react";
+
+import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 
 interface CertificationItem {
@@ -302,192 +304,197 @@ export function CertificationRoadmap() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
-      {/* Left Aligned Header */}
-      <motion.div
-        className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="flex-1">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
-          >
-            Advance Your Career with
-            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-              DevOps Certifications
-            </span>
-          </motion.h2>
+    <section className="relative min-h-screen bg-white/95 overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-          <motion.div
-            className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: 128 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          />
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-600 mt-4 text-lg max-w-2xl"
-          >
-            Validate your skills with industry-recognized certifications that
-            showcase your DevOps expertise and boost your career prospects.
-          </motion.p>
-        </div>
-      </motion.div>
-
-      {/* Certification Logos - 8 per row */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6"
-      >
-        {certifications.map((cert, index) => {
-          const config = difficultyConfig[cert.difficulty];
-          const isHovered = hoveredCert === cert.title;
-
-          return (
-            <motion.div
-              key={cert.title}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex flex-col items-center group"
+      <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
+        {/* Left Aligned Header */}
+        <motion.div
+          className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="flex-1">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
             >
-              {/* Logo Container with Full Rounded Difficulty Badge */}
+              Advance Your Career with
+              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                DevOps Certifications
+              </span>
+            </motion.h2>
+
+            <motion.div
+              className="h-1 w-32 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: 128 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            />
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-black mt-4 text-lg max-w-2xl"
+            >
+              Validate your skills with industry-recognized certifications that
+              showcase your DevOps expertise and boost your career prospects.
+            </motion.p>
+          </div>
+        </motion.div>
+
+        {/* Certification Logos - 8 per row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6"
+        >
+          {certifications.map((cert, index) => {
+            const config = difficultyConfig[cert.difficulty];
+            const isHovered = hoveredCert === cert.title;
+
+            return (
               <motion.div
-                className="relative cursor-pointer"
-                onHoverStart={() => setHoveredCert(cert.title)}
-                onHoverEnd={() => setHoveredCert(null)}
-                onClick={() => handleCertClick(cert.examLink)}
-                whileHover={{
-                  scale: 1.05,
-                  y: -5,
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 25,
-                }}
+                key={cert.title}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+                className="flex flex-col items-center group"
               >
-                {/* Main Card Container */}
+                {/* Logo Container with Full Rounded Difficulty Badge */}
                 <motion.div
-                  className={`
+                  className="relative cursor-pointer"
+                  onHoverStart={() => setHoveredCert(cert.title)}
+                  onHoverEnd={() => setHoveredCert(null)}
+                  onClick={() => handleCertClick(cert.examLink)}
+                  whileHover={{
+                    scale: 1.05,
+                    y: -5,
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 25,
+                  }}
+                >
+                  {/* Main Card Container */}
+                  <motion.div
+                    className={`
                     bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-gray-300
                     transition-all duration-300 relative overflow-hidden
                     group-hover:shadow-2xl group-hover:border-blue-400
                     ${config.glowColor}
                   `}
-                  whileHover={{
-                    boxShadow: "0 20px 40px rgba(59, 130, 246, 0.15)",
-                  }}
-                >
-                  {/* Hover Gradient Overlay */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={false}
-                  />
-
-                  {/* External Link Icon on Hover */}
-                  <motion.div
-                    className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                    initial={false}
-                    animate={{
-                      scale: isHovered ? 1 : 0.8,
-                    }}
-                  >
-                    <ExternalLink className="w-4 h-4 text-blue-500" />
-                  </motion.div>
-
-                  {/* Logo */}
-                  <motion.div
-                    className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mx-auto"
                     whileHover={{
-                      scale: 1.1,
+                      boxShadow: "0 20px 40px rgba(59, 130, 246, 0.15)",
                     }}
-                    transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <img
-                      src={`/logos/${cert.logo}`}
-                      alt={cert.title}
-                      className="w-full h-full object-contain"
-                      onError={handleImageError}
+                    {/* Hover Gradient Overlay */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      initial={false}
                     />
+
+                    {/* External Link Icon on Hover */}
+                    <motion.div
+                      className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      initial={false}
+                      animate={{
+                        scale: isHovered ? 1 : 0.8,
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 text-blue-500" />
+                    </motion.div>
+
+                    {/* Logo */}
+                    <motion.div
+                      className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mx-auto"
+                      whileHover={{
+                        scale: 1.1,
+                      }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <img
+                        src={`/logos/${cert.logo}`}
+                        alt={cert.title}
+                        className="w-full h-full object-contain"
+                        onError={handleImageError}
+                      />
+                    </motion.div>
+
+                    {/* Pulse Animation on Hover */}
+                    {isHovered && (
+                      <motion.div
+                        className="absolute inset-0 border-2 border-blue-400/30 rounded-xl"
+                        initial={{ scale: 1, opacity: 0.7 }}
+                        animate={{ scale: 1.1, opacity: 0 }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Number.POSITIVE_INFINITY,
+                        }}
+                      />
+                    )}
                   </motion.div>
 
-                  {/* Pulse Animation on Hover */}
-                  {isHovered && (
-                    <motion.div
-                      className="absolute inset-0 border-2 border-blue-400/30 rounded-xl"
-                      initial={{ scale: 1, opacity: 0.7 }}
-                      animate={{ scale: 1.1, opacity: 0 }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Number.POSITIVE_INFINITY,
-                      }}
-                    />
-                  )}
+                  {/* Full Rounded Difficulty Badge */}
+                  <motion.div
+                    className={`absolute -top-2 -right-2 px-3 py-1 ${config.labelColor} text-white text-xs font-semibold rounded-full shadow-lg backdrop-blur-sm border border-white/20`}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    {cert.difficulty}
+                  </motion.div>
                 </motion.div>
 
-                {/* Full Rounded Difficulty Badge */}
+                {/* Certification Title */}
                 <motion.div
-                  className={`absolute -top-2 -right-2 px-3 py-1 ${config.labelColor} text-white text-xs font-semibold rounded-full shadow-lg backdrop-blur-sm border border-white/20`}
-                  whileHover={{ scale: 1.1 }}
+                  className="text-center mt-3"
+                  animate={{ y: isHovered ? 2 : 0 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
-                  {cert.difficulty}
+                  <h3 className="text-xs md:text-sm font-semibold text-black line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-blue-600 transition-colors duration-300">
+                    {cert.title}
+                  </h3>
+
+                  {/* Organization on Hover */}
+                  <motion.p
+                    className="text-xs text-black mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={false}
+                  >
+                    {cert.organization}
+                  </motion.p>
+
+                  {/* Exam Details on Hover */}
+                  <motion.p
+                    className="text-xs text-blue-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={false}
+                  >
+                    {cert.examDetails.split("|")[0].trim()}
+                  </motion.p>
                 </motion.div>
               </motion.div>
+            );
+          })}
+        </motion.div>
 
-              {/* Certification Title */}
-              <motion.div
-                className="text-center mt-3"
-                animate={{ y: isHovered ? 2 : 0 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                <h3 className="text-xs md:text-sm font-semibold text-black line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-blue-600 transition-colors duration-300">
-                  {cert.title}
-                </h3>
-
-                {/* Organization on Hover */}
-                <motion.p
-                  className="text-xs text-gray-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={false}
-                >
-                  {cert.organization}
-                </motion.p>
-
-                {/* Exam Details on Hover */}
-                <motion.p
-                  className="text-xs text-blue-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={false}
-                >
-                  {cert.examDetails.split("|")[0].trim()}
-                </motion.p>
-              </motion.div>
-            </motion.div>
-          );
-        })}
-      </motion.div>
-
-      {/* Instruction Text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="text-center mt-8"
-      >
-        <p className="text-black text-sm">
-          💡 Click on any certification to visit the official exam page
-        </p>
-      </motion.div>
+        {/* Instruction Text */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="text-center mt-8"
+        >
+          <p className="text-black text-sm">
+            💡 Click on any certification to visit the official exam page
+          </p>
+        </motion.div>
+      </div>
     </section>
   );
 }

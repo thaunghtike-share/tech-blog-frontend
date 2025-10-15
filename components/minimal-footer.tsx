@@ -71,7 +71,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-600 hover:text-blue-700 transition-all duration-300 block font-medium hover:translate-x-1"
+                    className="text-black hover:text-blue-700 transition-all duration-300 block font-medium hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -99,7 +99,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-600 hover:text-green-700 transition-all duration-300 block font-medium hover:translate-x-1"
+                    className="text-black hover:text-green-700 transition-all duration-300 block font-medium hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -127,7 +127,7 @@ export function MinimalFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-600 hover:text-orange-700 transition-all duration-300 block font-medium hover:translate-x-1"
+                    className="text-black hover:text-orange-700 transition-all duration-300 block font-medium hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -144,7 +144,7 @@ export function MinimalFooter() {
               <li>
                 <a
                   href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                  className="text-gray-600 hover:text-purple-700 transition-all duration-300 flex items-center font-medium hover:translate-x-1"
+                  className="text-black hover:text-purple-700 transition-all duration-300 flex items-center font-medium hover:translate-x-1"
                 >
                   <Mail className="h-4 w-4 mr-3 text-purple-500" />
                   <span>Email Me</span>
@@ -153,13 +153,13 @@ export function MinimalFooter() {
               <li>
                 <a
                   href="tel:+959952492359"
-                  className="text-gray-600 hover:text-purple-700 transition-all duration-300 flex items-center font-medium hover:translate-x-1"
+                  className="text-black hover:text-purple-700 transition-all duration-300 flex items-center font-medium hover:translate-x-1"
                 >
                   <Phone className="h-4 w-4 mr-3 text-green-500" />
                   <span>+95 9952492359</span>
                 </a>
               </li>
-              <li className="text-gray-600 flex items-center font-medium">
+              <li className="text-black flex items-center font-medium">
                 <MapPin className="h-4 w-4 mr-3 text-red-500" />
                 <span>Yangon, Myanmar</span>
               </li>

@@ -16,10 +16,8 @@ import {
   CheckCircle2,
   Circle,
   ExternalLink,
-  Globe,
-  ChevronDown,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const youtubePlaylists = [
   // Linux courses
@@ -487,7 +485,6 @@ const youtubePlaylists = [
   },
 ];
 
-
 const difficultyConfig = {
   Beginner: {
     gradient: "from-emerald-500 to-teal-600",
@@ -664,254 +661,263 @@ export function YouTubePlaylists() {
   const IconComponent = currentConfig.icon;
 
   return (
-    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
-      {/* Header Section */}
-      <div className="text-center mb-12 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-12"
-        >
-          {/* Left Content */}
-          <div className="flex-1 text-left">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
-            >
-              Master DevOps with
-              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-                YouTube Courses
-              </span>
-            </motion.h1>
+    <section className="relative min-h-screen bg-white/95 overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-lg text-gray-600 mb-6 leading-relaxed max-w-2xl"
-            >
-              Curated learning paths from fundamentals to advanced production
-              skills. Follow structured roadmaps with the best YouTube content.
-            </motion.p>
-
-            {/* Search Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="relative max-w-2xl"
-            >
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search courses by topic, technology, or channel..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent shadow-lg"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-2xl"
-                >
-                  ×
-                </button>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Right Content - Your Channel */}
+      <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
+        {/* Header Section */}
+        <div className="text-center mb-12 relative">
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="lg:w-96 flex-shrink-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-12"
           >
-            <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                  <Youtube className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg">My DevOps Channel</h3>
-                  <p className="text-red-100 text-sm">
-                    Learn DevOps Now with Tho
-                  </p>
-                </div>
-              </div>
-
-              <div className="aspect-video bg-black rounded-xl overflow-hidden mb-4 shadow-lg">
-                <iframe
-                  src="https://www.youtube.com/embed/kvBQ0-TDB38"
-                  title="Learn DevOps Now with Tho - Channel Preview"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-
-              <a
-                href="https://www.youtube.com/@learndevopsnowbytho"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-white text-red-600 hover:bg-gray-100 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 hover:scale-105"
+            {/* Left Content */}
+            <div className="flex-1 text-left">
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
               >
-                <Youtube className="w-5 h-5" />
-                Subscribe to My Channel
-                <ExternalLink className="w-4 h-4" />
-              </a>
+                Master DevOps with
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  YouTube Courses
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-lg text-black mb-6 leading-relaxed max-w-2xl"
+              >
+                Curated learning paths from fundamentals to advanced production
+                skills. Follow structured roadmaps with the best YouTube
+                content.
+              </motion.p>
+
+              {/* Search Bar */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="relative max-w-2xl"
+              >
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search courses by topic, technology, or channel..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent shadow-lg"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-2xl"
+                  >
+                    ×
+                  </button>
+                )}
+              </motion.div>
             </div>
-          </motion.div>
-        </motion.div>
-      </div>
 
-      {/* Content */}
-      <div className="pb-12">
-        {!searchQuery ? (
-          <div className="space-y-20">
-            {difficulties.map((difficulty) => {
-              const playlists = playlistsByDifficulty[difficulty];
-              if (!playlists || playlists.length === 0) return null;
+            {/* Right Content - Your Channel */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="lg:w-96 flex-shrink-0"
+            >
+              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <Youtube className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg">My DevOps Channel</h3>
+                    <p className="text-red-100 text-sm">
+                      Learn DevOps Now with Tho
+                    </p>
+                  </div>
+                </div>
 
-              const config = difficultyConfig[difficulty];
-              const path = learningPaths[difficulty];
-              const DifficultyIcon = config.icon;
-              const isLeft = config.position === "left";
+                <div className="aspect-video bg-black rounded-xl overflow-hidden mb-4 shadow-lg">
+                  <iframe
+                    src="https://www.youtube.com/embed/kvBQ0-TDB38"
+                    title="Learn DevOps Now with Tho - Channel Preview"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
 
-              return (
-                <motion.section
-                  key={difficulty}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="scroll-mt-20"
+                <a
+                  href="https://www.youtube.com/@learndevopsnowbytho"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-white text-red-600 hover:bg-gray-100 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 hover:scale-105"
                 >
-                  <div
-                    className={`flex flex-col ${
-                      isLeft ? "items-start" : "items-end"
-                    } mb-8`}
+                  <Youtube className="w-5 h-5" />
+                  Subscribe to My Channel
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Content */}
+        <div className="pb-12">
+          {!searchQuery ? (
+            <div className="space-y-20">
+              {difficulties.map((difficulty) => {
+                const playlists = playlistsByDifficulty[difficulty];
+                if (!playlists || playlists.length === 0) return null;
+
+                const config = difficultyConfig[difficulty];
+                const path = learningPaths[difficulty];
+                const DifficultyIcon = config.icon;
+                const isLeft = config.position === "left";
+
+                return (
+                  <motion.section
+                    key={difficulty}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="scroll-mt-20"
                   >
                     <div
-                      className={`max-w-3xl ${
-                        isLeft ? "text-left" : "text-right"
-                      }`}
+                      className={`flex flex-col ${
+                        isLeft ? "items-start" : "items-end"
+                      } mb-8`}
                     >
                       <div
-                        className={`flex items-center gap-3 mb-3 ${
-                          isLeft ? "" : "flex-row-reverse"
+                        className={`max-w-3xl ${
+                          isLeft ? "text-left" : "text-right"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-xl ${config.bgColor} text-white shadow-lg`}
+                          className={`flex items-center gap-3 mb-3 ${
+                            isLeft ? "" : "flex-row-reverse"
+                          }`}
                         >
-                          <DifficultyIcon className="w-6 h-6" />
+                          <div
+                            className={`p-2 rounded-xl ${config.bgColor} text-white shadow-lg`}
+                          >
+                            <DifficultyIcon className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h2 className="text-3xl font-bold text-gray-900">
+                              {path.title}
+                            </h2>
+                            <span className="text-sm font-medium text-sky-600 mt-1 block">
+                              {difficulty} Level • {playlists.length} courses
+                            </span>
+                          </div>
                         </div>
-                        <div>
-                          <h2 className="text-3xl font-bold text-gray-900">
-                            {path.title}
-                          </h2>
-                          <span className="text-sm font-medium text-sky-600 mt-1 block">
-                            {difficulty} Level • {playlists.length} courses
+
+                        <p className="text-black text-base leading-relaxed mb-6">
+                          {path.description}
+                        </p>
+
+                        <div
+                          className={`inline-flex flex-col gap-2 ${
+                            isLeft ? "" : "items-end"
+                          }`}
+                        >
+                          <span className="text-sm font-semibold text-sky-600 uppercase tracking-wide">
+                            Recommended Learning Path
                           </span>
-                        </div>
-                      </div>
-
-                      <p className="text-gray-600 text-base leading-relaxed mb-6">
-                        {path.description}
-                      </p>
-
-                      <div
-                        className={`inline-flex flex-col gap-2 ${
-                          isLeft ? "" : "items-end"
-                        }`}
-                      >
-                        <span className="text-sm font-semibold text-sky-600 uppercase tracking-wide">
-                          Recommended Learning Path
-                        </span>
-                        {/* Updated Learning Path - All in one line */}
-                        <div className="flex items-center gap-1 flex-nowrap overflow-x-auto py-2 scrollbar-hide">
-                          {path.learningPath.map((step, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center gap-1 flex-shrink-0"
-                            >
+                          {/* Updated Learning Path - All in one line */}
+                          <div className="flex items-center gap-1 flex-nowrap overflow-x-auto py-2 scrollbar-hide">
+                            {path.learningPath.map((step, index) => (
                               <div
-                                className={`flex items-center gap-2 bg-white border-2 ${config.borderColor} rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
+                                key={index}
+                                className="flex items-center gap-1 flex-shrink-0"
                               >
-                                <span className="text-lg">{step.icon}</span>
-                                <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">
-                                  {step.title.split(" ").slice(0, 2).join(" ")}
-                                </span>
+                                <div
+                                  className={`flex items-center gap-2 bg-white border-2 ${config.borderColor} rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
+                                >
+                                  <span className="text-lg">{step.icon}</span>
+                                  <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">
+                                    {step.title
+                                      .split(" ")
+                                      .slice(0, 2)
+                                      .join(" ")}
+                                  </span>
+                                </div>
+                                {index < path.learningPath.length - 1 && (
+                                  <ArrowRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                                )}
                               </div>
-                              {index < path.learningPath.length - 1 && (
-                                <ArrowRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                              )}
-                            </div>
-                          ))}
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <HorizontalScrollSection
-                    playlists={playlists}
-                    config={config}
-                    completedPlaylists={completedPlaylists}
-                    toggleComplete={toggleComplete}
-                  />
-                </motion.section>
-              );
-            })}
-          </div>
-        ) : filteredPlaylists.length > 0 ? (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">
-              Found {filteredPlaylists.length} courses
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPlaylists.map((playlist, index) => {
-                const config =
-                  difficultyConfig[
-                    playlist.difficulty as keyof typeof difficultyConfig
-                  ];
-                return (
-                  <PlaylistCard
-                    key={playlist.id}
-                    playlist={playlist}
-                    config={config}
-                    index={index + 1}
-                    isCompleted={completedPlaylists.has(playlist.id)}
-                    toggleComplete={toggleComplete}
-                  />
+                    <HorizontalScrollSection
+                      playlists={playlists}
+                      config={config}
+                      completedPlaylists={completedPlaylists}
+                      toggleComplete={toggleComplete}
+                    />
+                  </motion.section>
                 );
               })}
             </div>
-          </motion.section>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-20"
-          >
-            <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              No courses found
-            </h3>
-            <p className="text-gray-600 mb-6">Try different keywords</p>
-            <button
-              onClick={() => setSearchQuery("")}
-              className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+          ) : filteredPlaylists.length > 0 ? (
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-16"
             >
-              Clear Search
-            </button>
-          </motion.div>
-        )}
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+                Found {filteredPlaylists.length} courses
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredPlaylists.map((playlist, index) => {
+                  const config =
+                    difficultyConfig[
+                      playlist.difficulty as keyof typeof difficultyConfig
+                    ];
+                  return (
+                    <PlaylistCard
+                      key={playlist.id}
+                      playlist={playlist}
+                      config={config}
+                      index={index + 1}
+                      isCompleted={completedPlaylists.has(playlist.id)}
+                      toggleComplete={toggleComplete}
+                    />
+                  );
+                })}
+              </div>
+            </motion.section>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-20"
+            >
+              <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                No courses found
+              </h3>
+              <p className="text-gray-600 mb-6">Try different keywords</p>
+              <button
+                onClick={() => setSearchQuery("")}
+                className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+              >
+                Clear Search
+              </button>
+            </motion.div>
+          )}
+        </div>
       </div>
     </section>
   );

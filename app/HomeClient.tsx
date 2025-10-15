@@ -225,7 +225,7 @@ export default function HomeClient() {
           </section> */}
 
           {/* All other sections remain exactly the same */}
-          <section id="roadmap" className="-mt-15 2xl:-mt-2">
+          <section id="roadmap" className="mt-5">
             <MinimalDevopsRoadmap />
           </section>
 

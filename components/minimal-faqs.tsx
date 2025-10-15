@@ -1,12 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  HelpCircle,
-  MessageCircleQuestion,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, MessageCircleQuestion } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type FAQ = {
@@ -105,7 +100,7 @@ export function MinimalFAQs() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-gray-600 text-lg max-w-3xl mx-auto"
+          className="text-black text-lg max-w-3xl mx-auto"
         >
           Find answers to frequently asked questions about DevOps and our
           services
