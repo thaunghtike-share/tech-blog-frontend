@@ -279,9 +279,9 @@ const difficultyConfig = {
     borderColor: "border-blue-300",
   },
   Intermediate: {
-    labelColor: "bg-gradient-to-r from-blue-500 to-purple-600",
-    glowColor: "hover:shadow-purple-500/20",
-    borderColor: "border-purple-300",
+    labelColor: "bg-gradient-to-r from-yellow-500 to-orange-600",
+    glowColor: "hover:shadow-orange-500/20",
+    borderColor: "border-orange-300",
   },
   Advanced: {
     labelColor: "bg-gradient-to-r from-green-500 to-emerald-600",

@@ -1,5 +1,10 @@
 "use client";
-import { ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import type React from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -411,7 +416,7 @@ export function MinimalDevopsRoadmap() {
               </div>
             </motion.div>
 
-            {/* Right Side - Course Items - Polished Design */}
+            {/* Right Side - Course Items - Compact Design */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -428,16 +433,10 @@ export function MinimalDevopsRoadmap() {
                   className="relative"
                 >
                   <div className="relative">
-                    {/* Enhanced Timeline line */}
+                    {/* Compact Timeline line */}
                     <div className="absolute left-6 top-0 bottom-0 flex flex-col items-center">
                       <div
-                        className={`w-1 h-full bg-gradient-to-b ${currentConfig.gradient} rounded-full shadow-sm`}
-                      />
-                      <div
-                        className={`absolute top-0 w-3 h-3 rounded-full bg-gradient-to-r ${currentConfig.gradient} shadow-md`}
-                      />
-                      <div
-                        className={`absolute bottom-0 w-3 h-3 rounded-full bg-gradient-to-r ${currentConfig.gradient} shadow-md`}
+                        className={`w-0.5 h-full bg-gradient-to-b ${currentConfig.gradient} rounded-full`}
                       />
                     </div>
 
@@ -448,46 +447,34 @@ export function MinimalDevopsRoadmap() {
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1, duration: 0.5 }}
-                          className="flex items-start gap-4 group"
+                          className="flex items-start gap-4 group relative"
                         >
-                          {/* Enhanced Timeline dot */}
-                          <div className="flex-shrink-0 relative z-10">
-                            <div className="relative">
-                              <div
-                                className={`w-4 h-4 rounded-full bg-gradient-to-r ${currentConfig.gradient} mt-4 group-hover:scale-125 transition-all duration-300 shadow-md`}
-                              />
-                              <div
-                                className={`absolute inset-0 w-4 h-4 rounded-full bg-gradient-to-r ${currentConfig.gradient} opacity-50 animate-ping mt-4`}
-                              />
+                          {/* Compact Number Bubble */}
+                          <div className="flex-shrink-0 relative z-20">
+                            <div
+                              className={`w-8 h-8 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-semibold text-sm shadow-md border-2 border-white group-hover:scale-110 transition-all duration-300`}
+                            >
+                              {index + 1}
                             </div>
                           </div>
 
-                          {/* Enhanced Content Card */}
+                          {/* Compact Content Card */}
                           <div className="flex-1 min-w-0">
-                            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1 shadow-sm">
-                              <div className="flex items-start justify-between mb-4">
-                                <h3 className="text-lg font-semibold text-gray-900 leading-tight">
-                                  {item.title}
-                                </h3>
-                                <div className="flex-shrink-0 ml-4">
-                                  <div
-                                    className={`w-9 h-9 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-semibold text-sm shadow-md`}
-                                  >
-                                    {index + 1}
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-gray-300 hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5 shadow-sm">
+                              <h3 className="text-base font-semibold text-gray-900 leading-tight mb-2">
+                                {item.title}
+                              </h3>
 
-                              <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                              <p className="text-sm text-gray-700 leading-relaxed mb-3">
                                 {item.description}
                               </p>
 
-                              {/* Enhanced Tags */}
-                              <div className="flex flex-wrap gap-2">
+                              {/* Compact Tags */}
+                              <div className="flex flex-wrap gap-1.5">
                                 {item.tags.map((tag, tagIndex) => (
                                   <span
                                     key={tagIndex}
-                                    className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium ${currentConfig.tagBg} border ${currentConfig.tagBorder} ${currentConfig.tagText} transition-all duration-200 hover:scale-105 ${currentConfig.tagHover} shadow-sm`}
+                                    className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${currentConfig.tagBg} border ${currentConfig.tagBorder} ${currentConfig.tagText} transition-all duration-200 hover:scale-105 ${currentConfig.tagHover}`}
                                   >
                                     {tag}
                                   </span>
@@ -498,28 +485,27 @@ export function MinimalDevopsRoadmap() {
                         </motion.div>
                       ))}
                     </div>
-
-                    {/* Enhanced Expand/Collapse Button */}
+                    {/* See All Button */}
                     {currentStage.items.length > 3 && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
-                        className="flex justify-center mt-8"
+                        className="flex justify-center mt-6"
                       >
                         <button
                           onClick={() => setExpanded(!expanded)}
-                          className={`flex items-center gap-3 px-6 py-3 rounded-xl text-white ${currentConfig.buttonBg} font-medium transition-all duration-300 hover:shadow-xl hover:scale-105 shadow-lg backdrop-blur-sm`}
+                          className={`flex items-center gap-2 px-4 py-2 rounded-full text-white ${currentConfig.buttonBg} font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md text-sm`}
                         >
                           {expanded ? (
                             <>
-                              <Minus className="w-5 h-5" />
+                              <ChevronUp className="w-4 h-4" />
                               Show Less
                             </>
                           ) : (
                             <>
-                              <Plus className="w-5 h-5" />
-                              Show All {currentStage.items.length} Topics
+                              <ChevronDown className="w-4 h-4" />
+                              See All {currentStage.items.length} Topics
                             </>
                           )}
                         </button>

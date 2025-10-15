@@ -736,7 +736,7 @@ export function YouTubePlaylists() {
               className="py-14 lg:w-96 flex-shrink-0"
             >
               <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
                     <Youtube className="w-6 h-6" />
                   </div>
