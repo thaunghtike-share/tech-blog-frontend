@@ -13,7 +13,6 @@ interface ProgrammingLanguage {
   frameworks: string[];
   level: string;
   youtubeVideoId: string;
-  youtubePlaylistId: string;
   color: string;
   tagColor: string;
 }
@@ -29,7 +28,6 @@ const programmingLanguages: ProgrammingLanguage[] = [
     frameworks: ["Django", "Flask", "FastAPI"],
     level: "Beginner to Advanced",
     youtubeVideoId: "QXeEoD0pB3E",
-    youtubePlaylistId: "PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3",
     color: "from-sky-600 to-blue-600",
     tagColor: "bg-sky-100 text-sky-800 border-sky-200",
   },
@@ -42,8 +40,7 @@ const programmingLanguages: ProgrammingLanguage[] = [
     officialLink: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
     frameworks: ["Node.js", "React", "Next.js", "Express.js", "NestJS"],
     level: "Beginner to Advanced",
-    youtubeVideoId: "W6NZfCO5SIk",
-    youtubePlaylistId: "PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3",
+    youtubeVideoId: "EerdGm-ehJQ",
     color: "from-amber-500 to-yellow-500",
     tagColor: "bg-amber-100 text-amber-800 border-amber-200",
   },
@@ -56,8 +53,7 @@ const programmingLanguages: ProgrammingLanguage[] = [
     officialLink: "https://go.dev",
     frameworks: ["Gin", "Echo", "Cobra"],
     level: "Intermediate to Advanced",
-    youtubeVideoId: "YS4e4q9oBaU",
-    youtubePlaylistId: "PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3",
+    youtubeVideoId: "un6ZyFkqFKo",
     color: "from-cyan-500 to-teal-500",
     tagColor: "bg-cyan-100 text-cyan-800 border-cyan-200",
   },
@@ -70,8 +66,7 @@ const programmingLanguages: ProgrammingLanguage[] = [
     officialLink: "https://www.java.com",
     frameworks: ["Spring Boot", "Maven", "Gradle", "JUnit"],
     level: "Intermediate to Advanced",
-    youtubeVideoId: "eIrMbAQSU34",
-    youtubePlaylistId: "PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3",
+    youtubeVideoId: "xTtL8E4LzTQ",
     color: "from-red-500 to-orange-500",
     tagColor: "bg-red-100 text-red-800 border-red-200",
   },
@@ -84,8 +79,7 @@ const programmingLanguages: ProgrammingLanguage[] = [
     officialLink: "https://laravel.com",
     frameworks: ["Laravel", "Symfony", "Composer"],
     level: "Intermediate",
-    youtubeVideoId: "ImtZ5yENzgE",
-    youtubePlaylistId: "PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3",
+    youtubeVideoId: "l4_Vn-sTBL8",
     color: "from-rose-500 to-pink-500",
     tagColor: "bg-rose-100 text-rose-800 border-rose-200",
   },
@@ -93,11 +87,9 @@ const programmingLanguages: ProgrammingLanguage[] = [
 
 export function ProgrammingLanguagesRoadmap() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const nextLanguage = () => {
     setCurrentIndex((prev) => (prev + 1) % programmingLanguages.length);
-    setIsVideoPlaying(false);
   };
 
   const prevLanguage = () => {
@@ -105,7 +97,6 @@ export function ProgrammingLanguagesRoadmap() {
       (prev) =>
         (prev - 1 + programmingLanguages.length) % programmingLanguages.length
     );
-    setIsVideoPlaying(false);
   };
 
   const currentLanguage = programmingLanguages[currentIndex];
@@ -117,13 +108,9 @@ export function ProgrammingLanguagesRoadmap() {
     target.src = "/new.png";
   };
 
-  const handleVideoClick = () => {
-    setIsVideoPlaying(true);
-  };
-
-  const handleFullTutorialClick = () => {
+  const handlePlayButtonClick = () => {
     window.open(
-      `https://www.youtube.com/watch?v=${currentLanguage.youtubeVideoId}&list=${currentLanguage.youtubePlaylistId}`,
+      `https://www.youtube.com/watch?v=${currentLanguage.youtubeVideoId}`,
       "_blank"
     );
   };
@@ -248,48 +235,36 @@ export function ProgrammingLanguagesRoadmap() {
                       {/* Video Preview */}
                       <div className="py-33">
                         <div className="transform transition-all duration-300 relative">
-                          {!isVideoPlaying ? (
-                            <div
-                              className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
-                              onClick={handleVideoClick}
-                            >
-                              <div className="aspect-video rounded-lg overflow-hidden shadow-md border border-gray-300 relative bg-gray-200">
-                                <img
-                                  src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
-                                  alt={`${currentLanguage.name} Tutorial Preview`}
-                                  className="w-full h-full object-cover"
-                                  onError={(e) => {
-                                    e.currentTarget.src = `https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/hqdefault.jpg`;
-                                    e.currentTarget.onerror = null;
-                                  }}
-                                />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="w-20 h-13 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
-                                    <svg
-                                      className="w-10 h-10 text-white ml-1"
-                                      viewBox="0 0 24 24"
-                                      fill="currentColor"
-                                    >
-                                      <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                  </div>
+                          <div
+                            className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
+                            onClick={handlePlayButtonClick}
+                          >
+                            <div className="aspect-video rounded-lg overflow-hidden shadow-md border border-gray-300 relative bg-gray-200">
+                              <img
+                                src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
+                                alt={`${currentLanguage.name} Tutorial Preview`}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  e.currentTarget.src = `https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/hqdefault.jpg`;
+                                  e.currentTarget.onerror = null;
+                                }}
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-20 h-13 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
+                                  <svg
+                                    className="w-10 h-10 text-white ml-1"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                  >
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
                                 </div>
                               </div>
-                              <p className="text-sm text-black text-center mt-4 flex items-center justify-center gap-1">
-                                💡 Click to view full playlist on youtube
-                              </p>
                             </div>
-                          ) : (
-                            <div className="aspect-video rounded-lg overflow-hidden shadow-md border border-gray-300 bg-black">
-                              <iframe
-                                src={`https://www.youtube.com/embed/${currentLanguage.youtubeVideoId}?autoplay=1&modestbranding=1&rel=0`}
-                                title={`${currentLanguage.name} Tutorial`}
-                                className="w-full h-full"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                              />
-                            </div>
-                          )}
+                            <p className="text-sm text-black text-center mt-4 flex items-center justify-center gap-1">
+                              💡 Click to watch full tutorial on YouTube
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -315,7 +290,6 @@ export function ProgrammingLanguagesRoadmap() {
                       key={index}
                       onClick={() => {
                         setCurrentIndex(index);
-                        setIsVideoPlaying(false);
                       }}
                       className="group"
                       aria-label={`Go to language ${index + 1}`}

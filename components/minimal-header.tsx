@@ -332,16 +332,15 @@ export function MinimalHeader() {
               <span className="relative z-10">Articles</span>
             </Link>
 
-            {/* DevOps Playground Link */}
             <Link
               href="/devops-playground"
               className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
-                pathname.includes("/devops-playground")
+                pathname.includes("/learn-devops-on-youtube")
                   ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                   : "text-black hover:text-black hover:bg-gray-100"
               }`}
             >
-              <span className="relative z-10">DevOps Playground</span>
+              <span className="relative z-10">Learn DevOps on Youtube</span>
             </Link>
 
             {/* Services Dropdown */}

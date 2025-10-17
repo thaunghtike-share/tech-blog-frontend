@@ -399,7 +399,7 @@ export function TopUdemyCourses() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scroll("left")}
-                className="absolute -left-4 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+                className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -411,7 +411,7 @@ export function TopUdemyCourses() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scroll("right")}
-                className="absolute -right-4 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+                className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-5 h-5 text-gray-700" />
