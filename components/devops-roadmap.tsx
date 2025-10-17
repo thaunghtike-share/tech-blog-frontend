@@ -182,7 +182,7 @@ const roadmap: RoadmapStage[] = [
         image: "ccna.png",
       },
       {
-        title: "AWS Practitioner",
+        title: "AWS Fundamentals",
         description:
           "AWS cloud fundamentals, services overview, and basic architecture",
         tags: [
@@ -195,16 +195,16 @@ const roadmap: RoadmapStage[] = [
         image: "aws.png",
       },
       {
-        title: "Azure Fundamentals",
+        title: "Virtualization",
         description:
-          "Microsoft Azure core services, solutions, and management tools",
+          "Introduction to virtualization concepts using VMware or VirtualBox",
         tags: [
-          "virtualization",
-          "scalability",
-          "availability",
-          "cost-management",
+          "virtualbox",
+          "vmware",
+          "vsphere",
+          "hypervisor",
         ],
-        image: "azure.png",
+        image: "vmware.png",
       },
     ],
   },
