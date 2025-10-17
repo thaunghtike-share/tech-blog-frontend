@@ -143,7 +143,7 @@ export function SuccessStoriesSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-gray-600 text-lg max-w-2xl"
+                className="text-black-600 text-lg max-w-2xl"
               >
                 See how students and junior engineers from Myanmar are growing
                 their careers and mastering DevOps skills
@@ -206,8 +206,8 @@ export function SuccessStoriesSection() {
                   <div className="bg-white/50 rounded-2xl p-6 h-full flex flex-col border border-gray-300 hover:border-gray-300 transition-colors duration-200">
                     {/* Top Section with Quote and Rating */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="p-2 bg-white rounded-lg border border-sky-300">
-                        <Quote className="w-4 h-4 text-sky-600" />
+                      <div className="p-3 bg-white rounded-lg border border-sky-300">
+                        <Quote className="w-5 h-5 text-sky-600" />
                       </div>
                       <div className="flex gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -225,7 +225,7 @@ export function SuccessStoriesSection() {
 
                     {/* Feedback Text - Full Height */}
                     <div className="flex-grow mb-6">
-                      <p className="text-gray-700 text-base leading-relaxed">
+                      <p className="text-black-500 text-base leading-relaxed">
                         "{testimonial.feedback}"
                       </p>
                     </div>
@@ -235,7 +235,7 @@ export function SuccessStoriesSection() {
                       <div className="text-sm font-semibold text-gray-900">
                         {testimonial.name}
                       </div>
-                      <div className="text-xs text-sky-600 mt-1">
+                      <div className="text-base text-black-300 mt-1">
                         {testimonial.role}
                       </div>
                     </div>

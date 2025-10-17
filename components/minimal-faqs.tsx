@@ -69,7 +69,7 @@ export function MinimalFAQs() {
   return (
     <section
       ref={sectionRef}
-      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-open-sans"
+      className="mt-13 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-open-sans"
     >
       {/* Centered Header */}
       <motion.div

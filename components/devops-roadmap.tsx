@@ -1,10 +1,5 @@
 "use client";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type React from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,6 +18,132 @@ interface RoadmapStage {
   description: string[];
   items: RoadmapItem[];
 }
+
+interface ProgrammingLanguage {
+  name: string;
+  icon: string;
+  description: string;
+  fullDescription: string;
+  officialLink: string;
+  frameworks: string[];
+}
+
+const programmingLanguages: Record<string, ProgrammingLanguage[]> = {
+  beginner: [
+    {
+      name: "Python",
+      icon: "python.png",
+      description: "Scripting & Automation",
+      fullDescription:
+        "Python is a high-level, interpreted programming language known for its simplicity and readability. In DevOps, Python is extensively used for automation scripts, infrastructure management, and building CI/CD tools. Its rich ecosystem of libraries makes it perfect for system administration tasks.",
+      officialLink: "https://www.python.org",
+      frameworks: ["Django", "Flask", "Ansible", "Fabric"],
+    },
+    {
+      name: "JavaScript",
+      icon: "javascript.png",
+      description: "Web & Node.js",
+      fullDescription:
+        "JavaScript is a versatile programming language that powers both frontend and backend development. In DevOps, JavaScript (via Node.js) is used for building automation tools, serverless functions, and real-time monitoring dashboards. Its event-driven architecture makes it ideal for handling asynchronous operations.",
+      officialLink: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      frameworks: ["Node.js", "Express.js", "React", "Next.js"],
+    },
+    {
+      name: "Go",
+      icon: "go.png",
+      description: "Cloud Native Tools",
+      fullDescription:
+        "Go (Golang) is a statically typed, compiled language designed by Google for building efficient and reliable software. In DevOps, Go is the language of choice for cloud-native tools like Docker, Kubernetes, and Terraform. Its fast compilation, built-in concurrency, and small binary sizes make it perfect for microservices and CLI tools.",
+      officialLink: "https://go.dev",
+      frameworks: ["Gin", "Echo", "Cobra", "Viper"],
+    },
+  ],
+  intermediate: [
+    {
+      name: "Python",
+      icon: "python.png",
+      description: "Advanced Automation",
+      fullDescription:
+        "At the intermediate level, Python is used for complex automation workflows, infrastructure orchestration, and building custom DevOps tools. You'll leverage advanced libraries for API integrations, data processing, and creating sophisticated deployment pipelines.",
+      officialLink: "https://www.python.org",
+      frameworks: ["Ansible", "SaltStack", "Fabric", "Boto3"],
+    },
+    {
+      name: "Node.js",
+      icon: "nodejs.png",
+      description: "Backend Services",
+      fullDescription:
+        "Node.js is a JavaScript runtime built on Chrome's V8 engine that enables server-side JavaScript execution. In DevOps, Node.js powers backend services, API gateways, and real-time monitoring systems. Its non-blocking I/O model makes it excellent for building scalable network applications.",
+      officialLink: "https://nodejs.org",
+      frameworks: ["Express.js", "NestJS", "Fastify", "Koa"],
+    },
+    {
+      name: "Go",
+      icon: "go.png",
+      description: "Microservices",
+      fullDescription:
+        "Go excels at building microservices due to its lightweight nature and excellent concurrency support. At this level, you'll use Go to create scalable, distributed systems with efficient resource utilization and fast response times.",
+      officialLink: "https://go.dev",
+      frameworks: ["Gin", "Echo", "gRPC", "Fiber"],
+    },
+    {
+      name: "Java",
+      icon: "java.png",
+      description: "Enterprise Apps",
+      fullDescription:
+        "Java is a robust, object-oriented programming language widely used in enterprise environments. In DevOps, Java is essential for managing and deploying large-scale enterprise applications. Its platform independence and mature ecosystem make it ideal for building reliable, high-performance systems.",
+      officialLink: "https://www.java.com",
+      frameworks: ["Spring Boot", "Maven", "Gradle", "Jenkins"],
+    },
+  ],
+  advanced: [
+    {
+      name: "Go",
+      icon: "go.png",
+      description: "K8s Operators",
+      fullDescription:
+        "At the advanced level, Go is used to build Kubernetes operators and custom controllers. These extend Kubernetes functionality to automate complex application management tasks. Go's performance and the official Kubernetes client libraries make it the standard for cloud-native infrastructure development.",
+      officialLink: "https://go.dev",
+      frameworks: ["Operator SDK", "Kubebuilder", "client-go", "Helm"],
+    },
+    {
+      name: "Python",
+      icon: "python.png",
+      description: "ML Ops & Automation",
+      fullDescription:
+        "Python dominates the MLOps space, bridging machine learning and DevOps practices. You'll use Python to build ML pipelines, automate model deployment, and create sophisticated monitoring systems for AI applications.",
+      officialLink: "https://www.python.org",
+      frameworks: ["Kubeflow", "MLflow", "Airflow", "TensorFlow"],
+    },
+    {
+      name: "Java",
+      icon: "java.png",
+      description: "Distributed Systems",
+      fullDescription:
+        "Java's maturity and robustness make it ideal for building distributed systems at scale. In advanced DevOps, Java is used for creating resilient microservices architectures, message queuing systems, and high-throughput data processing pipelines.",
+      officialLink: "https://www.java.com",
+      frameworks: ["Spring Cloud", "Apache Kafka", "Apache Camel", "Quarkus"],
+    },
+    {
+      name: "Node.js",
+      icon: "nodejs.png",
+      description: "Real-time Services",
+      fullDescription:
+        "Node.js excels at building real-time services like monitoring dashboards, log streaming, and event-driven architectures. Its event loop and WebSocket support make it perfect for applications requiring instant data updates and high concurrency.",
+      officialLink: "https://nodejs.org",
+      frameworks: ["Socket.io", "NestJS", "Express.js", "PM2"],
+    },
+    {
+      name: "Laravel",
+      icon: "laravel.png",
+      description: "PHP Deployments",
+      fullDescription:
+        "Laravel is a modern PHP framework that simplifies web application development. In DevOps, understanding Laravel is crucial for deploying and managing PHP applications at scale. It includes built-in tools for queue management, caching, and database migrations.",
+      officialLink: "https://laravel.com",
+      frameworks: ["Laravel", "Symfony", "Composer", "PHPUnit"],
+    },
+  ],
+};
 
 const roadmap: RoadmapStage[] = [
   {
@@ -229,26 +350,21 @@ const stageConfig = {
 
 export function MinimalDevopsRoadmap() {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
-  const [expanded, setExpanded] = useState(false);
 
   const nextStage = () => {
     setCurrentStageIndex((prev) => (prev + 1) % roadmap.length);
-    setExpanded(false);
   };
 
   const prevStage = () => {
     setCurrentStageIndex(
       (prev) => (prev - 1 + roadmap.length) % roadmap.length
     );
-    setExpanded(false);
   };
 
   const currentStage = roadmap[currentStageIndex];
   const currentConfig =
     stageConfig[currentStage.key as keyof typeof stageConfig];
-  const visibleItems = expanded
-    ? currentStage.items
-    : currentStage.items.slice(0, 3);
+  const visibleItems = currentStage.items;
 
   const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
@@ -385,7 +501,6 @@ export function MinimalDevopsRoadmap() {
                         key={index}
                         onClick={() => {
                           setCurrentStageIndex(index);
-                          setExpanded(false);
                         }}
                         className="group"
                         aria-label={`Go to stage ${index + 1}`}
@@ -413,6 +528,8 @@ export function MinimalDevopsRoadmap() {
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
+
+                {/* Removed the programming language section as per updates */}
               </div>
             </motion.div>
 
@@ -485,32 +602,6 @@ export function MinimalDevopsRoadmap() {
                         </motion.div>
                       ))}
                     </div>
-                    {/* See All Button */}
-                    {currentStage.items.length > 3 && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="flex justify-center mt-6"
-                      >
-                        <button
-                          onClick={() => setExpanded(!expanded)}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-full text-white ${currentConfig.buttonBg} font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md text-sm`}
-                        >
-                          {expanded ? (
-                            <>
-                              <ChevronUp className="w-4 h-4" />
-                              Show Less
-                            </>
-                          ) : (
-                            <>
-                              <ChevronDown className="w-4 h-4" />
-                              See All {currentStage.items.length} Topics
-                            </>
-                          )}
-                        </button>
-                      </motion.div>
-                    )}
                   </div>
                 </motion.div>
               </AnimatePresence>

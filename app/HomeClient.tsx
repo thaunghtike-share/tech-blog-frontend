@@ -27,6 +27,7 @@ import {
   Code,
 } from "lucide-react";
 import { MinimalDevopsRoadmap } from "@/components/devops-roadmap";
+import { ProgrammingLanguagesRoadmap } from "@/components/programming-languages-roadmap";
 
 export default function HomeClient() {
   const router = useRouter();
@@ -229,7 +230,11 @@ export default function HomeClient() {
             <MinimalDevopsRoadmap />
           </section>
 
-          <section id="youtube" className="">
+          <section id="">
+            <ProgrammingLanguagesRoadmap />
+          </section>
+
+          <section id="youtube" className="-mt-20">
             <YouTubePlaylists />
           </section>
 

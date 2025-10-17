@@ -741,10 +741,7 @@ export function YouTubePlaylists() {
                     <Youtube className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg">My DevOps Channel</h3>
-                    <p className="text-red-100 text-sm">
-                      Learn DevOps Now with Tho
-                    </p>
+                    <h3 className="font-bold text-lg">Learn DevOps Now - Burmese</h3>
                   </div>
                 </div>
 

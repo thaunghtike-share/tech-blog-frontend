@@ -15,7 +15,7 @@ const DevOpsCyclingHero = () => {
       description:
         "DevOps is a set of practices that combines software development (Dev) and IT operations (Ops) to shorten the development lifecycle and provide continuous delivery with high software quality.",
       iconGradient: "from-orange-600 to-yellow-600",
-      tags: ["Culture", "Automation", "Collaboration", "Continuous Delivery"],
+      tags: ["Culture", "Automation", "Collaboration", "Monitoring","Continuous Delivery"],
     },
     {
       id: "linux",
@@ -31,7 +31,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand networking basics - the protocols, architectures, and tools that enable communication between computers, servers, and cloud services in DevOps.",
       iconGradient: "from-sky-600 to-blue-600",
-      tags: ["TCP/IP", "DNS", "HTTP/HTTPS", "Load Balancing"],
+      tags: ["TCP/IP", "DNS", "Subnet", "Routing", "Switching"],
     },
     {
       id: "cloud",
@@ -39,7 +39,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Dive into cloud computing - learn how to leverage scalable, on-demand resources like servers, storage, and applications without managing physical infrastructure.",
       iconGradient: "from-sky-600 to-blue-600",
-      tags: ["AWS", "Azure", "GCP", "Scalability"],
+      tags: ["AWS", "Azure", "GCP"],
     },
     {
       id: "git",
@@ -55,7 +55,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand containerization - how to package applications and dependencies into lightweight, portable containers that run consistently across different environments.",
       iconGradient: "from-pink-600 to-purple-600",
-      tags: ["Docker", "Images", "Containers", "Portability"],
+      tags: ["Docker", "Images", "Containers", "Podman"],
     },
     {
       id: "cicd",
@@ -63,7 +63,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Explore Continuous Integration and Continuous Deployment - the practices that enable teams to deliver code changes more frequently and reliably through automated pipelines.",
       iconGradient: "from-orange-600 to-yellow-600",
-      tags: ["Jenkins", "GitLab CI", "Automation", "Testing"],
+      tags: ["Jenkins", "GitLab CI", "Github Actions", "CircleCI"],
     },
     {
       id: "kubernetes",
@@ -71,7 +71,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Learn container orchestration with Kubernetes - the industry standard for automating deployment, scaling, and management of containerized applications.",
       iconGradient: "from-blue-600 to-cyan-600",
-      tags: ["Pods", "Services", "Deployments", "Helm"],
+      tags: ["Pods", "Rancher", "Microk8s", "Helm", "Kubeadm"],
     },
     {
       id: "monitoring",
@@ -79,7 +79,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Understand the importance of monitoring and logging in DevOps - how to track application performance, detect issues, and gain insights through tools like Prometheus, Grafana, and ELK Stack.",
       iconGradient: "from-pink-600 to-purple-600",
-      tags: ["Metrics", "Logs", "Alerts", "Grafana"],
+      tags: ["Prometheus","Loki", "Kibana", "Logs", "Alerts", "Grafana"],
     },
     {
       id: "iac",
@@ -87,7 +87,7 @@ const DevOpsCyclingHero = () => {
       description:
         "Master Infrastructure as Code (IaC) - learn to manage and provision computing infrastructure through code for version control and automated deployment.",
       iconGradient: "from-sky-600 to-purple-600",
-      tags: ["Terraform", "CloudFormation", "Automation", "Versioning"],
+      tags: ["Terraform", "CloudFormation", "Pulumi", "Boto3", "Packer"],
     },
   ];
 

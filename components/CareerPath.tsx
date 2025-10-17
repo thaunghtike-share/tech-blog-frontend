@@ -139,7 +139,7 @@ export function CareerPath() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gray-600 text-lg leading-relaxed max-w-2xl lg:ml-auto"
+            className="text-black-500 text-lg leading-relaxed max-w-2xl lg:ml-auto"
           >
             Discover the key differences between DevOps roles and find your
             perfect career specialization path
@@ -238,7 +238,7 @@ export function CareerPath() {
                             {/* Content */}
                             <div className="p-6 pt-0 flex-grow flex flex-col space-y-6">
                               {/* Description */}
-                              <p className="text-gray-700 text-sm leading-relaxed">
+                              <p className="text-black text-sm leading-relaxed">
                                 {role.description}
                               </p>
 
@@ -278,7 +278,7 @@ export function CareerPath() {
                                       <div
                                         className={`w-1.5 h-1.5 rounded-full mt-1.5 bg-gradient-to-r ${role.color} flex-shrink-0`}
                                       />
-                                      <span className="text-gray-700 text-sm leading-relaxed">
+                                      <span className="text-black text-sm leading-relaxed">
                                         {resp}
                                       </span>
                                     </div>
