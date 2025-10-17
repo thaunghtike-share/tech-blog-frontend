@@ -488,7 +488,7 @@ const youtubePlaylists = [
 const difficultyConfig = {
   Beginner: {
     gradient: "from-emerald-500 to-teal-600",
-    bgColor: "bg-gradient-to-r from-emerald-500 to-teal-600",
+    bgColor: "bg-gradient-to-r from-sky-500 to-blue-600",
     lightBg: "bg-emerald-50",
     textColor: "text-emerald-700",
     borderColor: "border-emerald-200",
@@ -497,7 +497,7 @@ const difficultyConfig = {
   },
   Intermediate: {
     gradient: "from-sky-500 to-blue-600",
-    bgColor: "bg-gradient-to-r from-sky-500 to-blue-600",
+    bgColor: "bg-gradient-to-r from-blue-500 to-purple-600",
     lightBg: "bg-sky-50",
     textColor: "text-sky-700",
     borderColor: "border-sky-200",
@@ -505,7 +505,7 @@ const difficultyConfig = {
     position: "right",
   },
   Advanced: {
-    gradient: "from-indigo-500 to-purple-600",
+    gradient: "from-pink-500 to-purple-600",
     bgColor: "bg-gradient-to-r from-indigo-500 to-purple-600",
     lightBg: "bg-indigo-50",
     textColor: "text-indigo-700",

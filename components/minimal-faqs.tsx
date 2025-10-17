@@ -12,19 +12,9 @@ type FAQ = {
 
 const rawFaqs = [
   {
-    question: "Do you offer professional DevOps services?",
-    answer:
-      "Yes! We offer a range of professional DevOps services designed to help teams accelerate development, improve deployment reliability, and optimize infrastructure. Our services include Cloud Migration (to AWS, Azure, or GCP), Infrastructure Automation using tools like Terraform and Ansible, CI/CD pipeline setup with GitHub Actions or Jenkins, Kubernetes cluster configuration and management, containerization with Docker, and Cloud-native Application Deployment. Whether you're just starting your cloud journey or looking to scale and automate your operations, we can help you build a robust, secure, and cost-effective DevOps environment tailored to your business goals. Visit our Services page to explore each offering in detail or get in touch for a consultation.",
-  },
-  {
-    question: "How can I request a consultation?",
-    answer:
-      "You can request a consultation through several channels. Click the Messenger button on the bottom-right corner of the site to chat with us directly. You can also visit our Contact Page to fill out a quick form, reach out via LinkedIn for professional inquiries, or send us an email with your requirements and preferred time slots. We're happy to discuss your DevOps needs and find the best solution for your business.",
-  },
-  {
     question: "What skills are required to become a DevOps Engineer?",
     answer:
-      "To become a DevOps Engineer, you need to have a combination of technical and soft skills. Technical skills include knowledge of programming languages, automation tools, containerization, cloud platforms, CI/CD pipelines, configuration management tools, and monitoring and logging tools.",
+      "To become a DevOps Engineer, you need to have a combination of technical and soft skills. Technical skills include knowledge of programming languages, automation tools, containerization, cloud platforms, CI/CD pipelines, Infrastructure As Code, configuration management tools, and monitoring and logging tools.",
   },
   {
     question: "Does a DevOps Engineer know how to code?",
@@ -40,6 +30,16 @@ const rawFaqs = [
     question: "What is the difference between SRE and DevOps?",
     answer:
       "The difference between DevOps vs SRE lies in focus: DevOps Engineers improve software delivery and infrastructure automation, bridging development and operations, while Site Reliability Engineers (SREs) ensure system reliability and performance, applying software engineering to operations.",
+  },
+  {
+    question: "Do you offer professional DevOps services?",
+    answer:
+      "Yes! We offer a range of professional DevOps services designed to help teams accelerate development, improve deployment reliability, and optimize infrastructure. Our services include Cloud Migration (to AWS, Azure, or GCP), Infrastructure Automation using tools like Terraform and Ansible, CI/CD pipeline setup with GitHub Actions or Jenkins, Kubernetes cluster configuration and management, containerization with Docker, and Cloud-native Application Deployment. Whether you're just starting your cloud journey or looking to scale and automate your operations, we can help you build a robust, secure, and cost-effective DevOps environment tailored to your business goals. Visit our Services page to explore each offering in detail or get in touch for a consultation.",
+  },
+  {
+    question: "How can I request a consultation?",
+    answer:
+      "You can request a consultation through several channels. Click the Messenger button on the bottom-right corner of the site to chat with us directly. You can also visit our Contact Page to fill out a quick form, reach out via LinkedIn for professional inquiries, or send us an email with your requirements and preferred time slots. We're happy to discuss your DevOps needs and find the best solution for your business.",
   },
 ];
 

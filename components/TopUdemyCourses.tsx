@@ -35,7 +35,7 @@ interface UdemyCourse {
 const fallbackCourses: UdemyCourse[] = [
   {
     id: 1,
-    title: "Git, GitHub, and GitHub Action",
+    title: "1. Git, GitHub, and GitHub Action",
     description: "Learn Git, GitHub & GitHub Actions basics.",
     url: "https://www.udemy.com/course/git-github-and-github-actions-an-introduction/",
     author: "Emil Terhoven",
@@ -49,7 +49,7 @@ const fallbackCourses: UdemyCourse[] = [
   },
   {
     id: 2,
-    title: "Intro to Linux Shell Scripting",
+    title: "2. Intro to Linux Shell Scripting",
     description: "Shell scripting essentials for Linux administrators.",
     url: "https://www.udemy.com/course/linux-shell-scripting-free/",
     author: "Jason Cannon",
@@ -63,7 +63,7 @@ const fallbackCourses: UdemyCourse[] = [
   },
   {
     id: 3,
-    title: "Ansible Basics",
+    title: "3. Ansible Basics",
     description: "Learn the basics of Ansible automation by Red Hat.",
     url: "https://www.udemy.com/course/ansible-basics-an-automation-technical-overview/",
     author: "Red Hat, Inc.",
@@ -76,7 +76,7 @@ const fallbackCourses: UdemyCourse[] = [
   },
   {
     id: 4,
-    title: "Docker Essentials",
+    title: "4. Docker Essentials",
     description: "Learn Docker and Docker Compose efficiently.",
     url: "https://www.udemy.com/course/docker-essentials",
     author: "Cerulean Canvas",
@@ -90,7 +90,7 @@ const fallbackCourses: UdemyCourse[] = [
   },
   {
     id: 5,
-    title: "Introduction to DevOps",
+    title: "5. Introduction to DevOps",
     description: "Introduction to DevOps concepts and tools.",
     url: "https://www.udemy.com/course/introduction-to-devops-f",
     author: "Dicecamp Academy",
@@ -101,7 +101,7 @@ const fallbackCourses: UdemyCourse[] = [
   },
   {
     id: 6,
-    title: "AWS From Scratch",
+    title: "6. AWS From Scratch",
     description: "Get started with AWS and DevOps cloud basics.",
     url: "https://www.udemy.com/course/aws-from-scratch",
     author: "Sundus Hussain",
@@ -116,6 +116,12 @@ const fallbackCourses: UdemyCourse[] = [
 ];
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+// Function to extract number from title for sorting
+const extractNumberFromTitle = (title: string): number => {
+  const match = title.match(/^(\d+)\./);
+  return match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER;
+};
 
 export function TopUdemyCourses() {
   const [courses, setCourses] = useState<UdemyCourse[]>([]);
@@ -189,11 +195,24 @@ export function TopUdemyCourses() {
           })
         );
 
-        setCourses(mapped.length > 0 ? mapped : fallbackCourses);
+        // Sort courses by number in title
+        const sortedCourses = mapped.sort((a, b) => {
+          const numA = extractNumberFromTitle(a.title);
+          const numB = extractNumberFromTitle(b.title);
+          return numA - numB;
+        });
+
+        setCourses(sortedCourses.length > 0 ? sortedCourses : fallbackCourses);
       } catch (err) {
         console.error("Fetch error:", err);
         setUsingFallback(true);
-        setCourses(fallbackCourses);
+        // Also sort fallback courses
+        const sortedFallback = fallbackCourses.sort((a, b) => {
+          const numA = extractNumberFromTitle(a.title);
+          const numB = extractNumberFromTitle(b.title);
+          return numA - numB;
+        });
+        setCourses(sortedFallback);
         setError(err instanceof Error ? err.message : "Failed to load courses");
       } finally {
         setLoading(false);
@@ -232,12 +251,19 @@ export function TopUdemyCourses() {
     setError(null);
     setLoading(true);
     setTimeout(() => {
-      setCourses(fallbackCourses);
+      // Sort fallback courses when retrying
+      const sortedFallback = fallbackCourses.sort((a, b) => {
+        const numA = extractNumberFromTitle(a.title);
+        const numB = extractNumberFromTitle(b.title);
+        return numA - numB;
+      });
+      setCourses(sortedFallback);
       setLoading(false);
       setUsingFallback(true);
     }, 500);
   };
 
+  // Rest of the component remains the same...
   if (loading) {
     return (
       <section ref={sectionRef} className="w-full bg-white/95 py-20">
@@ -442,7 +468,7 @@ export function TopUdemyCourses() {
                         rel="noopener noreferrer"
                       >
                         <h3 className="font-bold text-gray-900 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
-                          {index + 1}. {course.title}
+                          {course.title}
                         </h3>
                       </a>
 
