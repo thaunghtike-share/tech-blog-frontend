@@ -333,7 +333,7 @@ export function MinimalHeader() {
             </Link>
 
             <Link
-              href="/devops-playground"
+              href="/learn-devops-on-youtube"
               className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
                 pathname.includes("/learn-devops-on-youtube")
                   ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"

@@ -15,7 +15,7 @@ const DevOpsCyclingHero = () => {
       description:
         "DevOps is a set of practices that combines software development (Dev) and IT operations (Ops) to shorten the development lifecycle and provide continuous delivery with high software quality.",
       iconGradient: "from-orange-600 to-yellow-600",
-      tags: ["Culture", "Automation", "Collaboration", "Monitoring","Continuous Delivery"],
+      tags: ["Automation", "Collaboration", "Monitoring","Continuous Delivery"],
     },
     {
       id: "linux",
@@ -119,7 +119,7 @@ const DevOpsCyclingHero = () => {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between py-8 gap-8">
+        <div className="flex flex-col lg:flex-row items-center justify-between py-13 gap-8">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -229,7 +229,7 @@ const DevOpsCyclingHero = () => {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 + index * 0.05 }}
-                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 text-gray-700 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 text-orange-500 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
                       >
                         {tag}
                       </motion.span>

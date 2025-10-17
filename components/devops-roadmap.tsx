@@ -582,7 +582,7 @@ export function MinimalDevopsRoadmap() {
                                 {item.title}
                               </h3>
 
-                              <p className="text-sm text-gray-700 leading-relaxed mb-3">
+                              <p className="text-sm text-black-700 leading-relaxed mb-3">
                                 {item.description}
                               </p>
 
@@ -591,7 +591,7 @@ export function MinimalDevopsRoadmap() {
                                 {item.tags.map((tag, tagIndex) => (
                                   <span
                                     key={tagIndex}
-                                    className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${currentConfig.tagBg} border ${currentConfig.tagBorder} ${currentConfig.tagText} transition-all duration-200 hover:scale-105 ${currentConfig.tagHover}`}
+                                    className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${currentConfig.tagBg} border ${currentConfig.tagBorder} text-orange-600 transition-all duration-200 hover:scale-105 ${currentConfig.tagHover}`}
                                   >
                                     {tag}
                                   </span>

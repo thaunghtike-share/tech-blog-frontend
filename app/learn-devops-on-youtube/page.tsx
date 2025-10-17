@@ -696,7 +696,7 @@ export default function LearnDevOpsOnUtube() {
       </div>
 
       <main className="relative z-10 pt-12">
-        <section className="relative py-12">
+        <section className="relative py-5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row items-start gap-8">
               <motion.div
