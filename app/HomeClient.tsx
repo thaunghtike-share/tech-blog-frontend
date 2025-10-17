@@ -253,7 +253,7 @@ export default function HomeClient() {
             <SuccessStoriesSection />
           </div>
 
-          <div className="-mt-32">
+          <div className="">
             <MinimalFAQs />
           </div>
         </main>

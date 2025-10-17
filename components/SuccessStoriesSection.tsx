@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { Star, Quote, ChevronRight } from "lucide-react";
+import { Star, Quote, ChevronRight, ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 type Testimonial = {
@@ -34,7 +34,16 @@ export function SuccessStoriesSection() {
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: 300,
+        left: 320,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -320,
         behavior: "smooth",
       });
     }
@@ -52,32 +61,69 @@ export function SuccessStoriesSection() {
     }
   }, [showAll]);
 
-  const displayed =
-    typeof window !== "undefined" && window.innerWidth < 640
-      ? feedbacks
-      : showAll
-      ? feedbacks.slice(0, 12)
-      : feedbacks.slice(0, 6);
+  const displayed = showAll ? feedbacks.slice(0, 12) : feedbacks.slice(0, 6);
+
+  const mockTestimonials: Testimonial[] = [
+    {
+      name: "Aung Ko",
+      role: "Junior DevOps Engineer",
+      feedback:
+        "The mentorship program completely transformed my career path. From zero knowledge to landing my first DevOps role in just 6 months!",
+      rating: 5,
+    },
+    {
+      name: "Hla Hla",
+      role: "Cloud Engineer",
+      feedback:
+        "The hands-on projects and real-world scenarios prepared me for actual workplace challenges. Highly recommended!",
+      rating: 5,
+    },
+    {
+      name: "Min Thu",
+      role: "Site Reliability Engineer",
+      feedback:
+        "The community support and detailed curriculum helped me transition from network engineering to SRE successfully.",
+      rating: 5,
+    },
+    {
+      name: "Su Su",
+      role: "DevOps Specialist",
+      feedback:
+        "Learning modern tools like Kubernetes and Terraform through practical projects made all the difference in my job interviews.",
+      rating: 4,
+    },
+    {
+      name: "Kyaw Zin",
+      role: "Infrastructure Engineer",
+      feedback:
+        "The career guidance and interview preparation sessions were invaluable. Got 3 job offers within 2 months of completing the program.",
+      rating: 5,
+    },
+    {
+      name: "Nilar",
+      role: "Platform Engineer",
+      feedback:
+        "As someone with non-CS background, the structured learning path and mentor support made complex concepts easy to understand.",
+      rating: 5,
+    },
+  ];
+
+  const testimonials = feedbacks.length > 0 ? feedbacks : mockTestimonials;
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen bg-white/95 overflow-hidden"
-    >
-      {/* Subtle background pattern */}
-
-      <div className="relative mt-3 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-open-sans">
-          {/* Left Aligned Header */}
+    <section ref={sectionRef} className="relative bg-white overflow-hidden">
+      <div className="relative w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 font-open-sans">
+          {/* Header */}
           <motion.div
-            className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
+            className="flex flex-col lg:flex-row items-start justify-between gap-12 mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <div className="flex-1">
               <motion.div
-                className="h-1 w-32 mb-4 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
+                className="h-1 w-32 mb-6 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: 128 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -85,10 +131,10 @@ export function SuccessStoriesSection() {
               <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
               >
                 Real Stories from
-                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mt-2">
                   Our Community
                 </span>
               </motion.h2>
@@ -97,7 +143,7 @@ export function SuccessStoriesSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-black mt-4 text-lg max-w-2xl"
+                className="text-gray-600 text-lg max-w-2xl"
               >
                 See how students and junior engineers from Myanmar are growing
                 their careers and mastering DevOps skills
@@ -105,79 +151,92 @@ export function SuccessStoriesSection() {
             </div>
           </motion.div>
 
-          {/* Testimonials Container - Mobile scroll with indicator */}
+          {/* Testimonials Container */}
           <div className="relative">
-            {/* Right-side scroll indicator (mobile only) */}
-            <div className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 pr-2">
+            {/* Navigation Arrows */}
+            <div className="hidden sm:flex absolute -top-20 right-0 gap-3">
+              <motion.button
+                onClick={scrollLeft}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 bg-white rounded-full border border-gray-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+              >
+                <ChevronLeft className="w-5 h-5 text-sky-600" />
+              </motion.button>
               <motion.button
                 onClick={scrollRight}
-                className="flex items-center justify-center w-10 h-10 bg-white text-blue-500 rounded-full border border-gray-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 bg-white rounded-full border border-gray-300 flex items-center justify-center transition-all duration-200 shadow-sm"
               >
-                <div className="relative">
-                  <ChevronRight className="w-5 h-5" />
-                  <motion.div
-                    animate={{
-                      x: [0, 4, 0],
-                      opacity: [0.6, 1, 0.6],
-                    }}
-                    transition={{
-                      repeat: Number.POSITIVE_INFINITY,
-                      duration: 1.5,
-                    }}
-                    className="absolute -right-1 -top-1 w-2 h-2 bg-blue-500 rounded-full"
-                  />
-                </div>
+                <ChevronRight className="w-5 h-5 text-sky-600" />
               </motion.button>
             </div>
 
-            {/* Testimonials - Horizontal scroll on mobile, grid on desktop */}
+            {/* Mobile Navigation */}
+            <div className="sm:hidden flex justify-between items-center absolute top-1/2 -translate-y-1/2 w-full z-10 px-2">
+              <motion.button
+                onClick={scrollLeft}
+                className="w-10 h-10 bg-white rounded-full border border-gray-300 flex items-center justify-center shadow-sm"
+              >
+                <ChevronLeft className="w-4 h-4 text-gray-600" />
+              </motion.button>
+              <motion.button
+                onClick={scrollRight}
+                className="w-10 h-10 bg-white rounded-full border border-gray-300 flex items-center justify-center shadow-sm"
+              >
+                <ChevronRight className="w-4 h-4 text-gray-600" />
+              </motion.button>
+            </div>
+
+            {/* Testimonials Grid/Scroll */}
             <div
               ref={scrollContainerRef}
-              className="flex overflow-x-auto hide-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-4"
+              className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-4"
             >
-              {displayed.map((t, i) => (
+              {displayed.map((testimonial, index) => (
                 <motion.div
-                  key={i}
+                  key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="min-w-[23.5rem] sm:min-w-0"
+                  transition={{ delay: index * 0.1 }}
+                  className="min-w-[320px] sm:min-w-0 snap-start flex-shrink-0"
                 >
-                  {/* Card */}
-                  <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-300 p-6 text-center flex flex-col justify-between h-full hover:shadow-lg transition-all duration-300">
-                    {/* Quote Icon */}
-                    <div className="flex justify-center mb-4">
-                      <div className="p-3 bg-gradient-to-r from-sky-500/20 to-blue-600/20 rounded-2xl border border-sky-500/30">
-                        <Quote className="w-6 h-6 text-sky-600" />
+                  {/* Enhanced Card Design */}
+                  <div className="bg-white/50 rounded-2xl p-6 h-full flex flex-col border border-gray-300 hover:border-gray-300 transition-colors duration-200">
+                    {/* Top Section with Quote and Rating */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="p-2 bg-white rounded-lg border border-sky-300">
+                        <Quote className="w-4 h-4 text-sky-600" />
                       </div>
-                    </div>
-
-                    {/* Feedback Text */}
-                    <p className="text-base sm:text-base text-black mb-4 leading-relaxed line-clamp-5 flex-grow">
-                      "{t.feedback}"
-                    </p>
-
-                    {/* User Info */}
-                    <div className="mt-auto">
-                      <div className="text-sm sm:text-base text-black font-semibold">
-                        {t.name}
-                      </div>
-                      <div className="text-sm sm:text-sm text-black">
-                        {t.role}
-                      </div>
-
-                      {/* Rating */}
-                      <div className="flex justify-center mt-3">
-                        {[...Array(5)].map((_, j) => (
+                      <div className="flex gap-1">
+                        {[...Array(5)].map((_, i) => (
                           <Star
-                            key={j}
+                            key={i}
                             className={`w-4 h-4 ${
-                              j < t.rating
+                              i < testimonial.rating
                                 ? "text-yellow-500 fill-yellow-500"
                                 : "text-gray-300"
                             }`}
                           />
                         ))}
+                      </div>
+                    </div>
+
+                    {/* Feedback Text - Full Height */}
+                    <div className="flex-grow mb-6">
+                      <p className="text-gray-700 text-base leading-relaxed">
+                        "{testimonial.feedback}"
+                      </p>
+                    </div>
+
+                    {/* User Info */}
+                    <div className="border-t border-gray-200 pt-4">
+                      <div className="text-sm font-semibold text-gray-900">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-xs text-sky-600 mt-1">
+                        {testimonial.role}
                       </div>
                     </div>
                   </div>
@@ -186,12 +245,17 @@ export function SuccessStoriesSection() {
             </div>
           </div>
 
-          {/* See More / See Less Button - Desktop only */}
-          {feedbacks.length > 6 && (
-            <div className="mt-12 text-center hidden sm:block">
-              <motion.button
+          {/* See More Button */}
+          {testimonials.length > 6 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-12 text-center"
+            >
+              <button
                 onClick={() => setShowAll(!showAll)}
-                className="px-8 py-3 rounded-xl text-sm font-medium bg-white/95 backdrop-blur-sm text-blue-600 border border-blue-500/30 flex items-center gap-2 mx-auto hover:shadow-md transition-all duration-300"
+                className="px-8 py-3 rounded-lg text-sm font-medium bg-sky-800 text-white border border-sky-800 flex items-center gap-2 mx-auto transition-colors duration-200 hover:bg-gray-700"
               >
                 {showAll ? (
                   <>
@@ -208,11 +272,11 @@ export function SuccessStoriesSection() {
                     >
                       <path d="M18 15l-6-6-6 6" />
                     </svg>
-                    Show Less
+                    Show Less Stories
                   </>
                 ) : (
                   <>
-                    Show More
+                    Show More Stories
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -228,8 +292,8 @@ export function SuccessStoriesSection() {
                     </svg>
                   </>
                 )}
-              </motion.button>
-            </div>
+              </button>
+            </motion.div>
           )}
         </div>
       </div>

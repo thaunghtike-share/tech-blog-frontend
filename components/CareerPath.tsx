@@ -35,8 +35,8 @@ const roles = [
       "Docker",
       "Kubernetes",
     ],
-    color: "from-sky-600 to-blue-600",
-    iconBg: "bg-gradient-to-r from-sky-500 to-blue-600",
+    color: "from-sky-500 to-blue-500",
+    iconBg: "bg-gradient-to-r from-sky-500 to-blue-500",
   },
   {
     title: "Site Reliability Engineer",
@@ -59,8 +59,8 @@ const roles = [
       "SLO/SLI",
       "Chaos Engineering",
     ],
-    color: "from-blue-600 to-purple-600",
-    iconBg: "bg-gradient-to-r from-blue-500 to-purple-600",
+    color: "from-blue-500 to-purple-500",
+    iconBg: "bg-gradient-to-r from-blue-500 to-purple-500",
   },
   {
     title: "Cloud Engineer",
@@ -84,8 +84,8 @@ const roles = [
       "VPC",
       "Cloud Security",
     ],
-    color: "from-green-600 to-emerald-600",
-    iconBg: "bg-gradient-to-r from-green-500 to-emerald-600",
+    color: "from-emerald-500 to-teal-500",
+    iconBg: "bg-gradient-to-r from-emerald-500 to-teal-500",
   },
 ];
 
@@ -107,32 +107,30 @@ export function CareerPath() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
-      {/* Right Aligned Header */}
+    <section className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+      {/* Header */}
       <motion.div
-        className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12"
+        className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Empty space on left */}
         <div className="hidden lg:block lg:w-1/2"></div>
 
-        {/* Title on right */}
         <div className="w-full lg:w-1/2 lg:text-right">
           <motion.div
-            className="h-1 w-32 mb-4 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full ml-auto"
+            className="h-1 w-24 mb-6 bg-gradient-to-r from-sky-500 to-blue-500 rounded-full ml-auto"
             initial={{ width: 0 }}
-            animate={{ width: 128 }}
+            animate={{ width: 96 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           />
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
           >
             Explore Your Future in
-            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mt-2">
               DevOps Careers
             </span>
           </motion.h2>
@@ -141,7 +139,7 @@ export function CareerPath() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-black mt-4 text-lg max-w-2xl lg:ml-auto"
+            className="text-gray-600 text-lg leading-relaxed max-w-2xl lg:ml-auto"
           >
             Discover the key differences between DevOps roles and find your
             perfect career specialization path
@@ -154,16 +152,15 @@ export function CareerPath() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-center py-8 md:py-12"
+          className="text-center py-16"
         >
-          <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mb-3 md:mb-4 backdrop-blur-sm border border-gray-400">
-            <Users className="w-6 h-6 md:w-8 md:h-8 text-black" />
+          <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+            <Users className="w-10 h-10 text-gray-400" />
           </div>
-          <h4 className="text-black font-medium text-base md:text-lg mb-2">
+          <h4 className="text-gray-900 font-semibold text-lg mb-3">
             No roles available
           </h4>
-          {/* Changed text-gray-600 to text-black for better visibility */}
-          <p className="text-black text-sm md:text-base">
+          <p className="text-gray-600">
             Please check back later for new career opportunities.
           </p>
         </motion.div>
@@ -172,22 +169,18 @@ export function CareerPath() {
           {/* Navigation Arrows */}
           {totalSlides > 1 && (
             <>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-300 flex items-center justify-center hover:shadow-xl hover:border-blue-400 transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-gray-200 flex items-center justify-center hover:shadow-lg transition-all duration-300 -ml-6"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-700" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                <ChevronLeft className="w-5 h-5 text-gray-600" />
+              </button>
+              <button
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-300 flex items-center justify-center hover:shadow-xl hover:border-blue-400 transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-gray-200 flex items-center justify-center hover:shadow-lg transition-all duration-300 -mr-6"
               >
-                <ChevronRight className="w-5 h-5 text-gray-700" />
-              </motion.button>
+                <ChevronRight className="w-5 h-5 text-gray-600" />
+              </button>
             </>
           )}
 
@@ -212,71 +205,80 @@ export function CareerPath() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.1 * idx }}
-                          whileHover={{ y: -4 }}
                           className="group"
                         >
-                          {/* Modern Card Design */}
-                          <div className="relative bg-white/80 backdrop-blur-sm border border-gray-300 rounded-2xl hover:border-blue-300 transition-all duration-300 overflow-hidden h-full flex flex-col">
-                            {/* Header with Gradient Accent */}
+                          {/* Card Design */}
+                          <div className="relative bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 overflow-hidden h-full flex flex-col">
+                            {/* Top Accent Bar */}
                             <div
-                              className={`bg-gradient-to-r ${role.color} p-6 pb-4`}
-                            >
-                              <div className="flex items-center gap-4 mb-3">
-                                <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                              className={`h-2 bg-gradient-to-r ${role.color}`}
+                            />
+
+                            {/* Header */}
+                            <div className="p-6 pb-4">
+                              <div className="flex items-center gap-4 mb-4">
+                                <div
+                                  className={`p-3 rounded-xl ${role.iconBg} shadow-sm`}
+                                >
                                   <role.icon className="w-6 h-6 text-white" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white">
-                                  {role.title}
-                                </h3>
-                              </div>
-                              <div className="bg-white/20 rounded-lg px-3 py-2 backdrop-blur-sm">
-                                <span className="text-white/90 text-sm font-medium">
-                                  {role.focus}
-                                </span>
+                                <div>
+                                  <h3 className="text-xl font-bold text-gray-900">
+                                    {role.title}
+                                  </h3>
+                                  <p
+                                    className={`text-sm font-medium bg-gradient-to-r ${role.color} bg-clip-text text-transparent mt-1`}
+                                  >
+                                    {role.focus}
+                                  </p>
+                                </div>
                               </div>
                             </div>
 
-                            {/* Content Area */}
-                            <div className="p-6 flex-grow flex flex-col">
+                            {/* Content */}
+                            <div className="p-6 pt-0 flex-grow flex flex-col space-y-6">
                               {/* Description */}
-                              <p className="text-black text-sm leading-relaxed mb-4">
+                              <p className="text-gray-700 text-sm leading-relaxed">
                                 {role.description}
                               </p>
 
-                              {/* Key Difference - Fixed height container */}
-                              <div className="mb-4 p-3 bg-gray-100 rounded-lg border border-gray-200 flex-grow-0 min-h-[80px] flex flex-col">
-                                <p className="text-xs font-semibold mb-2 flex items-center gap-1">
-                                  <span
-                                    className={`bg-gradient-to-r ${role.color} bg-clip-text text-transparent`}
-                                  >
-                                    KEY DIFFERENCE
+                              {/* Key Difference */}
+                              <div className="bg-gray-50 rounded-lg p-4">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <div
+                                    className={`w-2 h-2 rounded-full bg-gradient-to-r ${role.color}`}
+                                  />
+                                  <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                    Key Difference
                                   </span>
-                                </p>
-                                <p className="text-black text-sm flex-grow">
+                                </div>
+                                <p className="text-gray-900 text-sm">
                                   {role.keyDifference}
                                 </p>
                               </div>
 
-                              {/* Core Responsibilities - Fixed height container */}
-                              <div className="mb-4 flex-grow">
-                                <h4 className="text-black text-sm font-semibold mb-3 flex items-center gap-2">
+                              {/* Core Responsibilities */}
+                              <div>
+                                <div className="flex items-center gap-3 mb-4">
                                   <div
-                                    className={`p-1 rounded bg-gradient-to-r ${role.color}`}
+                                    className={`p-2 rounded-lg bg-gradient-to-r ${role.color}`}
                                   >
-                                    <Zap className="w-3 h-3 text-white" />
+                                    <Zap className="w-4 h-4 text-white" />
                                   </div>
-                                  Core Responsibilities
-                                </h4>
-                                <div className="space-y-2">
+                                  <h4 className="text-gray-900 font-semibold text-sm">
+                                    Core Responsibilities
+                                  </h4>
+                                </div>
+                                <div className="space-y-3">
                                   {role.coreResponsibilities.map((resp, i) => (
                                     <div
                                       key={i}
-                                      className="flex items-start gap-2"
+                                      className="flex items-start gap-3"
                                     >
                                       <div
-                                        className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${role.color}`}
+                                        className={`w-1.5 h-1.5 rounded-full mt-1.5 bg-gradient-to-r ${role.color} flex-shrink-0`}
                                       />
-                                      <span className="text-black text-sm">
+                                      <span className="text-gray-700 text-sm leading-relaxed">
                                         {resp}
                                       </span>
                                     </div>
@@ -295,17 +297,15 @@ export function CareerPath() {
 
           {/* Slide Indicators */}
           {totalSlides > 1 && (
-            <div className="flex justify-center mt-8 gap-2">
+            <div className="flex justify-center mt-12 gap-2">
               {Array.from({ length: totalSlides }).map((_, index) => (
-                <motion.button
+                <button
                   key={index}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
                   onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? "bg-gradient-to-r from-sky-500 to-blue-500 shadow-lg shadow-blue-400/50"
-                      : "bg-gray-400 hover:bg-gray-500"
+                      ? "bg-gradient-to-r from-sky-500 to-blue-500"
+                      : "bg-gray-300 hover:bg-gray-400"
                   }`}
                 />
               ))}

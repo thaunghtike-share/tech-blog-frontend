@@ -69,7 +69,7 @@ export function MinimalFAQs() {
   return (
     <section
       ref={sectionRef}
-      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-open-sans"
+      className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-open-sans"
     >
       {/* Centered Header */}
       <motion.div
@@ -145,7 +145,7 @@ export function MinimalFAQs() {
             >
               {/* Question Icon */}
               <div className="flex justify-center mb-6">
-                <div className="p-4 bg-gradient-to-r from-sky-500/20 to-blue-600/20 rounded-2xl border border-sky-500/30">
+                <div className="p-4 bg-white/95 rounded-2xl border border-sky-500/30">
                   <MessageCircleQuestion className="w-8 h-8 text-sky-600" />
                 </div>
               </div>
