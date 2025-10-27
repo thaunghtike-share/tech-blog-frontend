@@ -13,7 +13,7 @@ export function MinimalFooter() {
                 <img
                   src="/logo.png"
                   alt="Logo"
-                  className="h-32 w-32 transition-all duration-300 group-hover:scale-105"
+                  className="h-35 w-34 transition-all duration-300 group-hover:scale-105"
                 />
               </div>
             </Link>

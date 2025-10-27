@@ -6,7 +6,6 @@ import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
 import CountUp from "react-countup";
 import { GiscusComments } from "@/components/GiscusComments";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
 import { ShareButtons } from "@/components/share-buttons";
 import {
   ArrowLeft,
@@ -623,7 +622,6 @@ export function ArticleContent({
       </article>
       {/* Sidebar */}
       <aside className="hidden lg:block lg:col-span-1 space-y-8">
-        <MinimalSidebar />
         {/* Table of Contents */}
         <div className="bg-white/90 border border-white/70 shadow rounded-lg p-4 sticky top-4">
           <h3 className="text-base md:text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
