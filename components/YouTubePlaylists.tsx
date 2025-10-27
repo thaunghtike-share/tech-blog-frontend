@@ -1118,7 +1118,7 @@ function PlaylistCard({
           </h3>
         </a>
 
-        <div className="flex items-center justify-between">
+        <div className="flex mt-3 items-center justify-between">
           <div className="flex items-center gap-2 text-gray-600">
             <Users className="w-4 h-4 text-gray-400" />
             <span className="text-sm font-medium">{playlist.channel}</span>

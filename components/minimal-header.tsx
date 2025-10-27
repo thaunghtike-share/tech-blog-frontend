@@ -17,19 +17,19 @@ export function MinimalHeader() {
 
   // Dropdown states
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isLearningOpen, setIsLearningOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Timeout refs for delayed closing
   const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
-  const learningTimeout = useRef<NodeJS.Timeout | null>(null);
+  const resourcesTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
   useEffect(() => {
     return () => {
       if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
-      if (learningTimeout.current) clearTimeout(learningTimeout.current);
+      if (resourcesTimeout.current) clearTimeout(resourcesTimeout.current);
     };
   }, []);
 
@@ -70,7 +70,7 @@ export function MinimalHeader() {
   };
 
   const navLinkStyle = (href: string) =>
-    `block font-bold text-black px-3 py-2 rounded-md ${
+    `block text-black px-3 py-2 rounded-md font-medium ${
       pathname === href
         ? "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 shadow-inner"
         : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:shadow-inner"
@@ -124,7 +124,7 @@ export function MinimalHeader() {
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-full text-sm pl-10 pr-8 bg-white border-gray-200 text-black placeholder-gray-500 font-bold"
+                className="w-full rounded-full text-sm pl-10 pr-8 bg-white border-gray-200 text-black placeholder-gray-500 font-medium"
                 autoComplete="off"
                 spellCheck={false}
               />
@@ -147,13 +147,13 @@ export function MinimalHeader() {
                   <Link
                     key={article.id}
                     href={`/articles/${article.slug}`}
-                    className="block px-4 py-3 text-sm text-black hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all font-bold"
+                    className="block px-4 py-3 text-sm text-black hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all font-medium"
                     onClick={() => {
                       handleClear();
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <div className="font-black">{article.title}</div>
+                    <div>{article.title}</div>
                   </Link>
                 ))}
               </div>
@@ -163,7 +163,7 @@ export function MinimalHeader() {
           {/* Write Button - Mobile */}
           <Link
             href="/admin/new-article"
-            className="inline-flex items-center justify-center p-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-blue-500/25 flex-shrink-0 ml-2"
+            className="inline-flex items-center justify-center p-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-blue-500/25 flex-shrink-0 ml-2 font-medium"
           >
             <Pencil className="w-4 h-4" />
           </Link>
@@ -171,7 +171,7 @@ export function MinimalHeader() {
           {/* Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2.5 text-black hover:text-black hover:bg-gray-100 rounded-full transition-all flex-shrink-0 ml-1"
+            className="p-2.5 text-black hover:text-black hover:bg-gray-100 rounded-full transition-all flex-shrink-0 ml-1 font-medium"
           >
             {isMobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -212,33 +212,33 @@ export function MinimalHeader() {
             {/* Resources Dropdown */}
             <div className="bg-gray-50 rounded-lg">
               <button
-                onClick={() => setIsLearningOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-black font-bold"
+                onClick={() => setIsResourcesOpen((prev) => !prev)}
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-black font-medium"
               >
                 Resources
                 <ChevronDown
                   className={`${
-                    isLearningOpen ? "rotate-180" : ""
+                    isResourcesOpen ? "rotate-180" : ""
                   } w-4 h-4 transition-transform`}
                 />
               </button>
-              {isLearningOpen && (
+              {isResourcesOpen && (
                 <div className="ml-4 mt-1 space-y-1 border-l border-green-500 pl-3 pb-2">
                   <Link
                     href="/learn-devops-on-youtube"
-                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-bold"
+                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
-                    YouTube
+                    Learn DevOps on YouTube
                   </Link>
                   <Link
-                    href="/learn-devops-on-udemy"
-                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-bold"
+                    href="/online-free-courses"
+                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
-                    Udemy Free Course
+                    Online Free Courses
                   </Link>
                   <Link
                     href="/free-labs"
-                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-bold"
+                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Free Labs
                   </Link>
@@ -250,7 +250,7 @@ export function MinimalHeader() {
             <div className="bg-gray-50 rounded-lg">
               <button
                 onClick={() => setIsServicesOpen((prev) => !prev)}
-                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-black font-bold"
+                className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-black font-medium"
               >
                 Services
                 <ChevronDown
@@ -263,19 +263,19 @@ export function MinimalHeader() {
                 <div className="ml-4 mt-1 space-y-1 border-l border-purple-500 pl-3 pb-2">
                   <Link
                     href="/services/cloud-migration"
-                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-bold"
+                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Cloud Migration
                   </Link>
                   <Link
                     href="/services/infrastructure-automation"
-                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-bold"
+                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
                     href="/services/part-time-devops-support"
-                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-bold"
+                    className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
                   >
                     DevOps Support
                   </Link>
@@ -292,7 +292,7 @@ export function MinimalHeader() {
           </div>
         )}
 
-        {/* Desktop Header - Completely Redesigned */}
+        {/* Desktop Header - Updated with medium font weight */}
         <div className="hidden md:flex items-center justify-between h-25 relative z-10">
           {/* Logo Section */}
           <Link href="/" className="flex items-center space-x-3 group">
@@ -311,7 +311,7 @@ export function MinimalHeader() {
           <nav className="flex items-center space-x-1 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-400/50 px-2 py-1 shadow-sm">
             <Link
               href="/"
-              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
                 pathname === "/"
                   ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                   : "text-black hover:text-black hover:bg-gray-100"
@@ -323,7 +323,7 @@ export function MinimalHeader() {
             {/* Articles Link - Direct */}
             <Link
               href="/articles"
-              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
                 pathname.includes("/articles")
                   ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                   : "text-black hover:text-black hover:bg-gray-100"
@@ -332,16 +332,53 @@ export function MinimalHeader() {
               <span className="relative z-10">Articles</span>
             </Link>
 
-            <Link
-              href="/learn-devops-on-youtube"
-              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
-                pathname.includes("/learn-devops-on-youtube")
-                  ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
-                  : "text-black hover:text-black hover:bg-gray-100"
-              }`}
+            {/* Resources Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() =>
+                handleMouseEnter(setIsResourcesOpen, resourcesTimeout)
+              }
+              onMouseLeave={() =>
+                handleMouseLeave(setIsResourcesOpen, resourcesTimeout)
+              }
             >
-              <span className="relative z-10">Learn DevOps on Youtube</span>
-            </Link>
+              <button
+                className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
+                  pathname.includes("/learn-devops-on-youtube") ||
+                  pathname.includes("/online-free-courses") ||
+                  pathname.includes("/free-labs")
+                    ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
+                    : "text-black hover:text-black hover:bg-gray-100"
+                }`}
+              >
+                <span className="relative z-10">Resources</span>
+                <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
+              </button>
+              {isResourcesOpen && (
+                <div
+                  className="absolute top-full left-0 mt-3 w-64 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
+                  onMouseEnter={() =>
+                    handleMouseEnter(setIsResourcesOpen, resourcesTimeout)
+                  }
+                  onMouseLeave={() =>
+                    handleMouseLeave(setIsResourcesOpen, resourcesTimeout)
+                  }
+                >
+                  <Link
+                    href="/learn-devops-on-youtube"
+                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                  >
+                    Learn DevOps on YouTube
+                  </Link>
+                  <Link
+                    href="/online-free-courses"
+                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                  >
+                    Online Free Courses
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* Services Dropdown */}
             <div
@@ -354,7 +391,7 @@ export function MinimalHeader() {
               }
             >
               <button
-                className={`flex items-center px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
+                className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
                   pathname.includes("/services")
                     ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                     : "text-black hover:text-black hover:bg-gray-100"
@@ -375,19 +412,19 @@ export function MinimalHeader() {
                 >
                   <Link
                     href="/services/cloud-migration"
-                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
+                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     Cloud Migration
                   </Link>
                   <Link
                     href="/services/infrastructure-automation"
-                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-bold"
+                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
                     Infrastructure as Code
                   </Link>
                   <Link
                     href="/services/part-time-devops-support"
-                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 transition-all font-bold"
+                    className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 transition-all font-medium"
                   >
                     DevOps Support
                   </Link>
@@ -397,7 +434,7 @@ export function MinimalHeader() {
 
             <Link
               href="/about"
-              className={`px-5 py-2.5 rounded-xl font-black transition-all duration-200 relative group ${
+              className={`px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
                 pathname === "/about"
                   ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                   : "text-black hover:text-black hover:bg-gray-100"
@@ -418,7 +455,7 @@ export function MinimalHeader() {
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full pl-10 pr-8 bg-white border-gray-400 text-black placeholder-gray-500 font-bold transition-all group-hover:border-gray-300"
+                  className="w-full rounded-full pl-10 pr-8 bg-white border-gray-400 text-black placeholder-gray-500 transition-all group-hover:border-gray-300 font-medium"
                 />
                 {searchQuery && (
                   <Button
@@ -439,10 +476,10 @@ export function MinimalHeader() {
                     <Link
                       key={article.id}
                       href={`/articles/${article.slug}`}
-                      className="block px-4 py-3 text-black hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all group font-bold"
+                      className="block px-4 py-3 text-black hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-all group font-medium"
                       onClick={handleClear}
                     >
-                      <div className="font-black group-hover:text-blue-700 transition-colors">
+                      <div className="group-hover:text-blue-700 transition-colors">
                         {article.title}
                       </div>
                     </Link>
@@ -451,12 +488,12 @@ export function MinimalHeader() {
               )}
             </div>
 
-            {/* Write Button - Updated with professional blue/purple theme */}
+            {/* Write Button */}
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
               <Link
                 href="/admin/new-article"
-                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-700 to-blue-700 text-white font-black rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30"
+                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-700 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30 font-medium"
               >
                 <Sparkles className="w-4 h-4" />
                 Publish
