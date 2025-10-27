@@ -426,7 +426,7 @@ export function MinimalBlogList({
                       )}
                       <div className="flex items-center gap-1 text-sm text-sky-600">
                         <Eye className="w-4 h-4 text-sky-500" />
-                        <span className="font-medium sky-red">
+                        <span className="font-medium text-sky-600">
                           {article.read_count?.toLocaleString() || 0}
                         </span>
                       </div>
@@ -490,11 +490,6 @@ export function MinimalBlogList({
           {/* Pagination */}
           {totalPages > 1 && (
             <nav className="mt-12 flex flex-col sm:flex-row justify-between items-center gap-6">
-              <div className="text-sm text-gray-600 font-medium">
-                Showing {(currentPage - 1) * PAGE_SIZE + 1} to{" "}
-                {Math.min(currentPage * PAGE_SIZE, articles.length)} of{" "}
-                {articles.length} articles
-              </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}

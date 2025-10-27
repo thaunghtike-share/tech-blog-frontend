@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
 import {
   Calendar,
   Clock,
@@ -189,9 +188,6 @@ export default function AuthorDetailPage() {
                 </div>
               </div>
             </div>
-            <aside className="lg:col-span-2">
-              <MinimalSidebar />
-            </aside>
           </div>
         </main>
         <MinimalFooter />
@@ -517,10 +513,6 @@ export default function AuthorDetailPage() {
               )}
             </div>
           </div>
-          {/* Sidebar */}
-          <aside className="hidden relative lg:block lg:col-span-2">
-            <MinimalSidebar />
-          </aside>
         </div>
       </main>
       <MinimalFooter />
