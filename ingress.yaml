@@ -6,7 +6,7 @@ metadata:
     certmanager.k8s.io/acme-dns01-provider: cloudflare
   labels:
     app: ldn-ui
-  name: ldn-ui-v2
+  name: ldn-ui-v3
   namespace: learndevopsnow
 spec:
   ingressClassName: nginx
@@ -16,7 +16,7 @@ spec:
         paths:
           - backend:
               service:
-                name: ldn-ui-v2
+                name: ldn-ui-v3
                 port:
                   number: 80
             path: /
@@ -35,7 +35,7 @@ metadata:
     certmanager.k8s.io/acme-dns01-provider: cloudflare
   labels:
     app: ldn-ui
-  name: ldn-ui-v2-ingress
+  name: ldn-ui-v3-ingress
   namespace: learndevopsnow
 spec:
   ingressClassName: nginx
@@ -45,7 +45,7 @@ spec:
         paths:
           - backend:
               service:
-                name: ldn-ui-v2
+                name: ldn-ui-v3
                 port:
                   number: 80
             path: /
