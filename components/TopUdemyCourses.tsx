@@ -472,7 +472,7 @@ export function TopUdemyCourses() {
                         </h3>
                       </a>
 
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between  py-3 text-sm">
                         <div className="flex items-center gap-2 text-gray-600">
                           <User className="w-4 h-4 text-gray-400" />
                           <span className="font-medium truncate">

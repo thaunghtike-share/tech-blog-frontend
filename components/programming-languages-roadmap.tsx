@@ -231,10 +231,10 @@ export function ProgrammingLanguagesRoadmap() {
                     </div>
 
                     {/* Right Column - Video Preview */}
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                       {/* Video Preview */}
                       <div className="py-33">
-                        <div className="transform transition-all duration-300 relative">
+                        <div className="transform transition-all duration-500 relative">
                           <div
                             className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
                             onClick={handlePlayButtonClick}
@@ -253,7 +253,7 @@ export function ProgrammingLanguagesRoadmap() {
                                 <div className="w-20 h-13 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
                                   <svg
                                     className="w-10 h-10 text-white ml-1"
-                                    viewBox="0 0 24 24"
+                                    viewBox="0 0 27 27"
                                     fill="currentColor"
                                   >
                                     <path d="M8 5v14l11-7z" />
