@@ -560,7 +560,8 @@ const learningPaths = {
     learningPath: [
       { title: "Kubernetes", icon: "☸️" },
       { title: "Terraform", icon: "🏗️" },
-      { title: "DevSecOps", icon: "🛡️" },
+      { title: "GitOps", icon: "🔄" }, // Added GitOps
+      { title: "Monitoring", icon: "📊" },
       { title: "Hashicorp Vault", icon: "🔐" },
     ],
     duration: "16-20 weeks",
@@ -663,38 +664,6 @@ export default function LearnDevOpsOnUtube() {
     <div className="min-h-screen bg-white/75 overflow-x-hidden">
       <MinimalHeader />
 
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              x: [0, Math.random() * 30 - 15, 0],
-              opacity: [0.05, 0.2, 0.05],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 8,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 5,
-            }}
-          >
-            {i % 3 === 0 ? (
-              <BookOpen className="w-8 h-8 text-emerald-300" />
-            ) : i % 3 === 1 ? (
-              <TrendingUp className="w-8 h-8 text-sky-300" />
-            ) : (
-              <Star className="w-8 h-8 text-indigo-300" />
-            )}
-          </motion.div>
-        ))}
-      </div>
-
       <main className="relative z-10 pt-12">
         <section className="relative py-5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -756,7 +725,7 @@ export default function LearnDevOpsOnUtube() {
                     <div>
                       <h3 className="font-bold text-lg">My DevOps Channel</h3>
                       <p className="text-red-100 text-sm">
-                        Learn DevOps Now with Tho
+                        Learn DevOps Now - Thaung Htike Oo
                       </p>
                     </div>
                   </div>
@@ -991,7 +960,7 @@ function HorizontalScrollSection({
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -1001,7 +970,7 @@ function HorizontalScrollSection({
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-5 h-5 text-gray-700" />
@@ -1138,7 +1107,7 @@ function PlaylistCard({
           </h3>
         </a>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-3">
           <div className="flex items-center gap-2 text-gray-600">
             <Users className="w-4 h-4 text-gray-400" />
             <span className="text-sm font-medium">{playlist.channel}</span>

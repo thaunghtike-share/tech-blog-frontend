@@ -736,14 +736,17 @@ export function YouTubePlaylists() {
               className="py-14 lg:w-96 flex-shrink-0"
             >
               <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                    <Youtube className="w-6 h-6" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                      <Youtube className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg">My DevOps Channel</h3>
+                      <p className="text-red-100 text-sm">
+                        Learn DevOps Now - Thaung Htike Oo
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-lg">Learn DevOps Now - Burmese</h3>
-                  </div>
-                </div>
 
                 <div className="aspect-video bg-black rounded-xl overflow-hidden mb-4 shadow-lg">
                   <iframe

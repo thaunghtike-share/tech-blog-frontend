@@ -203,7 +203,7 @@ export function ArticleContent({
           </h1>
 
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6 md:mb-8">
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-full border border-gray-100 bg-gray-50/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-300">
+            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl border border-gray-400 bg-gray-50 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-300">
               <CalendarDays className="w-4 h-4 text-gray-600" />
               <span className="text-sm text-gray-700 font-medium">
                 {new Date(article.published_at).toLocaleDateString()}
@@ -211,8 +211,8 @@ export function ArticleContent({
             </div>
             <div className="flex items-center gap-2">
               <Link href={`/categories/${slugify(categoryName)}`}>
-                <span className="flex items-center gap-2 text-gray-700 border border-gray-100 bg-white px-3 md:px-4 py-2 rounded-full text-sm font-medium hover:bg-sky-50 hover:border-sky-300 hover:shadow-md transition-all duration-300 shadow-sm">
-                  <Folder className="w-3 h-3" />
+                <span className="flex items-center gap-2 text-sky-700 border border-sky-400 px-3 md:px-4 py-2 rounded-xl text-sm font-medium hover:bg-sky-50 hover:border-sky-300 hover:shadow-md transition-all duration-300 shadow-sm">
+                  <Folder className="w-3 h-3 text-sky-500" />
                   {categoryName}
                 </span>
               </Link>
@@ -222,9 +222,9 @@ export function ArticleContent({
                 <Link
                   href={`/articles?tag=${slugify(tag)}`}
                   key={index}
-                  className="flex items-center gap-2 text-gray-700 border border-gray-100 bg-white px-3 md:px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-50 hover:border-orange-300 hover:shadow-md transition-all duration-300 shadow-sm"
+                  className="flex items-center gap-2 text-orange-700 border border-orange-400 px-3 md:px-4 py-2 rounded-xl text-sm font-medium hover:bg-orange-50 hover:border-orange-300 hover:shadow-md transition-all duration-300 shadow-sm"
                 >
-                  <TagIcon className="w-3 h-3" />
+                  <TagIcon className="w-3 h-3 text-orange-500" />
                   {tag}
                 </Link>
               ))}
@@ -266,7 +266,7 @@ export function ArticleContent({
                 return (
                   <h2
                     id={id}
-                    className="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4 pb-2 border-b border-gray-100"
+                    className="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4 pb-2"
                     {...props}
                   >
                     {children}
@@ -494,7 +494,7 @@ export function ArticleContent({
               <div className="flex items-center justify-between pt-4 md:pt-5 border-t-2 border-gray-100">
                 <Link
                   href={`/authors/${authorSlug}`}
-                  className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 font-medium text-sm group/btn shadow-md"
+                  className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 font-medium text-sm group/btn shadow-md"
                 >
                   View Profile
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -560,7 +560,7 @@ export function ArticleContent({
                 <a
                   key={id}
                   href={`#${id}`}
-                  className={`block py-2 px-3 rounded-xl hover:bg-blue-50 hover:shadow-sm transition-all duration-200 text-sm border border-transparent hover:border-blue-200 group ${
+                  className={`block py-2 px-3 rounded-xl hover:bg-blue-50 hover:shadow-sm transition-all duration-200 text-sm border border-gray-400 hover:border-blue-200 group ${
                     level === 1
                       ? "text-blue-700 font-semibold"
                       : "text-gray-700 font-normal"
