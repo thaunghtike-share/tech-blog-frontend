@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import { MinimalSidebar } from "@/components/minimal-sidebar";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -235,9 +234,6 @@ export default function CategoryPageClient({ slug }: Props) {
                 </div>
               </div>
             </div>
-            <aside className="lg:col-span-2">
-              <MinimalSidebar />
-            </aside>
           </div>
         </main>
         <MinimalFooter />
@@ -530,11 +526,6 @@ export default function CategoryPageClient({ slug }: Props) {
               )}
             </div>
           </div>
-
-          {/* Sidebar */}
-          <aside className="hidden relative lg:block lg:col-span-2">
-            <MinimalSidebar onTagClick={onTagClick} />
-          </aside>
         </div>
       </main>
       <MinimalFooter />
