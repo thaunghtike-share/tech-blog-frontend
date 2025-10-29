@@ -91,8 +91,8 @@ export function MinimalFooter() {
                   label: "YouTube Tutorials",
                 },
                 {
-                  href: "/learn-devops-on-udemy",
-                  label: "Online Courses",
+                  href: "/free-courses",
+                  label: "Free Courses",
                 },
                 { href: "/free-labs", label: "DevOps Playgrounds" },
               ].map((link) => (

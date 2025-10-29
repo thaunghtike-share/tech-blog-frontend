@@ -345,13 +345,13 @@ export function MinimalHeader() {
               <button
                 className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
                   pathname.includes("/learn-devops-on-youtube") ||
-                  pathname.includes("/online-free-courses") ||
+                  pathname.includes("/free-courses") ||
                   pathname.includes("/free-labs")
                     ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
                     : "text-black hover:text-black hover:bg-gray-100"
                 }`}
               >
-                <span className="relative z-10">Learning Resources</span>
+                <span className="relative z-10">Resources</span>
                 <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
               </button>
               {isResourcesOpen && (
@@ -371,10 +371,10 @@ export function MinimalHeader() {
                     Learn DevOps on YouTube
                   </Link>
                   <Link
-                    href="/online-free-courses"
+                    href="/free-courses"
                     className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                   >
-                    Online Free Courses
+                    Free Courses
                   </Link>
                 </div>
               )}

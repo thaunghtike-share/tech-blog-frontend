@@ -18,8 +18,17 @@ import {
   Server,
   Linkedin,
   Sparkles,
+  Rocket,
+  CheckCircle2,
+  Zap,
+  ArrowRight,
+  Play,
+  ExternalLink,
+  Users,
+  Workflow,
 } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const personalInfo = {
   name: "Thaung Htike Oo",
@@ -29,7 +38,7 @@ const personalInfo = {
   phone: "+959952492359",
   summary:
     "DevOps Engineer with over 5 years of experience designing, automating, and optimizing cloud-native infrastructure in fast-paced, high-availability environments. Skilled in building robust CI/CD pipelines, managing containerized applications with Kubernetes and Docker, and implementing infrastructure as code using Terraform and Ansible. Proficient across major cloud platforms including Azure and AWS, with a strong focus on reliability, scalability, and automation. Currently expanding into the AI/MLOps space — learning to streamline machine learning workflows, manage model lifecycles, and deploy scalable ML solutions using tools like MLflow, Kubeflow, and Azure Machine Learning. Passionate about bridging the gap between software engineering, data science, and infrastructure through automation and modern DevOps practices.",
-  avatar: "/thaung.jpg?height=150&width=150", // Placeholder for avatar
+  avatar: "/thaung.jpg?height=150&width=150",
   linkedinUrl: "https://www.linkedin.com/in/thaung-htike-oo-6672781b1",
 };
 
@@ -247,107 +256,32 @@ const projects = [
   },
 ];
 
+const stats = [
+  { value: "5+", label: "Years Experience", icon: CheckCircle2 },
+  { value: "50+", label: "Projects Completed", icon: ArrowRight },
+  { value: "99.9%", label: "Uptime SLA", icon: Zap },
+  { value: "$17K+", label: "Freelance Earnings", icon: Users },
+];
+
 export default function AboutPage() {
+  const handleEmailClick = () => {
+    window.location.href = "mailto:thaunghtikeoo.tho1234@gmail.com?subject=Consultation - DevOps Services&body=Hi Thaung, I'm interested in learning more about your DevOps services.";
+  };
+
+  const handleCaseStudiesClick = () => {
+    window.open("https://github.com/thaunghtike-share/DevOps-Projects", "_blank");
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
-      {/* Subtle background pattern */}
-      <div
-        className="absolute inset-0 z-0 opacity-10"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zM36 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        }}
-      ></div>
-      {/* Enhanced Visibility Messenger Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Messenger Support"
-        className="fixed top-[70%] right-1 z-50 group"
-      >
-        <div className="flex items-center gap-2 relative">
-          {/* Glow effect (more subtle) */}
-          <div className="absolute -inset-1 bg-[#5e2ced]/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-          {/* Main button container */}
-          <div className="flex items-center gap-3 bg-white/75 border border-gray-200 shadow-[0_5px_20px_-5px_rgba(94,44,237,0.3)] px-4 py-2.5 rounded-full cursor-pointer transition-all duration-400 hover:scale-[1.03] hover:shadow-[0_8px_25px_-5px_rgba(94,44,237,0.4)]">
-            {/* Enhanced icon container */}
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              {/* Halo effect */}
-              <div className="absolute w-full h-full bg-[#5e2ced] rounded-full opacity-10 group-hover:opacity-15 group-hover:scale-110 transition-all duration-500"></div>
-
-              {/* Larger, clearer icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 240 240"
-                className="w-8 h-8 relative z-10" // Increased from w-7 h-7
-              >
-                {/* Solid purple circle with better contrast */}
-                <circle cx="120" cy="120" r="120" fill="#5e2ced" />
-                {/* Larger white message icon */}
-                <path
-                  fill="#fff"
-                  d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-                  transform="scale(1.05)" // Slightly larger message icon
-                />
-              </svg>
-            </div>
-
-            {/* Text label */}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#5e2ced] font-medium text-sm tracking-wider">
-              Chat?
-            </span>
-
-            {/* Arrow indicator */}
-            <div className="ml-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="#a78bfa"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Animated dots - now more visible */}
-          <div className="absolute -top-2 -right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="w-2 h-2 bg-[#5e2ced] rounded-full animate-bounce"
-                style={{
-                  animationDelay: `${i * 0.1}s`,
-                  boxShadow: "0 0 4px rgba(94,44,237,0.5)",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </a>
+    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
       <MinimalHeader />
-      {/* Page Header */}
-      <section className="-mt-14 md:-mt-4 bg-gray-50 py-12 border-b border-white/50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 leading-relaxed">
-            <span className="text-gray-700">About </span>
-            <span className="text-blue-600">Me</span>
-          </h1>
-          <p className="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
-            From CI/CD to MLOps — streamlining software delivery in the cloud
-            era.
-          </p>
-        </div>
-      </section>
-      <main className="-mt-22 md:-mt-10 max-w-7xl mx-auto px-4 py-12 relative z-10">
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-0 md:bg-gray-50 shadow-lg">
-              <CardContent className="p-6">
+            <Card className="border-0 shadow-2xl rounded-3xl">
+              <CardContent className="p-8">
                 <div className="text-center mb-6">
                   <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg">
                     <Image
@@ -358,14 +292,14 @@ export default function AboutPage() {
                       className="rounded-full"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                  <h3 className="text-2xl font-bold text-black mb-1">
                     {personalInfo.name}
                   </h3>
                   <p className="text-blue-600 font-semibold text-base">
                     {personalInfo.title}
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-gray-700">
+                <div className="space-y-3 text-sm text-black">
                   <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-3 text-blue-500" />
                     {personalInfo.location}
@@ -379,8 +313,8 @@ export default function AboutPage() {
                     {personalInfo.phone}
                   </div>
                 </div>
-                <div className="mt-6 pt-4 border-t border-blue-200">
-                  <p className="text-gray-700 leading-relaxed text-sm">
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <p className="text-black leading-relaxed text-sm">
                     {personalInfo.summary}
                   </p>
                 </div>
@@ -390,12 +324,9 @@ export default function AboutPage() {
                     download
                     className="w-full sm:w-auto"
                   >
-                    {" "}
-                    {/* Add w-full sm:w-auto here */}
                     <Button
                       size="lg"
-                      className="flex items-center justify-center gap-2 w-full sm:w-auto bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-all 
-      text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
+                      className="flex items-center justify-center gap-2 w-full sm:w-auto bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                     >
                       <Download className="h-4 w-4" />
                       Download CV
@@ -404,8 +335,7 @@ export default function AboutPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all bg-transparent
-    text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
+                    className="w-full sm:w-auto border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all duration-300 bg-transparent text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                     onClick={() =>
                       window.open(personalInfo.linkedinUrl, "_blank")
                     }
@@ -416,19 +346,20 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
+
             {/* Technical Skills */}
-            <Card className="border-0 bg-white shadow-lg">
+            <Card className="border-0 shadow-lg rounded-3xl">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-gray-900">
+                <CardTitle className="flex items-center text-xl font-bold text-black">
                   <Code className="h-6 w-6 mr-3 text-blue-600" />
                   Technical Skills
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 pt-0">
-                <div className="-mt-5 space-y-5">
+                <div className="space-y-5">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
-                      <h4 className="text-base font-semibold text-gray-800 mb-2">
+                      <h4 className="text-base font-semibold text-black mb-2">
                         {category}
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -436,7 +367,7 @@ export default function AboutPage() {
                           <Badge
                             key={skill}
                             variant="secondary"
-                            className="text-xs md:text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium"
+                            className="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium border-0"
                           >
                             {skill}
                           </Badge>
@@ -447,44 +378,32 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-0 bg-white shadow-lg">
+
+            {/* Freelance Earnings */}
+            <Card className="border-0 shadow-lg rounded-3xl">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-gray-900">
+                <CardTitle className="flex items-center text-xl font-bold text-black">
                   <Briefcase className="h-6 w-6 mr-3 text-green-600" />
                   Freelance Earnings (Upwork)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="-mt-6 p-6 pt-0 space-y-4">
+              <CardContent className="p-6 pt-0 space-y-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-gray-700 font-medium">
+                  <p className="text-sm text-black font-medium">
                     Total Earnings
                   </p>
-                  <Badge className="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full">
+                  <Badge className="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full border-0">
                     $17,000+
                   </Badge>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-black leading-relaxed">
                   Worked long-term as a Kubernetes Engineer providing reliable
-                  support and infrastructure automation to global clients. Also
-                  attempted DevOps content writing, but had to pause due to
-                  limited time.
+                  support and infrastructure automation to global clients.
                 </p>
-                <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
-                  <li>Kubernetes cluster setup, management, and scaling</li>
-                  <li>
-                    Terraform-based infrastructure provisioning (AWS & Azure)
-                  </li>
-                  <li>CI/CD pipeline design using GitHub Actions</li>
-                  <li>Monitoring and alerting with Grafana & Prometheus</li>
-                  <li>
-                    DevOps content creation (paused due to time constraints)
-                  </li>
-                </ul>
-
-                {/* Earnings Screenshot */}
-                <div className="mt-4 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                
+                <div className="mt-4 rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
                   <Image
-                    src="/earnings.png" // ← your image file
+                    src="/earnings.png"
                     alt="Upwork Earnings"
                     width={800}
                     height={400}
@@ -492,11 +411,10 @@ export default function AboutPage() {
                   />
                 </div>
 
-                {/* Upwork profile button */}
                 <Button
                   size="sm"
                   variant="outline"
-                  className="w-full border-2 border-green-300 text-green-700 hover:bg-green-50 hover:border-green-400 font-semibold transition-all bg-transparent"
+                  className="w-full border-2 border-green-300 text-green-700 hover:bg-green-50 hover:border-green-400 font-semibold transition-all duration-300 bg-transparent"
                   onClick={() =>
                     window.open(
                       "https://www.upwork.com/freelancers/~01e9f0a7b2e737ac90",
@@ -509,31 +427,42 @@ export default function AboutPage() {
               </CardContent>
             </Card>
           </div>
+
           {/* Experience, Education, Projects, Certifications */}
-          <div className="-mt-5 md:-mt-5 lg:col-span-2 space-y-10">
+          <div className="lg:col-span-2 space-y-10">
             {/* Work Experience */}
             <div>
-              <h3 className="text-xl md:text-2xl font-bold mb-3 flex items-center text-gray-900">
-                <Briefcase className="h-6 w-6 mr-3 text-blue-600" />
-                Work Experience
-              </h3>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white">
+                  <Briefcase className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-black">
+                    Work Experience
+                  </h2>
+                  <p className="text-black">
+                    5+ years of DevOps excellence
+                  </p>
+                </div>
+              </div>
+
               <div className="space-y-8">
                 {workExperience.map((job, index) => (
                   <Card
                     key={index}
-                    className="border-0 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
+                    className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
                   >
-                    <CardContent className="md:-mt-4 -mt-7 p-6">
-                      <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                    <CardContent className="p-8">
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
                         <div>
-                          <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-1">
+                          <h4 className="text-xl font-bold text-black mb-2">
                             {job.position}
                           </h4>
-                          <p className="text-blue-700 font-semibold text-sm md:text-base mb-2">
+                          <p className="text-blue-700 font-semibold text-lg mb-2">
                             {job.company}
                           </p>
                         </div>
-                        <div className="text-right text-sm text-gray-600">
+                        <div className="text-right text-black">
                           <div className="flex items-center justify-end mb-1">
                             <Calendar className="h-4 w-4 mr-2" />
                             {job.duration}
@@ -544,11 +473,11 @@ export default function AboutPage() {
                           </div>
                         </div>
                       </div>
-                      <ul className="space-y-2 mb-4 list-disc pl-5">
+                      <ul className="space-y-3 mb-6 list-disc pl-5">
                         {job.responsibilities.map((responsibility, idx) => (
                           <li
                             key={idx}
-                            className="text-gray-700 text-sm leading-relaxed"
+                            className="text-black text-sm leading-relaxed"
                           >
                             {responsibility}
                           </li>
@@ -559,7 +488,7 @@ export default function AboutPage() {
                           <Badge
                             key={tech}
                             variant="outline"
-                            className="text-xs md:text-xs bg-indigo-100 text-indigo-800 border-indigo-300 px-3 py-1 rounded-full font-medium"
+                            className="text-xs bg-indigo-100 text-indigo-800 border-0 px-3 py-1 rounded-full font-medium"
                           >
                             {tech}
                           </Badge>
@@ -570,106 +499,142 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
+
             {/* Key Projects */}
             <div>
-              <h3 className="-mt-4 text-xl md:text-2xl font-bold mb-6 flex items-center text-gray-900">
-                <Server className="h-6 w-6 mr-3 text-blue-600" />
-                Key Projects
-              </h3>
-              <div className="grid grid-cols-1 gap-6">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white">
+                  <Server className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-black">
+                    Key Projects
+                  </h2>
+                  <p className="text-black">
+                    Successful implementations and migrations
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-8">
                 {projects.map((project, index) => (
                   <Card
                     key={index}
-                    className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
+                    className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
                   >
-                    <CardContent className="p-6">
-                      <h4 className="-mt-8 text:lg md:text-xl font-bold text-gray-900 mb-2">
+                    <CardContent className="p-8">
+                      <h4 className="text-xl font-bold text-black mb-4">
                         {project.name}
                       </h4>
-                      <p className="text-gray-700 mb-3 text-sm leading-relaxed">
+                      <p className="text-black mb-4 text-sm leading-relaxed">
                         {project.description}
                       </p>
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {project.technologies.map((tech) => (
                           <Badge
                             key={tech}
                             variant="secondary"
-                            className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium"
+                            className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium border-0"
                           >
                             {tech}
                           </Badge>
                         ))}
                       </div>
+                      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 border border-blue-200">
+                        <p className="text-black text-sm font-semibold">
+                          Impact: {project.impact}
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
             </div>
-            {/* Education */}
-            <div>
-              <h3 className="-mt-5 text-xl md:text-2xl font-bold mb-6 flex items-center text-gray-900">
-                <GraduationCap className="h-6 w-6 mr-3 text-blue-600" />
-                Education
-              </h3>
-              <div className="space-y-6">
-                {education.map((edu, index) => (
-                  <Card
-                    key={index}
-                    className="border-0 bg-gray-50 shadow-md hover:shadow-xl transition-shadow duration-300"
-                  >
-                    <CardContent className="p-6">
-                      <h4 className="-mt-6 text-lg md:text-xl font-bold text-gray-900 mb-2">
-                        {edu.degree}
-                      </h4>
-                      <p className="text-green-700 font-semibold text-base mb-2">
-                        {edu.institution}
-                      </p>
-                      <div className="flex items-center text-sm text-gray-600 mb-2">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        {edu.duration}
-                      </div>
-                      <p className="text-gray-700 mb-2 text-sm leading-relaxed">
-                        {edu.details}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+
+            {/* Education & Certifications */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Education */}
+              <div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white">
+                    <GraduationCap className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-black">
+                      Education
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {education.map((edu, index) => (
+                    <Card
+                      key={index}
+                      className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
+                    >
+                      <CardContent className="p-6">
+                        <h4 className="text-lg font-bold text-black mb-2">
+                          {edu.degree}
+                        </h4>
+                        <p className="text-green-700 font-semibold text-base mb-2">
+                          {edu.institution}
+                        </p>
+                        <div className="flex items-center text-sm text-black mb-2">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {edu.duration}
+                        </div>
+                        <p className="text-black text-sm leading-relaxed">
+                          {edu.details}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
-            </div>
-            {/* Certifications */}
-            <div>
-              <h3 className="-mt-5 text-xl md:text-2xl font-bold mb-6 flex items-center text-gray-900">
-                <Award className="h-6 w-6 mr-3 text-blue-600" />
-                Certifications
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {certifications.map((cert, index) => (
-                  <Card
-                    key={index}
-                    className="border-0 bg-gray-50 to-red-50 shadow-md hover:shadow-xl transition-shadow duration-300"
-                  >
-                    <CardContent className="p-6">
-                      <h4 className="-mt-5 font-bold text-gray-900 mb-2 text-base">
-                        {cert.name}
-                      </h4>
-                      <p className="text-orange-700 font-semibold text-sm mb-2">
-                        {cert.issuer}
-                      </p>
-                      <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
-                        <span>Issued: {cert.year}</span>
-                        <span>Valid until: {cert.validUntil}</span>
-                      </div>
-                      <p className="text-sm text-gray-700 font-mono">
-                        {cert.credentialId}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+
+              {/* Certifications */}
+              <div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center text-white">
+                    <Award className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-black">
+                      Certifications
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6">
+                  {certifications.map((cert, index) => (
+                    <Card
+                      key={index}
+                      className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
+                    >
+                      <CardContent className="p-6">
+                        <h4 className="font-bold text-black mb-2 text-base">
+                          {cert.name}
+                        </h4>
+                        <p className="text-orange-700 font-semibold text-sm mb-2">
+                          {cert.issuer}
+                        </p>
+                        <div className="flex items-center justify-between text-sm text-black mb-2">
+                          <span>Issued: {cert.year}</span>
+                          <span>Valid until: {cert.validUntil}</span>
+                        </div>
+                        <p className="text-sm text-black font-mono">
+                          {cert.credentialId}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
+
       <MinimalFooter />
     </div>
   );

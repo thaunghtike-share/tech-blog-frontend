@@ -18,202 +18,208 @@ import {
   Database,
   RefreshCw,
   Handshake,
+  Rocket,
+  CheckCircle2,
+  ArrowRight,
+  Play,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import StepCard from "@/components/StepCard"; // Import the new StepCard component
-import { cn } from "@/lib/utils"; // Ensure cn utility is imported
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function PartTimeDevOpsSupportPage() {
-  const listItemStyle =
-    "flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-gray-100 transition-all duration-300 group";
-  const iconWrapperStyle = (color: string) =>
-    `p-2 bg-${color}-100 rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`;
-  const iconStyle = (color: string) => `w-4 h-4 text-${color}-600`;
-  const titleStyle = "font-bold text-sm md:text-base text-gray-900 mb-1"; // Adjusted for mobile
-  const descStyle = "text-xs md:text-sm text-gray-600 leading-relaxed"; // Adjusted for mobile
-
-  const steps = [
+  const features = [
     {
-      step: "1",
-      title: "Initial Consultation",
-      desc: "Discuss your current challenges, project goals, and desired outcomes.",
-      icon: Users,
-      color: "blue",
+      icon: Scale,
+      title: "Flexible Engagement",
+      description: "Custom support hours tailored to your needs"
     },
     {
-      step: "2",
-      title: "Scope Definition",
-      desc: "Work together to define the project scope, deliverables, and timeline.",
-      icon: BookOpen,
-      color: "green",
+      icon: Zap,
+      title: "Cost-Effective",
+      description: "No full-time salary expenses"
     },
     {
-      step: "3",
-      title: "Execution & Reporting",
-      desc: "Our experts perform the work, providing regular progress updates and detailed reports.",
-      icon: Code,
-      color: "purple",
+      icon: ShieldCheck,
+      title: "Expert Support",
+      description: "Senior DevOps professionals on demand"
     },
     {
-      step: "4",
-      title: "Ongoing Support",
-      desc: "Continuous assistance, maintenance, and optimization as your needs evolve.",
       icon: RefreshCw,
-      color: "orange",
-    },
+      title: "Continuous Improvement",
+      description: "Ongoing optimization and maintenance"
+    }
   ];
 
+  const stats = [
+    { value: "50%", label: "Cost Savings", icon: ArrowRight },
+    { value: "24/7", label: "Support Available", icon: Activity },
+    { value: "10x", label: "Faster Resolution", icon: Zap },
+    { value: "99.9%", label: "Uptime Guarantee", icon: CheckCircle2 }
+  ];
+
+  const handleEmailClick = () => {
+    window.location.href = "mailto:thaunghtikeoo.tho1234@gmail.com?subject=Part-Time DevOps Support Consultation&body=Hi, I'm interested in learning more about your part-time DevOps support services.";
+  };
+
+  const handleCaseStudiesClick = () => {
+    window.open("https://github.com/thaunghtike-share/DevOps-Projects", "_blank");
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
-      {/* Subtle background pattern */}
-      <div
-        className="absolute inset-0 z-0 opacity-10"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        }}
-      ></div>
-      {/* Enhanced Visibility Messenger Button */}
+    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+      {/* Messenger Button */}
       <a
         href="https://m.me/learndevopsnowbytho"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Messenger Support"
-        className="fixed top-[70%] right-1 z-50 group"
+        className="fixed top-[70%] right-4 z-50 group"
       >
-        <div className="flex items-center gap-2 relative">
-          {/* Glow effect (more subtle) */}
-          <div className="absolute -inset-1 bg-[#5e2ced]/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-          {/* Main button container */}
-          <div className="flex items-center gap-3 bg-white/75 border border-gray-200 shadow-[0_5px_20px_-5px_rgba(94,44,237,0.3)] px-4 py-2.5 rounded-full cursor-pointer transition-all duration-400 hover:scale-[1.03] hover:shadow-[0_8px_25px_-5px_rgba(94,44,237,0.4)]">
-            {/* Enhanced icon container */}
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              {/* Halo effect */}
-              <div className="absolute w-full h-full bg-[#5e2ced] rounded-full opacity-10 group-hover:opacity-15 group-hover:scale-110 transition-all duration-500"></div>
-
-              {/* Larger, clearer icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 240 240"
-                className="w-8 h-8 relative z-10" // Increased from w-7 h-7
-              >
-                {/* Solid purple circle with better contrast */}
-                <circle cx="120" cy="120" r="120" fill="#5e2ced" />
-                {/* Larger white message icon */}
-                <path
-                  fill="#fff"
-                  d="M158.8 80.2l-37.8 44.3-19.2-22.6-41 44.4 56.2-58.7 21 23.7 41-44.3z"
-                  transform="scale(1.05)" // Slightly larger message icon
-                />
-              </svg>
-            </div>
-
-            {/* Text label */}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#5e2ced] font-medium text-sm tracking-wider">
-              Chat?
-            </span>
-
-            {/* Arrow indicator */}
-            <div className="ml-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="#a78bfa"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+        <div className="flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-gray-200 shadow-lg rounded-full px-4 py-3 cursor-pointer transition-all duration-400 hover:scale-105 hover:shadow-xl">
+          <div className="relative w-8 h-8">
+            <div className="absolute inset-0 bg-purple-500 rounded-full animate-ping opacity-20"></div>
+            <div className="relative w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.844.523 3.566 1.426 5.035L2 22l5.035-1.426A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
               </svg>
             </div>
           </div>
-
-          {/* Animated dots - now more visible */}
-          <div className="absolute -top-2 -right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="w-2 h-2 bg-[#5e2ced] rounded-full animate-bounce"
-                style={{
-                  animationDelay: `${i * 0.1}s`,
-                  boxShadow: "0 0 4px rgba(94,44,237,0.5)",
-                }}
-              />
-            ))}
-          </div>
+          <span className="text-sm font-medium text-black">Chat Now</span>
         </div>
       </a>
+
       <MinimalHeader />
-      <main className="-mt-9 md:mt-1 max-w-7xl mx-auto px-6 py-10 relative z-10">
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
-        <section className="text-center mb-10">
-          <div className="max-w-5xl mx-auto">
-            <Badge className="mb-4 px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-gradient-to-r from-green-500 to-blue-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <Users className="w-4 h-4 mr-2" />
-              DevOps Support
-            </Badge>
-            <h1 className="text-xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
-              Flexible Part-Time DevOps Support
-              <span className="block text-transparent bg-gradient-to-r from-green-600 to-blue-700 bg-clip-text">
-                Customized to Your Requirements
+        <section className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full px-6 py-3 shadow-sm mb-8">
+              <Zap className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-semibold text-black">DevOps Support</span>
+            </div>
+
+            {/* Main Title */}
+            <h1 className="text-4xl md:text-6xl font-bold text-black mb-6 leading-tight">
+              Part-Time
+              <span className="block bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                DevOps Support
               </span>
             </h1>
-            <p className="text-sm md:text-base text-gray-600 mb-10 leading-relaxed max-w-4xl mx-auto">
-              Gain access to experienced DevOps professionals on demand without
-              the expense of a full-time hire. Our flexible support plans help
-              you optimize infrastructure, streamline processes, and swiftly
-              resolve critical issues.
+
+            {/* Description */}
+            <p className="text-xl text-black mb-12 leading-relaxed max-w-3xl mx-auto">
+              Get expert DevOps assistance when you need it without the expense of full-time hires. 
+              Flexible, cost-effective support tailored to your specific requirements.
             </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              <Badge className="px-3 py-1 text-sm md:px-4 md:py-2 md:text-base bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <Scale className="w-4 h-4 mr-2" />
-                Flexibility
-              </Badge>
-              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <Lightbulb className="w-4 h-4 mr-2" />
-                Expertise
-              </Badge>
-              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <Zap className="w-4 h-4 mr-2" />
-                Cost-Effective
-              </Badge>
-              <Badge className="px-3 py-1 text-xs md:px-4 md:py-2 md:text-base bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <ShieldCheck className="w-4 h-4 mr-2" />
-                Proactive
-              </Badge>
+
+            {/* Feature Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center group"
+                >
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-lg border border-gray-100 mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="font-semibold text-black mb-2">{feature.title}</h3>
+                  <p className="text-sm text-black">{feature.description}</p>
+                </motion.div>
+              ))}
             </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                onClick={handleEmailClick}
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Start Free Consultation
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleCaseStudiesClick}
+                className="px-8 py-3 rounded-xl text-lg font-semibold border-2 border-gray-300 hover:border-blue-500 transition-all duration-300 text-black"
+              >
+                View Case Studies
+              </Button>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="mb-20">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center p-8 bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <stat.icon className="w-8 h-8 text-blue-600" />
+                </div>
+                <div className="text-3xl font-bold text-black mb-2">{stat.value}</div>
+                <div className="text-black font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
           </div>
         </section>
-        {/* What is Part-Time DevOps Support? */}
-        <section className="mb-10">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="bg-gradient-to-br from-green-500 to-blue-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-              <span className="font-bold text-lg">?</span>
-            </div>
-            <div>
-              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-2">
-                What is Part-Time DevOps Support?
-              </h2>
-              <p className="text-sm md:text-lg text-gray-600">
-                Expert DevOps assistance whenever you need it
-              </p>
+
+        {/* What is Part-Time DevOps Support */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">
+                ?
+              </div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-black">
+                  What is Part-Time DevOps Support?
+                </h2>
+                <p className="text-xl text-black mt-2">
+                  Expert DevOps assistance whenever you need it
+                </p>
+              </div>
             </div>
           </div>
-          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-            <CardContent className="p-6 space-y-4">
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                Part-time DevOps support connects your organization with skilled
-                DevOps engineers on a flexible, as-needed basis. Perfect for
-                projects requiring specialized expertise, temporary resource
-                gaps, or ongoing maintenance without the cost of full-time
-                staff. Benefit from expert help with pipeline optimization,
-                cloud cost control, infrastructure automation, incident
-                management, and more to keep your operations efficient and
-                reliable.
+
+          <Card className="border-0 shadow-lg rounded-3xl">
+            <CardHeader className="pb-6">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-black">
+                <div className="p-3 bg-blue-100 rounded-xl">
+                  <Sparkles className="w-6 h-6 text-blue-600" />
+                </div>
+                Flexible DevOps Expertise
+              </CardTitle>
+              <CardDescription className="text-black text-lg">
+                Access senior DevOps professionals on your terms
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <p className="text-black leading-relaxed text-lg">
+                Part-time DevOps support connects your organization with skilled DevOps engineers 
+                on a flexible, as-needed basis. Perfect for projects requiring specialized expertise, 
+                temporary resource gaps, or ongoing maintenance without the cost of full-time staff.
               </p>
-              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
                   {
                     icon: Users,
@@ -240,16 +246,13 @@ export default function PartTimeDevOpsSupportPage() {
                     color: "purple",
                   },
                 ].map((item, index) => (
-                  <div
-                    key={index}
-                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
-                  >
-                    <div className={iconWrapperStyle(item.color)}>
-                      <item.icon className={iconStyle(item.color)} />
+                  <div key={index} className="flex items-start gap-4 p-6 bg-white rounded-2xl border border-gray-200 hover:shadow-md transition-all duration-300 group">
+                    <div className={`p-3 bg-${item.color}-100 rounded-xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
                     </div>
                     <div>
-                      <h4 className={titleStyle}>{item.title}</h4>
-                      <p className={descStyle}>{item.desc}</p>
+                      <h4 className="font-bold text-black mb-2 text-lg">{item.title}</h4>
+                      <p className="text-black leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -257,97 +260,155 @@ export default function PartTimeDevOpsSupportPage() {
             </CardContent>
           </Card>
         </section>
-        {/* Why Choose Part-Time DevOps Support? */}
-        <section className="mb-10">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-              <span className="font-bold text-lg">!</span>
-            </div>
-            <div>
-              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-2">
-                Why Choose Part-Time DevOps Support?
-              </h2>
-              <p className="text-sm md:text-lg text-gray-600">
-                Save costs and boost efficiency with expert, flexible support
-              </p>
+
+        {/* Benefits Section */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">
+                !
+              </div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-black">
+                  Why Choose Part-Time DevOps Support?
+                </h2>
+                <p className="text-xl text-black mt-2">
+                  Save costs and boost efficiency with expert, flexible support
+                </p>
+              </div>
             </div>
           </div>
-          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-            <CardContent className="p-6 space-y-4">
-              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-3">
-                {[
-                  {
-                    icon: Scale,
-                    title: "Cost Savings",
-                    desc: "Lower operational expenses compared to hiring full-time DevOps staff.",
-                    color: "green",
-                  },
-                  {
-                    icon: Sparkles,
-                    title: "Access to Top Talent",
-                    desc: "Work with highly skilled professionals who stay current on industry trends.",
-                    color: "blue",
-                  },
-                  {
-                    icon: Zap,
-                    title: "Increased Agility",
-                    desc: "Adapt quickly to changing project demands with on-demand support.",
-                    color: "orange",
-                  },
-                  {
-                    icon: ShieldCheck,
-                    title: "Reduced Overhead",
-                    desc: "Avoid recruitment, onboarding, and benefits costs of permanent hires.",
-                    color: "red",
-                  },
-                  {
-                    icon: Target,
-                    title: "Focus on Core Business",
-                    desc: "Let your internal teams focus on product development while we handle DevOps.",
-                    color: "purple",
-                  },
-                  {
-                    icon: BellRing,
-                    title: "Proactive Problem Solving",
-                    desc: "Prevent costly outages with proactive monitoring and issue resolution.",
-                    color: "teal",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
-                  >
-                    <div className={iconWrapperStyle(item.color)}>
-                      <item.icon className={iconStyle(item.color)} />
-                    </div>
-                    <div>
-                      <h4 className={titleStyle}>{item.title}</h4>
-                      <p className={descStyle}>{item.desc}</p>
-                    </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg rounded-3xl">
+              <CardHeader className="pb-6">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-black">
+                  <div className="p-3 bg-green-100 rounded-xl">
+                    <CheckCircle2 className="w-6 h-6 text-green-600" />
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  Business Benefits
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    {
+                      icon: Scale,
+                      title: "Cost Savings",
+                      desc: "Lower operational expenses compared to hiring full-time DevOps staff.",
+                      color: "green"
+                    },
+                    {
+                      icon: Target,
+                      title: "Focus on Core Business",
+                      desc: "Let your internal teams focus on product development while we handle DevOps.",
+                      color: "blue"
+                    },
+                    {
+                      icon: Zap,
+                      title: "Increased Agility",
+                      desc: "Adapt quickly to changing project demands with on-demand support.",
+                      color: "orange"
+                    },
+                    {
+                      icon: ShieldCheck,
+                      title: "Reduced Overhead",
+                      desc: "Avoid recruitment, onboarding, and benefits costs of permanent hires.",
+                      color: "purple"
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 mt-1`}>
+                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-black mb-1">{item.title}</h4>
+                        <p className="text-black text-sm">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg rounded-3xl">
+              <CardHeader className="pb-6">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-black">
+                  <div className="p-3 bg-blue-100 rounded-xl">
+                    <Sparkles className="w-6 h-6 text-blue-600" />
+                  </div>
+                  Technical Benefits
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    {
+                      icon: Lightbulb,
+                      title: "Access to Top Talent",
+                      desc: "Work with highly skilled professionals who stay current on industry trends.",
+                      color: "blue"
+                    },
+                    {
+                      icon: BellRing,
+                      title: "Proactive Problem Solving",
+                      desc: "Prevent costly outages with proactive monitoring and issue resolution.",
+                      color: "teal"
+                    },
+                    {
+                      icon: Workflow,
+                      title: "Best Practices",
+                      desc: "Implement industry-standard DevOps practices and tools.",
+                      color: "green"
+                    },
+                    {
+                      icon: RefreshCw,
+                      title: "Continuous Improvement",
+                      desc: "Ongoing optimization of your infrastructure and processes.",
+                      color: "orange"
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className={`p-2 bg-${item.color}-100 rounded-lg flex-shrink-0 mt-1`}>
+                        <item.icon className={`w-4 h-4 text-${item.color}-600`} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-black mb-1">{item.title}</h4>
+                        <p className="text-black text-sm">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </section>
-        {/* Key Services Offered */}
-        <section className="mb-10">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-              <Workflow className="w-6 h-6" />
-            </div>
-            <div>
-              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-2">
+
+        {/* Services Section */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+              Comprehensive DevOps Services
+            </h2>
+            <p className="text-xl text-black max-w-2xl mx-auto">
+              End-to-end support across your entire DevOps lifecycle
+            </p>
+          </div>
+
+          <Card className="border-0 shadow-lg rounded-3xl">
+            <CardHeader className="pb-6">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-black">
+                <div className="p-3 bg-purple-100 rounded-xl">
+                  <Workflow className="w-6 h-6 text-purple-600" />
+                </div>
                 Key Services Offered
-              </h2>
-              <p className="text-sm md:text-lg text-gray-600">
-                Comprehensive support across your entire DevOps lifecycle
-              </p>
-            </div>
-          </div>
-          <Card className="-mt-4 border border-gray-100 shadow-md bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-            <CardContent className="p-6 space-y-4">
-              <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 md:grid md:grid-cols-2">
+              </CardTitle>
+              <CardDescription className="text-black text-lg">
+                Everything you need to optimize your DevOps operations
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                   {
                     icon: Zap,
@@ -369,98 +430,159 @@ export default function PartTimeDevOpsSupportPage() {
                   },
                   {
                     icon: Activity,
-                    title: "Monitoring & Alerting Setup",
-                    desc: "Deploy monitoring solutions (Prometheus, Grafana) and configure alerts for proactive management.",
+                    title: "Monitoring & Alerting",
+                    desc: "Deploy monitoring solutions and configure alerts for proactive management.",
                     color: "orange",
                   },
                   {
                     icon: Dock,
                     title: "Kubernetes Management",
-                    desc: "Assist with deployment, scaling, and troubleshooting of Kubernetes clusters (AKS, EKS, GKE).",
+                    desc: "Assist with deployment, scaling, and troubleshooting of Kubernetes clusters.",
                     color: "teal",
                   },
                   {
                     icon: Database,
                     title: "Database & Storage Support",
-                    desc: "Manage cloud databases, backups, and storage to ensure performance and reliability.",
+                    desc: "Manage cloud databases, backups, and storage for performance and reliability.",
                     color: "red",
                   },
                 ].map((item, index) => (
-                  <div
-                    key={index}
-                    className={cn(listItemStyle, "min-w-[350px] flex-shrink-0")}
-                  >
-                    <div className={iconWrapperStyle(item.color)}>
-                      <item.icon className={iconStyle(item.color)} />
+                  <div key={index} className="text-center p-6 bg-white rounded-2xl border border-gray-200 hover:shadow-md transition-all duration-300">
+                    <div className={`p-3 bg-${item.color}-100 rounded-xl mb-4 mx-auto w-16 h-16 flex items-center justify-center`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
                     </div>
-                    <div>
-                      <h4 className={titleStyle}>{item.title}</h4>
-                      <p className={descStyle}>{item.desc}</p>
-                    </div>
+                    <h4 className="font-bold text-black mb-2 text-lg">{item.title}</h4>
+                    <p className="text-black text-sm">{item.desc}</p>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
         </section>
-        {/* How It Works (Steps with animation) */}
-        <section className="mb-10">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="bg-gradient-to-br from-green-500 to-blue-600 text-white w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-              <Handshake className="w-6 h-6" />
-            </div>
-            <div>
-              <h2 className="text-lg md:text-3xl font-bold text-gray-900 mb-2">
-                How It Works
-              </h2>
-              <p className="text-sm md:text-lg text-gray-600">
-                A straightforward 4-step process to get you started
-              </p>
+
+        {/* How It Works */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">
+                1
+              </div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-black">
+                  How It Works
+                </h2>
+                <p className="text-xl text-black mt-2">
+                  Simple 4-step process to get expert DevOps support
+                </p>
+              </div>
             </div>
           </div>
-          <div className="flex flex-nowrap overflow-x-auto gap-6 pb-4 lg:grid lg:grid-cols-4">
-            {steps.map(({ step, title, desc, icon, color }) => (
-              <StepCard
-                key={step}
-                step={step}
-                title={title}
-                desc={desc}
-                icon={icon}
-                color={color}
-                className="-mt-4 min-w-[220px] flex-shrink-0" // Apply min-width for horizontal scroll
-              />
-            ))}
-          </div>
+
+          <Card className="border-0 shadow-lg rounded-3xl">
+            <CardHeader className="pb-6">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-black">
+                <div className="p-3 bg-blue-100 rounded-xl">
+                  <Handshake className="w-6 h-6 text-blue-600" />
+                </div>
+                Simple Engagement Process
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  {
+                    step: "1",
+                    title: "Initial Consultation",
+                    desc: "Discuss your current challenges, project goals, and desired outcomes.",
+                    icon: Users,
+                    color: "blue"
+                  },
+                  {
+                    step: "2",
+                    title: "Scope Definition",
+                    desc: "Work together to define the project scope, deliverables, and timeline.",
+                    icon: BookOpen,
+                    color: "green"
+                  },
+                  {
+                    step: "3",
+                    title: "Execution & Reporting",
+                    desc: "Our experts perform the work, providing regular progress updates and detailed reports.",
+                    icon: Code,
+                    color: "purple"
+                  },
+                  {
+                    step: "4",
+                    title: "Ongoing Support",
+                    desc: "Continuous assistance, maintenance, and optimization as your needs evolve.",
+                    icon: RefreshCw,
+                    color: "orange"
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="text-center p-6 bg-white rounded-2xl border border-gray-200 hover:shadow-md transition-all duration-300">
+                    <div className={`p-3 bg-${item.color}-100 rounded-xl mb-4 mx-auto w-16 h-16 flex items-center justify-center`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
+                    </div>
+                    <h4 className="font-bold text-black mb-2 text-lg">{item.title}</h4>
+                    <p className="text-black text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </section>
-        {/* Call to Action */}
-        <section className="text-center mb-7 md:mb-13">
-          {" "}
-          {/* Reduced mb-16 to mb-12 */}
-          <h3 className="text-xl md:text-3xl font-bold text-gray-900 mb-6">
-            Ready to Enhance Your DevOps Capability?
-          </h3>
-          <p className="text-base md:text-lg text-gray-700 max-w-xl mx-auto mb-8">
-            Contact me today for a personalized consultation and a flexible
-            support plan tailored to your business needs.
-          </p>
-          <Button
-            size="lg"
-            asChild
-            className="bg-gradient-to-r from-green-600 to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            <a
-              href="thaunghtikeoo.tho1234@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Get Started
-            </a>
-          </Button>
+
+        {/* Final CTA */}
+        <section className="mb-16">
+          <Card className="bg-gradient-to-r from-blue-600 to-cyan-600 border-0 shadow-2xl rounded-3xl overflow-hidden">
+            <CardContent className="p-12 text-center text-white">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Ready to Enhance Your DevOps Capability?
+                </h2>
+                <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+                  Contact us today for a personalized consultation and a flexible support plan tailored to your business needs.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Button 
+                    size="lg" 
+                    onClick={handleEmailClick}
+                    className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  >
+                    <Rocket className="w-5 h-5 mr-2" />
+                    Start Free Consultation
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={handleCaseStudiesClick}
+                    className="border-2 border-white text-sky-600 hover:bg-white hover:text-blue-600 px-8 py-3 rounded-xl text-lg font-semibold transition-all duration-300"
+                  >
+                    View Case Studies
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-blue-500">
+                  {[
+                    { icon: CheckCircle2, label: "Flexible Plans", desc: "Tailored to your needs" },
+                    { icon: ShieldCheck, label: "Expert Team", desc: "Senior DevOps professionals" },
+                    { icon: Zap, label: "Rapid Start", desc: "Get started in days" },
+                  ].map((item, index) => (
+                    <div key={index} className="flex flex-col items-center">
+                      <item.icon className="w-8 h-8 mb-3 text-white" />
+                      <h4 className="font-semibold mb-2">{item.label}</h4>
+                      <p className="text-blue-200 text-sm">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </section>
       </main>
-      <div className="-mt-4 md:-mt-14">
-        <MinimalFooter />
-      </div>
+
+      <MinimalFooter />
     </div>
   );
 }

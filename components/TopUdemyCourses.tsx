@@ -623,7 +623,7 @@ export function TopUdemyCourses() {
             >
               <div className="flex items-center gap-3">
                 <PlayCircle className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                <span>Start KodeKloud DevOps Path</span>
+                <span>View Roadmap</span>
                 <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </div>
             </a>
@@ -756,7 +756,7 @@ export function TopUdemyCourses() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scroll("right")}
-                  className="absolute -right-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+                  className="absolute -right-2 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
                   aria-label="Scroll right"
                 >
                   <ChevronRight className="w-5 h-5 text-gray-700" />
@@ -780,7 +780,7 @@ export function TopUdemyCourses() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex-shrink-0 w-80 snap-start"
+                    className="flex-shrink-0 w-96 snap-start"
                   >
                     <div className="block group h-full">
                       <div className="relative">
@@ -844,17 +844,6 @@ export function TopUdemyCourses() {
                             </span>
                           </div>
                         )}
-
-                        <a
-                          href={course.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] mt-3 text-sm border border-blue-400/30"
-                        >
-                          <GraduationCap className="w-4 h-4 mr-2" />
-                          Enroll Now
-                          <ExternalLink className="w-4 h-4 ml-2" />
-                        </a>
                       </div>
                     </div>
                   </motion.div>
@@ -934,7 +923,7 @@ export function TopUdemyCourses() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollGL("right")}
-              className="absolute -right-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+              className="absolute -right-2 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5 text-gray-700" />
@@ -956,7 +945,7 @@ export function TopUdemyCourses() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex-shrink-0 w-80 snap-start"
+                  className="flex-shrink-0 w-96 snap-start"
                 >
                   <div className="block group h-full">
                     <div className="relative">
@@ -1018,17 +1007,6 @@ export function TopUdemyCourses() {
                           <span className="text-gray-600 text-sm">rating</span>
                         </div>
                       )}
-
-                      <a
-                        href={course.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] mt-3 text-sm border border-blue-400/30"
-                      >
-                        <GraduationCap className="w-4 h-4 mr-2" />
-                        Free Enroll Now
-                        <ExternalLink className="w-4 h-4 ml-2" />
-                      </a>
                     </div>
                   </div>
                 </motion.div>
