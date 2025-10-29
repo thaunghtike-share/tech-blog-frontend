@@ -528,7 +528,7 @@ export function TopUdemyCourses() {
   return (
     <>
       {/* KodeKloud Intro Section - Similar to Featured Authors */}
-      <section className="w-full bg-white py-20">
+      <section className="w-full bg-white py-13">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header - Exactly like Featured Authors */}
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -636,7 +636,7 @@ export function TopUdemyCourses() {
       {/* Udemy Section */}
       <section
         ref={sectionRef}
-        className="relative w-full bg-white/95 py-14 overflow-hidden"
+        className="relative w-full bg-white/95 py-10 overflow-hidden"
       >
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section */}
@@ -744,7 +744,7 @@ export function TopUdemyCourses() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scroll("left")}
-                  className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+                  className="absolute -left-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
                   aria-label="Scroll left"
                 >
                   <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -756,7 +756,7 @@ export function TopUdemyCourses() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scroll("right")}
-                  className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+                  className="absolute -right-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
                   aria-label="Scroll right"
                 >
                   <ChevronRight className="w-5 h-5 text-gray-700" />
@@ -866,7 +866,7 @@ export function TopUdemyCourses() {
       </section>
 
       {/* Great Learning Section */}
-      <section className="relative w-full bg-white py-14 overflow-hidden">
+      <section className="relative w-full bg-white py-17 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section */}
           <motion.div
@@ -924,7 +924,7 @@ export function TopUdemyCourses() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollGL("left")}
-              className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+              className="absolute -left-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -934,7 +934,7 @@ export function TopUdemyCourses() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollGL("right")}
-              className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
+              className="absolute -right-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5 text-gray-700" />
