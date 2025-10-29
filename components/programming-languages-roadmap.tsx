@@ -239,7 +239,7 @@ export function ProgrammingLanguagesRoadmap() {
                             className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
                             onClick={handlePlayButtonClick}
                           >
-                            <div className="aspect-video rounded-lg overflow-hidden shadow-md border border-gray-300 relative bg-gray-200">
+                            <div className="h-96 w-full rounded-lg overflow-hidden shadow-md border border-gray-300 relative bg-gray-200">
                               <img
                                 src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
                                 alt={`${currentLanguage.name} Tutorial Preview`}
