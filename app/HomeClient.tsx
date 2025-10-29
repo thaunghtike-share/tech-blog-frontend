@@ -142,25 +142,6 @@ export default function HomeClient() {
           backfaceVisibility: "hidden",
         }}
       />
-      {/* Messenger Button */}
-      <a
-        href="https://m.me/learndevopsnowbytho"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Messenger Support"
-        className="fixed top-[70%] right-4 z-50 group"
-      >
-        <div className="flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-gray-200 shadow-lg rounded-full px-4 py-3 cursor-pointer transition-all duration-400 hover:scale-105 hover:shadow-xl">
-          <div className="relative w-8 h-8">
-            <div className="absolute inset-0 bg-purple-500 rounded-full animate-ping opacity-20"></div>
-            <div className="relative w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
-              <MessageSquare className="w-4 h-4 text-white" />
-            </div>
-          </div>
-          <span className="text-sm font-medium text-black">Chat Now</span>
-        </div>
-      </a>
-
       {mounted && (
         <div
           className="fixed inset-0 pointer-events-none z-0"

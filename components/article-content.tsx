@@ -20,6 +20,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ListTree,
+  BookOpen,
+  Users,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -549,27 +551,33 @@ export function ArticleContent({
       {/* Sidebar */}
       <aside className="lg:col-span-1 space-y-6">
         {/* Table of Contents */}
-        <Card className="border-2 border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl">
-          <CardContent className="p-5 md:p-6">
-            <h3 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2 pb-3 border-b-2 border-gray-100">
-              <ListOrdered className="w-4 h-4 text-blue-600" />
-              Contents
-            </h3>
-            <nav className="space-y-1">
+        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+          <CardContent className="p-5">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+                <ListOrdered className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-base font-semibold text-gray-900">
+                Table of Contents
+              </h3>
+            </div>
+            <nav className="space-y-2">
               {headings.map(({ id, text, level }) => (
                 <a
                   key={id}
                   href={`#${id}`}
-                  className={`block py-2 px-3 rounded-xl hover:bg-blue-50 hover:shadow-sm transition-all duration-200 text-sm border border-gray-400 hover:border-blue-200 group ${
+                  className={`block py-2 px-3 rounded-lg hover:bg-sky-50 transition-all duration-200 text-sm group ${
                     level === 1
-                      ? "text-blue-700 font-semibold"
-                      : "text-gray-700 font-normal"
+                      ? "text-sky-700 font-semibold border-l-2 border-sky-500"
+                      : level === 2
+                      ? "text-gray-700 font-medium border-l-2 border-gray-300"
+                      : "text-gray-600 font-normal border-l-2 border-gray-200"
                   }`}
                   style={{
-                    paddingLeft: `${level * 12}px`,
+                    marginLeft: `${(level - 1) * 12}px`,
                   }}
                 >
-                  <span className="group-hover:translate-x-1 transition-transform duration-200 block">
+                  <span className="group-hover:translate-x-1 transition-transform duration-200 block line-clamp-1">
                     {text}
                   </span>
                 </a>
@@ -578,44 +586,44 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Current Article Read Count */}
-        <Card className="border-2 border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl">
-          <CardContent className="p-5 md:p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
-                  <Eye className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="text-sm text-black font-medium">
-                    Article Views
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <CountUp
-                      end={article.read_count || 0}
-                      duration={2}
-                      separator=","
-                      className="text-lg font-bold text-gray-900"
-                    />
-                    <span className="text-xs text-gray-500"></span>
-                  </div>
-                </div>
+        {/* Article Stats */}
+        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+          <CardContent className="p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm">
+                <Eye className="w-4 h-4 text-white" />
               </div>
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">
+                  Article Views
+                </h3>
+                <p className="text-sm text-gray-600">Total reads</p>
+              </div>
+            </div>
+            <div className="text-center">
+              <CountUp
+                end={article.read_count || 0}
+                duration={2}
+                separator=","
+                className="text-2xl font-bold text-gray-900"
+              />
             </div>
           </CardContent>
         </Card>
 
-        {/* Recent Articles in Sidebar */}
-        <Card className="border-2 border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl">
-          <CardContent className="p-5 md:p-6">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-gray-100">
-              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
-                <ListTree className="w-4 h-4 text-blue-600" />
+        {/* Recent Articles */}
+        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+          <CardContent className="p-5">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-sm">
+                <BookOpen className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-base font-semibold text-gray-900">
                 Recent Articles
               </h3>
             </div>
-            <div className="space-y-3">
-              {recentArticles.slice(0, 5).map((article) => {
+            <div className="space-y-4">
+              {recentArticles.slice(0, 4).map((article) => {
                 const itemAuthor = authors.find((a) => a.id === article.author);
                 const coverImage = article.cover_image || "/devops.webp";
 
@@ -625,33 +633,32 @@ export function ArticleContent({
                     key={article.id}
                     className="block group"
                   >
-                    <div className="flex flex-col gap-3 p-3 rounded-xl hover:bg-gray-50 hover:shadow-md transition-all duration-300 border border-transparent hover:border-gray-200">
+                    <div className="flex gap-3 p-2 rounded-lg hover:bg-gray-50 transition-all duration-300">
                       {/* Cover Image */}
-                      <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
                         <img
                           src={coverImage}
                           alt={article.title}
-                          className="w-full h-24 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
 
-                      {/* Title */}
-                      <h4 className="font-medium text-gray-800 group-hover:text-blue-700 transition-colors line-clamp-2 text-sm leading-tight">
-                        {article.title}
-                      </h4>
-
-                      {/* Author and Read Count */}
-                      <div className="flex items-center justify-between text-xs text-teal-500">
-                        <span className="font-medium">
-                          {itemAuthor?.name || "Unknown"}
-                        </span>
-                        <div className="flex items-center gap-1">
-                          <Eye className="w-3 h-3" />
-                          <CountUp
-                            end={article.read_count || 0}
-                            duration={1.5}
-                            separator=","
-                          />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-gray-800 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight mb-1">
+                          {article.title}
+                        </h4>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-sky-600 font-medium">
+                            {itemAuthor?.name || "Unknown"}
+                          </span>
+                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <Eye className="w-3 h-3" />
+                            <CountUp
+                              end={article.read_count || 0}
+                              duration={1.5}
+                              separator=","
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -662,42 +669,44 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Top Read Articles */}
-        <Card className="border-2 border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl">
-          <CardContent className="p-5 md:p-6">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-gray-100">
-              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-orange-600" />
-                Popular Articles
+        {/* Popular Articles */}
+        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+          <CardContent className="p-5">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-sm">
+                <TrendingUp className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-base font-semibold text-gray-900">
+                Popular Reads
               </h3>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {topReadArticles.map((article, index) => (
                 <Link
                   href={`/articles/${article.slug}`}
                   key={article.id}
                   className="block group"
                 >
-                  <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 hover:shadow-md transition-all duration-300 border border-transparent hover:border-gray-200">
+                  <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-all duration-300">
                     <span
-                      className={`text-sm font-bold w-6 h-6 flex items-center justify-center rounded-xl flex-shrink-0 shadow-sm transition-all duration-300 ${
+                      className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-lg flex-shrink-0 transition-all duration-300 ${
                         index === 0
-                          ? "text-white bg-gradient-to-br from-orange-500 to-orange-600 shadow-orange-200"
+                          ? "text-white bg-gradient-to-br from-orange-500 to-orange-600 shadow-sm"
                           : index === 1
-                          ? "text-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-200"
+                          ? "text-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm"
                           : index === 2
-                          ? "text-white bg-gradient-to-br from-blue-400 to-blue-500 shadow-blue-200"
-                          : "text-white bg-gradient-to-br from-orange-500 to-orange-600 shadow-orange-200"
+                          ? "text-white bg-gradient-to-br from-green-500 to-green-600 shadow-sm"
+                          : "text-white bg-gradient-to-br from-gray-500 to-gray-600 shadow-sm"
                       } group-hover:scale-110`}
                     >
                       {index + 1}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-gray-800 group-hover:text-blue-700 transition-colors line-clamp-2 text-sm leading-tight">
+                      <h4 className="font-medium text-gray-800 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight">
                         {article.title}
                       </h4>
                     </div>
-                    <div className="flex items-center text-sm text-orange-500 flex-shrink-0">
+                    <div className="flex items-center text-xs text-orange-600 flex-shrink-0 font-medium">
                       <Eye className="w-3 h-3 mr-1" />
                       <CountUp
                         end={article.read_count || 0}
@@ -709,6 +718,28 @@ export function ArticleContent({
                 </Link>
               ))}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Newsletter CTA */}
+        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-gradient-to-br from-sky-50 to-blue-50">
+          <CardContent className="p-5 text-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">
+              Join DevOps Community
+            </h3>
+            <p className="text-xs text-gray-600 mb-3">
+              Get the latest articles and insights delivered to your inbox
+            </p>
+            <Link
+              href="/newsletter"
+              className="inline-flex items-center gap-2 w-full justify-center bg-gradient-to-r from-sky-600 to-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 text-sm hover:scale-105"
+            >
+              Subscribe
+              <ArrowRight className="w-3 h-3" />
+            </Link>
           </CardContent>
         </Card>
       </aside>
