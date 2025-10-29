@@ -562,6 +562,7 @@ const learningPaths = {
       { title: "Terraform", icon: "🏗️" },
       { title: "GitOps", icon: "🔄" }, // Added GitOps
       { title: "Monitoring", icon: "📊" },
+      { title: "Vault", icon: "🛡️" },
     ],
     duration: "16-20 weeks",
     skills: ["Kubernetes", "Terraform", "GitOps", "Security", "Monitoring"],
