@@ -11,6 +11,10 @@ import {
   AlertTriangle,
   Users,
   RefreshCw,
+  PlayCircle,
+  Target,
+  Zap,
+  Clock,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -119,7 +123,8 @@ const greatLearningCourses: Course[] = [
   {
     id: 1,
     title: "1.Linux Tutorial",
-    description: "Comprehensive Linux tutorial covering essential commands, file systems, and system administration basics.",
+    description:
+      "Comprehensive Linux tutorial covering essential commands, file systems, and system administration basics.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/linux-tutorial",
     author: "Mr. Ramendra Tripathi",
     cover_image: "/g1.webp",
@@ -130,7 +135,8 @@ const greatLearningCourses: Course[] = [
   {
     id: 2,
     title: "2.AWS for Beginners",
-    description: "Learn AWS fundamentals, services, and cloud computing concepts from scratch with hands-on examples.",
+    description:
+      "Learn AWS fundamentals, services, and cloud computing concepts from scratch with hands-on examples.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/aws-for-beginners1",
     author: "Mr. Vishal Padghan",
     cover_image: "/aws.jpg",
@@ -141,7 +147,8 @@ const greatLearningCourses: Course[] = [
   {
     id: 3,
     title: "3.Git Tutorial",
-    description: "Master version control with Git - from basic commands to branching strategies and collaboration workflows.",
+    description:
+      "Master version control with Git - from basic commands to branching strategies and collaboration workflows.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/git-tutorial",
     author: "Mr. Ramendra Tripathi",
     cover_image: "/g4.webp",
@@ -152,7 +159,8 @@ const greatLearningCourses: Course[] = [
   {
     id: 4,
     title: "4.GitHub Tutorial for Beginners",
-    description: "Learn GitHub essentials including repositories, pull requests, issues, and collaborative development.",
+    description:
+      "Learn GitHub essentials including repositories, pull requests, issues, and collaborative development.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/github-tutorial-for-beginners",
     author: "Pragya P",
     cover_image: "/g5.jpg",
@@ -160,10 +168,11 @@ const greatLearningCourses: Course[] = [
     students: "9K+",
     rating: 4.6,
   },
-    {
+  {
     id: 5,
     title: "5.Docker for Intermediate Level",
-    description: "Advanced Docker concepts including container orchestration, Docker Compose, and best practices.",
+    description:
+      "Advanced Docker concepts including container orchestration, Docker Compose, and best practices.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/docker-for-intermediate-level",
     author: "Mr. Ramendra Tripathi",
     cover_image: "/docker.webp",
@@ -171,10 +180,11 @@ const greatLearningCourses: Course[] = [
     students: "8K+",
     rating: 4.5,
   },
-    {
+  {
     id: 6,
     title: "6.Docker Orchestration",
-    description: "Advanced Docker concepts including container orchestration, Docker Compose, and best practices.",
+    description:
+      "Advanced Docker concepts including container orchestration, Docker Compose, and best practices.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/docker-orchestration",
     author: "Mr. Ramendra Tripathi",
     cover_image: "/g12.png",
@@ -185,7 +195,8 @@ const greatLearningCourses: Course[] = [
   {
     id: 7,
     title: "7.AWS CI/CD Pipeline Tutorial",
-    description: "Build continuous integration and deployment pipelines on AWS with CodePipeline, CodeBuild, and CodeDeploy.",
+    description:
+      "Build continuous integration and deployment pipelines on AWS with CodePipeline, CodeBuild, and CodeDeploy.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/aws-ci-cd-pipeline-tutorial",
     author: "Mrs. Priyanka Sharma",
     cover_image: "/g6.jpg",
@@ -193,10 +204,11 @@ const greatLearningCourses: Course[] = [
     students: "7K+",
     rating: 4.7,
   },
-    {
+  {
     id: 8,
     title: "8.Jenkins Tutorial",
-    description: "Build continuous integration and deployment pipelines with Jenkins.",
+    description:
+      "Build continuous integration and deployment pipelines with Jenkins.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/jenkins-tutorial",
     author: "Mr. Ramendra Tripathi",
     cover_image: "/g7.png",
@@ -218,12 +230,64 @@ const greatLearningCourses: Course[] = [
   {
     id: 10,
     title: "10.Deploy an App using Kubernetes",
-    description: "Learn how to deploy a containerized application using Kubernetes.",
+    description:
+      "Learn how to deploy a containerized application using Kubernetes.",
     url: "https://www.mygreatlearning.com/academy/learn-for-free/courses/deploy-an-app-using-kubernetes",
     author: "Mr. Ramendra Tripathi",
     cover_image: "/g11.png",
     price: "Free",
     students: "24K+",
+    rating: 4.7,
+  },
+];
+
+const kodekloudCourses: Course[] = [
+  {
+    id: 1,
+    title: "Linux for Beginners",
+    description:
+      "Comprehensive Linux course covering commands, file systems, and administration basics with hands-on labs.",
+    url: "https://kodekloud.com/courses/linux-for-beginners/",
+    author: "KodeKloud Team",
+    cover_image: "/kodekloud-linux.jpg",
+    price: "Free",
+    students: "50K+",
+    rating: 4.8,
+  },
+  {
+    id: 2,
+    title: "Docker for Beginners",
+    description:
+      "Learn Docker fundamentals with interactive labs and real-world containerization scenarios.",
+    url: "https://kodekloud.com/courses/docker-for-beginners/",
+    author: "KodeKloud Team",
+    cover_image: "/kodekloud-docker.jpg",
+    price: "Free",
+    students: "45K+",
+    rating: 4.9,
+  },
+  {
+    id: 3,
+    title: "Kubernetes for Beginners",
+    description:
+      "Master Kubernetes basics with hands-on labs and practical deployment exercises.",
+    url: "https://kodekloud.com/courses/kubernetes-for-beginners/",
+    author: "KodeKloud Team",
+    cover_image: "/kodekloud-k8s.jpg",
+    price: "Free",
+    students: "38K+",
+    rating: 4.8,
+  },
+  {
+    id: 4,
+    title: "DevOps Pre-requisites",
+    description:
+      "Essential foundation course covering Git, Linux, and basic DevOps concepts with interactive labs.",
+    url: "https://kodekloud.com/courses/devops-pre-requisites/",
+    author: "KodeKloud Team",
+    cover_image: "/kodekloud-devops.jpg",
+    price: "Free",
+    students: "42K+",
     rating: 4.7,
   },
 ];
@@ -243,9 +307,14 @@ export function TopUdemyCourses() {
   const [usingFallback, setUsingFallback] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [canScrollLeftGL, setCanScrollLeftGL] = useState(false);
+  const [canScrollRightGL, setCanScrollRightGL] = useState(true);
+  const [canScrollLeftKK, setCanScrollLeftKK] = useState(false);
+  const [canScrollRightKK, setCanScrollRightKK] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const glScrollRef = useRef<HTMLDivElement>(null);
+  const kkScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -344,6 +413,22 @@ export function TopUdemyCourses() {
     }
   };
 
+  const checkScrollGL = () => {
+    if (glScrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = glScrollRef.current;
+      setCanScrollLeftGL(scrollLeft > 0);
+      setCanScrollRightGL(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const checkScrollKK = () => {
+    if (kkScrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = kkScrollRef.current;
+      setCanScrollLeftKK(scrollLeft > 0);
+      setCanScrollRightKK(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 400;
@@ -364,12 +449,36 @@ export function TopUdemyCourses() {
     }
   };
 
+  const scrollKK = (direction: "left" | "right") => {
+    if (kkScrollRef.current) {
+      const scrollAmount = 400;
+      kkScrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   useEffect(() => {
     checkScroll();
     const currentRef = scrollRef.current;
     currentRef?.addEventListener("scroll", checkScroll);
     return () => currentRef?.removeEventListener("scroll", checkScroll);
   }, [courses]);
+
+  useEffect(() => {
+    checkScrollGL();
+    const currentRef = glScrollRef.current;
+    currentRef?.addEventListener("scroll", checkScrollGL);
+    return () => currentRef?.removeEventListener("scroll", checkScrollGL);
+  }, []);
+
+  useEffect(() => {
+    checkScrollKK();
+    const currentRef = kkScrollRef.current;
+    currentRef?.addEventListener("scroll", checkScrollKK);
+    return () => currentRef?.removeEventListener("scroll", checkScrollKK);
+  }, []);
 
   const retryFetch = () => {
     setError(null);
@@ -418,6 +527,112 @@ export function TopUdemyCourses() {
 
   return (
     <>
+      {/* KodeKloud Intro Section - Similar to Featured Authors */}
+      <section className="w-full bg-white py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header - Exactly like Featured Authors */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-6 py-3 rounded-full border border-sky-100 mb-6">
+              <Zap className="w-5 h-5 text-sky-600" />
+              <span className="text-sky-700 font-semibold text-sm uppercase tracking-wide">
+                Perfect for Beginners
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
+              Start Your DevOps Journey with
+              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                KodeKloud
+              </span>
+            </h2>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Interactive courses with hands-on labs that make learning DevOps
+              tools and technologies engaging and practical. The perfect
+              starting point for your DevOps career.
+            </p>
+          </div>
+
+          {/* KodeKloud Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="group text-center p-8 bg-white rounded-2xl border border-gray-300 hover:border-sky-200 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="inline-flex items-center justify-center rounded-2xl p-5 mb-6 group-hover:scale-110 transition-transform duration-300">
+                <PlayCircle className="w-12 h-12 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-sky-600 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+                Hands-On Labs
+              </h3>
+              <p className="text-black leading-relaxed">
+                Practice with real-world scenarios in interactive environments
+                that simulate actual DevOps tools and workflows.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="group text-center p-8 bg-white rounded-2xl border border-gray-300 hover:border-sky-200 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="inline-flex items-center justify-center rounded-2xl p-5 mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-12 h-12 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-sky-600 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+                Beginner Friendly
+              </h3>
+              <p className="text-black leading-relaxed">
+                Step-by-step courses designed specifically for beginners with no
+                prior experience required.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="group text-center p-8 bg-white rounded-2xl border border-gray-300 hover:border-sky-200 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="inline-flex items-center justify-center rounded-2xl p-5 mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Clock className="w-12 h-12 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-sky-600 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+                Self-Paced Learning
+              </h3>
+              <p className="text-black leading-relaxed">
+                Learn at your own pace with comprehensive video lectures,
+                exercises, and lifetime access to course materials.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* KodeKloud CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-center"
+          >
+            <a
+              href="https://learn.kodekloud.com/user/learning-paths/devops"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-2xl transition-all duration-300 font-bold text-lg hover:scale-105 border border-blue-500/30"
+            >
+              <div className="flex items-center gap-3">
+                <PlayCircle className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                <span>Start KodeKloud DevOps Path</span>
+                <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </div>
+            </a>
+            <p className="text-gray-500 text-sm mt-4">
+              Perfect for absolute beginners. No credit card required.
+            </p>
+          </motion.div>
+        </div>
+      </section>
       {/* Udemy Section */}
       <section
         ref={sectionRef}
@@ -446,9 +661,9 @@ export function TopUdemyCourses() {
                 className="flex items-center gap-4 mb-6"
               >
                 <div className="w-16 h-16 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2">
-                  <img 
-                    src="/udemy.webp" 
-                    alt="Udemy" 
+                  <img
+                    src="/udemy.webp"
+                    alt="Udemy"
                     className="w-12 h-12 object-contain"
                   />
                 </div>
@@ -624,7 +839,9 @@ export function TopUdemyCourses() {
                                 {course.rating.toFixed(1)}
                               </span>
                             </div>
-                            <span className="text-gray-600 text-sm">rating</span>
+                            <span className="text-gray-600 text-sm">
+                              rating
+                            </span>
                           </div>
                         )}
 
@@ -673,9 +890,9 @@ export function TopUdemyCourses() {
                 className="flex items-center gap-4 mb-6"
               >
                 <div className="w-16 h-16 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2">
-                  <img 
-                    src="/greatlearning.png" 
-                    alt="Great Learning" 
+                  <img
+                    src="/greatlearning.png"
+                    alt="Great Learning"
                     className="w-12 h-12 object-contain"
                   />
                 </div>
@@ -693,8 +910,9 @@ export function TopUdemyCourses() {
                 transition={{ delay: 0.2 }}
                 className="text-lg text-black leading-relaxed"
               >
-                Free comprehensive courses from Great Learning Academy covering Linux, AWS, 
-                Docker, Git, and CI/CD pipelines to boost your DevOps skills
+                Free comprehensive courses from Great Learning Academy covering
+                Linux, AWS, Docker, Git, and CI/CD pipelines to boost your
+                DevOps skills
               </motion.p>
             </div>
           </motion.div>

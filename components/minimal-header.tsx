@@ -351,7 +351,7 @@ export function MinimalHeader() {
                     : "text-black hover:text-black hover:bg-gray-100"
                 }`}
               >
-                <span className="relative z-10">Resources</span>
+                <span className="relative z-10">Learning Resources</span>
                 <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
               </button>
               {isResourcesOpen && (
