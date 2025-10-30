@@ -493,7 +493,7 @@ export function MinimalHeader() {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
               <Link
                 href="/admin/new-article"
-                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-700 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30 font-medium"
+                className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-700 to-blue-700 text-white rounded-xl hover:from-sky-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 border border-blue-500/30 font-medium"
               >
                 <Sparkles className="w-4 h-4" />
                 Publish
