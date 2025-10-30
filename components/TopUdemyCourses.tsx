@@ -4,13 +4,21 @@ import {
   Star,
   GraduationCap,
   BookOpen,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
   User,
   AlertTriangle,
-  Users,
   RefreshCw,
+  Trophy,
+  Award,
+  Users,
+  Gift,
+  CheckCircle,
+  Ship,
+  Container,
+  Layout,
+  Cloud,
+  ExternalLink,
   PlayCircle,
   Target,
   Zap,
@@ -527,47 +535,62 @@ export function TopUdemyCourses() {
 
   return (
     <>
-      {/* KodeKloud Intro Section - Similar to Featured Authors */}
-      <section className="w-full bg-white py-13">
+      {/* KodeKloud Intro Section - Premium Brand Focus */}
+      <section className="w-full bg-white py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Header - Exactly like Featured Authors */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-6 py-3 rounded-full border border-sky-100 mb-6">
-              <Zap className="w-5 h-5 text-sky-600" />
-              <span className="text-sky-700 font-semibold text-sm uppercase tracking-wide">
-                Perfect for Beginners
+          {/* Header - Premium Brand Introduction */}
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-3 rounded-full text-white mb-6 shadow-lg">
+              <Trophy className="w-5 h-5" />
+              <span className="font-semibold text-sm uppercase tracking-wide">
+                Trusted by 500,000+ Engineers
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
-              Start Your DevOps Journey with
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              Learn DevOps with
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
                 KodeKloud
               </span>
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Interactive courses with hands-on labs that make learning DevOps
-              tools and technologies engaging and practical. The perfect
-              starting point for your DevOps career.
+            <p className="text-xl text-gray-700 leading-relaxed mb-6">
+              The leading platform for DevOps, Cloud, and Infrastructure
+              learning. Join the community trusted by engineers at Fortune 500
+              companies.
             </p>
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>Industry-Recognized Courses</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>Expert Instructors</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>Free Courses Available</span>
+              </div>
+            </div>
           </div>
 
-          {/* KodeKloud Features Grid */}
+          {/* KodeKloud Value Proposition Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="group text-center p-8 bg-white rounded-2xl border border-gray-300 hover:border-sky-200 hover:shadow-xl transition-all duration-300"
+              className="group text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-xl transition-all duration-300"
             >
-              <div className="inline-flex items-center justify-center rounded-2xl p-5 mb-6 group-hover:scale-110 transition-transform duration-300">
-                <PlayCircle className="w-12 h-12 text-sky-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Award className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-sky-600 mb-4 group-hover:text-sky-600 transition-colors duration-300">
-                Hands-On Labs
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+                Industry-Leading Courses
               </h3>
-              <p className="text-black leading-relaxed">
-                Practice with real-world scenarios in interactive environments
-                that simulate actual DevOps tools and workflows.
+              <p className="text-gray-700 leading-relaxed">
+                Comprehensive curriculum covering Docker, Kubernetes, AWS,
+                Terraform, and more. Courses designed by industry experts with
+                real-world relevance.
               </p>
             </motion.div>
 
@@ -575,17 +598,18 @@ export function TopUdemyCourses() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="group text-center p-8 bg-white rounded-2xl border border-gray-300 hover:border-sky-200 hover:shadow-xl transition-all duration-300"
+              className="group text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-xl transition-all duration-300"
             >
-              <div className="inline-flex items-center justify-center rounded-2xl p-5 mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Target className="w-12 h-12 text-sky-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-sky-600 mb-4 group-hover:text-sky-600 transition-colors duration-300">
-                Beginner Friendly
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+                Expert Instructors
               </h3>
-              <p className="text-black leading-relaxed">
-                Step-by-step courses designed specifically for beginners with no
-                prior experience required.
+              <p className="text-gray-700 leading-relaxed">
+                Learn from top industry professionals including Mumshad
+                Mannambeth, with years of real-world experience in DevOps and
+                cloud technologies.
               </p>
             </motion.div>
 
@@ -593,42 +617,61 @@ export function TopUdemyCourses() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="group text-center p-8 bg-white rounded-2xl border border-gray-300 hover:border-sky-200 hover:shadow-xl transition-all duration-300"
+              className="group text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-xl transition-all duration-300"
             >
-              <div className="inline-flex items-center justify-center rounded-2xl p-5 mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Clock className="w-12 h-12 text-sky-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Gift className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-sky-600 mb-4 group-hover:text-sky-600 transition-colors duration-300">
-                Self-Paced Learning
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+                Free Learning Path
               </h3>
-              <p className="text-black leading-relaxed">
-                Learn at your own pace with comprehensive video lectures,
-                exercises, and lifetime access to course materials.
+              <p className="text-gray-700 leading-relaxed">
+                Start with free courses and hands-on labs. No credit card
+                required. Perfect for beginners to explore DevOps without
+                financial commitment.
               </p>
             </motion.div>
           </div>
 
-          {/* KodeKloud CTA */}
+          {/* CTA Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             className="text-center"
           >
-            <a
-              href="https://learn.kodekloud.com/user/learning-paths/devops"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-2xl transition-all duration-300 font-bold text-lg hover:scale-105 border border-blue-500/30"
-            >
-              <div className="flex items-center gap-3">
-                <PlayCircle className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                <span>View Roadmap</span>
-                <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <div className="bg-gradient-to-r from-sky-600 to-blue-600 rounded-2xl p-8 text-white shadow-xl mb-6">
+              <h3 className="text-2xl font-bold mb-4">
+                Ready to Start Your DevOps Journey?
+              </h3>
+              <p className="text-sky-100 text-lg mb-6 max-w-2xl mx-auto">
+                Join thousands of successful engineers who transformed their
+                careers with KodeKloud's proven learning platform.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="https://kodekloud.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-sky-600 rounded-xl hover:shadow-2xl transition-all duration-300 font-bold text-lg hover:scale-105"
+                >
+                  <span>Explore All Courses</span>
+                  <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </a>
+                <a
+                  href="https://learn.kodekloud.com/user/learning-paths/devops"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl hover:bg-white hover:text-sky-600 transition-all duration-300 font-bold text-lg"
+                >
+                  <PlayCircle className="w-5 h-5" />
+                  <span>View DevOps Path</span>
+                </a>
               </div>
-            </a>
-            <p className="text-gray-500 text-sm mt-4">
-              Perfect for absolute beginners. No credit card required.
+            </div>
+            <p className="text-gray-600 text-sm">
+              Trusted by engineers at Google, Amazon, Microsoft, and thousands
+              of other companies worldwide.
             </p>
           </motion.div>
         </div>

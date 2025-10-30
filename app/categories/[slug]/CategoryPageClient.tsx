@@ -10,8 +10,9 @@ import {
   ArrowRight,
   Eye,
   Tag as TagIcon,
-  Sparkles,
-  AlertTriangle,
+  Star,
+  Award,
+  TrendingUp,
 } from "lucide-react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -22,6 +23,7 @@ interface Category {
   id: number;
   name: string;
   slug: string;
+  post_count?: number;
 }
 
 interface Article {
@@ -34,6 +36,7 @@ interface Article {
   tags: number[];
   author: number;
   read_count?: number;
+  cover_image?: string;
 }
 
 interface Author {
@@ -54,7 +57,7 @@ interface Props {
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const DEFAULT_PAGE_SIZE = 5;
+const DEFAULT_PAGE_SIZE = 6;
 
 export default function CategoryPageClient({ slug }: Props) {
   const [category, setCategory] = useState<Category | null>(null);
@@ -65,7 +68,6 @@ export default function CategoryPageClient({ slug }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const router = useRouter();
   const topRef = useRef<HTMLHeadingElement>(null);
   const isFirstRender = useRef(true);
@@ -99,9 +101,8 @@ export default function CategoryPageClient({ slug }: Props) {
         // Fetch authors
         const authorsRes = await fetch(`${API_BASE_URL}/authors/`);
         const authorsData = await authorsRes.json();
-        setAuthors(
-          Array.isArray(authorsData) ? authorsData : authorsData.results || []
-        );
+        const authorsList = Array.isArray(authorsData) ? authorsData : authorsData.results || [];
+        setAuthors(authorsList);
 
         // Fetch tags
         const tagsRes = await fetch(`${API_BASE_URL}/tags/`);
@@ -146,9 +147,32 @@ export default function CategoryPageClient({ slug }: Props) {
   const truncate = (str: string, max = 150) =>
     str.length <= max ? str : str.slice(0, max) + "...";
 
-  const handlePageSizeChange = (size: number) => {
-    setPageSize(size);
-    setCurrentPage(1);
+  // Get cover image URL
+  const getCoverImage = (article: Article) => {
+    if (article.cover_image && article.cover_image.trim() !== '') {
+      return article.cover_image;
+    }
+
+    // Fallback based on category
+    const categoryName = category?.name?.toLowerCase() || '';
+    if (categoryName.includes('devops') || categoryName.includes('docker') || categoryName.includes('kubernetes')) {
+      return "/devops.webp";
+    } else if (categoryName.includes('cloud') || categoryName.includes('aws') || categoryName.includes('azure')) {
+      return "/cloud.webp";
+    } else if (categoryName.includes('automation') || categoryName.includes('ci/cd')) {
+      return "/automation.webp";
+    } else if (categoryName.includes('terraform') || categoryName.includes('iac')) {
+      return "/terraform.webp";
+    } else if (categoryName.includes('devsecops') || categoryName.includes('security')) {
+      return "/security.webp";
+    }
+    
+    return "/devops.webp";
+  };
+
+  // Check if article has a real cover image
+  const hasRealCoverImage = (article: Article) => {
+    return !!(article.cover_image && article.cover_image.trim() !== '');
   };
 
   // Pagination logic
@@ -159,49 +183,27 @@ export default function CategoryPageClient({ slug }: Props) {
     currentPage * pageSize
   );
 
-  // Tag click handler passed to sidebar - updates URL with tag filter
-  const onTagClick = (tagSlug: string | null) => {
-    setSelectedTag(tagSlug);
-    const params = new URLSearchParams();
-    if (tagSlug) {
-      params.set("tags__slug", tagSlug);
-    }
-    const newUrl = `/articles?${params.toString()}`;
-    router.push(newUrl);
-  };
-
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="relative">
-          <MinimalHeader />
-        </div>
-        <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl p-8 shadow-lg text-center max-w-2xl mx-auto">
-            <div className="bg-red-100 p-4 rounded-full inline-flex items-center justify-center mb-6">
-              <svg
-                className="w-10 h-10 text-red-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+      <div className="min-h-screen bg-white">
+        <MinimalHeader />
+        <main className="max-w-6xl mx-auto px-4 py-20">
+          <div className="text-center">
+            <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-pink-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+              <Award className="w-12 h-12 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Oops! Something went wrong
-            </h2>
-            <p className="text-gray-600 mb-6">{error}</p>
+            <h1 className="text-4xl font-bold text-black mb-4">
+              Category Not Found
+            </h1>
+            <p className="text-lg text-black/80 mb-8 max-w-md mx-auto">
+              {error}
+            </p>
             <Link
-              href="/"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+              href="/categories"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              Back to Home
+              Browse All Categories
+              <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </main>
@@ -212,27 +214,32 @@ export default function CategoryPageClient({ slug }: Props) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="relative">
-          <MinimalHeader />
-        </div>
-        <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
-            <div className="lg:col-span-4 bg-white rounded-2xl p-8 shadow-sm">
-              <div className="animate-pulse space-y-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-xl"></div>
-                  <div className="space-y-2">
-                    <div className="h-7 w-64 bg-gray-200 rounded-full"></div>
-                    <div className="h-4 w-48 bg-gray-200 rounded-full"></div>
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="h-32 bg-gray-100 rounded-xl"></div>
-                  ))}
+      <div className="min-h-screen bg-white">
+        <MinimalHeader />
+        <main className="max-w-6xl mx-auto px-4 py-12">
+          <div className="animate-pulse space-y-12">
+            {/* Category Skeleton */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-8">
+              <div className="flex items-center gap-8">
+                <div className="w-24 h-24 bg-gray-200 rounded-2xl"></div>
+                <div className="space-y-4 flex-1">
+                  <div className="h-8 bg-gray-200 rounded-full w-64"></div>
+                  <div className="h-6 bg-gray-200 rounded-full w-48"></div>
+                  <div className="h-4 bg-gray-200 rounded-full w-36"></div>
                 </div>
               </div>
+            </div>
+            {/* Articles Skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl border border-gray-200 p-6">
+                  <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
+                  <div className="space-y-3">
+                    <div className="h-4 bg-gray-200 rounded-full w-3/4"></div>
+                    <div className="h-4 bg-gray-200 rounded-full w-1/2"></div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </main>
@@ -242,292 +249,300 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-gray-50 to-gray-100">
-      <div
-        className="absolute inset-0 z-0 opacity-10"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 10v-4h-2v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        }}
-      ></div>
-      <div className="relative">
-        <MinimalHeader />
-      </div>
-
-      <main className="md:-mt-1 -mt-14 max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
-          {/* Article list */}
-          <div className="lg:col-span-4 space-y-8">
-            {/* Articles Section */}
-            <div className="bg-white/90 relative rounded-2xl p-8 shadow-lg border border-gray-100">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                <div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
-                      <Folder className="w-6 h-6 text-white" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900">
-                      {category?.name} Articles
-                    </h2>
+    <div className="min-h-screen bg-white">
+      <MinimalHeader />
+      
+      <main className="max-w-6xl mx-auto px-4 py-8">
+        {/* Category Header */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative mb-12"
+        >
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8">
+              {/* Category Icon */}
+              <div className="relative">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 p-1 shadow-lg">
+                  <div className="w-full h-full rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center border-4 border-white/20">
+                    <Award className="w-10 h-10 md:w-12 md:h-12 text-white" />
                   </div>
-                  <p className="text-gray-600 mt-1">
-                    {articles.length} published article
-                    {articles.length !== 1 ? "s" : ""}
-                  </p>
                 </div>
               </div>
 
-              {articles.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="inline-flex items-center justify-center bg-yellow-50 rounded-full p-5 mb-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-10 h-10 text-yellow-600"
-                    >
-                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                      <line x1="12" y1="9" x2="12" y2="13"></line>
-                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    No articles found
-                  </h3>
-                  <p className="text-gray-600 max-w-md mx-auto">
-                    No articles available in this category yet. Check back
-                    later!
-                  </p>
+              {/* Category Info */}
+              <div className="flex-1 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
+                  <Award className="w-4 h-4" />
+                  Category
                 </div>
-              ) : (
-                <>
-                  <div className="space-y-6">
-                    <AnimatePresence>
-                      {paginatedArticles.map((article, index) => {
-                        const previewText = truncate(
-                          stripMarkdown(article.content),
-                          200
-                        );
-                        const author = getAuthor(article.author);
-
-                        return (
-                          <motion.article
-                            key={article.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: index * 0.1 }}
-                            className="group bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-                          >
-                            {/* Title */}
-                            <Link
-                              href={`/articles/${article.slug}`}
-                              className="group/link block mb-3"
-                            >
-                              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover/link:text-blue-600 transition-colors">
-                                {article.title}
-                              </h3>
-                            </Link>
-
-                            {/* Author and Date */}
-                            <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
-                              <div className="flex items-center gap-2">
-                                {author?.avatar ? (
-                                  <img
-                                    src={author.avatar}
-                                    alt={author.name}
-                                    className="w-5 h-5 rounded-full object-cover border border-gray-200"
-                                    loading="lazy"
-                                  />
-                                ) : (
-                                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                                    <User className="w-3 h-3 text-white" />
-                                  </div>
-                                )}
-                                <Link
-                                  href={`/authors/${author?.slug}`}
-                                  className="font-medium text-gray-600 hover:text-blue-600 transition-colors"
-                                >
-                                  {author?.name || `Author ${article.author}`}
-                                </Link>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <Calendar className="w-4 h-4 text-gray-400" />
-                                <span>{formatDate(article.published_at)}</span>
-                              </div>
-                            </div>
-
-                            {/* Tags */}
-                            {article.tags.length > 0 && (
-                              <div className="flex flex-wrap gap-2 mb-4">
-                                {article.tags.map((tagId) => {
-                                  const tag = getTagById(tagId);
-                                  if (!tag) return null;
-                                  return (
-                                    <Link
-                                      key={tag.id}
-                                      href={`/articles?tag=${tag.slug}`}
-                                      className="flex items-center gap-1 text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                                    >
-                                      <TagIcon className="w-4 h-4" />
-                                      <span>{tag.name}</span>
-                                    </Link>
-                                  );
-                                })}
-                              </div>
-                            )}
-
-                            {/* Content */}
-                            <div className="mb-4">
-                              <p className="text-sm sm:text-[15px] text-gray-700 line-clamp-2 leading-relaxed">
-                                {previewText}
-                              </p>
-                            </div>
-
-                            {/* Read more and stats in one line */}
-                            <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                              <Link
-                                href={`/articles/${article.slug}`}
-                                className="text-sm text-blue-600 flex items-center gap-1 group-hover:gap-2 font-medium transition-all"
-                              >
-                                Read more{" "}
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                              </Link>
-                              <div className="flex items-center gap-4 text-sm text-gray-500">
-                                <div className="flex items-center gap-1">
-                                  <Clock className="w-4 h-4 text-gray-400" />
-                                  <span>
-                                    {calculateReadTime(article.content)} read
-                                  </span>
-                                </div>
-                                {article.read_count && (
-                                  <div className="flex items-center gap-1">
-                                    <Eye className="w-4 h-4 text-gray-400" />
-                                    <span className="font-medium">
-                                      {article.read_count.toLocaleString()}{" "}
-                                      views
-                                    </span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </motion.article>
-                        );
-                      })}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Pagination */}
-                  {totalPages > 1 && (
-                    <nav className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-                      <div className="text-xs sm:text-sm text-gray-500">
-                        Showing {(currentPage - 1) * pageSize + 1} to{" "}
-                        {Math.min(currentPage * pageSize, totalArticles)} of{" "}
-                        {totalArticles} articles
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() =>
-                            setCurrentPage((p) => Math.max(1, p - 1))
-                          }
-                          disabled={currentPage === 1}
-                          className="flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M15 19l-7-7 7-7"
-                            />
-                          </svg>
-                          Previous
-                        </button>
-                        <div className="flex items-center gap-1">
-                          {Array.from(
-                            { length: Math.min(5, totalPages) },
-                            (_, i) => {
-                              let pageNum;
-                              if (totalPages <= 5) {
-                                pageNum = i + 1;
-                              } else if (currentPage <= 3) {
-                                pageNum = i + 1;
-                              } else if (currentPage >= totalPages - 2) {
-                                pageNum = totalPages - 4 + i;
-                              } else {
-                                pageNum = currentPage - 2 + i;
-                              }
-
-                              return (
-                                <button
-                                  key={pageNum}
-                                  onClick={() => setCurrentPage(pageNum)}
-                                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
-                                    currentPage === pageNum
-                                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                                      : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                                  }`}
-                                >
-                                  {pageNum}
-                                </button>
-                              );
-                            }
-                          )}
-                          {totalPages > 5 && currentPage < totalPages - 2 && (
-                            <span className="px-2 text-gray-500">...</span>
-                          )}
-                          {totalPages > 5 && currentPage < totalPages - 2 && (
-                            <button
-                              onClick={() => setCurrentPage(totalPages)}
-                              className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
-                                currentPage === totalPages
-                                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                                  : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                              }`}
-                            >
-                              {totalPages}
-                            </button>
-                          )}
-                        </div>
-                        <button
-                          onClick={() =>
-                            setCurrentPage((p) => Math.min(totalPages, p + 1))
-                          }
-                          disabled={currentPage === totalPages}
-                          className="flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white shadow-sm"
-                        >
-                          Next
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </nav>
-                  )}
-                </>
-              )}
+                
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-3 leading-tight">
+                  {category?.name}
+                </h1>
+                
+                <p className="text-lg text-purple-600 font-semibold mb-4">
+                  {articles.length} published articles
+                </p>
+                
+                <p className="text-black leading-relaxed mb-6 max-w-2xl text-base">
+                  Explore all articles in the {category?.name} category. 
+                  Stay updated with the latest insights, tutorials, and best practices.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.section>
+
+        {/* Articles Grid */}
+        <section className="mb-16">
+          {/* Section Header */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex items-center gap-4 mb-8"
+          >
+            <div className="p-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-2">
+                Articles in {category?.name}
+              </h2>
+              <p className="text-black">
+                {articles.length} published articles
+              </p>
+            </div>
+          </motion.div>
+
+          {articles.length === 0 ? (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-16"
+            >
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <Star className="w-10 h-10 text-purple-500" />
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-black mb-3">
+                No Articles Yet
+              </h3>
+              <p className="text-black max-w-md mx-auto">
+                Stay tuned! We're preparing amazing {category?.name} content for you.
+              </p>
+            </motion.div>
+          ) : (
+            <>
+              {/* Articles Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <AnimatePresence>
+                  {paginatedArticles.map((article, index) => {
+                    const previewText = truncate(
+                      stripMarkdown(article.content),
+                      120
+                    );
+                    const author = getAuthor(article.author);
+                    const coverImage = getCoverImage(article);
+                    const hasRealCover = hasRealCoverImage(article);
+                    
+                    return (
+                      <motion.article
+                        key={article.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        className="group bg-white border border-gray-200 rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden"
+                      >
+                        {/* Cover Image */}
+                        <div className={`relative h-48 overflow-hidden ${!hasRealCover ? 'bg-gradient-to-br from-gray-100 to-gray-200' : 'bg-gray-100'}`}>
+                          <img
+                            src={coverImage}
+                            alt={article.title}
+                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            onError={(e) => {
+                              console.log(`Image failed to load: ${coverImage}`);
+                              // Fallback to category-based image
+                              const categoryName = category?.name?.toLowerCase() || '';
+                              let fallbackImage = "/devops.webp";
+                              if (categoryName.includes('cloud')) fallbackImage = "/cloud.webp";
+                              if (categoryName.includes('automation')) fallbackImage = "/automation.webp";
+                              if (categoryName.includes('terraform')) fallbackImage = "/terraform.webp";
+                              if (categoryName.includes('devsecops')) fallbackImage = "/security.webp";
+                              (e.target as HTMLImageElement).src = fallbackImage;
+                            }}
+                          />
+                          {!hasRealCover && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="text-center p-4">
+                                <Folder className="w-8 h-8 text-gray-500 mx-auto mb-2" />
+                                <p className="text-xs text-black font-medium">Cover Image</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Article Content */}
+                        <div className="p-6">
+                          {/* Author with Avatar */}
+                          {author && (
+                            <div className="flex items-center gap-2 bg-gray-50 text-black px-3 py-1.5 rounded-full text-sm font-medium border border-gray-200 mb-3 w-fit">
+                              <div className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 p-0.5">
+                                  <img
+                                    src={author.avatar || "/placeholder.svg"}
+                                    alt={author.name}
+                                    className="w-full h-full rounded-full object-cover border border-white"
+                                    onError={(e) => {
+                                      (e.target as HTMLImageElement).src = "/placeholder.svg";
+                                    }}
+                                  />
+                                </div>
+                                <Link 
+                                  href={`/authors/${author.slug}`}
+                                  className="hover:text-purple-600 transition-colors"
+                                >
+                                  {author.name}
+                                </Link>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Title */}
+                          <Link href={`/articles/${article.slug}`}>
+                            <h3 className="text-lg font-bold text-black mb-3 leading-tight group-hover:text-purple-600 transition-colors duration-300 line-clamp-2">
+                              {article.title}
+                            </h3>
+                          </Link>
+
+                          {/* Excerpt */}
+                          <p className="text-black leading-relaxed mb-4 line-clamp-3 text-sm">
+                            {previewText}
+                          </p>
+
+                          {/* Meta Information */}
+                          <div className="flex items-center gap-4 text-sm text-black mb-4">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-4 h-4 text-black" />
+                              <span>{formatDate(article.published_at)}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-4 h-4 text-black" />
+                              <span>{calculateReadTime(article.content)}</span>
+                            </div>
+                          </div>
+
+                          {/* Tags */}
+                          {article.tags && article.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mb-4">
+                              {article.tags.slice(0, 3).map((tagId) => {
+                                const tag = getTagById(tagId);
+                                if (!tag) return null;
+                                return (
+                                  <Link
+                                    key={tag.id}
+                                    href={`/articles?tag=${tag.slug}`}
+                                    className="inline-flex items-center gap-1 bg-gray-50 text-black px-2 py-1 rounded-lg text-xs font-medium transition-all duration-300 hover:bg-gray-100 border border-gray-200"
+                                  >
+                                    <TagIcon className="w-3 h-3" />
+                                    {tag.name}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {/* Read More and Stats */}
+                          <div className="flex items-center justify-between">
+                            <Link
+                              href={`/articles/${article.slug}`}
+                              className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-semibold text-sm transition-colors group/readmore"
+                            >
+                              Read more
+                              <ArrowRight className="w-4 h-4 group-hover/readmore:translate-x-1 transition-transform duration-300" />
+                            </Link>
+                            
+                            {article.read_count && (
+                              <div className="flex items-center gap-1 text-xs text-black">
+                                <Eye className="w-3 h-3" />
+                                <span className="font-medium">{article.read_count.toLocaleString()}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </motion.article>
+                    );
+                  })}
+                </AnimatePresence>
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <motion.nav 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="mt-12 flex flex-col sm:flex-row justify-between items-center gap-4"
+                >
+                  <div className="text-sm text-black">
+                    Page {currentPage} of {totalPages}
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white text-black"
+                    >
+                      <ArrowRight className="w-4 h-4 rotate-180" />
+                      Previous
+                    </button>
+                    
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let pageNum;
+                        if (totalPages <= 5) {
+                          pageNum = i + 1;
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1;
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => setCurrentPage(pageNum)}
+                            className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm transition-all ${
+                              currentPage === pageNum
+                                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
+                                : "border border-gray-300 bg-white text-black hover:bg-gray-50"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white text-black"
+                    >
+                      Next
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </motion.nav>
+              )}
+            </>
+          )}
+        </section>
       </main>
+
       <MinimalFooter />
     </div>
   );

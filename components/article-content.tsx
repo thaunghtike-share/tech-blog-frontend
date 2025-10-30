@@ -5,6 +5,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
 import CountUp from "react-countup";
+import { motion } from "framer-motion";
 import { GiscusComments } from "@/components/GiscusComments";
 import {
   ArrowRight,
@@ -19,9 +20,12 @@ import {
   TagIcon,
   ChevronLeft,
   ChevronRight,
-  ListTree,
-  BookOpen,
-  Users,
+  Clock,
+  FileText,
+  Award,
+  Star,
+  Trophy,
+  Zap,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -52,6 +56,8 @@ interface Author {
   slug: string;
   avatar?: string;
   linkedin?: string;
+  job_title?: string;
+  company?: string;
 }
 
 interface Tag {
@@ -117,7 +123,7 @@ const CopyButton = ({ code }: { code: string }) => {
       onClick={handleCopy}
       variant="ghost"
       size="sm"
-      className="absolute top-3 right-3 bg-white/80 backdrop-blur-sm border border-gray-300 text-gray-600 hover:text-gray-800 hover:bg-white hover:border-gray-400 px-3 py-2 text-xs rounded-lg transition-all duration-200 shadow-sm"
+      className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm border border-sky-300 text-sky-700 hover:text-sky-800 hover:bg-white hover:border-sky-400 px-3 py-2 text-xs rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
     >
       {copied ? (
         <Check className="w-3 h-3 mr-1" />
@@ -197,36 +203,41 @@ export function ArticleContent({
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
       {/* Main Article Content */}
-      <article className="lg:col-span-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 p-6 md:p-8 lg:p-10">
+      <article className="lg:col-span-3 bg-white rounded-3xl border border-sky-100 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
         {/* Article Header */}
         <div className="mb-8 md:mb-10">
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 mb-6 md:mb-8 leading-tight tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 mb-6 md:mb-8 leading-tight tracking-tight bg-gradient-to-br from-sky-900 to-blue-900 bg-clip-text text-transparent">
             {article.title}
           </h1>
 
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6 md:mb-8">
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl border border-gray-400 bg-gray-50 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-300">
-              <CalendarDays className="w-4 h-4 text-gray-600" />
-              <span className="text-sm text-gray-700 font-medium">
+            {/* Date */}
+            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl border border-sky-200 bg-gradient-to-r from-sky-50 to-blue-50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300">
+              <CalendarDays className="w-4 h-4 text-sky-600" />
+              <span className="text-sm text-sky-700 font-medium">
                 {new Date(article.published_at).toLocaleDateString()}
               </span>
             </div>
+            
+            {/* Category */}
             <div className="flex items-center gap-2">
               <Link href={`/categories/${slugify(categoryName)}`}>
-                <span className="flex items-center gap-2 text-sky-700 border border-sky-400 px-3 md:px-4 py-2 rounded-xl text-sm font-medium hover:bg-sky-50 hover:border-sky-300 hover:shadow-md transition-all duration-300 shadow-sm">
+                <span className="flex items-center gap-2 text-sky-700 border border-sky-300 px-3 md:px-4 py-2 rounded-xl text-sm font-medium bg-white hover:bg-sky-50 hover:border-sky-400 hover:shadow-md transition-all duration-300 shadow-sm">
                   <Folder className="w-3 h-3 text-sky-500" />
                   {categoryName}
                 </span>
               </Link>
             </div>
+            
+            {/* Tags */}
             <div className="flex items-center gap-2 flex-wrap">
               {tagNames.map((tag, index) => (
                 <Link
                   href={`/articles?tag=${slugify(tag)}`}
                   key={index}
-                  className="flex items-center gap-2 text-orange-700 border border-orange-400 px-3 md:px-4 py-2 rounded-xl text-sm font-medium hover:bg-orange-50 hover:border-orange-300 hover:shadow-md transition-all duration-300 shadow-sm"
+                  className="flex items-center gap-2 text-blue-600 border border-blue-200 px-3 md:px-4 py-2 rounded-xl text-sm font-medium bg-white hover:bg-blue-50 hover:border-blue-300 hover:shadow-md transition-all duration-300 shadow-sm"
                 >
-                  <TagIcon className="w-3 h-3 text-orange-500" />
+                  <TagIcon className="w-3 h-3 text-blue-500" />
                   {tag}
                 </Link>
               ))}
@@ -236,7 +247,7 @@ export function ArticleContent({
 
         {/* Cover Image */}
         {article.cover_image && (
-          <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-500">
+          <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-sky-100 shadow-xl hover:shadow-2xl transition-all duration-500">
             <img
               src={article.cover_image || "/placeholder.svg"}
               alt={article.title}
@@ -256,7 +267,7 @@ export function ArticleContent({
                 return (
                   <h1
                     id={id}
-                    className="text-2xl md:text-3xl font-bold text-gray-900 mt-10 mb-6 pb-3 border-b-2 border-gray-100 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
+                    className="text-2xl md:text-3xl font-bold text-gray-900 mt-10 mb-6 pb-3 border-b-2 border-sky-100"
                     {...props}
                   >
                     {children}
@@ -268,7 +279,7 @@ export function ArticleContent({
                 return (
                   <h2
                     id={id}
-                    className="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4 pb-2"
+                    className="text-xl md:text-2xl font-semibold text-gray-900 mt-8 mb-4 pb-2 border-l-4 border-sky-500 pl-4 bg-gradient-to-r from-sky-50 to-transparent rounded-r-lg"
                     {...props}
                   >
                     {children}
@@ -280,7 +291,7 @@ export function ArticleContent({
                 return (
                   <h3
                     id={id}
-                    className="text-lg md:text-xl font-semibold text-gray-800 mt-6 mb-3"
+                    className="text-lg md:text-xl font-semibold text-gray-800 mt-6 mb-3 pl-3 border-l-2 border-sky-300"
                     {...props}
                   >
                     {children}
@@ -298,7 +309,7 @@ export function ArticleContent({
               a: ({ href, children, ...props }) => (
                 <a
                   href={href}
-                  className="text-blue-600 hover:text-blue-700 hover:underline decoration-2 underline-offset-2 break-words text-base md:text-lg transition-all duration-200 font-medium"
+                  className="text-sky-600 hover:text-sky-700 hover:underline decoration-2 underline-offset-2 break-words text-base md:text-lg transition-all duration-200 font-medium"
                   target="_blank"
                   rel="noopener noreferrer"
                   {...props}
@@ -332,7 +343,7 @@ export function ArticleContent({
                     className="flex items-start text-base text-gray-700 leading-relaxed gap-3"
                     {...props}
                   >
-                    <span className="inline-block w-2 h-2 rounded-full bg-indigo-500 mt-2 flex-shrink-0 shadow-sm" />
+                    <span className="inline-block w-2 h-2 rounded-full bg-sky-500 mt-2 flex-shrink-0 shadow-sm" />
                     <span className="flex-1">
                       {childrenArray.map((child, i) => {
                         if (typeof child === "string") {
@@ -368,7 +379,7 @@ export function ArticleContent({
                 if (inline) {
                   return (
                     <code
-                      className="bg-gray-100 text-gray-800 rounded-lg px-2 py-1 text-base font-mono border border-gray-200 shadow-sm"
+                      className="bg-sky-100 text-sky-700 rounded-lg px-2 py-1 text-base font-mono border border-sky-200 shadow-sm"
                       {...props}
                     >
                       {children}
@@ -392,11 +403,11 @@ export function ArticleContent({
                 ].includes(language);
                 return (
                   <div
-                    className="relative mb-8 rounded-2xl bg-gradient-to-br from-gray-50 to-white text-gray-900 font-mono text-sm shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                    className="relative mb-8 rounded-2xl bg-gradient-to-br from-sky-50 to-white text-gray-700 font-mono text-sm shadow-lg border border-sky-200 hover:shadow-xl transition-all duration-300 overflow-hidden"
                     {...props}
                   >
                     {language && (
-                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-2xl px-4 py-2 text-xs font-semibold">
+                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-t-2xl px-4 py-2 text-xs font-semibold">
                         {language.toUpperCase()}
                       </div>
                     )}
@@ -409,10 +420,10 @@ export function ArticleContent({
                       {lines.map((line, idx) => (
                         <div
                           key={idx}
-                          className="flex hover:bg-blue-50/50 rounded-lg px-2 -mx-2 transition-colors"
+                          className="flex hover:bg-sky-50/50 rounded-lg px-2 -mx-2 transition-colors"
                         >
                           {idx === 0 && startsWithDollar && (
-                            <span className="text-blue-600 font-bold select-none mr-2">
+                            <span className="text-sky-600 font-bold select-none mr-2">
                               $
                             </span>
                           )}
@@ -429,14 +440,14 @@ export function ArticleContent({
               },
               blockquote: ({ ...props }) => (
                 <blockquote
-                  className="border-l-4 border-blue-500 pl-6 pr-4 py-4 italic text-gray-700 my-6 text-sm md:text-base bg-gradient-to-r from-blue-50 to-indigo-50 rounded-r-2xl shadow-sm"
+                  className="border-l-4 border-sky-500 pl-6 pr-4 py-4 italic text-gray-700 my-6 text-sm md:text-base bg-gradient-to-r from-sky-50 to-blue-50 rounded-r-2xl shadow-sm"
                   {...props}
                 />
               ),
               img: ({ ...props }) => (
                 <img
                   {...props}
-                  className="my-8 max-w-full rounded-2xl shadow-lg mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                  className="my-8 max-w-full rounded-2xl shadow-lg mx-auto border border-sky-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                   alt={props.alt || "Article image"}
                 />
               ),
@@ -451,75 +462,100 @@ export function ArticleContent({
           <GiscusComments />
         </div>
 
-        {/* Author Bio - Removed border line */}
-        <div className="mt-12">
-          <Card className="bg-gradient-to-br from-white to-gray-50 rounded-2xl border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-200 transition-all duration-500 group">
-            <CardContent className="p-6 md:p-8 flex flex-col h-full">
-              <div className="flex items-center gap-4 md:gap-5 mb-4 md:mb-5">
-                <div className="relative flex-shrink-0">
-                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl border-4 border-white shadow-2xl overflow-hidden group-hover:border-blue-100 group-hover:shadow-2xl transition-all duration-500">
-                    <img
-                      src={author?.avatar || "/placeholder.svg"}
-                      alt={author?.name || "Author"}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
+        {/* Updated Author Header */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative mb-12 mt-12"
+        >
+          <div className="bg-gradient-to-br from-white to-sky-50 rounded-3xl border border-sky-200 p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8">
+              {/* Author Avatar */}
+              <div className="relative">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1 shadow-2xl">
+                  <img
+                    src={author?.avatar || "/placeholder.svg"}
+                    alt={author?.name || "Author"}
+                    className="w-full h-full rounded-2xl object-cover border-4 border-white"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/placeholder.svg";
+                    }}
+                  />
+                </div>
+                {author?.linkedin && (
+                  <a
+                    href={author.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2 rounded-xl shadow-2xl transition-all duration-300 hover:scale-110"
+                  >
+                    <Linkedin className="w-4 h-4 text-white" />
+                  </a>
+                )}
+              </div>
+
+              {/* Author Info */}
+              <div className="flex-1 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
+                  <Trophy className="w-4 h-4" />
+                  Author
+                </div>
+                
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+                  {author?.name}
+                </h1>
+                
+                <p className="text-lg text-sky-600 font-semibold mb-4">
+                  {author?.job_title} at {author?.company}
+                </p>
+                
+                <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl text-base">
+                  {author?.bio}
+                </p>
+
+                {/* Stats Row */}
+                <div className="flex items-center gap-6 justify-center lg:justify-start">
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Eye className="w-4 h-4 text-sky-500" />
+                    <span className="text-sm font-medium">
+                      <CountUp
+                        end={article.read_count || 0}
+                        duration={2}
+                        separator=","
+                      />{" "}
+                      views
+                    </span>
                   </div>
-                  {author?.linkedin && (
-                    <a
-                      href={author.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute -bottom-1 -right-1 bg-[#0077B5] p-1.5 rounded-xl shadow-2xl hover:bg-[#005885] transition-all duration-300 hover:scale-110 hover:shadow-2xl"
-                    >
-                      <Linkedin className="w-3 h-3 text-white" />
-                    </a>
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sky-600 text-lg leading-tight mb-2 group-hover:text-sky-600 transition-colors duration-300">
-                    <Link href={`/authors/${authorSlug}`} className="">
-                      {article.author_name || author?.name || "Unknown Author"}
-                    </Link>
-                  </h3>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Star className="w-4 h-4 text-amber-500" />
+                    <span className="text-sm font-medium">Expert Level</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Zap className="w-4 h-4 text-orange-500" />
+                    <span className="text-sm font-medium">5+ Years Exp</span>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </motion.section>
 
-              {author?.bio && (
-                <div className="mb-4 md:mb-5 flex-grow">
-                  <p className="text-black text-sm leading-relaxed">
-                    {author.bio}
-                  </p>
-                </div>
-              )}
-
-              <div className="flex items-center justify-between pt-4 md:pt-5 border-t-2 border-gray-100">
-                <Link
-                  href={`/authors/${authorSlug}`}
-                  className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 font-medium text-sm group/btn shadow-md"
-                >
-                  View Profile
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Navigation - Simplified and Cleaner */}
+        {/* Navigation */}
         <div className="mt-12 flex items-center justify-between gap-4">
           {prevArticle && (
             <Link
               href={`/articles/${prevArticle.slug}`}
-              className="group flex items-center gap-3 text-sky-600 hover:text-sky-600 transition-all duration-300 flex-1 min-w-0"
+              className="group flex items-center gap-3 text-sky-600 hover:text-sky-700 transition-all duration-300 flex-1 min-w-0"
             >
               <div className="flex items-center gap-2">
                 <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                  <span className="text-xs text-gray-600 font-medium uppercase tracking-wide">
                     Previous
                   </span>
-                  <span className="text-sm font-medium line-clamp-1 group-hover:text-blue-700 transition-colors">
+                  <span className="text-sm font-medium line-clamp-1 group-hover:text-sky-700 transition-colors">
                     {prevArticle.title}
                   </span>
                 </div>
@@ -530,15 +566,15 @@ export function ArticleContent({
           {nextArticle && (
             <Link
               href={`/articles/${nextArticle.slug}`}
-              className="group flex items-center gap-3 text-sky-600 hover:text-sky-600 transition-all duration-300 flex-1 min-w-0 justify-end text-right"
+              className="group flex items-center gap-3 text-sky-600 hover:text-sky-700 transition-all duration-300 flex-1 min-w-0 justify-end text-right"
             >
               <div className="flex items-center gap-2 flex-row-reverse">
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 <div className="flex flex-col items-end">
-                  <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                  <span className="text-xs text-gray-600 font-medium uppercase tracking-wide">
                     Next
                   </span>
-                  <span className="text-sm font-medium line-clamp-1 group-hover:text-blue-700 transition-colors">
+                  <span className="text-sm font-medium line-clamp-1 group-hover:text-sky-700 transition-colors">
                     {nextArticle.title}
                   </span>
                 </div>
@@ -551,10 +587,10 @@ export function ArticleContent({
       {/* Sidebar */}
       <aside className="lg:col-span-1 space-y-6">
         {/* Table of Contents */}
-        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <ListOrdered className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
@@ -566,12 +602,12 @@ export function ArticleContent({
                 <a
                   key={id}
                   href={`#${id}`}
-                  className={`block py-2 px-3 rounded-lg hover:bg-sky-50 transition-all duration-200 text-sm group ${
+                  className={`block py-2 px-3 rounded-xl hover:bg-sky-50 transition-all duration-200 text-sm group ${
                     level === 1
                       ? "text-sky-700 font-semibold border-l-2 border-sky-500"
                       : level === 2
-                      ? "text-gray-700 font-medium border-l-2 border-gray-300"
-                      : "text-gray-600 font-normal border-l-2 border-gray-200"
+                      ? "text-gray-800 font-medium border-l-2 border-sky-300"
+                      : "text-gray-700 font-normal border-l-2 border-sky-200"
                   }`}
                   style={{
                     marginLeft: `${(level - 1) * 12}px`,
@@ -586,37 +622,39 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Article Stats */}
-        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+        {/* Article Stats - Updated to One Line */}
+        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm">
-                <Eye className="w-4 h-4 text-white" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Eye className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900">
+                    Total Reads
+                  </h3>
+                  <p className="text-xs text-gray-600">Article views</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-semibold text-gray-900">
-                  Article Views
-                </h3>
-                <p className="text-sm text-gray-600">Total reads</p>
+              <div className="text-right">
+                <CountUp
+                  end={article.read_count || 0}
+                  duration={2}
+                  separator=","
+                  className="text-xl font-bold text-gray-900"
+                />
               </div>
-            </div>
-            <div className="text-center">
-              <CountUp
-                end={article.read_count || 0}
-                duration={2}
-                separator=","
-                className="text-2xl font-bold text-gray-900"
-              />
             </div>
           </CardContent>
         </Card>
 
         {/* Recent Articles */}
-        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-sm">
-                <BookOpen className="w-4 h-4 text-white" />
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <FileText className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
                 Recent Articles
@@ -633,9 +671,9 @@ export function ArticleContent({
                     key={article.id}
                     className="block group"
                   >
-                    <div className="flex gap-3 p-2 rounded-lg hover:bg-gray-50 transition-all duration-300">
+                    <div className="flex gap-3 p-2 rounded-xl hover:bg-sky-50 transition-all duration-300">
                       {/* Cover Image */}
-                      <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden border border-sky-200 shadow-sm">
                         <img
                           src={coverImage}
                           alt={article.title}
@@ -644,14 +682,14 @@ export function ArticleContent({
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-800 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight mb-1">
+                        <h4 className="font-medium text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight mb-1">
                           {article.title}
                         </h4>
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-sky-600 font-medium">
                             {itemAuthor?.name || "Unknown"}
                           </span>
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                          <div className="flex items-center gap-1 text-xs text-gray-600">
                             <Eye className="w-3 h-3" />
                             <CountUp
                               end={article.read_count || 0}
@@ -670,10 +708,10 @@ export function ArticleContent({
         </Card>
 
         {/* Popular Articles */}
-        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-white">
+        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-sm">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
                 <TrendingUp className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
@@ -687,26 +725,26 @@ export function ArticleContent({
                   key={article.id}
                   className="block group"
                 >
-                  <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-all duration-300">
+                  <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 transition-all duration-300">
                     <span
                       className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-lg flex-shrink-0 transition-all duration-300 ${
                         index === 0
-                          ? "text-white bg-gradient-to-br from-orange-500 to-orange-600 shadow-sm"
+                          ? "text-white bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg"
                           : index === 1
-                          ? "text-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm"
+                          ? "text-white bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg"
                           : index === 2
-                          ? "text-white bg-gradient-to-br from-green-500 to-green-600 shadow-sm"
+                          ? "text-white bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg"
                           : "text-white bg-gradient-to-br from-gray-500 to-gray-600 shadow-sm"
                       } group-hover:scale-110`}
                     >
                       {index + 1}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-gray-800 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight">
+                      <h4 className="font-medium text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight">
                         {article.title}
                       </h4>
                     </div>
-                    <div className="flex items-center text-xs text-orange-600 flex-shrink-0 font-medium">
+                    <div className="flex items-center text-xs text-amber-600 flex-shrink-0 font-medium">
                       <Eye className="w-3 h-3 mr-1" />
                       <CountUp
                         end={article.read_count || 0}
@@ -718,28 +756,6 @@ export function ArticleContent({
                 </Link>
               ))}
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Newsletter CTA */}
-        <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-gradient-to-br from-sky-50 to-blue-50">
-          <CardContent className="p-5 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm">
-              <Users className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-2">
-              Join DevOps Community
-            </h3>
-            <p className="text-xs text-gray-600 mb-3">
-              Get the latest articles and insights delivered to your inbox
-            </p>
-            <Link
-              href="/newsletter"
-              className="inline-flex items-center gap-2 w-full justify-center bg-gradient-to-r from-sky-600 to-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 text-sm hover:scale-105"
-            >
-              Subscribe
-              <ArrowRight className="w-3 h-3" />
-            </Link>
           </CardContent>
         </Card>
       </aside>

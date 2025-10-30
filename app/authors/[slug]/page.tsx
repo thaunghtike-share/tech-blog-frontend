@@ -68,17 +68,18 @@ export default function AuthorDetailPage() {
         const res = await fetch(`${API_BASE_URL}/authors/${slug}/details`);
         if (!res.ok) throw new Error("Failed to load author details");
         const data = await res.json();
-        console.log("Full API response:", data);
+        console.log("🚀 API Response:", data);
         
-        // Debug: Check the first article's structure
+        // Debug cover images
         if (data.articles && data.articles.length > 0) {
-          console.log("First article structure:", data.articles[0]);
-          console.log("Available image fields in first article:", {
-            cover_image: data.articles[0].cover_image,
-            image_url: data.articles[0].image_url,
-            has_cover_image: !!data.articles[0].cover_image,
-            has_image_url: !!data.articles[0].image_url,
-            all_keys: Object.keys(data.articles[0])
+          console.log("🔍 Cover Image Analysis:");
+          data.articles.forEach((article: Article) => {
+            console.log(`📄 "${article.title}":`, {
+              cover_image: article.cover_image,
+              has_cover_image: !!article.cover_image,
+              cover_image_type: typeof article.cover_image,
+              cover_image_length: article.cover_image?.length
+            });
           });
         }
         
@@ -118,42 +119,37 @@ export default function AuthorDetailPage() {
   const truncate = (str: string, max = 150) =>
     str.length <= max ? str : str.slice(0, max) + "...";
 
-  // Get cover image URL - handle different API response structures
+  // SIMPLIFIED: Get cover image URL
   const getCoverImage = (article: Article) => {
-    console.log("Processing article cover image:", {
-      title: article.title,
+    console.log(`🖼️ Processing cover for: "${article.title}"`, {
       cover_image: article.cover_image,
-      image_url: article.image_url
+      has_cover_image: !!article.cover_image
     });
 
-    // Try cover_image first
-    if (article.cover_image) {
-      // If it's a full URL, use it directly
-      if (article.cover_image.startsWith('http')) {
-        return article.cover_image;
-      }
-      // If it's a relative path starting with /, use it as-is
-      if (article.cover_image.startsWith('/')) {
-        return article.cover_image;
-      }
-      // If it's just a filename, prepend with /
-      return `/${article.cover_image}`;
+    // If cover_image exists and is not null/empty, use it directly
+    if (article.cover_image && article.cover_image.trim() !== '') {
+      console.log(`✅ Using real cover image: ${article.cover_image}`);
+      return article.cover_image;
     }
+
+    // Fallback based on category
+    const category = article.category?.name?.toLowerCase() || '';
+    let fallback = "/devops.webp";
     
-    // Try image_url as fallback
-    if (article.image_url) {
-      if (article.image_url.startsWith('http')) {
-        return article.image_url;
-      }
-      if (article.image_url.startsWith('/')) {
-        return article.image_url;
-      }
-      return `/${article.image_url}`;
-    }
+    if (category.includes('cloud')) fallback = "/cloud.webp";
+    if (category.includes('automation')) fallback = "/automation.webp";
+    if (category.includes('terraform')) fallback = "/terraform.webp";
+    if (category.includes('devsecops') || category.includes('security')) fallback = "/security.webp";
     
-    // Final fallback - use different fallbacks to see which one works
-    console.log("No cover image found for article:", article.title);
-    return "/devops.webp";
+    console.log(`🔄 Using fallback: ${fallback} for category: ${category}`);
+    return fallback;
+  };
+
+  // Check if article has a real cover image
+  const hasRealCoverImage = (article: Article) => {
+    const hasImage = !!(article.cover_image && article.cover_image.trim() !== '');
+    console.log(`🔍 Has real cover for "${article.title}": ${hasImage} (${article.cover_image})`);
+    return hasImage;
   };
 
   // Pagination logic
@@ -273,7 +269,7 @@ export default function AuthorDetailPage() {
               <div className="flex-1 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
                   <Award className="w-4 h-4" />
-                  DevOps Author
+                  Author
                 </div>
                 
                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
@@ -342,8 +338,14 @@ export default function AuthorDetailPage() {
                       "Read the full article to learn more...";
                     
                     const coverImage = getCoverImage(article);
-                    const isFallbackImage = coverImage === "/devops.webp";
+                    const hasRealCover = hasRealCoverImage(article);
                     
+                    console.log(`🎯 Rendering "${article.title}":`, {
+                      finalCoverImage: coverImage,
+                      hasRealCover: hasRealCover,
+                      originalCoverImage: article.cover_image
+                    });
+
                     return (
                       <motion.article
                         key={article.id}
@@ -353,25 +355,32 @@ export default function AuthorDetailPage() {
                         className="group bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300 overflow-hidden"
                       >
                         {/* Cover Image */}
-                        <div className={`relative h-48 overflow-hidden ${isFallbackImage ? 'bg-gradient-to-br from-gray-100 to-gray-200' : 'bg-gray-100'}`}>
+                        <div className={`relative h-48 overflow-hidden ${!hasRealCover ? 'bg-gradient-to-br from-gray-100 to-gray-200' : 'bg-gray-100'}`}>
                           <img
                             src={coverImage}
                             alt={article.title}
                             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                             onError={(e) => {
-                              console.log(`Image failed to load for "${article.title}":`, coverImage);
-                              // Try a different fallback
-                              (e.target as HTMLImageElement).src = "/placeholder.svg";
+                              console.log(`❌ Image failed to load: ${coverImage} for "${article.title}"`);
+                              // Fallback to category-based image
+                              const category = article.category?.name?.toLowerCase() || '';
+                              let fallbackImage = "/devops.webp";
+                              if (category.includes('cloud')) fallbackImage = "/cloud.webp";
+                              if (category.includes('automation')) fallbackImage = "/automation.webp";
+                              if (category.includes('terraform')) fallbackImage = "/terraform.webp";
+                              if (category.includes('devsecops')) fallbackImage = "/security.webp";
+                              console.log(`🔄 Falling back to: ${fallbackImage}`);
+                              (e.target as HTMLImageElement).src = fallbackImage;
                             }}
                             onLoad={() => {
-                              console.log(`Image loaded successfully for "${article.title}":`, coverImage);
+                              console.log(`✅ Image loaded successfully: ${coverImage} for "${article.title}"`);
                             }}
                           />
-                          {isFallbackImage && (
+                          {!hasRealCover && (
                             <div className="absolute inset-0 flex items-center justify-center">
                               <div className="text-center p-4">
-                                <Star className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                                <p className="text-xs text-gray-500 font-medium">No cover image</p>
+                                <Folder className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                                <p className="text-xs text-gray-500 font-medium">Cover Image</p>
                               </div>
                             </div>
                           )}
