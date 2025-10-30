@@ -14,7 +14,8 @@ export default function ProfileForm() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user, updateProfile, checkAuth } = useAuth();
+  const [success, setSuccess] = useState(false);
+  const { user, updateProfile } = useAuth();
 
   useEffect(() => {
     // Load existing profile data if available
@@ -76,15 +77,20 @@ export default function ProfileForm() {
 
       const savedProfile = await response.json();
       
-      // Update the auth state to mark profile as complete
+      // Update the auth state
       updateProfile({ 
         profileComplete: true,
         username: savedProfile.name || user?.username,
         avatar: savedProfile.avatar
       });
       
-      // Force a re-check of auth state to trigger the redirect
-      await checkAuth();
+      // Show success message
+      setSuccess(true);
+      
+      // Redirect to article editor after a short delay
+      setTimeout(() => {
+        window.location.href = "/admin/new-article";
+      }, 1500);
       
     } catch (error: any) {
       setError(error.message);
@@ -99,6 +105,25 @@ export default function ProfileForm() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  if (success) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 text-center">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span>Profile Completed!</span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+            Welcome to the Community!
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Your profile has been saved successfully. Redirecting to article editor...
+          </p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -116,6 +141,7 @@ export default function ProfileForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* ... rest of your form fields remain the same ... */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block mb-2 font-medium text-gray-700">
