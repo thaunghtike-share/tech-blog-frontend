@@ -14,7 +14,7 @@ export default function ProfileForm() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user, updateProfile } = useAuth();
+  const { user, updateProfile, checkAuth } = useAuth();
 
   useEffect(() => {
     // Load existing profile data if available
@@ -75,7 +75,16 @@ export default function ProfileForm() {
       }
 
       const savedProfile = await response.json();
-      updateProfile({ profileComplete: true });
+      
+      // Update the auth state to mark profile as complete
+      updateProfile({ 
+        profileComplete: true,
+        username: savedProfile.name || user?.username,
+        avatar: savedProfile.avatar
+      });
+      
+      // Force a re-check of auth state to trigger the redirect
+      await checkAuth();
       
     } catch (error: any) {
       setError(error.message);

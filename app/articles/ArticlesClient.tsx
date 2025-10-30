@@ -61,7 +61,7 @@ export default function ArticlesClient() {
         );
       });
 
-      // Fetch article counts for each author
+      // Fetch article counts for each author and filter those with at least 1 article
       const authorsWithCounts = await Promise.all(
         completeAuthors.slice(0, 6).map(async (author: AuthorSummary) => {
           try {
@@ -83,7 +83,12 @@ export default function ArticlesClient() {
         })
       );
 
-      setAuthors(authorsWithCounts);
+      // Filter authors to only show those with at least 1 article
+      const authorsWithArticles = authorsWithCounts.filter(author => 
+        author.articles_count && author.articles_count > 0
+      );
+
+      setAuthors(authorsWithArticles);
     } catch (err) {
       console.error("Error fetching authors:", err);
     } finally {
