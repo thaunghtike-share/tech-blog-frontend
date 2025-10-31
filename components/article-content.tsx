@@ -212,7 +212,7 @@ export function ArticleContent({
 
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6 md:mb-8">
             {/* Date */}
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl backdrop-blur-sm shadow-sm transition-all duration-300">
+            <div className="flex items-center gap-2 px-3 md:px-4 py-2 hover:shadow-sm rounded-xl backdrop-blur-sm shadow-sm transition-all duration-300">
               <CalendarDays className="w-4 h-4 text-gray-700" />
               <span className="text-sm text-gray-700 font-medium">
                 {new Date(article.published_at).toLocaleDateString()}
@@ -222,7 +222,7 @@ export function ArticleContent({
             {/* Category */}
             <div className="flex items-center gap-2">
               <Link href={`/categories/${slugify(categoryName)}`}>
-                <span className="flex items-center gap-2 text-sky-600 px-3 md:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm">
+                <span className="flex items-center hover:shadow-sm gap-2 text-sky-600 px-3 md:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm">
                   <Folder className="w-4 h-4 text-sky-600" />
                   {categoryName}
                 </span>
