@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { useAuth } from "@/app/auth/hooks/use-auth";
+import  AuthModal  from "@/app/auth/auth-modal";
 import {
   FileText,
   Eye,
@@ -22,9 +23,10 @@ import {
   Crown,
   Zap,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import AuthModal from "@/app/auth/auth-modal";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -75,6 +77,8 @@ export default function AuthorAdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const articlesPerPage = 10;
 
   // 🔐 AUTHENTICATION CHECK - Show modal if not authenticated
   useEffect(() => {
@@ -231,6 +235,13 @@ export default function AuthorAdminDashboard() {
       return "/security.webp";
     return "/devops.webp";
   };
+
+  // Pagination logic
+  const totalPages = Math.ceil(totalArticles / articlesPerPage);
+  const paginatedArticles = author?.articles?.slice(
+    (currentPage - 1) * articlesPerPage,
+    currentPage * articlesPerPage
+  ) || [];
 
   // 🔐 Show loading while checking authentication
   if (isLoading) {
@@ -570,13 +581,16 @@ export default function AuthorAdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
+              className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-xl overflow-hidden"
             >
               <div className="px-8 py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                   <h2 className="text-3xl font-bold text-slate-900 mb-2">
                     Your Articles
                   </h2>
+                  <p className="text-slate-600">
+                    Showing {paginatedArticles.length} of {totalArticles} articles
+                  </p>
                 </div>
                 <Link
                   href={`/authors/${author?.slug}`}
@@ -607,101 +621,161 @@ export default function AuthorAdminDashboard() {
                   </Link>
                 </div>
               ) : (
-                <div className="divide-y divide-slate-200">
-                  {author?.articles?.map((article, index) => (
-                    <motion.div
-                      key={article.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="p-8 hover:bg-white transition-all duration-300 group border-b border-slate-100 last:border-b-0"
-                    >
-                      <div className="flex flex-col lg:flex-row gap-8 items-start">
-                        {/* Article Cover */}
-                        <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                          <img
-                            src={getCoverImage(article)}
-                            alt={article.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                        </div>
-
-                        {/* Article Info */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex flex-wrap items-center gap-4 mb-4">
-                            {article.category && (
-                              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md">
-                                <Folder className="w-4 h-4" />
-                                {article.category.name}
-                              </span>
-                            )}
-                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
-                              <Calendar className="w-4 h-4 text-slate-600" />
-                              {formatDate(article.published_at)}
-                            </span>
+                <>
+                  <div className="divide-y divide-slate-200">
+                    {paginatedArticles.map((article, index) => (
+                      <motion.div
+                        key={article.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="p-8 hover:bg-white transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                      >
+                        <div className="flex flex-col lg:flex-row gap-8 items-start">
+                          {/* Article Cover */}
+                          <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                            <img
+                              src={getCoverImage(article)}
+                              alt={article.title}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
                           </div>
 
-                          <h3 className="text-2xl font-bold text-sky-700 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
-                            <Link href={`/articles/${article.slug}`}>
-                              {article.title}
-                            </Link>
-                          </h3>
-
-                          {article.excerpt && (
-                            <p className="text-slate-700 text-lg line-clamp-2 mb-4 font-medium">
-                              {article.excerpt}
-                            </p>
-                          )}
-
-                          {/* Engagement Metrics */}
-                          <div className="flex flex-wrap items-center gap-8 mb-4">
-                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
-                              <Eye className="w-5 h-5 text-sky-600" />
-                              {article.read_count?.toLocaleString()} views
-                            </span>
-                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
-                              <Heart className="w-5 h-5 text-rose-600" />
-                              {article.reactions?.total} reactions
-                            </span>
-                          </div>
-
-                          {/* Tags */}
-                          {article.tags && article.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-3">
-                              {article.tags.slice(0, 4).map((tag) => (
-                                <span
-                                  key={tag.id}
-                                  className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold"
-                                >
-                                  <TagIcon className="w-4 h-4" />
-                                  {tag.name}
+                          {/* Article Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-center gap-4 mb-4">
+                              {article.category && (
+                                <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md">
+                                  <Folder className="w-4 h-4" />
+                                  {article.category.name}
                                 </span>
-                              ))}
+                              )}
+                              <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                                <Calendar className="w-4 h-4 text-slate-600" />
+                                {formatDate(article.published_at)}
+                              </span>
                             </div>
-                          )}
-                        </div>
 
-                        {/* Actions */}
-                        <div className="flex items-center gap-4">
-                          <Link
-                            href={`/articles/${article.slug}`}
-                            className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                            <h3 className="text-2xl font-bold text-sky-700 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                              <Link href={`/articles/${article.slug}`}>
+                                {article.title}
+                              </Link>
+                            </h3>
+
+                            {article.excerpt && (
+                              <p className="text-slate-700 text-lg line-clamp-2 mb-4 font-medium">
+                                {article.excerpt}
+                              </p>
+                            )}
+
+                            {/* Engagement Metrics */}
+                            <div className="flex flex-wrap items-center gap-8 mb-4">
+                              <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                                <Eye className="w-5 h-5 text-sky-600" />
+                                {article.read_count?.toLocaleString()} views
+                              </span>
+                              <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                                <Heart className="w-5 h-5 text-rose-600" />
+                                {article.reactions?.total} reactions
+                              </span>
+                            </div>
+
+                            {/* Tags */}
+                            {article.tags && article.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-3">
+                                {article.tags.slice(0, 4).map((tag) => (
+                                  <span
+                                    key={tag.id}
+                                    className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold"
+                                  >
+                                    <TagIcon className="w-4 h-4" />
+                                    {tag.name}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex items-center gap-4">
+                            <Link
+                              href={`/articles/${article.slug}`}
+                              className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                            >
+                              <Eye className="w-4 h-4" />
+                              View
+                            </Link>
+                            <Link
+                              href={`/admin/edit-article/${article.slug}`}
+                              className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                            >
+                              <Edit className="w-4 h-4" />
+                              Edit
+                            </Link>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Pagination Controls */}
+                  {totalPages > 1 && (
+                    <div className="px-8 py-6 border-t border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm text-slate-600">
+                          Page {currentPage} of {totalPages}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            disabled={currentPage === 1}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
                           >
-                            <Eye className="w-4 h-4" />
-                            View
-                          </Link>
-                          <Link
-                            href={`/admin/edit-article/${article.slug}`}
-                            className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                            <ChevronLeft className="w-4 h-4" />
+                            Previous
+                          </button>
+                          
+                          <div className="flex items-center gap-1">
+                            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                              let pageNum;
+                              if (totalPages <= 5) {
+                                pageNum = i + 1;
+                              } else if (currentPage <= 3) {
+                                pageNum = i + 1;
+                              } else if (currentPage >= totalPages - 2) {
+                                pageNum = totalPages - 4 + i;
+                              } else {
+                                pageNum = currentPage - 2 + i;
+                              }
+                              return (
+                                <button
+                                  key={pageNum}
+                                  onClick={() => setCurrentPage(pageNum)}
+                                  className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all ${
+                                    currentPage === pageNum
+                                      ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
+                                      : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                                  }`}
+                                >
+                                  {pageNum}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            disabled={currentPage === totalPages}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
                           >
-                            <Edit className="w-4 h-4" />
-                            Edit
-                          </Link>
+                            Next
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
+                    </div>
+                  )}
+                </>
               )}
             </motion.div>
           </>
