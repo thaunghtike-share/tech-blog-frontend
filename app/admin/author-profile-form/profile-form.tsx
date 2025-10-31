@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAuth } from "../hooks/use-auth";
+import { useAuth } from "../../auth/hooks/use-auth";
 
 export default function ProfileForm() {
   const [formData, setFormData] = useState({
@@ -24,9 +24,12 @@ export default function ProfileForm() {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const profileRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`, {
-          headers: { Authorization: `Token ${token}` },
-        });
+        const profileRes = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
 
         if (profileRes.ok) {
           const profileData = await profileRes.json();
@@ -59,39 +62,40 @@ export default function ProfileForm() {
         throw new Error("No authentication token found");
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
-        },
-        body: JSON.stringify({
-          ...formData,
-          profile_complete: true,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+          },
+          body: JSON.stringify({
+            ...formData,
+            profile_complete: true,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to save profile");
       }
 
       const savedProfile = await response.json();
-      
+
       // Update the auth state
-      updateProfile({ 
+      updateProfile({
         profileComplete: true,
         username: savedProfile.name || user?.username,
-        avatar: savedProfile.avatar
+        avatar: savedProfile.avatar,
       });
-      
+
       // Show success message
       setSuccess(true);
-      
-      // Redirect to article editor after a short delay
+
       setTimeout(() => {
-        window.location.href = "/admin/new-article";
+        window.location.href = `/admin/author/${formData.slug}`;
       }, 1500);
-      
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -99,8 +103,10 @@ export default function ProfileForm() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -117,7 +123,8 @@ export default function ProfileForm() {
             Welcome to the Community!
           </h1>
           <p className="text-gray-600 mb-6">
-            Your profile has been saved successfully. Redirecting to article editor...
+            Your profile has been saved successfully. Redirecting to your
+            dashboard...
           </p>
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mx-auto"></div>
         </div>

@@ -5,10 +5,18 @@ import { createPortal } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronDown, X, Menu, Pencil, Search, Sparkles, TrendingUp } from "lucide-react";
+import {
+  ChevronDown,
+  X,
+  Menu,
+  Pencil,
+  Search,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import AuthModal from "@/app/admin/new-article/components/auth-modal";
+import AuthModal from "@/app/auth/auth-modal";
 
 export function MinimalHeader() {
   const pathname = usePathname();
@@ -121,11 +129,11 @@ export function MinimalHeader() {
     return createPortal(
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           onClick={() => setShowAuthModal(false)}
         />
-        
+
         {/* Modal Container */}
         <div className="relative z-[10000] w-full max-w-md mx-auto">
           <button
@@ -134,7 +142,7 @@ export function MinimalHeader() {
           >
             <X className="w-6 h-6" />
           </button>
-          
+
           {/* Modal Content */}
           <div className="bg-white rounded-2xl shadow-xl">
             <AuthModal onSuccess={handleAuthSuccess} />
@@ -544,7 +552,7 @@ export function MinimalHeader() {
                   className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-700 to-blue-700 text-white rounded-full hover:from-sky-700 hover:to-sky-700 transition-all shadow-lg hover:shadow-xl hover:shadow-sky-500/25 border border-sky-500/30 font-medium"
                 >
                   <TrendingUp className="w-4 h-4" />
-                  Join Us 
+                  Join Us
                 </button>
               </div>
             </div>

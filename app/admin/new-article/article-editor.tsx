@@ -25,7 +25,10 @@ export default function ArticleEditor() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
+  const [message, setMessage] = useState<{
+    text: string;
+    type: "success" | "error";
+  } | null>(null);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
@@ -43,12 +46,14 @@ export default function ArticleEditor() {
           fetch(`${API_BASE_URL}/categories/`),
           fetch(`${API_BASE_URL}/tags/`),
         ]);
-        
+
         if (catRes.ok) {
           const catData = await catRes.json();
-          setCategories(Array.isArray(catData) ? catData : catData.results || []);
+          setCategories(
+            Array.isArray(catData) ? catData : catData.results || []
+          );
         }
-        
+
         if (tagRes.ok) {
           const tagData = await tagRes.json();
           setTags(Array.isArray(tagData) ? tagData : tagData.results || []);
@@ -66,7 +71,7 @@ export default function ArticleEditor() {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
       setLastSaved(new Date().toLocaleTimeString());
     };
-    
+
     const interval = setInterval(saveDraft, SAVE_INTERVAL);
     return () => clearInterval(interval);
   }, [form]);
@@ -84,14 +89,14 @@ export default function ArticleEditor() {
   }, []);
 
   const handleChange = (field: string, value: any) => {
-    setForm(prev => ({ ...prev, [field]: value }));
+    setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const toggleTag = (id: number) => {
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       tags: prev.tags.includes(id)
-        ? prev.tags.filter(tagId => tagId !== id)
+        ? prev.tags.filter((tagId) => tagId !== id)
         : [...prev.tags, id],
     }));
   };
@@ -137,7 +142,10 @@ export default function ArticleEditor() {
       });
 
       if (res.ok) {
-        setMessage({ text: "Article submitted successfully!", type: "success" });
+        setMessage({
+          text: "Article submitted successfully!",
+          type: "success",
+        });
         localStorage.removeItem(DRAFT_KEY);
         setForm({
           title: "",
@@ -175,7 +183,7 @@ export default function ArticleEditor() {
     const handleFullscreenChange = () => {
       setFullscreen(!!document.fullscreenElement);
     };
-    
+
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
@@ -226,7 +234,7 @@ export default function ArticleEditor() {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
       <EditorHeader lastSaved={lastSaved} />
-      
+
       {message && (
         <div
           className={`mb-6 p-4 rounded-xl text-sm ${
@@ -290,9 +298,7 @@ export default function ArticleEditor() {
         </div>
 
         <div>
-          <label className="block mb-2 font-medium text-gray-700">
-            Tags
-          </label>
+          <label className="block mb-2 font-medium text-gray-700">Tags</label>
           <div className="flex flex-wrap gap-3">
             {tags.map((tag) => (
               <button
@@ -343,7 +349,7 @@ export default function ArticleEditor() {
               </button>
             </div>
           </div>
-          
+
           <div ref={editorRef} data-color-mode="light">
             <MDEditor
               value={form.content}
@@ -353,10 +359,12 @@ export default function ArticleEditor() {
               hideToolbar={false}
               textareaProps={{
                 placeholder: "Write your article content here...",
-                className: "text-sm leading-relaxed bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-400",
+                className:
+                  "text-sm leading-relaxed bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-400",
               }}
               previewOptions={{
-                className: "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
+                className:
+                  "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
               }}
               className="rounded-xl border border-gray-200 shadow-sm"
               extraCommands={[

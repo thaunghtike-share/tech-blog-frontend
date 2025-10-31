@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import AuthModal from "./components/auth-modal";
-import ArticleEditor from "./components/article-editor";
-import ProfileForm from "./components/profile-form";
-import { useAuth } from "./hooks/use-auth";
+import AuthModal from "../../auth/auth-modal";
+import ArticleEditor from "./article-editor";
+import ProfileForm from "../author-profile-form/profile-form";
+import { useAuth } from "../../auth/hooks/use-auth";
 
 export default function NewArticlePage() {
   const { user, isAuthenticated, loading, checkAuth } = useAuth();
@@ -13,7 +13,6 @@ export default function NewArticlePage() {
   useEffect(() => {
     checkAuth();
   }, []);
-
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col bg-white/95">

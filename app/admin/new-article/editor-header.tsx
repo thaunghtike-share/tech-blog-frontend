@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "../hooks/use-auth";
+import { useAuth } from "../../auth/hooks/use-auth";
 
 interface EditorHeaderProps {
   lastSaved?: string | null;
@@ -16,7 +16,7 @@ export default function EditorHeader({ lastSaved }: EditorHeaderProps) {
           {lastSaved && `Draft auto-saved at ${lastSaved}`}
         </p>
       </div>
-      
+
       <div className="flex items-center space-x-4">
         {user && (
           <div className="flex items-center space-x-3 bg-white rounded-xl border border-gray-200 px-4 py-2">
@@ -36,7 +36,7 @@ export default function EditorHeader({ lastSaved }: EditorHeaderProps) {
             </span>
           </div>
         )}
-        
+
         <button
           onClick={logout}
           className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 text-sm font-medium"

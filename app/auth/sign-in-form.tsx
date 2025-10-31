@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "../hooks/use-auth";
+import { useAuth } from "./hooks/use-auth";
 
 interface SignInFormProps {
   onSuccess?: () => void;
@@ -22,7 +22,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
   useEffect(() => {
     const initializeGoogleSignIn = () => {
       if (googleInitialized.current) return;
-      
+
       if (!(window as any).google) {
         console.error("Google Sign-In library not loaded");
         return;
@@ -60,7 +60,9 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
 
     const loadGoogleScript = () => {
       // Check if script is already loaded
-      if (document.querySelector('script[src*="accounts.google.com/gsi/client"]')) {
+      if (
+        document.querySelector('script[src*="accounts.google.com/gsi/client"]')
+      ) {
         // Script already exists, wait for it to load
         const checkGoogle = setInterval(() => {
           if ((window as any).google) {
@@ -72,8 +74,8 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       }
 
       // Load the Google Sign-In script
-      const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
       script.onload = () => {
@@ -97,7 +99,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -109,11 +111,14 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Invalid username or password");
@@ -121,7 +126,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
 
       const data = await res.json();
       const authToken = data.token;
-      
+
       login(authToken, {
         username: data.user?.username || formData.username,
         email: data.user?.email || "",
@@ -140,7 +145,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     setError(null);
-    
+
     try {
       if (!(window as any).google || !googleInitialized.current) {
         setError("Google Sign-In not ready. Please try again.");
@@ -160,7 +165,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
           console.log("Google Sign-In prompt displayed");
         }
       });
-
     } catch (error) {
       console.error("Google Sign-In error:", error);
       setError("Failed to initialize Google Sign In");
@@ -171,7 +175,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
   const handlePopupBlocked = () => {
     setError(
       "Pop-up blocked! Please allow pop-ups for this site and try again. " +
-      "You can also click the Google button again or check your browser's address bar for pop-up permissions."
+        "You can also click the Google button again or check your browser's address bar for pop-up permissions."
     );
     setGoogleLoading(false);
   };
@@ -179,13 +183,16 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
   const handleGoogleResponse = async (response: any) => {
     setGoogleLoading(true);
     setError(null);
-    
+
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id_token: response.credential }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id_token: response.credential }),
+        }
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -194,7 +201,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
 
       const data = await res.json();
       const authToken = data.token;
-      
+
       login(authToken, {
         username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
@@ -202,7 +209,14 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         profileComplete: data.author?.profile_complete || false,
       });
 
-      onSuccess?.();
+      // ✅ FIX: Redirect based on profile completion status
+      if (data.author?.profile_complete) {
+        // Redirect to admin dashboard
+        window.location.href = `/admin/author/${data.author.slug}`;
+      } else {
+        // Redirect to profile completion
+        window.location.href = "/admin/author-profile-form";
+      }
     } catch (error: any) {
       setError(error.message);
     } finally {

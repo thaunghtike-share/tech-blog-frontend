@@ -15,7 +15,9 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
   useEffect(() => {
     const loadGoogleScript = () => {
       // Check if script is already loaded
-      if (document.querySelector('script[src*="accounts.google.com/gsi/client"]')) {
+      if (
+        document.querySelector('script[src*="accounts.google.com/gsi/client"]')
+      ) {
         setGoogleScriptLoaded(true);
         return;
       }
