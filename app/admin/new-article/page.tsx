@@ -16,7 +16,7 @@ export default function NewArticlePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col bg-white/95">
         <MinimalHeader />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
@@ -30,7 +30,7 @@ export default function NewArticlePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-white/95">
       <MinimalHeader />
       <main className="flex-grow max-w-7xl mx-auto px-4 py-10 w-full">
         {!isAuthenticated ? (
