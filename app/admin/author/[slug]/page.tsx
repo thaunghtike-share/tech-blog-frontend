@@ -24,6 +24,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import AuthModal from "@/app/auth/auth-modal";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -68,28 +69,26 @@ interface Author {
 
 export default function AuthorAdminDashboard() {
   const { slug } = useParams();
-  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const [author, setAuthor] = useState<Author | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [authChecked, setAuthChecked] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // 🔐 AUTHENTICATION CHECK - Only run once when auth state is determined
+  // 🔐 AUTHENTICATION CHECK - Show modal if not authenticated
   useEffect(() => {
-    if (!authLoading) {
-      if (!isAuthenticated) {
-        router.push('/auth/signin');
-        return;
-      }
-      setAuthChecked(true);
+    if (!isLoading && !isAuthenticated) {
+      setShowLoginModal(true);
+      setError("Please login to access your dashboard");
+      setLoading(false);
     }
-  }, [isAuthenticated, authLoading, router]);
+  }, [isAuthenticated, isLoading]);
 
   useEffect(() => {
     async function fetchAuthorData() {
       // 🔐 Check authentication before making API call
-      if (!isAuthenticated || !authChecked) return;
+      if (!isAuthenticated || isLoading) return;
 
       try {
         setLoading(true);
@@ -111,7 +110,7 @@ export default function AuthorAdminDashboard() {
         if (res.status === 401) {
           // Token expired or invalid
           localStorage.removeItem('token');
-          router.push('/auth/signin');
+          setShowLoginModal(true);
           return;
         }
         
@@ -159,10 +158,21 @@ export default function AuthorAdminDashboard() {
       }
     }
 
-    if (slug && isAuthenticated && authChecked) {
+    if (slug && isAuthenticated && !isLoading) {
       fetchAuthorData();
     }
-  }, [slug, isAuthenticated, authChecked, router]);
+  }, [slug, isAuthenticated, isLoading]);
+
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    setError(null);
+    // Refresh the page to load dashboard data with new auth state
+    window.location.reload();
+  };
+
+  const handleCloseModal = () => {
+    setShowLoginModal(false);
+  };
 
   // Calculate stats
   const totalArticles = author?.articles?.length || 0;
@@ -214,7 +224,7 @@ export default function AuthorAdminDashboard() {
   };
 
   // 🔐 Show loading while checking authentication
-  if (authLoading || !authChecked) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
         <MinimalHeader />
@@ -233,42 +243,49 @@ export default function AuthorAdminDashboard() {
     );
   }
 
-  // 🔐 If not authenticated (should be redirected, but show message as fallback)
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-white">
-        <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                <Sparkles className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                Access Denied
-              </h2>
-              <p className="text-slate-700 mb-8 text-lg font-medium max-w-md">
-                Please sign in to access your dashboard.
-              </p>
-              <Link
-                href="/auth/signin"
-                className="px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
-              >
-                Sign In
-              </Link>
-            </div>
+  return (
+    <div className="min-h-screen bg-white">
+      <MinimalHeader />
+      
+      {/* Login Modal Overlay */}
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="relative max-w-md w-full">
+            <button
+              onClick={handleCloseModal}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 text-2xl font-bold"
+            >
+              ×
+            </button>
+            <AuthModal onSuccess={handleLoginSuccess} />
           </div>
-        </main>
-        <MinimalFooter />
-      </div>
-    );
-  }
+        </div>
+      )}
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Show error message if not authenticated */}
+        {!isAuthenticated && (
+          <div className="text-center py-16">
+            <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              Access Required
+            </h2>
+            <p className="text-slate-700 mb-8 text-lg font-medium">
+              Please login to access your admin dashboard
+            </p>
+            <button
+              onClick={() => setShowLoginModal(true)}
+              className="px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
+            >
+              Open Login
+            </button>
+          </div>
+        )}
+
+        {/* Show loading while fetching data */}
+        {isAuthenticated && loading && (
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-sky-600 mx-auto mb-6"></div>
@@ -277,17 +294,10 @@ export default function AuthorAdminDashboard() {
               </p>
             </div>
           </div>
-        </main>
-        <MinimalFooter />
-      </div>
-    );
-  }
+        )}
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white">
-        <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Show error if data fetch fails */}
+        {isAuthenticated && error && !loading && (
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
@@ -308,389 +318,379 @@ export default function AuthorAdminDashboard() {
                 >
                   Try Again
                 </button>
-                <Link
-                  href="/auth/signin"
-                  className="px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
-                >
-                  Sign In
-                </Link>
               </div>
             </div>
           </div>
-        </main>
-        <MinimalFooter />
-      </div>
-    );
-  }
+        )}
 
-  return (
-    <div className="min-h-screen bg-white">
-      <MinimalHeader />
-
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Premium Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-16"
-        >
-          <div className="flex items-center gap-6">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500 via-blue-600 to-purple-600 p-1.5 shadow-2xl">
-                <img
-                  src={author?.avatar || "/placeholder.svg"}
-                  alt={author?.name}
-                  className="w-full h-full rounded-2xl object-cover border-4 border-white"
-                />
-              </div>
-              <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-amber-500 to-orange-600 p-3 rounded-2xl shadow-2xl">
-                <Crown className="w-5 h-5 text-white" />
-              </div>
-            </div>
-            <div>
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold mb-4 shadow-lg">
-                <Sparkles className="w-4 h-4" />
-                Author Dashboard
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
-                Welcome back, {author?.name}!
-              </h1>
-              <p className="text-xl text-slate-700 font-medium">
-                {author?.job_title} at {author?.company}
-              </p>
-            </div>
-          </div>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative"
-          >
-            <div className="absolute -inset-1 bg-gradient-to-r from-sky-600 to-blue-600 rounded-3xl blur opacity-75"></div>
-            <Link
-              href="/admin/new-article"
-              className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 shadow-xl"
-            >
-              <Plus className="w-5 h-5" />
-              Write New Article
-            </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Premium Stats Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
-        >
-          {/* Total Articles */}
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-sky-200">
-            <div className="flex items-center justify-between mb-6">
-              <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
-                <TrendingUp className="w-7 h-7 text-white" />
-              </div>
-            </div>
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">
-              {totalArticles}
-            </h3>
-            <p className="text-slate-700 font-semibold text-lg">
-              Total Articles
-            </p>
-          </div>
-
-          {/* Total Views */}
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-green-200">
-            <div className="flex items-center justify-between mb-6">
-              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl">
-                <Eye className="w-7 h-7 text-white" />
-              </div>
-            </div>
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">
-              {totalViews.toLocaleString()}
-            </h3>
-            <p className="text-slate-700 font-semibold text-lg">Total Views</p>
-          </div>
-
-          {/* Average Views */}
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-purple-200">
-            <div className="flex items-center justify-between mb-6">
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
-                <BarChart3 className="w-7 h-7 text-white" />
-              </div>
-            </div>
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">
-              {avgViews.toLocaleString()}
-            </h3>
-            <p className="text-slate-700 font-semibold text-lg">Avg Views</p>
-          </div>
-
-          {/* Total Reactions */}
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-rose-200">
-            <div className="flex items-center justify-between mb-6">
-              <div className="w-14 h-14 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
-                <Heart className="w-7 h-7 text-white" />
-              </div>
-            </div>
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">
-              {totalReactions.toLocaleString()}
-            </h3>
-            <p className="text-slate-700 font-semibold text-lg">
-              Total Reactions
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Top Performing Articles */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
-          {/* Most Viewed Article */}
-          {topArticle && (
+        {/* Show dashboard content only if authenticated and data loaded */}
+        {isAuthenticated && author && !loading && !error && (
+          <>
+            {/* Premium Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-16"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl flex items-center justify-center">
-                  <Eye className="w-5 h-5 text-white" />
+              <div className="flex items-center gap-6">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500 via-blue-600 to-purple-600 p-1.5 shadow-2xl">
+                    <img
+                      src={author?.avatar || "/placeholder.svg"}
+                      alt={author?.name}
+                      className="w-full h-full rounded-2xl object-cover border-4 border-white"
+                    />
+                  </div>
+                  <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-amber-500 to-orange-600 p-3 rounded-2xl shadow-2xl">
+                    <Crown className="w-5 h-5 text-white" />
+                  </div>
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">
-                    Most Viewed
-                  </h2>
+                  <div className="inline-flex items-center gap-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold mb-4 shadow-lg">
+                    <Sparkles className="w-4 h-4" />
+                    Author Dashboard
+                  </div>
+                  <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
+                    Welcome back, {author?.name}!
+                  </h1>
+                  <p className="text-xl text-slate-700 font-medium">
+                    {author?.job_title} at {author?.company}
+                  </p>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="w-full h-32 rounded-xl overflow-hidden">
-                  <img
-                    src={getCoverImage(topArticle)}
-                    alt={topArticle.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <h3 className="text-lg font-bold text-slate-900 line-clamp-2">
-                  {topArticle.title}
-                </h3>
-
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="flex items-center gap-1 text-slate-700 font-semibold">
-                    <Eye className="w-4 h-4 text-sky-600" />
-                    {topArticle.read_count?.toLocaleString()} views
-                  </span>
-                  <span className="flex items-center gap-1 text-slate-700 font-semibold">
-                    <Heart className="w-4 h-4 text-rose-600" />
-                    {topArticle.reactions?.total} reactions
-                  </span>
-                </div>
-
-                <Link
-                  href={`/articles/${topArticle.slug}`}
-                  className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold transition-colors"
-                >
-                  View Article
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Most Loved Article */}
-          {mostLovedArticle && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900">
-                    Most Loved
-                  </h2>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="w-full h-32 rounded-xl overflow-hidden">
-                  <img
-                    src={getCoverImage(mostLovedArticle)}
-                    alt={mostLovedArticle.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <h3 className="text-lg font-bold text-slate-900 line-clamp-2">
-                  {mostLovedArticle.title}
-                </h3>
-
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="flex items-center gap-1 text-slate-700 font-semibold">
-                    <Heart className="w-4 h-4 text-rose-600" />
-                    {mostLovedArticle.reactions?.total} reactions
-                  </span>
-                  <span className="flex items-center gap-1 text-slate-700 font-semibold">
-                    <Eye className="w-4 h-4 text-sky-600" />
-                    {mostLovedArticle.read_count?.toLocaleString()} views
-                  </span>
-                </div>
-
-                <Link
-                  href={`/articles/${mostLovedArticle.slug}`}
-                  className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold transition-colors"
-                >
-                  View Article
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* All Articles Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
-        >
-          <div className="px-8 py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">
-                Your Articles
-              </h2>
-            </div>
-            <Link
-              href={`/authors/${author?.slug}`}
-              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
-            >
-              View Public Profile
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          {author?.articles && author.articles.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                <FileText className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-3xl font-bold text-slate-900 mb-4">
-                Ready to Share Your Knowledge?
-              </h3>
-              <p className="text-slate-700 mb-8 text-xl font-medium max-w-md mx-auto">
-                Create your first article and start building your audience.
-              </p>
-              <Link
-                href="/admin/new-article"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 shadow-lg"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative"
               >
-                <Plus className="w-5 h-5" />
-                Create Your First Article
-              </Link>
-            </div>
-          ) : (
-            <div className="divide-y divide-slate-200">
-              {author?.articles?.map((article, index) => (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="p-8 hover:bg-white transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                <div className="absolute -inset-1 bg-gradient-to-r from-sky-600 to-blue-600 rounded-3xl blur opacity-75"></div>
+                <Link
+                  href="/admin/new-article"
+                  className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 shadow-xl"
                 >
-                  <div className="flex flex-col lg:flex-row gap-8 items-start">
-                    {/* Article Cover */}
-                    <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Plus className="w-5 h-5" />
+                  Write New Article
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Premium Stats Grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+            >
+              {/* Total Articles */}
+              <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-sky-200">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <TrendingUp className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">
+                  {totalArticles}
+                </h3>
+                <p className="text-slate-700 font-semibold text-lg">
+                  Total Articles
+                </p>
+              </div>
+
+              {/* Total Views */}
+              <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-green-200">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Eye className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">
+                  {totalViews.toLocaleString()}
+                </h3>
+                <p className="text-slate-700 font-semibold text-lg">Total Views</p>
+              </div>
+
+              {/* Average Views */}
+              <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-purple-200">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <BarChart3 className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">
+                  {avgViews.toLocaleString()}
+                </h3>
+                <p className="text-slate-700 font-semibold text-lg">Avg Views</p>
+              </div>
+
+              {/* Total Reactions */}
+              <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-rose-200">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Heart className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">
+                  {totalReactions.toLocaleString()}
+                </h3>
+                <p className="text-slate-700 font-semibold text-lg">
+                  Total Reactions
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Top Performing Articles */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
+              {/* Most Viewed Article */}
+              {topArticle && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <Eye className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900">
+                        Most Viewed
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="w-full h-32 rounded-xl overflow-hidden">
                       <img
-                        src={getCoverImage(article)}
-                        alt={article.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        src={getCoverImage(topArticle)}
+                        alt={topArticle.title}
+                        className="w-full h-full object-cover"
                       />
                     </div>
 
-                    {/* Article Info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-4 mb-4">
-                        {article.category && (
-                          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md">
-                            <Folder className="w-4 h-4" />
-                            {article.category.name}
-                          </span>
-                        )}
-                        <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
-                          <Calendar className="w-4 h-4 text-slate-600" />
-                          {formatDate(article.published_at)}
-                        </span>
-                      </div>
+                    <h3 className="text-lg font-bold text-slate-900 line-clamp-2">
+                      {topArticle.title}
+                    </h3>
 
-                      <h3 className="text-2xl font-bold text-sky-700 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
-                        <Link href={`/articles/${article.slug}`}>
-                          {article.title}
-                        </Link>
-                      </h3>
-
-                      {article.excerpt && (
-                        <p className="text-slate-700 text-lg line-clamp-2 mb-4 font-medium">
-                          {article.excerpt}
-                        </p>
-                      )}
-
-                      {/* Engagement Metrics */}
-                      <div className="flex flex-wrap items-center gap-8 mb-4">
-                        <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
-                          <Eye className="w-5 h-5 text-sky-600" />
-                          {article.read_count?.toLocaleString()} views
-                        </span>
-                        <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
-                          <Heart className="w-5 h-5 text-rose-600" />
-                          {article.reactions?.total} reactions
-                        </span>
-                      </div>
-
-                      {/* Tags */}
-                      {article.tags && article.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-3">
-                          {article.tags.slice(0, 4).map((tag) => (
-                            <span
-                              key={tag.id}
-                              className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold"
-                            >
-                              <TagIcon className="w-4 h-4" />
-                              {tag.name}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="flex items-center gap-1 text-slate-700 font-semibold">
+                        <Eye className="w-4 h-4 text-sky-600" />
+                        {topArticle.read_count?.toLocaleString()} views
+                      </span>
+                      <span className="flex items-center gap-1 text-slate-700 font-semibold">
+                        <Heart className="w-4 h-4 text-rose-600" />
+                        {topArticle.reactions?.total} reactions
+                      </span>
                     </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-4">
-                      <Link
-                        href={`/articles/${article.slug}`}
-                        className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
-                      >
-                        <Eye className="w-4 h-4" />
-                        View
-                      </Link>
-                      <Link
-                        href={`/admin/edit-article/${article.slug}`}
-                        className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
-                      >
-                        <Edit className="w-4 h-4" />
-                        Edit
-                      </Link>
-                    </div>
+                    <Link
+                      href={`/articles/${topArticle.slug}`}
+                      className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold transition-colors"
+                    >
+                      View Article
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </motion.div>
-              ))}
+              )}
+
+              {/* Most Loved Article */}
+              {mostLovedArticle && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl flex items-center justify-center">
+                      <Heart className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900">
+                        Most Loved
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="w-full h-32 rounded-xl overflow-hidden">
+                      <img
+                        src={getCoverImage(mostLovedArticle)}
+                        alt={mostLovedArticle.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <h3 className="text-lg font-bold text-slate-900 line-clamp-2">
+                      {mostLovedArticle.title}
+                    </h3>
+
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="flex items-center gap-1 text-slate-700 font-semibold">
+                        <Heart className="w-4 h-4 text-rose-600" />
+                        {mostLovedArticle.reactions?.total} reactions
+                      </span>
+                      <span className="flex items-center gap-1 text-slate-700 font-semibold">
+                        <Eye className="w-4 h-4 text-sky-600" />
+                        {mostLovedArticle.read_count?.toLocaleString()} views
+                      </span>
+                    </div>
+
+                    <Link
+                      href={`/articles/${mostLovedArticle.slug}`}
+                      className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold transition-colors"
+                    >
+                      View Article
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </motion.div>
+              )}
             </div>
-          )}
-        </motion.div>
+
+            {/* All Articles Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
+            >
+              <div className="px-8 py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                    Your Articles
+                  </h2>
+                </div>
+                <Link
+                  href={`/authors/${author?.slug}`}
+                  className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                >
+                  View Public Profile
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              {author?.articles && author.articles.length === 0 ? (
+                <div className="text-center py-20">
+                  <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <FileText className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-slate-900 mb-4">
+                    Ready to Share Your Knowledge?
+                  </h3>
+                  <p className="text-slate-700 mb-8 text-xl font-medium max-w-md mx-auto">
+                    Create your first article and start building your audience.
+                  </p>
+                  <Link
+                    href="/admin/new-article"
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 shadow-lg"
+                  >
+                    <Plus className="w-5 h-5" />
+                    Create Your First Article
+                  </Link>
+                </div>
+              ) : (
+                <div className="divide-y divide-slate-200">
+                  {author?.articles?.map((article, index) => (
+                    <motion.div
+                      key={article.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="p-8 hover:bg-white transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                    >
+                      <div className="flex flex-col lg:flex-row gap-8 items-start">
+                        {/* Article Cover */}
+                        <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <img
+                            src={getCoverImage(article)}
+                            alt={article.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        </div>
+
+                        {/* Article Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                            {article.category && (
+                              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md">
+                                <Folder className="w-4 h-4" />
+                                {article.category.name}
+                              </span>
+                            )}
+                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                              <Calendar className="w-4 h-4 text-slate-600" />
+                              {formatDate(article.published_at)}
+                            </span>
+                          </div>
+
+                          <h3 className="text-2xl font-bold text-sky-700 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                            <Link href={`/articles/${article.slug}`}>
+                              {article.title}
+                            </Link>
+                          </h3>
+
+                          {article.excerpt && (
+                            <p className="text-slate-700 text-lg line-clamp-2 mb-4 font-medium">
+                              {article.excerpt}
+                            </p>
+                          )}
+
+                          {/* Engagement Metrics */}
+                          <div className="flex flex-wrap items-center gap-8 mb-4">
+                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                              <Eye className="w-5 h-5 text-sky-600" />
+                              {article.read_count?.toLocaleString()} views
+                            </span>
+                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                              <Heart className="w-5 h-5 text-rose-600" />
+                              {article.reactions?.total} reactions
+                            </span>
+                          </div>
+
+                          {/* Tags */}
+                          {article.tags && article.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-3">
+                              {article.tags.slice(0, 4).map((tag) => (
+                                <span
+                                  key={tag.id}
+                                  className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold"
+                                >
+                                  <TagIcon className="w-4 h-4" />
+                                  {tag.name}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center gap-4">
+                          <Link
+                            href={`/articles/${article.slug}`}
+                            className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                          >
+                            <Eye className="w-4 h-4" />
+                            View
+                          </Link>
+                          <Link
+                            href={`/admin/edit-article/${article.slug}`}
+                            className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                          >
+                            <Edit className="w-4 h-4" />
+                            Edit
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </>
+        )}
       </main>
 
       <MinimalFooter />
