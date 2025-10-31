@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../auth/hooks/use-auth";
+import { useAuth } from "../auth/hooks/use-auth";
 
 export default function ProfileForm() {
   const [formData, setFormData] = useState({

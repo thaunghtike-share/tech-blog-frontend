@@ -215,7 +215,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         window.location.href = `/admin/author/${data.author.slug}`;
       } else {
         // Redirect to profile completion
-        window.location.href = "/admin/author-profile-form";
+        window.location.href = "/author-profile-form";
       }
     } catch (error: any) {
       setError(error.message);

@@ -4,7 +4,7 @@ import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import AuthModal from "../../auth/auth-modal";
 import ArticleEditor from "./article-editor";
-import ProfileForm from "../author-profile-form/profile-form";
+import ProfileForm from "../../author-profile-form/profile-form";
 import { useAuth } from "../../auth/hooks/use-auth";
 
 export default function NewArticlePage() {
