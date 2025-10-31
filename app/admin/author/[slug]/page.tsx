@@ -100,7 +100,8 @@ export default function AuthorAdminDashboard() {
           throw new Error("No authentication token found");
         }
 
-        const res = await fetch(`${API_BASE_URL}/authors/${slug}/details`, {
+        // 🔐 SECURITY FIX: Use the secure endpoint that returns only current user's data
+        const res = await fetch(`${API_BASE_URL}/authors/me/dashboard/`, {
           headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
@@ -123,6 +124,14 @@ export default function AuthorAdminDashboard() {
         }
         
         const data = await res.json();
+
+        // 🔐 SECURITY FIX: Verify the returned data belongs to the URL slug
+        // This prevents URL manipulation attacks
+        if (data.slug !== slug) {
+          // If URL doesn't match user's actual slug, redirect to correct URL
+          router.push(`/admin/author/${data.slug}`);
+          return;
+        }
 
         // Add dummy reaction data to articles
         const articlesWithReactions = data.articles
@@ -161,7 +170,7 @@ export default function AuthorAdminDashboard() {
     if (slug && isAuthenticated && !isLoading) {
       fetchAuthorData();
     }
-  }, [slug, isAuthenticated, isLoading]);
+  }, [slug, isAuthenticated, isLoading, router]);
 
   const handleLoginSuccess = () => {
     setShowLoginModal(false);
@@ -318,6 +327,12 @@ export default function AuthorAdminDashboard() {
                 >
                   Try Again
                 </button>
+                <Link
+                  href="/"
+                  className="px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
+                >
+                  Go Home
+                </Link>
               </div>
             </div>
           </div>
