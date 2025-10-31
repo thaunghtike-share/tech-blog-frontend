@@ -4,14 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import DevOpsCyclingHero from "@/components/devops-cycling-hero";
-import { FeaturedArticlesPage } from "@/components/featured-articles";
-import { AuthorsHero } from "@/components/authors-hero";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { CertificationRoadmap } from "@/components/CertificationRoadmap";
 import { MinimalFAQs } from "@/components/minimal-faqs";
-import { TopUdemyCourses } from "@/components/TopUdemyCourses";
-import { FreelanceServicesSection } from "@/components/FreelanceServicesSection";
-import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { YouTubePlaylists } from "@/components/YouTubePlaylists";
 import { FreeLabs } from "@/components/FreeLabs";
@@ -237,10 +232,6 @@ export default function HomeClient() {
 
           <section id="youtube" className="-mt-20">
             <YouTubePlaylists />
-          </section>
-
-          <section id="online" className="-mt-25">
-            <TopDevOpsCourses />
           </section>
 
           <section id="playgrounds" className="-mt-15">
