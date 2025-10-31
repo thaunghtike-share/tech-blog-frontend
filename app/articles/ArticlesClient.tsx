@@ -69,13 +69,18 @@ export default function ArticlesClient() {
         );
       });
 
-      // For now, just use the first 3 complete authors without checking article counts
-      // since we can't access the details endpoint without auth
+      // ✅ FIX: Sort authors by articles_count (descending) and take top 3
       const topAuthors = completeAuthors
-        .slice(0, 3)
+        .sort((a: AuthorSummary, b: AuthorSummary) => {
+          const countA = a.articles_count || 0;
+          const countB = b.articles_count || 0;
+          return countB - countA; // Descending order - most articles first
+        })
+        .slice(0, 3) // Take only top 3 authors
         .map((author: AuthorSummary) => ({
           ...author,
-          articles_count: 3, // Assume they have articles for display purposes
+          // Keep the actual articles_count from API
+          articles_count: author.articles_count || 0,
         }));
 
       setAuthors(topAuthors);
@@ -131,7 +136,7 @@ export default function ArticlesClient() {
 
       <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
         <section className="w-full mb-20">
-          {/* Header - Updated to left align like "Our Mission" */}
+          {/* Header - Keeping your original text exactly as you had it */}
           <div className="max-w-3xl mb-16">
             <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">

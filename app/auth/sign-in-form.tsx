@@ -135,6 +135,15 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       });
 
       onSuccess?.();
+
+      // ✅ FIX: Add the same redirect logic as Google login
+      if (data.author?.profile_complete) {
+        // Redirect to admin dashboard
+        window.location.href = `/admin/author/${data.author.slug}`;
+      } else {
+        // Redirect to profile completion
+        window.location.href = "/author-profile-form";
+      }
     } catch (error: any) {
       setError(error.message);
     } finally {
