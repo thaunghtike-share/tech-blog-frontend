@@ -8,12 +8,12 @@ import ProfileForm from "../../author-profile-form/profile-form";
 import { useAuth } from "../../auth/hooks/use-auth";
 
 export default function NewArticlePage() {
-  const { user, isAuthenticated, loading, checkAuth } = useAuth();
+  const { user, isAuthenticated, isLoading, checkAuth } = useAuth();
 
   useEffect(() => {
     checkAuth();
   }, []);
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-white/95">
         <MinimalHeader />

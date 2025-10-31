@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -68,17 +68,61 @@ interface Author {
 
 export default function AuthorAdminDashboard() {
   const { slug } = useParams();
-  const { user } = useAuth();
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
+  const router = useRouter();
   const [author, setAuthor] = useState<Author | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // 🔐 AUTHENTICATION CHECK - Only run once when auth state is determined
+  useEffect(() => {
+    if (!authLoading) {
+      if (!isAuthenticated) {
+        router.push('/auth/signin');
+        return;
+      }
+      setAuthChecked(true);
+    }
+  }, [isAuthenticated, authLoading, router]);
 
   useEffect(() => {
     async function fetchAuthorData() {
+      // 🔐 Check authentication before making API call
+      if (!isAuthenticated || !authChecked) return;
+
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/authors/${slug}/details`);
-        if (!res.ok) throw new Error("Failed to load author data");
+        setError(null);
+        
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+          throw new Error("No authentication token found");
+        }
+
+        const res = await fetch(`${API_BASE_URL}/authors/${slug}/details`, {
+          headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (res.status === 401) {
+          // Token expired or invalid
+          localStorage.removeItem('token');
+          router.push('/auth/signin');
+          return;
+        }
+        
+        if (res.status === 403) {
+          throw new Error("You don't have permission to access this dashboard");
+        }
+        
+        if (!res.ok) {
+          throw new Error(`Failed to load author data: ${res.status}`);
+        }
+        
         const data = await res.json();
 
         // Add dummy reaction data to articles
@@ -108,14 +152,17 @@ export default function AuthorAdminDashboard() {
           articles: articlesWithReactions,
         });
       } catch (err) {
+        console.error('Error fetching author data:', err);
         setError((err as Error).message);
       } finally {
         setLoading(false);
       }
     }
 
-    if (slug) fetchAuthorData();
-  }, [slug]);
+    if (slug && isAuthenticated && authChecked) {
+      fetchAuthorData();
+    }
+  }, [slug, isAuthenticated, authChecked, router]);
 
   // Calculate stats
   const totalArticles = author?.articles?.length || 0;
@@ -166,6 +213,57 @@ export default function AuthorAdminDashboard() {
     return "/devops.webp";
   };
 
+  // 🔐 Show loading while checking authentication
+  if (authLoading || !authChecked) {
+    return (
+      <div className="min-h-screen bg-white">
+        <MinimalHeader />
+        <main className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-sky-600 mx-auto mb-6"></div>
+              <p className="text-slate-700 text-lg font-medium">
+                Checking authentication...
+              </p>
+            </div>
+          </div>
+        </main>
+        <MinimalFooter />
+      </div>
+    );
+  }
+
+  // 🔐 If not authenticated (should be redirected, but show message as fallback)
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-white">
+        <MinimalHeader />
+        <main className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                <Sparkles className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                Access Denied
+              </h2>
+              <p className="text-slate-700 mb-8 text-lg font-medium max-w-md">
+                Please sign in to access your dashboard.
+              </p>
+              <Link
+                href="/auth/signin"
+                className="px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
+              >
+                Sign In
+              </Link>
+            </div>
+          </div>
+        </main>
+        <MinimalFooter />
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
@@ -196,17 +294,27 @@ export default function AuthorAdminDashboard() {
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                Error Loading Dashboard
+                {error.includes("permission") || error.includes("denied") || error.includes("403") 
+                  ? "Access Denied" 
+                  : "Error Loading Dashboard"}
               </h2>
               <p className="text-slate-700 mb-8 text-lg font-medium max-w-md">
                 {error}
               </p>
-              <button
-                onClick={() => window.location.reload()}
-                className="px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
-              >
-                Try Again
-              </button>
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={() => window.location.reload()}
+                  className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
+                >
+                  Try Again
+                </button>
+                <Link
+                  href="/auth/signin"
+                  className="px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-2xl hover:shadow-2xl transition-all duration-300 font-semibold shadow-lg"
+                >
+                  Sign In
+                </Link>
+              </div>
             </div>
           </div>
         </main>

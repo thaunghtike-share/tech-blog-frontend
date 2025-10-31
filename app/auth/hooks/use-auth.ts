@@ -11,13 +11,13 @@ interface User {
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const checkAuth = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        setLoading(false);
+        setIsLoading(false);
         return;
       }
 
@@ -43,9 +43,14 @@ export function useAuth() {
       console.error("Auth check failed:", error);
       localStorage.removeItem("token");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
+
+  // 🔐 CRITICAL FIX: Call checkAuth on component mount
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const login = (token: string, userData: User) => {
     localStorage.setItem("token", token);
@@ -66,7 +71,7 @@ export function useAuth() {
   return {
     user,
     isAuthenticated,
-    loading,
+    isLoading, // Changed from 'loading' to match your usage
     checkAuth,
     login,
     logout,
