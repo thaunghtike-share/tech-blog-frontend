@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalBlogList } from "@/components/minimal-blog-list";
 import { MinimalFooter } from "@/components/minimal-footer";
-import { Users, Linkedin, BookOpen, ArrowRight, Star, BookText } from "lucide-react";
+import { Users, Linkedin, BookOpen, ArrowRight, Star, BookText, TrendingUp } from "lucide-react";
 
 interface AuthorSummary {
   id: number;
@@ -188,10 +188,10 @@ export default function ArticlesClient() {
                           </h3>
                           <div className="flex flex-wrap items-center gap-3 mb-4">
                             <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-4 py-2 rounded-full border border-sky-100 text-sky-700 font-medium text-sm">
-                              <BookText className="w-4 h-4" />
+                              <TrendingUp className="w-4 h-4" />
                               {author.articles_count} article{author.articles_count !== 1 ? 's' : ''}
                             </span>
-                            <span className="text-gray-600 font-medium text-sm">
+                            <span className="text-sky-600 font-medium text-base">
                               {author.job_title} at {author.company}
                             </span>
                           </div>
@@ -205,7 +205,7 @@ export default function ArticlesClient() {
 
                       {/* Full Bio */}
                       <div className="mb-4">
-                        <p className="text-gray-700 leading-relaxed text-lg">
+                        <p className="text-black-400 leading-relaxed text-lg">
                           {author.bio}
                         </p>
                       </div>
