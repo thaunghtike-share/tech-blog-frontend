@@ -71,10 +71,12 @@ export default function ArticlesClient() {
 
       // For now, just use the first 3 complete authors without checking article counts
       // since we can't access the details endpoint without auth
-      const topAuthors = completeAuthors.slice(0, 3).map((author: AuthorSummary) => ({
-        ...author,
-        articles_count: 3 // Assume they have articles for display purposes
-      }));
+      const topAuthors = completeAuthors
+        .slice(0, 3)
+        .map((author: AuthorSummary) => ({
+          ...author,
+          articles_count: 3, // Assume they have articles for display purposes
+        }));
 
       setAuthors(topAuthors);
     } catch (err) {
@@ -91,7 +93,7 @@ export default function ArticlesClient() {
           job_title: "Senior DevOps Engineer",
           company: "Tech Solutions Inc",
           linkedin: "https://linkedin.com/in/thaunghtikeoo",
-          articles_count: 3
+          articles_count: 3,
         },
         {
           id: 2,
@@ -103,7 +105,7 @@ export default function ArticlesClient() {
           job_title: "Cloud Architect",
           company: "Cloud Innovations",
           linkedin: "https://linkedin.com/in/sandarwin",
-          articles_count: 2
+          articles_count: 2,
         },
         {
           id: 3,
@@ -115,8 +117,8 @@ export default function ArticlesClient() {
           job_title: "DevOps Lead",
           company: "InfraTech",
           linkedin: "https://linkedin.com/in/aungmyintmyat",
-          articles_count: 4
-        }
+          articles_count: 4,
+        },
       ]);
     } finally {
       setAuthorsLoading(false);
@@ -128,16 +130,10 @@ export default function ArticlesClient() {
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
-        {/* Featured Authors Section - Moved to Top */}
         <section className="w-full mb-20">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-6 py-3 rounded-full border border-sky-100 mb-6">
-              <Star className="w-5 h-5 text-sky-600" />
-              <span className="text-sky-700 font-semibold text-sm uppercase tracking-wide">
-                Meet Our Authors
-              </span>
-            </div>
+          {/* Header - Updated to left align like "Our Mission" */}
+          <div className="max-w-3xl mb-16">
+            <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
               This Week's
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -151,7 +147,7 @@ export default function ArticlesClient() {
             </p>
           </div>
 
-          {/* Authors Grid */}
+          {/* Authors Grid - rest remains exactly the same */}
           {authorsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {Array.from({ length: 3 }).map((_, i) => (
