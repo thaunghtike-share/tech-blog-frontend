@@ -24,7 +24,6 @@ import {
 } from "lucide-react";
 import { MinimalDevopsRoadmap } from "@/components/devops-roadmap";
 import { ProgrammingLanguagesRoadmap } from "@/components/programming-languages-roadmap";
-import { TopDevOpsCourses } from "@/components/TopDevOpsCourses";
 
 export default function HomeClient() {
   const router = useRouter();
