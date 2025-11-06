@@ -116,9 +116,8 @@ const DevOpsCyclingHero = () => {
 
   return (
     <section className="relative bg-white/95 overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between py-13 gap-8">
+        <div className="flex flex-col lg:flex-row items-center justify-between py-7 gap-8">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

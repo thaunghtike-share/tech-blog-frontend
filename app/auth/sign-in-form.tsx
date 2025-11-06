@@ -203,12 +203,12 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         }
       );
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.detail || "Google sign in failed");
+        throw new Error(data.error || data.details || "Google sign in failed");
       }
 
-      const data = await res.json();
       const authToken = data.token;
 
       login(authToken, {
@@ -218,15 +218,14 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         profileComplete: data.author?.profile_complete || false,
       });
 
-      // ✅ FIX: Redirect based on profile completion status
-      if (data.author?.profile_complete) {
-        // Redirect to admin dashboard
+      // Safe redirect logic
+      if (data.author?.profile_complete && data.author?.slug) {
         window.location.href = `/admin/author/${data.author.slug}`;
       } else {
-        // Redirect to profile completion
         window.location.href = "/author-profile-form";
       }
     } catch (error: any) {
+      console.error("Google auth error:", error);
       setError(error.message);
     } finally {
       setGoogleLoading(false);
