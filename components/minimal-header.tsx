@@ -94,9 +94,18 @@ export function MinimalHeader() {
   };
 
   const handleLogout = () => {
-    logout();
+    // Show loading state immediately
     setIsUserDropdownOpen(false);
     setIsMobileMenuOpen(false);
+    
+    // Add a small delay for better UX
+    setTimeout(() => {
+      logout();
+      // Redirect to home page after logout
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 100);
+    }, 500);
   };
 
   const handleAuthSuccess = () => {

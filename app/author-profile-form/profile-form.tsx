@@ -103,6 +103,41 @@ export default function ProfileForm() {
     }
   };
 
+  const handleSkip = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "/";
+        return;
+      }
+
+      // Try to get the author data to get the slug
+      const profileRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      );
+
+      if (profileRes.ok) {
+        const profileData = await profileRes.json();
+        // Redirect to the correct author admin dashboard
+        if (profileData.slug) {
+          window.location.href = `/admin/author/${profileData.slug}`;
+        } else {
+          window.location.href = "/";
+        }
+      } else {
+        // Fallback to home page
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("Failed to get author data:", error);
+      // Fallback to home page
+      window.location.href = "/";
+    }
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -148,7 +183,6 @@ export default function ProfileForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* ... rest of your form fields remain the same ... */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block mb-2 font-medium text-gray-700">
@@ -167,13 +201,14 @@ export default function ProfileForm() {
 
             <div>
               <label className="block mb-2 font-medium text-gray-700">
-                Job Title
+                Job Title <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 name="job_title"
                 value={formData.job_title}
                 onChange={handleInputChange}
+                required
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
                 placeholder="Your current position"
               />
@@ -197,13 +232,14 @@ export default function ProfileForm() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700">
-              Company
+              Company <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="company"
               value={formData.company}
               onChange={handleInputChange}
+              required
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
               placeholder="Where you work"
             />
@@ -211,13 +247,14 @@ export default function ProfileForm() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700">
-              LinkedIn URL
+              LinkedIn URL <span className="text-red-500">*</span>
             </label>
             <input
               type="url"
               name="linkedin"
               value={formData.linkedin}
               onChange={handleInputChange}
+              required
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
               placeholder="https://linkedin.com/in/your-profile"
             />
@@ -225,13 +262,14 @@ export default function ProfileForm() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700">
-              Avatar URL (GitHub Raw URL)
+              Avatar URL (GitHub Raw URL) <span className="text-red-500">*</span>
             </label>
             <input
               type="url"
               name="avatar"
               value={formData.avatar}
               onChange={handleInputChange}
+              required
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
               placeholder="https://raw.githubusercontent.com/username/repo/path/to/image.png"
             />
@@ -242,13 +280,14 @@ export default function ProfileForm() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700">
-              Profile Slug
+              Profile Slug <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="slug"
               value={formData.slug}
               onChange={handleInputChange}
+              required
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
               placeholder="your-unique-profile-slug"
             />
@@ -263,13 +302,22 @@ export default function ProfileForm() {
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Saving Profile..." : "Complete Profile & Continue"}
-          </button>
+          <div className="flex gap-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Saving Profile..." : "Complete Profile & Continue"}
+            </button>
+            <button
+              type="button"
+              onClick={handleSkip}
+              className="flex-1 border border-slate-300 text-slate-700 py-3 rounded-xl hover:bg-slate-50 transition-all duration-300 font-medium"
+            >
+              Skip for Now
+            </button>
+          </div>
         </form>
       </div>
     </div>
