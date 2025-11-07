@@ -52,6 +52,23 @@ export function MinimalHeader() {
     };
   }, []);
 
+  // FIX: Scroll to top when modal opens
+  useEffect(() => {
+    if (showAuthModal) {
+      // Scroll to top of page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Prevent body scrolling
+      document.body.classList.add('modal-open');
+    } else {
+      // Re-enable body scrolling
+      document.body.classList.remove('modal-open');
+    }
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, [showAuthModal]);
+
   useEffect(() => {
     const fetchResults = async () => {
       if (searchQuery.trim().length < 2) {
@@ -189,41 +206,34 @@ export function MinimalHeader() {
       </div>
     </div>
   );
+// Auth Modal Component
+const AuthModalOverlay = () => {
+  if (!mounted || !showAuthModal) return null;
 
-  // Auth Modal Component
-  const AuthModalOverlay = () => {
-    if (!mounted || !showAuthModal) return null;
-
-    return createPortal(
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-white/30 backdrop-blur-2xl overflow-y-auto pt-40">
+      {/* Modal Container */}
+      <div className="relative w-full max-w-md mx-auto my-8">
+        <button
           onClick={() => setShowAuthModal(false)}
-        />
+          className="absolute -top-12 right-0 text-black hover:text-gray-600 transition-colors z-[10001]"
+        >
+          <X className="w-6 h-6" />
+        </button>
 
-        {/* Modal Container */}
-        <div className="relative z-[10000] w-full max-w-md mx-auto">
-          <button
-            onClick={() => setShowAuthModal(false)}
-            className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-[10001]"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          {/* Modal Content */}
-          <div className="bg-white rounded-2xl shadow-xl">
-            <AuthModal onSuccess={handleAuthSuccess} />
-          </div>
+        {/* Modal Content */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-200">
+          <AuthModal onSuccess={handleAuthSuccess} />
         </div>
-      </div>,
-      document.body
-    );
-  };
+      </div>
+    </div>,
+    document.body
+  );
+};
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-4 relative">
           {/* Mobile Header */}
           <div className="flex items-center justify-between md:hidden py-3 gap-3 relative z-10">

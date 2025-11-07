@@ -299,6 +299,11 @@ export default function HomeClient() {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Fix for modal positioning - scroll to top when modal opens */
+        body.modal-open {
+          overflow: hidden;
+        }
       `}</style>
     </div>
   );
