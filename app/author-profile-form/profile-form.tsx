@@ -253,7 +253,7 @@ export default function ProfileForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="relative overflow-x-hidden max-w-2xl mx-auto">
       <div className="bg-white/95 rounded-2xl border border-gray-200 shadow-lg p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">

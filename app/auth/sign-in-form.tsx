@@ -43,7 +43,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
             {
               theme: "outline",
               size: "large",
-              width: "100%",
+              width: "400",
               text: "signin_with",
               shape: "pill",
             }

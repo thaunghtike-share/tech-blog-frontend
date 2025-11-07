@@ -264,7 +264,7 @@ export default function AuthorAdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative overflow-x-hidden">
       <MinimalHeader />
       
       {/* Login Modal Overlay */}
