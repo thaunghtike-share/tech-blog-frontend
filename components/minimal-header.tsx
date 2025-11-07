@@ -48,7 +48,8 @@ export function MinimalHeader() {
     return () => {
       if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
       if (resourcesTimeout.current) clearTimeout(resourcesTimeout.current);
-      if (userDropdownTimeout.current) clearTimeout(userDropdownTimeout.current);
+      if (userDropdownTimeout.current)
+        clearTimeout(userDropdownTimeout.current);
     };
   }, []);
 
@@ -56,16 +57,16 @@ export function MinimalHeader() {
   useEffect(() => {
     if (showAuthModal) {
       // Scroll to top of page
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       // Prevent body scrolling
-      document.body.classList.add('modal-open');
+      document.body.classList.add("modal-open");
     } else {
       // Re-enable body scrolling
-      document.body.classList.remove('modal-open');
+      document.body.classList.remove("modal-open");
     }
 
     return () => {
-      document.body.classList.remove('modal-open');
+      document.body.classList.remove("modal-open");
     };
   }, [showAuthModal]);
 
@@ -114,7 +115,7 @@ export function MinimalHeader() {
     // Show loading state immediately
     setIsUserDropdownOpen(false);
     setIsMobileMenuOpen(false);
-    
+
     // Add a small delay for better UX
     setTimeout(() => {
       logout();
@@ -167,7 +168,7 @@ export function MinimalHeader() {
         </p>
         <p className="text-sm text-gray-500 truncate">{user?.email}</p>
       </div>
-      
+
       <Link
         href={`/admin/author/${user?.username}`}
         className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
@@ -176,7 +177,7 @@ export function MinimalHeader() {
         <User className="w-4 h-4 mr-3" />
         Your Profile
       </Link>
-      
+
       <Link
         href={`/admin/author/${user?.username}`}
         className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
@@ -185,7 +186,7 @@ export function MinimalHeader() {
         <LayoutDashboard className="w-4 h-4 mr-3" />
         Dashboard
       </Link>
-      
+
       <Link
         href="/settings"
         className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
@@ -194,7 +195,7 @@ export function MinimalHeader() {
         <Settings className="w-4 h-4 mr-3" />
         Settings
       </Link>
-      
+
       <div className="border-t border-gray-100 mt-2 pt-2">
         <button
           onClick={handleLogout}
@@ -206,30 +207,31 @@ export function MinimalHeader() {
       </div>
     </div>
   );
-// Auth Modal Component
-const AuthModalOverlay = () => {
-  if (!mounted || !showAuthModal) return null;
+  
+  // Auth Modal Component
+  const AuthModalOverlay = () => {
+    if (!mounted || !showAuthModal) return null;
 
-  return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-white/30 backdrop-blur-2xl overflow-y-auto pt-40">
-      {/* Modal Container */}
-      <div className="relative w-full max-w-md mx-auto my-8">
-        <button
-          onClick={() => setShowAuthModal(false)}
-          className="absolute -top-12 right-0 text-black hover:text-gray-600 transition-colors z-[10001]"
-        >
-          <X className="w-6 h-6" />
-        </button>
+    return createPortal(
+      <div className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-white/100 backdrop-blur-2xl overflow-y-auto pt-40">
+        {/* Modal Container */}
+        <div className="relative w-full max-w-md mx-auto my-8">
+          <button
+            onClick={() => setShowAuthModal(false)}
+            className="absolute -top-12 right-0 text-black hover:text-gray-600 transition-colors z-[10001]"
+          >
+            <X className="w-6 h-6" />
+          </button>
 
-        {/* Modal Content */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-200">
-          <AuthModal onSuccess={handleAuthSuccess} />
+          {/* Modal Content */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200">
+            <AuthModal onSuccess={handleAuthSuccess} />
+          </div>
         </div>
-      </div>
-    </div>,
-    document.body
-  );
-};
+      </div>,
+      document.body
+    );
+  };
 
   return (
     <>
@@ -710,10 +712,20 @@ const AuthModalOverlay = () => {
               {!isLoading && (
                 <div className="flex items-center">
                   {isAuthenticated ? (
-                    <div 
+                    <div
                       className="relative"
-                      onMouseEnter={() => handleMouseEnter(setIsUserDropdownOpen, userDropdownTimeout)}
-                      onMouseLeave={() => handleMouseLeave(setIsUserDropdownOpen, userDropdownTimeout)}
+                      onMouseEnter={() =>
+                        handleMouseEnter(
+                          setIsUserDropdownOpen,
+                          userDropdownTimeout
+                        )
+                      }
+                      onMouseLeave={() =>
+                        handleMouseLeave(
+                          setIsUserDropdownOpen,
+                          userDropdownTimeout
+                        )
+                      }
                     >
                       <button className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-gray-200 hover:shadow-inner transition-all">
                         {user?.avatar ? (
