@@ -322,7 +322,7 @@ export function MinimalHeader() {
                     onClick={handleSignInClick}
                     className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-blue-500/25 font-medium text-sm"
                   >
-                    Sign In
+                    Write Article
                   </button>
                 )}
 
@@ -745,7 +745,7 @@ export function MinimalHeader() {
                       onClick={handleSignInClick}
                       className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-700 text-white rounded-full hover:from-sky-600 hover:to-blue-600 transition-all shadow-lg hover:shadow-blue-500/25 font-medium"
                     >
-                      Sign In
+                      Write Article
                     </button>
                   )}
                 </div>
