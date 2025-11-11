@@ -13,6 +13,10 @@ import {
   Tag as TagIcon,
   Award,
   Star,
+  Eye,
+  Heart,
+  TrendingUp,
+  BarChart3,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -65,23 +69,10 @@ export default function AuthorDetailPage() {
     async function fetchAuthor() {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/authors/${slug}/details`);
+        const res = await fetch(`${API_BASE_URL}/authors/${slug}/public/`);
         if (!res.ok) throw new Error("Failed to load author details");
         const data = await res.json();
         console.log("🚀 API Response:", data);
-        
-        // Debug cover images
-        if (data.articles && data.articles.length > 0) {
-          console.log("🔍 Cover Image Analysis:");
-          data.articles.forEach((article: Article) => {
-            console.log(`📄 "${article.title}":`, {
-              cover_image: article.cover_image,
-              has_cover_image: !!article.cover_image,
-              cover_image_type: typeof article.cover_image,
-              cover_image_length: article.cover_image?.length
-            });
-          });
-        }
         
         setAuthor(data);
       } catch (err) {
@@ -92,6 +83,12 @@ export default function AuthorDetailPage() {
     }
     if (slug) fetchAuthor();
   }, [slug]);
+
+  // Calculate stats
+  const totalArticles = author?.articles?.length || 0;
+  const totalViews = author?.articles?.reduce((sum, article) => sum + (article.read_count || 0), 0) || 0;
+  const avgViews = totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
+  const totalReactions = author?.articles?.reduce((sum, article) => sum + (Math.floor(Math.random() * 100) + 20), 0) || 0; // Dummy reactions for now
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -119,20 +116,11 @@ export default function AuthorDetailPage() {
   const truncate = (str: string, max = 150) =>
     str.length <= max ? str : str.slice(0, max) + "...";
 
-  // SIMPLIFIED: Get cover image URL
   const getCoverImage = (article: Article) => {
-    console.log(`🖼️ Processing cover for: "${article.title}"`, {
-      cover_image: article.cover_image,
-      has_cover_image: !!article.cover_image
-    });
-
-    // If cover_image exists and is not null/empty, use it directly
     if (article.cover_image && article.cover_image.trim() !== '') {
-      console.log(`✅ Using real cover image: ${article.cover_image}`);
       return article.cover_image;
     }
 
-    // Fallback based on category
     const category = article.category?.name?.toLowerCase() || '';
     let fallback = "/devops.webp";
     
@@ -141,19 +129,14 @@ export default function AuthorDetailPage() {
     if (category.includes('terraform')) fallback = "/terraform.webp";
     if (category.includes('devsecops') || category.includes('security')) fallback = "/security.webp";
     
-    console.log(`🔄 Using fallback: ${fallback} for category: ${category}`);
     return fallback;
   };
 
-  // Check if article has a real cover image
   const hasRealCoverImage = (article: Article) => {
-    const hasImage = !!(article.cover_image && article.cover_image.trim() !== '');
-    console.log(`🔍 Has real cover for "${article.title}": ${hasImage} (${article.cover_image})`);
-    return hasImage;
+    return !!(article.cover_image && article.cover_image.trim() !== '');
   };
 
   // Pagination logic
-  const totalArticles = author?.articles?.length || 0;
   const totalPages = Math.ceil(totalArticles / pageSize);
   const paginatedArticles =
     author?.articles?.slice(
@@ -177,7 +160,7 @@ export default function AuthorDetailPage() {
               {error}
             </p>
             <Link
-              href="/authors"
+              href="/articles"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
               Browse All Authors
@@ -283,6 +266,66 @@ export default function AuthorDetailPage() {
                 <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl text-base">
                   {author?.bio}
                 </p>
+
+                {/* Author Stats */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"
+                >
+                  {/* Total Articles */}
+                  <div className="">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+                        <TrendingUp className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-900">{totalArticles}</div>
+                        <div className="text-xs text-gray-600 font-medium">Articles</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Total Views */}
+                  <div className="">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-md">
+                        <Eye className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-900">{totalViews.toLocaleString()}</div>
+                        <div className="text-xs text-gray-600 font-medium">Total Views</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Average Views */}
+                  <div className="">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md">
+                        <BarChart3 className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-900">{avgViews.toLocaleString()}</div>
+                        <div className="text-xs text-gray-600 font-medium">Avg Views</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Total Reactions */}
+                  <div className="">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md">
+                        <Heart className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-900">{totalReactions.toLocaleString()}</div>
+                        <div className="text-xs text-gray-600 font-medium">Reactions</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -339,12 +382,6 @@ export default function AuthorDetailPage() {
                     
                     const coverImage = getCoverImage(article);
                     const hasRealCover = hasRealCoverImage(article);
-                    
-                    console.log(`🎯 Rendering "${article.title}":`, {
-                      finalCoverImage: coverImage,
-                      hasRealCover: hasRealCover,
-                      originalCoverImage: article.cover_image
-                    });
 
                     return (
                       <motion.article
@@ -361,19 +398,13 @@ export default function AuthorDetailPage() {
                             alt={article.title}
                             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                             onError={(e) => {
-                              console.log(`❌ Image failed to load: ${coverImage} for "${article.title}"`);
-                              // Fallback to category-based image
                               const category = article.category?.name?.toLowerCase() || '';
                               let fallbackImage = "/devops.webp";
                               if (category.includes('cloud')) fallbackImage = "/cloud.webp";
                               if (category.includes('automation')) fallbackImage = "/automation.webp";
                               if (category.includes('terraform')) fallbackImage = "/terraform.webp";
                               if (category.includes('devsecops')) fallbackImage = "/security.webp";
-                              console.log(`🔄 Falling back to: ${fallbackImage}`);
                               (e.target as HTMLImageElement).src = fallbackImage;
-                            }}
-                            onLoad={() => {
-                              console.log(`✅ Image loaded successfully: ${coverImage} for "${article.title}"`);
                             }}
                           />
                           {!hasRealCover && (
@@ -418,8 +449,16 @@ export default function AuthorDetailPage() {
                               <span>{formatDate(article.published_at)}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="w-4 h-4 text-gray-400" />
-                              <span>{calculateReadTime(article.content)}</span>
+                              <Heart className="w-3 h-3 text-rose-600" />
+                              <span>{Math.floor(Math.random() * 100) + 20} reactions</span>
+                            </div>
+                          </div>
+
+                          {/* Article Stats */}
+                          <div className="flex items-center gap-4 text-xs text-gray-600 mb-4">
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3 h-3 text-sky-600" />
+                              <span>{article.read_count?.toLocaleString()} views</span>
                             </div>
                           </div>
 

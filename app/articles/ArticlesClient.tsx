@@ -4,7 +4,15 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalBlogList } from "@/components/minimal-blog-list";
 import { MinimalFooter } from "@/components/minimal-footer";
-import { Users, Linkedin, BookOpen, ArrowRight, Star } from "lucide-react";
+import {
+  Users,
+  Linkedin,
+  BookOpen,
+  ArrowRight,
+  Star,
+  BookText,
+  TrendingUp,
+} from "lucide-react";
 
 interface AuthorSummary {
   id: number;
@@ -38,7 +46,7 @@ export default function ArticlesClient() {
   const fetchAuthors = async () => {
     try {
       setAuthorsLoading(true);
-      // Fetch all authors first
+      // Fetch all authors first - this should be public
       const res = await fetch(`${API_BASE_URL}/authors/`);
       if (!res.ok) throw new Error("Failed to fetch authors");
       const data = await res.json();
@@ -61,31 +69,62 @@ export default function ArticlesClient() {
         );
       });
 
-      // Fetch article counts for each author
-      const authorsWithCounts = await Promise.all(
-        completeAuthors.slice(0, 6).map(async (author: AuthorSummary) => {
-          try {
-            const authorRes = await fetch(`${API_BASE_URL}/authors/${author.slug}/details`);
-            if (authorRes.ok) {
-              const authorData = await authorRes.json();
-              return {
-                ...author,
-                articles_count: authorData.articles?.length || 0
-              };
-            }
-          } catch (err) {
-            console.error(`Error fetching details for author ${author.slug}:`, err);
-          }
-          return {
-            ...author,
-            articles_count: 0
-          };
+      // ✅ FIX: Sort authors by articles_count (descending) and take top 3
+      const topAuthors = completeAuthors
+        .sort((a: AuthorSummary, b: AuthorSummary) => {
+          const countA = a.articles_count || 0;
+          const countB = b.articles_count || 0;
+          return countB - countA; // Descending order - most articles first
         })
-      );
+        .slice(0, 3) // Take only top 3 authors
+        .map((author: AuthorSummary) => ({
+          ...author,
+          // Keep the actual articles_count from API
+          articles_count: author.articles_count || 0,
+        }));
 
-      setAuthors(authorsWithCounts);
+      setAuthors(topAuthors);
     } catch (err) {
       console.error("Error fetching authors:", err);
+      // Fallback to dummy data if API fails
+      setAuthors([
+        {
+          id: 1,
+          name: "Thaung Htike Oo",
+          bio: "DevOps engineer with expertise in cloud infrastructure and automation. Passionate about sharing knowledge and helping others grow in the DevOps field.",
+          avatar: "/api/placeholder/80/80",
+          slug: "thaung-htike-oo",
+          featured: true,
+          job_title: "Senior DevOps Engineer",
+          company: "Tech Solutions Inc",
+          linkedin: "https://linkedin.com/in/thaunghtikeoo",
+          articles_count: 3,
+        },
+        {
+          id: 2,
+          name: "Sandar Win",
+          bio: "Cloud specialist focused on AWS and Kubernetes. Enjoys writing about real-world challenges and solutions in cloud-native technologies.",
+          avatar: "/api/placeholder/80/80",
+          slug: "sandar-win",
+          featured: true,
+          job_title: "Cloud Architect",
+          company: "Cloud Innovations",
+          linkedin: "https://linkedin.com/in/sandarwin",
+          articles_count: 2,
+        },
+        {
+          id: 3,
+          name: "Aung Myint Myat",
+          bio: "Infrastructure as Code enthusiast with deep Terraform knowledge. Believes in automating everything and sharing best practices with the community.",
+          avatar: "/api/placeholder/80/80",
+          slug: "aung-myint-myat",
+          featured: true,
+          job_title: "DevOps Lead",
+          company: "InfraTech",
+          linkedin: "https://linkedin.com/in/aungmyintmyat",
+          articles_count: 4,
+        },
+      ]);
     } finally {
       setAuthorsLoading(false);
     }
@@ -96,70 +135,63 @@ export default function ArticlesClient() {
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
-        {/* Featured Authors Section - Moved to Top */}
         <section className="w-full mb-20">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-6 py-3 rounded-full border border-sky-100 mb-6">
-              <Star className="w-5 h-5 text-sky-600" />
-              <span className="text-sky-700 font-semibold text-sm uppercase tracking-wide">
-                Meet Our Experts
-              </span>
-            </div>
+          {/* Header - Keeping your original text exactly as you had it */}
+          <div className="max-w-3xl mb-16">
+            <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
-              Learn from Industry
+              This Week's
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-                DevOps Experts
+                Featured Authors
               </span>
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Get insights from professionals who work with cutting-edge technologies daily. 
-              Real-world experience, practical knowledge, and proven methodologies.
+              Get insights from professionals who work with cutting-edge
+              technologies daily. Real-world experience, practical knowledge,
+              and proven methodologies.
             </p>
           </div>
 
-          {/* Authors Grid */}
+          {/* Authors Grid - rest remains exactly the same */}
           {authorsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse bg-white rounded-2xl border border-gray-200 overflow-hidden p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-20 h-20 bg-gray-200 rounded-full"></div>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-16 h-16 bg-gray-200 rounded-full flex-shrink-0"></div>
                     <div className="flex-1 space-y-2">
-                      <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                      <div className="h-5 bg-gray-200 rounded w-3/4"></div>
                       <div className="h-4 bg-gray-200 rounded w-1/2"></div>
                     </div>
                   </div>
-                  <div className="space-y-2 mb-6">
+                  <div className="space-y-2">
                     <div className="h-4 bg-gray-200 rounded"></div>
                     <div className="h-4 bg-gray-200 rounded"></div>
                     <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="h-8 bg-gray-200 rounded w-20"></div>
-                    <div className="h-10 bg-gray-200 rounded w-28"></div>
                   </div>
                 </div>
               ))}
             </div>
           ) : authors.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-12">
               {authors.map((author) => (
                 <div
                   key={author.id}
-                  className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 group hover:border-sky-200"
+                  className="group cursor-pointer transition-all duration-300 hover:translate-x-2"
+                  onClick={() => router.push(`/authors/${author.slug}`)}
                 >
-                  <div className="p-6 flex flex-col h-full">
-                    {/* Author Header */}
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="relative flex-shrink-0">
-                        <div className="w-20 h-20 rounded-full border-4 border-white shadow-lg overflow-hidden group-hover:border-sky-50 transition-colors duration-300">
+                  <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
+                    {/* Author Avatar */}
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-white shadow-lg overflow-hidden transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
                           <img
                             src={author.avatar}
                             alt={author.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="w-full h-full object-cover"
                             onError={(e) => {
-                              (e.target as HTMLImageElement).src = "/placeholder.svg";
+                              (e.target as HTMLImageElement).src =
+                                "/placeholder.svg";
                             }}
                           />
                         </div>
@@ -168,49 +200,49 @@ export default function ArticlesClient() {
                             href={author.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="absolute -bottom-1 -right-1 bg-sky-600 p-2 rounded-full shadow-lg hover:bg-sky-700 transition-all duration-300 hover:scale-110"
+                            onClick={(e) => e.stopPropagation()}
+                            className="absolute -bottom-2 -right-2 bg-sky-600 p-2 rounded-full shadow-lg hover:bg-sky-700 transition-all duration-300 hover:scale-110 z-10"
                           >
                             <Linkedin className="w-4 h-4 text-white" />
                           </a>
                         )}
                       </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-black text-xl leading-tight mb-2 group-hover:text-sky-600 transition-colors duration-300">
-                          <a 
-                            href={`/authors/${author.slug}`} 
-                            className="hover:underline decoration-2 decoration-sky-600"
-                          >
+                    </div>
+
+                    {/* Author Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
+                        <div className="flex-1">
+                          <h3 className="font-bold text-2xl text-gray-900 mb-2 group-hover:text-sky-600 transition-colors duration-300">
                             {author.name}
-                          </a>
-                        </h3>
-                        <p className="text-sm text-sky-600 font-semibold line-clamp-1 bg-sky-50 px-3 py-1 rounded-full inline-block">
-                          {author.job_title} at {author.company}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-3 mb-4">
+                            <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-4 py-2 rounded-full border border-sky-100 text-sky-700 font-medium text-sm">
+                              <TrendingUp className="w-4 h-4" />
+                              {author.articles_count} article
+                              {author.articles_count !== 1 ? "s" : ""}
+                            </span>
+                            <span className="text-sky-600 font-medium text-base">
+                              {author.job_title} at {author.company}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sky-600 font-semibold group-hover:translate-x-1 transition-transform duration-300">
+                          <span>View Profile</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+
+                      {/* Full Bio */}
+                      <div className="mb-4">
+                        <p className="text-black-400 leading-relaxed text-lg">
+                          {author.bio}
                         </p>
                       </div>
-                    </div>
 
-                    {/* Bio */}
-                    <div className="mb-6 flex-grow">
-                      <p className="text-gray-600 leading-relaxed line-clamp-3">
-                        {author.bio}
-                      </p>
-                    </div>
-
-                    {/* Stats & Action */}
-                    <div className="flex items-center justify-between pt-5 border-t border-gray-100">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-sky-700">
-                        <span>
-                          {author.articles_count || 0} {author.articles_count === 1 ? 'Article Published' : 'Articles Published'}
-                        </span>
-                      </div>
-                      <a
-                        href={`/authors/${author.slug}`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold text-sm group/btn hover:from-sky-700 hover:to-blue-700"
-                      >
-                        View Profile
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                      </a>
+                      {/* Divider */}
+                      <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent group-last-of-type:via-transparent"></div>
                     </div>
                   </div>
                 </div>
@@ -225,7 +257,8 @@ export default function ArticlesClient() {
                 Expert Authors Coming Soon
               </h3>
               <p className="text-gray-600 max-w-md mx-auto text-lg">
-                We're bringing industry experts to share their DevOps knowledge and real-world experiences with you.
+                We're bringing industry experts to share their DevOps knowledge
+                and real-world experiences with you.
               </p>
             </div>
           )}

@@ -425,8 +425,8 @@ export function MinimalBlogList({
                         </Link>
                       )}
                       <div className="flex items-center gap-1 text-sm text-sky-600">
-                        <Eye className="w-4 h-4 text-sky-500" />
-                        <span className="font-medium text-sky-600">
+                        <Eye className="w-4 h-4 text-gray-700" />
+                        <span className="font-medium text-gray-700">
                           {article.read_count?.toLocaleString() || 0}
                         </span>
                       </div>

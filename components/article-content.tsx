@@ -203,18 +203,18 @@ export function ArticleContent({
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
       {/* Main Article Content */}
-      <article className="lg:col-span-3 bg-white rounded-3xl border border-sky-100 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
+      <article className="lg:col-span-3 bg-white rounded-3xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
         {/* Article Header */}
         <div className="mb-8 md:mb-10">
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 mb-6 md:mb-8 leading-tight tracking-tight bg-gradient-to-br from-sky-900 to-blue-900 bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-black mb-6 md:mb-8 leading-tight tracking-tight bg-gradient-to-br from-sky-900 to-blue-900 bg-clip-text">
             {article.title}
           </h1>
 
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6 md:mb-8">
             {/* Date */}
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl border border-sky-200 bg-gradient-to-r from-sky-50 to-blue-50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300">
-              <CalendarDays className="w-4 h-4 text-sky-600" />
-              <span className="text-sm text-sky-700 font-medium">
+            <div className="flex items-center gap-2 px-3 md:px-4 py-2 hover:shadow-sm rounded-xl backdrop-blur-sm shadow-sm transition-all duration-300">
+              <CalendarDays className="w-4 h-4 text-gray-700" />
+              <span className="text-sm text-gray-700 font-medium">
                 {new Date(article.published_at).toLocaleDateString()}
               </span>
             </div>
@@ -222,8 +222,8 @@ export function ArticleContent({
             {/* Category */}
             <div className="flex items-center gap-2">
               <Link href={`/categories/${slugify(categoryName)}`}>
-                <span className="flex items-center gap-2 text-sky-700 border border-sky-300 px-3 md:px-4 py-2 rounded-xl text-sm font-medium bg-white hover:bg-sky-50 hover:border-sky-400 hover:shadow-md transition-all duration-300 shadow-sm">
-                  <Folder className="w-3 h-3 text-sky-500" />
+                <span className="flex items-center hover:shadow-sm gap-2 text-sky-600 px-3 md:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm">
+                  <Folder className="w-4 h-4 text-sky-600" />
                   {categoryName}
                 </span>
               </Link>
@@ -235,9 +235,9 @@ export function ArticleContent({
                 <Link
                   href={`/articles?tag=${slugify(tag)}`}
                   key={index}
-                  className="flex items-center gap-2 text-blue-600 border border-blue-200 px-3 md:px-4 py-2 rounded-xl text-sm font-medium bg-white hover:bg-blue-50 hover:border-blue-300 hover:shadow-md transition-all duration-300 shadow-sm"
+                  className="flex items-center gap-2 text-orange-600 px-3 md:px-4 py-2 rounded-xl text-sm font-medium hover:shadow-md transition-all duration-300 shadow-sm"
                 >
-                  <TagIcon className="w-3 h-3 text-blue-500" />
+                  <TagIcon className="w-4 h-4 text-orange-600" />
                   {tag}
                 </Link>
               ))}
@@ -247,7 +247,7 @@ export function ArticleContent({
 
         {/* Cover Image */}
         {article.cover_image && (
-          <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-sky-100 shadow-xl hover:shadow-2xl transition-all duration-500">
+          <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500">
             <img
               src={article.cover_image || "/placeholder.svg"}
               alt={article.title}
@@ -469,7 +469,7 @@ export function ArticleContent({
           transition={{ duration: 0.6 }}
           className="relative mb-12 mt-12"
         >
-          <div className="bg-gradient-to-br from-white to-sky-50 rounded-3xl border border-sky-200 p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
+          <div className="bg-white/90 rounded-3xl border border-gray-200 p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8">
               {/* Author Avatar */}
               <div className="relative">
@@ -503,7 +503,7 @@ export function ArticleContent({
                   Author
                 </div>
                 
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+                <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-gray-900 mb-3 leading-tight">
                   {author?.name}
                 </h1>
                 
@@ -514,29 +514,6 @@ export function ArticleContent({
                 <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl text-base">
                   {author?.bio}
                 </p>
-
-                {/* Stats Row */}
-                <div className="flex items-center gap-6 justify-center lg:justify-start">
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Eye className="w-4 h-4 text-sky-500" />
-                    <span className="text-sm font-medium">
-                      <CountUp
-                        end={article.read_count || 0}
-                        duration={2}
-                        separator=","
-                      />{" "}
-                      views
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Star className="w-4 h-4 text-amber-500" />
-                    <span className="text-sm font-medium">Expert Level</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Zap className="w-4 h-4 text-orange-500" />
-                    <span className="text-sm font-medium">5+ Years Exp</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -587,10 +564,10 @@ export function ArticleContent({
       {/* Sidebar */}
       <aside className="lg:col-span-1 space-y-6">
         {/* Table of Contents */}
-        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
                 <ListOrdered className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
@@ -606,8 +583,8 @@ export function ArticleContent({
                     level === 1
                       ? "text-sky-700 font-semibold border-l-2 border-sky-500"
                       : level === 2
-                      ? "text-gray-800 font-medium border-l-2 border-sky-300"
-                      : "text-gray-700 font-normal border-l-2 border-sky-200"
+                      ? "text-gray-800 font-medium border-l-2 border-gray-600"
+                      : "text-gray-700 font-normal border-l-2 border-gray-600"
                   }`}
                   style={{
                     marginLeft: `${(level - 1) * 12}px`,
@@ -623,11 +600,11 @@ export function ArticleContent({
         </Card>
 
         {/* Article Stats - Updated to One Line */}
-        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
                   <Eye className="w-4 h-4 text-white" />
                 </div>
                 <div>
@@ -650,11 +627,11 @@ export function ArticleContent({
         </Card>
 
         {/* Recent Articles */}
-        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <FileText className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
+                <TrendingUp className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
                 Recent Articles
@@ -686,7 +663,7 @@ export function ArticleContent({
                           {article.title}
                         </h4>
                         <div className="flex items-center justify-between">
-                          <span className="text-xs text-sky-600 font-medium">
+                          <span className="text-xs text-gray-600 font-medium">
                             {itemAuthor?.name || "Unknown"}
                           </span>
                           <div className="flex items-center gap-1 text-xs text-gray-600">
@@ -708,10 +685,10 @@ export function ArticleContent({
         </Card>
 
         {/* Popular Articles */}
-        <Card className="border border-sky-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
                 <TrendingUp className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
@@ -729,12 +706,12 @@ export function ArticleContent({
                     <span
                       className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-lg flex-shrink-0 transition-all duration-300 ${
                         index === 0
-                          ? "text-white bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg"
+                          ? "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-lg"
                           : index === 1
-                          ? "text-white bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg"
+                          ? "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-lg"
                           : index === 2
-                          ? "text-white bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg"
-                          : "text-white bg-gradient-to-br from-gray-500 to-gray-600 shadow-sm"
+                          ? "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-lg"
+                          : "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-sm"
                       } group-hover:scale-110`}
                     >
                       {index + 1}
@@ -744,7 +721,7 @@ export function ArticleContent({
                         {article.title}
                       </h4>
                     </div>
-                    <div className="flex items-center text-xs text-amber-600 flex-shrink-0 font-medium">
+                    <div className="flex items-center text-xs text-gray-600 flex-shrink-0 font-medium">
                       <Eye className="w-3 h-3 mr-1" />
                       <CountUp
                         end={article.read_count || 0}

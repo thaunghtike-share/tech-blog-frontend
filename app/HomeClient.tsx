@@ -4,14 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MinimalHeader } from "@/components/minimal-header";
 import DevOpsCyclingHero from "@/components/devops-cycling-hero";
-import { FeaturedArticlesPage } from "@/components/featured-articles";
-import { AuthorsHero } from "@/components/authors-hero";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { CertificationRoadmap } from "@/components/CertificationRoadmap";
 import { MinimalFAQs } from "@/components/minimal-faqs";
-import { TopUdemyCourses } from "@/components/TopUdemyCourses";
-import { FreelanceServicesSection } from "@/components/FreelanceServicesSection";
-import { AuthorsContributorsCTA } from "@/components/AuthorsContributorsCTA";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { YouTubePlaylists } from "@/components/YouTubePlaylists";
 import { FreeLabs } from "@/components/FreeLabs";
@@ -29,7 +24,6 @@ import {
 } from "lucide-react";
 import { MinimalDevopsRoadmap } from "@/components/devops-roadmap";
 import { ProgrammingLanguagesRoadmap } from "@/components/programming-languages-roadmap";
-import { TopDevOpsCourses } from "@/components/TopDevOpsCourses";
 
 export default function HomeClient() {
   const router = useRouter();
@@ -239,10 +233,6 @@ export default function HomeClient() {
             <YouTubePlaylists />
           </section>
 
-          <section id="online" className="-mt-25">
-            <TopDevOpsCourses />
-          </section>
-
           <section id="playgrounds" className="-mt-15">
             <FreeLabs />
           </section>
@@ -308,6 +298,11 @@ export default function HomeClient() {
         * {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Fix for modal positioning - scroll to top when modal opens */
+        body.modal-open {
+          overflow: hidden;
         }
       `}</style>
     </div>

@@ -535,102 +535,61 @@ export function TopUdemyCourses() {
 
   return (
     <>
-      {/* KodeKloud Intro Section - Premium Brand Focus */}
-      <section className="w-full bg-white py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Header - Premium Brand Introduction */}
-          <div className="text-center max-w-4xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-3 rounded-full text-white mb-6 shadow-lg">
-              <Trophy className="w-5 h-5" />
-              <span className="font-semibold text-sm uppercase tracking-wide">
-                Trusted by 500,000+ Engineers
-              </span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Learn DevOps with
+      {/* KodeKloud Section - Left Aligned */}
+      <section className="w-full bg-white/95 py-16 lg:py-20">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          {/* Header - Left Aligned */}
+          <div className="max-w-3xl mb-16">
+            <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+              Start Your Journey with
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
                 KodeKloud
               </span>
             </h2>
-            <p className="text-xl text-gray-700 leading-relaxed mb-6">
+            <p className="text-xl text-slate-700 leading-relaxed">
               The leading platform for DevOps, Cloud, and Infrastructure
-              learning. Join the community trusted by engineers at Fortune 500
-              companies.
+              learning. Join engineers from Fortune 500 companies.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span>Industry-Recognized Courses</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span>Expert Instructors</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span>Free Courses Available</span>
-              </div>
-            </div>
           </div>
 
-          {/* KodeKloud Value Proposition Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="group text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-xl transition-all duration-300"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Award className="w-8 h-8 text-white" />
+          {/* Simple Feature Points */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Award className="w-8 h-8 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-sky-600 transition-colors duration-300">
-                Industry-Leading Courses
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+                Industry Courses
               </h3>
-              <p className="text-gray-700 leading-relaxed">
-                Comprehensive curriculum covering Docker, Kubernetes, AWS,
-                Terraform, and more. Courses designed by industry experts with
-                real-world relevance.
+              <p className="text-slate-700 leading-relaxed">
+                Docker, Kubernetes, AWS, Terraform with real-world projects.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="group text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-xl transition-all duration-300"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-8 h-8 text-white" />
+            <div className="text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Users className="w-8 h-8 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-sky-600 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">
                 Expert Instructors
               </h3>
-              <p className="text-gray-700 leading-relaxed">
-                Learn from top industry professionals including Mumshad
-                Mannambeth, with years of real-world experience in DevOps and
-                cloud technologies.
+              <p className="text-slate-700 leading-relaxed">
+                Learn from industry leaders like Mumshad Mannambeth.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="group text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-xl transition-all duration-300"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Gift className="w-8 h-8 text-white" />
+            <div className="text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Gift className="w-8 h-8 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-sky-600 transition-colors duration-300">
-                Free Learning Path
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+                Free Access
               </h3>
-              <p className="text-gray-700 leading-relaxed">
-                Start with free courses and hands-on labs. No credit card
-                required. Perfect for beginners to explore DevOps without
-                financial commitment.
+              <p className="text-slate-700 leading-relaxed">
+                Start with free courses and hands-on labs.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           {/* CTA Section */}
@@ -676,22 +635,23 @@ export function TopUdemyCourses() {
           </motion.div>
         </div>
       </section>
-      {/* Udemy Section */}
+
+      {/* Udemy Section - Right Aligned Title */}
       <section
         ref={sectionRef}
         className="relative w-full bg-white/95 py-10 overflow-hidden"
       >
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Header Section */}
+          {/* Header Section - Right Aligned */}
           <motion.div
-            className="mb-16"
+            className="mb-16 flex justify-end"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="max-w-3xl">
+            <div className="max-w-3xl text-right">
               <motion.div
-                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"
+                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6 ml-auto"
                 initial={{ width: 0 }}
                 animate={{ width: "6rem" }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -701,8 +661,14 @@ export function TopUdemyCourses() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="flex items-center gap-4 mb-6"
+                className="flex items-center gap-4 mb-6 justify-end"
               >
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                  Master DevOps with
+                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                    Udemy Courses
+                  </span>
+                </h2>
                 <div className="w-16 h-16 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2">
                   <img
                     src="/udemy.webp"
@@ -710,12 +676,6 @@ export function TopUdemyCourses() {
                     className="w-12 h-12 object-contain"
                   />
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                  Master DevOps with
-                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-                    Udemy Courses
-                  </span>
-                </h2>
               </motion.div>
 
               <motion.p
@@ -897,7 +857,7 @@ export function TopUdemyCourses() {
         </div>
       </section>
 
-      {/* Great Learning Section */}
+      {/* Great Learning Section - Keep as is or update if needed */}
       <section className="relative w-full bg-white py-17 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section */}
