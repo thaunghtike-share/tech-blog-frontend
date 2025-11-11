@@ -10,6 +10,7 @@ interface RoadmapItem {
   description: string;
   tags: string[];
   image?: string;
+  officialLink?: string;
 }
 
 interface RoadmapStage {
@@ -166,6 +167,7 @@ const roadmap: RoadmapStage[] = [
           "networking",
         ],
         image: "linux.webp",
+        officialLink: "https://www.linux.org",
       },
       {
         title: "Bash Scripting",
@@ -173,6 +175,7 @@ const roadmap: RoadmapStage[] = [
           "Automate tasks with Bash scripting and command-line tools",
         tags: ["variables", "loops", "functions", "automation", "debugging"],
         image: "bash.png",
+        officialLink: "https://www.gnu.org/software/bash/",
       },
       {
         title: "CCNA",
@@ -180,6 +183,7 @@ const roadmap: RoadmapStage[] = [
           "Understand networking basics, protocols, and infrastructure",
         tags: ["tcp-ip", "subnetting", "routing", "switching", "vlans"],
         image: "ccna.png",
+        officialLink: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html",
       },
       {
         title: "AWS Fundamentals",
@@ -193,6 +197,7 @@ const roadmap: RoadmapStage[] = [
           "security",
         ],
         image: "aws.png",
+        officialLink: "https://aws.amazon.com",
       },
       {
         title: "Virtualization",
@@ -205,6 +210,7 @@ const roadmap: RoadmapStage[] = [
           "hypervisor",
         ],
         image: "vmware.png",
+        officialLink: "https://www.vmware.com",
       },
     ],
   },
@@ -222,6 +228,7 @@ const roadmap: RoadmapStage[] = [
           "Containerize applications and manage container lifecycles",
         tags: ["containers", "images", "dockerfile", "volumes", "networking"],
         image: "docker.png",
+        officialLink: "https://www.docker.com",
       },
       {
         title: "Git & GitHub",
@@ -229,6 +236,7 @@ const roadmap: RoadmapStage[] = [
           "Version control, branching strategies, and collaborative workflows",
         tags: ["branches", "merge", "rebase", "pull-requests", "workflows"],
         image: "git.png",
+        officialLink: "https://github.com",
       },
       {
         title: "CI/CD Pipelines",
@@ -236,6 +244,7 @@ const roadmap: RoadmapStage[] = [
           "Build automated testing and deployment pipelines with Jenkins or GitLab",
         tags: ["jenkins", "gitlab-ci", "stages", "artifacts", "testing"],
         image: "cicd.png",
+        officialLink: "https://www.jenkins.io",
       },
       {
         title: "Ansible Automation",
@@ -243,6 +252,7 @@ const roadmap: RoadmapStage[] = [
           "Automate configuration management and application deployment",
         tags: ["playbooks", "inventory", "roles", "variables", "modules"],
         image: "ansible.png",
+        officialLink: "https://www.ansible.com",
       },
       {
         title: "Packer",
@@ -256,6 +266,7 @@ const roadmap: RoadmapStage[] = [
           "builders",
         ],
         image: "packer.png",
+        officialLink: "https://www.packer.io",
       },
     ],
   },
@@ -273,6 +284,7 @@ const roadmap: RoadmapStage[] = [
           "Orchestrate containers at scale with K8s clusters and deployments",
         tags: ["pods", "services", "deployments", "configmaps", "helm", "rbac"],
         image: "kubernetes.png",
+        officialLink: "https://kubernetes.io",
       },
       {
         title: "Terraform",
@@ -280,6 +292,7 @@ const roadmap: RoadmapStage[] = [
           "Infrastructure as Code for multi-cloud provisioning and management",
         tags: ["modules", "state", "providers", "workspaces", "cdktf"],
         image: "terraform.png",
+        officialLink: "https://www.terraform.io",
       },
       {
         title: "Monitoring & Observability",
@@ -287,6 +300,7 @@ const roadmap: RoadmapStage[] = [
           "Implement Prometheus, Grafana, and ELK stack for system insights",
         tags: ["metrics", "logs", "alerts", "dashboards", "tracing"],
         image: "monitoring.png",
+        officialLink: "https://prometheus.io",
       },
       {
         title: "GitOps",
@@ -294,6 +308,7 @@ const roadmap: RoadmapStage[] = [
           "Declarative infrastructure with ArgoCD and Flux for automated deployments",
         tags: ["argocd", "flux", "sync", "rollback", "automation"],
         image: "gitops.png",
+        officialLink: "https://argo-cd.readthedocs.io",
       },
       {
         title: "Hashicorp Vault",
@@ -301,6 +316,7 @@ const roadmap: RoadmapStage[] = [
           "Secure sensitive data with Vault, secrets management, and encryption",
         tags: ["vault", "secrets", "encryption", "pki", "authentication"],
         image: "vault.png",
+        officialLink: "https://www.vaultproject.io",
       },
     ],
   },
@@ -458,7 +474,7 @@ export function MinimalDevopsRoadmap() {
                       ))}
                     </div>
 
-                    {/* Technology Logos */}
+                    {/* Technology Logos with Links */}
                     <div className="flex flex-wrap gap-4 pt-4">
                       {currentStage.items.map((item, index) => (
                         <motion.div
@@ -468,17 +484,27 @@ export function MinimalDevopsRoadmap() {
                           transition={{ delay: 0.4 + index * 0.05 }}
                           className="group flex flex-col items-center gap-2"
                         >
-                          <div className="w-16 h-16 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden group-hover:border-gray-400 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
+                          <a
+                            href={item.officialLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-16 h-16 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden group-hover:border-gray-400 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110 cursor-pointer"
+                          >
                             <img
                               src={`/${item.image}`}
                               alt={item.title}
                               className="w-12 h-12 object-contain"
                               onError={handleImageError}
                             />
-                          </div>
-                          <span className="text-xs text-gray-700 text-center font-medium max-w-[70px] leading-tight">
+                          </a>
+                          <a
+                            href={item.officialLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-gray-700 text-center font-medium max-w-[70px] leading-tight hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+                          >
                             {item.title}
-                          </span>
+                          </a>
                         </motion.div>
                       ))}
                     </div>
@@ -578,9 +604,14 @@ export function MinimalDevopsRoadmap() {
                           {/* Compact Content Card */}
                           <div className="flex-1 min-w-0">
                             <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-gray-300 hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5 shadow-sm">
-                              <h3 className="text-base font-semibold text-gray-900 leading-tight mb-2">
+                              <a
+                                href={item.officialLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-base font-semibold text-sky-700 leading-tight mb-2 hover:text-sky-700 transition-colors duration-200 cursor-pointer block"
+                              >
                                 {item.title}
-                              </h3>
+                              </a>
 
                               <p className="text-sm text-black-700 leading-relaxed mb-3">
                                 {item.description}
