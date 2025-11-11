@@ -21,6 +21,9 @@ export default function ProfileForm() {
   const [hasExistingAvatar, setHasExistingAvatar] = useState(false);
   const { user, updateProfile } = useAuth();
 
+  // Add this state to track if user has existing completed profile
+  const [hasCompletedProfile, setHasCompletedProfile] = useState(false);
+
   useEffect(() => {
     // Load existing profile data if available
     const loadProfile = async () => {
@@ -46,10 +49,15 @@ export default function ProfileForm() {
             avatar: profileData.avatar || "",
             slug: profileData.slug || "",
           });
-          
+
           // Check if user already has an avatar (existing user)
           if (profileData.avatar && profileData.avatar.trim() !== "") {
             setHasExistingAvatar(true);
+          }
+
+          // ✅ Check if user already has a completed profile
+          if (profileData.profile_complete) {
+            setHasCompletedProfile(true);
           }
         }
       } catch (error) {
@@ -117,15 +125,17 @@ export default function ProfileForm() {
     if (!file) return;
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      setUploadError('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+      setUploadError(
+        "Please select a valid image file (JPEG, PNG, GIF, or WebP)"
+      );
       return;
     }
 
     // Validate file size (5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setUploadError('File size must be less than 5MB');
+      setUploadError("File size must be less than 5MB");
       return;
     }
 
@@ -135,11 +145,11 @@ export default function ProfileForm() {
 
     try {
       const formData = new FormData();
-      formData.append('avatar', file);
+      formData.append("avatar", file);
 
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error('No authentication token found');
+        throw new Error("No authentication token found");
       }
 
       setUploadProgress(30);
@@ -147,9 +157,9 @@ export default function ProfileForm() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/upload-avatar/`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Authorization': `Token ${token}`,
+            Authorization: `Token ${token}`,
           },
           body: formData,
         }
@@ -159,17 +169,17 @@ export default function ProfileForm() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Upload failed');
+        throw new Error(errorData.error || "Upload failed");
       }
 
       const data = await response.json();
-      
+
       setUploadProgress(100);
-      
+
       // Update the form with the new avatar URL
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        avatar: data.avatar_url
+        avatar: data.avatar_url,
       }));
 
       // Mark as having an avatar now
@@ -180,7 +190,6 @@ export default function ProfileForm() {
         setUploadProgress(0);
         setIsUploading(false);
       }, 1000);
-
     } catch (error: any) {
       setUploadError(error.message);
       setUploadProgress(0);
@@ -189,6 +198,24 @@ export default function ProfileForm() {
   };
 
   const handleSkip = async () => {
+    // Wait for form data to fully load by checking if all fields are populated
+    const allFieldsFilled =
+      formData.name?.trim() &&
+      formData.bio?.trim() &&
+      formData.job_title?.trim() &&
+      formData.company?.trim() &&
+      formData.linkedin?.trim() &&
+      formData.avatar?.trim() &&
+      formData.slug?.trim();
+
+    if (!allFieldsFilled) {
+      setError(
+        "Please wait for your profile data to load completely, or fill all the fields before skipping."
+      );
+      return;
+    }
+
+    // If all fields are filled, allow redirect
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -196,7 +223,6 @@ export default function ProfileForm() {
         return;
       }
 
-      // Try to get the author data to get the slug
       const profileRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
         {
@@ -206,19 +232,16 @@ export default function ProfileForm() {
 
       if (profileRes.ok) {
         const profileData = await profileRes.json();
-        // Redirect to the correct author admin dashboard
         if (profileData.slug) {
           window.location.href = `/admin/author/${profileData.slug}`;
         } else {
           window.location.href = "/";
         }
       } else {
-        // Fallback to home page
         window.location.href = "/";
       }
     } catch (error) {
       console.error("Failed to get author data:", error);
-      // Fallback to home page
       window.location.href = "/";
     }
   };
@@ -284,19 +307,37 @@ export default function ProfileForm() {
               />
             </div>
 
-            <div>
+            <div className="md:col-span-2">
               <label className="block mb-2 font-medium text-gray-700">
-                Job Title <span className="text-red-500">*</span>
+                Professional Information <span className="text-red-500">*</span>
               </label>
-              <input
-                type="text"
-                name="job_title"
-                value={formData.job_title}
-                onChange={handleInputChange}
-                required
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-                placeholder="Your current position"
-              />
+              <div className="flex flex-col md:flex-row gap-4 items-start md:items-end">
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    name="job_title"
+                    value={formData.job_title}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                    placeholder="Job title"
+                  />
+                </div>
+                <div className="flex items-center h-12 text-gray-500 font-medium">
+                  at
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                    placeholder="Company name"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -312,21 +353,6 @@ export default function ProfileForm() {
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
               required
               placeholder="Tell us about yourself, your expertise, and experience..."
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium text-gray-700">
-              Company <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="company"
-              value={formData.company}
-              onChange={handleInputChange}
-              required
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-              placeholder="Where you work"
             />
           </div>
 
@@ -350,14 +376,14 @@ export default function ProfileForm() {
             <label className="block mb-2 font-medium text-gray-700">
               Profile Photo <span className="text-red-500">*</span>
             </label>
-            
+
             {/* Current Avatar Preview */}
             {formData.avatar && (
               <div className="mb-4">
                 <p className="text-sm text-gray-600 mb-2">Current Avatar:</p>
-                <img 
-                  src={formData.avatar} 
-                  alt="Current avatar" 
+                <img
+                  src={formData.avatar}
+                  alt="Current avatar"
                   className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
                 />
               </div>
@@ -374,8 +400,18 @@ export default function ProfileForm() {
                 />
                 <div className="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 transition-all duration-300">
                   <div className="flex flex-col items-center gap-2">
-                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <svg
+                      className="w-8 h-8 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
                     </svg>
                     <span className="text-sm font-medium text-gray-700">
                       Click to upload photo
@@ -396,7 +432,7 @@ export default function ProfileForm() {
                   <span>{uploadProgress}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
+                  <div
                     className="bg-sky-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${uploadProgress}%` }}
                   ></div>
@@ -461,6 +497,8 @@ export default function ProfileForm() {
             >
               {loading ? "Saving Profile..." : "Complete Profile & Continue"}
             </button>
+
+            {/* ✅ ALWAYS SHOW SKIP BUTTON - but it will show error if profile not completed */}
             <button
               type="button"
               onClick={handleSkip}
