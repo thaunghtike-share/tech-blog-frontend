@@ -57,6 +57,7 @@ interface Author {
   avatar?: string;
   linkedin?: string;
   job_title?: string;
+  featured?: boolean;
   company?: string;
 }
 
@@ -68,6 +69,8 @@ interface Tag {
 interface Category {
   id: number;
   name: string;
+  post_count?: number;
+  slug: string;
 }
 
 interface ArticleContentProps {
@@ -218,7 +221,7 @@ export function ArticleContent({
                 {new Date(article.published_at).toLocaleDateString()}
               </span>
             </div>
-            
+
             {/* Category */}
             <div className="flex items-center gap-2">
               <Link href={`/categories/${slugify(categoryName)}`}>
@@ -228,7 +231,7 @@ export function ArticleContent({
                 </span>
               </Link>
             </div>
-            
+
             {/* Tags */}
             <div className="flex items-center gap-2 flex-wrap">
               {tagNames.map((tag, index) => (
@@ -463,7 +466,7 @@ export function ArticleContent({
         </div>
 
         {/* Updated Author Header */}
-        <motion.section 
+        <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -502,15 +505,15 @@ export function ArticleContent({
                   <Trophy className="w-4 h-4" />
                   Author
                 </div>
-                
+
                 <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-gray-900 mb-3 leading-tight">
                   {author?.name}
                 </h1>
-                
+
                 <p className="text-lg text-sky-600 font-semibold mb-4">
                   {author?.job_title} at {author?.company}
                 </p>
-                
+
                 <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl text-base">
                   {author?.bio}
                 </p>
@@ -567,7 +570,7 @@ export function ArticleContent({
         <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <ListOrdered className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
@@ -583,8 +586,8 @@ export function ArticleContent({
                     level === 1
                       ? "text-sky-700 font-semibold border-l-2 border-sky-500"
                       : level === 2
-                      ? "text-gray-800 font-medium border-l-2 border-gray-600"
-                      : "text-gray-700 font-normal border-l-2 border-gray-600"
+                      ? "text-gray-800 font-medium border-l-2 border-gray-300"
+                      : "text-gray-700 font-normal border-l-2 border-gray-300"
                   }`}
                   style={{
                     marginLeft: `${(level - 1) * 12}px`,
@@ -599,12 +602,12 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Article Stats - Updated to One Line */}
+        {/* Article Stats */}
         <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                   <Eye className="w-4 h-4 text-white" />
                 </div>
                 <div>
@@ -630,8 +633,8 @@ export function ArticleContent({
         <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
-                <TrendingUp className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <FileText className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
                 Recent Articles
@@ -641,6 +644,7 @@ export function ArticleContent({
               {recentArticles.slice(0, 4).map((article) => {
                 const itemAuthor = authors.find((a) => a.id === article.author);
                 const coverImage = article.cover_image || "/devops.webp";
+                const articleExcerpt = excerpt(article.content || "");
 
                 return (
                   <Link
@@ -648,25 +652,40 @@ export function ArticleContent({
                     key={article.id}
                     className="block group"
                   >
-                    <div className="flex gap-3 p-2 rounded-xl hover:bg-sky-50 transition-all duration-300">
+                    <div className="bg-white rounded-xl p-3 border border-gray-200 shadow-sm hover:shadow-md hover:border-sky-300 transition-all duration-300">
                       {/* Cover Image */}
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden border border-sky-200 shadow-sm">
+                      <div className="mb-3 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
                         <img
                           src={coverImage}
                           alt={article.title}
-                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-20 object-cover transform group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
 
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight mb-1">
+                      {/* Content */}
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight">
                           {article.title}
                         </h4>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-gray-600 font-medium">
-                            {itemAuthor?.name || "Unknown"}
-                          </span>
-                          <div className="flex items-center gap-1 text-xs text-gray-600">
+
+                        <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">
+                          {articleExcerpt}
+                        </p>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white shadow-sm">
+                              <img
+                                src={itemAuthor?.avatar || "/placeholder.svg"}
+                                alt={itemAuthor?.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <span className="text-xs font-medium text-gray-700">
+                              {itemAuthor?.name || "Unknown"}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1 text-xs text-gray-600 font-medium">
                             <Eye className="w-3 h-3" />
                             <CountUp
                               end={article.read_count || 0}
@@ -684,11 +703,170 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
+        {/* Featured Authors */}
+        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+          <CardContent className="p-5">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Star className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-base font-semibold text-gray-900">
+                Featured Authors
+              </h3>
+            </div>
+            <div className="space-y-3">
+              {authors
+                .filter((author) => author.featured)
+                .slice(0, 4)
+                .map((author) => (
+                  <Link
+                    href={`/authors/${author.slug}`}
+                    key={author.id}
+                    className="block group"
+                  >
+                    <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 transition-all duration-300">
+                      {/* Author Avatar */}
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white shadow-sm flex-shrink-0">
+                        <img
+                          src={author.avatar || "/placeholder.svg"}
+                          alt={author.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "/placeholder.svg";
+                          }}
+                        />
+                      </div>
+
+                      {/* Author Info */}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-1 text-base">
+                          {author.name}
+                        </h4>
+                        <p className="text-xs text-gray-600 line-clamp-1">
+                          {author.job_title}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Categories */}
+        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Folder className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">Categories</h3>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {categories.slice(0, 6).map((category) => {
+                const getCategoryIcon = (categoryName: string) => {
+                  const name = categoryName.toLowerCase();
+                  if (
+                    name.includes("devops") ||
+                    name.includes("docker") ||
+                    name.includes("kubernetes")
+                  )
+                    return "⚙️";
+                  if (
+                    name.includes("cloud") ||
+                    name.includes("aws") ||
+                    name.includes("azure")
+                  )
+                    return "☁️";
+                  if (name.includes("automation") || name.includes("ci/cd"))
+                    return "🤖";
+                  if (name.includes("terraform") || name.includes("iac"))
+                    return "🏗️";
+                  if (name.includes("security") || name.includes("devsecops"))
+                    return "🔒";
+                  if (
+                    name.includes("monitoring") ||
+                    name.includes("observability")
+                  )
+                    return "📊";
+                  if (name.includes("linux") || name.includes("ubuntu"))
+                    return "🐧";
+                  if (name.includes("python") || name.includes("scripting"))
+                    return "🐍";
+                  return "📁";
+                };
+
+                const getCategoryColor = (categoryName: string) => {
+                  const name = categoryName.toLowerCase();
+                  if (name.includes("devops"))
+                    return "from-orange-500 to-red-500";
+                  if (name.includes("cloud")) return "from-sky-500 to-blue-500";
+                  if (name.includes("automation"))
+                    return "from-emerald-500 to-green-500";
+                  if (name.includes("terraform"))
+                    return "from-purple-500 to-indigo-500";
+                  if (name.includes("security"))
+                    return "from-rose-500 to-pink-500";
+                  if (name.includes("monitoring"))
+                    return "from-amber-500 to-yellow-500";
+                  return "from-gray-500 to-gray-600";
+                };
+
+                return (
+                  <Link
+                    href={`/categories/${category.slug}`}
+                    key={category.id}
+                    className="block group"
+                  >
+                    <div className="text-center p-3 rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-md transition-all duration-300 bg-white group-hover:bg-sky-50">
+                      {/* Circular Icon */}
+                      <div
+                        className={`w-12 h-12 rounded-full bg-gradient-to-br ${getCategoryColor(
+                          category.name
+                        )} flex items-center justify-center shadow-lg mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <span className="text-lg">
+                          {getCategoryIcon(category.name)}
+                        </span>
+                      </div>
+
+                      {/* Category Name */}
+                      <h4 className="font-semibold text-gray-900 group-hover:text-sky-700 transition-colors text-xs leading-tight mb-1 line-clamp-2">
+                        {category.name}
+                      </h4>
+
+                      {/* Article Count */}
+                      {category.post_count && (
+                        <div className="flex items-center justify-center gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
+                          <span className="text-xs text-gray-600 font-medium">
+                            {category.post_count}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* See All Button */}
+            <Link
+              href="/categories"
+              className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group/seeall transform hover:scale-[1.02]"
+            >
+              See All Categories
+              <ChevronRight className="w-4 h-4 group-hover/seeall:translate-x-1 transition-transform" />
+            </Link>
+          </CardContent>
+        </Card>
+
         {/* Popular Articles */}
         <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
-              <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <TrendingUp className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-gray-900">
@@ -696,42 +874,28 @@ export function ArticleContent({
               </h3>
             </div>
             <div className="space-y-3">
-              {topReadArticles.map((article, index) => (
-                <Link
-                  href={`/articles/${article.slug}`}
-                  key={article.id}
-                  className="block group"
-                >
-                  <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 transition-all duration-300">
-                    <span
-                      className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-lg flex-shrink-0 transition-all duration-300 ${
-                        index === 0
-                          ? "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-lg"
-                          : index === 1
-                          ? "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-lg"
-                          : index === 2
-                          ? "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-lg"
-                          : "text-white bg-gradient-to-br from-gray-700 to-gray-900 shadow-sm"
-                      } group-hover:scale-110`}
-                    >
-                      {index + 1}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight">
-                        {article.title}
-                      </h4>
+              {topReadArticles.map((article) => {
+                const itemAuthor = authors.find((a) => a.id === article.author);
+
+                return (
+                  <Link
+                    href={`/articles/${article.slug}`}
+                    key={article.id}
+                    className="block group"
+                  >
+                    <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-sky-50 transition-all duration-300">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight mb-1">
+                          {article.title}
+                        </h4>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-xs text-gray-600"></div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center text-xs text-gray-600 flex-shrink-0 font-medium">
-                      <Eye className="w-3 h-3 mr-1" />
-                      <CountUp
-                        end={article.read_count || 0}
-                        duration={1.5}
-                        separator=","
-                      />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
