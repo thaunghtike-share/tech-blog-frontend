@@ -23,6 +23,8 @@ import {
   Target,
   Zap,
   Clock,
+  Lightbulb,
+  ArrowRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -313,16 +315,12 @@ export function TopUdemyCourses() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [usingFallback, setUsingFallback] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [canScrollLeftGL, setCanScrollLeftGL] = useState(false);
-  const [canScrollRightGL, setCanScrollRightGL] = useState(true);
-  const [canScrollLeftKK, setCanScrollLeftKK] = useState(false);
-  const [canScrollRightKK, setCanScrollRightKK] = useState(true);
+  const [currentPageUdemy, setCurrentPageUdemy] = useState(0);
+  const [currentPageGL, setCurrentPageGL] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const glScrollRef = useRef<HTMLDivElement>(null);
-  const kkScrollRef = useRef<HTMLDivElement>(null);
+
+  // Courses per page - 3 per row, 2 rows = 6 courses per page
+  const COURSES_PER_PAGE = 6;
 
   useEffect(() => {
     async function fetchCourses() {
@@ -413,80 +411,31 @@ export function TopUdemyCourses() {
     fetchCourses();
   }, []);
 
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
+  // Calculate pagination for Udemy courses
+  const totalPagesUdemy = Math.ceil(courses.length / COURSES_PER_PAGE);
+  const startIndexUdemy = currentPageUdemy * COURSES_PER_PAGE;
+  const currentCoursesUdemy = courses.slice(startIndexUdemy, startIndexUdemy + COURSES_PER_PAGE);
+
+  // Calculate pagination for Great Learning courses
+  const totalPagesGL = Math.ceil(greatLearningCourses.length / COURSES_PER_PAGE);
+  const startIndexGL = currentPageGL * COURSES_PER_PAGE;
+  const currentCoursesGL = greatLearningCourses.slice(startIndexGL, startIndexGL + COURSES_PER_PAGE);
+
+  const nextPageUdemy = () => {
+    setCurrentPageUdemy((prev) => (prev + 1) % totalPagesUdemy);
   };
 
-  const checkScrollGL = () => {
-    if (glScrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = glScrollRef.current;
-      setCanScrollLeftGL(scrollLeft > 0);
-      setCanScrollRightGL(scrollLeft < scrollWidth - clientWidth - 10);
-    }
+  const prevPageUdemy = () => {
+    setCurrentPageUdemy((prev) => (prev - 1 + totalPagesUdemy) % totalPagesUdemy);
   };
 
-  const checkScrollKK = () => {
-    if (kkScrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = kkScrollRef.current;
-      setCanScrollLeftKK(scrollLeft > 0);
-      setCanScrollRightKK(scrollLeft < scrollWidth - clientWidth - 10);
-    }
+  const nextPageGL = () => {
+    setCurrentPageGL((prev) => (prev + 1) % totalPagesGL);
   };
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 400;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
+  const prevPageGL = () => {
+    setCurrentPageGL((prev) => (prev - 1 + totalPagesGL) % totalPagesGL);
   };
-
-  const scrollGL = (direction: "left" | "right") => {
-    if (glScrollRef.current) {
-      const scrollAmount = 400;
-      glScrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const scrollKK = (direction: "left" | "right") => {
-    if (kkScrollRef.current) {
-      const scrollAmount = 400;
-      kkScrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  useEffect(() => {
-    checkScroll();
-    const currentRef = scrollRef.current;
-    currentRef?.addEventListener("scroll", checkScroll);
-    return () => currentRef?.removeEventListener("scroll", checkScroll);
-  }, [courses]);
-
-  useEffect(() => {
-    checkScrollGL();
-    const currentRef = glScrollRef.current;
-    currentRef?.addEventListener("scroll", checkScrollGL);
-    return () => currentRef?.removeEventListener("scroll", checkScrollGL);
-  }, []);
-
-  useEffect(() => {
-    checkScrollKK();
-    const currentRef = kkScrollRef.current;
-    currentRef?.addEventListener("scroll", checkScrollKK);
-    return () => currentRef?.removeEventListener("scroll", checkScrollKK);
-  }, []);
 
   const retryFetch = () => {
     setError(null);
@@ -514,9 +463,9 @@ export function TopUdemyCourses() {
             <div className="h-6 w-full max-w-2xl bg-gray-200 rounded animate-pulse" />
           </div>
 
-          <div className="flex gap-6 overflow-hidden">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="flex-shrink-0 w-80 animate-pulse">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse">
                 <div className="aspect-video bg-gray-200 rounded-2xl mb-4" />
                 <div className="h-6 w-3/4 bg-gray-200 rounded mb-3" />
                 <div className="h-4 w-full bg-gray-200 rounded mb-2" />
@@ -726,7 +675,7 @@ export function TopUdemyCourses() {
             </motion.div>
           )}
 
-          {/* Courses Grid */}
+          {/* Courses Grid with Pagination */}
           {courses.length === 0 ? (
             <div className="text-center py-20">
               <div className="inline-flex items-center justify-center bg-gray-100 rounded-full p-8 mb-6 border-2 border-gray-200">
@@ -741,123 +690,145 @@ export function TopUdemyCourses() {
             </div>
           ) : (
             <div className="relative">
-              {/* Navigation Arrows */}
-              {canScrollLeft && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => scroll("left")}
-                  className="absolute -left-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="w-5 h-5 text-gray-700" />
-                </motion.button>
-              )}
-
-              {canScrollRight && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => scroll("right")}
-                  className="absolute -right-2 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="w-5 h-5 text-gray-700" />
-                </motion.button>
-              )}
-
-              {/* Horizontal Scroll Section */}
-              <div
-                ref={scrollRef}
-                className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                }}
-                onScroll={checkScroll}
-              >
-                {courses.map((course, index) => (
+              {/* 2x3 Grid Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {currentCoursesUdemy.map((course, index) => (
                   <motion.div
                     key={course.id}
-                    initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex-shrink-0 w-96 snap-start"
+                    className="block group h-full"
                   >
-                    <div className="block group h-full">
-                      <div className="relative">
-                        <a
-                          href={course.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block"
-                        >
-                          <div className="relative aspect-video bg-gray-100 overflow-hidden rounded-2xl border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-xl transition-all duration-300">
-                            {course.cover_image ? (
-                              <img
-                                src={course.cover_image || "/placeholder.svg"}
-                                alt={course.title}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <BookOpen className="w-16 h-16 text-gray-300" />
-                              </div>
-                            )}
-                          </div>
-                        </a>
-                      </div>
+                    <div className="relative">
+                      <a
+                        href={course.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        <div className="relative aspect-video bg-gray-100 overflow-hidden rounded-2xl border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-xl transition-all duration-300">
+                          {course.cover_image ? (
+                            <img
+                              src={course.cover_image || "/placeholder.svg"}
+                              alt={course.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <BookOpen className="w-16 h-16 text-gray-300" />
+                            </div>
+                          )}
+                        </div>
+                      </a>
+                    </div>
 
-                      <div className="mt-4 space-y-3">
-                        <a
-                          href={course.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <h3 className="font-bold text-gray-900 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
-                            {course.title}
-                          </h3>
-                        </a>
+                    <div className="mt-4 space-y-3">
+                      <a
+                        href={course.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <h3 className="font-bold text-sky-600 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
+                          {course.title}
+                        </h3>
+                      </a>
 
-                        <div className="flex items-center justify-between  py-3 text-sm">
-                          <div className="flex items-center gap-2 text-gray-600">
-                            <User className="w-4 h-4 text-gray-400" />
-                            <span className="font-medium truncate">
-                              {course.author}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-1.5 text-gray-600">
-                            <Users className="w-4 h-4 text-gray-400" />
-                            <span>{course.students}</span>
-                          </div>
+                      <div className="flex items-center justify-between py-3 text-sm">
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <User className="w-4 h-4 text-gray-400" />
+                          <span className="font-medium truncate">
+                            {course.author}
+                          </span>
                         </div>
 
-                        {course.rating && (
-                          <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1">
-                              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                              <span className="font-medium text-gray-900 text-sm">
-                                {course.rating.toFixed(1)}
-                              </span>
-                            </div>
-                            <span className="text-gray-600 text-sm">
-                              rating
+                        <div className="flex items-center gap-1.5 text-gray-600">
+                          <Users className="w-4 h-4 text-gray-400" />
+                          <span>{course.students}</span>
+                        </div>
+                      </div>
+
+                      {course.rating && (
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span className="font-medium text-gray-900 text-sm">
+                              {course.rating.toFixed(1)}
                             </span>
                           </div>
-                        )}
-                      </div>
+                          <span className="text-gray-600 text-sm">rating</span>
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 ))}
               </div>
+
+              {/* Pagination Controls - Centered with arrows */}
+              {totalPagesUdemy > 1 && (
+                <div className="flex items-center justify-center gap-4 mb-5 mt-8">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={prevPageUdemy}
+                    className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                    aria-label="Previous page"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                  </motion.button>
+
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-gray-600 font-medium">
+                      Page {currentPageUdemy + 1} of {totalPagesUdemy}
+                    </span>
+                    <div className="flex space-x-2">
+                      {Array.from({ length: totalPagesUdemy }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPageUdemy(i)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            i === currentPageUdemy
+                              ? "bg-sky-600 scale-125"
+                              : "bg-gray-300 hover:bg-gray-400"
+                          }`}
+                          aria-label={`Go to page ${i + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={nextPageUdemy}
+                    className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                    aria-label="Next page"
+                  >
+                    <ChevronRight className="w-5 h-5 text-gray-700" />
+                  </motion.button>
+                </div>
+              )}
             </div>
           )}
+
+          {/* Hint Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="flex items-center justify-center gap-3 mb-8"
+          >
+            <Lightbulb className="w-5 h-5 text-yellow-500" />
+            <span className="text-gray-600 text-sm font-medium">
+              Use the navigation above to explore more courses
+            </span>
+            <ArrowRight className="w-4 h-4 text-gray-400" />
+          </motion.div>
         </div>
       </section>
 
-      {/* Great Learning Section - Keep as is or update if needed */}
+      {/* Great Learning Section */}
       <section className="relative w-full bg-white py-17 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section */}
@@ -909,112 +880,127 @@ export function TopUdemyCourses() {
             </div>
           </motion.div>
 
-          {/* Great Learning Courses Grid */}
+          {/* Great Learning Courses Grid with Pagination */}
           <div className="relative">
-            {/* Navigation Arrows */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollGL("left")}
-              className="absolute -left-6 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollGL("right")}
-              className="absolute -right-2 top-1/4 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-lg"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-700" />
-            </motion.button>
-
-            {/* Horizontal Scroll Section */}
-            <div
-              ref={glScrollRef}
-              className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              {greatLearningCourses.map((course, index) => (
+            {/* 2x3 Grid Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {currentCoursesGL.map((course, index) => (
                 <motion.div
                   key={course.id}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex-shrink-0 w-96 snap-start"
+                  className="block group h-full"
                 >
-                  <div className="block group h-full">
-                    <div className="relative">
-                      <a
-                        href={course.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                      >
-                        <div className="relative aspect-video bg-gray-100 overflow-hidden rounded-2xl border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-xl transition-all duration-300">
-                          {course.cover_image ? (
-                            <img
-                              src={course.cover_image || "/placeholder.svg"}
-                              alt={course.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <BookOpen className="w-16 h-16 text-gray-300" />
-                            </div>
-                          )}
-                        </div>
-                      </a>
-                    </div>
+                  <div className="relative">
+                    <a
+                      href={course.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <div className="relative aspect-video bg-gray-100 overflow-hidden rounded-2xl border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-xl transition-all duration-300">
+                        {course.cover_image ? (
+                          <img
+                            src={course.cover_image || "/placeholder.svg"}
+                            alt={course.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <BookOpen className="w-16 h-16 text-gray-300" />
+                          </div>
+                        )}
+                      </div>
+                    </a>
+                  </div>
 
-                    <div className="mt-4 space-y-3">
-                      <a
-                        href={course.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <h3 className="font-bold text-gray-900 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
-                          {course.title}
-                        </h3>
-                      </a>
+                  <div className="mt-4 space-y-3">
+                    <a
+                      href={course.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h3 className="font-bold text-sky-600 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
+                        {course.title}
+                      </h3>
+                    </a>
 
-                      <div className="flex items-center justify-between  py-3 text-sm">
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <User className="w-4 h-4 text-gray-400" />
-                          <span className="font-medium truncate">
-                            {course.author}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Users className="w-4 h-4 text-gray-400" />
-                          <span>{course.students}</span>
-                        </div>
+                    <div className="flex items-center justify-between py-3 text-sm">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <User className="w-4 h-4 text-gray-400" />
+                        <span className="font-medium truncate">
+                          {course.author}
+                        </span>
                       </div>
 
-                      {course.rating && (
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium text-gray-900 text-sm">
-                              {course.rating.toFixed(1)}
-                            </span>
-                          </div>
-                          <span className="text-gray-600 text-sm">rating</span>
-                        </div>
-                      )}
+                      <div className="flex items-center gap-1.5 text-gray-600">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span>{course.students}</span>
+                      </div>
                     </div>
+
+                    {course.rating && (
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="font-medium text-gray-900 text-sm">
+                            {course.rating.toFixed(1)}
+                          </span>
+                        </div>
+                        <span className="text-gray-600 text-sm">rating</span>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}
             </div>
+
+            {/* Pagination Controls - Centered with arrows */}
+            {totalPagesGL > 1 && (
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={prevPageGL}
+                  className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="w-5 h-5 text-gray-700" />
+                </motion.button>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600 font-medium">
+                    Page {currentPageGL + 1} of {totalPagesGL}
+                  </span>
+                  <div className="flex space-x-2">
+                    {Array.from({ length: totalPagesGL }, (_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPageGL(i)}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          i === currentPageGL
+                            ? "bg-sky-600 scale-125"
+                            : "bg-gray-300 hover:bg-gray-400"
+                        }`}
+                        aria-label={`Go to page ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={nextPageGL}
+                  className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                  aria-label="Next page"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-700" />
+                </motion.button>
+              </div>
+            )}
           </div>
         </div>
       </section>

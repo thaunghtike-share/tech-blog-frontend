@@ -764,7 +764,7 @@ export function ArticleContent({
               <h3 className="text-lg font-bold text-gray-900">Categories</h3>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-6">
-              {categories.slice(0, 6).map((category) => {
+              {categories.slice(0, 4).map((category) => {
                 const getCategoryIcon = (categoryName: string) => {
                   const name = categoryName.toLowerCase();
                   if (
