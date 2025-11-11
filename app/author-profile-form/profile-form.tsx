@@ -23,13 +23,24 @@ export default function ProfileForm() {
 
   // Add this state to track if user has existing completed profile
   const [hasCompletedProfile, setHasCompletedProfile] = useState(false);
+  
+  // Add loading state for initial profile data
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
 
   useEffect(() => {
     // Load existing profile data if available
     const loadProfile = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) return;
+        if (!token) {
+          // Wait 5 seconds even if no token
+          await new Promise(resolve => setTimeout(resolve, 5000));
+          setIsLoadingProfile(false);
+          return;
+        }
+
+        // Wait 5 seconds before making the API call to ensure loading shows
+        await new Promise(resolve => setTimeout(resolve, 3000));
 
         const profileRes = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
@@ -62,6 +73,8 @@ export default function ProfileForm() {
         }
       } catch (error) {
         console.error("Failed to load profile:", error);
+      } finally {
+        setIsLoadingProfile(false);
       }
     };
 
@@ -254,6 +267,26 @@ export default function ProfileForm() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  // Show loading state for 5 seconds
+  if (isLoadingProfile) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 text-center">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span>Loading Your Profile</span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+            Preparing Your Profile
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Loading your profile data, please wait...
+          </p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
 
   if (success) {
     return (
