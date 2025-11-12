@@ -1,7 +1,6 @@
 "use client";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import type React from "react";
-
 import { useState } from "react";
 
 interface ProgrammingLanguage {
@@ -87,23 +86,23 @@ const programmingLanguages: ProgrammingLanguage[] = [
 
 export function ProgrammingLanguagesRoadmap() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState(0);
 
   const nextLanguage = () => {
-    setCurrentIndex((prev) => (prev + 1) % programmingLanguages.length);
+    const next = (currentIndex + 1) % programmingLanguages.length;
+    setCurrentIndex(next);
+    setSelectedLanguage(next);
   };
 
   const prevLanguage = () => {
-    setCurrentIndex(
-      (prev) =>
-        (prev - 1 + programmingLanguages.length) % programmingLanguages.length
-    );
+    const prev = (currentIndex - 1 + programmingLanguages.length) % programmingLanguages.length;
+    setCurrentIndex(prev);
+    setSelectedLanguage(prev);
   };
 
   const currentLanguage = programmingLanguages[currentIndex];
 
-  const handleImageError = (
-    e: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget;
     target.src = "/new.png";
   };
@@ -115,213 +114,219 @@ export function ProgrammingLanguagesRoadmap() {
     );
   };
 
+  const handleLanguageSelect = (index: number) => {
+    setCurrentIndex(index);
+    setSelectedLanguage(index);
+  };
+
   return (
-    <section className="relative bg-white overflow-hidden py-16">
-      <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Header Section */}
-          <div className="mb-12">
-            <div className="max-w-3xl">
-              <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6" />
-
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Start with Coding Before
-                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-                  Your DevOps Journey
-                </span>
-              </h2>
-
-              <p className="text-lg text-black leading-relaxed">
-                Before diving into DevOps tools and automation, it's important
-                to have a solid understanding of programming. Coding skills help
-                you write scripts, automate tasks, and understand how software
-                is built and deployed. Here are some of the most popular
-                languages that every aspiring DevOps engineer should get
-                familiar with.
-              </p>
-            </div>
+    <section className="relative bg-white py-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="mb-16">
+          <div className="max-w-3xl">
+            <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6" />
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              Start with Coding Before
+              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                Your DevOps Journey
+              </span>
+            </h2>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Before diving into DevOps tools and automation, it's important
+              to have a solid understanding of programming. Coding skills help
+              you write scripts, automate tasks, and understand how software
+              is built and deployed.
+            </p>
           </div>
+        </div>
 
-          {/* Main Content */}
-          <div className="max-w-6xl mx-auto">
-            <div className="relative">
-              {/* Language Card */}
-              <div className="relative bg-white border border-gray-300 rounded-2xl overflow-hidden shadow-lg">
-                <div className="p-8">
-                  <div className="grid lg:grid-cols-2 gap-8">
-                    {/* Left Column - About Content */}
-                    <div className="space-y-6">
-                      {/* Language Header with Icon */}
-                      <div className="flex items-start gap-6">
-                        <div className="relative flex-shrink-0">
-                          <div className="w-16 h-16  flex items-center justify-center overflow-hidden">
-                            <img
-                              src={`/${currentLanguage.icon}`}
-                              alt={currentLanguage.name}
-                              className="w-10 h-10 object-contain"
-                              onError={handleImageError}
-                            />
-                          </div>
-                        </div>
+        {/* Circular Language Selector */}
+        <div className="relative mb-16">
+          <div className="flex justify-center items-center gap-8 flex-wrap">
+            {programmingLanguages.map((language, index) => (
+              <button
+                key={language.name}
+                onClick={() => handleLanguageSelect(index)}
+                className={`group relative flex flex-col items-center transition-all duration-300 ${
+                  selectedLanguage === index ? 'scale-110' : 'scale-100 hover:scale-105'
+                }`}
+              >
+                <div
+                  className={`w-20 h-20 rounded-full p-4 border-4 transition-all duration-300 ${
+                    selectedLanguage === index
+                      ? `border-transparent bg-gradient-to-r ${language.color} shadow-lg`
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                >
+                  <img
+                    src={`/${language.icon}`}
+                    alt={language.name}
+                    className="w-full h-full object-contain"
+                    onError={handleImageError}
+                  />
+                </div>
+                <span
+                  className={`mt-3 font-semibold transition-all duration-300 ${
+                    selectedLanguage === index
+                      ? `bg-gradient-to-r ${language.color} bg-clip-text text-transparent`
+                      : 'text-gray-600'
+                  }`}
+                >
+                  {language.name}
+                </span>
+                {selectedLanguage === index && (
+                  <div className="absolute -bottom-2 w-2 h-2 rounded-full bg-gradient-to-r from-sky-600 to-blue-600" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3
-                              className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-transparent`}
-                            >
-                              {currentLanguage.name}
-                            </h3>
-                            <a
-                              href={currentLanguage.officialLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-black hover:text-gray-700"
-                              aria-label={`Visit ${currentLanguage.name} official website`}
-                            >
-                              <ExternalLink className="w-5 h-5" />
-                            </a>
-                          </div>
-                          <p className="text-lg font-semibold text-black mb-3">
-                            {currentLanguage.description}
-                          </p>
-                        </div>
-                      </div>
+        {/* Content Area - No Container Box */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Left Column - Content */}
+            <div className="space-y-8">
+              {/* Language Header */}
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex items-center justify-center">
+                  <img
+                    src={`/${currentLanguage.icon}`}
+                    alt={currentLanguage.name}
+                    className="w-8 h-8 object-contain"
+                    onError={handleImageError}
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-transparent`}>
+                      {currentLanguage.name}
+                    </h3>
+                    <a
+                      href={currentLanguage.officialLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-gray-900 transition-colors"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                    </a>
+                  </div>
+                  <p className="text-lg font-semibold text-gray-700">
+                    {currentLanguage.description}
+                  </p>
+                </div>
+              </div>
 
-                      <div className="h-px bg-gray-300" />
+              {/* Description */}
+              <div className="space-y-4">
+                <p className="text-gray-600 leading-relaxed text-lg">
+                  {currentLanguage.fullDescription}
+                </p>
+              </div>
 
-                      {/* Full Description */}
-                      <div className="space-y-4">
-                        <h4 className="text-xl font-bold text-black">
-                          About {currentLanguage.name}
-                        </h4>
-                        <p className="text-base text-black leading-relaxed">
-                          {currentLanguage.fullDescription}
-                        </p>
-                      </div>
+              {/* Frameworks */}
+              <div className="space-y-4">
+                <h4 className="text-xl font-bold text-gray-900">
+                  Popular Frameworks & Tools
+                </h4>
+                <div className="flex flex-wrap gap-3">
+                  {currentLanguage.frameworks.map((framework, idx) => (
+                    <span
+                      key={idx}
+                      className={`px-4 py-2 rounded-xl text-sm font-medium ${currentLanguage.tagColor} border-2 transition-all hover:scale-105 hover:shadow-md`}
+                    >
+                      {framework}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-                      {/* Frameworks & Tools */}
-                      <div className="space-y-4">
-                        <h4 className="text-lg font-bold text-black">
-                          Popular Frameworks & Tools
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {currentLanguage.frameworks.map((framework, idx) => (
-                            <span
-                              key={idx}
-                              className={`inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium ${currentLanguage.tagColor} border transition-all hover:scale-105`}
-                            >
-                              {framework}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+              {/* CTA Button */}
+              <a
+                href={currentLanguage.officialLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r ${currentLanguage.color} text-white font-semibold text-lg hover:shadow-xl transition-all hover:scale-105 shadow-lg`}
+              >
+                Explore {currentLanguage.name} Documentation
+                <ExternalLink className="w-5 h-5" />
+              </a>
+            </div>
 
-                      {/* Official Link Button */}
-                      <div>
-                        <a
-                          href={currentLanguage.officialLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r ${currentLanguage.color} text-white text-base font-semibold hover:opacity-90 transition-all shadow-md hover:shadow-lg`}
-                        >
-                          Visit Official Documentation
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Right Column - Video Preview */}
-                    <div className="space-y-8">
-                      {/* Video Preview */}
-                      <div className="py-33">
-                        <div className="transform transition-all duration-500 relative">
-                          <div
-                            className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
-                            onClick={handlePlayButtonClick}
-                          >
-                            <div className="h-96 w-full rounded-lg overflow-hidden shadow-md border border-gray-300 relative bg-gray-200">
-                              <img
-                                src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
-                                alt={`${currentLanguage.name} Tutorial Preview`}
-                                className="w-full h-full object-cover"
-                                onError={(e) => {
-                                  e.currentTarget.src = `https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/hqdefault.jpg`;
-                                  e.currentTarget.onerror = null;
-                                }}
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-20 h-13 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
-                                  <svg
-                                    className="w-10 h-10 text-white ml-1"
-                                    viewBox="0 0 27 27"
-                                    fill="currentColor"
-                                  >
-                                    <path d="M8 5v14l11-7z" />
-                                  </svg>
-                                </div>
-                              </div>
-                            </div>
-                            <p className="text-sm text-black text-center mt-4 flex items-center justify-center gap-1">
-                              💡 Click to watch full tutorial on YouTube
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+            {/* Right Column - Video */}
+            <div className="space-y-6">
+              <div
+                className="cursor-pointer group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={handlePlayButtonClick}
+              >
+                <div className="aspect-video relative bg-gray-100">
+                  <img
+                    src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
+                    alt={`${currentLanguage.name} Tutorial`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.src = `https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/hqdefault.jpg`;
+                      e.currentTarget.onerror = null;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-2xl">
+                      <svg className="w-8 h-8 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Bottom Navigation Controls with Chevrons */}
-              <div className="flex items-center justify-center gap-8 mt-8">
-                {/* Left Chevron */}
-                <button
-                  onClick={prevLanguage}
-                  className="p-3 rounded-full bg-white hover:bg-gray-50 text-black border border-gray-300 hover:border-gray-400 shadow-lg hover:shadow-xl transition-all"
-                  aria-label="Previous language"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-
-                {/* Indicator Dots */}
-                <div className="flex gap-2">
-                  {programmingLanguages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setCurrentIndex(index);
-                      }}
-                      className="group"
-                      aria-label={`Go to language ${index + 1}`}
-                    >
-                      <div
-                        className={`h-2 rounded-full transition-all duration-300 ${
-                          index === currentIndex
-                            ? `w-8 bg-gradient-to-r ${currentLanguage.color}`
-                            : "w-2 bg-gray-300 group-hover:bg-gray-400"
-                        }`}
-                      />
-                    </button>
-                  ))}
-                </div>
-
-                {/* Right Chevron */}
-                <button
-                  onClick={nextLanguage}
-                  className="p-3 rounded-full bg-white hover:bg-gray-50 text-black border border-gray-300 hover:border-gray-400 shadow-lg hover:shadow-xl transition-all"
-                  aria-label="Next language"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Language Counter */}
-              <div className="text-center mt-4">
-                <span className="text-sm font-medium text-black">
-                  {currentIndex + 1} of {programmingLanguages.length}
-                </span>
-              </div>
+              <p className="text-center text-gray-600 text-sm flex items-center justify-center gap-2">
+                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                Watch tutorial to master {currentLanguage.name}
+              </p>
             </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex items-center justify-between mt-16 pt-8 border-t border-gray-200">
+            <button
+              onClick={prevLanguage}
+              className="flex items-center gap-3 px-6 py-3 text-gray-700 hover:text-gray-900 font-semibold transition-all hover:gap-4 group"
+            >
+              <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Previous
+            </button>
+
+            <div className="flex items-center gap-6">
+              <div className="flex gap-2">
+                {programmingLanguages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleLanguageSelect(index)}
+                    className="group"
+                  >
+                    <div
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentIndex
+                          ? `bg-gradient-to-r ${currentLanguage.color} scale-125`
+                          : "bg-gray-300 group-hover:bg-gray-400"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <span className="text-sm text-gray-600 font-medium">
+                {currentIndex + 1} / {programmingLanguages.length}
+              </span>
+            </div>
+
+            <button
+              onClick={nextLanguage}
+              className="flex items-center gap-3 px-6 py-3 text-gray-700 hover:text-gray-900 font-semibold transition-all hover:gap-4 group"
+            >
+              Next
+              <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </button>
           </div>
         </div>
       </div>
