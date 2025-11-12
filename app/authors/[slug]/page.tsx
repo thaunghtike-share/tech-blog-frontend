@@ -6,22 +6,24 @@ import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import {
   Calendar,
-  Clock,
   Linkedin,
   Folder,
   ArrowRight,
   Tag as TagIcon,
-  Award,
   Star,
   Eye,
   Heart,
   TrendingUp,
   BarChart3,
+  ChevronRight,
+  ChevronLeft,
+  FileText,
+  Crown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const DEFAULT_PAGE_SIZE = 6;
+const DEFAULT_PAGE_SIZE = 8;
 
 interface Article {
   id: number;
@@ -72,7 +74,13 @@ export default function AuthorDetailPage() {
         const res = await fetch(`${API_BASE_URL}/authors/${slug}/public/`);
         if (!res.ok) throw new Error("Failed to load author details");
         const data = await res.json();
-        console.log("🚀 API Response:", data);
+        
+        // Sort articles by latest (newest first)
+        if (data.articles) {
+          data.articles = data.articles.sort((a: Article, b: Article) => 
+            new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+          );
+        }
         
         setAuthor(data);
       } catch (err) {
@@ -88,7 +96,7 @@ export default function AuthorDetailPage() {
   const totalArticles = author?.articles?.length || 0;
   const totalViews = author?.articles?.reduce((sum, article) => sum + (article.read_count || 0), 0) || 0;
   const avgViews = totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
-  const totalReactions = author?.articles?.reduce((sum, article) => sum + (Math.floor(Math.random() * 100) + 20), 0) || 0; // Dummy reactions for now
+  const totalReactions = author?.articles?.reduce((sum, article) => sum + (Math.floor(Math.random() * 100) + 20), 0) || 0;
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -96,9 +104,6 @@ export default function AuthorDetailPage() {
       month: "long",
       day: "numeric",
     });
-
-  const calculateReadTime = (text?: string) =>
-    `${Math.ceil(((text ?? "").split(" ").length || 1) / 200)} min`;
 
   const stripMarkdown = (md?: string) => {
     if (!md) return "";
@@ -151,12 +156,12 @@ export default function AuthorDetailPage() {
         <main className="max-w-6xl mx-auto px-4 py-20">
           <div className="text-center">
             <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-              <Award className="w-12 h-12 text-white" />
+              <Star className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-black-700 mb-4">
               Author Not Found
             </h1>
-            <p className="text-lg text-gray-600 mb-8 max-w-md mx-auto">
+            <p className="text-lg text-black-600 mb-8 max-w-md mx-auto">
               {error}
             </p>
             <Link
@@ -210,193 +215,183 @@ export default function AuthorDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       <MinimalHeader />
       
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        {/* Author Header */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Author Header - Clean design like admin page */}
         <motion.section 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative mb-12"
+          className="mb-16"
         >
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8">
-              {/* Author Avatar */}
-              <div className="relative">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1 shadow-lg">
-                  <img
-                    src={author?.avatar || "/placeholder.svg"}
-                    alt={author?.name || "Author"}
-                    className="w-full h-full rounded-2xl object-cover border-4 border-white"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/placeholder.svg";
-                    }}
-                  />
-                </div>
-                {author?.linkedin && (
-                  <a
-                    href={author.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2 rounded-xl shadow-lg transition-all duration-300 hover:scale-110"
-                  >
-                    <Linkedin className="w-4 h-4 text-white" />
-                  </a>
-                )}
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 mb-12">
+            <div className="relative">
+              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500 via-blue-600 to-purple-600 p-1.5 shadow-2xl">
+                <img
+                  src={author?.avatar || "/placeholder.svg"}
+                  alt={author?.name || "Author"}
+                  className="w-full h-full rounded-2xl object-cover border-4 border-white"
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder.svg";
+                  }}
+                />
               </div>
-
-              {/* Author Info */}
-              <div className="flex-1 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
-                  <Award className="w-4 h-4" />
-                  Author
-                </div>
-                
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-                  {author?.name}
-                </h1>
-                
-                <p className="text-lg text-sky-600 font-semibold mb-4">
-                  {author?.job_title} at {author?.company}
-                </p>
-                
-                <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl text-base">
-                  {author?.bio}
-                </p>
-
-                {/* Author Stats */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"
+              {author?.linkedin && (
+                <a
+                  href={author.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute -bottom-3 -right-3 bg-gradient-to-r from-sky-600 to-blue-600 p-3 rounded-2xl shadow-2xl hover:scale-110 transition-all duration-300"
                 >
-                  {/* Total Articles */}
-                  <div className="">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
-                        <TrendingUp className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-lg font-bold text-gray-900">{totalArticles}</div>
-                        <div className="text-xs text-gray-600 font-medium">Articles</div>
-                      </div>
-                    </div>
-                  </div>
+                  <Linkedin className="w-5 h-5 text-white" />
+                </a>
+              )}
+            </div>
 
-                  {/* Total Views */}
-                  <div className="">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-md">
-                        <Eye className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-lg font-bold text-gray-900">{totalViews.toLocaleString()}</div>
-                        <div className="text-xs text-gray-600 font-medium">Total Views</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Average Views */}
-                  <div className="">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md">
-                        <BarChart3 className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-lg font-bold text-gray-900">{avgViews.toLocaleString()}</div>
-                        <div className="text-xs text-gray-600 font-medium">Avg Views</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Total Reactions */}
-                  <div className="">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md">
-                        <Heart className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-lg font-bold text-gray-900">{totalReactions.toLocaleString()}</div>
-                        <div className="text-xs text-gray-600 font-medium">Reactions</div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+            <div className="flex-1">
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold mb-4 shadow-lg">
+                <Crown className="w-4 h-4" />
+                Author
               </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
+                {author?.name}
+              </h1>
+              <p className="text-xl text-slate-700 font-medium mb-6">
+                {author?.job_title} at {author?.company}
+              </p>
+              <p className="text-slate-700 text-lg leading-relaxed max-w-3xl">
+                {author?.bio}
+              </p>
             </div>
           </div>
-        </motion.section>
 
-        {/* Articles Grid */}
-        <section className="mb-16">
-          {/* Section Header */}
-          <motion.div 
+          {/* Stats Grid */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex items-center gap-4 mb-8"
+            transition={{ delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            <div className="p-3 bg-gradient-to-r from-sky-600 to-blue-600 rounded-xl">
-              <Star className="w-6 h-6 text-white" />
+            {/* Total Articles */}
+            <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-md">
+                  <TrendingUp className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">
+                {totalArticles}
+              </h3>
+              <p className="text-slate-700 font-semibold">
+                Total Articles
+              </p>
             </div>
-            <div>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
-                Articles by {author?.name}
-              </h2>
-              <p className="text-gray-600">
-                {author?.articles?.length || 0} published articles
+
+            {/* Total Views */}
+            <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-md">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">
+                {totalViews.toLocaleString()}
+              </h3>
+              <p className="text-slate-700 font-semibold">Total Views</p>
+            </div>
+
+            {/* Average Views */}
+            <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-md">
+                  <BarChart3 className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">
+                {avgViews.toLocaleString()}
+              </h3>
+              <p className="text-slate-700 font-semibold">Avg Views</p>
+            </div>
+
+            {/* Total Reactions */}
+            <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-md">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">
+                {totalReactions.toLocaleString()}
+              </h3>
+              <p className="text-slate-700 font-semibold">
+                Total Reactions
               </p>
             </div>
           </motion.div>
+        </motion.section>
+
+        {/* Articles Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-xl overflow-hidden mb-16"
+        >
+          <div className="px-8 py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                  Articles by {author?.name}
+                </h2>
+                <p className="text-slate-600">
+                  Showing {paginatedArticles.length} of {totalArticles} articles
+                </p>
+              </div>
+            </div>
+          </div>
 
           {author?.articles && author.articles.length === 0 ? (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-16"
-            >
-              <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                <Star className="w-10 h-10 text-sky-500" />
+            <div className="text-center py-20">
+              <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                <FileText className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">
                 No Articles Yet
               </h3>
-              <p className="text-gray-600 max-w-md mx-auto">
+              <p className="text-slate-700 mb-8 text-xl font-medium max-w-md mx-auto">
                 Stay tuned! {author?.name} is preparing amazing content for you.
               </p>
-            </motion.div>
+            </div>
           ) : (
             <>
-              {/* Articles Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                <AnimatePresence>
-                  {paginatedArticles.map((article, index) => {
-                    const previewText =
-                      article.excerpt?.trim() ||
-                      truncate(stripMarkdown(article.content), 120) ||
-                      "Read the full article to learn more...";
-                    
-                    const coverImage = getCoverImage(article);
-                    const hasRealCover = hasRealCoverImage(article);
+              <div className="divide-y divide-slate-200">
+                {paginatedArticles.map((article, index) => {
+                  const previewText =
+                    article.excerpt?.trim() ||
+                    truncate(stripMarkdown(article.content), 120) ||
+                    "Read the full article to learn more...";
+                  
+                  const coverImage = getCoverImage(article);
+                  const hasRealCover = hasRealCoverImage(article);
 
-                    return (
-                      <motion.article
-                        key={article.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                        className="group bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300 overflow-hidden"
-                      >
-                        {/* Cover Image */}
-                        <div className={`relative h-48 overflow-hidden ${!hasRealCover ? 'bg-gradient-to-br from-gray-100 to-gray-200' : 'bg-gray-100'}`}>
+                  return (
+                    <motion.div
+                      key={article.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="p-8 hover:bg-white transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                    >
+                      <div className="flex flex-col lg:flex-row gap-8 items-start">
+                        {/* Article Cover */}
+                        <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
                           <img
                             src={coverImage}
                             alt={article.title}
-                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             onError={(e) => {
                               const category = article.category?.name?.toLowerCase() || '';
                               let fallbackImage = "/devops.webp";
@@ -407,156 +402,139 @@ export default function AuthorDetailPage() {
                               (e.target as HTMLImageElement).src = fallbackImage;
                             }}
                           />
-                          {!hasRealCover && (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="text-center p-4">
-                                <Folder className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                                <p className="text-xs text-gray-500 font-medium">Cover Image</p>
-                              </div>
-                            </div>
-                          )}
                         </div>
 
-                        {/* Article Content */}
-                        <div className="p-6">
-                          {/* Category */}
-                          {article.category && (
-                            <Link
-                              href={`/categories/${article.category.slug}`}
-                              className="inline-flex items-center gap-2 bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-sky-100 transition-colors border border-sky-200 mb-3"
-                            >
-                              <Folder className="w-4 h-4" />
-                              {article.category.name}
-                            </Link>
-                          )}
-
-                          {/* Title */}
-                          <Link href={`/articles/${article.slug}`}>
-                            <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight group-hover:text-sky-600 transition-colors duration-300 line-clamp-2">
-                              {article.title}
-                            </h3>
-                          </Link>
-
-                          {/* Excerpt */}
-                          <p className="text-gray-700 leading-relaxed mb-4 line-clamp-3 text-sm">
-                            {previewText}
-                          </p>
-
-                          {/* Meta Information */}
-                          <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4 text-gray-400" />
-                              <span>{formatDate(article.published_at)}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Heart className="w-3 h-3 text-rose-600" />
-                              <span>{Math.floor(Math.random() * 100) + 20} reactions</span>
-                            </div>
+                        {/* Article Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                            {article.category && (
+                              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md">
+                                <Folder className="w-4 h-4" />
+                                {article.category.name}
+                              </span>
+                            )}
+                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                              <Calendar className="w-4 h-4 text-slate-600" />
+                              {formatDate(article.published_at)}
+                            </span>
                           </div>
 
-                          {/* Article Stats */}
-                          <div className="flex items-center gap-4 text-xs text-gray-600 mb-4">
-                            <div className="flex items-center gap-1">
-                              <Eye className="w-3 h-3 text-sky-600" />
-                              <span>{article.read_count?.toLocaleString()} views</span>
-                            </div>
+                          <h3 className="text-2xl font-bold text-sky-700 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                            <Link href={`/articles/${article.slug}`}>
+                              {article.title}
+                            </Link>
+                          </h3>
+
+                          {article.excerpt && (
+                            <p className="text-slate-700 text-lg line-clamp-2 mb-4 font-medium">
+                              {article.excerpt}
+                            </p>
+                          )}
+
+                          {/* Engagement Metrics */}
+                          <div className="flex flex-wrap items-center gap-8 mb-4">
+                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                              <Eye className="w-5 h-5 text-sky-600" />
+                              {article.read_count?.toLocaleString()} views
+                            </span>
+                            <span className="inline-flex items-center gap-2 text-slate-700 font-semibold">
+                              <Heart className="w-5 h-5 text-rose-600" />
+                              {Math.floor(Math.random() * 100) + 20} reactions
+                            </span>
                           </div>
 
                           {/* Tags */}
                           {article.tags && article.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5 mb-4">
-                              {article.tags.slice(0, 3).map((tag) => (
-                                <Link
+                            <div className="flex flex-wrap gap-3">
+                              {article.tags.slice(0, 4).map((tag) => (
+                                <span
                                   key={tag.id}
-                                  href={`/articles?tag=${tag.slug}`}
-                                  className="inline-flex items-center gap-1 bg-gray-50 text-gray-700 px-2 py-1 rounded-lg text-xs font-medium transition-all duration-300 hover:bg-gray-100"
+                                  className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold"
                                 >
-                                  <TagIcon className="w-3 h-3" />
+                                  <TagIcon className="w-4 h-4" />
                                   {tag.name}
-                                </Link>
+                                </span>
                               ))}
                             </div>
                           )}
+                        </div>
 
-                          {/* Read More */}
+                        {/* Read More Button */}
+                        <div className="flex items-center">
                           <Link
                             href={`/articles/${article.slug}`}
-                            className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold text-sm transition-colors group/readmore"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
                           >
-                            Read more
-                            <ArrowRight className="w-4 h-4 group-hover/readmore:translate-x-1 transition-transform duration-300" />
+                            Read Article
+                            <ArrowRight className="w-4 h-4" />
                           </Link>
                         </div>
-                      </motion.article>
-                    );
-                  })}
-                </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
 
-              {/* Pagination */}
+              {/* Pagination Controls */}
               {totalPages > 1 && (
-                <motion.nav 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="mt-12 flex flex-col sm:flex-row justify-between items-center gap-4"
-                >
-                  <div className="text-sm text-gray-600">
-                    Page {currentPage} of {totalPages}
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white"
-                    >
-                      <ArrowRight className="w-4 h-4 rotate-180" />
-                      Previous
-                    </button>
-                    
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                        let pageNum;
-                        if (totalPages <= 5) {
-                          pageNum = i + 1;
-                        } else if (currentPage <= 3) {
-                          pageNum = i + 1;
-                        } else if (currentPage >= totalPages - 2) {
-                          pageNum = totalPages - 4 + i;
-                        } else {
-                          pageNum = currentPage - 2 + i;
-                        }
-                        return (
-                          <button
-                            key={pageNum}
-                            onClick={() => setCurrentPage(pageNum)}
-                            className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm transition-all ${
-                              currentPage === pageNum
-                                ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
-                                : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                            }`}
-                          >
-                            {pageNum}
-                          </button>
-                        );
-                      })}
+                <div className="px-8 py-6 border-t border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-slate-600">
+                      Page {currentPage} of {totalPages}
                     </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        Previous
+                      </button>
+                      
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                          let pageNum;
+                          if (totalPages <= 5) {
+                            pageNum = i + 1;
+                          } else if (currentPage <= 3) {
+                            pageNum = i + 1;
+                          } else if (currentPage >= totalPages - 2) {
+                            pageNum = totalPages - 4 + i;
+                          } else {
+                            pageNum = currentPage - 2 + i;
+                          }
+                          return (
+                            <button
+                              key={pageNum}
+                              onClick={() => setCurrentPage(pageNum)}
+                              className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all ${
+                                currentPage === pageNum
+                                  ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
+                                  : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                              }`}
+                            >
+                              {pageNum}
+                            </button>
+                          );
+                        })}
+                      </div>
 
-                    <button
-                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors bg-white"
-                    >
-                      Next
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                        disabled={currentPage === totalPages}
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
+                      >
+                        Next
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                </motion.nav>
+                </div>
               )}
             </>
           )}
-        </section>
+        </motion.section>
       </main>
 
       <MinimalFooter />
