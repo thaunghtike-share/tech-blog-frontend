@@ -53,8 +53,8 @@ const programmingLanguages: ProgrammingLanguage[] = [
     frameworks: ["Gin", "Echo", "Cobra"],
     level: "Intermediate to Advanced",
     youtubeVideoId: "un6ZyFkqFKo",
-    color: "from-cyan-500 to-teal-500",
-    tagColor: "bg-cyan-100 text-cyan-800 border-cyan-200",
+    color: "from-gray-500 to-gray-700",
+    tagColor: "bg-gray-400 text-gray-800 border-gray-300",
   },
   {
     name: "Java",
@@ -176,7 +176,7 @@ export function ProgrammingLanguagesRoadmap() {
                   {language.name}
                 </span>
                 {selectedLanguage === index && (
-                  <div className="absolute -bottom-2 w-2 h-2 rounded-full bg-gradient-to-r from-sky-600 to-blue-600" />
+                  <div className={`absolute -bottom-2 w-2 h-2 rounded-full bg-gradient-to-r ${language.color}`} />
                 )}
               </button>
             ))}
@@ -249,40 +249,44 @@ export function ProgrammingLanguagesRoadmap() {
                 rel="noopener noreferrer"
                 className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r ${currentLanguage.color} text-white font-semibold text-lg hover:shadow-xl transition-all hover:scale-105 shadow-lg`}
               >
-                Explore {currentLanguage.name} Documentation
+                Read Official Docs
                 <ExternalLink className="w-5 h-5" />
               </a>
             </div>
 
-            {/* Right Column - Video */}
+            {/* Right Column - Video (Using your EXACT working code) */}
             <div className="space-y-6">
-              <div
-                className="cursor-pointer group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-                onClick={handlePlayButtonClick}
-              >
-                <div className="aspect-video relative bg-gray-100">
-                  <img
-                    src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
-                    alt={`${currentLanguage.name} Tutorial`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.src = `https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/hqdefault.jpg`;
-                      e.currentTarget.onerror = null;
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-2xl">
-                      <svg className="w-8 h-8 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
+              <div className="transform transition-all duration-500 relative">
+                <div
+                  className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
+                  onClick={handlePlayButtonClick}
+                >
+                  <div className="h-75 w-full rounded-xl overflow-hidden shadow-lg border border-gray-300 relative bg-gray-200">
+                    <img
+                      src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
+                      alt={`${currentLanguage.name} Tutorial Preview`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/hqdefault.jpg`;
+                        e.currentTarget.onerror = null;
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-13 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
+                        <svg
+                          className="w-10 h-10 text-white ml-1"
+                          viewBox="0 0 27 27"
+                          fill="currentColor"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <p className="text-center text-gray-600 text-sm flex items-center justify-center gap-2">
-                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                Watch tutorial to master {currentLanguage.name}
+              <p className="text-sm text-gray-600 text-center flex items-center justify-center gap-1">
+                💡 Click to watch full tutorial on YouTube
               </p>
             </div>
           </div>
