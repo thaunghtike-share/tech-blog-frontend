@@ -4,6 +4,14 @@ metadata:
   annotations:
     certmanager.k8s.io/acme-challenge-type: dns01
     certmanager.k8s.io/acme-dns01-provider: cloudflare
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      set $block 0;
+      if ($http_user_agent ~* "(android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini)") {
+        set $block 1;
+      }
+      if ($block = 1) {
+        return 403;
+      }
   labels:
     app: ldn-ui
   name: ldn-ui-v3
@@ -33,6 +41,14 @@ metadata:
   annotations:
     certmanager.k8s.io/acme-challenge-type: dns01
     certmanager.k8s.io/acme-dns01-provider: cloudflare
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      set $block 0;
+      if ($http_user_agent ~* "(android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini)") {
+        set $block 1;
+      }
+      if ($block = 1) {
+        return 403;
+      }
   labels:
     app: ldn-ui
   name: ldn-ui-v3-ingress
@@ -53,4 +69,4 @@ spec:
   tls:
     - hosts:
         - learndevopsnow.it.com
-      secretName: ldn-tls-secret      
+      secretName: ldn-tls-secret
