@@ -137,7 +137,7 @@ export default function NewArticlePage() {
     fetchData();
   }, [API_BASE_URL, token]);
 
-  // Handle fullscreen
+  // Handle fullscreen change
   useEffect(() => {
     const handleFullscreenChange = () => {
       setFullscreen(!!document.fullscreenElement);
@@ -149,12 +149,14 @@ export default function NewArticlePage() {
     };
   }, []);
 
-  const handleEditorFullscreen = () => {
+  // Custom fullscreen handler for MDEditor - EXACTLY like your old version
+  const handleEditorFullscreen = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (!editorRef.current) return;
 
     if (!fullscreen) {
       editorRef.current.requestFullscreen().catch((err) => {
-        console.error("Error enabling fullscreen:", err);
+        console.error("Error attempting to enable fullscreen:", err);
       });
     } else {
       document.exitFullscreen();
@@ -382,47 +384,6 @@ export default function NewArticlePage() {
     }
   }
 
-  if (fullscreen) {
-    return (
-      <div className="fixed inset-0 z-50 bg-white">
-        <div className="h-full flex flex-col">
-          <div className="flex-grow flex flex-col">
-            <div ref={editorRef} data-color-mode="light" className="h-full">
-              <MDEditor
-                value={form.content}
-                onChange={(val) => handleChange("content", val || "")}
-                height="100%"
-                preview="edit"
-                hideToolbar={false}
-                textareaProps={{
-                  placeholder: "Write your article content here...",
-                  className: "text-sm leading-relaxed bg-white text-gray-900",
-                }}
-                className="h-full rounded-none"
-                extraCommands={[
-                  {
-                    name: "fullscreen",
-                    keyCommand: "fullscreen",
-                    buttonProps: { "aria-label": "Toggle fullscreen" },
-                    icon: (
-                      <svg width="14" height="14" viewBox="0 0 512 512">
-                        <path
-                          fill="currentColor"
-                          d="M396.795 396.8H320V448h128V320h-51.205zm-281.59 0H192V448H64V320h51.205zm0-281.595H64V192h128V64H192zm281.595 0H320V64h128v128h-51.205z"
-                        />
-                      </svg>
-                    ),
-                    execute: handleEditorFullscreen,
-                  },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // Show loading state
   if (loading) {
     return (
@@ -438,38 +399,54 @@ export default function NewArticlePage() {
       </div>
     );
   }
-// Show redirect message if not authenticated
-if (!token) {
-  return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <MinimalHeader />
-      <main className="flex-grow flex items-center justify-center py-20">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-6"></div>
-          <p className="text-gray-600 text-lg">You need to be logged in to create articles.</p>
-        </div>
-      </main>
-      <MinimalFooter />
-    </div>
-  );
-}
+
+  // Show redirect message if not authenticated
+  if (!token) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white">
+        <MinimalHeader />
+        <main className="flex-grow flex items-center justify-center py-20">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-6"></div>
+            <p className="text-gray-600 text-lg">You need to be logged in to create articles.</p>
+          </div>
+        </main>
+        <MinimalFooter />
+      </div>
+    );
+  }
 
   // Main editor form for authenticated users
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <MinimalHeader />
-      <main className="flex-grow max-w-7xl mx-auto px-4 py-10 w-full">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">New Article Editor</h1>
-              <p className="text-gray-600 mt-2">
-                {lastSaved && `Draft auto-saved at ${lastSaved}`}
-              </p>
-            </div>
-          </div>
+    <div className={`min-h-screen flex flex-col bg-white ${fullscreen ? "overflow-hidden" : ""}`}>
+      {!fullscreen && <MinimalHeader />}
 
-          {message && (
+      <main className={`${fullscreen ? "fixed inset-0 z-50 bg-white" : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"}`}>
+        <div className={`${fullscreen ? "h-full" : "bg-white rounded-2xl border border-gray-200 shadow-lg p-8"}`}>
+          {!fullscreen && (
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Write New Article</h1>
+                <p className="text-gray-600 mt-2">
+                  {lastSaved && `Draft auto-saved at ${lastSaved}`}
+                </p>
+              </div>
+              
+              {/* Clear Draft Button - Moved to top right */}
+              <button
+                type="button"
+                onClick={clearDraft}
+                className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-medium flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Clear Draft
+              </button>
+            </div>
+          )}
+
+          {!fullscreen && message && (
             <div
               className={`mb-6 p-4 rounded-lg border ${
                 message.type === "success"
@@ -481,385 +458,396 @@ if (!token) {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Article Title */}
-            <div>
-              <label className="block mb-2 font-medium text-gray-700">
-                Title <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => handleChange("title", e.target.value)}
-                required
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-                placeholder="Enter your article title"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Category */}
-              <div>
-                <label className="block mb-2 font-medium text-gray-700">
-                  Category <span className="text-red-500">*</span>
-                </label>
-                <div className="space-y-2">
-                  <select
-                    value={form.category}
-                    onChange={(e) => handleChange("category", e.target.value)}
-                    required
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-                  >
-                    <option value="">Select category</option>
-                    {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </option>
-                    ))}
-                  </select>
-                  
-                  {!showNewCategoryInput ? (
-                    <button
-                      type="button"
-                      onClick={() => setShowNewCategoryInput(true)}
-                      className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
-                    >
-                      + Create New Category
-                    </button>
-                  ) : (
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={newCategoryName}
-                        onChange={(e) => setNewCategoryName(e.target.value)}
-                        placeholder="Enter new category name"
-                        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
-                      />
-                      <button
-                        type="button"
-                        onClick={handleCreateCategory}
-                        disabled={creatingCategory}
-                        className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 disabled:opacity-50 text-sm font-medium"
-                      >
-                        {creatingCategory ? "Creating..." : "Add"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShowNewCategoryInput(false)}
-                        className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Published Date */}
-              <div>
-                <label className="block mb-2 font-medium text-gray-700">
-                  Published Date <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="date"
-                  value={form.published_at}
-                  onChange={(e) => handleChange("published_at", e.target.value)}
-                  required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-                />
-                <p className="text-xs text-gray-500 mt-1">Defaults to today's date</p>
-              </div>
-            </div>
-
-            {/* Tags Dropdown */}
-            <div>
-              <label className="block mb-2 font-medium text-gray-700">Tags</label>
-              <div className="space-y-2">
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowTagDropdown(!showTagDropdown)}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-                  >
-                    {form.tags.length > 0 
-                      ? `${form.tags.length} tags selected`
-                      : "Select tags"
-                    }
-                  </button>
-                  
-                  {showTagDropdown && (
-                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-60 overflow-auto">
-                      {tags.map((tag) => (
-                        <label
-                          key={tag.id}
-                          className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={form.tags.includes(tag.id)}
-                            onChange={() => toggleTag(tag.id)}
-                            className="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
-                          />
-                          <span className="ml-3 text-sm text-gray-700">{tag.name}</span>
-                        </label>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                
-                {!showNewTagInput ? (
-                  <button
-                    type="button"
-                    onClick={() => setShowNewTagInput(true)}
-                    className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
-                  >
-                    + Create New Tag
-                  </button>
-                ) : (
-                  <div className="flex gap-2">
+          <form onSubmit={handleSubmit} className={`${fullscreen ? "h-full" : "space-y-6"}`}>
+            <div className={`${fullscreen ? "h-full flex flex-col" : "space-y-6"}`}>
+              {!fullscreen && (
+                <>
+                  {/* Article Title */}
+                  <div>
+                    <label className="block mb-2 font-medium text-gray-700">
+                      Title <span className="text-red-500">*</span>
+                    </label>
                     <input
                       type="text"
-                      value={newTagName}
-                      onChange={(e) => setNewTagName(e.target.value)}
-                      placeholder="Enter new tag name"
-                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                      value={form.title}
+                      onChange={(e) => handleChange("title", e.target.value)}
+                      required
+                      className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                      placeholder="Enter your article title"
                     />
-                    <button
-                      type="button"
-                      onClick={handleCreateTag}
-                      disabled={creatingTag}
-                      className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 disabled:opacity-50 text-sm font-medium"
-                    >
-                      {creatingTag ? "Creating..." : "Add"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowNewTagInput(false)}
-                      className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
-                    >
-                      Cancel
-                    </button>
                   </div>
-                )}
-              </div>
-              
-              {form.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {form.tags.map(tagId => {
-                    const tag = tags.find(t => t.id === tagId);
-                    return tag ? (
-                      <span key={tag.id} className="bg-sky-100 text-sky-800 text-xs px-3 py-1 rounded-full">
-                        {tag.name}
-                      </span>
-                    ) : null;
-                  })}
-                </div>
-              )}
-            </div>
 
-            {/* Cover Image Upload */}
-            <div>
-              <label className="block mb-2 font-medium text-gray-700">
-                Cover Image
-              </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Category */}
+                    <div>
+                      <label className="block mb-2 font-medium text-gray-700">
+                        Category <span className="text-red-500">*</span>
+                      </label>
+                      <div className="space-y-2">
+                        <select
+                          value={form.category}
+                          onChange={(e) => handleChange("category", e.target.value)}
+                          required
+                          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                        >
+                          <option value="">Select category</option>
+                          {categories.map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                              {cat.name}
+                            </option>
+                          ))}
+                        </select>
+                        
+                        {!showNewCategoryInput ? (
+                          <button
+                            type="button"
+                            onClick={() => setShowNewCategoryInput(true)}
+                            className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
+                          >
+                            + Create New Category
+                          </button>
+                        ) : (
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={newCategoryName}
+                              onChange={(e) => setNewCategoryName(e.target.value)}
+                              placeholder="Enter new category name"
+                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                            />
+                            <button
+                              type="button"
+                              onClick={handleCreateCategory}
+                              disabled={creatingCategory}
+                              className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 disabled:opacity-50 text-sm font-medium"
+                            >
+                              {creatingCategory ? "Creating..." : "Add"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setShowNewCategoryInput(false)}
+                              className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-              {form.cover_image && (
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600 mb-2">Current Cover Image:</p>
-                  <img
-                    src={form.cover_image}
-                    alt="Cover preview"
-                    className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300"
-                  />
-                </div>
-              )}
-
-              <div className="mb-4">
-                <label className="cursor-pointer">
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/gif,image/webp"
-                    onChange={handleCoverImageUpload}
-                    className="hidden"
-                  />
-                  <div className="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 transition-all duration-300">
-                    <div className="flex flex-col items-center gap-2">
-                      <svg
-                        className="w-8 h-8 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span className="text-sm font-medium text-gray-700">
-                        Click to upload cover image
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        JPEG, PNG, GIF, WebP (max 5MB)
-                      </span>
+                    {/* Published Date */}
+                    <div>
+                      <label className="block mb-2 font-medium text-gray-700">
+                        Published Date <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        value={form.published_at}
+                        onChange={(e) => handleChange("published_at", e.target.value)}
+                        required
+                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Defaults to today's date</p>
                     </div>
                   </div>
-                </label>
-              </div>
 
-              {coverImageProgress > 0 && coverImageProgress < 100 && (
-                <div className="mt-3">
-                  <div className="flex justify-between text-sm text-gray-600 mb-1">
-                    <span>Uploading cover image...</span>
-                    <span>{coverImageProgress}%</span>
+                  {/* Tags Dropdown */}
+                  <div>
+                    <label className="block mb-2 font-medium text-gray-700">Tags</label>
+                    <div className="space-y-2">
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setShowTagDropdown(!showTagDropdown)}
+                          className="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                        >
+                          {form.tags.length > 0 
+                            ? `${form.tags.length} tags selected`
+                            : "Select tags"
+                          }
+                        </button>
+                        
+                        {showTagDropdown && (
+                          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-60 overflow-auto">
+                            {tags.map((tag) => (
+                              <label
+                                key={tag.id}
+                                className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={form.tags.includes(tag.id)}
+                                  onChange={() => toggleTag(tag.id)}
+                                  className="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
+                                />
+                                <span className="ml-3 text-sm text-gray-700">{tag.name}</span>
+                              </label>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {!showNewTagInput ? (
+                        <button
+                          type="button"
+                          onClick={() => setShowNewTagInput(true)}
+                          className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
+                        >
+                          + Create New Tag
+                        </button>
+                      ) : (
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={newTagName}
+                            onChange={(e) => setNewTagName(e.target.value)}
+                            placeholder="Enter new tag name"
+                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                          />
+                          <button
+                            type="button"
+                            onClick={handleCreateTag}
+                            disabled={creatingTag}
+                            className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 disabled:opacity-50 text-sm font-medium"
+                          >
+                            {creatingTag ? "Creating..." : "Add"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setShowNewTagInput(false)}
+                            className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {form.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {form.tags.map(tagId => {
+                          const tag = tags.find(t => t.id === tagId);
+                          return tag ? (
+                            <span key={tag.id} className="bg-sky-100 text-sky-800 text-xs px-3 py-1 rounded-full">
+                              {tag.name}
+                            </span>
+                          ) : null;
+                        })}
+                      </div>
+                    )}
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-sky-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${coverImageProgress}%` }}
-                    ></div>
+
+                  {/* Cover Image Upload */}
+                  <div>
+                    <label className="block mb-2 font-medium text-gray-700">
+                      Cover Image
+                    </label>
+
+                    {form.cover_image && (
+                      <div className="mb-4">
+                        <p className="text-sm text-gray-600 mb-2">Current Cover Image:</p>
+                        <img
+                          src={form.cover_image}
+                          alt="Cover preview"
+                          className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300"
+                        />
+                      </div>
+                    )}
+
+                    <div className="mb-4">
+                      <label className="cursor-pointer">
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/gif,image/webp"
+                          onChange={handleCoverImageUpload}
+                          className="hidden"
+                        />
+                        <div className="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 transition-all duration-300">
+                          <div className="flex flex-col items-center gap-2">
+                            <svg
+                              className="w-8 h-8 text-gray-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                            <span className="text-sm font-medium text-gray-700">
+                              Click to upload cover image
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              JPEG, PNG, GIF, WebP (max 5MB)
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+
+                    {coverImageProgress > 0 && coverImageProgress < 100 && (
+                      <div className="mt-3">
+                        <div className="flex justify-between text-sm text-gray-600 mb-1">
+                          <span>Uploading cover image...</span>
+                          <span>{coverImageProgress}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-sky-600 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${coverImageProgress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
+
+                    {coverImageError && (
+                      <p className="text-red-600 text-sm mt-2">{coverImageError}</p>
+                    )}
+
+                    <div className="mt-4">
+                      <label className="block mb-2 text-sm font-medium text-gray-700">
+                        Or use image URL:
+                      </label>
+                      <input
+                        type="url"
+                        value={form.cover_image}
+                        onChange={(e) => handleChange("cover_image", e.target.value)}
+                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm"
+                        placeholder="https://example.com/cover-image.jpg"
+                      />
+                    </div>
                   </div>
+
+                  {/* Featured Article Checkbox */}
+                  <div className="flex items-center">
+                    <input
+                      id="featured"
+                      type="checkbox"
+                      checked={form.featured}
+                      onChange={(e) => handleChange("featured", e.target.checked)}
+                      className="h-5 w-5 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
+                    />
+                    <label
+                      htmlFor="featured"
+                      className="ml-3 block text-sm font-medium text-gray-700"
+                    >
+                      Featured Article
+                    </label>
+                  </div>
+                </>
+              )}
+
+              {/* Content Editor - EXACTLY like your old version */}
+              <div className={`${fullscreen ? "flex-grow flex flex-col" : ""}`}>
+                {!fullscreen && (
+                  <div className="flex justify-between items-center mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Content (Markdown) <span className="text-red-500">*</span>
+                    </label>
+                    <div className="flex space-x-3">
+                      <button
+                        type="button"
+                        onClick={() => setShowPreview(!showPreview)}
+                        className="px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 text-sm font-medium"
+                      >
+                        {showPreview ? "Hide Preview" : "Show Preview"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+                <div
+                  ref={editorRef}
+                  data-color-mode="light"
+                  className={`${fullscreen ? "h-full" : ""}`}
+                >
+                  <MDEditor
+                    value={form.content}
+                    onChange={(val) => handleChange("content", val || "")}
+                    height={fullscreen ? "100%" : 500}
+                    preview={fullscreen ? "edit" : showPreview ? "live" : "edit"}
+                    hideToolbar={false}
+                    textareaProps={{
+                      placeholder: "Write your article content here...",
+                      className: "text-sm leading-relaxed bg-white text-gray-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-400",
+                    }}
+                    previewOptions={{
+                      className: "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
+                    }}
+                    className={`${
+                      fullscreen
+                        ? "h-full rounded-none"
+                        : "rounded-xl border border-gray-200 shadow-sm"
+                    }`}
+                    extraCommands={[
+                      {
+                        name: "fullscreen",
+                        keyCommand: "fullscreen",
+                        buttonProps: { "aria-label": "Toggle fullscreen" },
+                        icon: (
+                          <svg width="14" height="14" viewBox="0 0 512 512">
+                            <path
+                              fill="currentColor"
+                              d="M396.795 396.8H320V448h128V320h-51.205zm-281.59 0H192V448H64V320h51.205zm0-281.595H64V192h128V64H192zm281.595 0H320V64h128v128h-51.205z"
+                            />
+                          </svg>
+                        ),
+                        execute: (state, api) => {
+                          handleEditorFullscreen({
+                            preventDefault: () => {},
+                          } as React.MouseEvent);
+                        },
+                      },
+                    ]}
+                  />
                 </div>
-              )}
-
-              {coverImageError && (
-                <p className="text-red-600 text-sm mt-2">{coverImageError}</p>
-              )}
-
-              <div className="mt-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Or use image URL:
-                </label>
-                <input
-                  type="url"
-                  value={form.cover_image}
-                  onChange={(e) => handleChange("cover_image", e.target.value)}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm"
-                  placeholder="https://example.com/cover-image.jpg"
-                />
               </div>
-            </div>
 
-            {/* Featured Article Checkbox */}
-            <div className="flex items-center">
-              <input
-                id="featured"
-                type="checkbox"
-                checked={form.featured}
-                onChange={(e) => handleChange("featured", e.target.checked)}
-                className="h-5 w-5 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="featured"
-                className="ml-3 block text-sm font-medium text-gray-700"
-              >
-                Featured Article
-              </label>
-            </div>
-
-            {/* Content Editor */}
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Content (Markdown) <span className="text-red-500">*</span>
-                </label>
-                <div className="flex space-x-3">
+              {!fullscreen && (
+                <div className="flex justify-end items-center pt-6 border-t border-gray-200">
                   <button
-                    type="button"
-                    onClick={() => setShowPreview(!showPreview)}
-                    className="px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 text-sm font-medium"
+                    type="submit"
+                    disabled={loading || coverImageUploading}
+                    className="px-8 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {showPreview ? "Hide Preview" : "Show Preview"}
+                    {loading ? (
+                      <span className="flex items-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Submitting...
+                      </span>
+                    ) : (
+                      "Submit Article"
+                    )}
                   </button>
                 </div>
-              </div>
-
-              <div ref={editorRef} data-color-mode="light">
-                <MDEditor
-                  value={form.content}
-                  onChange={(val) => handleChange("content", val || "")}
-                  height={500}
-                  preview={showPreview ? "live" : "edit"}
-                  hideToolbar={false}
-                  textareaProps={{
-                    placeholder: "Write your article content here...",
-                    className:
-                      "text-sm leading-relaxed bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-400",
-                  }}
-                  previewOptions={{
-                    className:
-                      "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
-                  }}
-                  className="rounded-xl border border-gray-200 shadow-sm"
-                  extraCommands={[
-                    {
-                      name: "fullscreen",
-                      keyCommand: "fullscreen",
-                      buttonProps: { "aria-label": "Toggle fullscreen" },
-                      icon: (
-                        <svg width="14" height="14" viewBox="0 0 512 512">
-                          <path
-                            fill="currentColor"
-                            d="M396.795 396.8H320V448h128V320h-51.205zm-281.59 0H192V448H64V320h51.205zm0-281.595H64V192h128V64H192zm281.595 0H320V64h128v128h-51.205z"
-                          />
-                        </svg>
-                      ),
-                      execute: handleEditorFullscreen,
-                    },
-                  ]}
-                />
-              </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex justify-between items-center pt-6 border-t border-gray-200">
-              <button
-                type="button"
-                onClick={clearDraft}
-                className="px-6 py-3 border border-red-300 text-red-700 rounded-xl hover:bg-red-50 transition-all duration-300 font-medium"
-              >
-                Clear Draft
-              </button>
-
-              <button
-                type="submit"
-                disabled={loading || coverImageUploading}
-                className="px-8 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? (
-                  <span className="flex items-center">
-                    <svg
-                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Submitting...
-                  </span>
-                ) : (
-                  "Submit Article"
-                )}
-              </button>
+              )}
             </div>
           </form>
         </div>
       </main>
-      <MinimalFooter />
+
+      {!fullscreen && <MinimalFooter />}
     </div>
   );
 }

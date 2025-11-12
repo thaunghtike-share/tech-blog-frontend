@@ -301,7 +301,7 @@ export default function FAQPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-lg text-gray-700 leading-relaxed"
+              className="text-lg text-black-700 leading-relaxed"
             >
               Get answers to common questions about DevOps, career paths, cloud
               technologies, and our services. Real-world experience, practical
@@ -327,10 +327,10 @@ export default function FAQPage() {
                     <div className="w-12 h-12 bg-gradient-to-r from-sky-500 to-blue-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">
+                    <div className="text-2xl font-bold text-black-700 mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-gray-600 text-sm font-medium">
+                    <div className="text-black-600 text-sm font-medium">
                       {stat.label}
                     </div>
                   </CardContent>
@@ -346,7 +346,7 @@ export default function FAQPage() {
             {/* Categories Card */}
             <Card className="border-0 shadow-lg rounded-3xl">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-gray-900">
+                <CardTitle className="flex items-center text-xl font-bold text-black-700">
                   <Filter className="h-6 w-6 mr-3 text-sky-600" />
                   Categories
                 </CardTitle>
@@ -362,7 +362,7 @@ export default function FAQPage() {
                         className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${
                           selectedCategory === category.id
                             ? "bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-lg"
-                            : "bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200"
+                            : "bg-gray-50 text-black-700 hover:bg-gray-100 border border-gray-200"
                         }`}
                       >
                         <div className="flex items-center">
@@ -389,7 +389,7 @@ export default function FAQPage() {
             {/* Quick Actions Card */}
             <Card className="border-0 shadow-lg rounded-3xl">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-gray-900">
+                <CardTitle className="flex items-center text-xl font-bold text-black-700">
                   <Zap className="h-6 w-6 mr-3 text-amber-500" />
                   Quick Actions
                 </CardTitle>
@@ -429,10 +429,10 @@ export default function FAQPage() {
                   <MessageCircleQuestion className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
+                  <h2 className="text-2xl font-bold text-black-700">
                     Featured Questions
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-black-600">
                     Browse through important questions ({filteredFaqs.length}{" "}
                     found)
                   </p>
@@ -481,7 +481,7 @@ export default function FAQPage() {
                         </Badge>
 
                         {/* Question */}
-                        <h3 className="text-2xl font-bold text-gray-900 mb-6 leading-tight">
+                        <h3 className="text-2xl font-bold text-black-700 mb-6 leading-tight">
                           {currentFAQ.question}
                         </h3>
 
@@ -490,13 +490,13 @@ export default function FAQPage() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2, duration: 0.5 }}
-                          className="text-gray-700 text-lg leading-relaxed text-left"
+                          className="text-black-700 text-lg leading-relaxed text-left"
                         >
                           {currentFAQ.answer}
                         </motion.div>
 
                         {/* Popularity Indicator */}
-                        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-500">
+                        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-black-500">
                           <Sparkles className="w-4 h-4 text-amber-500" />
                           {currentFAQ.popularity}% of users found this helpful
                         </div>
@@ -507,11 +507,11 @@ export default function FAQPage() {
               ) : (
                 <Card className="border-0 shadow-xl rounded-3xl">
                   <CardContent className="p-12 text-center">
-                    <MessageCircleQuestion className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    <MessageCircleQuestion className="w-16 h-16 text-black-300 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-black-700 mb-2">
                       No questions found
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-black-600">
                       Try adjusting your search or filter criteria
                     </p>
                   </CardContent>
@@ -542,10 +542,10 @@ export default function FAQPage() {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
+                  <h2 className="text-2xl font-bold text-black-700">
                     All Questions
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-black-600">
                     {filteredFaqs.length} questions in{" "}
                     {selectedCategory === "all"
                       ? "all categories"
@@ -581,12 +581,12 @@ export default function FAQPage() {
                               <Badge className="bg-sky-100 text-sky-800 border-0 text-xs">
                                 {faq.category}
                               </Badge>
-                              <div className="flex items-center gap-1 text-xs text-gray-500">
+                              <div className="flex items-center gap-1 text-xs text-black-500">
                                 <Sparkles className="w-3 h-3 text-amber-500" />
                                 {faq.popularity}%
                               </div>
                             </div>
-                            <h4 className="font-semibold text-gray-900 text-lg leading-tight pr-8">
+                            <h4 className="font-semibold text-black-700 text-lg leading-tight pr-8">
                               {faq.question}
                             </h4>
                           </div>
@@ -606,7 +606,7 @@ export default function FAQPage() {
                               transition={{ duration: 0.3 }}
                               className="pt-4 border-t border-gray-200 mt-4"
                             >
-                              <p className="text-gray-700 leading-relaxed">
+                              <p className="text-black-700 leading-relaxed">
                                 {faq.answer}
                               </p>
                             </motion.div>

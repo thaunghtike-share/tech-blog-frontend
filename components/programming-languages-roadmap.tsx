@@ -132,7 +132,7 @@ export function ProgrammingLanguagesRoadmap() {
                 Your DevOps Journey
               </span>
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
+            <p className="text-lg text-black-400 leading-relaxed">
               Before diving into DevOps tools and automation, it's important
               to have a solid understanding of programming. Coding skills help
               you write scripts, automate tasks, and understand how software
@@ -200,19 +200,19 @@ export function ProgrammingLanguagesRoadmap() {
                 </div>
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-transparent`}>
+                    <h3 className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-black-600`}>
                       {currentLanguage.name}
                     </h3>
                     <a
                       href={currentLanguage.officialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-gray-900 transition-colors"
+                      className="text-black-600 hover:text-gray-900 transition-colors"
                     >
                       <ExternalLink className="w-5 h-5" />
                     </a>
                   </div>
-                  <p className="text-lg font-semibold text-gray-700">
+                  <p className="text-lg font-semibold text-black-500">
                     {currentLanguage.description}
                   </p>
                 </div>
@@ -220,14 +220,14 @@ export function ProgrammingLanguagesRoadmap() {
 
               {/* Description */}
               <div className="space-y-4">
-                <p className="text-gray-600 leading-relaxed text-lg">
+                <p className="text-black-600 leading-relaxed text-lg">
                   {currentLanguage.fullDescription}
                 </p>
               </div>
 
               {/* Frameworks */}
               <div className="space-y-4">
-                <h4 className="text-xl font-bold text-gray-900">
+                <h4 className="text-xl font-bold text-black-500">
                   Popular Frameworks & Tools
                 </h4>
                 <div className="flex flex-wrap gap-3">
@@ -285,7 +285,7 @@ export function ProgrammingLanguagesRoadmap() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-gray-600 text-center flex items-center justify-center gap-1">
+              <p className="text-sm text-black-600 text-center flex items-center justify-center gap-1">
                 💡 Click to watch full tutorial on YouTube
               </p>
             </div>
