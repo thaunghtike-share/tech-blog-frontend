@@ -94,7 +94,7 @@ export function MinimalFooter() {
                   href: "/free-courses",
                   label: "Free Courses",
                 },
-                { href: "/free-labs", label: "DevOps Playgrounds" },
+                { href: "/faqs", label: "FAQS" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

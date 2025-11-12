@@ -207,7 +207,7 @@ export function MinimalHeader() {
       </div>
     </div>
   );
-  
+
   // Auth Modal Component
   const AuthModalOverlay = () => {
     if (!mounted || !showAuthModal) return null;
@@ -594,7 +594,13 @@ export function MinimalHeader() {
                       href="/free-courses"
                       className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                     >
-                      Free Courses
+                      Explore Free Courses
+                    </Link>
+                    <Link
+                      href="/faqs"
+                      className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    >
+                      FAQS
                     </Link>
                   </div>
                 )}

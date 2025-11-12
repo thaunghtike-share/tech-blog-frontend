@@ -248,10 +248,6 @@ export default function HomeClient() {
           <div className="">
             <SuccessStoriesSection />
           </div>
-
-          <div className="">
-            <MinimalFAQs />
-          </div>
         </main>
 
         <div id="faqs" className="">
