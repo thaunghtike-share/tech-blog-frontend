@@ -3,244 +3,324 @@
 
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import { Shield, Lock, User, Database, Eye, Mail, FileText, CheckCircle, XCircle } from "lucide-react";
+import {
+  Shield,
+  Lock,
+  User,
+  Database,
+  Eye,
+  Mail,
+  FileText,
+  CheckCircle,
+  XCircle,
+  Server,
+  Key,
+  Users,
+  BookOpen,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function PrivacyPolicy() {
-  const features = [
+  const privacyPrinciples = [
     {
-      icon: CheckCircle,
-      title: "No Tracking",
-      description: "We don't use Google Analytics or any tracking scripts"
+      icon: Shield,
+      title: "Zero Tracking",
+      description: "No analytics, no cookies, no surveillance",
+      gradient: "from-green-500 to-emerald-600",
     },
     {
-      icon: CheckCircle,
-      title: "No Cookies",
-      description: "We don't use cookies for tracking or advertising"
+      icon: Lock,
+      title: "Data Minimalism",
+      description: "Only collect what's absolutely necessary",
+      gradient: "from-blue-500 to-cyan-600",
     },
     {
-      icon: CheckCircle,
-      title: "No Newsletters",
-      description: "We don't send marketing emails or newsletters"
+      icon: Users,
+      title: "Community First",
+      description: "Built for DevOps professionals, by DevOps professionals",
+      gradient: "from-purple-500 to-pink-600",
     },
     {
-      icon: CheckCircle,
-      title: "No Third Parties",
-      description: "We don't share data with third-party services"
-    }
+      icon: Server,
+      title: "Secure Infrastructure",
+      description: "Azure AKS with enterprise-grade security",
+      gradient: "from-orange-500 to-red-600",
+    },
   ];
 
-  const dataPoints = [
+  const dataCollection = [
     {
       icon: Mail,
-      title: "Email Address",
-      description: "For author authentication only"
+      title: "Authentication Only",
+      items: ["Email address for login", "No marketing communications"],
     },
     {
       icon: User,
-      title: "Profile Information",
-      description: "Optional bio, avatar, and job title"
+      title: "Public Profile",
+      items: ["Optional display name", "Professional bio", "Avatar image"],
     },
     {
-      icon: FileText,
-      title: "Published Articles",
-      description: "Content you choose to share with the community"
-    }
+      icon: BookOpen,
+      title: "Community Content",
+      items: ["Published articles", "Technical tutorials", "Code examples"],
+    },
   ];
 
-  const rights = [
-    "View and update your profile information",
-    "Request account deletion at any time",
-    "Maintain ownership of your published content",
-    "Get answers about your data usage"
+  const securityFeatures = [
+    {
+      icon: Database,
+      title: "Azure AKS",
+      description: "Enterprise-grade Kubernetes infrastructure",
+    },
+    {
+      icon: Key,
+      title: "Encrypted Auth",
+      description: "Passwords hashed with bcrypt",
+    },
+    {
+      icon: Shield,
+      title: "No Third Parties",
+      description: "Your data stays with us",
+    },
+    {
+      icon: Lock,
+      title: "Regular Updates",
+      description: "Security patches applied automatically",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen bg-white">
       <MinimalHeader />
-      
-      <main className="max-w-6xl mx-auto px-4 py-8">
+
+      <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Hero Section */}
-        <motion.section 
+        <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="relative mb-20"
         >
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-6 py-3 rounded-2xl text-sm font-semibold mb-6 shadow-lg">
-            <Shield className="w-4 h-4" />
-            Privacy Policy
+          {/* Background Elements */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-0 left-0 w-72 h-72 bg-sky-100 rounded-full blur-3xl opacity-30"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
           </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            Simple & Transparent
-            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-              Data Practices
-            </span>
-          </h1>
-          
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            We believe in keeping things simple. No tracking, no cookies, no newsletters - 
-            just a clean DevOps learning community built on trust and transparency.
-          </p>
+
+          <div className="max-w-4xl">
+            {/* Header - Moved to left side like your example */}
+            <div className="max-w-3xl mb-16">
+              <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
+              <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
+                Privacy Policy
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  Simple & Transparent
+                </span>
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                We believe in keeping things simple. No tracking, no cookies, no
+                newsletters - just a clean DevOps learning community built on
+                trust and transparency.
+              </p>
+            </div>
+
+            {/* Last Updated */}
+            <div className="inline-flex items-center gap-3 bg-white border border-slate-200 rounded-2xl px-6 py-3 shadow-sm">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-slate-700 font-medium">
+                Last updated:{" "}
+                {new Date().toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+          </div>
         </motion.section>
 
-        {/* Last Updated Badge */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl px-6 py-3 shadow-sm">
-            <p className="text-slate-700 font-medium">
-              Last Updated: <span className="text-sky-600">{new Date().toLocaleDateString()}</span>
+        {/* Privacy Principles */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Our Privacy Principles
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Four simple principles that guide how we handle your data
             </p>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {/* What We Collect */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-xl">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <User className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-900">Information We Collect</h2>
-                  <p className="text-slate-600">Only what's necessary for author accounts</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {dataPoints.map((item, index) => (
-                  <div key={index} className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                        <item.icon className="w-5 h-5 text-sky-600" />
-                      </div>
-                      <h3 className="font-semibold text-slate-900">{item.title}</h3>
-                    </div>
-                    <p className="text-slate-700 text-sm">{item.description}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {privacyPrinciples.map((principle, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
+                  <div
+                    className={`w-14 h-14 bg-gradient-to-br ${principle.gradient} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <principle.icon className="w-7 h-7 text-white" />
                   </div>
-                ))}
-              </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                    {principle.title}
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    {principle.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
-              <div className="mt-6 bg-blue-50 border border-blue-200 rounded-2xl p-6">
-                <p className="text-blue-700 font-medium text-center">
-                  Regular readers can browse all content without providing any personal information
+        {/* Data Collection */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-20"
+        >
+          <div className="bg-gradient-to-br from-slate-900 to-blue-900 rounded-3xl p-12 text-white relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0 bg-gradient-to-br from-white to-transparent"></div>
+            </div>
+
+            <div className="relative z-10">
+              <div className="max-w-4xl">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  What We Collect
+                </h2>
+                <p className="text-blue-100 text-lg mb-12 max-w-2xl">
+                  Only the bare minimum needed for author accounts. Regular
+                  readers can access all content completely anonymously.
                 </p>
-              </div>
-            </div>
-          </div>
 
-          {/* What We Don't Do */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-xl">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <XCircle className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900">What We Don't Do</h2>
-                <p className="text-slate-600">Our privacy promises</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 rounded-xl bg-green-50 border border-green-200">
-                  <feature.icon className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-green-900 mb-1">{feature.title}</h3>
-                    <p className="text-green-700 text-sm">{feature.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Data Usage & Security */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {/* Data Usage */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-xl">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <Database className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900">How We Use Data</h2>
-                <p className="text-slate-600">Simple and purposeful</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                <h3 className="font-semibold text-blue-900 mb-2">For Authors</h3>
-                <p className="text-blue-700 text-sm">Email for authentication, profile for community recognition</p>
-              </div>
-              
-              <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
-                <h3 className="font-semibold text-indigo-900 mb-2">For Content</h3>
-                <p className="text-indigo-700 text-sm">Articles are publicly visible to help the DevOps community learn</p>
-              </div>
-              
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <h3 className="font-semibold text-slate-900 mb-2">No Other Uses</h3>
-                <p className="text-slate-700 text-sm">We don't use your data for marketing, analytics, or any other purposes</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Security & Rights */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-xl">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <Lock className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900">Security & Your Rights</h2>
-                <p className="text-slate-600">Protected and empowered</p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-3">Infrastructure</h3>
-                <div className="space-y-2 text-sm text-slate-700">
-                  <p>• Hosted on Azure AKS (Azure Kubernetes Service)</p>
-                  <p>• MySQL databases with standard security</p>
-                  <p>• Passwords hashed (never plain text)</p>
-                  <p>• Reasonable security practices implemented</p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-3">Your Rights</h3>
-                <div className="space-y-2">
-                  {rights.map((right, index) => (
-                    <div key={index} className="flex items-center gap-3 text-slate-700">
-                      <div className="w-2 h-2 bg-sky-500 rounded-full"></div>
-                      <span className="text-sm">{right}</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {dataCollection.map((section, index) => (
+                    <div
+                      key={index}
+                      className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20"
+                    >
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <section.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-4">
+                        {section.title}
+                      </h3>
+                      <ul className="space-y-2">
+                        {section.items.map((item, itemIndex) => (
+                          <li
+                            key={itemIndex}
+                            className="flex items-center gap-3 text-blue-100"
+                          >
+                            <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.section>
 
-        {/* Final Note */}
-        <div className="bg-gradient-to-r from-sky-600 to-blue-600 rounded-3xl p-8 text-center">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-4">
-              Built by Developers, for Developers
-            </h2>
-            <p className="text-blue-100 text-lg leading-relaxed">
-              We keep things simple and respectful. No hidden agendas, no complicated policies - 
-              just a clean platform for the DevOps community to learn and share knowledge.
-            </p>
-            <div className="mt-6 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
-              <Eye className="w-4 h-4 text-white" />
-              <span className="text-white text-sm font-medium">Transparent by Design</span>
+        {/* Security & Infrastructure */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-20"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                Enterprise-Grade Security
+              </h2>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                We use the same infrastructure trusted by Fortune 500 companies,
+                ensuring your data is protected with industry-leading security
+                practices.
+              </p>
+
+              <div className="space-y-4">
+                {securityFeatures.map((feature, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200"
+                  >
+                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                      <feature.icon className="w-6 h-6 text-sky-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900">
+                        {feature.title}
+                      </h3>
+                      <p className="text-slate-600 text-sm">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl p-8 border border-slate-200">
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <Server className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                  Azure AKS Infrastructure
+                </h3>
+                <p className="text-slate-600 mb-6">
+                  Built on Microsoft Azure Kubernetes Service with automated
+                  security updates and enterprise-grade reliability.
+                </p>
+                <div className="inline-flex items-center gap-2 bg-white border border-slate-300 rounded-full px-4 py-2 text-slate-700 text-sm font-medium">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  SOC 2 Compliant Infrastructure
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.section>
+
+        {/* Final CTA */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-center"
+        >
+          <div className="bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl p-12 text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Questions About Your Data?
+              </h2>
+              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+                We're developers building for developers. We believe in complete
+                transparency and are always happy to answer questions about how
+                we handle your data.
+              </p>
+              <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-3 border border-white/30">
+                <Eye className="w-5 h-5" />
+                <span className="font-semibold">100% Transparent</span>
+              </div>
+            </div>
+          </div>
+        </motion.section>
       </main>
 
       <MinimalFooter />
