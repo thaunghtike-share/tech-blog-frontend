@@ -30,6 +30,7 @@ export default function NewArticlePage() {
 
   const [form, setForm] = useState({
     title: "",
+    slug: "",
     category: "",
     tags: [] as number[],
     featured: false,
@@ -48,7 +49,7 @@ export default function NewArticlePage() {
   const [coverImageUploading, setCoverImageUploading] = useState(false);
   const [coverImageProgress, setCoverImageProgress] = useState(0);
   const [coverImageError, setCoverImageError] = useState<string | null>(null);
-  
+
   // New state for creating tags/categories
   const [newTagName, setNewTagName] = useState("");
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -56,6 +57,48 @@ export default function NewArticlePage() {
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [creatingTag, setCreatingTag] = useState(false);
   const [creatingCategory, setCreatingCategory] = useState(false);
+
+  // Generate slug from title and date - NO CHARACTER LIMIT
+  const generateSlug = (title: string, date: string) => {
+    if (!title) return "";
+
+    // Format: title-date (e.g., hello-devops-nov-14-2025)
+    const titleSlug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+      .trim();
+
+    const dateObj = new Date(date);
+    const monthNames = [
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "may",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "oct",
+      "nov",
+      "dec",
+    ];
+    const month = monthNames[dateObj.getMonth()];
+    const day = dateObj.getDate();
+    const year = dateObj.getFullYear();
+
+    return `${titleSlug}-${month}-${day}-${year}`;
+  };
+
+  // Update slug when title or date changes
+  useEffect(() => {
+    if (form.title && form.published_at) {
+      const generatedSlug = generateSlug(form.title, form.published_at);
+      setForm((prev) => ({ ...prev, slug: generatedSlug }));
+    }
+  }, [form.title, form.published_at]);
 
   // Load token on initial render
   useEffect(() => {
@@ -70,7 +113,11 @@ export default function NewArticlePage() {
         if (draft) {
           try {
             const parsedDraft = JSON.parse(draft);
-            setForm(parsedDraft);
+            // Ensure slug is always a string to avoid uncontrolled input warning
+            setForm({
+              ...parsedDraft,
+              slug: parsedDraft.slug || "",
+            });
           } catch (error) {
             console.error("Error parsing draft:", error);
           }
@@ -123,7 +170,9 @@ export default function NewArticlePage() {
 
         if (catRes.ok) {
           const catData = await catRes.json();
-          setCategories(Array.isArray(catData) ? catData : catData.results || []);
+          setCategories(
+            Array.isArray(catData) ? catData : catData.results || []
+          );
         }
 
         if (tagRes.ok) {
@@ -164,13 +213,17 @@ export default function NewArticlePage() {
   };
 
   // Handle cover image upload
-  const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCoverImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      setCoverImageError("Please select a valid image file (JPEG, PNG, GIF, or WebP)");
+      setCoverImageError(
+        "Please select a valid image file (JPEG, PNG, GIF, or WebP)"
+      );
       return;
     }
 
@@ -194,16 +247,13 @@ export default function NewArticlePage() {
 
       setCoverImageProgress(30);
 
-      const response = await fetch(
-        `${API_BASE_URL}/upload-cover-image/`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/upload-cover-image/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+        body: formData,
+      });
 
       setCoverImageProgress(70);
 
@@ -235,7 +285,7 @@ export default function NewArticlePage() {
   // Create new tag
   const handleCreateTag = async () => {
     if (!newTagName.trim()) return;
-    
+
     setCreatingTag(true);
     try {
       const token = localStorage.getItem("token");
@@ -250,10 +300,10 @@ export default function NewArticlePage() {
 
       if (res.ok) {
         const newTag = await res.json();
-        setTags(prev => [...prev, newTag]);
-        setForm(prev => ({
+        setTags((prev) => [...prev, newTag]);
+        setForm((prev) => ({
           ...prev,
-          tags: [...prev.tags, newTag.id]
+          tags: [...prev.tags, newTag.id],
         }));
         setNewTagName("");
         setShowNewTagInput(false);
@@ -271,7 +321,7 @@ export default function NewArticlePage() {
   // Create new category
   const handleCreateCategory = async () => {
     if (!newCategoryName.trim()) return;
-    
+
     setCreatingCategory(true);
     try {
       const token = localStorage.getItem("token");
@@ -286,10 +336,10 @@ export default function NewArticlePage() {
 
       if (res.ok) {
         const newCategory = await res.json();
-        setCategories(prev => [...prev, newCategory]);
-        setForm(prev => ({
+        setCategories((prev) => [...prev, newCategory]);
+        setForm((prev) => ({
           ...prev,
-          category: newCategory.id.toString()
+          category: newCategory.id.toString(),
         }));
         setNewCategoryName("");
         setShowNewCategoryInput(false);
@@ -321,6 +371,7 @@ export default function NewArticlePage() {
     localStorage.removeItem(DRAFT_KEY);
     setForm({
       title: "",
+      slug: "",
       category: "",
       tags: [],
       featured: false,
@@ -330,6 +381,33 @@ export default function NewArticlePage() {
     });
     setMessage({ text: "Draft cleared", type: "success" });
   }
+
+  // Add this state
+  const [authorSlug, setAuthorSlug] = useState("");
+
+  // Add this effect to fetch current author data
+  useEffect(() => {
+    if (!token) return;
+
+    async function fetchCurrentAuthor() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/authors/me/dashboard/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+
+        if (res.ok) {
+          const authorData = await res.json();
+          setAuthorSlug(authorData.slug);
+        }
+      } catch (error) {
+        console.error("Error fetching author data:", error);
+      }
+    }
+
+    fetchCurrentAuthor();
+  }, [token, API_BASE_URL]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -353,6 +431,7 @@ export default function NewArticlePage() {
         },
         body: JSON.stringify({
           title: form.title,
+          slug: form.slug,
           category: Number(form.category),
           tags: form.tags,
           featured: form.featured,
@@ -364,14 +443,32 @@ export default function NewArticlePage() {
 
       if (res.ok) {
         setMessage({
-          text: "Article submitted successfully! Redirecting...",
+          text: "Article submitted successfully! Redirecting to dashboard...",
           type: "success",
         });
         localStorage.removeItem(DRAFT_KEY);
-        
-        // Redirect to articles page after successful submission
+
+        // Redirect to the current user's author dashboard
         setTimeout(() => {
-          router.push("/articles");
+          if (authorSlug) {
+            router.push(`/admin/author/${authorSlug}`);
+          } else {
+            // Fallback: try to get slug from localStorage or redirect to articles
+            const userData = localStorage.getItem("userData");
+            if (userData) {
+              try {
+                const parsed = JSON.parse(userData);
+                if (parsed.author?.slug) {
+                  router.push(`/admin/author/${parsed.author.slug}`);
+                  return;
+                }
+              } catch (error) {
+                console.error("Error parsing user data:", error);
+              }
+            }
+            // Ultimate fallback
+            router.push("/articles");
+          }
         }, 1500);
       } else {
         const errorData = await res.json();
@@ -408,7 +505,9 @@ export default function NewArticlePage() {
         <main className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-6"></div>
-            <p className="text-gray-600 text-lg">You need to be logged in to create articles.</p>
+            <p className="text-gray-600 text-lg">
+              You need to be logged in to create articles.
+            </p>
           </div>
         </main>
         <MinimalFooter />
@@ -418,28 +517,56 @@ export default function NewArticlePage() {
 
   // Main editor form for authenticated users
   return (
-    <div className={`min-h-screen flex flex-col bg-white ${fullscreen ? "overflow-hidden" : ""}`}>
+    <div
+      className={`min-h-screen flex flex-col bg-white ${
+        fullscreen ? "overflow-hidden" : ""
+      }`}
+    >
       {!fullscreen && <MinimalHeader />}
 
-      <main className={`${fullscreen ? "fixed inset-0 z-50 bg-white" : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"}`}>
-        <div className={`${fullscreen ? "h-full" : "bg-white rounded-2xl border border-gray-200 shadow-lg p-8"}`}>
+      <main
+        className={`${
+          fullscreen
+            ? "fixed inset-0 z-50 bg-white"
+            : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"
+        }`}
+      >
+        <div
+          className={`${
+            fullscreen
+              ? "h-full"
+              : "bg-white rounded-2xl border border-gray-200 shadow-lg p-8"
+          }`}
+        >
           {!fullscreen && (
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Write New Article</h1>
+                <h1 className="text-3xl font-bold text-gray-900">
+                  Write New Article
+                </h1>
                 <p className="text-gray-600 mt-2">
                   {lastSaved && `Draft auto-saved at ${lastSaved}`}
                 </p>
               </div>
-              
+
               {/* Clear Draft Button - Moved to top right */}
               <button
                 type="button"
                 onClick={clearDraft}
                 className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-medium flex items-center gap-2"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
                 </svg>
                 Clear Draft
               </button>
@@ -458,8 +585,13 @@ export default function NewArticlePage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className={`${fullscreen ? "h-full" : "space-y-6"}`}>
-            <div className={`${fullscreen ? "h-full flex flex-col" : "space-y-6"}`}>
+          <form
+            onSubmit={handleSubmit}
+            className={`${fullscreen ? "h-full" : "space-y-6"}`}
+          >
+            <div
+              className={`${fullscreen ? "h-full flex flex-col" : "space-y-6"}`}
+            >
               {!fullscreen && (
                 <>
                   {/* Article Title */}
@@ -477,6 +609,33 @@ export default function NewArticlePage() {
                     />
                   </div>
 
+                  {/* Slug Field */}
+                  <div>
+                    <label className="block mb-2 font-medium text-gray-700">
+                      URL Slug <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={form.slug || ""}
+                      onChange={(e) => handleChange("slug", e.target.value)}
+                      required
+                      className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-gray-50"
+                      placeholder="URL will be auto-generated from title and date"
+                    />
+                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-xs text-gray-500">
+                        Format: title-month-day-year (e.g.,
+                        hello-devops-nov-14-2025)
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {form.slug.length} characters
+                      </p>
+                    </div>
+                    <p className="text-xs text-blue-600 mt-1">
+                      Final URL: /articles/{form.slug}
+                    </p>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Category */}
                     <div>
@@ -486,7 +645,9 @@ export default function NewArticlePage() {
                       <div className="space-y-2">
                         <select
                           value={form.category}
-                          onChange={(e) => handleChange("category", e.target.value)}
+                          onChange={(e) =>
+                            handleChange("category", e.target.value)
+                          }
                           required
                           className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
                         >
@@ -497,7 +658,7 @@ export default function NewArticlePage() {
                             </option>
                           ))}
                         </select>
-                        
+
                         {!showNewCategoryInput ? (
                           <button
                             type="button"
@@ -511,7 +672,9 @@ export default function NewArticlePage() {
                             <input
                               type="text"
                               value={newCategoryName}
-                              onChange={(e) => setNewCategoryName(e.target.value)}
+                              onChange={(e) =>
+                                setNewCategoryName(e.target.value)
+                              }
                               placeholder="Enter new category name"
                               className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
                             />
@@ -543,17 +706,23 @@ export default function NewArticlePage() {
                       <input
                         type="date"
                         value={form.published_at}
-                        onChange={(e) => handleChange("published_at", e.target.value)}
+                        onChange={(e) =>
+                          handleChange("published_at", e.target.value)
+                        }
                         required
                         className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Defaults to today's date</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Defaults to today's date
+                      </p>
                     </div>
                   </div>
 
                   {/* Tags Dropdown */}
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700">Tags</label>
+                    <label className="block mb-2 font-medium text-gray-700">
+                      Tags
+                    </label>
                     <div className="space-y-2">
                       <div className="relative">
                         <button
@@ -561,12 +730,11 @@ export default function NewArticlePage() {
                           onClick={() => setShowTagDropdown(!showTagDropdown)}
                           className="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
                         >
-                          {form.tags.length > 0 
+                          {form.tags.length > 0
                             ? `${form.tags.length} tags selected`
-                            : "Select tags"
-                          }
+                            : "Select tags"}
                         </button>
-                        
+
                         {showTagDropdown && (
                           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-60 overflow-auto">
                             {tags.map((tag) => (
@@ -580,13 +748,15 @@ export default function NewArticlePage() {
                                   onChange={() => toggleTag(tag.id)}
                                   className="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
                                 />
-                                <span className="ml-3 text-sm text-gray-700">{tag.name}</span>
+                                <span className="ml-3 text-sm text-gray-700">
+                                  {tag.name}
+                                </span>
                               </label>
                             ))}
                           </div>
                         )}
                       </div>
-                      
+
                       {!showNewTagInput ? (
                         <button
                           type="button"
@@ -622,13 +792,16 @@ export default function NewArticlePage() {
                         </div>
                       )}
                     </div>
-                    
+
                     {form.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-3">
-                        {form.tags.map(tagId => {
-                          const tag = tags.find(t => t.id === tagId);
+                        {form.tags.map((tagId) => {
+                          const tag = tags.find((t) => t.id === tagId);
                           return tag ? (
-                            <span key={tag.id} className="bg-sky-100 text-sky-800 text-xs px-3 py-1 rounded-full">
+                            <span
+                              key={tag.id}
+                              className="bg-sky-100 text-sky-800 text-xs px-3 py-1 rounded-full"
+                            >
                               {tag.name}
                             </span>
                           ) : null;
@@ -645,7 +818,9 @@ export default function NewArticlePage() {
 
                     {form.cover_image && (
                       <div className="mb-4">
-                        <p className="text-sm text-gray-600 mb-2">Current Cover Image:</p>
+                        <p className="text-sm text-gray-600 mb-2">
+                          Current Cover Image:
+                        </p>
                         <img
                           src={form.cover_image}
                           alt="Cover preview"
@@ -704,7 +879,9 @@ export default function NewArticlePage() {
                     )}
 
                     {coverImageError && (
-                      <p className="text-red-600 text-sm mt-2">{coverImageError}</p>
+                      <p className="text-red-600 text-sm mt-2">
+                        {coverImageError}
+                      </p>
                     )}
 
                     <div className="mt-4">
@@ -714,7 +891,9 @@ export default function NewArticlePage() {
                       <input
                         type="url"
                         value={form.cover_image}
-                        onChange={(e) => handleChange("cover_image", e.target.value)}
+                        onChange={(e) =>
+                          handleChange("cover_image", e.target.value)
+                        }
                         className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm"
                         placeholder="https://example.com/cover-image.jpg"
                       />
@@ -727,7 +906,9 @@ export default function NewArticlePage() {
                       id="featured"
                       type="checkbox"
                       checked={form.featured}
-                      onChange={(e) => handleChange("featured", e.target.checked)}
+                      onChange={(e) =>
+                        handleChange("featured", e.target.checked)
+                      }
                       className="h-5 w-5 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
                     />
                     <label
@@ -767,14 +948,18 @@ export default function NewArticlePage() {
                     value={form.content}
                     onChange={(val) => handleChange("content", val || "")}
                     height={fullscreen ? "100%" : 500}
-                    preview={fullscreen ? "edit" : showPreview ? "live" : "edit"}
+                    preview={
+                      fullscreen ? "edit" : showPreview ? "live" : "edit"
+                    }
                     hideToolbar={false}
                     textareaProps={{
                       placeholder: "Write your article content here...",
-                      className: "text-sm leading-relaxed bg-white text-gray-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-400",
+                      className:
+                        "text-sm leading-relaxed bg-white text-gray-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-400",
                     }}
                     previewOptions={{
-                      className: "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
+                      className:
+                        "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
                     }}
                     className={`${
                       fullscreen

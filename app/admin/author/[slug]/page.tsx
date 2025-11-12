@@ -137,7 +137,7 @@ export default function AuthorAdminDashboard() {
           return;
         }
 
-        // Add dummy reaction data to articles
+        // Add dummy reaction data to articles and sort by latest (newest first)
         const articlesWithReactions = data.articles
           ?.map((article: Article) => ({
             ...article,
@@ -157,7 +157,9 @@ export default function AuthorAdminDashboard() {
                 article.reactions!.loves +
                 article.reactions!.claps,
             },
-          }));
+          }))
+          // Sort articles by published_at in descending order (newest first)
+          .sort((a: Article, b: Article) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
 
         setAuthor({
           ...data,
