@@ -60,7 +60,7 @@ export default function TermsOfService() {
   ];
 
   return (
-    <div className="min-h-screen bg-white/95">
+    <div className="min-h-screen bg-white/95 relative overflow-hidden">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 py-8">

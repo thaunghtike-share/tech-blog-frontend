@@ -90,7 +90,7 @@ export default function PrivacyPolicy() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
