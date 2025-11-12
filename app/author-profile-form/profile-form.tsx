@@ -512,7 +512,7 @@ export default function ProfileForm() {
               placeholder="your-unique-profile-slug"
             />
             <p className="text-sm text-gray-500 mt-2">
-              This will be used in your profile URL (e.g., /authors/your-slug)
+              Don't change auto-generated slug. This will be used in your profile URL (e.g., /authors/your-slug)
             </p>
           </div>
 
