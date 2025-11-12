@@ -175,7 +175,7 @@ const roadmap: RoadmapStage[] = [
           "Automate tasks with Bash scripting and command-line tools",
         tags: ["variables", "loops", "functions", "automation", "debugging"],
         image: "bash.png",
-        officialLink: "https://www.gnu.org/software/bash/",
+        officialLink: "https://www.w3schools.com/bash/",
       },
       {
         title: "CCNA",
@@ -183,7 +183,7 @@ const roadmap: RoadmapStage[] = [
           "Understand networking basics, protocols, and infrastructure",
         tags: ["tcp-ip", "subnetting", "routing", "switching", "vlans"],
         image: "ccna.png",
-        officialLink: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html",
+        officialLink: "https://learningnetwork.cisco.com/s/ccna",
       },
       {
         title: "AWS Fundamentals",
@@ -197,7 +197,7 @@ const roadmap: RoadmapStage[] = [
           "security",
         ],
         image: "aws.png",
-        officialLink: "https://aws.amazon.com",
+        officialLink: "https://aws.amazon.com/training/learn-about/cloud-practitioner/",
       },
       {
         title: "Virtualization",
