@@ -19,6 +19,11 @@ import {
   ChevronRight,
   ChevronDown,
   ChevronUp,
+  Vault,
+  Key,
+  Container,
+  GitBranch,
+  GitCommit,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -43,6 +48,10 @@ const getCategoryIcon = (categoryName: string) => {
   if (name.includes("security")) return Shield;
   if (name.includes("database")) return Database;
   if (name.includes("web")) return Globe;
+  if (name.includes("devsecops")) return Key;
+  if (name.includes("kubernetes")) return Container;
+  if (name.includes("terraform")) return GitBranch;
+  if (name.includes("cicd")) return GitCommit;
   return Zap;
 };
 
