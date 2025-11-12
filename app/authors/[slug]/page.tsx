@@ -259,7 +259,7 @@ export default function AuthorDetailPage() {
               <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
                 {author?.name}
               </h1>
-              <p className="text-xl text-slate-700 font-medium mb-6">
+              <p className="text-xl text-sky-700 font-medium mb-6">
                 {author?.job_title} at {author?.company}
               </p>
               <p className="text-slate-700 text-lg leading-relaxed max-w-3xl">

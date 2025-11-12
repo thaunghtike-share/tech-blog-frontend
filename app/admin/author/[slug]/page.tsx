@@ -381,7 +381,7 @@ export default function AuthorAdminDashboard() {
                   <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
                     Welcome back, {author?.name}!
                   </h1>
-                  <p className="text-xl text-slate-700 font-medium">
+                  <p className="text-xl text-sky-700 font-medium">
                     {author?.job_title} at {author?.company}
                   </p>
                 </div>
