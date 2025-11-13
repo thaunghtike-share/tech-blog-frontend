@@ -1,8 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "./hooks/use-auth";
-import GitHubLoginButton from "./GithubLoginButton";
-
 interface SignInFormProps {
   onSuccess?: () => void;
 }
@@ -243,13 +241,12 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       {/* Google Sign In - Two Options */}
       <div className="space-y-3">
         <div ref={googleButtonRef} className="flex justify-center"></div>
-        <div className="flex items-center my-4">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="mx-4 text-gray-500 text-sm">OR</span>
-          <div className="flex-grow border-t border-gray-300"></div>
-        </div>
-        {/* ✅ ADD THIS LINE - GitHub Sign In */}
-        <GitHubLoginButton onSuccess={onSuccess} />
+      </div>
+
+      <div className="flex items-center my-4">
+        <div className="flex-grow border-t border-gray-300"></div>
+        <span className="mx-4 text-gray-500 text-sm">OR</span>
+        <div className="flex-grow border-t border-gray-300"></div>
       </div>
 
       {/* Username/Password Form */}
