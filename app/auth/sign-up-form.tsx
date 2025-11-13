@@ -7,7 +7,10 @@ interface SignUpFormProps {
   switchToSignIn: () => void;
 }
 
-export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProps) {
+export default function SignUpForm({
+  onSuccess,
+  switchToSignIn,
+}: SignUpFormProps) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -29,7 +32,12 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
   };
 
   const validateForm = () => {
-    if (!formData.username || !formData.email || !formData.password1 || !formData.password2) {
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password1 ||
+      !formData.password2
+    ) {
       setError("All fields are required");
       return false;
     }
@@ -67,7 +75,7 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
 
     try {
       console.log("📤 Attempting registration...");
-      
+
       // 1. Register user
       const registerResponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/registration/`,
@@ -83,7 +91,7 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
       // Handle registration response
       if (registerResponse.status === 201) {
         console.log("✅ Registration successful - attempting auto-login");
-        
+
         // Registration successful - now auto-login
         const loginResponse = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`,
@@ -102,7 +110,7 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
         if (loginResponse.ok) {
           const loginData = await loginResponse.json();
           console.log("🎉 Auto-login successful, token received");
-          
+
           // Login successful - update auth context
           login(loginData.token, {
             username: formData.username,
@@ -114,32 +122,30 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
           // Show success and redirect
           setSuccess(true);
           onSuccess?.();
-          
+
           // Redirect to profile completion after a brief delay
           setTimeout(() => {
             window.location.href = "/author-profile-form";
           }, 1500);
-          
         } else {
           // Registration successful but login failed
           console.log("⚠️ Registration successful but auto-login failed");
           setSuccess(true);
           setError("Account created successfully! Please sign in manually.");
-          
+
           // Switch to sign-in tab after delay
           setTimeout(() => {
             switchToSignIn();
           }, 3000);
         }
-        
       } else if (registerResponse.status === 400) {
         // Validation errors
         const errorData = await registerResponse.json();
         console.log("❌ Validation errors:", errorData);
-        
-        const errorMessage = 
+
+        const errorMessage =
           errorData.username?.[0] ||
-          errorData.email?.[0] || 
+          errorData.email?.[0] ||
           errorData.password1?.[0] ||
           errorData.password2?.[0] ||
           errorData.non_field_errors?.[0] ||
@@ -149,7 +155,9 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
         // Other server errors
         const errorText = await registerResponse.text();
         console.error("❌ Server error:", registerResponse.status, errorText);
-        throw new Error("Registration service is temporarily unavailable. Please try again later.");
+        throw new Error(
+          "Registration service is temporarily unavailable. Please try again later."
+        );
       }
     } catch (error: any) {
       console.error("💥 Registration error:", error);
@@ -164,18 +172,27 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
     return (
       <div className="text-center py-8">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <svg
+            className="w-8 h-8 text-green-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
           </svg>
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
           Account Created Successfully!
         </h3>
         <p className="text-gray-600 mb-6">
-          {error 
-            ? error 
-            : "Your account has been created. Redirecting to profile setup..."
-          }
+          {error
+            ? error
+            : "Your account has been created. Redirecting to profile setup..."}
         </p>
         {error && (
           <button
@@ -212,7 +229,6 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
           disabled={loading}
         />
       </div>
-
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">
           Email Address *
@@ -228,7 +244,6 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
           disabled={loading}
         />
       </div>
-
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">
           Password *
@@ -245,7 +260,6 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
           disabled={loading}
         />
       </div>
-
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">
           Confirm Password *
@@ -262,13 +276,11 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
           disabled={loading}
         />
       </div>
-
       {error && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-700 text-sm">{error}</p>
         </div>
       )}
-
       <button
         type="submit"
         disabled={loading}
@@ -283,7 +295,6 @@ export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProp
           "Create Account"
         )}
       </button>
-
       <div className="text-center pt-4 border-t border-gray-200">
         <p className="text-gray-600 text-sm">
           Already have an account?{" "}

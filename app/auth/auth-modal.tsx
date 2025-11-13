@@ -8,7 +8,7 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ onSuccess }: AuthModalProps) {
-  const [activeTab, setActiveTab] = useState<"signup" | "signin">("signup");
+  const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin"); // Changed to signin first
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
   // Load Google Identity Services script
@@ -47,22 +47,12 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
           <p className="text-gray-600">
             {activeTab === "signup" 
               ? "Create an account to share your knowledge" 
-              : "Sign in to your account"}
+              : "Sign in to your account to continue"}
           </p>
         </div>
 
         {/* Tab Navigation */}
         <div className="flex border-b border-gray-200 mb-6">
-          <button
-            onClick={() => setActiveTab("signup")}
-            className={`flex-1 py-3 font-medium text-sm ${
-              activeTab === "signup"
-                ? "text-sky-600 border-b-2 border-sky-600"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            Sign Up
-          </button>
           <button
             onClick={() => setActiveTab("signin")}
             className={`flex-1 py-3 font-medium text-sm ${
@@ -73,10 +63,20 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
           >
             Sign In
           </button>
+          <button
+            onClick={() => setActiveTab("signup")}
+            className={`flex-1 py-3 font-medium text-sm ${
+              activeTab === "signup"
+                ? "text-sky-600 border-b-2 border-sky-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Sign Up
+          </button>
         </div>
 
-        {/* Show loading if Google script isn't ready and we need it for signin */}
-        {!googleScriptLoaded && activeTab === "signin" && (
+        {/* Show loading if Google script isn't ready */}
+        {!googleScriptLoaded && (
           <div className="text-center py-4">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600 mx-auto mb-2"></div>
             <p className="text-gray-600 text-sm">Loading authentication...</p>
@@ -84,11 +84,11 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
         )}
 
         {/* Tab Content */}
-        <div className={!googleScriptLoaded && activeTab === "signin" ? "opacity-50" : ""}>
+        <div className={!googleScriptLoaded ? "opacity-50" : ""}>
           {activeTab === "signup" ? (
             <SignUpForm onSuccess={onSuccess} switchToSignIn={() => setActiveTab("signin")} />
           ) : (
-            <SignInForm onSuccess={onSuccess} />
+            <SignInForm onSuccess={onSuccess} switchToSignUp={() => setActiveTab("signup")} />
           )}
         </div>
       </div>

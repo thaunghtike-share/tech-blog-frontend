@@ -1,11 +1,16 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "./hooks/use-auth";
+
 interface SignInFormProps {
   onSuccess?: () => void;
+  switchToSignUp?: () => void; // Add this prop
 }
 
-export default function SignInForm({ onSuccess }: SignInFormProps) {
+export default function SignInForm({
+  onSuccess,
+  switchToSignUp,
+}: SignInFormProps) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -135,12 +140,9 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
 
       onSuccess?.();
 
-      // ✅ FIX: Add the same redirect logic as Google login
       if (data.author?.profile_complete) {
-        // Redirect to admin dashboard
         window.location.href = `/admin/author/${data.author.slug}`;
       } else {
-        // Redirect to profile completion
         window.location.href = "/author-profile-form";
       }
     } catch (error: any) {
@@ -160,14 +162,12 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         return;
       }
 
-      // Use the prompt method with better error handling
       (window as any).google.accounts.id.prompt((notification: any) => {
         if (notification.isNotDisplayed()) {
           console.log("Google Sign-In prompt not displayed");
           handlePopupBlocked();
         } else if (notification.isSkippedMoment()) {
           console.log("Google Sign-In prompt skipped");
-          // User dismissed the prompt, no need to show error
           setGoogleLoading(false);
         } else if (notification.isDisplayed()) {
           console.log("Google Sign-In prompt displayed");
@@ -182,8 +182,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
 
   const handlePopupBlocked = () => {
     setError(
-      "Pop-up blocked! Please allow pop-ups for this site and try again. " +
-        "You can also click the Google button again or check your browser's address bar for pop-up permissions."
+      "Pop-up blocked! Please allow pop-ups for this site and try again."
     );
     setGoogleLoading(false);
   };
@@ -217,7 +216,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         profileComplete: data.author?.profile_complete || false,
       });
 
-      // Safe redirect logic
       if (data.author?.profile_complete && data.author?.slug) {
         window.location.href = `/admin/author/${data.author.slug}`;
       } else {
@@ -231,14 +229,21 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
     }
   };
 
-  const retryGoogleSignIn = () => {
-    setError(null);
-    handleGoogleSignIn();
+  const handleForgotPassword = () => {
+    // For now, show a message. You can implement the actual flow later.
+    setError(
+      "Password reset feature coming soon. Please contact support for now."
+    );
+  };
+
+  const handleResendVerification = () => {
+    // For now, show a message. You can implement the actual flow later.
+    setError("Email verification resend feature coming soon.");
   };
 
   return (
     <div className="space-y-6">
-      {/* Google Sign In - Two Options */}
+      {/* Google Sign In */}
       <div className="space-y-3">
         <div ref={googleButtonRef} className="flex justify-center"></div>
       </div>
@@ -253,7 +258,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       <form onSubmit={handleFormSubmit} className="space-y-4">
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Username
+            Username or Email
           </label>
           <input
             type="text"
@@ -262,7 +267,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
             onChange={handleInputChange}
             required
             className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-            placeholder="Enter your username"
+            placeholder="Enter your username or email"
           />
         </div>
         <div>
@@ -279,6 +284,22 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
             placeholder="Enter your password"
           />
         </div>
+
+        {/* Help Links */}
+        <div className="flex justify-between items-center text-sm">
+          <button
+            type="button"
+          >
+          </button>
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="text-sky-600 hover:text-sky-700 font-medium"
+          >
+            Forgot Password?
+          </button>
+        </div>
+
         <button
           type="submit"
           disabled={formLoading}
@@ -288,12 +309,26 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         </button>
       </form>
 
+      {/* Sign Up Link */}
+      <div className="text-center pt-4 border-t border-gray-200">
+        <p className="text-gray-600 text-sm">
+          Don't have an account?{" "}
+          <button
+            type="button"
+            onClick={switchToSignUp}
+            className="text-sky-600 hover:text-sky-700 font-medium"
+          >
+            Sign Up
+          </button>
+        </p>
+      </div>
+
       {error && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm">
           <div className="text-red-700 mb-2">{error}</div>
           {error.includes("pop-up") && (
             <button
-              onClick={retryGoogleSignIn}
+              onClick={handleGoogleSignIn}
               className="text-red-600 hover:text-red-800 text-sm font-medium underline"
             >
               Try Google Sign-In again
