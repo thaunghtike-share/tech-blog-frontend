@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import SignInForm from "./sign-in-form";
+import SignUpForm from "./sign-up-form";
 
 interface AuthModalProps {
   onSuccess?: () => void;
 }
 
-// In AuthModal component, fix the SignUpForm import and usage:
 export default function AuthModal({ onSuccess }: AuthModalProps) {
   const [activeTab, setActiveTab] = useState<"signup" | "signin">("signup");
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
@@ -14,10 +14,7 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
   // Load Google Identity Services script
   useEffect(() => {
     const loadGoogleScript = () => {
-      // Check if script is already loaded
-      if (
-        document.querySelector('script[src*="accounts.google.com/gsi/client"]')
-      ) {
+      if (document.querySelector('script[src*="accounts.google.com/gsi/client"]')) {
         setGoogleScriptLoaded(true);
         return;
       }
@@ -32,6 +29,7 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
       };
       script.onerror = () => {
         console.error("Failed to load Google Sign-In script");
+        setGoogleScriptLoaded(true); // Still allow form-based auth
       };
       document.body.appendChild(script);
     };
@@ -44,27 +42,55 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
       <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-            Join Our Community
+            {activeTab === "signup" ? "Join Our Community" : "Welcome Back"}
           </h1>
           <p className="text-gray-600">
-            Sign in to share your knowledge with the community
+            {activeTab === "signup" 
+              ? "Create an account to share your knowledge" 
+              : "Sign in to your account"}
           </p>
         </div>
 
-        {/* Show loading if Google script isn't ready */}
-        {!googleScriptLoaded && (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading authentication...</p>
+        {/* Tab Navigation */}
+        <div className="flex border-b border-gray-200 mb-6">
+          <button
+            onClick={() => setActiveTab("signup")}
+            className={`flex-1 py-3 font-medium text-sm ${
+              activeTab === "signup"
+                ? "text-sky-600 border-b-2 border-sky-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Sign Up
+          </button>
+          <button
+            onClick={() => setActiveTab("signin")}
+            className={`flex-1 py-3 font-medium text-sm ${
+              activeTab === "signin"
+                ? "text-sky-600 border-b-2 border-sky-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Sign In
+          </button>
+        </div>
+
+        {/* Show loading if Google script isn't ready and we need it for signin */}
+        {!googleScriptLoaded && activeTab === "signin" && (
+          <div className="text-center py-4">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600 mx-auto mb-2"></div>
+            <p className="text-gray-600 text-sm">Loading authentication...</p>
           </div>
         )}
 
-        {/* Tab Content - Only show when Google script is loaded */}
-        {googleScriptLoaded && (
-          <>
+        {/* Tab Content */}
+        <div className={!googleScriptLoaded && activeTab === "signin" ? "opacity-50" : ""}>
+          {activeTab === "signup" ? (
+            <SignUpForm onSuccess={onSuccess} switchToSignIn={() => setActiveTab("signin")} />
+          ) : (
             <SignInForm onSuccess={onSuccess} />
-          </>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

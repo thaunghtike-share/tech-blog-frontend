@@ -213,7 +213,7 @@ export function MinimalHeader() {
     if (!mounted || !showAuthModal) return null;
 
     return createPortal(
-      <div className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-white/80 overflow-y-auto pt-40">
+      <div className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-white/80 overflow-y-auto pt-20">
         {/* Modal Container */}
         <div className="relative w-full max-w-md mx-auto my-8">
           <button
