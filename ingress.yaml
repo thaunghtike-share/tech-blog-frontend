@@ -1,31 +1,3 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    certmanager.k8s.io/acme-challenge-type: dns01
-    certmanager.k8s.io/acme-dns01-provider: cloudflare
-  labels:
-    app: ldn-ui
-  name: ldn-ui-v3
-  namespace: learndevopsnow
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: www.learndevopsnow.it.com
-      http:
-        paths:
-          - backend:
-              service:
-                name: ldn-ui-v3
-                port:
-                  number: 80
-            path: /
-            pathType: Prefix
-  tls:
-    - hosts:
-        - www.learndevopsnow.it.com
-      secretName: ldn-tls-secret
-
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -34,65 +6,7 @@ metadata:
     certmanager.k8s.io/acme-challenge-type: dns01
     certmanager.k8s.io/acme-dns01-provider: cloudflare
   labels:
-    app: ldn-ui
-  name: ldn-ui-v3-ingress
-  namespace: learndevopsnow
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: learndevopsnow.it.com
-      http:
-        paths:
-          - backend:
-              service:
-                name: ldn-ui-v3
-                port:
-                  number: 80
-            path: /
-            pathType: Prefix
-  tls:
-    - hosts:
-        - learndevopsnow.it.com
-      secretName: ldn-tls-secret
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    certmanager.k8s.io/acme-challenge-type: dns01
-    certmanager.k8s.io/acme-dns01-provider: cloudflare
-  labels:
-    app: ldn-ui
-  name: demo-ui-v3
-  namespace: learndevopsnow
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: demo.learndevopsnow.it.com
-      http:
-        paths:
-          - backend:
-              service:
-                name: ldn-ui-v3
-                port:
-                  number: 80
-            path: /
-            pathType: Prefix
-  tls:
-    - hosts:
-        - demo.learndevopsnow.it.com
-      secretName: ldn-tls-secret
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    certmanager.k8s.io/acme-challenge-type: dns01
-    certmanager.k8s.io/acme-dns01-provider: cloudflare
-  labels:
-    app: ldn-ui
+    app: beta-ui
   name: beta-ui-v3
   namespace: learndevopsnow
 spec:
@@ -103,7 +17,7 @@ spec:
         paths:
           - backend:
               service:
-                name: ldn-ui-v3
+                name: beta-ui-v3
                 port:
                   number: 80
             path: /
