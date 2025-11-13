@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "./hooks/use-auth";
-
 interface SignInFormProps {
   onSuccess?: () => void;
 }
@@ -43,7 +42,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
             {
               theme: "outline",
               size: "large",
-              width: "400",
+              width: "380",
               text: "signin_with",
               shape: "pill",
             }
