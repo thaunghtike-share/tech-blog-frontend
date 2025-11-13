@@ -7,10 +7,7 @@ interface SignUpFormProps {
   switchToSignIn: () => void;
 }
 
-export default function SignUpForm({
-  onSuccess,
-  switchToSignIn,
-}: SignUpFormProps) {
+export default function SignUpForm({ onSuccess, switchToSignIn }: SignUpFormProps) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -19,6 +16,7 @@ export default function SignUpForm({
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const { login } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,15 +24,12 @@ export default function SignUpForm({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    // Clear error when user starts typing
+    if (error) setError(null);
   };
 
   const validateForm = () => {
-    if (
-      !formData.username ||
-      !formData.email ||
-      !formData.password1 ||
-      !formData.password2
-    ) {
+    if (!formData.username || !formData.email || !formData.password1 || !formData.password2) {
       setError("All fields are required");
       return false;
     }
@@ -54,99 +49,108 @@ export default function SignUpForm({
       return false;
     }
 
+    if (formData.username.length < 3) {
+      setError("Username must be at least 3 characters long");
+      return false;
+    }
+
     return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(false);
 
-    if (!validateForm()) {
-      return;
-    }
-
+    if (!validateForm()) return;
     setLoading(true);
 
     try {
-      const registrationUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/registration/`;
-      console.log("📤 Attempting registration at:", registrationUrl);
-
-      // Step 1: Register the user
-      const registerResponse = await fetch(registrationUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password1: formData.password1,
-          password2: formData.password2,
-        }),
-      });
-
-      console.log("📥 Registration response status:", registerResponse.status);
-
-      // Check if response is JSON
-      const contentType = registerResponse.headers.get("content-type");
-      console.log("📄 Response content type:", contentType);
-
-      let registerData;
-      if (contentType && contentType.includes("application/json")) {
-        registerData = await registerResponse.json();
-      } else {
-        // If not JSON, get as text to see what's returned
-        const textResponse = await registerResponse.text();
-        console.error("❌ Non-JSON response:", textResponse.substring(0, 500));
-        throw new Error(
-          "Server returned an error page. Check if registration endpoint exists."
-        );
-      }
-
-      console.log("📋 Registration response data:", registerData);
-
-      if (!registerResponse.ok) {
-        throw new Error(
-          registerData.username?.[0] ||
-            registerData.email?.[0] ||
-            registerData.password1?.[0] ||
-            registerData.password2?.[0] ||
-            registerData.non_field_errors?.[0] ||
-            `Registration failed: ${registerResponse.status}`
-        );
-      }
-
-      // Step 2: Auto-login after successful registration
-      console.log("🔐 Attempting auto-login...");
-      const loginResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`,
+      console.log("📤 Attempting registration...");
+      
+      // 1. Register user
+      const registerResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/registration/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: formData.username,
-            password: formData.password1,
-          }),
+          body: JSON.stringify(formData),
         }
       );
 
-      if (!loginResponse.ok) {
-        throw new Error(
-          "Registration successful but automatic login failed. Please sign in manually."
+      console.log("📥 Registration response status:", registerResponse.status);
+
+      // Handle registration response
+      if (registerResponse.status === 201) {
+        console.log("✅ Registration successful - attempting auto-login");
+        
+        // Registration successful - now auto-login
+        const loginResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: formData.username,
+              password: formData.password1,
+            }),
+          }
         );
+
+        console.log("🔐 Login response status:", loginResponse.status);
+
+        if (loginResponse.ok) {
+          const loginData = await loginResponse.json();
+          console.log("🎉 Auto-login successful, token received");
+          
+          // Login successful - update auth context
+          login(loginData.token, {
+            username: formData.username,
+            email: formData.email,
+            avatar: "",
+            profileComplete: false,
+          });
+
+          // Show success and redirect
+          setSuccess(true);
+          onSuccess?.();
+          
+          // Redirect to profile completion after a brief delay
+          setTimeout(() => {
+            window.location.href = "/author-profile-form";
+          }, 1500);
+          
+        } else {
+          // Registration successful but login failed
+          console.log("⚠️ Registration successful but auto-login failed");
+          setSuccess(true);
+          setError("Account created successfully! Please sign in manually.");
+          
+          // Switch to sign-in tab after delay
+          setTimeout(() => {
+            switchToSignIn();
+          }, 3000);
+        }
+        
+      } else if (registerResponse.status === 400) {
+        // Validation errors
+        const errorData = await registerResponse.json();
+        console.log("❌ Validation errors:", errorData);
+        
+        const errorMessage = 
+          errorData.username?.[0] ||
+          errorData.email?.[0] || 
+          errorData.password1?.[0] ||
+          errorData.password2?.[0] ||
+          errorData.non_field_errors?.[0] ||
+          "Please check your information and try again.";
+        throw new Error(errorMessage);
+      } else {
+        // Other server errors
+        const errorText = await registerResponse.text();
+        console.error("❌ Server error:", registerResponse.status, errorText);
+        throw new Error("Registration service is temporarily unavailable. Please try again later.");
       }
-
-      const loginData = await loginResponse.json();
-      const authToken = loginData.token;
-
-      // Use the login function from your auth context
-      login(authToken, {
-        username: formData.username,
-        email: formData.email,
-        avatar: "",
-        profileComplete: false,
-      });
-
-      onSuccess?.();
-      window.location.href = "/author-profile-form";
     } catch (error: any) {
       console.error("💥 Registration error:", error);
       setError(error.message);
@@ -154,6 +158,41 @@ export default function SignUpForm({
       setLoading(false);
     }
   };
+
+  // Show success message
+  if (success) {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          Account Created Successfully!
+        </h3>
+        <p className="text-gray-600 mb-6">
+          {error 
+            ? error 
+            : "Your account has been created. Redirecting to profile setup..."
+          }
+        </p>
+        {error && (
+          <button
+            onClick={switchToSignIn}
+            className="w-full bg-sky-600 text-white py-3 rounded-xl hover:bg-sky-700 transition-colors font-medium"
+          >
+            Sign In Now
+          </button>
+        )}
+        {!error && (
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600"></div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -170,6 +209,7 @@ export default function SignUpForm({
           className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
           placeholder="Choose a username"
           minLength={3}
+          disabled={loading}
         />
       </div>
 
@@ -185,6 +225,7 @@ export default function SignUpForm({
           required
           className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
           placeholder="Enter your email"
+          disabled={loading}
         />
       </div>
 
@@ -201,6 +242,7 @@ export default function SignUpForm({
           className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
           placeholder="Create a password (min. 8 characters)"
           minLength={8}
+          disabled={loading}
         />
       </div>
 
@@ -217,6 +259,7 @@ export default function SignUpForm({
           className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
           placeholder="Confirm your password"
           minLength={8}
+          disabled={loading}
         />
       </div>
 
@@ -229,9 +272,16 @@ export default function SignUpForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
       >
-        {loading ? "Creating Account..." : "Create Account"}
+        {loading ? (
+          <>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+            Creating Account...
+          </>
+        ) : (
+          "Create Account"
+        )}
       </button>
 
       <div className="text-center pt-4 border-t border-gray-200">
@@ -240,7 +290,8 @@ export default function SignUpForm({
           <button
             type="button"
             onClick={switchToSignIn}
-            className="text-sky-600 hover:text-sky-700 font-medium"
+            className="text-sky-600 hover:text-sky-700 font-medium disabled:opacity-50"
+            disabled={loading}
           >
             Sign In
           </button>
