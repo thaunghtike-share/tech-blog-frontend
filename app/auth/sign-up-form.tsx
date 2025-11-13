@@ -171,9 +171,9 @@ export default function SignUpForm({
   if (success) {
     return (
       <div className="text-center py-8">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg
-            className="w-8 h-8 text-green-600"
+            className="w-8 h-8 text-blue-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -182,31 +182,40 @@ export default function SignUpForm({
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
-              d="M5 13l4 4L19 7"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
             />
           </svg>
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
-          Account Created Successfully!
+          Check Your Email!
         </h3>
-        <p className="text-gray-600 mb-6">
-          {error
-            ? error
-            : "Your account has been created. Redirecting to profile setup..."}
+        <p className="text-gray-600 mb-4">
+          We've sent a verification link to <strong>{formData.email}</strong>.
+          Please click the link in the email to verify your account before
+          signing in.
         </p>
-        {error && (
+        <div className="space-y-3">
           <button
             onClick={switchToSignIn}
             className="w-full bg-sky-600 text-white py-3 rounded-xl hover:bg-sky-700 transition-colors font-medium"
           >
-            Sign In Now
+            Go to Sign In
           </button>
-        )}
-        {!error && (
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600"></div>
-          </div>
-        )}
+          <button
+            onClick={() => {
+              setSuccess(false);
+              setFormData({
+                username: "",
+                email: "",
+                password1: "",
+                password2: "",
+              });
+            }}
+            className="w-full border border-gray-300 text-gray-700 py-3 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+          >
+            Register Another Account
+          </button>
+        </div>
       </div>
     );
   }
