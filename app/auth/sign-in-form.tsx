@@ -4,7 +4,7 @@ import { useAuth } from "./hooks/use-auth";
 
 interface SignInFormProps {
   onSuccess?: () => void;
-  switchToSignUp?: () => void; // Add this prop
+  switchToSignUp?: () => void;
 }
 
 export default function SignInForm({
@@ -18,6 +18,8 @@ export default function SignInForm({
   const [googleLoading, setGoogleLoading] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showHint, setShowHint] = useState(false);
+  const [passwordHint, setPasswordHint] = useState("");
   const { login } = useAuth();
   const googleInitialized = useRef(false);
   const googleButtonRef = useRef<HTMLDivElement>(null);
@@ -40,7 +42,6 @@ export default function SignInForm({
           auto_select: false,
         });
 
-        // Render the button explicitly for better control
         if (googleButtonRef.current) {
           (window as any).google.accounts.id.renderButton(
             googleButtonRef.current,
@@ -63,11 +64,9 @@ export default function SignInForm({
     };
 
     const loadGoogleScript = () => {
-      // Check if script is already loaded
       if (
         document.querySelector('script[src*="accounts.google.com/gsi/client"]')
       ) {
-        // Script already exists, wait for it to load
         const checkGoogle = setInterval(() => {
           if ((window as any).google) {
             initializeGoogleSignIn();
@@ -77,14 +76,12 @@ export default function SignInForm({
         return;
       }
 
-      // Load the Google Sign-In script
       const script = document.createElement("script");
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
       script.onload = () => {
         console.log("Google Sign-In script loaded");
-        // Small delay to ensure complete initialization
         setTimeout(initializeGoogleSignIn, 100);
       };
       script.onerror = () => {
@@ -96,7 +93,6 @@ export default function SignInForm({
 
     loadGoogleScript();
 
-    // Cleanup function
     return () => {
       googleInitialized.current = false;
     };
@@ -107,12 +103,19 @@ export default function SignInForm({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    // Hide hint when user starts typing again
+    if (showHint) {
+      setShowHint(false);
+      setPasswordHint("");
+    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormLoading(true);
     setError(null);
+    setShowHint(false);
+    setPasswordHint("");
 
     try {
       const res = await fetch(
@@ -125,6 +128,8 @@ export default function SignInForm({
       );
 
       if (!res.ok) {
+        // If login fails, try to get password hint
+        await fetchPasswordHint(formData.username);
         throw new Error("Invalid username or password");
       }
 
@@ -152,39 +157,21 @@ export default function SignInForm({
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
-    setError(null);
-
+  const fetchPasswordHint = async (username: string) => {
     try {
-      if (!(window as any).google || !googleInitialized.current) {
-        setError("Google Sign-In not ready. Please try again.");
-        return;
-      }
-
-      (window as any).google.accounts.id.prompt((notification: any) => {
-        if (notification.isNotDisplayed()) {
-          console.log("Google Sign-In prompt not displayed");
-          handlePopupBlocked();
-        } else if (notification.isSkippedMoment()) {
-          console.log("Google Sign-In prompt skipped");
-          setGoogleLoading(false);
-        } else if (notification.isDisplayed()) {
-          console.log("Google Sign-In prompt displayed");
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/password-hint/${username}/`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        if (data.hint) {
+          setPasswordHint(data.hint);
+          setShowHint(true);
         }
-      });
+      }
     } catch (error) {
-      console.error("Google Sign-In error:", error);
-      setError("Failed to initialize Google Sign In");
-      setGoogleLoading(false);
+      console.error("Failed to fetch password hint");
     }
-  };
-
-  const handlePopupBlocked = () => {
-    setError(
-      "Pop-up blocked! Please allow pop-ups for this site and try again."
-    );
-    setGoogleLoading(false);
   };
 
   const handleGoogleResponse = async (response: any) => {
@@ -230,15 +217,9 @@ export default function SignInForm({
   };
 
   const handleForgotPassword = () => {
-    // For now, show a message. You can implement the actual flow later.
     setError(
-      "Password reset feature coming soon. Please contact support for now."
+      "Forgot password? Please contact our team via Messenger or email for assistance."
     );
-  };
-
-  const handleResendVerification = () => {
-    // For now, show a message. You can implement the actual flow later.
-    setError("Email verification resend feature coming soon.");
   };
 
   return (
@@ -283,21 +264,25 @@ export default function SignInForm({
             className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
             placeholder="Enter your password"
           />
-        </div>
 
-        {/* Help Links */}
-        <div className="flex justify-between items-center text-sm">
-          <button
-            type="button"
-          >
-          </button>
-          <button
-            type="button"
-            onClick={handleForgotPassword}
-            className="text-sky-600 hover:text-sky-700 font-medium"
-          >
-            Forgot Password?
-          </button>
+          {/* ✅ PASSWORD HINT AND FORGOT PASSWORD IN ONE LINE */}
+          <div className="flex justify-between items-center mt-2">
+            {/* Password Hint */}
+            {showHint && passwordHint && (
+              <div className="text-xs text-blue-600">
+                <span className="font-medium">Hint:</span> "{passwordHint}"
+              </div>
+            )}
+
+            {/* Forgot Password - pushes to right */}
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-sky-600 hover:text-sky-700 font-medium text-sm"
+            >
+              Forgot Password?
+            </button>
+          </div>
         </div>
 
         <button
@@ -326,14 +311,6 @@ export default function SignInForm({
       {error && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm">
           <div className="text-red-700 mb-2">{error}</div>
-          {error.includes("pop-up") && (
-            <button
-              onClick={handleGoogleSignIn}
-              className="text-red-600 hover:text-red-800 text-sm font-medium underline"
-            >
-              Try Google Sign-In again
-            </button>
-          )}
         </div>
       )}
     </div>
