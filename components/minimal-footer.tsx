@@ -67,6 +67,7 @@ export function MinimalFooter() {
                 { href: "/articles", label: "Articles" },
                 { href: "/categories", label: "Categories" },
                 { href: "/about", label: "About Me" },
+                { href: "/faqs", label: "FAQS" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -94,7 +95,7 @@ export function MinimalFooter() {
                   href: "/free-courses",
                   label: "Free Courses",
                 },
-                { href: "/faqs", label: "FAQS" },
+                { href: "/devops-playgrounds", label: "DevOps Playgrounds" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

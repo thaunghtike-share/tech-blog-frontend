@@ -594,18 +594,17 @@ export function MinimalHeader() {
                       href="/free-courses"
                       className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                     >
-                      Explore Free Courses
+                      Explore DevOps Playgrounds
                     </Link>
                     <Link
-                      href="/faqs"
+                      href="/devops-playgrounds"
                       className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                     >
-                      FAQS
+                      DevOps Playgrounds
                     </Link>
                   </div>
                 )}
               </div>
-
               {/* Services Dropdown */}
               <div
                 className="relative"
@@ -653,6 +652,12 @@ export function MinimalHeader() {
                       className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 transition-all font-medium"
                     >
                       DevOps Support
+                    </Link>
+                    <Link
+                      href="/faqs"
+                      className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 transition-all font-medium"
+                    >
+                      FAQs
                     </Link>
                   </div>
                 )}
