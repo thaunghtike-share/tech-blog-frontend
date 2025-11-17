@@ -6,6 +6,7 @@ import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
+import { CommentsReactions } from "./comment-reactions";
 import { GiscusComments } from "@/components/GiscusComments";
 import {
   ArrowRight,
@@ -460,9 +461,15 @@ export function ArticleContent({
           </ReactMarkdown>
         </div>
 
-        {/* Comments */}
+        {/* Comments & Reactions */}
         <div className="mt-12">
-          <GiscusComments />
+          <CommentsReactions
+            articleSlug={article.slug}
+            currentUser={{
+              isAuthenticated: true, // You'll need to pass your auth state here
+              authorSlug: author?.slug,
+            }}
+          />
         </div>
 
         {/* Updated Author Header */}
