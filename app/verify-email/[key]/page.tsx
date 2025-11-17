@@ -8,8 +8,8 @@ export default function VerifyEmailKey() {
 
   useEffect(() => {
     if (key) {
-      // Redirect to Django's confirmation endpoint
-      // Django will handle verification and redirect to /verify-email?status=success
+      // ✅ This is the PROPER way - let Django handle the verification
+      // Django will verify and redirect back to your frontend success page
       window.location.href = `http://localhost:8000/accounts/confirm-email/${key}/`;
     }
   }, [key]);
