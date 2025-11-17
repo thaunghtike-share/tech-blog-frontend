@@ -63,6 +63,25 @@ export default function SignUpForm({
     setLoading(true);
 
     try {
+      console.log("📤 Checking email availability...");
+
+      // ✅ CHECK EMAIL UNIQUENESS FIRST
+      if (formData.email && formData.email.trim() !== "") {
+        const emailCheckResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/check-email/`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: formData.email }),
+          }
+        );
+
+        if (!emailCheckResponse.ok) {
+          const emailError = await emailCheckResponse.json();
+          throw new Error(emailError.error || "Email already exists");
+        }
+      }
+
       console.log("📤 Attempting registration...");
 
       const registerResponse = await fetch(
@@ -72,10 +91,9 @@ export default function SignUpForm({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             username: formData.username,
-            email: formData.email,
+            email: formData.email ? formData.email.trim() : "", // Trim whitespace
             password1: formData.password1,
             password2: formData.password2,
-            // Don't send password_hint here - Django doesn't know what to do with it
           }),
         }
       );
@@ -107,7 +125,6 @@ export default function SignUpForm({
             }
           } catch (hintError) {
             console.error("❌ Failed to save password hint:", hintError);
-            // Don't throw error - registration succeeded even if hint fails
           }
         }
 
@@ -116,13 +133,16 @@ export default function SignUpForm({
         const errorData = await registerResponse.json();
         console.log("❌ Validation errors:", errorData);
 
-        const errorMessage =
-          errorData.username?.[0] ||
-          errorData.email?.[0] ||
-          errorData.password1?.[0] ||
-          errorData.password2?.[0] ||
-          errorData.non_field_errors?.[0] ||
-          "Please check your information and try again.";
+        // Handle email duplicate error specifically
+        const errorMessage = errorData.email?.[0]?.includes("already exists")
+          ? "This email is already registered. Please use a different email or leave it blank."
+          : errorData.username?.[0] ||
+            errorData.email?.[0] ||
+            errorData.password1?.[0] ||
+            errorData.password2?.[0] ||
+            errorData.non_field_errors?.[0] ||
+            "Please check your information and try again.";
+
         throw new Error(errorMessage);
       } else {
         const errorText = await registerResponse.text();
@@ -138,7 +158,7 @@ export default function SignUpForm({
       setLoading(false);
     }
   };
-
+  
   // Show success message
   if (success) {
     return (
