@@ -5,7 +5,7 @@ import Link from "next/link";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { useAuth } from "@/app/auth/hooks/use-auth";
-import  AuthModal  from "@/app/auth/auth-modal";
+import AuthModal from "@/app/auth/auth-modal";
 import {
   FileText,
   Eye,
@@ -25,6 +25,9 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  Trash2,
+  Loader,
+  AlertTriangle,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -69,6 +72,78 @@ interface Author {
   articles: Article[];
 }
 
+function DeleteConfirmationModal({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  article,
+  isLoading 
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  article: Article | null;
+  isLoading: boolean;
+}) {
+  if (!isOpen || !article) return null;
+
+  return (
+    <div className="fixed inset-0 bg-white/80 backdrop-blur-[2px] flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200/80"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
+            <AlertTriangle className="w-5 h-5 text-slate-600" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-slate-900">Delete Article</h3>
+            <p className="text-slate-500 text-sm">This action cannot be undone</p>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <p className="text-slate-700 font-medium mb-2">
+            Delete &ldquo;{article.title}&rdquo;?
+          </p>
+          <p className="text-slate-500 text-sm">
+            This article has {article.read_count?.toLocaleString()} views and will be permanently removed from your blog.
+          </p>
+        </div>
+
+        <div className="flex gap-3 justify-end">
+          <button
+            onClick={onClose}
+            disabled={isLoading}
+            className="px-4 py-2 text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all duration-200 font-medium disabled:opacity-50"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={isLoading}
+            className="px-4 py-2 bg-slate-800 text-white rounded-xl hover:bg-slate-900 transition-all duration-200 font-medium disabled:opacity-50 flex items-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <Loader className="w-4 h-4 animate-spin" />
+                Deleting...
+              </>
+            ) : (
+              <>
+                <Trash2 className="w-4 h-4" />
+                Delete
+              </>
+            )}
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function AuthorAdminDashboard() {
   const { slug } = useParams();
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -79,6 +154,17 @@ export default function AuthorAdminDashboard() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 10;
+
+  // Delete confirmation modal state
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    article: Article | null;
+    isLoading: boolean;
+  }>({
+    isOpen: false,
+    article: null,
+    isLoading: false,
+  });
 
   // 🔐 AUTHENTICATION CHECK - Show modal if not authenticated
   useEffect(() => {
@@ -177,6 +263,75 @@ export default function AuthorAdminDashboard() {
       fetchAuthorData();
     }
   }, [slug, isAuthenticated, isLoading, router]);
+
+  // Delete Article Function
+  const handleDeleteArticle = async (articleSlug: string) => {
+    setDeleteModal(prev => ({ ...prev, isLoading: true }));
+    
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error("No authentication token found");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/articles/${articleSlug}/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 401) {
+        throw new Error("Authentication failed. Please login again.");
+      }
+
+      if (response.status === 403) {
+        throw new Error("You don't have permission to delete this article");
+      }
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete article: ${response.status}`);
+      }
+
+      // Remove the article from the local state
+      setAuthor(prev => prev ? {
+        ...prev,
+        articles: prev.articles.filter(article => article.slug !== articleSlug)
+      } : null);
+
+      // Close the modal
+      setDeleteModal({ isOpen: false, article: null, isLoading: false });
+
+      // Show success message (you could add a toast notification here)
+      console.log("Article deleted successfully");
+
+    } catch (err) {
+      console.error('Error deleting article:', err);
+      setError((err as Error).message);
+      setDeleteModal(prev => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  // Open delete confirmation modal
+  const openDeleteModal = (article: Article) => {
+    setDeleteModal({
+      isOpen: true,
+      article,
+      isLoading: false,
+    });
+  };
+
+  // Close delete confirmation modal
+  const closeDeleteModal = () => {
+    if (!deleteModal.isLoading) {
+      setDeleteModal({
+        isOpen: false,
+        article: null,
+        isLoading: false,
+      });
+    }
+  };
 
   const handleLoginSuccess = () => {
     setShowLoginModal(false);
@@ -283,6 +438,15 @@ export default function AuthorAdminDashboard() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={deleteModal.isOpen}
+        onClose={closeDeleteModal}
+        onConfirm={() => handleDeleteArticle(deleteModal.article?.slug || '')}
+        article={deleteModal.article}
+        isLoading={deleteModal.isLoading}
+      />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Show error message if not authenticated */}
@@ -698,8 +862,8 @@ export default function AuthorAdminDashboard() {
                             )}
                           </div>
 
-                          {/* Actions */}
-                          <div className="flex items-center gap-4">
+                          {/* Actions - Now with 3 buttons */}
+                          <div className="flex items-center gap-3">
                             <Link
                               href={`/articles/${article.slug}`}
                               className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
@@ -714,6 +878,13 @@ export default function AuthorAdminDashboard() {
                               <Edit className="w-4 h-4" />
                               Edit
                             </Link>
+                            <button
+                              onClick={() => openDeleteModal(article)}
+                              className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                              Delete
+                            </button>
                           </div>
                         </div>
                       </motion.div>
