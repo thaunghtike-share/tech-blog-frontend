@@ -4,7 +4,7 @@ import { Heart, ThumbsUp, Sparkles, Lightbulb, Send, Reply, Trash2, Edit, MoreHo
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
+import { useAuth } from '@/app/auth/hooks/use-auth';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -36,19 +36,23 @@ interface CommentsReactionsProps {
   };
 }
 
-// Reaction Button Component - Hide Zero Counts
+// Reaction Button Component
 const ReactionButton = ({ 
   type, 
   count, 
   icon: Icon, 
   isActive,
-  onClick 
+  onClick,
+  isAuthenticated,
+  onAuthRequired
 }: { 
   type: string; 
   count: number; 
   icon: any;
   isActive: boolean;
   onClick: () => void;
+  isAuthenticated: boolean;
+  onAuthRequired: () => void;
 }) => {
   const getReactionColor = (type: string) => {
     switch(type) {
@@ -70,12 +74,21 @@ const ReactionButton = ({
     }
   };
 
+  const handleClick = () => {
+    if (!isAuthenticated) {
+      onAuthRequired();
+      return;
+    }
+    onClick();
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={`group flex items-center gap-3 px-4 py-2 transition-all duration-200 hover:scale-105 ${
         isActive ? `${getReactionColor(type)} font-semibold` : 'text-gray-500 hover:text-gray-700'
-      }`}
+      } ${!isAuthenticated ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
+      title={!isAuthenticated ? "Please sign in to react" : ""}
     >
       <Icon className="w-5 h-5" />
       <div className="flex items-center gap-2">
@@ -84,6 +97,7 @@ const ReactionButton = ({
           <span className={`text-xs px-1.5 py-0.5 rounded-full ${
             isActive ? 'bg-gray-100 text-gray-700' : 'bg-gray-100 text-gray-500'
           }`}>
+            {count}
           </span>
         )}
       </div>
@@ -107,18 +121,50 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
   const [showAllComments, setShowAllComments] = useState(false);
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState('');
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  // Get anonymous ID
-  const getAnonymousId = () => {
-    if (typeof window !== 'undefined') {
-      let id = localStorage.getItem('anonymous_id');
-      if (!id) {
-        id = 'anon_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('anonymous_id', id);
+  // Use your auth hook
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
+
+  // Fetch reactions for the article
+  const fetchReactions = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Add authorization header if user is authenticated
+      if (token) {
+        headers['Authorization'] = `Token ${token}`;
       }
-      return id;
+
+      const response = await fetch(
+        `${API_BASE_URL}/articles/${articleSlug}/reactions/`,
+        { headers }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Update reactions summary
+        if (data.summary) {
+          setReactions({
+            like: Number(data.summary.like) || 0,
+            love: Number(data.summary.love) || 0,
+            celebrate: Number(data.summary.celebrate) || 0,
+            insightful: Number(data.summary.insightful) || 0
+          });
+        }
+        
+        // Update user's reactions if authenticated
+        if (data.user_reactions) {
+          setUserReactions(data.user_reactions);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch reactions:', error);
     }
-    return '';
   };
 
   // Fetch comments
@@ -134,70 +180,51 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
     }
   };
 
-  // Fetch reactions
-  const fetchReactions = async () => {
-    try {
-      const anonymousId = getAnonymousId();
-      const url = `${API_BASE_URL}/articles/${articleSlug}/reactions/?anonymous_id=${anonymousId}`;
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        
-        if (data.summary) {
-          const safeSummary = {
-            like: Number(data.summary.like) || 0,
-            love: Number(data.summary.love) || 0,
-            celebrate: Number(data.summary.celebrate) || 0,
-            insightful: Number(data.summary.insightful) || 0
-          };
-          setReactions(safeSummary);
-        }
-        
-        if (data.user_reactions) {
-          setUserReactions(data.user_reactions);
-        }
-      }
-    } catch (error) {
-      console.error('Failed to fetch reactions:', error);
-    }
-  };
-
   // Load data on component mount
   useEffect(() => {
     fetchComments();
     fetchReactions();
   }, [articleSlug]);
 
-  // Handle reaction - Single reaction only
+  // Handle reaction - Only for authenticated users
   const handleReaction = async (reactionType: string) => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
+
     try {
-      const anonymousId = getAnonymousId();
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setShowAuthModal(true);
+        return;
+      }
+
       const response = await fetch(
         `${API_BASE_URL}/articles/${articleSlug}/reactions/${reactionType}/`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
           },
-          body: JSON.stringify({
-            anonymous_id: anonymousId
-          }),
         }
       );
 
       if (response.ok) {
-        // Update local state to reflect single reaction
-        const result = await response.json();
-        if (result.status === 'reaction_added') {
-          // User can only have one reaction, so set only this one as active
-          setUserReactions([reactionType]);
-          // Refresh reactions to get updated counts
-          fetchReactions();
-        }
+        // Refresh reactions to get updated counts
+        fetchReactions();
+      } else if (response.status === 401) {
+        // Unauthorized - show auth modal
+        setShowAuthModal(true);
       }
     } catch (error) {
       console.error('Failed to toggle reaction:', error);
     }
+  };
+
+  const handleAuthRequired = () => {
+    setShowAuthModal(true);
   };
 
   // Submit comment
@@ -476,6 +503,8 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
               icon={ThumbsUp}
               isActive={userReactions.includes('like')}
               onClick={() => handleReaction('like')}
+              isAuthenticated={isAuthenticated}
+              onAuthRequired={handleAuthRequired}
             />
             <ReactionButton 
               type="love" 
@@ -483,6 +512,8 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
               icon={Heart}
               isActive={userReactions.includes('love')}
               onClick={() => handleReaction('love')}
+              isAuthenticated={isAuthenticated}
+              onAuthRequired={handleAuthRequired}
             />
             <ReactionButton 
               type="celebrate" 
@@ -490,6 +521,8 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
               icon={Sparkles}
               isActive={userReactions.includes('celebrate')}
               onClick={() => handleReaction('celebrate')}
+              isAuthenticated={isAuthenticated}
+              onAuthRequired={handleAuthRequired}
             />
             <ReactionButton 
               type="insightful" 
@@ -497,11 +530,27 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
               icon={Lightbulb}
               isActive={userReactions.includes('insightful')}
               onClick={() => handleReaction('insightful')}
+              isAuthenticated={isAuthenticated}
+              onAuthRequired={handleAuthRequired}
             />
           </div>
           
+          {/* Authentication Notice */}
+          {!isAuthenticated && (
+            <div className="text-center mt-3">
+              <p className="text-sm text-gray-600">
+                <button 
+                  onClick={() => setShowAuthModal(true)}
+                  className="text-sky-600 hover:text-sky-700 font-medium underline"
+                >
+                  Sign in
+                </button> to react to this article
+              </p>
+            </div>
+          )}
+
           {/* Current Reaction Status */}
-          {userReactions.length > 0 && (
+          {isAuthenticated && userReactions.length > 0 && (
             <div className="text-center mt-3 text-sm text-gray-600">
               You reacted with <span className="font-semibold capitalize">{userReactions[0]}</span>
             </div>
@@ -571,6 +620,40 @@ export function CommentsReactions({ articleSlug, currentUser }: CommentsReaction
           </div>
         </CardContent>
       </Card>
+
+      {/* Auth Modal */}
+      {showAuthModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full">
+            <h3 className="text-xl font-bold mb-4">Sign In Required</h3>
+            <p className="text-gray-600 mb-6">
+              Please sign in to react to articles and engage with the community.
+            </p>
+            <div className="flex gap-3">
+              <Button
+                onClick={() => setShowAuthModal(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowAuthModal(false);
+                  // Trigger your auth modal from MinimalHeader
+                  const authButton = document.querySelector('[onclick*="AuthModal"]');
+                  if (authButton) {
+                    (authButton as HTMLButtonElement).click();
+                  }
+                }}
+                className="flex-1 bg-sky-600 hover:bg-sky-700"
+              >
+                Sign In
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
