@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useAuth } from "../auth/hooks/use-auth";
+import { useRouter } from "next/navigation";
 
 export default function ProfileForm() {
   const [formData, setFormData] = useState({
@@ -14,16 +15,17 @@ export default function ProfileForm() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [hasExistingAvatar, setHasExistingAvatar] = useState(false);
   const { user, updateProfile } = useAuth();
+  const router = useRouter();
 
   // Add this state to track if user has existing completed profile
   const [hasCompletedProfile, setHasCompletedProfile] = useState(false);
-  
+
   // Add loading state for initial profile data
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
 
@@ -34,13 +36,13 @@ export default function ProfileForm() {
         const token = localStorage.getItem("token");
         if (!token) {
           // Wait 5 seconds even if no token
-          await new Promise(resolve => setTimeout(resolve, 5000));
+          await new Promise((resolve) => setTimeout(resolve, 5000));
           setIsLoadingProfile(false);
           return;
         }
 
         // Wait 5 seconds before making the API call to ensure loading shows
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
 
         const profileRes = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
@@ -81,6 +83,7 @@ export default function ProfileForm() {
     loadProfile();
   }, []);
 
+  // ✅ EXISTING SUBMIT FUNCTION - NO CHANGES
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -121,10 +124,64 @@ export default function ProfileForm() {
       });
 
       // Show success message
-      setSuccess(true);
+      setSuccess("redirect");
 
       setTimeout(() => {
         window.location.href = `/admin/author/${formData.slug}`;
+      }, 1500);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ NEW FUNCTION: Save and go back to previous page
+  const handleSaveAndStay = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No authentication token found");
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/me/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+          },
+          body: JSON.stringify({
+            ...formData,
+            profile_complete: true,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to save profile");
+      }
+
+      const savedProfile = await response.json();
+
+      // Update the auth state
+      updateProfile({
+        profileComplete: true,
+        username: savedProfile.name || user?.username,
+        avatar: savedProfile.avatar,
+      });
+
+      // Show success message for staying
+      setSuccess("stay");
+
+      // Go back to previous page after success
+      setTimeout(() => {
+        router.back(); // Go back to the article page
       }, 1500);
     } catch (error: any) {
       setError(error.message);
@@ -210,6 +267,7 @@ export default function ProfileForm() {
     }
   };
 
+  // ✅ EXISTING SKIP FUNCTION - NO CHANGES
   const handleSkip = async () => {
     // Wait for form data to fully load by checking if all fields are populated
     const allFieldsFilled =
@@ -296,11 +354,14 @@ export default function ProfileForm() {
             <span>Profile Completed!</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-            Welcome to the Community!
+            {success === "stay"
+              ? "Happy Reading! 🎉"
+              : "Welcome to the Community!"}
           </h1>
           <p className="text-gray-600 mb-6">
-            Your profile has been saved successfully. Redirecting to your
-            dashboard...
+            {success === "stay"
+              ? "Your profile is saved. Taking you back to continue reading..."
+              : "Your profile has been saved successfully. Redirecting to your dashboard..."}
           </p>
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mx-auto"></div>
         </div>
@@ -324,6 +385,7 @@ export default function ProfileForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* ALL YOUR EXISTING FORM FIELDS REMAIN EXACTLY THE SAME */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block mb-2 font-medium text-gray-700">
@@ -404,13 +466,12 @@ export default function ProfileForm() {
             />
           </div>
 
-          {/* Avatar Section - File Upload for new users, URL field for existing users */}
+          {/* Avatar Section */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Profile Photo <span className="text-red-500">*</span>
             </label>
 
-            {/* Current Avatar Preview */}
             {formData.avatar && (
               <div className="mb-4">
                 <p className="text-sm text-gray-600 mb-2">Current Avatar:</p>
@@ -422,7 +483,6 @@ export default function ProfileForm() {
               </div>
             )}
 
-            {/* File Upload - Show for all users */}
             <div className="mb-4">
               <label className="cursor-pointer">
                 <input
@@ -457,7 +517,6 @@ export default function ProfileForm() {
               </label>
             </div>
 
-            {/* Upload Progress */}
             {uploadProgress > 0 && uploadProgress < 100 && (
               <div className="mt-3">
                 <div className="flex justify-between text-sm text-gray-600 mb-1">
@@ -477,7 +536,6 @@ export default function ProfileForm() {
               <p className="text-red-600 text-sm mt-2">{uploadError}</p>
             )}
 
-            {/* URL Input - Keep as fallback for existing users */}
             {hasExistingAvatar && (
               <div className="mt-4">
                 <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -512,7 +570,8 @@ export default function ProfileForm() {
               placeholder="your-unique-profile-slug"
             />
             <p className="text-sm text-gray-500 mt-2">
-              Don't change auto-generated slug. This will be used in your profile URL (e.g., /authors/your-slug)
+              Don't change auto-generated slug. This will be used in your
+              profile URL (e.g., /authors/your-slug)
             </p>
           </div>
 
@@ -522,20 +581,36 @@ export default function ProfileForm() {
             </div>
           )}
 
-          <div className="flex gap-4">
+          {/* ✅ POLISHED BUTTONS SECTION */}
+          <div className="space-y-3">
+            {/* Button 1: Complete Profile & Go to Dashboard */}
             <button
               type="submit"
               disabled={loading || isUploading}
-              className="flex-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Saving Profile..." : "Complete Profile & Continue"}
+              {loading
+                ? "Saving Profile..."
+                : "Complete Profile & Go to Dashboard"}
             </button>
 
-            {/* ✅ ALWAYS SHOW SKIP BUTTON - but it will show error if profile not completed */}
+            {/* Button 2: Save Profile & Continue Reading */}
+            <button
+              type="button"
+              onClick={handleSaveAndStay}
+              disabled={loading || isUploading}
+              className="w-full border-2 border-sky-500 text-sky-600 bg-white py-3 rounded-xl hover:bg-sky-50 hover:border-sky-600 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading
+                ? "Saving Profile..."
+                : "Save Profile & Continue Reading"}
+            </button>
+
+            {/* Button 3: Skip for Now */}
             <button
               type="button"
               onClick={handleSkip}
-              className="flex-1 border border-slate-300 text-slate-700 py-3 rounded-xl hover:bg-slate-50 transition-all duration-300 font-medium"
+              className="w-full text-purple-500 py-3 rounded-xl hover:text-purple-600 transition-all duration-300 font-medium underline"
             >
               Skip for Now
             </button>
