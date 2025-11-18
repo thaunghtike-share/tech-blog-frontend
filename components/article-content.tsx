@@ -27,6 +27,7 @@ import {
   Star,
   Trophy,
   Zap,
+  Crown,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -58,6 +59,7 @@ interface Author {
   avatar?: string;
   linkedin?: string;
   job_title?: string;
+  articles?: Article[];
   featured?: boolean;
   company?: string;
 }
@@ -472,34 +474,39 @@ export function ArticleContent({
           />
         </div>
 
-        {/* Updated Author Header */}
+        {/* Updated Author Section */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative mb-12 mt-12"
+          className="relative mb-12 mt-16"
         >
-          <div className="bg-white/90 rounded-3xl border border-gray-200 p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8">
-              {/* Author Avatar */}
-              <div className="relative">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1 shadow-2xl">
-                  <img
-                    src={author?.avatar || "/placeholder.svg"}
-                    alt={author?.name || "Author"}
-                    className="w-full h-full rounded-2xl object-cover border-4 border-white"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/placeholder.svg";
-                    }}
-                  />
-                </div>
+          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+              {/* Author Avatar Container */}
+              <div className="group relative">
+                <Link href={`/authors/${authorSlug}`} className="block">
+                  <div className="relative">
+                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1.5 shadow-2xl group-hover:scale-105 transition-transform duration-300">
+                      <img
+                        src={author?.avatar || "/placeholder.svg"}
+                        alt={author?.name || "Author"}
+                        className="w-full h-full rounded-2xl object-cover border-4 border-white"
+                        loading="lazy"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/placeholder.svg";
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Link>
                 {author?.linkedin && (
                   <a
                     href={author.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2 rounded-xl shadow-2xl transition-all duration-300 hover:scale-110"
+                    className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2.5 rounded-xl shadow-2xl transition-all duration-300 hover:scale-110"
                   >
                     <Linkedin className="w-4 h-4 text-white" />
                   </a>
@@ -508,22 +515,35 @@ export function ArticleContent({
 
               {/* Author Info */}
               <div className="flex-1 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
-                  <Trophy className="w-4 h-4" />
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-5 py-2.5 rounded-2xl text-sm font-semibold mb-3 shadow-lg">
+                  <Crown className="w-4 h-4" />
                   Author
                 </div>
 
-                <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-gray-900 mb-3 leading-tight">
-                  {author?.name}
-                </h1>
+                <h3 className="font-bold text-slate-900 leading-tight mb-2 group-hover:text-sky-600 transition-colors duration-300">
+                  Written By
+                </h3>
 
-                <p className="text-lg text-sky-600 font-semibold mb-4">
-                  {author?.job_title} at {author?.company}
-                </p>
+                <Link
+                  href={`/authors/${authorSlug}`}
+                  className="group block mb-3"
+                >
+                  <p className="text-xl text-sky-700 font-semibold mb-4">
+                    {author?.name}
+                  </p>
+                </Link>
 
-                <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl text-base">
+                <p className="text-slate-700 leading-relaxed mb-6 max-w-2xl text-base">
                   {author?.bio}
                 </p>
+
+                {/* View Profile Button */}
+                <Link href={`/authors/${authorSlug}`}>
+                  <Button className="group bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    View Author Profile
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -612,25 +632,20 @@ export function ArticleContent({
         {/* Article Stats */}
         <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
           <CardContent className="p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Eye className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-900">
-                    Total Reads
-                  </h3>
-                  <p className="text-xs text-gray-600">Article views</p>
-                </div>
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                <Zap className="w-6 h-6 text-white" />
               </div>
-              <div className="text-right">
+              <div>
                 <CountUp
                   end={article.read_count || 0}
                   duration={2}
                   separator=","
-                  className="text-xl font-bold text-gray-900"
+                  className="text-2xl font-bold text-gray-900 block leading-tight"
                 />
+                <p className="text-sm text-black-600 font-medium">
+                  Article Reads
+                </p>
               </div>
             </div>
           </CardContent>
