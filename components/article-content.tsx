@@ -5,6 +5,20 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/atom-one-light.css";
 import CountUp from "react-countup";
+import {
+  Settings,
+  Cloud,
+  Bot,
+  Building,
+  Lock,
+  BarChart3,
+  Server,
+  Code,
+  Folder,
+  ChevronRight,
+  Container,
+  GitBranch,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { CommentsReactions } from "./comment-reactions";
 import { GiscusComments } from "@/components/GiscusComments";
@@ -13,14 +27,12 @@ import {
   Linkedin,
   ListOrdered,
   CalendarDays,
-  Folder,
   Clipboard,
   Check,
   Eye,
   TrendingUp,
   TagIcon,
   ChevronLeft,
-  ChevronRight,
   Clock,
   FileText,
   Award,
@@ -778,14 +790,14 @@ export function ArticleContent({
 
         {/* Categories */}
         <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Folder className="w-5 h-5 text-white" />
+          <CardContent className="p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Folder className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900">Categories</h3>
+              <h3 className="text-base font-bold text-gray-900">Categories</h3>
             </div>
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-4">
               {categories.slice(0, 4).map((category) => {
                 const getCategoryIcon = (categoryName: string) => {
                   const name = categoryName.toLowerCase();
@@ -794,29 +806,29 @@ export function ArticleContent({
                     name.includes("docker") ||
                     name.includes("kubernetes")
                   )
-                    return "⚙️";
+                    return <Container className="w-5 h-5 text-white" />;
                   if (
                     name.includes("cloud") ||
                     name.includes("aws") ||
                     name.includes("azure")
                   )
-                    return "☁️";
+                    return <Cloud className="w-5 h-5 text-white" />;
                   if (name.includes("automation") || name.includes("ci/cd"))
-                    return "🤖";
+                    return <GitBranch className="w-5 h-5 text-white" />;
                   if (name.includes("terraform") || name.includes("iac"))
-                    return "🏗️";
+                    return <Code className="w-5 h-5 text-white" />;
                   if (name.includes("security") || name.includes("devsecops"))
-                    return "🔒";
+                    return <Zap className="w-5 h-5 text-white" />;
                   if (
                     name.includes("monitoring") ||
                     name.includes("observability")
                   )
-                    return "📊";
+                    return <Code className="w-5 h-5 text-white" />;
                   if (name.includes("linux") || name.includes("ubuntu"))
-                    return "🐧";
+                    return <Code className="w-5 h-5 text-white" />;
                   if (name.includes("python") || name.includes("scripting"))
-                    return "🐍";
-                  return "📁";
+                    return <Code className="w-5 h-5 text-white" />;
+                  return <Folder className="w-5 h-5 text-white" />;
                 };
 
                 const getCategoryColor = (categoryName: string) => {
@@ -841,16 +853,14 @@ export function ArticleContent({
                     key={category.id}
                     className="block group"
                   >
-                    <div className="text-center p-3 rounded-2xl border border-gray-200 hover:border-sky-300 hover:shadow-md transition-all duration-300 bg-white group-hover:bg-sky-50">
+                    <div className="text-center p-2 rounded-xl border border-gray-200 hover:border-sky-300 hover:shadow-md transition-all duration-300 bg-white group-hover:bg-sky-50">
                       {/* Circular Icon */}
                       <div
-                        className={`w-12 h-12 rounded-full bg-gradient-to-br ${getCategoryColor(
+                        className={`w-10 h-10 rounded-full bg-gradient-to-br ${getCategoryColor(
                           category.name
-                        )} flex items-center justify-center shadow-lg mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}
+                        )} flex items-center justify-center shadow-md mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`}
                       >
-                        <span className="text-lg">
-                          {getCategoryIcon(category.name)}
-                        </span>
+                        {getCategoryIcon(category.name)}
                       </div>
 
                       {/* Category Name */}
@@ -876,10 +886,10 @@ export function ArticleContent({
             {/* See All Button */}
             <Link
               href="/categories"
-              className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group/seeall transform hover:scale-[1.02]"
+              className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group/seeall transform hover:scale-[1.02] text-sm"
             >
               See All Categories
-              <ChevronRight className="w-4 h-4 group-hover/seeall:translate-x-1 transition-transform" />
+              <ChevronRight className="w-3 h-3 group-hover/seeall:translate-x-1 transition-transform" />
             </Link>
           </CardContent>
         </Card>
