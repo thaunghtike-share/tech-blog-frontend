@@ -5,8 +5,10 @@ interface User {
   username: string;
   email: string;
   avatar?: string;
+  id: number;
   profileComplete: boolean;
   slug: string; // ✅ ONLY ADD THIS LINE
+  name?: string;
 }
 
 export function useAuth() {
@@ -30,6 +32,7 @@ export function useAuth() {
       if (profileRes.ok) {
         const profileData = await profileRes.json();
         setUser({
+          id: profileData.id, // ✅ ADD THIS - from /authors/me/ response
           username: profileData.name || "Author",
           email: profileData.email || "",
           avatar: profileData.avatar,
