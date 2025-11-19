@@ -14,6 +14,8 @@ import {
   Settings,
   LogOut,
   LayoutDashboard,
+  Eye,
+  Crown,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -160,53 +162,55 @@ export function MinimalHeader() {
   }
 
   // User Dropdown Component
-  const UserDropdown = () => (
-    <div className="absolute top-full right-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2">
-      <div className="px-4 py-3 border-b border-gray-100">
-        <p className="text-sm font-medium text-gray-900 truncate">
-          {user?.username}
-        </p>
-        <p className="text-sm text-gray-500 truncate">{user?.email}</p>
-      </div>
+  const UserDropdown = () => {
+    return (
+      <div className="absolute top-full right-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2">
+        <div className="px-4 py-3 border-b border-gray-100">
+          <p className="text-sm font-medium text-gray-900 truncate">
+            {user?.username}
+          </p>
+          <p className="text-sm text-gray-500 truncate">{user?.email}</p>
+        </div>
 
-      <Link
-        href={`/admin/author/${user?.username}`}
-        className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
-        onClick={() => setIsUserDropdownOpen(false)}
-      >
-        <User className="w-4 h-4 mr-3" />
-        Your Profile
-      </Link>
-
-      <Link
-        href={`/admin/author/${user?.username}`}
-        className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
-        onClick={() => setIsUserDropdownOpen(false)}
-      >
-        <LayoutDashboard className="w-4 h-4 mr-3" />
-        Dashboard
-      </Link>
-
-      <Link
-        href="/settings"
-        className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
-        onClick={() => setIsUserDropdownOpen(false)}
-      >
-        <Settings className="w-4 h-4 mr-3" />
-        Settings
-      </Link>
-
-      <div className="border-t border-gray-100 mt-2 pt-2">
-        <button
-          onClick={handleLogout}
-          className="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-all font-medium"
+        <Link
+          href="/author-profile-form"
+          className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+          onClick={() => setIsUserDropdownOpen(false)}
         >
-          <LogOut className="w-4 h-4 mr-3" />
-          Sign Out
-        </button>
+          <Settings className="w-4 h-4 mr-3" />
+          Edit Your Profile
+        </Link>
+
+        <Link
+          href={`/admin/author/${user?.username}`}
+          className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+          onClick={() => setIsUserDropdownOpen(false)}
+        >
+          <LayoutDashboard className="w-4 h-4 mr-3" />
+          Dashboard
+        </Link>
+
+        <Link
+          href={`/authors/${user?.slug}`}
+          className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+          onClick={() => setIsUserDropdownOpen(false)}
+        >
+          <Crown className="w-4 h-4 mr-3" />
+          Public Profile View
+        </Link>
+
+        <div className="border-t border-gray-100 mt-2 pt-2">
+          <button
+            onClick={handleLogout}
+            className="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-all font-medium"
+          >
+            <LogOut className="w-4 h-4 mr-3" />
+            Sign Out
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Auth Modal Component
   const AuthModalOverlay = () => {
@@ -353,165 +357,6 @@ export function MinimalHeader() {
               </div>
             )}
           </div>
-
-          {/* Mobile Menu */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden mt-3 space-y-1 pb-4 text-sm z-10 relative bg-white border border-gray-200 rounded-xl shadow-lg p-3">
-              <Link
-                href="/"
-                className={`${navLinkStyle("/")} text-black bg-gray-50`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-
-              <Link
-                href="/articles"
-                className={`${navLinkStyle("/articles")} text-black bg-gray-50`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Articles
-              </Link>
-
-              <Link
-                href="/devops-playground"
-                className={`${navLinkStyle(
-                  "/devops-playground"
-                )} text-black bg-gray-50`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                DevOps Playground
-              </Link>
-
-              {/* Resources Dropdown */}
-              <div className="bg-gray-50 rounded-lg">
-                <button
-                  onClick={() => setIsResourcesOpen((prev) => !prev)}
-                  className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-black font-medium"
-                >
-                  Resources
-                  <ChevronDown
-                    className={`${
-                      isResourcesOpen ? "rotate-180" : ""
-                    } w-4 h-4 transition-transform`}
-                  />
-                </button>
-                {isResourcesOpen && (
-                  <div className="ml-4 mt-1 space-y-1 border-l border-green-500 pl-3 pb-2">
-                    <Link
-                      href="/learn-devops-on-youtube"
-                      className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Learn DevOps on YouTube
-                    </Link>
-                    <Link
-                      href="/online-free-courses"
-                      className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Online Free Courses
-                    </Link>
-                    <Link
-                      href="/free-labs"
-                      className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Free Labs
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              {/* Services Dropdown */}
-              <div className="bg-gray-50 rounded-lg">
-                <button
-                  onClick={() => setIsServicesOpen((prev) => !prev)}
-                  className="flex items-center justify-between w-full px-3 py-3 rounded-md hover:bg-gray-100 transition-all text-black font-medium"
-                >
-                  Services
-                  <ChevronDown
-                    className={`${
-                      isServicesOpen ? "rotate-180" : ""
-                    } w-4 h-4 transition-transform`}
-                  />
-                </button>
-                {isServicesOpen && (
-                  <div className="ml-4 mt-1 space-y-1 border-l border-purple-500 pl-3 pb-2">
-                    <Link
-                      href="/services/cloud-migration"
-                      className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Cloud Migration
-                    </Link>
-                    <Link
-                      href="/services/infrastructure-automation"
-                      className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Infrastructure as Code
-                    </Link>
-                    <Link
-                      href="/services/part-time-devops-support"
-                      className="block px-4 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      DevOps Support
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              <Link
-                href="/about"
-                className={`${navLinkStyle("/about")} text-black bg-gray-50`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                About Me
-              </Link>
-
-              {/* Mobile Auth Section */}
-              {!isLoading && isAuthenticated && (
-                <div className="border-t border-gray-200 pt-3 mt-3">
-                  <div className="px-3 py-2 text-sm text-gray-500 font-medium">
-                    Signed in as {user?.username}
-                  </div>
-                  <Link
-                    href={`/admin/author/${user?.username}`}
-                    className="flex items-center px-3 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <User className="w-4 h-4 mr-3" />
-                    Your Profile
-                  </Link>
-                  <Link
-                    href={`/admin/author/${user?.username}`}
-                    className="flex items-center px-3 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <LayoutDashboard className="w-4 h-4 mr-3" />
-                    Dashboard
-                  </Link>
-                  <Link
-                    href="/settings"
-                    className="flex items-center px-3 py-2 text-black hover:bg-gray-100 rounded-md transition-all font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Settings className="w-4 h-4 mr-3" />
-                    Settings
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center w-full px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-all font-medium"
-                  >
-                    <LogOut className="w-4 h-4 mr-3" />
-                    Sign Out
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
 
           {/* Desktop Header */}
           <div className="hidden md:flex items-center justify-between h-25 relative z-10">

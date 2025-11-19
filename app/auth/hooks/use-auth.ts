@@ -6,6 +6,7 @@ interface User {
   email: string;
   avatar?: string;
   profileComplete: boolean;
+  slug: string; // ✅ ONLY ADD THIS LINE
 }
 
 export function useAuth() {
@@ -33,6 +34,7 @@ export function useAuth() {
           email: profileData.email || "",
           avatar: profileData.avatar,
           profileComplete: profileData.profile_complete || false,
+          slug: profileData.slug || "", // ✅ ONLY ADD THIS LINE
         });
         setIsAuthenticated(true);
       } else {
@@ -71,7 +73,7 @@ export function useAuth() {
   return {
     user,
     isAuthenticated,
-    isLoading, // Changed from 'loading' to match your usage
+    isLoading,
     checkAuth,
     login,
     logout,
