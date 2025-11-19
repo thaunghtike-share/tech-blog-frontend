@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../auth/hooks/use-auth";
 import { useRouter } from "next/navigation";
+import { Award, Crown, Zap } from "lucide-react";
 
 export default function ProfileForm() {
   const [formData, setFormData] = useState({
@@ -136,11 +137,45 @@ export default function ProfileForm() {
     }
   };
 
-  // ✅ NEW FUNCTION: Save and go back to previous page
+  // ✅ UPDATED FUNCTION: Save and go back to previous page with validation
   const handleSaveAndStay = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    // Validate all required fields are filled
+    if (
+      !formData.name?.trim() ||
+      !formData.bio?.trim() ||
+      !formData.job_title?.trim() ||
+      !formData.company?.trim() ||
+      !formData.linkedin?.trim() ||
+      !formData.avatar?.trim() ||
+      !formData.slug?.trim()
+    ) {
+      setError("Please fill in all required fields before saving.");
+      setLoading(false);
+      return;
+    }
+
+    // Validate LinkedIn URL format
+    const linkedinRegex = /^https?:\/\/(www\.)?linkedin\.com\/in\/.+/;
+    if (!linkedinRegex.test(formData.linkedin)) {
+      setError(
+        "Please enter a valid LinkedIn URL (e.g., https://linkedin.com/in/your-profile)"
+      );
+      setLoading(false);
+      return;
+    }
+
+    // Validate avatar URL format if it's a custom URL
+    if (formData.avatar && !formData.avatar.startsWith("http")) {
+      setError(
+        "Please enter a valid avatar URL starting with http:// or https://"
+      );
+      setLoading(false);
+      return;
+    }
 
     try {
       const token = localStorage.getItem("token");
@@ -267,8 +302,14 @@ export default function ProfileForm() {
     }
   };
 
-  // ✅ EXISTING SKIP FUNCTION - NO CHANGES
+  // ✅ UPDATED SKIP FUNCTION - Redirects to previous page for completed profiles
   const handleSkip = async () => {
+    // If user has completed profile, go back to previous page
+    if (hasCompletedProfile) {
+      router.back();
+      return;
+    }
+
     // Wait for form data to fully load by checking if all fields are populated
     const allFieldsFilled =
       formData.name?.trim() &&
@@ -332,7 +373,7 @@ export default function ProfileForm() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 text-center">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            <span>Loading Your Profile</span>
+            <Zap className="w-5 h-5" />Loading Your Profile
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
             Preparing Your Profile
@@ -351,7 +392,7 @@ export default function ProfileForm() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 text-center">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            <span>Profile Completed!</span>
+            <Crown className="w-5 h-5" />Thank You!
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
             {success === "stay"
@@ -374,7 +415,7 @@ export default function ProfileForm() {
       <div className="bg-white/95 rounded-2xl border border-gray-200 shadow-lg p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            <span>Complete Your Profile</span>
+            <Zap className="w-5 h-5" />Complete Your Profile
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
             Tell Us About Yourself
@@ -591,7 +632,7 @@ export default function ProfileForm() {
             >
               {loading
                 ? "Saving Profile..."
-                : "Complete Profile & Go to Dashboard"}
+                : "Save Profile & Go to Admin Dashboard"}
             </button>
 
             {/* Button 2: Save Profile & Continue Reading */}
@@ -603,16 +644,7 @@ export default function ProfileForm() {
             >
               {loading
                 ? "Saving Profile..."
-                : "Save Profile & Continue Reading"}
-            </button>
-
-            {/* Button 3: Skip for Now */}
-            <button
-              type="button"
-              onClick={handleSkip}
-              className="w-full text-purple-500 py-3 rounded-xl hover:text-purple-600 transition-all duration-300 font-medium underline"
-            >
-              Skip for Now
+                : "Save Profile & Back to Previous Page"}
             </button>
           </div>
         </form>
