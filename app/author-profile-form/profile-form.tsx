@@ -398,7 +398,7 @@ export default function ProfileForm() {
                 onChange={handleInputChange}
                 required
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
-                placeholder="Your name"
+                placeholder="Your Name - eg. John Doe"
               />
             </div>
 
