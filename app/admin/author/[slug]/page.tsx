@@ -72,12 +72,12 @@ interface Author {
   articles: Article[];
 }
 
-function DeleteConfirmationModal({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
+function DeleteConfirmationModal({
+  isOpen,
+  onClose,
+  onConfirm,
   article,
-  isLoading 
+  isLoading,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -100,7 +100,9 @@ function DeleteConfirmationModal({
           </div>
           <div>
             <h3 className="text-lg font-bold text-slate-900">Delete Article</h3>
-            <p className="text-slate-500 text-sm">This action cannot be undone</p>
+            <p className="text-slate-500 text-sm">
+              This action cannot be undone
+            </p>
           </div>
         </div>
 
@@ -109,7 +111,8 @@ function DeleteConfirmationModal({
             Delete &ldquo;{article.title}&rdquo;?
           </p>
           <p className="text-slate-500 text-sm">
-            This article has {article.read_count?.toLocaleString()} views and will be permanently removed from your blog.
+            This article has {article.read_count?.toLocaleString()} views and
+            will be permanently removed from your blog.
           </p>
         </div>
 
@@ -183,9 +186,9 @@ export default function AuthorAdminDashboard() {
       try {
         setLoading(true);
         setError(null);
-        
-        const token = localStorage.getItem('token');
-        
+
+        const token = localStorage.getItem("token");
+
         if (!token) {
           throw new Error("No authentication token found");
         }
@@ -193,26 +196,26 @@ export default function AuthorAdminDashboard() {
         // 🔐 SECURITY FIX: Use the secure endpoint that returns only current user's data
         const res = await fetch(`${API_BASE_URL}/authors/me/dashboard/`, {
           headers: {
-            'Authorization': `Token ${token}`,
-            'Content-Type': 'application/json',
-          }
+            Authorization: `Token ${token}`,
+            "Content-Type": "application/json",
+          },
         });
-        
+
         if (res.status === 401) {
           // Token expired or invalid
-          localStorage.removeItem('token');
+          localStorage.removeItem("token");
           setShowLoginModal(true);
           return;
         }
-        
+
         if (res.status === 403) {
           throw new Error("You don't have permission to access this dashboard");
         }
-        
+
         if (!res.ok) {
           throw new Error(`Failed to load author data: ${res.status}`);
         }
-        
+
         const data = await res.json();
 
         // 🔐 SECURITY FIX: Verify the returned data belongs to the URL slug
@@ -245,14 +248,18 @@ export default function AuthorAdminDashboard() {
             },
           }))
           // Sort articles by published_at in descending order (newest first)
-          .sort((a: Article, b: Article) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+          .sort(
+            (a: Article, b: Article) =>
+              new Date(b.published_at).getTime() -
+              new Date(a.published_at).getTime()
+          );
 
         setAuthor({
           ...data,
           articles: articlesWithReactions,
         });
       } catch (err) {
-        console.error('Error fetching author data:', err);
+        console.error("Error fetching author data:", err);
         setError((err as Error).message);
       } finally {
         setLoading(false);
@@ -266,19 +273,19 @@ export default function AuthorAdminDashboard() {
 
   // Delete Article Function
   const handleDeleteArticle = async (articleSlug: string) => {
-    setDeleteModal(prev => ({ ...prev, isLoading: true }));
-    
+    setDeleteModal((prev) => ({ ...prev, isLoading: true }));
+
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No authentication token found");
       }
 
       const response = await fetch(`${API_BASE_URL}/articles/${articleSlug}/`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Authorization': `Token ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
@@ -295,21 +302,26 @@ export default function AuthorAdminDashboard() {
       }
 
       // Remove the article from the local state
-      setAuthor(prev => prev ? {
-        ...prev,
-        articles: prev.articles.filter(article => article.slug !== articleSlug)
-      } : null);
+      setAuthor((prev) =>
+        prev
+          ? {
+              ...prev,
+              articles: prev.articles.filter(
+                (article) => article.slug !== articleSlug
+              ),
+            }
+          : null
+      );
 
       // Close the modal
       setDeleteModal({ isOpen: false, article: null, isLoading: false });
 
       // Show success message (you could add a toast notification here)
       console.log("Article deleted successfully");
-
     } catch (err) {
-      console.error('Error deleting article:', err);
+      console.error("Error deleting article:", err);
       setError((err as Error).message);
-      setDeleteModal(prev => ({ ...prev, isLoading: false }));
+      setDeleteModal((prev) => ({ ...prev, isLoading: false }));
     }
   };
 
@@ -395,10 +407,11 @@ export default function AuthorAdminDashboard() {
 
   // Pagination logic
   const totalPages = Math.ceil(totalArticles / articlesPerPage);
-  const paginatedArticles = author?.articles?.slice(
-    (currentPage - 1) * articlesPerPage,
-    currentPage * articlesPerPage
-  ) || [];
+  const paginatedArticles =
+    author?.articles?.slice(
+      (currentPage - 1) * articlesPerPage,
+      currentPage * articlesPerPage
+    ) || [];
 
   // 🔐 Show loading while checking authentication
   if (isLoading) {
@@ -423,7 +436,7 @@ export default function AuthorAdminDashboard() {
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden">
       <MinimalHeader />
-      
+
       {/* Login Modal Overlay */}
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -443,7 +456,7 @@ export default function AuthorAdminDashboard() {
       <DeleteConfirmationModal
         isOpen={deleteModal.isOpen}
         onClose={closeDeleteModal}
-        onConfirm={() => handleDeleteArticle(deleteModal.article?.slug || '')}
+        onConfirm={() => handleDeleteArticle(deleteModal.article?.slug || "")}
         article={deleteModal.article}
         isLoading={deleteModal.isLoading}
       />
@@ -490,8 +503,10 @@ export default function AuthorAdminDashboard() {
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                {error.includes("permission") || error.includes("denied") || error.includes("403") 
-                  ? "Access Denied" 
+                {error.includes("permission") ||
+                error.includes("denied") ||
+                error.includes("403")
+                  ? "Access Denied"
                   : "Error Loading Dashboard"}
               </h2>
               <p className="text-slate-700 mb-8 text-lg font-medium max-w-md">
@@ -545,9 +560,17 @@ export default function AuthorAdminDashboard() {
                   <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
                     Welcome back, {author?.name}!
                   </h1>
-                  <p className="text-xl text-sky-700 font-medium">
-                    {author?.job_title} at {author?.company}
-                  </p>
+                  {author?.job_title || author?.company ? (
+                    <p className="text-xl text-sky-700 font-medium">
+                      {author.job_title && author.company
+                        ? `${author.job_title} at ${author.company}`
+                        : author.job_title || author.company}
+                    </p>
+                  ) : (
+                    <p className="text-xl text-sky-700 font-medium">
+                      Welcome to your author dashboard
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -599,7 +622,9 @@ export default function AuthorAdminDashboard() {
                 <h3 className="text-3xl font-bold text-slate-900 mb-2">
                   {totalViews.toLocaleString()}
                 </h3>
-                <p className="text-slate-700 font-semibold text-lg">Total Views</p>
+                <p className="text-slate-700 font-semibold text-lg">
+                  Total Views
+                </p>
               </div>
 
               {/* Average Views */}
@@ -612,7 +637,9 @@ export default function AuthorAdminDashboard() {
                 <h3 className="text-3xl font-bold text-slate-900 mb-2">
                   {avgViews.toLocaleString()}
                 </h3>
-                <p className="text-slate-700 font-semibold text-lg">Avg Views</p>
+                <p className="text-slate-700 font-semibold text-lg">
+                  Avg Views
+                </p>
               </div>
 
               {/* Total Reactions */}
@@ -755,7 +782,8 @@ export default function AuthorAdminDashboard() {
                     Your Articles
                   </h2>
                   <p className="text-slate-600">
-                    Showing {paginatedArticles.length} of {totalArticles} articles
+                    Showing {paginatedArticles.length} of {totalArticles}{" "}
+                    articles
                   </p>
                 </div>
                 <Link
@@ -900,44 +928,53 @@ export default function AuthorAdminDashboard() {
                         </div>
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            onClick={() =>
+                              setCurrentPage((prev) => Math.max(1, prev - 1))
+                            }
                             disabled={currentPage === 1}
                             className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
                           >
                             <ChevronLeft className="w-4 h-4" />
                             Previous
                           </button>
-                          
+
                           <div className="flex items-center gap-1">
-                            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                              let pageNum;
-                              if (totalPages <= 5) {
-                                pageNum = i + 1;
-                              } else if (currentPage <= 3) {
-                                pageNum = i + 1;
-                              } else if (currentPage >= totalPages - 2) {
-                                pageNum = totalPages - 4 + i;
-                              } else {
-                                pageNum = currentPage - 2 + i;
+                            {Array.from(
+                              { length: Math.min(5, totalPages) },
+                              (_, i) => {
+                                let pageNum;
+                                if (totalPages <= 5) {
+                                  pageNum = i + 1;
+                                } else if (currentPage <= 3) {
+                                  pageNum = i + 1;
+                                } else if (currentPage >= totalPages - 2) {
+                                  pageNum = totalPages - 4 + i;
+                                } else {
+                                  pageNum = currentPage - 2 + i;
+                                }
+                                return (
+                                  <button
+                                    key={pageNum}
+                                    onClick={() => setCurrentPage(pageNum)}
+                                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all ${
+                                      currentPage === pageNum
+                                        ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
+                                        : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                                    }`}
+                                  >
+                                    {pageNum}
+                                  </button>
+                                );
                               }
-                              return (
-                                <button
-                                  key={pageNum}
-                                  onClick={() => setCurrentPage(pageNum)}
-                                  className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all ${
-                                    currentPage === pageNum
-                                      ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
-                                      : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-                                  }`}
-                                >
-                                  {pageNum}
-                                </button>
-                              );
-                            })}
+                            )}
                           </div>
 
                           <button
-                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            onClick={() =>
+                              setCurrentPage((prev) =>
+                                Math.min(totalPages, prev + 1)
+                              )
+                            }
                             disabled={currentPage === totalPages}
                             className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
                           >
