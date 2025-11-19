@@ -18,7 +18,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Users,
-  Heart,
+  Clock,
+  BookOpen,
+  FileText,
 } from "lucide-react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -64,7 +66,7 @@ interface Props {
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const DEFAULT_PAGE_SIZE = 12;
+const DEFAULT_PAGE_SIZE = 8;
 
 export default function CategoryPageClient({ slug }: Props) {
   const [category, setCategory] = useState<Category | null>(null);
@@ -79,23 +81,31 @@ export default function CategoryPageClient({ slug }: Props) {
   const topRef = useRef<HTMLHeadingElement>(null);
   const isFirstRender = useRef(true);
 
+  // Calculate read time function
+  const calculateReadTime = (content?: string) => {
+    if (!content) return 5;
+    const wordsPerMinute = 200;
+    const words = content.split(/\s+/).length;
+    return Math.max(1, Math.ceil(words / wordsPerMinute));
+  };
+
   // Get category icon based on category name
   const getCategoryIcon = (categoryName: string) => {
     const name = categoryName.toLowerCase();
-    
-    if (name.includes('kubernetes')) {
+
+    if (name.includes("kubernetes")) {
       return Container;
-    } else if (name.includes('cicd') || name.includes('ci/cd')) {
+    } else if (name.includes("cicd") || name.includes("ci/cd")) {
       return Container;
-    } else if (name.includes('python')) {
+    } else if (name.includes("python")) {
       return Code;
-    } else if (name.includes('terraform')) {
+    } else if (name.includes("terraform")) {
       return Code;
-    } else if (name.includes('cloud')) {
+    } else if (name.includes("cloud")) {
       return Cloud;
-    } else if (name.includes('devops')) {
+    } else if (name.includes("devops")) {
       return ToolCase;
-    } else if (name.includes('devsecops')) {
+    } else if (name.includes("devsecops")) {
       return Shield;
     } else {
       return Wrench;
@@ -105,20 +115,20 @@ export default function CategoryPageClient({ slug }: Props) {
   // Get category gradient colors
   const getCategoryGradient = (categoryName: string) => {
     const name = categoryName.toLowerCase();
-    
-    if (name.includes('kubernetes')) {
+
+    if (name.includes("kubernetes")) {
       return "from-blue-500 to-cyan-600";
-    } else if (name.includes('cicd') || name.includes('ci/cd')) {
+    } else if (name.includes("cicd") || name.includes("ci/cd")) {
       return "from-green-500 to-emerald-600";
-    } else if (name.includes('python')) {
+    } else if (name.includes("python")) {
       return "from-yellow-500 to-amber-600";
-    } else if (name.includes('terraform')) {
+    } else if (name.includes("terraform")) {
       return "from-purple-500 to-pink-600";
-    } else if (name.includes('cloud')) {
+    } else if (name.includes("cloud")) {
       return "from-sky-500 to-blue-600";
-    } else if (name.includes('devops')) {
+    } else if (name.includes("devops")) {
       return "from-orange-500 to-red-600";
-    } else if (name.includes('devsecops')) {
+    } else if (name.includes("devsecops")) {
       return "from-red-500 to-rose-600";
     } else {
       return "from-gray-500 to-gray-600";
@@ -149,12 +159,21 @@ export default function CategoryPageClient({ slug }: Props) {
         const articlesList = Array.isArray(articlesData)
           ? articlesData
           : articlesData.results || [];
-        setArticles(articlesList);
+
+        // Add read time to articles
+        const articlesWithReadTime = articlesList.map((article: Article) => ({
+          ...article,
+          read_time: calculateReadTime(article.content),
+        }));
+
+        setArticles(articlesWithReadTime);
 
         // Fetch authors
         const authorsRes = await fetch(`${API_BASE_URL}/authors/`);
         const authorsData = await authorsRes.json();
-        const authorsList = Array.isArray(authorsData) ? authorsData : authorsData.results || [];
+        const authorsList = Array.isArray(authorsData)
+          ? authorsData
+          : authorsData.results || [];
         setAuthors(authorsList);
 
         // Fetch tags
@@ -200,47 +219,59 @@ export default function CategoryPageClient({ slug }: Props) {
 
   // Get cover image URL
   const getCoverImage = (article: Article) => {
-    if (article.cover_image && article.cover_image.trim() !== '') {
+    if (article.cover_image && article.cover_image.trim() !== "") {
       return article.cover_image;
     }
 
     // Fallback based on category
-    const categoryName = category?.name?.toLowerCase() || '';
-    if (categoryName.includes('kubernetes')) {
+    const categoryName = category?.name?.toLowerCase() || "";
+    if (categoryName.includes("kubernetes")) {
       return "/kubernetes.webp";
-    } else if (categoryName.includes('cicd') || categoryName.includes('ci/cd')) {
+    } else if (
+      categoryName.includes("cicd") ||
+      categoryName.includes("ci/cd")
+    ) {
       return "/cicd.webp";
-    } else if (categoryName.includes('python')) {
+    } else if (categoryName.includes("python")) {
       return "/python.webp";
-    } else if (categoryName.includes('terraform')) {
+    } else if (categoryName.includes("terraform")) {
       return "/terraform.webp";
-    } else if (categoryName.includes('cloud')) {
+    } else if (categoryName.includes("cloud")) {
       return "/cloud.webp";
-    } else if (categoryName.includes('devops')) {
+    } else if (categoryName.includes("devops")) {
       return "/devops.webp";
-    } else if (categoryName.includes('devsecops')) {
+    } else if (categoryName.includes("devsecops")) {
       return "/security.webp";
     }
-    
+
     return "/devops.webp";
   };
 
   // Check if article has a real cover image
   const hasRealCoverImage = (article: Article) => {
-    return !!(article.cover_image && article.cover_image.trim() !== '');
+    return !!(article.cover_image && article.cover_image.trim() !== "");
   };
 
   // Calculate stats
   const totalArticles = articles.length;
-  const totalViews = articles.reduce((sum, article) => sum + (article.read_count || 0), 0);
-  const avgViews = totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
-  
+  const totalViews = articles.reduce(
+    (sum, article) => sum + (article.read_count || 0),
+    0
+  );
+  const avgViews =
+    totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
+
   // Get unique authors in this category
-  const uniqueAuthors = new Set(articles.map(article => article.author));
+  const uniqueAuthors = new Set(articles.map((article) => article.author));
   const totalAuthors = uniqueAuthors.size;
 
-  // Calculate total reactions (random for now)
-  const totalReactions = articles.reduce((sum, article) => sum + (Math.floor(Math.random() * 100) + 20), 0);
+  // Calculate total read time
+  const totalReadTime = articles.reduce(
+    (sum, article) => sum + calculateReadTime(article.content),
+    0
+  );
+  const avgReadTime =
+    totalArticles > 0 ? Math.round(totalReadTime / totalArticles) : 0;
 
   // Pagination logic
   const totalPages = Math.ceil(totalArticles / pageSize);
@@ -258,15 +289,13 @@ export default function CategoryPageClient({ slug }: Props) {
             <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
               <Shield className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-black-700 mb-4">
+            <h1 className="text-4xl font-bold text-black mb-4">
               Category Not Found
             </h1>
-            <p className="text-lg text-black-600 mb-8 max-w-md mx-auto">
-              {error}
-            </p>
+            <p className="text-lg text-black mb-8 max-w-md mx-auto">{error}</p>
             <Link
               href="/categories"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 shadow-lg"
             >
               Browse All Categories
               <ArrowRight className="w-5 h-5" />
@@ -297,8 +326,11 @@ export default function CategoryPageClient({ slug }: Props) {
             </div>
             {/* Articles Skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="bg-white rounded-xl border border-slate-200 p-6">
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-xl border border-slate-200 p-6"
+                >
                   <div className="h-48 bg-slate-200 rounded-lg mb-4"></div>
                   <div className="space-y-3">
                     <div className="h-4 bg-slate-200 rounded-full w-3/4"></div>
@@ -315,128 +347,125 @@ export default function CategoryPageClient({ slug }: Props) {
   }
 
   const CategoryIcon = category ? getCategoryIcon(category.name) : Wrench;
-  const categoryGradient = category ? getCategoryGradient(category.name) : "from-slate-500 to-slate-600";
+  const categoryGradient = category
+    ? getCategoryGradient(category.name)
+    : "from-slate-500 to-slate-600";
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       <MinimalHeader />
-      
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Category Header */}
-        <motion.section 
+
+      <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
+        {/* Category Header - Premium Design */}
+        <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="w-full mb-16"
         >
-          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 mb-12">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500 via-blue-600 to-purple-600 p-1.5 shadow-2xl">
-                <div className="w-full h-full rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center border-4 border-white/20">
-                  <CategoryIcon className="w-12 h-12 text-white" />
+          {/* Simple Header */}
+          <div className="mb-12">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+              <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
+                Category
+              </span>
+            </div>
+            <h1 className="text-6xl md:text-7xl font-light text-black mb-6 tracking-tight">
+              {category?.name}
+            </h1>
+          </div>
+
+          {/* Category Profile */}
+          <div className="flex flex-col lg:flex-row items-start gap-12 mb-16">
+            {/* Icon Section */}
+            <div className="flex-shrink-0">
+              <div className="relative">
+                <div className="w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                  <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                    <CategoryIcon className="w-12 h-12 text-white" />
+                  </div>
                 </div>
               </div>
             </div>
 
+            {/* Content Section */}
             <div className="flex-1">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold mb-4 shadow-lg">
-                <Folder className="w-4 h-4" />
-                Category
+              {/* Description */}
+              <p className="text-lg text-black leading-relaxed mb-8 max-w-2xl">
+                Explore all articles in the {category?.name} category. Stay
+                updated with the latest insights, tutorials, and best practices.
+              </p>
+
+              {/* Simple Badges */}
+              <div className="flex gap-3">
+                <span className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-medium rounded-full shadow-sm">
+                  {totalArticles} Related Articles
+                </span>
+                <span className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full shadow-sm">
+                  {totalAuthors} Related Authors
+                </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-black-700 mb-3">
-                {category?.name} Category
-              </h1>
-              <p className="text-xl text-sky-700 font-medium mb-6">
-                {articles.length} published articles
-              </p>
-              <p className="text-black-700 text-lg leading-relaxed max-w-3xl">
-                Explore all articles in the {category?.name} category. 
-                Stay updated with the latest insights, tutorials, and best practices.
-              </p>
             </div>
           </div>
 
-          {/* Stats Grid - Like Admin Dashboard */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8"
-          >
-            {/* Total Articles */}
-            <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-sky-200">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
-                  <TrendingUp className="w-7 h-7 text-white" />
-                </div>
-              </div>
-              <h3 className="text-3xl font-bold text-black-700 mb-2">
+          {/* Stats - Premium Design */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
+            <div className="space-y-3">
+              <div className="text-5xl font-light text-black">
                 {totalArticles}
-              </h3>
-              <p className="text-black-700 font-semibold text-lg">
-                Total Articles
-              </p>
-            </div>
-
-            {/* Total Views */}
-            <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-green-200">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl">
-                  <Eye className="w-7 h-7 text-white" />
-                </div>
               </div>
-              <h3 className="text-3xl font-bold text-black-700 mb-2">
+              <div className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
+                Articles
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="text-5xl font-light text-black">
                 {totalViews.toLocaleString()}
-              </h3>
-              <p className="text-black-700 font-semibold text-lg">Total Views</p>
-            </div>
-
-            {/* Total Authors */}
-            <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-purple-200">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
-                  <Users className="w-7 h-7 text-white" />
-                </div>
               </div>
-              <h3 className="text-3xl font-bold text-black-700 mb-2">
-                {totalAuthors}
-              </h3>
-              <p className="text-black-700 font-semibold text-lg">Total Authors</p>
-            </div>
-
-            {/* Total Reactions */}
-            <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:border-rose-200">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
-                  <Heart className="w-7 h-7 text-white" />
-                </div>
+              <div className="text-sm text-green-600 font-semibold uppercase tracking-wider">
+                Total Views
               </div>
-              <h3 className="text-3xl font-bold text-black-700 mb-2">
-                {totalReactions.toLocaleString()}
-              </h3>
-              <p className="text-black-700 font-semibold text-lg">
-                Total Reactions
-              </p>
             </div>
-          </motion.div>
+            <div className="space-y-3">
+              <div className="text-5xl font-light text-black">{avgViews}</div>
+              <div className="text-sm text-purple-600 font-semibold uppercase tracking-wider">
+                Avg Views
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="text-5xl font-light text-black">
+                {avgReadTime}m
+              </div>
+              <div className="text-sm text-orange-600 font-semibold uppercase tracking-wider">
+                Read Time
+              </div>
+            </div>
+          </div>
         </motion.section>
 
-        {/* Articles Section */}
+        {/* Articles Section - Premium Design */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-xl overflow-hidden mb-16"
+          className="bg-white/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-2xl overflow-hidden mb-16"
         >
-          <div className="px-8 py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+          <div className="px-8 py-6 border-b border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-3xl font-bold text-black-700 mb-2">
-                  {category?.name} Articles
+                <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
+                  Latest Articles
                 </h2>
-                <p className="text-black-700">
-                  Showing {paginatedArticles.length} of {totalArticles} articles
+                <p className="text-slate-600 font-medium">
+                  {totalArticles} articles published •{" "}
+                  {totalViews.toLocaleString()} total reads
                 </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="text-sm text-slate-500 font-medium">
+                  Page {currentPage} of {totalPages}
+                </div>
               </div>
             </div>
           </div>
@@ -444,121 +473,158 @@ export default function CategoryPageClient({ slug }: Props) {
           {articles.length === 0 ? (
             <div className="text-center py-20">
               <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                <Star className="w-10 h-10 text-white" />
+                <FileText className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-3xl font-bold text-black-700 mb-4">
+              <h3 className="text-3xl font-bold text-slate-800 mb-4">
                 No Articles Yet
               </h3>
-              <p className="text-black-700 mb-8 text-xl font-medium max-w-md mx-auto">
-                Stay tuned! We're preparing amazing {category?.name} content for you.
+              <p className="text-slate-600 mb-8 text-lg font-medium max-w-md mx-auto">
+                Stay tuned! We're preparing amazing {category?.name} content for
+                you.
               </p>
             </div>
           ) : (
             <>
-              <div className="divide-y divide-slate-200">
+              <div className="divide-y divide-slate-200/50">
                 {paginatedArticles.map((article, index) => {
-                  const previewText = article.excerpt?.trim() || truncate(
-                    stripMarkdown(article.content),
-                    120
-                  );
+                  // Use excerpt if available, otherwise strip markdown from content and truncate
+                  const previewText =
+                    article.excerpt?.trim() ||
+                    truncate(stripMarkdown(article.content || ""), 150) ||
+                    "Discover insights and best practices in this comprehensive article...";
+
                   const author = getAuthor(article.author);
                   const coverImage = getCoverImage(article);
-                  const hasRealCover = hasRealCoverImage(article);
-                  // Random reactions for now
-                  const articleReactions = Math.floor(Math.random() * 100) + 20;
-                  
+                  const readTime = calculateReadTime(article.content);
+
                   return (
                     <motion.div
                       key={article.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-8 hover:bg-white transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                      className="p-8 hover:bg-white/50 transition-all duration-300 group border-b border-slate-100 last:border-b-0"
                     >
                       <div className="flex flex-col lg:flex-row gap-8 items-start">
                         {/* Article Cover */}
-                        <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
                           <img
                             src={coverImage}
                             alt={article.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             onError={(e) => {
-                              console.log(`Image failed to load: ${coverImage}`);
+                              console.log(
+                                `Image failed to load: ${coverImage}`
+                              );
                               // Fallback to category-based image
-                              const categoryName = category?.name?.toLowerCase() || '';
+                              const categoryName =
+                                category?.name?.toLowerCase() || "";
                               let fallbackImage = "/devops.webp";
-                              if (categoryName.includes('kubernetes')) fallbackImage = "/kubernetes.webp";
-                              if (categoryName.includes('cicd') || categoryName.includes('ci/cd')) fallbackImage = "/cicd.webp";
-                              if (categoryName.includes('python')) fallbackImage = "/python.webp";
-                              if (categoryName.includes('terraform')) fallbackImage = "/terraform.webp";
-                              if (categoryName.includes('cloud')) fallbackImage = "/cloud.webp";
-                              if (categoryName.includes('devops')) fallbackImage = "/devops.webp";
-                              if (categoryName.includes('devsecops')) fallbackImage = "/security.webp";
-                              (e.target as HTMLImageElement).src = fallbackImage;
+                              if (categoryName.includes("kubernetes"))
+                                fallbackImage = "/kubernetes.webp";
+                              if (
+                                categoryName.includes("cicd") ||
+                                categoryName.includes("ci/cd")
+                              )
+                                fallbackImage = "/cicd.webp";
+                              if (categoryName.includes("python"))
+                                fallbackImage = "/python.webp";
+                              if (categoryName.includes("terraform"))
+                                fallbackImage = "/terraform.webp";
+                              if (categoryName.includes("cloud"))
+                                fallbackImage = "/cloud.webp";
+                              if (categoryName.includes("devops"))
+                                fallbackImage = "/devops.webp";
+                              if (categoryName.includes("devsecops"))
+                                fallbackImage = "/security.webp";
+                              (e.target as HTMLImageElement).src =
+                                fallbackImage;
                             }}
                           />
                         </div>
 
                         {/* Article Info */}
                         <div className="flex-1 min-w-0">
-                          <div className="flex flex-wrap items-center gap-4 mb-4">
-                            {author && (
-                              <div className="flex items-center gap-2 text-black-700 px-4 py-2 rounded-xl text-sm font-semibold">
+                          <div className="flex flex-wrap items-center gap-4 mb-3">
+                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
+                              <Calendar className="w-4 h-4 text-slate-500" />
+                              {formatDate(article.published_at)}
+                            </span>
+                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
+                              <Clock className="w-4 h-4 text-slate-500" />
+                              {readTime} min read
+                            </span>
+                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
+                              <Eye className="w-4 h-4 text-sky-600" />
+                              {article.read_count?.toLocaleString() || "0"}{" "}
+                              views
+                            </span>
+                          </div>
+
+                          <h3 className="text-2xl font-bold text-slate-800 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                            <Link href={`/articles/${article.slug}`}>
+                              {article.title}
+                            </Link>
+                          </h3>
+
+                          {/* Article Excerpt/Content Preview */}
+                          <div className="mb-4">
+                            <p className="text-slate-600 text-lg leading-relaxed line-clamp-3 font-medium">
+                              {previewText}
+                            </p>
+
+                            {/* Show content length indicator */}
+                            {article.content && (
+                              <div className="mt-2 flex items-center gap-2 text-sm text-slate-500">
+                                <BookOpen className="w-4 h-4" />
+                                <span>
+                                  {article.content
+                                    .split(/\s+/)
+                                    .length.toLocaleString()}{" "}
+                                  words
+                                  {article.content.length > 5000 &&
+                                    " • Comprehensive guide"}
+                                  {article.content.length > 10000 &&
+                                    " • In-depth tutorial"}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Author Info */}
+                          {author && (
+                            <div className="flex items-center gap-3 mb-4">
+                              <div className="flex items-center gap-2 text-slate-700 font-medium">
                                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 p-0.5">
                                   <img
                                     src={author.avatar || "/placeholder.svg"}
                                     alt={author.name}
                                     className="w-full h-full rounded-full object-cover border border-white"
                                     onError={(e) => {
-                                      (e.target as HTMLImageElement).src = "/placeholder.svg";
+                                      (e.target as HTMLImageElement).src =
+                                        "/placeholder.svg";
                                     }}
                                   />
                                 </div>
-                                <Link 
+                                <Link
                                   href={`/authors/${author.slug}`}
-                                  className="hover:text-sky-600 transition-colors"
+                                  className="hover:text-sky-600 transition-colors text-sm"
                                 >
                                   {author.name}
                                 </Link>
                               </div>
-                            )}
-                          </div>
-
-                          <h3 className="text-2xl font-bold text-sky-700 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
-                            <Link href={`/articles/${article.slug}`}>
-                              {article.title}
-                            </Link>
-                          </h3>
-
-                          <p className="text-black-700 text-lg line-clamp-2 mb-4 font-medium">
-                            {previewText}
-                          </p>
-
-                          {/* Engagement Metrics - Date, Views, Reactions */}
-                          <div className="flex flex-wrap items-center gap-8 mb-4">
-                            <span className="inline-flex items-center gap-2 text-black-700 font-semibold">
-                              <Calendar className="w-5 h-5 text-black-600" />
-                              {formatDate(article.published_at)}
-                            </span>
-                            <span className="inline-flex items-center gap-2 text-black-700 font-semibold">
-                              <Eye className="w-5 h-5 text-sky-600" />
-                              {article.read_count?.toLocaleString() || '0'} views
-                            </span>
-                            <span className="inline-flex items-center gap-2 text-black-700 font-semibold">
-                              <Heart className="w-5 h-5 text-rose-600" />
-                              {articleReactions} reactions
-                            </span>
-                          </div>
+                            </div>
+                          )}
                         </div>
 
                         {/* Read More Button */}
                         <div className="flex items-center">
                           <Link
                             href={`/articles/${article.slug}`}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105 group/btn"
                           >
                             Read Article
-                            <ArrowRight className="w-4 h-4" />
+                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                           </Link>
                         </div>
                       </div>
@@ -569,53 +635,63 @@ export default function CategoryPageClient({ slug }: Props) {
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="px-8 py-6 border-t border-black-200 bg-gradient-to-r from-black-50 to-white">
+                <div className="px-8 py-6 border-t border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-black-600">
-                      Page {currentPage} of {totalPages}
+                    <div className="text-sm text-slate-600 font-medium">
+                      Showing {paginatedArticles.length} of {totalArticles}{" "}
+                      articles
                     </div>
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        onClick={() =>
+                          setCurrentPage((prev) => Math.max(1, prev - 1))
+                        }
                         disabled={currentPage === 1}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Previous
                       </button>
-                      
+
                       <div className="flex items-center gap-1">
-                        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                          let pageNum;
-                          if (totalPages <= 5) {
-                            pageNum = i + 1;
-                          } else if (currentPage <= 3) {
-                            pageNum = i + 1;
-                          } else if (currentPage >= totalPages - 2) {
-                            pageNum = totalPages - 4 + i;
-                          } else {
-                            pageNum = currentPage - 2 + i;
+                        {Array.from(
+                          { length: Math.min(5, totalPages) },
+                          (_, i) => {
+                            let pageNum;
+                            if (totalPages <= 5) {
+                              pageNum = i + 1;
+                            } else if (currentPage <= 3) {
+                              pageNum = i + 1;
+                            } else if (currentPage >= totalPages - 2) {
+                              pageNum = totalPages - 4 + i;
+                            } else {
+                              pageNum = currentPage - 2 + i;
+                            }
+                            return (
+                              <button
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all shadow-sm ${
+                                  currentPage === pageNum
+                                    ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
+                                    : "border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-50 backdrop-blur-sm"
+                                }`}
+                              >
+                                {pageNum}
+                              </button>
+                            );
                           }
-                          return (
-                            <button
-                              key={pageNum}
-                              onClick={() => setCurrentPage(pageNum)}
-                              className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all ${
-                                currentPage === pageNum
-                                  ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
-                                  : "border border-black-300 bg-white text-black-700 hover:bg-black-50"
-                              }`}
-                            >
-                              {pageNum}
-                            </button>
-                          );
-                        })}
+                        )}
                       </div>
 
                       <button
-                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                        onClick={() =>
+                          setCurrentPage((prev) =>
+                            Math.min(totalPages, prev + 1)
+                          )
+                        }
                         disabled={currentPage === totalPages}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
                       >
                         Next
                         <ChevronRight className="w-4 h-4" />
