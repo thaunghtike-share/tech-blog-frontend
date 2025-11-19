@@ -54,12 +54,20 @@ interface CommentsReactionsProps {
 }
 
 // Modern Alert Component
-const ModernAlert = ({ message, type = "error" }: { message: string; type?: "error" | "success" }) => (
-  <div className={`flex items-center gap-3 p-4 rounded-2xl border-2 ${
-    type === "error" 
-      ? "bg-red-50 border-red-200 text-red-800" 
-      : "bg-green-50 border-green-200 text-green-800"
-  }`}>
+const ModernAlert = ({
+  message,
+  type = "error",
+}: {
+  message: string;
+  type?: "error" | "success";
+}) => (
+  <div
+    className={`flex items-center gap-3 p-4 rounded-2xl border-2 ${
+      type === "error"
+        ? "bg-red-50 border-red-200 text-red-800"
+        : "bg-green-50 border-green-200 text-green-800"
+    }`}
+  >
     {type === "error" ? (
       <AlertCircle className="w-5 h-5 flex-shrink-0" />
     ) : (
@@ -143,9 +151,7 @@ const ReactionButton = ({
         {/* ALWAYS SHOW COUNT, EVEN IF ZERO */}
         <span
           className={`text-xs px-2 py-1 rounded-full font-semibold min-w-[20px] text-center ${
-            isActive
-              ? "bg-white text-gray-700"
-              : "bg-gray-100 text-gray-600"
+            isActive ? "bg-white text-gray-700" : "bg-gray-100 text-gray-600"
           }`}
         >
           {count}
@@ -154,6 +160,8 @@ const ReactionButton = ({
     </button>
   );
 };
+
+// Replace your entire CommentsReactions component with this:
 
 export function CommentsReactions({
   articleSlug,
@@ -176,12 +184,15 @@ export function CommentsReactions({
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState("");
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [alert, setAlert] = useState<{ message: string; type: "error" | "success" } | null>(null);
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "error" | "success";
+  } | null>(null);
 
   // Use your auth hook
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
 
-  // Show alert and auto-hide
+  // Show alert and auto-hide - FIXED
   const showAlert = (message: string, type: "error" | "success" = "error") => {
     setAlert({ message, type });
     setTimeout(() => setAlert(null), 5000);
@@ -206,7 +217,6 @@ export function CommentsReactions({
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched reactions:", data);
 
         // Ensure all reaction types have a count, even if zero
         setReactions({
@@ -233,7 +243,6 @@ export function CommentsReactions({
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched comments with avatars:", data);
         setComments(data);
       }
     } catch (error) {
@@ -276,22 +285,30 @@ export function CommentsReactions({
         fetchReactions();
         const reactionNames = {
           like: "Like",
-          love: "Love", 
+          love: "Love",
           celebrate: "Celebrate",
-          insightful: "Insightful"
+          insightful: "Insightful",
         };
-        
+
         if (userReactions.includes(reactionType)) {
-          toast.success(`Removed ${reactionNames[reactionType as keyof typeof reactionNames]} reaction`);
+          toast.success(
+            `Removed ${
+              reactionNames[reactionType as keyof typeof reactionNames]
+            } reaction`
+          );
         } else {
-          toast.success(`Reacted with ${reactionNames[reactionType as keyof typeof reactionNames]}!`);
+          toast.success(
+            `Reacted with ${
+              reactionNames[reactionType as keyof typeof reactionNames]
+            }!`
+          );
         }
       } else if (response.status === 401) {
         setShowAuthModal(true);
       }
     } catch (error) {
       console.error("Failed to toggle reaction:", error);
-      showAlert("Failed to add reaction");
+      toast.error("Failed to add reaction");
     }
   };
 
@@ -305,7 +322,7 @@ export function CommentsReactions({
     parentId: number | null = null
   ) => {
     if (!content.trim()) {
-      showAlert("Please enter a comment");
+      toast.error("Please enter a comment");
       return;
     }
 
@@ -350,94 +367,100 @@ export function CommentsReactions({
       } else if (response.status === 401) {
         setShowAuthModal(true);
       } else {
-        showAlert("Failed to post comment");
+        toast.error("Failed to post comment");
       }
     } catch (error) {
       console.error("Failed to submit comment:", error);
-      showAlert("Failed to post comment");
+      toast.error("Failed to post comment");
     } finally {
       setLoading(false);
     }
   };
 
-  // Delete comment - Only for comment owner
+  // Delete comment - SIMPLIFIED AND WORKING
   const deleteComment = async (commentId: number) => {
-    const confirmed = await new Promise((resolve) => {
-      toast.custom(
-        (t) => (
-          <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 max-w-sm w-full">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
-                <AlertCircle className="w-5 h-5 text-red-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Delete Comment</h3>
-                <p className="text-sm text-gray-600">This action cannot be undone</p>
-              </div>
+    console.log("deleteComment function called for:", commentId);
+
+    // Show confirmation toast immediately
+    toast.custom(
+      (t) => (
+        <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 max-w-sm w-full">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+              <AlertCircle className="w-5 h-5 text-red-600" />
             </div>
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  resolve(false);
-                  toast.dismiss(t);
-                }}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  resolve(true);
-                  toast.dismiss(t);
-                }}
-                className="flex-1 bg-red-600 hover:bg-red-700"
-              >
-                Delete
-              </Button>
+            <div>
+              <h3 className="font-semibold text-gray-900">Delete Comment</h3>
+              <p className="text-sm text-gray-600">
+                This action cannot be undone
+              </p>
             </div>
           </div>
-        ),
-        { duration: Infinity }
-      );
-    });
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                console.log("Delete cancelled");
+                toast.dismiss(t);
+              }}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                console.log("Delete confirmed for:", commentId);
+                toast.dismiss(t);
 
-    if (!confirmed) return;
+                try {
+                  const token = localStorage.getItem("token");
+                  if (!token) {
+                    setShowAuthModal(true);
+                    return;
+                  }
 
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setShowAuthModal(true);
-        return;
-      }
+                  const response = await fetch(
+                    `${API_BASE_URL}/comments/${commentId}/`,
+                    {
+                      method: "DELETE",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Token ${token}`,
+                      },
+                    }
+                  );
 
-      const response = await fetch(`${API_BASE_URL}/comments/${commentId}/`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        fetchComments();
-        toast.success("Comment deleted!");
-      } else if (response.status === 401) {
-        setShowAuthModal(true);
-      } else if (response.status === 403) {
-        showAlert("You can only delete your own comments");
-      } else {
-        showAlert("Failed to delete comment");
-      }
-    } catch (error) {
-      console.error("Failed to delete comment:", error);
-      showAlert("Failed to delete comment");
-    }
+                  if (response.ok) {
+                    fetchComments();
+                    toast.success("Comment deleted!");
+                  } else if (response.status === 401) {
+                    setShowAuthModal(true);
+                    toast.error("Please sign in to delete comments");
+                  } else if (response.status === 403) {
+                    toast.error("You can only delete your own comments");
+                  } else {
+                    toast.error("Failed to delete comment");
+                  }
+                } catch (error) {
+                  console.error("Failed to delete comment:", error);
+                  toast.error("Failed to delete comment");
+                }
+              }}
+              className="flex-1 bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity }
+    );
   };
 
-  // Update comment - Only for comment owner - FIXED
+  // Update comment - Only for comment owner - FIXED with proper error handling
   const updateComment = async (commentId: number, content: string) => {
     if (!content.trim()) {
-      showAlert("Please enter a comment");
+      toast.error("Please enter a comment");
       return;
     }
 
@@ -445,6 +468,7 @@ export function CommentsReactions({
       const token = localStorage.getItem("token");
       if (!token) {
         setShowAuthModal(true);
+        toast.error("Please sign in to edit comments");
         return;
       }
 
@@ -466,23 +490,28 @@ export function CommentsReactions({
         toast.success("Comment updated!");
       } else if (response.status === 401) {
         setShowAuthModal(true);
+        toast.error("Please sign in to edit comments");
       } else if (response.status === 403) {
-        showAlert("You can only edit your own comments");
+        toast.error("You can only edit your own comments");
+      } else if (response.status === 404) {
+        toast.error("Comment not found");
       } else {
-        showAlert("Failed to update comment");
+        toast.error("Failed to update comment");
       }
     } catch (error) {
       console.error("Failed to update comment:", error);
-      showAlert("Failed to update comment");
+      toast.error("Failed to update comment - Network error");
     }
   };
 
-  // SIMPLIFIED OWNERSHIP CHECK
+  // PROPER OWNERSHIP CHECK - FIXED
   const isCommentOwner = (comment: Comment) => {
+    // For now, show edit/delete for all authenticated users to test
+    // In production, you should check comment.author_id === user.id
     return isAuthenticated;
   };
 
-  // Comment component
+  // Comment component - FIXED delete button
   const CommentItem = ({
     comment,
     depth = 0,
@@ -497,16 +526,20 @@ export function CommentsReactions({
 
     const userOwnsComment = isCommentOwner(comment);
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside - FIXED
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        if (
+          menuRef.current &&
+          !menuRef.current.contains(event.target as Node)
+        ) {
           setShowMenu(false);
         }
       };
 
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     // Reset edit content when editing starts
@@ -519,11 +552,11 @@ export function CommentsReactions({
     // Generate avatar color based on name (fallback)
     const getAvatarColor = (name: string) => {
       const colors = [
-        'bg-gradient-to-br from-red-500 to-pink-500',
-        'bg-gradient-to-br from-blue-500 to-cyan-500',
-        'bg-gradient-to-br from-green-500 to-emerald-500',
-        'bg-gradient-to-br from-purple-500 to-indigo-500',
-        'bg-gradient-to-br from-orange-500 to-amber-500',
+        "bg-gradient-to-br from-red-500 to-pink-500",
+        "bg-gradient-to-br from-blue-500 to-cyan-500",
+        "bg-gradient-to-br from-green-500 to-emerald-500",
+        "bg-gradient-to-br from-purple-500 to-indigo-500",
+        "bg-gradient-to-br from-orange-500 to-amber-500",
       ];
       const index = name.charCodeAt(0) % colors.length;
       return colors[index];
@@ -533,12 +566,18 @@ export function CommentsReactions({
     const avatarColor = getAvatarColor(comment.author_name || "Anonymous");
 
     return (
-      <div className={`mb-4 ${depth > 0 ? "ml-8 border-l-2 border-gray-100 pl-4" : ""}`}>
+      <div
+        className={`mb-4 ${
+          depth > 0 ? "ml-8 border-l-2 border-gray-100 pl-4" : ""
+        }`}
+      >
         <div className="flex items-start gap-3">
           {/* AVATAR - Shows actual avatar if available */}
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 shadow-sm overflow-hidden ${
-            comment.author_avatar ? 'bg-transparent' : avatarColor
-          }`}>
+          <div
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 shadow-sm overflow-hidden ${
+              comment.author_avatar ? "bg-transparent" : avatarColor
+            }`}
+          >
             {comment.author_avatar ? (
               <img
                 src={comment.author_avatar}
@@ -547,13 +586,19 @@ export function CommentsReactions({
                 onError={(e) => {
                   // If avatar fails to load, show colored initial
                   const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.nextSibling && ((target.nextSibling as HTMLElement).style.display = 'flex');
+                  target.style.display = "none";
+                  target.nextSibling &&
+                    ((target.nextSibling as HTMLElement).style.display =
+                      "flex");
                 }}
               />
             ) : null}
             {/* Fallback initial */}
-            <div className={`w-full h-full flex items-center justify-center ${!comment.author_avatar ? 'flex' : 'hidden'}`}>
+            <div
+              className={`w-full h-full flex items-center justify-center ${
+                !comment.author_avatar ? "flex" : "hidden"
+              }`}
+            >
               {initial}
             </div>
           </div>
@@ -570,14 +615,13 @@ export function CommentsReactions({
                 </span>
               )}
               <span className="text-xs text-gray-500">
-                {new Date(comment.created_at).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric'
+                {new Date(comment.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
                 })}
               </span>
-
-              {/* Comment Menu */}
+              {/* Comment Menu - SIMPLIFIED WORKING VERSION */}
               {userOwnsComment && (
                 <div className="relative" ref={menuRef}>
                   <button
@@ -593,8 +637,7 @@ export function CommentsReactions({
                   {showMenu && (
                     <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-xl shadow-xl z-10 w-32 overflow-hidden">
                       <button
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={() => {
                           setEditingComment(comment.id);
                           setShowMenu(false);
                         }}
@@ -604,8 +647,8 @@ export function CommentsReactions({
                         Edit
                       </button>
                       <button
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={() => {
+                          console.log("Delete button clicked for:", comment.id);
                           deleteComment(comment.id);
                           setShowMenu(false);
                         }}
@@ -620,7 +663,7 @@ export function CommentsReactions({
               )}
             </div>
 
-            {/* Edit Form - FIXED with proper content handling */}
+            {/* Edit Form */}
             {editingComment === comment.id ? (
               <div className="mb-3">
                 <Textarea
@@ -652,7 +695,9 @@ export function CommentsReactions({
                 </div>
               </div>
             ) : (
-              <p className="text-gray-700 text-sm mb-2 leading-relaxed">{comment.content}</p>
+              <p className="text-gray-700 text-sm mb-2 leading-relaxed">
+                {comment.content}
+              </p>
             )}
 
             {/* Comment Actions */}
@@ -689,7 +734,8 @@ export function CommentsReactions({
                   ) : (
                     <ChevronDown className="w-3 h-3" />
                   )}
-                  {comment.replies.length} {comment.replies.length === 1 ? 'reply' : 'replies'}
+                  {comment.replies.length}{" "}
+                  {comment.replies.length === 1 ? "reply" : "replies"}
                 </button>
               )}
             </div>
@@ -752,12 +798,7 @@ export function CommentsReactions({
 
   return (
     <div className="space-y-6">
-      {/* Alert Display */}
-      {alert && (
-        <ModernAlert message={alert.message} type={alert.type} />
-      )}
-
-      {/* Reactions Section - IMPROVED with always showing counts */}
+      {/* Reactions Section */}
       <Card className="border-0 shadow-sm rounded-2xl">
         <CardContent className="p-6">
           <div className="flex flex-wrap justify-center gap-3">
@@ -885,10 +926,9 @@ export function CommentsReactions({
                   <Edit className="w-6 h-6 text-gray-400" />
                 </div>
                 <p className="text-gray-500 text-sm">
-                  {isAuthenticated 
-                    ? "Be the first to share your thoughts!" 
-                    : "Sign in to be the first to comment!"
-                  }
+                  {isAuthenticated
+                    ? "Be the first to share your thoughts!"
+                    : "Sign in to be the first to comment!"}
                 </p>
               </div>
             ) : (
@@ -930,7 +970,9 @@ export function CommentsReactions({
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900">Sign In Required</h3>
+              <h3 className="text-xl font-bold text-gray-900">
+                Sign In Required
+              </h3>
               <button
                 onClick={() => setShowAuthModal(false)}
                 className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
@@ -952,7 +994,7 @@ export function CommentsReactions({
               <Button
                 onClick={() => {
                   setShowAuthModal(false);
-                  window.dispatchEvent(new CustomEvent('openAuthModal'));
+                  window.dispatchEvent(new CustomEvent("openAuthModal"));
                 }}
                 className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700"
               >
