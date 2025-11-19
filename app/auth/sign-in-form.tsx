@@ -128,7 +128,6 @@ export default function SignInForm({
       );
 
       if (!res.ok) {
-        // If login fails, try to get password hint
         await fetchPasswordHint(formData.username);
         throw new Error("Invalid username or password");
       }
@@ -136,7 +135,10 @@ export default function SignInForm({
       const data = await res.json();
       const authToken = data.token;
 
+      // ✅ FIXED: Include all required User properties
       login(authToken, {
+        id: data.user?.id || data.author?.id || 0, // Add ID (provide default)
+        slug: data.author?.slug || "", // Add slug
         username: data.user?.username || formData.username,
         email: data.user?.email || "",
         avatar: data.author?.avatar,
@@ -196,7 +198,10 @@ export default function SignInForm({
 
       const authToken = data.token;
 
+      // ✅ FIXED: Include all required User properties
       login(authToken, {
+        id: data.user?.id || data.author?.id || 0, // Add ID (provide default)
+        slug: data.author?.slug || "", // Add slug
         username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
         avatar: data.author?.avatar || data.user?.avatar,
