@@ -37,11 +37,13 @@ export function MinimalHeader() {
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isOthersOpen, setIsOthersOpen] = useState(false); // Add this new state
 
   // Timeout refs for delayed closing
   const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
   const resourcesTimeout = useRef<NodeJS.Timeout | null>(null);
   const userDropdownTimeout = useRef<NodeJS.Timeout | null>(null);
+  const othersTimeout = useRef<NodeJS.Timeout | null>(null); // Add this new ref
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -50,6 +52,7 @@ export function MinimalHeader() {
     return () => {
       if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
       if (resourcesTimeout.current) clearTimeout(resourcesTimeout.current);
+      if (othersTimeout.current) clearTimeout(othersTimeout.current); // Add this
       if (userDropdownTimeout.current)
         clearTimeout(userDropdownTimeout.current);
     };
@@ -498,26 +501,62 @@ export function MinimalHeader() {
                     >
                       DevOps Support
                     </Link>
+                  </div>
+                )}
+              </div>
+              {/* Others Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() =>
+                  handleMouseEnter(setIsOthersOpen, othersTimeout)
+                }
+                onMouseLeave={() =>
+                  handleMouseLeave(setIsOthersOpen, othersTimeout)
+                }
+              >
+                <button
+                  className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
+                    pathname.includes("/about") ||
+                    pathname.includes("/faqs") ||
+                    pathname.includes("/user-guide")
+                      ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
+                      : "text-black hover:text-black hover:bg-gray-100"
+                  }`}
+                >
+                  <span className="relative z-10">Others</span>
+                  <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
+                </button>
+                {isOthersOpen && (
+                  <div
+                    className="absolute top-full left-0 mt-3 w-64 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2"
+                    onMouseEnter={() =>
+                      handleMouseEnter(setIsOthersOpen, othersTimeout)
+                    }
+                    onMouseLeave={() =>
+                      handleMouseLeave(setIsOthersOpen, othersTimeout)
+                    }
+                  >
+                    <Link
+                      href="/about"
+                      className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
+                    >
+                      About
+                    </Link>
                     <Link
                       href="/faqs"
-                      className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 transition-all font-medium"
+                      className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-all font-medium"
                     >
                       FAQs
+                    </Link>
+                    <Link
+                      href="/user-guide"
+                      className="block px-4 py-3 text-black hover:text-black hover:bg-gray-50 transition-all font-medium"
+                    >
+                      User Guide
                     </Link>
                   </div>
                 )}
               </div>
-
-              <Link
-                href="/about"
-                className={`px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
-                  pathname === "/about"
-                    ? "text-black bg-gradient-to-r from-blue-100 to-purple-100 shadow-md"
-                    : "text-black hover:text-black hover:bg-gray-100"
-                }`}
-              >
-                <span className="relative z-10">About</span>
-              </Link>
             </nav>
 
             {/* Right Section - Search + Auth */}

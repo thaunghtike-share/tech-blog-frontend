@@ -173,7 +173,7 @@ export function MinimalFooter() {
             &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
             reserved.
           </p>
-          
+
           {/* Privacy and Terms Links */}
           <div className="flex space-x-6">
             <Link
@@ -187,6 +187,12 @@ export function MinimalFooter() {
               className="text-gray-800 hover:text-blue-700 transition-all duration-300 font-medium"
             >
               Terms of Service
+            </Link>
+            <Link
+              href="/user-guide"
+              className="text-gray-800 hover:text-blue-700 transition-all duration-300 font-medium"
+            >
+              User Guide
             </Link>
           </div>
         </div>
