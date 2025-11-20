@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ldn-container
-          image: mahar.azurecr.io/ldn-ui-v3:alpha
+          image: mahar.azurecr.io/ldn-ui-v3:latest
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
