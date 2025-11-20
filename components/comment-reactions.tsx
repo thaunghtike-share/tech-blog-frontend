@@ -635,13 +635,13 @@ export function CommentsReactions({
                   </button>
 
                   {showMenu && (
-                    <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-xl shadow-xl z-10 w-32 overflow-hidden">
+                    <div className="absolute right-2 top-8 bg-white border border-gray-200 rounded-xl shadow-xl z-10 w-32 overflow-hidden">
                       <button
                         onClick={() => {
                           setEditingComment(comment.id);
                           setShowMenu(false);
                         }}
-                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       >
                         <Edit className="w-4 h-4" />
                         Edit
