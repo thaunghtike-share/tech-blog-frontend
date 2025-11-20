@@ -16,6 +16,10 @@ import {
   LayoutDashboard,
   Eye,
   Crown,
+  Trash,
+  Trash2,
+  AlertTriangle,
+  Loader,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -164,57 +168,191 @@ export function MinimalHeader() {
     }, 200);
   }
 
-  // User Dropdown Component
-  const UserDropdown = () => {
+  // Add these states with your other state declarations at the top
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Add this function with your other functions
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/auth/delete-account/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Clear local storage and redirect to home
+        localStorage.removeItem("token");
+        window.location.href = "/";
+      } else {
+        const errorData = await response.json();
+        alert(
+          `Failed to delete account: ${errorData.error || "Unknown error"}`
+        );
+        setShowDeleteConfirm(false);
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      alert("Failed to delete account. Please try again.");
+      setShowDeleteConfirm(false);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // Update DeleteAccountModal to receive props
+  const DeleteAccountModal = () => {
+    if (!showDeleteConfirm) return null;
+
     return (
-      <div className="absolute top-full right-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2">
-        <div className="px-4 py-3 border-b border-gray-100">
-          <p className="text-sm font-medium text-gray-900 truncate">
-            {user?.username}
-          </p>
-          <p className="text-sm text-gray-500 truncate">{user?.email}</p>
-        </div>
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+        <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-red-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-red-600" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-red-900">
+                Delete Your Account
+              </h3>
+              <p className="text-red-600 text-sm">
+                This action cannot be undone
+              </p>
+            </div>
+          </div>
 
-        <Link
-          href="/author-profile-form"
-          className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
-          onClick={() => setIsUserDropdownOpen(false)}
-        >
-          <Settings className="w-4 h-4 mr-3" />
-          Edit Your Profile
-        </Link>
+          <div className="mb-6">
+            <p className="text-gray-900 font-medium mb-3">
+              Are you absolutely sure you want to delete your account?
+            </p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <ul className="text-red-800 text-sm space-y-2">
+                <li className="flex items-start gap-2">
+                  <X className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                  <span>All your articles will be permanently deleted</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <X className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                  <span>Your author profile will be removed</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <X className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                  <span>All comments and reactions will be deleted</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <X className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                  <span>This action cannot be reversed</span>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-        <Link
-          href={`/admin/author/${user?.username}`}
-          className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
-          onClick={() => setIsUserDropdownOpen(false)}
-        >
-          <LayoutDashboard className="w-4 h-4 mr-3" />
-          Dashboard
-        </Link>
-
-        <Link
-          href={`/authors/${user?.slug}`}
-          className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
-          onClick={() => setIsUserDropdownOpen(false)}
-        >
-          <Crown className="w-4 h-4 mr-3" />
-          Public Profile View
-        </Link>
-
-        <div className="border-t border-gray-100 mt-2 pt-2">
-          <button
-            onClick={handleLogout}
-            className="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-all font-medium"
-          >
-            <LogOut className="w-4 h-4 mr-3" />
-            Sign Out
-          </button>
+          <div className="flex gap-3 justify-end">
+            <button
+              onClick={() => setShowDeleteConfirm(false)}
+              disabled={isDeleting}
+              className="px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition-all duration-200 font-medium disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDeleteAccount}
+              disabled={isDeleting}
+              className="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-200 font-medium disabled:opacity-50 flex items-center gap-2"
+            >
+              {isDeleting ? (
+                <>
+                  <Loader className="w-4 h-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="w-4 h-4" />
+                  Yes, Delete My Account
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     );
   };
 
+  // Simplify UserDropdown component
+  const UserDropdown = () => {
+    const openDeleteConfirmation = () => {
+      setIsUserDropdownOpen(false);
+      setShowDeleteConfirm(true);
+    };
+
+    return (
+      <>
+        <div className="absolute top-full right-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {user?.username}
+            </p>
+            <p className="text-sm text-gray-500 truncate">{user?.email}</p>
+          </div>
+
+          <Link
+            href="/author-profile-form"
+            className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+            onClick={() => setIsUserDropdownOpen(false)}
+          >
+            <Settings className="w-4 h-4 mr-3" />
+            Edit Your Profile
+          </Link>
+
+          <Link
+            href={`/admin/author/${user?.username}`}
+            className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+            onClick={() => setIsUserDropdownOpen(false)}
+          >
+            <LayoutDashboard className="w-4 h-4 mr-3" />
+            Dashboard
+          </Link>
+
+          <Link
+            href={`/authors/${user?.slug}`}
+            className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+            onClick={() => setIsUserDropdownOpen(false)}
+          >
+            <Crown className="w-4 h-4 mr-3" />
+            Public Profile View
+          </Link>
+
+          <div className="border-t border-gray-100 mt-2 pt-2">
+            <button
+              onClick={handleLogout}
+              className="flex items-center w-full px-4 py-3 text-gray-700 hover:bg-gray-50 transition-all font-medium"
+            >
+              <LogOut className="w-4 h-4 mr-3" />
+              Sign Out
+            </button>
+
+            {/* Delete Account Option */}
+            <button
+              onClick={openDeleteConfirmation}
+              className="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-all font-medium border-t border-gray-100 mt-2 pt-2"
+            >
+              <Trash2 className="w-4 h-4 mr-3" />
+              Delete Account
+            </button>
+          </div>
+        </div>
+
+        {/* Delete Confirmation Modal */}
+        <DeleteAccountModal />
+      </>
+    );
+  };
   // Auth Modal Component
   const AuthModalOverlay = () => {
     if (!mounted || !showAuthModal) return null;
@@ -657,6 +795,9 @@ export function MinimalHeader() {
 
       {/* Auth Modal - Rendered as portal to body */}
       <AuthModalOverlay />
+
+      {/* Delete Account Confirmation Modal */}
+      <DeleteAccountModal />
     </>
   );
 }
