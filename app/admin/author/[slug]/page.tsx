@@ -343,7 +343,7 @@ export default function AuthorAdminDashboard() {
     ) || 0;
   const avgViews =
     totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
-  
+
   const totalReadTime =
     author?.articles?.reduce(
       (sum, article) => sum + calculateReadTime(article.content),
@@ -576,10 +576,12 @@ export default function AuthorAdminDashboard() {
 
                 {/* Content Section */}
                 <div className="flex-1">
-                  {/* Title & Company */}
-                  <p className="text-xl text-blue-600 font-medium mb-6">
-                    {author?.job_title} at {author?.company}
-                  </p>
+                  {/* Title & Company - Only show if both are set */}
+                  {author?.job_title && author?.company && (
+                    <p className="text-xl text-blue-600 font-medium mb-6">
+                      {author.job_title} at {author.company}
+                    </p>
+                  )}
 
                   {/* Bio */}
                   <p className="text-lg text-black leading-relaxed mb-8 max-w-2xl">
@@ -630,7 +632,9 @@ export default function AuthorAdminDashboard() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <div className="text-5xl font-light text-black">{avgViews}</div>
+                  <div className="text-5xl font-light text-black">
+                    {avgViews}
+                  </div>
                   <div className="text-sm text-purple-600 font-semibold uppercase tracking-wider">
                     Avg Views
                   </div>
