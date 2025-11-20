@@ -295,8 +295,8 @@ export function MinimalHeader() {
       <>
         <div className="absolute top-full right-0 mt-3 w-56 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 py-2">
           <div className="px-4 py-3 border-b border-gray-100">
-            <p className="text-sm font-medium text-gray-900 truncate">
-              {user?.username}
+            <p className="text-base font-medium text-gray-900 truncate">
+              Hello, {user?.username}!
             </p>
             <p className="text-sm text-gray-500 truncate">{user?.email}</p>
           </div>
