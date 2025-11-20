@@ -646,17 +646,6 @@ export function CommentsReactions({
                         <Edit className="w-4 h-4" />
                         Edit
                       </button>
-                      <button
-                        onClick={() => {
-                          console.log("Delete button clicked for:", comment.id);
-                          deleteComment(comment.id);
-                          setShowMenu(false);
-                        }}
-                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        Delete
-                      </button>
                     </div>
                   )}
                 </div>
