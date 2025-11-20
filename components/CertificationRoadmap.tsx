@@ -304,7 +304,7 @@ export function CertificationRoadmap() {
   };
 
   return (
-    <section className="relative min-h-screen bg-white/95 overflow-hidden">
+    <section className="relative min-h-screen bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
       {/* Subtle background pattern */}
       <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
         {/* Left Aligned Header */}
@@ -325,7 +325,7 @@ export function CertificationRoadmap() {
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+              className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
             >
               Advance Your Career with
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -337,7 +337,7 @@ export function CertificationRoadmap() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-black mt-4 text-lg max-w-2xl"
+              className="text-black dark:text-gray-300 mt-4 text-lg max-w-2xl"
             >
               Validate your skills with industry-recognized certifications that
               showcase your DevOps expertise and boost your career prospects.
@@ -384,9 +384,9 @@ export function CertificationRoadmap() {
                   {/* Main Card Container */}
                   <motion.div
                     className={`
-                    bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-gray-300
+                    bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 border border-gray-300 dark:border-gray-700
                     transition-all duration-300 relative overflow-hidden
-                    group-hover:shadow-2xl group-hover:border-blue-400
+                    group-hover:shadow-2xl group-hover:border-blue-400 dark:group-hover:border-blue-500
                     ${config.glowColor}
                   `}
                     whileHover={{
@@ -407,7 +407,7 @@ export function CertificationRoadmap() {
                         scale: isHovered ? 1 : 0.8,
                       }}
                     >
-                      <ExternalLink className="w-4 h-4 text-blue-500" />
+                      <ExternalLink className="w-4 h-4 text-blue-500 dark:text-blue-400" />
                     </motion.div>
 
                     {/* Logo */}
@@ -429,7 +429,7 @@ export function CertificationRoadmap() {
                     {/* Pulse Animation on Hover */}
                     {isHovered && (
                       <motion.div
-                        className="absolute inset-0 border-2 border-blue-400/30 rounded-xl"
+                        className="absolute inset-0 border-2 border-blue-400/30 dark:border-blue-500/30 rounded-xl"
                         initial={{ scale: 1, opacity: 0.7 }}
                         animate={{ scale: 1.1, opacity: 0 }}
                         transition={{
@@ -456,13 +456,13 @@ export function CertificationRoadmap() {
                   animate={{ y: isHovered ? 2 : 0 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
-                  <h3 className="text-xs md:text-sm font-semibold text-black line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-blue-600 transition-colors duration-300">
+                  <h3 className="text-xs md:text-sm font-semibold text-black dark:text-gray-100 line-clamp-2 leading-tight min-h-[2.5rem] flex items-center justify-center group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                     {cert.title}
                   </h3>
 
                   {/* Organization on Hover */}
                   <motion.p
-                    className="text-xs text-black mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="text-xs text-black dark:text-gray-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     initial={false}
                   >
                     {cert.organization}
@@ -470,7 +470,7 @@ export function CertificationRoadmap() {
 
                   {/* Exam Details on Hover */}
                   <motion.p
-                    className="text-xs text-blue-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="text-xs text-blue-600 dark:text-blue-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     initial={false}
                   >
                     {cert.examDetails.split("|")[0].trim()}
@@ -488,7 +488,7 @@ export function CertificationRoadmap() {
           transition={{ delay: 1 }}
           className="text-center mt-8"
         >
-          <p className="text-black text-sm">
+          <p className="text-black dark:text-gray-300 text-sm">
             💡 Click on any certification to visit the official exam page
           </p>
         </motion.div>

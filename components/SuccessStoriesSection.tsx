@@ -111,7 +111,7 @@ export function SuccessStoriesSection() {
   const testimonials = feedbacks.length > 0 ? feedbacks : mockTestimonials;
 
   return (
-    <section ref={sectionRef} className="relative bg-white overflow-hidden">
+    <section ref={sectionRef} className="relative bg-white dark:bg-[#0A0A0A] overflow-hidden">
       <div className="relative w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 font-open-sans">
           {/* Header */}
@@ -131,7 +131,7 @@ export function SuccessStoriesSection() {
               <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
+                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight"
               >
                 Real Stories from
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mt-2">
@@ -143,7 +143,7 @@ export function SuccessStoriesSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-black-600 text-lg max-w-2xl"
+                className="text-black-600 dark:text-gray-300 text-lg max-w-2xl"
               >
                 See how students and junior engineers from Myanmar are growing
                 their careers and mastering DevOps skills
@@ -159,17 +159,17 @@ export function SuccessStoriesSection() {
                 onClick={scrollLeft}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 bg-white rounded-full border border-gray-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center transition-all duration-200 shadow-sm"
               >
-                <ChevronLeft className="w-5 h-5 text-sky-600" />
+                <ChevronLeft className="w-5 h-5 text-sky-600 dark:text-sky-400" />
               </motion.button>
               <motion.button
                 onClick={scrollRight}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 bg-white rounded-full border border-gray-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center transition-all duration-200 shadow-sm"
               >
-                <ChevronRight className="w-5 h-5 text-sky-600" />
+                <ChevronRight className="w-5 h-5 text-sky-600 dark:text-sky-400" />
               </motion.button>
             </div>
 
@@ -177,15 +177,15 @@ export function SuccessStoriesSection() {
             <div className="sm:hidden flex justify-between items-center absolute top-1/2 -translate-y-1/2 w-full z-10 px-2">
               <motion.button
                 onClick={scrollLeft}
-                className="w-10 h-10 bg-white rounded-full border border-gray-300 flex items-center justify-center shadow-sm"
+                className="w-10 h-10 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-sm"
               >
-                <ChevronLeft className="w-4 h-4 text-gray-600" />
+                <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </motion.button>
               <motion.button
                 onClick={scrollRight}
-                className="w-10 h-10 bg-white rounded-full border border-gray-300 flex items-center justify-center shadow-sm"
+                className="w-10 h-10 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-sm"
               >
-                <ChevronRight className="w-4 h-4 text-gray-600" />
+                <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </motion.button>
             </div>
 
@@ -203,11 +203,11 @@ export function SuccessStoriesSection() {
                   className="min-w-[320px] sm:min-w-0 snap-start flex-shrink-0"
                 >
                   {/* Enhanced Card Design */}
-                  <div className="bg-white/50 rounded-2xl p-6 h-full flex flex-col border border-gray-300 hover:border-gray-300 transition-colors duration-200">
+                  <div className="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 h-full flex flex-col border border-gray-300 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors duration-200">
                     {/* Top Section with Quote and Rating */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="p-3 bg-white rounded-lg border border-sky-300">
-                        <Quote className="w-5 h-5 text-sky-600" />
+                      <div className="p-3 bg-white dark:bg-gray-700 rounded-lg border border-sky-300 dark:border-sky-600">
+                        <Quote className="w-5 h-5 text-sky-600 dark:text-sky-400" />
                       </div>
                       <div className="flex gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -216,7 +216,7 @@ export function SuccessStoriesSection() {
                             className={`w-4 h-4 ${
                               i < testimonial.rating
                                 ? "text-yellow-500 fill-yellow-500"
-                                : "text-gray-300"
+                                : "text-gray-300 dark:text-gray-600"
                             }`}
                           />
                         ))}
@@ -225,17 +225,17 @@ export function SuccessStoriesSection() {
 
                     {/* Feedback Text - Full Height */}
                     <div className="flex-grow mb-6">
-                      <p className="text-black-500 text-base leading-relaxed">
+                      <p className="text-black-500 dark:text-gray-300 text-base leading-relaxed">
                         "{testimonial.feedback}"
                       </p>
                     </div>
 
                     {/* User Info */}
-                    <div className="border-t border-gray-200 pt-4">
-                      <div className="text-sm font-semibold text-gray-900">
+                    <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                         {testimonial.name}
                       </div>
-                      <div className="text-base text-black-300 mt-1">
+                      <div className="text-base text-black-300 dark:text-gray-400 mt-1">
                         {testimonial.role}
                       </div>
                     </div>
@@ -255,7 +255,7 @@ export function SuccessStoriesSection() {
             >
               <button
                 onClick={() => setShowAll(!showAll)}
-                className="px-8 py-3 rounded-lg text-sm font-medium bg-sky-800 text-white border border-sky-800 flex items-center gap-2 mx-auto transition-colors duration-200 hover:bg-gray-700"
+                className="px-8 py-3 rounded-lg text-sm font-medium bg-sky-800 dark:bg-sky-700 text-white border border-sky-800 dark:border-sky-700 flex items-center gap-2 mx-auto transition-colors duration-200 hover:bg-gray-700 dark:hover:bg-gray-600"
               >
                 {showAll ? (
                   <>

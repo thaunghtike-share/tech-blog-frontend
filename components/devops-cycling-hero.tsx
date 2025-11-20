@@ -115,7 +115,7 @@ const DevOpsCyclingHero = () => {
   };
 
   return (
-    <section className="relative bg-white/95 overflow-hidden">
+    <section className="relative bg-white/95 overflow-hidden dark:bg-[#0A0A0A]/95">
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between py-7 gap-8">
           {/* Left Content */}
@@ -137,7 +137,7 @@ const DevOpsCyclingHero = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight"
+                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight"
               >
                 Our Mission for
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -149,7 +149,7 @@ const DevOpsCyclingHero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-black leading-relaxed max-w-xl mx-auto lg:mx-0"
+                className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
               >
                 This website is for students and developers in Myanmar who want
                 to learn DevOps and boost their careers in modern software
@@ -205,7 +205,7 @@ const DevOpsCyclingHero = () => {
                 <div className="space-y-4">
                   {/* Topic indicator positioned lower */}
                   <div className="inline-block mb-4">
-                    <span className="text-xs font-mono text-gray-500 tracking-wider uppercase">
+                    <span className="text-xs font-mono text-gray-500 dark:text-gray-400 tracking-wider uppercase">
                       Topic {currentSlide + 1} of {slides.length}
                     </span>
                   </div>
@@ -216,7 +216,7 @@ const DevOpsCyclingHero = () => {
                     {currentSlideData.title}
                   </h1>
 
-                  <p className="text-lg text-black leading-relaxed">
+                  <p className="text-lg text-black dark:text-gray-300 leading-relaxed">
                     {currentSlideData.description}
                   </p>
 
@@ -227,7 +227,7 @@ const DevOpsCyclingHero = () => {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 + index * 0.05 }}
-                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 text-orange-500 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-orange-500 dark:text-orange-400 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
                       >
                         {tag}
                       </motion.span>
@@ -248,7 +248,7 @@ const DevOpsCyclingHero = () => {
                         className={`h-2 rounded-full transition-all duration-300 ${
                           index === currentSlide
                             ? `w-10 bg-gradient-to-r ${slide.iconGradient}`
-                            : "w-2 bg-gray-300 group-hover:bg-gray-400"
+                            : "w-2 bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
                         }`}
                       />
                     </button>

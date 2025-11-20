@@ -6,7 +6,6 @@ import { MinimalHeader } from "@/components/minimal-header";
 import DevOpsCyclingHero from "@/components/devops-cycling-hero";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { CertificationRoadmap } from "@/components/CertificationRoadmap";
-import { MinimalFAQs } from "@/components/minimal-faqs";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { YouTubePlaylists } from "@/components/YouTubePlaylists";
 import { FreeLabs } from "@/components/FreeLabs";
@@ -86,6 +85,19 @@ export default function HomeClient() {
     setMounted(true);
   }, []);
 
+  // Add this to your existing useEffects in HomeClient
+  useEffect(() => {
+    // Load saved theme or detect system preference
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
   // Handle initial load scroll
   useEffect(() => {
     if (isInitialLoad) {
@@ -118,32 +130,11 @@ export default function HomeClient() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-white backdrop-blur-2xl relative overflow-x-hidden"
-      style={{
-        // Force GPU acceleration and prevent white flashes
-        transform: "translateZ(0)",
-        backfaceVisibility: "hidden",
-        perspective: 1000,
-        willChange: "auto",
-      }}
-    >
-      {/* Pre-render background to prevent white screen */}
-      <div
-        className="fixed inset-0 bg-white z-0"
-        style={{
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-        }}
-      />
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
+      {/* Remove the fixed background div - it's causing the issue */}
+      
       {mounted && (
-        <div
-          className="fixed inset-0 pointer-events-none z-0"
-          style={{
-            transform: "translateZ(0)",
-            backfaceVisibility: "hidden",
-          }}
-        >
+        <div className="fixed inset-0 pointer-events-none z-0">
           {floatingIconPositions.map((pos, i) => {
             const icons = [
               Server,
@@ -165,12 +156,10 @@ export default function HomeClient() {
                   top: `${pos.top}%`,
                   animationDelay: `${i * 0.7}s`,
                   animationDuration: `${15 + (i % 5) * 2}s`,
-                  transform: "translateZ(0)",
-                  backfaceVisibility: "hidden",
                 }}
               >
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-100/20 to-purple-100/20 rounded-lg backdrop-blur-sm border border-blue-200/30 flex items-center justify-center shadow-sm">
-                  <IconComponent className="w-5 h-5 text-blue-500/40" />
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-100/20 to-purple-100/20 dark:from-blue-900/10 dark:to-purple-900/10 rounded-lg backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/20 flex items-center justify-center shadow-sm">
+                  <IconComponent className="w-5 h-5 text-blue-500/40 dark:text-blue-400/20" />
                 </div>
               </div>
             );
@@ -185,72 +174,53 @@ export default function HomeClient() {
                 top: `${pos.top}%`,
                 animationDelay: `${i * 0.2}s`,
                 animationDuration: `${3 + (i % 3)}s`,
-                transform: "translateZ(0)",
-                backfaceVisibility: "hidden",
               }}
             >
-              <div className="w-3 h-3 bg-gradient-to-r from-blue-200 to-purple-200 rounded-full shadow-sm" />
+              <div className="w-3 h-3 bg-gradient-to-r from-blue-200 to-purple-200 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full shadow-sm" />
             </div>
           ))}
         </div>
       )}
 
-      <div
-        className="relative z-10"
-        style={{
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-        }}
-      >
+      <div className="relative z-10">
         <MinimalHeader />
 
-        <main
-          className="relative z-10"
-          style={{
-            transform: "translateZ(0)",
-            backfaceVisibility: "hidden",
-          }}
-        >
-          <section className="">
+        <main className="relative z-10">
+          {/* Add explicit background to each section */}
+          <section className="bg-white dark:bg-[#0A0A0A]">
             <DevOpsCyclingHero />
           </section>
 
-          {/* Featured Articles Section - Only this section updated for 2xl 
-          <section className="-mt-17 2xl:-mt-12 2xl:-mt-10">
-            <FeaturedArticlesPage />
-          </section> */}
-
-          {/* All other sections remain exactly the same */}
-          <section id="roadmap" className="-mt-18">
+          <section id="roadmap" className="bg-white dark:bg-[#0A0A0A]">
             <MinimalDevopsRoadmap />
           </section>
 
-          <section id="">
+          <section id="" className="bg-white dark:bg-[#0A0A0A]">
             <ProgrammingLanguagesRoadmap />
           </section>
 
-          <section id="youtube" className="-mt-20">
+          <section id="youtube" className="bg-white dark:bg-[#0A0A0A]">
             <YouTubePlaylists />
           </section>
 
-          <section id="playgrounds" className="-mt-15">
+          <section id="playgrounds" className="bg-white dark:bg-[#0A0A0A]">
             <FreeLabs />
           </section>
 
-          <div id="cert" className="-mt-10">
+          <div id="cert" className="bg-white dark:bg-[#0A0A0A]">
             <CertificationRoadmap />
           </div>
 
-          <section id="career" className="-mt-1">
+          <section id="career" className="bg-white dark:bg-[#0A0A0A]">
             <CareerPath />
           </section>
 
-          <div className="">
+          <div className="bg-white dark:bg-[#0A0A0A]">
             <SuccessStoriesSection />
           </div>
         </main>
 
-        <div id="faqs" className="">
+        <div id="faqs" className="bg-white dark:bg-[#0A0A0A]">
           <MinimalFooter />
         </div>
       </div>
@@ -275,25 +245,21 @@ export default function HomeClient() {
           animation: float 20s ease-in-out infinite;
         }
 
-        /* Update background to white theme */
-        html {
-          background: #ffffff;
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          perspective: 1000;
-        }
-
-        body {
-          background: #ffffff;
-          transform: translateZ(0);
-          backface-visibility: hidden;
+        /* Force background colors to prevent white flash */
+        html, body {
+          background: white;
+          margin: 0;
+          padding: 0;
           overflow-x: hidden;
         }
 
-        /* Ensure smooth scrolling without white gaps */
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
+        .dark html, .dark body {
+          background: #0A0A0A;
+        }
+
+        /* Ensure all sections have proper backgrounds */
+        section, main, div[class*="section"] {
+          background-color: inherit !important;
         }
 
         /* Fix for modal positioning - scroll to top when modal opens */

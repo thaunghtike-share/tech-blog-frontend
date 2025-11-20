@@ -127,7 +127,7 @@ export function CareerPath() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
+            className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight"
           >
             Explore Your Future in
             <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mt-2">
@@ -139,7 +139,7 @@ export function CareerPath() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-black-500 text-lg leading-relaxed max-w-2xl lg:ml-auto"
+            className="text-black-500 dark:text-gray-300 text-lg leading-relaxed max-w-2xl lg:ml-auto"
           >
             Discover the key differences between DevOps roles and find your
             perfect career specialization path
@@ -154,13 +154,13 @@ export function CareerPath() {
           transition={{ delay: 0.4 }}
           className="text-center py-16"
         >
-          <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+          <div className="mx-auto w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
             <Users className="w-10 h-10 text-gray-400" />
           </div>
-          <h4 className="text-gray-900 font-semibold text-lg mb-3">
+          <h4 className="text-gray-900 dark:text-gray-100 font-semibold text-lg mb-3">
             No roles available
           </h4>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             Please check back later for new career opportunities.
           </p>
         </motion.div>
@@ -171,15 +171,15 @@ export function CareerPath() {
             <>
               <button
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-gray-200 flex items-center justify-center hover:shadow-lg transition-all duration-300 -ml-6"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-md border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:shadow-lg transition-all duration-300 -ml-6"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-600" />
+                <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-gray-200 flex items-center justify-center hover:shadow-lg transition-all duration-300 -mr-6"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-md border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:shadow-lg transition-all duration-300 -mr-6"
               >
-                <ChevronRight className="w-5 h-5 text-gray-600" />
+                <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </button>
             </>
           )}
@@ -208,7 +208,7 @@ export function CareerPath() {
                           className="group"
                         >
                           {/* Card Design */}
-                          <div className="relative bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 overflow-hidden h-full flex flex-col">
+                          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all duration-300 overflow-hidden h-full flex flex-col">
                             {/* Top Accent Bar */}
                             <div
                               className={`h-2 bg-gradient-to-r ${role.color}`}
@@ -223,7 +223,7 @@ export function CareerPath() {
                                   <role.icon className="w-6 h-6 text-white" />
                                 </div>
                                 <div>
-                                  <h3 className="text-xl font-bold text-gray-900">
+                                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                                     {role.title}
                                   </h3>
                                   <p
@@ -238,21 +238,21 @@ export function CareerPath() {
                             {/* Content */}
                             <div className="p-6 pt-0 flex-grow flex flex-col space-y-6">
                               {/* Description */}
-                              <p className="text-black text-sm leading-relaxed">
+                              <p className="text-black dark:text-gray-300 text-sm leading-relaxed">
                                 {role.description}
                               </p>
 
                               {/* Key Difference */}
-                              <div className="bg-gray-50 rounded-lg p-4">
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                 <div className="flex items-center gap-2 mb-2">
                                   <div
                                     className={`w-2 h-2 rounded-full bg-gradient-to-r ${role.color}`}
                                   />
-                                  <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                  <span className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                                     Key Difference
                                   </span>
                                 </div>
-                                <p className="text-gray-900 text-sm">
+                                <p className="text-gray-900 dark:text-gray-100 text-sm">
                                   {role.keyDifference}
                                 </p>
                               </div>
@@ -265,7 +265,7 @@ export function CareerPath() {
                                   >
                                     <Zap className="w-4 h-4 text-white" />
                                   </div>
-                                  <h4 className="text-gray-900 font-semibold text-sm">
+                                  <h4 className="text-gray-900 dark:text-gray-100 font-semibold text-sm">
                                     Core Responsibilities
                                   </h4>
                                 </div>
@@ -278,7 +278,7 @@ export function CareerPath() {
                                       <div
                                         className={`w-1.5 h-1.5 rounded-full mt-1.5 bg-gradient-to-r ${role.color} flex-shrink-0`}
                                       />
-                                      <span className="text-black text-sm leading-relaxed">
+                                      <span className="text-black dark:text-gray-300 text-sm leading-relaxed">
                                         {resp}
                                       </span>
                                     </div>
@@ -305,7 +305,7 @@ export function CareerPath() {
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === currentIndex
                       ? "bg-gradient-to-r from-sky-500 to-blue-500"
-                      : "bg-gray-300 hover:bg-gray-400"
+                      : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                   }`}
                 />
               ))}

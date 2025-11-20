@@ -120,19 +120,19 @@ export function ProgrammingLanguagesRoadmap() {
   };
 
   return (
-    <section className="relative bg-white py-16">
+    <section className="relative bg-white dark:bg-[#0A0A0A] py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-16">
           <div className="max-w-3xl">
             <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6" />
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
               Start with Coding Before
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
                 Your DevOps Journey
               </span>
             </h2>
-            <p className="text-lg text-black-400 leading-relaxed">
+            <p className="text-lg text-black-400 dark:text-gray-300 leading-relaxed">
               Before diving into DevOps tools and automation, it's important
               to have a solid understanding of programming. Coding skills help
               you write scripts, automate tasks, and understand how software
@@ -156,7 +156,7 @@ export function ProgrammingLanguagesRoadmap() {
                   className={`w-20 h-20 rounded-full p-4 border-4 transition-all duration-300 ${
                     selectedLanguage === index
                       ? `border-transparent bg-gradient-to-r ${language.color} shadow-lg`
-                      : 'border-gray-200 bg-white hover:border-gray-300'
+                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
                 >
                   <img
@@ -170,7 +170,7 @@ export function ProgrammingLanguagesRoadmap() {
                   className={`mt-3 font-semibold transition-all duration-300 ${
                     selectedLanguage === index
                       ? `bg-gradient-to-r ${language.color} bg-clip-text text-transparent`
-                      : 'text-gray-600'
+                      : 'text-gray-600 dark:text-gray-400'
                   }`}
                 >
                   {language.name}
@@ -200,19 +200,19 @@ export function ProgrammingLanguagesRoadmap() {
                 </div>
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-black-600`}>
+                    <h3 className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-black-600 dark:text-gray-300`}>
                       {currentLanguage.name}
                     </h3>
                     <a
                       href={currentLanguage.officialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-black-600 hover:text-gray-900 transition-colors"
+                      className="text-black-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                     >
                       <ExternalLink className="w-5 h-5" />
                     </a>
                   </div>
-                  <p className="text-lg font-semibold text-black-500">
+                  <p className="text-lg font-semibold text-black-500 dark:text-gray-400">
                     {currentLanguage.description}
                   </p>
                 </div>
@@ -220,21 +220,21 @@ export function ProgrammingLanguagesRoadmap() {
 
               {/* Description */}
               <div className="space-y-4">
-                <p className="text-black-600 leading-relaxed text-lg">
+                <p className="text-black-600 dark:text-gray-300 leading-relaxed text-lg">
                   {currentLanguage.fullDescription}
                 </p>
               </div>
 
               {/* Frameworks */}
               <div className="space-y-4">
-                <h4 className="text-xl font-bold text-black-500">
+                <h4 className="text-xl font-bold text-black-500 dark:text-gray-300">
                   Popular Frameworks & Tools
                 </h4>
                 <div className="flex flex-wrap gap-3">
                   {currentLanguage.frameworks.map((framework, idx) => (
                     <span
                       key={idx}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium ${currentLanguage.tagColor} border-2 transition-all hover:scale-105 hover:shadow-md`}
+                      className={`px-4 py-2 rounded-xl text-sm font-medium ${currentLanguage.tagColor} border-2 transition-all hover:scale-105 hover:shadow-md dark:border-gray-600`}
                     >
                       {framework}
                     </span>
@@ -261,7 +261,7 @@ export function ProgrammingLanguagesRoadmap() {
                   className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
                   onClick={handlePlayButtonClick}
                 >
-                  <div className="h-75 w-full rounded-xl overflow-hidden shadow-lg border border-gray-300 relative bg-gray-200">
+                  <div className="h-75 w-full rounded-xl overflow-hidden shadow-lg border border-gray-300 dark:border-gray-700 relative bg-gray-200 dark:bg-gray-800">
                     <img
                       src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
                       alt={`${currentLanguage.name} Tutorial Preview`}
@@ -285,17 +285,17 @@ export function ProgrammingLanguagesRoadmap() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-black-600 text-center flex items-center justify-center gap-1">
+              <p className="text-sm text-black-600 dark:text-gray-400 text-center flex items-center justify-center gap-1">
                 💡 Click to watch full tutorial on YouTube
               </p>
             </div>
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between mt-16 pt-8 border-t border-gray-200">
+          <div className="flex items-center justify-between mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={prevLanguage}
-              className="flex items-center gap-3 px-6 py-3 text-gray-700 hover:text-gray-900 font-semibold transition-all hover:gap-4 group"
+              className="flex items-center gap-3 px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-semibold transition-all hover:gap-4 group"
             >
               <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Previous
@@ -313,20 +313,20 @@ export function ProgrammingLanguagesRoadmap() {
                       className={`w-3 h-3 rounded-full transition-all duration-300 ${
                         index === currentIndex
                           ? `bg-gradient-to-r ${currentLanguage.color} scale-125`
-                          : "bg-gray-300 group-hover:bg-gray-400"
+                          : "bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
                       }`}
                     />
                   </button>
                 ))}
               </div>
-              <span className="text-sm text-gray-600 font-medium">
+              <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                 {currentIndex + 1} / {programmingLanguages.length}
               </span>
             </div>
 
             <button
               onClick={nextLanguage}
-              className="flex items-center gap-3 px-6 py-3 text-gray-700 hover:text-gray-900 font-semibold transition-all hover:gap-4 group"
+              className="flex items-center gap-3 px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-semibold transition-all hover:gap-4 group"
             >
               Next
               <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />

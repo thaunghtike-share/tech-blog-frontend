@@ -489,27 +489,27 @@ const difficultyConfig = {
   Beginner: {
     gradient: "from-emerald-500 to-teal-600",
     bgColor: "bg-gradient-to-r from-sky-500 to-blue-600",
-    lightBg: "bg-emerald-50",
-    textColor: "text-emerald-700",
-    borderColor: "border-emerald-200",
+    lightBg: "bg-emerald-50 dark:bg-emerald-900/20",
+    textColor: "text-emerald-700 dark:text-emerald-300",
+    borderColor: "border-emerald-200 dark:border-emerald-800",
     icon: BookOpen,
     position: "left",
   },
   Intermediate: {
     gradient: "from-sky-500 to-blue-600",
     bgColor: "bg-gradient-to-r from-blue-500 to-purple-600",
-    lightBg: "bg-sky-50",
-    textColor: "text-sky-700",
-    borderColor: "border-sky-200",
+    lightBg: "bg-sky-50 dark:bg-sky-900/20",
+    textColor: "text-sky-700 dark:text-sky-300",
+    borderColor: "border-sky-200 dark:border-sky-800",
     icon: TrendingUp,
     position: "right",
   },
   Advanced: {
     gradient: "from-pink-500 to-purple-600",
     bgColor: "bg-gradient-to-r from-indigo-500 to-purple-600",
-    lightBg: "bg-indigo-50",
-    textColor: "text-indigo-700",
-    borderColor: "border-indigo-200",
+    lightBg: "bg-indigo-50 dark:bg-indigo-900/20",
+    textColor: "text-indigo-700 dark:text-indigo-300",
+    borderColor: "border-indigo-200 dark:border-indigo-800",
     icon: Star,
     position: "left",
   },
@@ -650,7 +650,7 @@ export function YouTubePlaylists() {
   if (!isClient) {
     return (
       <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="animate-pulse">Loading YouTube courses...</div>
+        <div className="animate-pulse dark:text-gray-300">Loading YouTube courses...</div>
       </section>
     );
   }
@@ -661,7 +661,7 @@ export function YouTubePlaylists() {
   const IconComponent = currentConfig.icon;
 
   return (
-    <section className="relative min-h-screen bg-white/95 overflow-hidden">
+    <section className="relative min-h-screen bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
       {/* Subtle background pattern */}
 
       <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
@@ -683,7 +683,7 @@ export function YouTubePlaylists() {
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
               >
                 Master DevOps with
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -695,7 +695,7 @@ export function YouTubePlaylists() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-lg text-black mb-6 leading-relaxed max-w-2xl"
+                className="text-lg text-black dark:text-gray-300 mb-6 leading-relaxed max-w-2xl"
               >
                 Curated learning paths from fundamentals to advanced production
                 skills. Follow structured roadmaps with the best YouTube
@@ -715,12 +715,12 @@ export function YouTubePlaylists() {
                   placeholder="Search courses by topic, technology, or channel..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent shadow-lg"
+                  className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent shadow-lg"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-2xl"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl"
                   >
                     ×
                   </button>
@@ -816,16 +816,16 @@ export function YouTubePlaylists() {
                             <DifficultyIcon className="w-6 h-6" />
                           </div>
                           <div>
-                            <h2 className="text-3xl font-bold text-gray-900">
+                            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                               {path.title}
                             </h2>
-                            <span className="text-sm font-medium text-sky-600 mt-1 block">
+                            <span className="text-sm font-medium text-sky-600 dark:text-sky-400 mt-1 block">
                               {difficulty} Level • {playlists.length} courses
                             </span>
                           </div>
                         </div>
 
-                        <p className="text-black text-base leading-relaxed mb-6">
+                        <p className="text-black dark:text-gray-300 text-base leading-relaxed mb-6">
                           {path.description}
                         </p>
 
@@ -834,7 +834,7 @@ export function YouTubePlaylists() {
                             isLeft ? "" : "items-end"
                           }`}
                         >
-                          <span className="text-sm font-semibold text-sky-600 uppercase tracking-wide">
+                          <span className="text-sm font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wide">
                             Recommended Learning Path
                           </span>
                           {/* Updated Learning Path - All in one line */}
@@ -845,10 +845,10 @@ export function YouTubePlaylists() {
                                 className="flex items-center gap-1 flex-shrink-0"
                               >
                                 <div
-                                  className={`flex items-center gap-2 bg-white border-2 ${config.borderColor} rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
+                                  className={`flex items-center gap-2 bg-white dark:bg-gray-800 border-2 ${config.borderColor} rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
                                 >
                                   <span className="text-lg">{step.icon}</span>
-                                  <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">
+                                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
                                     {step.title
                                       .split(" ")
                                       .slice(0, 2)
@@ -856,7 +856,7 @@ export function YouTubePlaylists() {
                                   </span>
                                 </div>
                                 {index < path.learningPath.length - 1 && (
-                                  <ArrowRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                                  <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-600 flex-shrink-0" />
                                 )}
                               </div>
                             ))}
@@ -881,7 +881,7 @@ export function YouTubePlaylists() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-16"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
                 Found {filteredPlaylists.length} courses
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -909,11 +909,11 @@ export function YouTubePlaylists() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-20"
             >
-              <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              <Search className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 No courses found
               </h3>
-              <p className="text-gray-600 mb-6">Try different keywords</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Try different keywords</p>
               <button
                 onClick={() => setSearchQuery("")}
                 className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
@@ -974,20 +974,20 @@ function HorizontalScrollSection({
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-3 rounded-full shadow-xl hover:bg-white dark:hover:bg-gray-700 hover:scale-110 transition-all"
           aria-label="Scroll left"
         >
-          <ChevronLeft className="w-5 h-5 text-gray-700" />
+          <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
         </button>
       )}
 
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-3 rounded-full shadow-xl hover:bg-white dark:hover:bg-gray-700 hover:scale-110 transition-all"
           aria-label="Scroll right"
         >
-          <ChevronRight className="w-5 h-5 text-gray-700" />
+          <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
         </button>
       )}
 
@@ -1076,8 +1076,8 @@ function PlaylistCard({
             </div>
 
             {playlist.is_burmese && (
-              <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-lg">
-                <span className="text-sm font-semibold">🇲🇲</span>
+              <div className="absolute top-3 right-3 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-lg">
+                <span className="text-sm font-semibold dark:text-gray-900">🇲🇲</span>
               </div>
             )}
 
@@ -1094,13 +1094,13 @@ function PlaylistCard({
               e.preventDefault();
               toggleComplete(playlist.id);
             }}
-            className="absolute top-3 right-3 z-10 bg-white/95 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-110 transition-transform border-2 border-gray-300"
+            className="absolute top-3 right-3 z-10 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-110 transition-transform border-2 border-gray-300 dark:border-gray-600"
             aria-label={isCompleted ? "Mark as incomplete" : "Mark as complete"}
           >
             {isCompleted ? (
               <CheckCircle2 className="w-5 h-5 text-green-600" />
             ) : (
-              <Circle className="w-5 h-5 text-gray-400" />
+              <Circle className="w-5 h-5 text-gray-400 dark:text-gray-500" />
             )}
           </button>
         )}
@@ -1113,8 +1113,8 @@ function PlaylistCard({
           rel="noopener noreferrer"
         >
           <h3
-            className={`font-bold line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug ${
-              isCompleted ? "text-gray-500 line-through" : "text-gray-900"
+            className={`font-bold line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-200 text-base leading-snug ${
+              isCompleted ? "text-gray-500 dark:text-gray-500 line-through" : "text-gray-900 dark:text-gray-100"
             }`}
           >
             {index}. {playlist.title}
@@ -1122,13 +1122,13 @@ function PlaylistCard({
         </a>
 
         <div className="flex mt-3 items-center justify-between">
-          <div className="flex items-center gap-2 text-gray-600">
-            <Users className="w-4 h-4 text-gray-400" />
+          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+            <Users className="w-4 h-4 text-gray-400 dark:text-gray-500" />
             <span className="text-sm font-medium">{playlist.channel}</span>
           </div>
 
           {isCompleted && (
-            <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full flex items-center gap-1">
+            <span className="text-xs font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-full flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" />
               Completed
             </span>
