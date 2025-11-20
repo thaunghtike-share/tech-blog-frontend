@@ -1,3 +1,5 @@
+"use client"; // Add this at the very top
+
 import Link from "next/link";
 import {
   Facebook,
@@ -10,7 +12,7 @@ import {
   Sun,
   Monitor,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; // Removed unused 'use' import
 
 export function MinimalFooter() {
   const [theme, setTheme] = useState<"light" | "dark" | "system">("light");
