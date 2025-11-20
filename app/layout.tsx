@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,47 +13,78 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Learn DevOps Now | Free DevOps Tutorials, Tools & Labs",
-  description:
-    "Learn DevOps Now with free tutorials, CI/CD guides, DevOps tools, and practice labs for beginners and professionals.",
+  title: {
+    default: "Learn DevOps Now - Myanmar | Free DevOps Tutorials & Labs",
+    template: "%s | Learn DevOps Now - Myanmar"
+  },
+  description: "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students. Learn Docker, Kubernetes, AWS, Terraform, CI/CD in Burmese and English.",
   keywords: [
-    "learn devops",
-    "devops tutorials",
-    "ci/cd",
-    "devops tools",
-    "practice labs",
-    "cloud devops",
+    "devops myanmar",
+    "myanmar developers",
+    "docker myanmar",
+    "kubernetes myanmar", 
+    "aws myanmar",
+    "terraform myanmar",
+    "ci/cd myanmar",
+    "devops tutorials burmese",
+    "cloud computing myanmar",
+    "devops labs myanmar",
+    "learn devops myanmar",
+    "learn devops now myanmar",
+    "learndevopsnow-mm blog",
+    "myanmar tech community",
+    "containerization myanmar",
+    "infrastructure as code myanmar",
+    "cloud infrastructure myanmar",
+    "burmese devops tutorials",
+    "myanmar software development"
   ],
+  authors: [{ name: "Learn DevOps Now - Myanmar" }],
+  creator: "Learn DevOps Now - Myanmar",
+  publisher: "Learn DevOps Now - Myanmar",
+  metadataBase: new URL("https://www.learndevopsnow-mm.blog"),
+  alternates: {
+    canonical: "/",
+  },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
-    icon: "/devops.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
+  manifest: "/site.webmanifest",
   openGraph: {
-    title: "Learn DevOps Now | Free DevOps Tutorials, Tools & Labs",
-    description:
-      "Learn DevOps Now with free tutorials, CI/CD guides, DevOps tools, and practice labs for beginners and professionals.",
-    url: "https://www.learndevopsnow.it.com",
-    siteName: "Learn DevOps Now",
+    type: "website",
+    locale: "en_US",
+    url: "https://www.learndevopsnow-mm.blog",
+    siteName: "Learn DevOps Now - Myanmar",
+    title: "Learn DevOps Now - Myanmar | Free DevOps Tutorials & Labs",
+    description: "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students.",
     images: [
       {
-        url: "https://www.learndevopsnow.it.com/images/mylogo.jpg",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Learn DevOps Now - Preview",
+        alt: "Learn DevOps Now - Myanmar - Free DevOps Tutorials and Labs for Myanmar Developers",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Learn DevOps Now | Free DevOps Tutorials, Tools & Labs",
-    description:
-      "Learn DevOps Now with free tutorials, CI/CD guides, DevOps tools, and practice labs for beginners and professionals.",
-    images: ["https://www.learndevopsnow.it.com/images/mylogo.jpg"],
+    title: "Learn DevOps Now - Myanmar | Free DevOps Tutorials & Labs",
+    description: "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students.",
+    images: ["/og-image.jpg"],
+    creator: "@learndevopsnowmm",
   },
 };
 
@@ -65,9 +95,43 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        {/* Preload critical resources */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Structured Data for SEO with Myanmar focus */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": "Learn DevOps Now - Myanmar",
+              "description": "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students",
+              "url": "https://www.learndevopsnow-mm.blog",
+              "logo": "https://www.learndevopsnow-mm.blog/logo.png",
+              "sameAs": [],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "hello@learndevopsnow-mm.blog",
+                "contactType": "customer service"
+              },
+              "areaServed": {
+                "@type": "Country",
+                "name": "Myanmar"
+              },
+              "audience": {
+                "@type": "Audience",
+                "audienceType": "Developers, Students, Engineers in Myanmar"
+              },
+              "availableLanguage": ["en", "my"],
+              "keywords": "DevOps Myanmar, Docker Myanmar, Kubernetes Myanmar, AWS Myanmar, Terraform Myanmar, CI/CD Myanmar, Burmese DevOps Tutorials, Myanmar Tech Community"
+            })
+          }}
+        />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>

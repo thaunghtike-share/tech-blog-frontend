@@ -40,7 +40,7 @@ interface Category {
 }
 
 export const dynamic = "force-dynamic";
-
+const SITE_URL = "https://www.learndevopsnow-mm.blog";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
@@ -113,42 +113,38 @@ export async function generateMetadata({
     const cleanDescription =
       article.content
         ?.replace(/[#_*>\[\]()`]/g, "")
-        .slice(0, 150)
-        .trim() || "Learn DevOps Now";
+        .slice(0, 160)
+        .trim() + "..." || "Learn DevOps tutorials and labs for Myanmar developers";
 
-    const title = article.title || "Learn DevOps Now";
-    const combinedTitle = `${title} - ${cleanDescription}`;
+    const title = article.title || "Learn DevOps Now - Myanmar";
 
-    let image =
-      article.cover_image ||
-      "https://www.learndevopsnow.it.com/images/mylogo.jpg";
-
-    if (image && !image.startsWith("http")) {
-      image = `https://www.learndevopsnow.it.com${
-        image.startsWith("/") ? "" : "/"
-      }${image}`;
-    }
+    let image = article.cover_image || "/og-image.jpg";
 
     return {
-      title: combinedTitle,
+      title: `${title} | Learn DevOps Now - Myanmar`,
       description: cleanDescription,
       openGraph: {
-        title: combinedTitle,
-        description: "",
+        title: title,
+        description: cleanDescription,
         type: "article",
-        url: `https://www.learndevopsnow.it.com/articles/${slug}`,
-        images: [{ url: image, width: 1200, height: 630, alt: title }],
+        url: `https://www.learndevopsnow-mm.blog/articles/${slug}`,
+        images: [{ 
+          url: image.startsWith('http') ? image : `https://www.learndevopsnow-mm.blog${image.startsWith('/') ? '' : '/'}${image}`,
+          width: 1200, 
+          height: 630, 
+          alt: title 
+        }],
       },
       twitter: {
         card: "summary_large_image",
-        title: combinedTitle,
-        description: "",
-        images: [image],
+        title: title,
+        description: cleanDescription,
+        images: [image.startsWith('http') ? image : `https://www.learndevopsnow-mm.blog${image.startsWith('/') ? '' : '/'}${image}`],
       },
     };
   } catch {
     return {
-      title: "Article not found",
+      title: "Article not found | Learn DevOps Now - Myanmar",
       description: "This article does not exist.",
     };
   }
@@ -190,16 +186,16 @@ export default async function ArticlePage({
     article.content
       ?.replace(/[#_*>\[\]()`]/g, "")
       .slice(0, 150)
-      .trim() || "Learn DevOps Now";
+      .trim() || "Learn DevOps Now - Myanmar";
 
   const combinedTitle = `${article.title} - ${cleanDescription}`;
 
   let image =
-    article.cover_image ||
-    "https://www.learndevopsnow.it.com/images/mylogo.jpg";
+  article.cover_image ||
+  "/og-image.jpg"; // ← NEW DOMAIN (use relative path)
 
   if (image && !image.startsWith("http")) {
-    image = `https://www.learndevopsnow.it.com${
+    image = `https://www.learndevopsnow-mm.blog${
       image.startsWith("/") ? "" : "/"
     }${image}`;
   }
@@ -224,52 +220,53 @@ export default async function ArticlePage({
     .map((id) => tags.find((t) => t.id === id)?.name)
     .filter(Boolean) as string[];
 
-  return (
-    <>
-      <Head>
-        <title>{combinedTitle}</title>
-        <meta name="description" content={cleanDescription} />
+return (
+  <>
+    <Head>
+      <title>{`${article.title} | Learn DevOps Now - Myanmar`}</title>
+      <meta name="description" content={cleanDescription} />
 
-        {/* Open Graph */}
-        <meta property="og:title" content={combinedTitle} />
-        <meta property="og:description" content="" />
-        <meta property="og:image" content={image} />
-        <meta
-          property="og:url"
-          content={`https://www.learndevopsnow.it.com/articles/${slug}`}
+      {/* Open Graph */}
+      <meta property="og:title" content={article.title} />
+      <meta property="og:description" content={cleanDescription} />
+      <meta property="og:image" content={image} />
+      <meta
+        property="og:url"
+        content={`https://www.learndevopsnow-mm.blog/articles/${slug}`}
+      />
+      <meta property="og:type" content="article" />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={article.title} />
+      <meta name="twitter:description" content={cleanDescription} />
+      <meta name="twitter:image" content={image} />
+    </Head>
+
+    {/* REST OF YOUR EXISTING CODE STAYS EXACTLY THE SAME */}
+    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+      <MinimalHeader />
+      <div className="md:-mt-1 -mt-19">
+        <ArticleContent
+          article={article}
+          author={author}
+          headings={headings}
+          prevArticle={prevArticle}
+          nextArticle={nextArticle}
+          recentArticles={recentArticles}
+          sameCategoryArticles={sameCategoryArticles}
+          publishDate={publishDate}
+          categoryName={categoryName}
+          tagNames={tagNames}
+          authors={authors}
+          categories={categories}
+          readCount={article.read_count || 0}
         />
-        <meta property="og:type" content="article" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={combinedTitle} />
-        <meta name="twitter:description" content="" />
-        <meta name="twitter:image" content={image} />
-      </Head>
-
-      <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
-        <MinimalHeader />
-        <div className="md:-mt-1 -mt-19">
-          <ArticleContent
-            article={article}
-            author={author}
-            headings={headings}
-            prevArticle={prevArticle}
-            nextArticle={nextArticle}
-            recentArticles={recentArticles}
-            sameCategoryArticles={sameCategoryArticles}
-            publishDate={publishDate}
-            categoryName={categoryName}
-            tagNames={tagNames}
-            authors={authors}
-            categories={categories}
-            readCount={article.read_count || 0}
-          />
-        </div>
-        <div className="md:-mt-2 -mt-5">
-          <MinimalFooter />
-        </div>
       </div>
-    </>
-  );
+      <div className="md:-mt-2 -mt-5">
+        <MinimalFooter />
+      </div>
+    </div>
+  </>
+);
 }
