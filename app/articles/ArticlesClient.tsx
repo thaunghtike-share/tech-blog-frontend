@@ -12,6 +12,14 @@ import {
   Star,
   BookText,
   TrendingUp,
+  Server,
+  Container,
+  GitBranch,
+  Terminal,
+  Zap,
+  Cloud,
+  Box,
+  Code,
 } from "lucide-react";
 
 interface AuthorSummary {
@@ -38,6 +46,60 @@ export default function ArticlesClient() {
   const [localSearch, setLocalSearch] = useState(searchQuery);
   const [authors, setAuthors] = useState<AuthorSummary[]>([]);
   const [authorsLoading, setAuthorsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const floatingIconPositions = [
+    { left: 5, top: 10 },
+    { left: 85, top: 15 },
+    { left: 25, top: 25 },
+    { left: 70, top: 35 },
+    { left: 10, top: 50 },
+    { left: 90, top: 45 },
+    { left: 40, top: 60 },
+    { left: 60, top: 75 },
+    { left: 15, top: 80 },
+    { left: 80, top: 85 },
+    { left: 30, top: 90 },
+    { left: 55, top: 20 },
+    { left: 20, top: 40 },
+    { left: 75, top: 55 },
+    { left: 45, top: 30 },
+    { left: 65, top: 65 },
+    { left: 35, top: 70 },
+    { left: 95, top: 25 },
+  ];
+
+  const floatingDotPositions = [
+    { left: 8, top: 12 },
+    { left: 92, top: 18 },
+    { left: 22, top: 28 },
+    { left: 78, top: 32 },
+    { left: 12, top: 48 },
+    { left: 88, top: 52 },
+    { left: 35, top: 65 },
+    { left: 65, top: 72 },
+    { left: 18, top: 85 },
+    { left: 82, top: 88 },
+    { left: 28, top: 95 },
+    { left: 58, top: 22 },
+    { left: 38, top: 38 },
+    { left: 72, top: 58 },
+    { left: 48, top: 78 },
+    { left: 15, top: 35 },
+    { left: 85, top: 42 },
+    { left: 32, top: 15 },
+    { left: 68, top: 25 },
+    { left: 52, top: 45 },
+    { left: 25, top: 68 },
+    { left: 75, top: 82 },
+    { left: 42, top: 92 },
+    { left: 62, top: 8 },
+    { left: 95, top: 65 },
+  ];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     fetchAuthors();
@@ -131,151 +193,224 @@ export default function ArticlesClient() {
   };
 
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
-      <MinimalHeader />
-
-      <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
-        <section className="w-full mb-20">
-          {/* Header - Keeping your original text exactly as you had it */}
-          <div className="max-w-3xl mb-16">
-            <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
-              This Week's
-              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-                Featured Authors
-              </span>
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Get insights from professionals who work with cutting-edge
-              technologies daily. Real-world experience, practical knowledge,
-              and proven methodologies.
-            </p>
-          </div>
-
-          {/* Authors Grid - rest remains exactly the same */}
-          {authorsLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex-shrink-0"></div>
-                    <div className="flex-1 space-y-2">
-                      <div className="h-5 bg-gray-200 rounded w-3/4"></div>
-                      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-                  </div>
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
+      {/* Floating Background Elements - Same as home page */}
+      {mounted && (
+        <div className="fixed inset-0 pointer-events-none z-0">
+          {floatingIconPositions.map((pos, i) => {
+            const icons = [
+              Server,
+              Container,
+              GitBranch,
+              Terminal,
+              Zap,
+              Cloud,
+              Box,
+              Code,
+            ];
+            const IconComponent = icons[i % icons.length];
+            return (
+              <div
+                key={`bg-icon-${i}`}
+                className="absolute animate-float opacity-10"
+                style={{
+                  left: `${pos.left}%`,
+                  top: `${pos.top}%`,
+                  animationDelay: `${i * 0.7}s`,
+                  animationDuration: `${15 + (i % 5) * 2}s`,
+                }}
+              >
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-100/20 to-purple-100/20 dark:from-blue-900/10 dark:to-purple-900/10 rounded-lg backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/20 flex items-center justify-center shadow-sm">
+                  <IconComponent className="w-5 h-5 text-blue-500/40 dark:text-blue-400/20" />
                 </div>
-              ))}
+              </div>
+            );
+          })}
+
+          {floatingDotPositions.map((pos, i) => (
+            <div
+              key={`bg-dot-${i}`}
+              className="absolute animate-pulse opacity-15"
+              style={{
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
+                animationDelay: `${i * 0.2}s`,
+                animationDuration: `${3 + (i % 3)}s`,
+              }}
+            >
+              <div className="w-3 h-3 bg-gradient-to-r from-blue-200 to-purple-200 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full shadow-sm" />
             </div>
-          ) : authors.length > 0 ? (
-            <div className="space-y-12">
-              {authors.map((author) => (
-                <div
-                  key={author.id}
-                  className="group cursor-pointer transition-all duration-300 hover:translate-x-2"
-                  onClick={() => router.push(`/authors/${author.slug}`)}
-                >
-                  <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
-                    {/* Author Avatar */}
-                    <div className="flex-shrink-0">
-                      <div className="relative">
-                        <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-white shadow-lg overflow-hidden transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
-                          <img
-                            src={author.avatar}
-                            alt={author.name}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                "/placeholder.svg";
-                            }}
-                          />
-                        </div>
-                        {author.linkedin && (
-                          <a
-                            href={author.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="absolute -bottom-2 -right-2 bg-sky-600 p-2 rounded-full shadow-lg hover:bg-sky-700 transition-all duration-300 hover:scale-110 z-10"
-                          >
-                            <Linkedin className="w-4 h-4 text-white" />
-                          </a>
-                        )}
+          ))}
+        </div>
+      )}
+
+      <div className="relative z-10">
+        <MinimalHeader />
+
+        <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
+          <section className="w-full mb-20">
+            {/* Header - Keeping your original text exactly as you had it */}
+            <div className="max-w-3xl mb-16">
+              <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
+              <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-6 leading-tight">
+                This Week's
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  Featured Authors
+                </span>
+              </h2>
+              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                Get insights from professionals who work with cutting-edge
+                technologies daily. Real-world experience, practical knowledge,
+                and proven methodologies.
+              </p>
+            </div>
+
+            {/* Authors Grid - rest remains exactly the same */}
+            {authorsLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex-shrink-0"></div>
+                      <div className="flex-1 space-y-2">
+                        <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                       </div>
                     </div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : authors.length > 0 ? (
+              <div className="space-y-12">
+                {authors.map((author) => (
+                  <div
+                    key={author.id}
+                    className="group cursor-pointer transition-all duration-300 hover:translate-x-2"
+                    onClick={() => router.push(`/authors/${author.slug}`)}
+                  >
+                    <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
+                      {/* Author Avatar */}
+                      <div className="flex-shrink-0">
+                        <div className="relative">
+                          <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
+                            <img
+                              src={author.avatar}
+                              alt={author.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "/placeholder.svg";
+                              }}
+                            />
+                          </div>
+                          {author.linkedin && (
+                            <a
+                              href={author.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="absolute -bottom-2 -right-2 bg-sky-600 p-2 rounded-full shadow-lg hover:bg-sky-700 transition-all duration-300 hover:scale-110 z-10"
+                            >
+                              <Linkedin className="w-4 h-4 text-white" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
 
-                    {/* Author Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
-                        <div className="flex-1">
-                          <h3 className="font-bold text-2xl text-gray-900 mb-2 group-hover:text-sky-600 transition-colors duration-300">
-                            {author.name}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-3 mb-4">
-                            <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 px-4 py-2 rounded-full border border-sky-100 text-sky-700 font-medium text-sm">
-                              <TrendingUp className="w-4 h-4" />
-                              {author.articles_count} article
-                              {author.articles_count !== 1 ? "s" : ""}
-                            </span>
-                            <span className="text-sky-600 font-medium text-base">
-                              {author.job_title} at {author.company}
-                            </span>
+                      {/* Author Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-2xl text-gray-900 dark:text-gray-100 mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-300">
+                              {author.name}
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-3 mb-4">
+                              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-50 to-blue-50 dark:from-sky-900/20 dark:to-blue-900/20 px-4 py-2 rounded-full border border-sky-100 dark:border-sky-800 text-sky-700 dark:text-sky-300 font-medium text-sm">
+                                <TrendingUp className="w-4 h-4" />
+                                {author.articles_count} article
+                                {author.articles_count !== 1 ? "s" : ""}
+                              </span>
+                              <span className="text-sky-600 dark:text-sky-400 font-medium text-base">
+                                {author.job_title} at {author.company}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-semibold group-hover:translate-x-1 transition-transform duration-300">
+                            <span>View Profile</span>
+                            <ArrowRight className="w-4 h-4" />
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-sky-600 font-semibold group-hover:translate-x-1 transition-transform duration-300">
-                          <span>View Profile</span>
-                          <ArrowRight className="w-4 h-4" />
+                        {/* Full Bio */}
+                        <div className="mb-4">
+                          <p className="text-black-400 dark:text-gray-300 leading-relaxed text-lg">
+                            {author.bio}
+                          </p>
                         </div>
-                      </div>
 
-                      {/* Full Bio */}
-                      <div className="mb-4">
-                        <p className="text-black-400 leading-relaxed text-lg">
-                          {author.bio}
-                        </p>
+                        {/* Divider */}
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent group-last-of-type:via-transparent"></div>
                       </div>
-
-                      {/* Divider */}
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent group-last-of-type:via-transparent"></div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl border border-sky-100">
-              <div className="inline-flex items-center justify-center bg-white rounded-full p-6 mb-6 shadow-lg">
-                <Users className="w-12 h-12 text-sky-500" />
+                ))}
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                Expert Authors Coming Soon
-              </h3>
-              <p className="text-gray-600 max-w-md mx-auto text-lg">
-                We're bringing industry experts to share their DevOps knowledge
-                and real-world experiences with you.
-              </p>
+            ) : (
+              <div className="text-center py-20 bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-900/20 dark:to-blue-900/20 rounded-2xl border border-sky-100 dark:border-sky-800">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-gray-800 rounded-full p-6 mb-6 shadow-lg">
+                  <Users className="w-12 h-12 text-sky-500 dark:text-sky-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">
+                  Expert Authors Coming Soon
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto text-lg">
+                  We're bringing industry experts to share their DevOps knowledge
+                  and real-world experiences with you.
+                </p>
+              </div>
+            )}
+          </section>
+
+          {/* Articles Section */}
+          <div className="w-full">
+            <div className="rounded-xl">
+              <MinimalBlogList
+                searchQuery={searchQuery}
+                filterTagSlug={selectedTag}
+              />
             </div>
-          )}
-        </section>
-
-        {/* Articles Section */}
-        <div className="w-full">
-          <div className="rounded-xl">
-            <MinimalBlogList
-              searchQuery={searchQuery}
-              filterTagSlug={selectedTag}
-            />
           </div>
-        </div>
-      </main>
+        </main>
 
-      <MinimalFooter />
+        <MinimalFooter />
+      </div>
+
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0px) translateX(0px) rotate(0deg);
+          }
+          25% {
+            transform: translateY(-20px) translateX(10px) rotate(90deg);
+          }
+          50% {
+            transform: translateY(-10px) translateX(-10px) rotate(180deg);
+          }
+          75% {
+            transform: translateY(-30px) translateX(5px) rotate(270deg);
+          }
+        }
+        .animate-float {
+          animation: float 20s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }

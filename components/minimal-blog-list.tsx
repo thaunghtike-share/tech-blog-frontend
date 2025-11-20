@@ -207,9 +207,9 @@ export function MinimalBlogList({
         <div className="mb-12">
           <div className="h-1 w-20 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full mb-6"></div>
           <div className="animate-pulse">
-            <div className="h-12 bg-gray-200 rounded-xl mb-4 max-w-md"></div>
-            <div className="h-6 bg-gray-200 rounded mb-2 max-w-2xl"></div>
-            <div className="h-6 bg-gray-200 rounded max-w-xl"></div>
+            <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-xl mb-4 max-w-md"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2 max-w-2xl"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded max-w-xl"></div>
           </div>
         </div>
 
@@ -217,10 +217,10 @@ export function MinimalBlogList({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 12 }).map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="aspect-video bg-gray-200 rounded-xl mb-4"></div>
-              <div className="h-5 bg-gray-200 rounded mb-3"></div>
-              <div className="h-4 bg-gray-200 rounded mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-xl mb-4"></div>
+              <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
             </div>
           ))}
         </div>
@@ -231,10 +231,10 @@ export function MinimalBlogList({
   if (error) {
     return (
       <div className="w-full text-center py-12">
-        <div className="bg-sky-50 border border-sky-200 rounded-2xl p-8">
-          <AlertTriangle className="w-16 h-16 text-sky-600 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-sky-600 mb-2">Error Loading Articles</h3>
-          <p className="text-sky-600 mb-6">{error}</p>
+        <div className="bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800 rounded-2xl p-8">
+          <AlertTriangle className="w-16 h-16 text-sky-600 dark:text-sky-400 mx-auto mb-4" />
+          <h3 className="text-xl font-bold text-sky-600 dark:text-sky-400 mb-2">Error Loading Articles</h3>
+          <p className="text-sky-600 dark:text-sky-400 mb-6">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="px-6 py-3 bg-sky-600 text-white rounded-xl hover:bg-sky-700 transition-colors font-medium"
@@ -251,13 +251,13 @@ export function MinimalBlogList({
       {/* Header */}
       <div className="mb-12">
         <div className="h-1 w-20 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full mb-6"></div>
-        <h1 className="text-4xl md:text-5xl font-bold text-black mb-4 leading-tight">
+        <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 leading-tight">
           DevOps Articles
           <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
             Learn & Build
           </span>
         </h1>
-        <p className="text-lg text-black max-w-3xl leading-relaxed">
+        <p className="text-lg text-black dark:text-gray-300 max-w-3xl leading-relaxed">
           Explore comprehensive tutorials, best practices, and real-world DevOps scenarios. 
           Master modern tools through practical, hands-on examples.
         </p>
@@ -269,19 +269,19 @@ export function MinimalBlogList({
           {/* Search Bar - Left Side */}
           <form onSubmit={handleSearch} className="flex-1 max-w-2xl w-full">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search articles by topic, technology, or keyword..."
                 value={localSearch}
                 onChange={(e) => setLocalSearch(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-lg bg-white border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-black dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
               {localSearch && (
                 <button
                   type="button"
                   onClick={() => setLocalSearch("")}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-black"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-gray-200"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -297,7 +297,7 @@ export function MinimalBlogList({
                 className={`flex items-center gap-2 px-4 py-3 rounded-lg border transition-all duration-200 ${
                   filterTagSlug 
                     ? "bg-sky-600 text-white border-sky-600 shadow-md" 
-                    : "bg-white text-black border-gray-300 hover:border-sky-400 hover:shadow-sm"
+                    : "bg-white dark:bg-gray-800 text-black dark:text-gray-100 border-gray-300 dark:border-gray-700 hover:border-sky-400 dark:hover:border-sky-600 hover:shadow-sm"
                 }`}
               >
                 <Filter className="w-4 h-4" />
@@ -310,7 +310,7 @@ export function MinimalBlogList({
               {filterTagSlug && (
                 <button
                   onClick={clearFilters}
-                  className="flex items-center gap-1 px-3 py-2 bg-sky-100 text-sky-700 rounded-lg hover:bg-sky-200 transition-colors"
+                  className="flex items-center gap-1 px-3 py-2 bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-900/50 transition-colors"
                 >
                   <X className="w-4 h-4" />
                   Clear
@@ -320,9 +320,9 @@ export function MinimalBlogList({
 
             {/* Dropdown Menu */}
             {isTagDropdownOpen && (
-              <div className="absolute mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+              <div className="absolute mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
                 <div className="p-3">
-                  <div className="text-sm font-semibold text-black mb-2">Select a tag:</div>
+                  <div className="text-sm font-semibold text-black dark:text-gray-100 mb-2">Select a tag:</div>
                   <div className="space-y-1">
                     {tags.map((tag) => (
                       <button
@@ -333,14 +333,14 @@ export function MinimalBlogList({
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
                           filterTagSlug === tag.slug
-                            ? "bg-sky-100 text-sky-700 font-medium"
-                            : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 font-medium"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                         }`}
                       >
                         <TagIcon className="w-4 h-4" />
                         <span>{tag.name}</span>
                         {filterTagSlug === tag.slug && (
-                          <div className="w-2 h-2 bg-sky-600 rounded-full ml-auto" />
+                          <div className="w-2 h-2 bg-sky-600 dark:bg-sky-400 rounded-full ml-auto" />
                         )}
                       </button>
                     ))}
@@ -355,13 +355,13 @@ export function MinimalBlogList({
       {/* Empty State */}
       {articles.length === 0 ? (
         <div className="text-center py-16">
-          <div className="inline-flex items-center justify-center bg-amber-50 rounded-full p-6 mb-6 border border-amber-200">
-            <AlertTriangle className="w-12 h-12 text-amber-600" />
+          <div className="inline-flex items-center justify-center bg-amber-50 dark:bg-amber-900/20 rounded-full p-6 mb-6 border border-amber-200 dark:border-amber-800">
+            <AlertTriangle className="w-12 h-12 text-amber-600 dark:text-amber-400" />
           </div>
-          <h3 className="text-2xl font-bold text-black mb-3">
+          <h3 className="text-2xl font-bold text-black dark:text-gray-100 mb-3">
             No articles found
           </h3>
-          <p className="text-black mb-6 max-w-md mx-auto">
+          <p className="text-black dark:text-gray-300 mb-6 max-w-md mx-auto">
             {filterTagSlug
               ? `No articles match the tag "${getCurrentTagName()}". Try another tag!`
               : "No articles available. Check back later for new content!"}
@@ -392,12 +392,12 @@ export function MinimalBlogList({
               return (
                 <article
                   key={article.id}
-                  className="bg-white rounded-lg border border-gray-300 overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-700 overflow-hidden hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow"
                 >
                   {/* Cover Image */}
                   <Link 
                     href={`/articles/${article.slug}`} 
-                    className="block aspect-video overflow-hidden bg-gray-100"
+                    className="block aspect-video overflow-hidden bg-gray-100 dark:bg-gray-700"
                   >
                     <img
                       src={getCoverImage(article)}
@@ -419,14 +419,14 @@ export function MinimalBlogList({
                           href={`/categories/${category.slug}`}
                           className="inline-block"
                         >
-                          <span className="text-xs font-semibold text-sky-600 uppercase tracking-wide hover:text-sky-700">
+                          <span className="text-xs font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wide hover:text-sky-700 dark:hover:text-sky-300">
                             {category.name}
                           </span>
                         </Link>
                       )}
-                      <div className="flex items-center gap-1 text-sm text-sky-600">
-                        <Eye className="w-4 h-4 text-gray-700" />
-                        <span className="font-medium text-gray-700">
+                      <div className="flex items-center gap-1 text-sm text-sky-600 dark:text-sky-400">
+                        <Eye className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                        <span className="font-medium text-gray-700 dark:text-gray-300">
                           {article.read_count?.toLocaleString() || 0}
                         </span>
                       </div>
@@ -437,27 +437,27 @@ export function MinimalBlogList({
                       href={`/articles/${article.slug}`}
                       className="block mb-3"
                     >
-                      <h3 className="font-bold text-black line-clamp-2 hover:text-sky-600 transition-colors leading-tight text-lg">
+                      <h3 className="font-bold text-black dark:text-gray-100 line-clamp-2 hover:text-sky-600 dark:hover:text-sky-400 transition-colors leading-tight text-lg">
                         {article.title}
                       </h3>
                     </Link>
 
                     {/* Excerpt */}
                     <div className="mb-4">
-                      <p className="text-black line-clamp-2 leading-relaxed text-sm">
+                      <p className="text-black dark:text-gray-300 line-clamp-2 leading-relaxed text-sm">
                         {article.excerpt || truncate(stripMarkdown(article.content))}
                       </p>
                     </div>
 
                     {/* Author and Main Tag */}
-                    <div className="flex items-center justify-between text-sm text-gray-600 pt-4">
+                    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 pt-4">
                       {/* Author - Left Side */}
                       <div className="flex items-center gap-2">
                         {author?.avatar ? (
                           <img
                             src={author.avatar}
                             alt={author.name}
-                            className="w-6 h-6 rounded-full object-cover border border-gray-200"
+                            className="w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-600"
                             loading="lazy"
                           />
                         ) : (
@@ -465,7 +465,7 @@ export function MinimalBlogList({
                             <User className="w-3 h-3 text-white" />
                           </div>
                         )}
-                        <span className="font-medium text-black">
+                        <span className="font-medium text-black dark:text-gray-100">
                           {author?.name || `Author ${article.author}`}
                         </span>
                       </div>
@@ -474,7 +474,7 @@ export function MinimalBlogList({
                       {articleTags.length > 0 && (
                         <Link
                           href={`/articles?tag=${articleTags[0]!.slug}`}
-                          className="flex items-center gap-1 text-orange-600 hover:text-orange-800 font-medium text-sm"
+                          className="flex items-center gap-1 text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 font-medium text-sm"
                         >
                           <TagIcon className="w-4 h-4" />
                           {articleTags[0]!.name}
@@ -494,7 +494,7 @@ export function MinimalBlogList({
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 bg-white text-black"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-100"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Previous
@@ -519,7 +519,7 @@ export function MinimalBlogList({
                         className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium ${
                           currentPage === pageNum
                             ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white"
-                            : "border border-gray-300 bg-white text-black hover:bg-gray-50"
+                            : "border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                         }`}
                       >
                         {pageNum}
@@ -532,7 +532,7 @@ export function MinimalBlogList({
                     setCurrentPage((p) => Math.min(totalPages, p + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 bg-white text-black"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-100"
                 >
                   Next
                   <ChevronRight className="w-4 h-4" />
