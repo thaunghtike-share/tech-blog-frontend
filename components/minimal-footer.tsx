@@ -56,7 +56,7 @@ export function MinimalFooter() {
   };
 
   return (
-    <footer className="bg-white/95 dark:bg-[#0A0A0A]/95 py-16 md:py-20 relative z-10 transition-colors duration-300">
+    <footer className="bg-white/95 dark:bg-[#0A0A0A] py-16 md:py-20 relative z-10 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 md:gap-12 pb-12">
           {/* Logo + Description */}

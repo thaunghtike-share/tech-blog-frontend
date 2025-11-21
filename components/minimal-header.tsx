@@ -380,7 +380,7 @@ export function MinimalHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white dark:bg-[#0A0A0A]/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 bg-white dark:bg-[#0A0A0A] backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 relative">
           {/* Mobile Header */}
           <div className="flex items-center justify-between md:hidden py-3 gap-3 relative z-10">

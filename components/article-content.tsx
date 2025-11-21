@@ -321,8 +321,6 @@ export function ArticleContent({
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
-      <FloatingBackgroundElements />
-      
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 relative z-10">
         {/* Main Article Content */}
         <article className="lg:col-span-3 bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">

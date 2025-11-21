@@ -115,7 +115,7 @@ const DevOpsCyclingHero = () => {
   };
 
   return (
-    <section className="relative bg-white/95 overflow-hidden dark:bg-[#0A0A0A]/95">
+    <section className="relative bg-white overflow-hidden dark:bg-[#0A0A0A]/95">
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between py-7 gap-8">
           {/* Left Content */}
