@@ -644,7 +644,7 @@ export default function AuthorAdminDashboard() {
                     {avgReadTime}m
                   </div>
                   <div className="text-sm text-orange-600 font-semibold uppercase tracking-wider">
-                    Read Time
+                    Avg Read Time
                   </div>
                 </div>
               </div>

@@ -132,55 +132,6 @@ export default function HomeClient() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       {/* Remove the fixed background div - it's causing the issue */}
-      
-      {mounted && (
-        <div className="fixed inset-0 pointer-events-none z-0">
-          {floatingIconPositions.map((pos, i) => {
-            const icons = [
-              Server,
-              Container,
-              GitBranch,
-              Terminal,
-              Zap,
-              Cloud,
-              Box,
-              Code,
-            ];
-            const IconComponent = icons[i % icons.length];
-            return (
-              <div
-                key={`bg-icon-${i}`}
-                className="absolute animate-float opacity-10"
-                style={{
-                  left: `${pos.left}%`,
-                  top: `${pos.top}%`,
-                  animationDelay: `${i * 0.7}s`,
-                  animationDuration: `${15 + (i % 5) * 2}s`,
-                }}
-              >
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-100/20 to-purple-100/20 dark:from-blue-900/10 dark:to-purple-900/10 rounded-lg backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/20 flex items-center justify-center shadow-sm">
-                  <IconComponent className="w-5 h-5 text-blue-500/40 dark:text-blue-400/20" />
-                </div>
-              </div>
-            );
-          })}
-
-          {floatingDotPositions.map((pos, i) => (
-            <div
-              key={`bg-dot-${i}`}
-              className="absolute animate-pulse opacity-15"
-              style={{
-                left: `${pos.left}%`,
-                top: `${pos.top}%`,
-                animationDelay: `${i * 0.2}s`,
-                animationDuration: `${3 + (i % 3)}s`,
-              }}
-            >
-              <div className="w-3 h-3 bg-gradient-to-r from-blue-200 to-purple-200 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full shadow-sm" />
-            </div>
-          ))}
-        </div>
-      )}
 
       <div className="relative z-10">
         <MinimalHeader />

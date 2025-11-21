@@ -244,7 +244,7 @@ return (
     </Head>
 
     {/* REST OF YOUR EXISTING CODE STAYS EXACTLY THE SAME */}
-    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden">
       <MinimalHeader />
       <div className="md:-mt-1 -mt-19">
         <ArticleContent

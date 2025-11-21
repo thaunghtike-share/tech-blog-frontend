@@ -64,8 +64,8 @@ const ModernAlert = ({
   <div
     className={`flex items-center gap-3 p-4 rounded-2xl border-2 ${
       type === "error"
-        ? "bg-red-50 border-red-200 text-red-800"
-        : "bg-green-50 border-green-200 text-green-800"
+        ? "bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-700 dark:text-red-200"
+        : "bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-700 dark:text-green-200"
     }`}
   >
     {type === "error" ? (
@@ -98,15 +98,15 @@ const ReactionButton = ({
   const getReactionColor = (type: string) => {
     switch (type) {
       case "like":
-        return "text-blue-600 bg-blue-50 border-blue-200";
+        return "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-900/20 dark:border-blue-600";
       case "love":
-        return "text-red-500 bg-red-50 border-red-200";
+        return "text-red-500 bg-red-50 border-red-200 dark:text-red-400 dark:bg-red-900/20 dark:border-red-600";
       case "celebrate":
-        return "text-yellow-600 bg-yellow-50 border-yellow-200";
+        return "text-yellow-600 bg-yellow-50 border-yellow-200 dark:text-yellow-400 dark:bg-yellow-900/20 dark:border-yellow-600";
       case "insightful":
-        return "text-green-600 bg-green-50 border-green-200";
+        return "text-green-600 bg-green-50 border-green-200 dark:text-green-400 dark:bg-green-900/20 dark:border-green-600";
       default:
-        return "text-gray-500 bg-gray-50 border-gray-200";
+        return "text-gray-500 bg-gray-50 border-gray-200 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600";
     }
   };
 
@@ -139,7 +139,7 @@ const ReactionButton = ({
       className={`group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 border-2 ${
         isActive
           ? `${getReactionColor(type)} font-semibold scale-105`
-          : "text-gray-500 bg-white border-gray-200 hover:bg-gray-50 hover:scale-105"
+          : "text-gray-500 bg-white border-gray-200 hover:bg-gray-50 hover:scale-105 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700"
       } ${
         !isAuthenticated ? "cursor-not-allowed opacity-60" : "cursor-pointer"
       }`}
@@ -151,7 +151,9 @@ const ReactionButton = ({
         {/* ALWAYS SHOW COUNT, EVEN IF ZERO */}
         <span
           className={`text-xs px-2 py-1 rounded-full font-semibold min-w-[20px] text-center ${
-            isActive ? "bg-white text-gray-700" : "bg-gray-100 text-gray-600"
+            isActive 
+              ? "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300" 
+              : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
           }`}
         >
           {count}
@@ -384,14 +386,14 @@ export function CommentsReactions({
     // Show confirmation toast immediately
     toast.custom(
       (t) => (
-        <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 max-w-sm w-full">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-600 max-w-sm w-full">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
-              <AlertCircle className="w-5 h-5 text-red-600" />
+            <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Delete Comment</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">Delete Comment</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 This action cannot be undone
               </p>
             </div>
@@ -403,7 +405,7 @@ export function CommentsReactions({
                 console.log("Delete cancelled");
                 toast.dismiss(t);
               }}
-              className="flex-1"
+              className="flex-1 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
             >
               Cancel
             </Button>
@@ -446,7 +448,7 @@ export function CommentsReactions({
                   toast.error("Failed to delete comment");
                 }
               }}
-              className="flex-1 bg-red-600 hover:bg-red-700"
+              className="flex-1 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600"
             >
               Delete
             </Button>
@@ -568,7 +570,7 @@ export function CommentsReactions({
     return (
       <div
         className={`mb-4 ${
-          depth > 0 ? "ml-8 border-l-2 border-gray-100 pl-4" : ""
+          depth > 0 ? "ml-8 border-l-2 border-gray-100 dark:border-gray-600 pl-4" : ""
         }`}
       >
         <div className="flex items-start gap-3">
@@ -606,15 +608,15 @@ export function CommentsReactions({
           {/* Comment Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className="font-semibold text-gray-900 text-sm">
+              <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
                 {comment.author_name || "Anonymous"}
               </h4>
               {comment.is_author && (
-                <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">
+                <span className="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs rounded-full font-medium">
                   Author
                 </span>
               )}
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 {new Date(comment.created_at).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -629,19 +631,19 @@ export function CommentsReactions({
                       e.stopPropagation();
                       setShowMenu(!showMenu);
                     }}
-                    className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                   >
-                    <MoreHorizontal className="w-4 h-4 text-gray-500" />
+                    <MoreHorizontal className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                   </button>
 
                   {showMenu && (
-                    <div className="absolute right-2 top-8 bg-white border border-gray-200 rounded-xl shadow-xl z-10 w-32 overflow-hidden">
+                    <div className="absolute right-2 top-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-xl z-10 w-32 overflow-hidden">
                       <button
                         onClick={() => {
                           setEditingComment(comment.id);
                           setShowMenu(false);
                         }}
-                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
                         <Edit className="w-4 h-4" />
                         Edit
@@ -658,7 +660,7 @@ export function CommentsReactions({
                 <Textarea
                   value={localEditContent}
                   onChange={(e) => setLocalEditContent(e.target.value)}
-                  className="mb-2 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500"
+                  className="mb-2 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100"
                   rows={3}
                   placeholder="Edit your comment..."
                 />
@@ -677,14 +679,14 @@ export function CommentsReactions({
                       setEditingComment(null);
                       setLocalEditContent(comment.content);
                     }}
-                    className="text-xs rounded-lg"
+                    className="text-xs rounded-lg dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                   >
                     Cancel
                   </Button>
                 </div>
               </div>
             ) : (
-              <p className="text-gray-700 text-sm mb-2 leading-relaxed">
+              <p className="text-gray-700 dark:text-gray-300 text-sm mb-2 leading-relaxed">
                 {comment.content}
               </p>
             )}
@@ -698,7 +700,7 @@ export function CommentsReactions({
                     setReplyTo(replyTo === comment.id ? null : comment.id);
                     setReplyContent("");
                   }}
-                  className="text-xs text-gray-600 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
+                  className="text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors flex items-center gap-1"
                 >
                   <Reply className="w-3 h-3" />
                   Reply
@@ -716,7 +718,7 @@ export function CommentsReactions({
               {comment.replies && comment.replies.length > 0 && (
                 <button
                   onClick={() => setShowReplies(!showReplies)}
-                  className="text-xs text-gray-600 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
+                  className="text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors flex items-center gap-1"
                 >
                   {showReplies ? (
                     <ChevronUp className="w-3 h-3" />
@@ -731,11 +733,11 @@ export function CommentsReactions({
 
             {/* Reply Form */}
             {replyTo === comment.id && isAuthenticated && (
-              <div className="mt-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="mt-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-600">
                 <Textarea
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
-                  className="mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500"
+                  className="mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                   rows={2}
                   placeholder="Write your reply..."
                 />
@@ -747,7 +749,7 @@ export function CommentsReactions({
                       setReplyTo(null);
                       setReplyContent("");
                     }}
-                    className="text-xs rounded-lg"
+                    className="text-xs rounded-lg dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                   >
                     Cancel
                   </Button>
@@ -788,7 +790,7 @@ export function CommentsReactions({
   return (
     <div className="space-y-6">
       {/* Reactions Section */}
-      <Card className="border-0 shadow-sm rounded-2xl">
+      <Card className="border border-gray-200 dark:border-gray-600 shadow-sm rounded-2xl dark:bg-gray-800">
         <CardContent className="p-6">
           <div className="flex flex-wrap justify-center gap-3">
             <ReactionButton
@@ -831,8 +833,8 @@ export function CommentsReactions({
 
           {/* Current Reaction Status */}
           {isAuthenticated && userReactions.length > 0 && (
-            <div className="text-center mt-4 p-3 bg-blue-50 rounded-xl border border-blue-200">
-              <p className="text-sm text-blue-700 font-medium">
+            <div className="text-center mt-4 p-3 bg-blue-50 rounded-xl border border-blue-200 dark:bg-blue-900/20 dark:border-blue-700">
+              <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
                 You reacted with{" "}
                 <span className="font-semibold capitalize">
                   {userReactions[0]}
@@ -843,10 +845,10 @@ export function CommentsReactions({
 
           {!isAuthenticated && (
             <div className="text-center mt-4">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="text-blue-600 hover:text-blue-700 font-medium underline"
+                  className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium underline"
                 >
                   Sign in
                 </button>{" "}
@@ -858,26 +860,26 @@ export function CommentsReactions({
       </Card>
 
       {/* Comments Section */}
-      <Card className="border-0 shadow-sm rounded-2xl">
+      <Card className="border border-gray-200 dark:border-gray-600 shadow-sm rounded-2xl dark:bg-gray-800">
         <CardContent className="p-6">
-          <h3 className="text-xl font-bold mb-6">
+          <h3 className="text-xl font-bold mb-6 dark:text-gray-100">
             Comments ({comments.length})
           </h3>
 
           {/* Comment Form */}
           {isAuthenticated ? (
-            <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <Textarea
                 placeholder="Share your thoughts..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500"
+                className="mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-100"
                 rows={3}
               />
               <div className="flex items-center justify-between">
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
                   Commenting as{" "}
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">
                     {user?.username || "User"}
                   </span>
                 </div>
@@ -893,8 +895,8 @@ export function CommentsReactions({
               </div>
             </div>
           ) : (
-            <div className="mb-6 p-6 text-center bg-gray-50 rounded-xl border border-gray-200">
-              <p className="text-sm text-gray-600 mb-3">
+            <div className="mb-6 p-6 text-center bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Please sign in to leave a comment
               </p>
               <Button
@@ -911,10 +913,10 @@ export function CommentsReactions({
           <div className="space-y-4">
             {displayedComments.length === 0 ? (
               <div className="text-center py-8">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Edit className="w-6 h-6 text-gray-400" />
+                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Edit className="w-6 h-6 text-gray-400 dark:text-gray-500" />
                 </div>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 dark:text-gray-400 text-sm">
                   {isAuthenticated
                     ? "Be the first to share your thoughts!"
                     : "Sign in to be the first to comment!"}
@@ -932,7 +934,7 @@ export function CommentsReactions({
                     <Button
                       variant="outline"
                       onClick={() => setShowAllComments(!showAllComments)}
-                      className="rounded-lg"
+                      className="rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       {showAllComments ? (
                         <>
@@ -957,26 +959,26 @@ export function CommentsReactions({
       {/* Modern Auth Modal */}
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full shadow-xl border border-gray-200 dark:border-gray-600">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 Sign In Required
               </h3>
               <button
                 onClick={() => setShowAuthModal(false)}
-                className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               Please sign in to react to articles and leave comments.
             </p>
             <div className="flex gap-3">
               <Button
                 onClick={() => setShowAuthModal(false)}
                 variant="outline"
-                className="flex-1 rounded-lg"
+                className="flex-1 rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 Close
               </Button>
@@ -985,7 +987,7 @@ export function CommentsReactions({
                   setShowAuthModal(false);
                   window.dispatchEvent(new CustomEvent("openAuthModal"));
                 }}
-                className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700"
+                className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
               >
                 Sign In
               </Button>
