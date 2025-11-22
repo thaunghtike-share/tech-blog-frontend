@@ -371,14 +371,14 @@ export default function ProfileForm() {
   if (isLoadingProfile) {
     return (
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8 text-center">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Zap className="w-5 h-5" />Loading Your Profile
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
             Preparing Your Profile
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
             Loading your profile data, please wait...
           </p>
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mx-auto"></div>
@@ -390,16 +390,16 @@ export default function ProfileForm() {
   if (success) {
     return (
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8 text-center">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Crown className="w-5 h-5" />Thank You!
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
             {success === "stay"
               ? "Happy Reading! 🎉"
               : "Welcome to the Community!"}
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
             {success === "stay"
               ? "Your profile is saved. Taking you back to continue reading..."
               : "Your profile has been saved successfully. Redirecting to your dashboard..."}
@@ -412,15 +412,15 @@ export default function ProfileForm() {
 
   return (
     <div className="relative overflow-x-hidden max-w-2xl mx-auto">
-      <div className="bg-white/95 rounded-2xl border border-gray-200 shadow-lg p-8">
+      <div className="bg-white/95 dark:bg-gray-800/95 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Zap className="w-5 h-5" />Complete Your Profile
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
             Tell Us About Yourself
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             Complete your author profile to start writing articles
           </p>
         </div>
@@ -429,7 +429,7 @@ export default function ProfileForm() {
           {/* ALL YOUR EXISTING FORM FIELDS REMAIN EXACTLY THE SAME */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block mb-2 font-medium text-gray-700">
+              <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                 Display Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -438,13 +438,13 @@ export default function ProfileForm() {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Your Name - eg. John Doe"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block mb-2 font-medium text-gray-700">
+              <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                 Professional Information <span className="text-red-500">*</span>
               </label>
               <div className="flex flex-col md:flex-row gap-4 items-start md:items-end">
@@ -455,11 +455,11 @@ export default function ProfileForm() {
                     value={formData.job_title}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                    className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Job title"
                   />
                 </div>
-                <div className="flex items-center h-12 text-gray-500 font-medium">
+                <div className="flex items-center h-12 text-gray-500 dark:text-gray-400 font-medium">
                   at
                 </div>
                 <div className="flex-1">
@@ -469,7 +469,7 @@ export default function ProfileForm() {
                     value={formData.company}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                    className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Company name"
                   />
                 </div>
@@ -478,7 +478,7 @@ export default function ProfileForm() {
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700">
+            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
               Bio <span className="text-red-500">*</span>
             </label>
             <textarea
@@ -486,14 +486,14 @@ export default function ProfileForm() {
               value={formData.bio}
               onChange={handleInputChange}
               rows={4}
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               required
               placeholder="Tell us about yourself, your expertise, and experience..."
             />
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700">
+            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
               LinkedIn URL <span className="text-red-500">*</span>
             </label>
             <input
@@ -502,24 +502,24 @@ export default function ProfileForm() {
               value={formData.linkedin}
               onChange={handleInputChange}
               required
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               placeholder="https://linkedin.com/in/your-profile"
             />
           </div>
 
           {/* Avatar Section */}
           <div>
-            <label className="block mb-2 font-medium text-gray-700">
+            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
               Profile Photo <span className="text-red-500">*</span>
             </label>
 
             {formData.avatar && (
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">Current Avatar:</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Current Avatar:</p>
                 <img
                   src={formData.avatar}
                   alt="Current avatar"
-                  className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
+                  className="w-20 h-20 rounded-full object-cover border-2 border-gray-300 dark:border-gray-600"
                 />
               </div>
             )}
@@ -532,10 +532,10 @@ export default function ProfileForm() {
                   onChange={handleFileUpload}
                   className="hidden"
                 />
-                <div className="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 transition-all duration-300">
+                <div className="w-full border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/20 transition-all duration-300">
                   <div className="flex flex-col items-center gap-2">
                     <svg
-                      className="w-8 h-8 text-gray-400"
+                      className="w-8 h-8 text-gray-400 dark:text-gray-500"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -547,10 +547,10 @@ export default function ProfileForm() {
                         d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                       />
                     </svg>
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       Click to upload photo
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       JPEG, PNG, GIF, WebP (max 5MB)
                     </span>
                   </div>
@@ -560,11 +560,11 @@ export default function ProfileForm() {
 
             {uploadProgress > 0 && uploadProgress < 100 && (
               <div className="mt-3">
-                <div className="flex justify-between text-sm text-gray-600 mb-1">
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
                   <span>Uploading...</span>
                   <span>{uploadProgress}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-sky-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${uploadProgress}%` }}
@@ -574,12 +574,12 @@ export default function ProfileForm() {
             )}
 
             {uploadError && (
-              <p className="text-red-600 text-sm mt-2">{uploadError}</p>
+              <p className="text-red-600 dark:text-red-400 text-sm mt-2">{uploadError}</p>
             )}
 
             {hasExistingAvatar && (
               <div className="mt-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
+                <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                   Or use custom URL:
                 </label>
                 <input
@@ -587,10 +587,10 @@ export default function ProfileForm() {
                   name="avatar"
                   value={formData.avatar}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
                   placeholder="https://example.com/avatar.jpg"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   Keep your existing avatar URL or change it
                 </p>
               </div>
@@ -598,7 +598,7 @@ export default function ProfileForm() {
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700">
+            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
               Profile Slug <span className="text-red-500">*</span>
             </label>
             <input
@@ -607,17 +607,17 @@ export default function ProfileForm() {
               value={formData.slug}
               onChange={handleInputChange}
               required
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               placeholder="your-unique-profile-slug"
             />
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
               Don't change auto-generated slug. This will be used in your
               profile URL (e.g., /authors/your-slug)
             </p>
           </div>
 
           {error && (
-            <div className="p-4 bg-red-50 text-red-700 rounded-xl text-sm border border-red-200">
+            <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-xl text-sm border border-red-200 dark:border-red-800">
               {error}
             </div>
           )}
@@ -640,7 +640,7 @@ export default function ProfileForm() {
               type="button"
               onClick={handleSaveAndStay}
               disabled={loading || isUploading}
-              className="w-full border-2 border-sky-500 text-sky-600 bg-white py-3 rounded-xl hover:bg-sky-50 hover:border-sky-600 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full border-2 border-sky-500 text-sky-600 dark:text-sky-400 bg-white dark:bg-gray-800 py-3 rounded-xl hover:bg-sky-50 dark:hover:bg-sky-900/20 hover:border-sky-600 dark:hover:border-sky-400 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading
                 ? "Saving Profile..."

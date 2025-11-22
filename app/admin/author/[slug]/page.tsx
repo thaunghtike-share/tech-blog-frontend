@@ -84,29 +84,29 @@ function DeleteConfirmationModal({
   if (!isOpen || !article) return null;
 
   return (
-    <div className="fixed inset-0 bg-white/80 backdrop-blur-[2px] flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-white/80 dark:bg-[#0A0A0A]/80 backdrop-blur-[2px] flex items-center justify-center z-50 p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200/80"
+        className="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200/80 dark:border-gray-700"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
-            <AlertTriangle className="w-5 h-5 text-slate-600" />
+          <div className="w-10 h-10 bg-slate-100 dark:bg-gray-700 rounded-xl flex items-center justify-center">
+            <AlertTriangle className="w-5 h-5 text-slate-600 dark:text-gray-300" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-900">Delete Article</h3>
-            <p className="text-slate-500 text-sm">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Delete Article</h3>
+            <p className="text-slate-500 dark:text-gray-400 text-sm">
               This action cannot be undone
             </p>
           </div>
         </div>
 
         <div className="mb-6">
-          <p className="text-slate-700 font-medium mb-2">
+          <p className="text-slate-700 dark:text-gray-300 font-medium mb-2">
             Delete &ldquo;{article.title}&rdquo;?
           </p>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 dark:text-gray-400 text-sm">
             This article has {article.read_count?.toLocaleString()} views and
             will be permanently removed from your blog.
           </p>
@@ -116,14 +116,14 @@ function DeleteConfirmationModal({
           <button
             onClick={onClose}
             disabled={isLoading}
-            className="px-4 py-2 text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all duration-200 font-medium disabled:opacity-50"
+            className="px-4 py-2 text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-gray-700 rounded-xl transition-all duration-200 font-medium disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
             disabled={isLoading}
-            className="px-4 py-2 bg-slate-800 text-white rounded-xl hover:bg-slate-900 transition-all duration-200 font-medium disabled:opacity-50 flex items-center gap-2"
+            className="px-4 py-2 bg-slate-800 dark:bg-gray-700 text-white rounded-xl hover:bg-slate-900 dark:hover:bg-gray-600 transition-all duration-200 font-medium disabled:opacity-50 flex items-center gap-2"
           >
             {isLoading ? (
               <>
@@ -426,13 +426,13 @@ export default function AuthorAdminDashboard() {
   // 🔐 Show loading while checking authentication
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-sky-600 mx-auto mb-6"></div>
-              <p className="text-slate-700 text-lg font-medium">
+              <p className="text-slate-700 dark:text-gray-300 text-lg font-medium">
                 Checking authentication...
               </p>
             </div>
@@ -444,7 +444,7 @@ export default function AuthorAdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
       {/* Login Modal Overlay */}
@@ -478,10 +478,10 @@ export default function AuthorAdminDashboard() {
             <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
               <Crown className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-black mb-4">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
               Access Required
             </h1>
-            <p className="text-lg text-black mb-8 max-w-md mx-auto">
+            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">
               Please login to access your admin dashboard
             </p>
             <button
@@ -498,7 +498,7 @@ export default function AuthorAdminDashboard() {
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-sky-600 mx-auto mb-6"></div>
-              <p className="text-slate-700 text-lg font-medium">
+              <p className="text-slate-700 dark:text-gray-300 text-lg font-medium">
                 Loading your dashboard...
               </p>
             </div>
@@ -512,12 +512,12 @@ export default function AuthorAdminDashboard() {
               <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
                 <AlertTriangle className="w-12 h-12 text-white" />
               </div>
-              <h1 className="text-4xl font-bold text-black mb-4">
+              <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
                 {error.includes("permission") || error.includes("403")
                   ? "Access Denied"
                   : "Error Loading Dashboard"}
               </h1>
-              <p className="text-lg text-black mb-8 max-w-md mx-auto">
+              <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">
                 {error}
               </p>
               <div className="flex gap-4 justify-center">
@@ -551,7 +551,7 @@ export default function AuthorAdminDashboard() {
                     Author Dashboard
                   </span>
                 </div>
-                <h1 className="text-6xl md:text-7xl font-light text-black mb-6 tracking-tight">
+                <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
                   Welcome back, {author?.name}
                 </h1>
               </div>
@@ -561,14 +561,14 @@ export default function AuthorAdminDashboard() {
                 {/* Avatar Section */}
                 <div className="flex-shrink-0">
                   <div className="relative">
-                    <div className="w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                    <div className="w-28 h-28 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
                       <img
                         src={author?.avatar || "/placeholder.svg"}
                         alt={author?.name}
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-600 p-3 rounded-full shadow-2xl border-2 border-white">
+                    <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-600 p-3 rounded-full shadow-2xl border-2 border-white dark:border-gray-800">
                       <Crown className="w-4 h-4 text-white" />
                     </div>
                   </div>
@@ -584,7 +584,7 @@ export default function AuthorAdminDashboard() {
                   )}
 
                   {/* Bio */}
-                  <p className="text-lg text-black leading-relaxed mb-8 max-w-2xl">
+                  <p className="text-lg text-black dark:text-gray-300 leading-relaxed mb-8 max-w-2xl">
                     {author?.bio}
                   </p>
 
@@ -616,7 +616,7 @@ export default function AuthorAdminDashboard() {
               {/* Stats - Premium Design */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
                 <div className="space-y-3">
-                  <div className="text-5xl font-light text-black">
+                  <div className="text-5xl font-light text-black dark:text-white">
                     {totalArticles}
                   </div>
                   <div className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
@@ -624,7 +624,7 @@ export default function AuthorAdminDashboard() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <div className="text-5xl font-light text-black">
+                  <div className="text-5xl font-light text-black dark:text-white">
                     {totalViews.toLocaleString()}
                   </div>
                   <div className="text-sm text-green-600 font-semibold uppercase tracking-wider">
@@ -632,7 +632,7 @@ export default function AuthorAdminDashboard() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <div className="text-5xl font-light text-black">
+                  <div className="text-5xl font-light text-black dark:text-white">
                     {avgViews}
                   </div>
                   <div className="text-sm text-purple-600 font-semibold uppercase tracking-wider">
@@ -640,7 +640,7 @@ export default function AuthorAdminDashboard() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <div className="text-5xl font-light text-black">
+                  <div className="text-5xl font-light text-black dark:text-white">
                     {avgReadTime}m
                   </div>
                   <div className="text-sm text-orange-600 font-semibold uppercase tracking-wider">
@@ -655,21 +655,21 @@ export default function AuthorAdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-2xl overflow-hidden mb-16"
+              className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700 shadow-2xl overflow-hidden mb-16"
             >
-              <div className="px-8 py-6 border-b border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
+              <div className="px-8 py-6 border-b border-slate-200/50 dark:border-gray-700 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div>
-                    <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
+                    <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
                       Your Articles
                     </h2>
-                    <p className="text-slate-600 font-medium">
+                    <p className="text-slate-600 dark:text-gray-400 font-medium">
                       {totalArticles} articles published •{" "}
                       {totalViews.toLocaleString()} total reads
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-sm text-slate-500 font-medium">
+                    <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">
                       Page {currentPage} of {totalPages}
                     </div>
                   </div>
@@ -681,10 +681,10 @@ export default function AuthorAdminDashboard() {
                   <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
                     <FileText className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-800 mb-4">
+                  <h3 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
                     Ready to Share Your Knowledge?
                   </h3>
-                  <p className="text-slate-600 mb-8 text-lg font-medium max-w-md mx-auto">
+                  <p className="text-slate-600 dark:text-gray-400 mb-8 text-lg font-medium max-w-md mx-auto">
                     Create your first article and start building your audience.
                   </p>
                   <Link
@@ -697,7 +697,7 @@ export default function AuthorAdminDashboard() {
                 </div>
               ) : (
                 <>
-                  <div className="divide-y divide-slate-200/50">
+                  <div className="divide-y divide-slate-200/50 dark:divide-gray-700">
                     {paginatedArticles.map((article, index) => {
                       const previewText =
                         article.excerpt?.trim() ||
@@ -713,11 +713,11 @@ export default function AuthorAdminDashboard() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          className="p-8 hover:bg-white/50 transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                          className="p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
                         >
                           <div className="flex flex-col lg:flex-row gap-8 items-start">
                             {/* Article Cover */}
-                            <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
+                            <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
                               <img
                                 src={coverImage}
                                 alt={article.title}
@@ -736,28 +736,28 @@ export default function AuthorAdminDashboard() {
                             {/* Article Info */}
                             <div className="flex-1 min-w-0">
                               <div className="flex flex-wrap items-center gap-4 mb-3">
-                                <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                                  <Calendar className="w-4 h-4 text-slate-500" />
+                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                                  <Calendar className="w-4 h-4 text-slate-500 dark:text-gray-500" />
                                   {formatDate(article.published_at)}
                                 </span>
-                                <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                                  <Clock className="w-4 h-4 text-slate-500" />
+                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                                  <Clock className="w-4 h-4 text-slate-500 dark:text-gray-500" />
                                   {readTime} min read
                                 </span>
-                                <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
+                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
                                   <Eye className="w-4 h-4 text-sky-600" />
                                   {article.read_count?.toLocaleString()} views
                                 </span>
                               </div>
 
-                              <h3 className="text-2xl font-bold text-slate-800 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
                                 <Link href={`/articles/${article.slug}`}>
                                   {article.title}
                                 </Link>
                               </h3>
 
                               {article.excerpt && (
-                                <p className="text-slate-600 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
+                                <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
                                   {article.excerpt}
                                 </p>
                               )}
@@ -768,14 +768,14 @@ export default function AuthorAdminDashboard() {
                                   {article.tags.slice(0, 4).map((tag) => (
                                     <span
                                       key={tag.id}
-                                      className="inline-flex items-center gap-1.5 bg-slate-100/80 text-slate-700 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50"
+                                      className="inline-flex items-center gap-1.5 bg-slate-100/80 dark:bg-gray-700 text-slate-700 dark:text-gray-300 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50 dark:border-gray-600"
                                     >
                                       <TagIcon className="w-3.5 h-3.5" />
                                       {tag.name}
                                     </span>
                                   ))}
                                   {article.tags.length > 4 && (
-                                    <span className="inline-flex items-center bg-slate-100/80 text-slate-600 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50">
+                                    <span className="inline-flex items-center bg-slate-100/80 dark:bg-gray-700 text-slate-600 dark:text-gray-400 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50 dark:border-gray-600">
                                       +{article.tags.length - 4} more
                                     </span>
                                   )}
@@ -815,9 +815,9 @@ export default function AuthorAdminDashboard() {
 
                   {/* Pagination Controls */}
                   {totalPages > 1 && (
-                    <div className="px-8 py-6 border-t border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
+                    <div className="px-8 py-6 border-t border-slate-200/50 dark:border-gray-700 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
                       <div className="flex items-center justify-between">
-                        <div className="text-sm text-slate-600 font-medium">
+                        <div className="text-sm text-slate-600 dark:text-gray-400 font-medium">
                           Showing {paginatedArticles.length} of {totalArticles}{" "}
                           articles
                         </div>
@@ -827,7 +827,7 @@ export default function AuthorAdminDashboard() {
                               setCurrentPage((prev) => Math.max(1, prev - 1))
                             }
                             disabled={currentPage === 1}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
                           >
                             <ChevronLeft className="w-4 h-4" />
                             Previous
@@ -854,7 +854,7 @@ export default function AuthorAdminDashboard() {
                                     className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all shadow-sm ${
                                       currentPage === pageNum
                                         ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
-                                        : "border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-50 backdrop-blur-sm"
+                                        : "border border-slate-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 backdrop-blur-sm"
                                     }`}
                                   >
                                     {pageNum}
@@ -871,7 +871,7 @@ export default function AuthorAdminDashboard() {
                               )
                             }
                             disabled={currentPage === totalPages}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
                           >
                             Next
                             <ChevronRight className="w-4 h-4" />

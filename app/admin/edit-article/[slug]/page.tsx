@@ -41,7 +41,8 @@ export default function EditArticlePage() {
   const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(true);
   const [articleLoading, setArticleLoading] = useState(false);
-  const [redirectCountdown, setRedirectCountdown] = useState(5); // ADDED REDIRECT COUNTDOWN
+  const [redirectCountdown, setRedirectCountdown] = useState(5);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -74,16 +75,37 @@ export default function EditArticlePage() {
   const [creatingTag, setCreatingTag] = useState(false);
   const [creatingCategory, setCreatingCategory] = useState(false);
 
-  // Load token on initial render
+  // Check for dark mode on initial load
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedToken = localStorage.getItem("token");
       setToken(savedToken);
       setLoading(false);
+      
+      // Check for dark mode
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+      
+      // Observe for dark mode changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class') {
+            const isDark = document.documentElement.classList.contains('dark');
+            setIsDarkMode(isDark);
+          }
+        });
+      });
+      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+      
+      return () => observer.disconnect();
     }
   }, []);
 
-  // Auto-redirect if not logged in - ADDED THIS EFFECT
+  // Auto-redirect if not logged in
   useEffect(() => {
     if (!loading && !token) {
       const countdown = setInterval(() => {
@@ -101,7 +123,7 @@ export default function EditArticlePage() {
     }
   }, [loading, token, router]);
 
-  // Fetch article when token changes - MOVED BEFORE CONDITIONAL RETURNS
+  // Fetch article when token changes
   useEffect(() => {
     const loadData = async () => {
       if (token) {
@@ -143,7 +165,7 @@ export default function EditArticlePage() {
       setArticle(articleData);
       setForm({
         title: articleData.title,
-        slug: articleData.slug, // Add slug here
+        slug: articleData.slug,
         category: articleData.category.toString(),
         tags: articleData.tags,
         featured: articleData.featured,
@@ -204,18 +226,18 @@ export default function EditArticlePage() {
     fetchData();
   }, []);
 
-  // Show redirect message if not authenticated - UPDATED WITH COUNTDOWN
+  // Show redirect message if not authenticated
   if (!token) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-6"></div>
-            <p className="text-gray-600 text-lg mb-2">
+            <p className="text-gray-600 dark:text-gray-300 text-lg mb-2">
               You need to be logged in to edit articles.
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
               Redirecting to home page in {redirectCountdown} seconds...
             </p>
           </div>
@@ -228,20 +250,18 @@ export default function EditArticlePage() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading...</p>
+            <p className="text-gray-600 dark:text-gray-300">Loading...</p>
           </div>
         </main>
         <MinimalFooter />
       </div>
     );
   }
-
-  // ... rest of the code remains the same (handleCoverImageUpload, handleCreateTag, handleCreateCategory, etc.)
 
   // Handle cover image upload
   const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -427,7 +447,7 @@ export default function EditArticlePage() {
         },
         body: JSON.stringify({
           title: form.title,
-          slug: form.slug, // Include slug in the update
+          slug: form.slug,
           category: Number(form.category),
           tags: form.tags,
           featured: form.featured,
@@ -457,16 +477,16 @@ export default function EditArticlePage() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col bg-white ${fullscreen ? "overflow-hidden" : ""}`}>
+    <div className={`min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors duration-300 ${fullscreen ? "overflow-hidden" : ""}`}>
       {!fullscreen && <MinimalHeader />}
 
-      <main className={`${fullscreen ? "fixed inset-0 z-50 bg-white" : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"}`}>
-        <div className={`${fullscreen ? "h-full" : "bg-white rounded-2xl border border-gray-200 shadow-lg p-8"}`}>
+      <main className={`${fullscreen ? "fixed inset-0 z-50 bg-white dark:bg-[#0A0A0A]" : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"}`}>
+        <div className={`${fullscreen ? "h-full" : "bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8"}`}>
           {!fullscreen && (
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Edit Article</h1>
-                <p className="text-gray-600 mt-2">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Edit Article</h1>
+                <p className="text-gray-600 dark:text-gray-300 mt-2">
                   {lastSaved && `Draft auto-saved at ${lastSaved}`}
                 </p>
               </div>
@@ -499,8 +519,8 @@ export default function EditArticlePage() {
             <div
               className={`mb-6 p-4 rounded-lg border ${
                 message.type === "success"
-                  ? "bg-green-50 text-green-700 border-green-200"
-                  : "bg-red-50 text-red-700 border-red-200"
+                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800"
+                  : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800"
               }`}
             >
               {message.text}
@@ -508,20 +528,20 @@ export default function EditArticlePage() {
           )}
 
           {articleLoading ? (
-            <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-8 text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">Loading Article</h2>
-              <p className="text-gray-600">Preparing your content for editing...</p>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Loading Article</h2>
+              <p className="text-gray-600 dark:text-gray-300">Preparing your content for editing...</p>
             </div>
           ) : !article ? (
-            <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-8 text-center">
+              <div className="w-12 h-12 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">Article Not Found</h2>
-              <p className="text-gray-600 mb-4">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Article Not Found</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 {message?.type === "error" ? message.text : "The article you're looking for doesn't exist."}
               </p>
               {message?.type === "error" && (
@@ -540,7 +560,7 @@ export default function EditArticlePage() {
                   <>
                     {/* Article Title */}
                     <div>
-                      <label className="block mb-2 font-medium text-gray-700">
+                      <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                         Title <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -548,14 +568,14 @@ export default function EditArticlePage() {
                         value={form.title}
                         onChange={(e) => handleChange("title", e.target.value)}
                         required
-                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                         placeholder="Enter your article title"
                       />
                     </div>
 
                     {/* Slug Field */}
                     <div>
-                      <label className="block mb-2 font-medium text-gray-700">
+                      <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                         URL Slug <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -563,18 +583,18 @@ export default function EditArticlePage() {
                         value={form.slug || ""}
                         onChange={(e) => handleChange("slug", e.target.value)}
                         required
-                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-gray-50"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-gray-50 dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                         placeholder="Enter URL slug"
                       />
                       <div className="flex justify-between items-center mt-1">
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           This will be used in the article URL
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           {form.slug.length} characters
                         </p>
                       </div>
-                      <p className="text-xs text-blue-600 mt-1">
+                      <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
                         Final URL: /articles/{form.slug}
                       </p>
                     </div>
@@ -582,7 +602,7 @@ export default function EditArticlePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Category */}
                       <div>
-                        <label className="block mb-2 font-medium text-gray-700">
+                        <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                           Category <span className="text-red-500">*</span>
                         </label>
                         <div className="space-y-2">
@@ -590,7 +610,7 @@ export default function EditArticlePage() {
                             value={form.category}
                             onChange={(e) => handleChange("category", e.target.value)}
                             required
-                            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                           >
                             <option value="">Select category</option>
                             {categories.map((cat) => (
@@ -604,7 +624,7 @@ export default function EditArticlePage() {
                             <button
                               type="button"
                               onClick={() => setShowNewCategoryInput(true)}
-                              className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
+                              className="w-full px-4 py-2 text-sm text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg border border-dashed border-sky-300 dark:border-sky-600 transition-all duration-300"
                             >
                               + Create New Category
                             </button>
@@ -615,7 +635,7 @@ export default function EditArticlePage() {
                                 value={newCategoryName}
                                 onChange={(e) => setNewCategoryName(e.target.value)}
                                 placeholder="Enter new category name"
-                                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                                className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                               />
                               <button
                                 type="button"
@@ -628,7 +648,7 @@ export default function EditArticlePage() {
                               <button
                                 type="button"
                                 onClick={() => setShowNewCategoryInput(false)}
-                                className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
+                                className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg text-sm"
                               >
                                 Cancel
                               </button>
@@ -639,7 +659,7 @@ export default function EditArticlePage() {
 
                       {/* Published Date */}
                       <div>
-                        <label className="block mb-2 font-medium text-gray-700">
+                        <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                           Published Date <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -647,9 +667,9 @@ export default function EditArticlePage() {
                           value={form.published_at}
                           onChange={(e) => handleChange("published_at", e.target.value)}
                           required
-                          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                          className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         />
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           Defaults to today's date
                         </p>
                       </div>
@@ -657,7 +677,7 @@ export default function EditArticlePage() {
 
                     {/* Tags Dropdown */}
                     <div>
-                      <label className="block mb-2 font-medium text-gray-700">
+                      <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                         Tags
                       </label>
                       <div className="space-y-2">
@@ -665,7 +685,7 @@ export default function EditArticlePage() {
                           <button
                             type="button"
                             onClick={() => setShowTagDropdown(!showTagDropdown)}
-                            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                           >
                             {form.tags.length > 0
                               ? `${form.tags.length} tags selected`
@@ -673,11 +693,11 @@ export default function EditArticlePage() {
                           </button>
 
                           {showTagDropdown && (
-                            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-60 overflow-auto">
+                            <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl shadow-lg max-h-60 overflow-auto">
                               {tags.map((tag) => (
                                 <label
                                   key={tag.id}
-                                  className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                                  className="flex items-center px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer border-b border-gray-100 dark:border-gray-600 last:border-b-0"
                                 >
                                   <input
                                     type="checkbox"
@@ -685,7 +705,7 @@ export default function EditArticlePage() {
                                     onChange={() => toggleTag(tag.id)}
                                     className="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
                                   />
-                                  <span className="ml-3 text-sm text-gray-700">
+                                  <span className="ml-3 text-sm text-gray-700 dark:text-gray-300">
                                     {tag.name}
                                   </span>
                                 </label>
@@ -698,7 +718,7 @@ export default function EditArticlePage() {
                           <button
                             type="button"
                             onClick={() => setShowNewTagInput(true)}
-                            className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
+                            className="w-full px-4 py-2 text-sm text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg border border-dashed border-sky-300 dark:border-sky-600 transition-all duration-300"
                           >
                             + Create New Tag
                           </button>
@@ -709,7 +729,7 @@ export default function EditArticlePage() {
                               value={newTagName}
                               onChange={(e) => setNewTagName(e.target.value)}
                               placeholder="Enter new tag name"
-                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                              className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                             />
                             <button
                               type="button"
@@ -722,7 +742,7 @@ export default function EditArticlePage() {
                             <button
                               type="button"
                               onClick={() => setShowNewTagInput(false)}
-                              className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
+                              className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg text-sm"
                             >
                               Cancel
                             </button>
@@ -737,7 +757,7 @@ export default function EditArticlePage() {
                             return tag ? (
                               <span
                                 key={tag.id}
-                                className="bg-sky-100 text-sky-800 text-xs px-3 py-1 rounded-full"
+                                className="bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 text-xs px-3 py-1 rounded-full"
                               >
                                 {tag.name}
                               </span>
@@ -749,19 +769,19 @@ export default function EditArticlePage() {
 
                     {/* Cover Image Upload */}
                     <div>
-                      <label className="block mb-2 font-medium text-gray-700">
+                      <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                         Cover Image
                       </label>
 
                       {form.cover_image && (
                         <div className="mb-4">
-                          <p className="text-sm text-gray-600 mb-2">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                             Current Cover Image:
                           </p>
                           <img
                             src={form.cover_image}
                             alt="Cover preview"
-                            className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300"
+                            className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600"
                           />
                         </div>
                       )}
@@ -774,10 +794,10 @@ export default function EditArticlePage() {
                             onChange={handleCoverImageUpload}
                             className="hidden"
                           />
-                          <div className="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 transition-all duration-300">
+                          <div className="w-full border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/20 transition-all duration-300">
                             <div className="flex flex-col items-center gap-2">
                               <svg
-                                className="w-8 h-8 text-gray-400"
+                                className="w-8 h-8 text-gray-400 dark:text-gray-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -789,10 +809,10 @@ export default function EditArticlePage() {
                                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                                 />
                               </svg>
-                              <span className="text-sm font-medium text-gray-700">
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Click to upload cover image
                               </span>
-                              <span className="text-xs text-gray-500">
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
                                 JPEG, PNG, GIF, WebP (max 5MB)
                               </span>
                             </div>
@@ -802,11 +822,11 @@ export default function EditArticlePage() {
 
                       {coverImageProgress > 0 && coverImageProgress < 100 && (
                         <div className="mt-3">
-                          <div className="flex justify-between text-sm text-gray-600 mb-1">
+                          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
                             <span>Uploading cover image...</span>
                             <span>{coverImageProgress}%</span>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                             <div
                               className="bg-sky-600 h-2 rounded-full transition-all duration-300"
                               style={{ width: `${coverImageProgress}%` }}
@@ -816,20 +836,20 @@ export default function EditArticlePage() {
                       )}
 
                       {coverImageError && (
-                        <p className="text-red-600 text-sm mt-2">
+                        <p className="text-red-600 dark:text-red-400 text-sm mt-2">
                           {coverImageError}
                         </p>
                       )}
 
                       <div className="mt-4">
-                        <label className="block mb-2 text-sm font-medium text-gray-700">
+                        <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                           Or use image URL:
                         </label>
                         <input
                           type="url"
                           value={form.cover_image}
                           onChange={(e) => handleChange("cover_image", e.target.value)}
-                          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm"
+                          className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                           placeholder="https://example.com/cover-image.jpg"
                         />
                       </div>
@@ -846,7 +866,7 @@ export default function EditArticlePage() {
                       />
                       <label
                         htmlFor="featured"
-                        className="ml-3 block text-sm font-medium text-gray-700"
+                        className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
                         Featured Article
                       </label>
@@ -858,7 +878,7 @@ export default function EditArticlePage() {
                 <div className={`${fullscreen ? "flex-grow flex flex-col" : ""}`}>
                   {!fullscreen && (
                     <div className="flex justify-between items-center mb-4">
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Content (Markdown) <span className="text-red-500">*</span>
                       </label>
                       <div className="flex space-x-3">
@@ -874,7 +894,7 @@ export default function EditArticlePage() {
                   )}
                   <div
                     ref={editorRef}
-                    data-color-mode="light"
+                    data-color-mode={isDarkMode ? "dark" : "light"}
                     className={`${fullscreen ? "h-full" : ""}`}
                   >
                     <MDEditor
@@ -886,16 +906,16 @@ export default function EditArticlePage() {
                       textareaProps={{
                         placeholder: "Write your article content here...",
                         className:
-                          "text-sm leading-relaxed bg-white text-gray-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-400",
+                          "text-sm leading-relaxed bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-400",
                       }}
                       previewOptions={{
                         className:
-                          "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
+                          "bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl p-6 border border-gray-200 dark:border-gray-700",
                       }}
                       className={`${
                         fullscreen
                           ? "h-full rounded-none"
-                          : "rounded-xl border border-gray-200 shadow-sm"
+                          : "rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm"
                       }`}
                       extraCommands={[
                         {
@@ -922,7 +942,7 @@ export default function EditArticlePage() {
                 </div>
 
                 {!fullscreen && (
-                  <div className="flex justify-end items-center pt-6 border-t border-gray-200">
+                  <div className="flex justify-end items-center pt-6 border-t border-gray-200 dark:border-gray-700">
                     <button
                       type="submit"
                       disabled={loading || coverImageUploading}

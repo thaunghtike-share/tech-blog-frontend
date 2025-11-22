@@ -289,37 +289,6 @@ export default function ArticlePage() {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
-        {/* Compact Theme Toggle - Bottom Right Corner */}
-        <div className="fixed bottom-6 right-6 z-50">
-          <div className="flex flex-col items-center space-y-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl p-3 shadow-2xl border border-gray-200/50 dark:border-gray-700/50">
-            {/* Dark Button */}
-            <button
-              onClick={() => setThemeMode("dark")}
-              className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-110 ${
-                theme === "dark" 
-                  ? "bg-purple-500 text-white shadow-lg shadow-purple-500/50" 
-                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
-              title="Dark Theme"
-            >
-              <Moon className="h-5 w-5" />
-            </button>
-                        
-            {/* Light Button */}
-            <button
-              onClick={() => setThemeMode("light")}
-              className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-110 ${
-                theme === "light" 
-                  ? "bg-amber-500 text-white shadow-lg shadow-amber-500/50" 
-                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
-              title="Light Theme"
-            >
-              <Sun className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-
         <MinimalHeader />
         
         <div className="md:-mt-1 -mt-19">

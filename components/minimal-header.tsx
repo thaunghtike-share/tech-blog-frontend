@@ -580,13 +580,13 @@ export function MinimalHeader() {
                       href="/free-courses"
                       className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
                     >
-                      Explore DevOps Playgrounds
+                      Learn Free Courses
                     </Link>
                     <Link
                       href="/devops-playgrounds"
                       className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
                     >
-                      DevOps Playgrounds
+                      Explore DevOps Playgrounds
                     </Link>
                   </div>
                 )}

@@ -4,6 +4,7 @@ import MDEditor from "@uiw/react-md-editor";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import { useRouter } from "next/navigation";
+import { relative } from "path";
 
 interface Category {
   id: number;
@@ -27,6 +28,7 @@ export default function NewArticlePage() {
   const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(true);
   const [redirectCountdown, setRedirectCountdown] = useState(5);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -57,6 +59,36 @@ export default function NewArticlePage() {
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [creatingTag, setCreatingTag] = useState(false);
   const [creatingCategory, setCreatingCategory] = useState(false);
+
+  // Check for dark mode on initial load
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedToken = localStorage.getItem("token");
+      setToken(savedToken);
+      setLoading(false);
+      
+      // Check for dark mode
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+      
+      // Observe for dark mode changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class') {
+            const isDark = document.documentElement.classList.contains('dark');
+            setIsDarkMode(isDark);
+          }
+        });
+      });
+      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+      
+      return () => observer.disconnect();
+    }
+  }, []);
 
   // Generate slug from title and date - NO CHARACTER LIMIT
   const generateSlug = (title: string, date: string) => {
@@ -484,12 +516,12 @@ export default function NewArticlePage() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading...</p>
+            <p className="text-gray-600 dark:text-gray-300">Loading...</p>
           </div>
         </main>
         <MinimalFooter />
@@ -500,12 +532,12 @@ export default function NewArticlePage() {
   // Show redirect message if not authenticated
   if (!token) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-6"></div>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 dark:text-gray-300 text-lg">
               You need to be logged in to create articles.
             </p>
           </div>
@@ -518,7 +550,7 @@ export default function NewArticlePage() {
   // Main editor form for authenticated users
   return (
     <div
-      className={`min-h-screen flex flex-col bg-white ${
+      className={`min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors relative overflow-x-hidden duration-300 ${
         fullscreen ? "overflow-hidden" : ""
       }`}
     >
@@ -527,7 +559,7 @@ export default function NewArticlePage() {
       <main
         className={`${
           fullscreen
-            ? "fixed inset-0 z-50 bg-white"
+            ? "fixed inset-0 z-50 bg-white dark:bg-[#0A0A0A]"
             : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"
         }`}
       >
@@ -535,16 +567,16 @@ export default function NewArticlePage() {
           className={`${
             fullscreen
               ? "h-full"
-              : "bg-white rounded-2xl border border-gray-200 shadow-lg p-8"
+              : "bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8"
           }`}
         >
           {!fullscreen && (
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                   Write New Article
                 </h1>
-                <p className="text-gray-600 mt-2">
+                <p className="text-gray-600 dark:text-gray-300 mt-2">
                   {lastSaved && `Draft auto-saved at ${lastSaved}`}
                 </p>
               </div>
@@ -577,8 +609,8 @@ export default function NewArticlePage() {
             <div
               className={`mb-6 p-4 rounded-lg border ${
                 message.type === "success"
-                  ? "bg-green-50 text-green-700 border-green-200"
-                  : "bg-red-50 text-red-700 border-red-200"
+                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800"
+                  : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800"
               }`}
             >
               {message.text}
@@ -596,7 +628,7 @@ export default function NewArticlePage() {
                 <>
                   {/* Article Title */}
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                       Title <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -604,14 +636,14 @@ export default function NewArticlePage() {
                       value={form.title}
                       onChange={(e) => handleChange("title", e.target.value)}
                       required
-                      className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                      className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="Enter your article title"
                     />
                   </div>
 
                   {/* Slug Field */}
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                       URL Slug <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -619,19 +651,19 @@ export default function NewArticlePage() {
                       value={form.slug || ""}
                       onChange={(e) => handleChange("slug", e.target.value)}
                       required
-                      className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-gray-50"
+                      className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-gray-50 dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="URL will be auto-generated from title and date"
                     />
                     <div className="flex justify-between items-center mt-1">
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         Format: title-month-day-year (e.g.,
                         hello-devops-nov-14-2025)
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {form.slug.length} characters
                       </p>
                     </div>
-                    <p className="text-xs text-blue-600 mt-1">
+                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
                       Final URL: /articles/{form.slug}
                     </p>
                   </div>
@@ -639,7 +671,7 @@ export default function NewArticlePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Category */}
                     <div>
-                      <label className="block mb-2 font-medium text-gray-700">
+                      <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                         Category <span className="text-red-500">*</span>
                       </label>
                       <div className="space-y-2">
@@ -649,7 +681,7 @@ export default function NewArticlePage() {
                             handleChange("category", e.target.value)
                           }
                           required
-                          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                          className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         >
                           <option value="">Select category</option>
                           {categories.map((cat) => (
@@ -663,7 +695,7 @@ export default function NewArticlePage() {
                           <button
                             type="button"
                             onClick={() => setShowNewCategoryInput(true)}
-                            className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
+                            className="w-full px-4 py-2 text-sm text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg border border-dashed border-sky-300 dark:border-sky-600 transition-all duration-300"
                           >
                             + Create New Category
                           </button>
@@ -676,7 +708,7 @@ export default function NewArticlePage() {
                                 setNewCategoryName(e.target.value)
                               }
                               placeholder="Enter new category name"
-                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                              className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                             />
                             <button
                               type="button"
@@ -689,7 +721,7 @@ export default function NewArticlePage() {
                             <button
                               type="button"
                               onClick={() => setShowNewCategoryInput(false)}
-                              className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
+                              className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg text-sm"
                             >
                               Cancel
                             </button>
@@ -700,7 +732,7 @@ export default function NewArticlePage() {
 
                     {/* Published Date */}
                     <div>
-                      <label className="block mb-2 font-medium text-gray-700">
+                      <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                         Published Date <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -710,9 +742,9 @@ export default function NewArticlePage() {
                           handleChange("published_at", e.target.value)
                         }
                         required
-                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       />
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         Defaults to today's date
                       </p>
                     </div>
@@ -720,7 +752,7 @@ export default function NewArticlePage() {
 
                   {/* Tags Dropdown */}
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                       Tags
                     </label>
                     <div className="space-y-2">
@@ -728,7 +760,7 @@ export default function NewArticlePage() {
                         <button
                           type="button"
                           onClick={() => setShowTagDropdown(!showTagDropdown)}
-                          className="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+                          className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-left focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         >
                           {form.tags.length > 0
                             ? `${form.tags.length} tags selected`
@@ -736,11 +768,11 @@ export default function NewArticlePage() {
                         </button>
 
                         {showTagDropdown && (
-                          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-60 overflow-auto">
+                          <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl shadow-lg max-h-60 overflow-auto">
                             {tags.map((tag) => (
                               <label
                                 key={tag.id}
-                                className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                                className="flex items-center px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer border-b border-gray-100 dark:border-gray-600 last:border-b-0"
                               >
                                 <input
                                   type="checkbox"
@@ -748,7 +780,7 @@ export default function NewArticlePage() {
                                   onChange={() => toggleTag(tag.id)}
                                   className="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
                                 />
-                                <span className="ml-3 text-sm text-gray-700">
+                                <span className="ml-3 text-sm text-gray-700 dark:text-gray-300">
                                   {tag.name}
                                 </span>
                               </label>
@@ -761,7 +793,7 @@ export default function NewArticlePage() {
                         <button
                           type="button"
                           onClick={() => setShowNewTagInput(true)}
-                          className="w-full px-4 py-2 text-sm text-sky-600 hover:bg-sky-50 rounded-lg border border-dashed border-sky-300 transition-all duration-300"
+                          className="w-full px-4 py-2 text-sm text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg border border-dashed border-sky-300 dark:border-sky-600 transition-all duration-300"
                         >
                           + Create New Tag
                         </button>
@@ -772,7 +804,7 @@ export default function NewArticlePage() {
                             value={newTagName}
                             onChange={(e) => setNewTagName(e.target.value)}
                             placeholder="Enter new tag name"
-                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                            className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                           />
                           <button
                             type="button"
@@ -785,7 +817,7 @@ export default function NewArticlePage() {
                           <button
                             type="button"
                             onClick={() => setShowNewTagInput(false)}
-                            className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm"
+                            className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg text-sm"
                           >
                             Cancel
                           </button>
@@ -800,7 +832,7 @@ export default function NewArticlePage() {
                           return tag ? (
                             <span
                               key={tag.id}
-                              className="bg-sky-100 text-sky-800 text-xs px-3 py-1 rounded-full"
+                              className="bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 text-xs px-3 py-1 rounded-full"
                             >
                               {tag.name}
                             </span>
@@ -812,19 +844,19 @@ export default function NewArticlePage() {
 
                   {/* Cover Image Upload */}
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
                       Cover Image
                     </label>
 
                     {form.cover_image && (
                       <div className="mb-4">
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                           Current Cover Image:
                         </p>
                         <img
                           src={form.cover_image}
                           alt="Cover preview"
-                          className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300"
+                          className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600"
                         />
                       </div>
                     )}
@@ -837,10 +869,10 @@ export default function NewArticlePage() {
                           onChange={handleCoverImageUpload}
                           className="hidden"
                         />
-                        <div className="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 transition-all duration-300">
+                        <div className="w-full border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/20 transition-all duration-300">
                           <div className="flex flex-col items-center gap-2">
                             <svg
-                              className="w-8 h-8 text-gray-400"
+                              className="w-8 h-8 text-gray-400 dark:text-gray-500"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -852,10 +884,10 @@ export default function NewArticlePage() {
                                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                               />
                             </svg>
-                            <span className="text-sm font-medium text-gray-700">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                               Click to upload cover image
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                               JPEG, PNG, GIF, WebP (max 5MB)
                             </span>
                           </div>
@@ -865,11 +897,11 @@ export default function NewArticlePage() {
 
                     {coverImageProgress > 0 && coverImageProgress < 100 && (
                       <div className="mt-3">
-                        <div className="flex justify-between text-sm text-gray-600 mb-1">
+                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
                           <span>Uploading cover image...</span>
                           <span>{coverImageProgress}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                           <div
                             className="bg-sky-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${coverImageProgress}%` }}
@@ -879,13 +911,13 @@ export default function NewArticlePage() {
                     )}
 
                     {coverImageError && (
-                      <p className="text-red-600 text-sm mt-2">
+                      <p className="text-red-600 dark:text-red-400 text-sm mt-2">
                         {coverImageError}
                       </p>
                     )}
 
                     <div className="mt-4">
-                      <label className="block mb-2 text-sm font-medium text-gray-700">
+                      <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                         Or use image URL:
                       </label>
                       <input
@@ -894,7 +926,7 @@ export default function NewArticlePage() {
                         onChange={(e) =>
                           handleChange("cover_image", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                         placeholder="https://example.com/cover-image.jpg"
                       />
                     </div>
@@ -913,7 +945,7 @@ export default function NewArticlePage() {
                     />
                     <label
                       htmlFor="featured"
-                      className="ml-3 block text-sm font-medium text-gray-700"
+                      className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
                     >
                       Featured Article
                     </label>
@@ -925,7 +957,7 @@ export default function NewArticlePage() {
               <div className={`${fullscreen ? "flex-grow flex flex-col" : ""}`}>
                 {!fullscreen && (
                   <div className="flex justify-between items-center mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Content (Markdown) <span className="text-red-500">*</span>
                     </label>
                     <div className="flex space-x-3">
@@ -941,7 +973,7 @@ export default function NewArticlePage() {
                 )}
                 <div
                   ref={editorRef}
-                  data-color-mode="light"
+                  data-color-mode={isDarkMode ? "dark" : "light"}
                   className={`${fullscreen ? "h-full" : ""}`}
                 >
                   <MDEditor
@@ -952,19 +984,27 @@ export default function NewArticlePage() {
                       fullscreen ? "edit" : showPreview ? "live" : "edit"
                     }
                     hideToolbar={false}
+                    style={{
+                      backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
+                      color: isDarkMode ? '#f9fafb' : '#000000',
+                    }}
                     textareaProps={{
                       placeholder: "Write your article content here...",
-                      className:
-                        "text-sm leading-relaxed bg-white text-gray-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-400",
+                      style: {
+                        backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
+                        color: isDarkMode ? '#f9fafb' : '#000000',
+                      },
                     }}
                     previewOptions={{
-                      className:
-                        "bg-white text-gray-900 rounded-xl p-6 border border-gray-200",
+                      style: {
+                        backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
+                        color: isDarkMode ? '#f9fafb' : '#000000',
+                      },
                     }}
                     className={`${
                       fullscreen
                         ? "h-full rounded-none"
-                        : "rounded-xl border border-gray-200 shadow-sm"
+                        : "rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm"
                     }`}
                     extraCommands={[
                       {
@@ -991,7 +1031,7 @@ export default function NewArticlePage() {
               </div>
 
               {!fullscreen && (
-                <div className="flex justify-end items-center pt-6 border-t border-gray-200">
+                <div className="flex justify-end items-center pt-6 border-t border-gray-200 dark:border-gray-700">
                   <button
                     type="submit"
                     disabled={loading || coverImageUploading}
