@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
+import React from "react";
 import "highlight.js/styles/atom-one-light.css";
 import CountUp from "react-countup";
 import {
@@ -21,7 +22,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { CommentsReactions } from "./comment-reactions";
-import { GiscusComments } from "@/components/GiscusComments";
 import {
   ArrowRight,
   Linkedin,
@@ -40,6 +40,10 @@ import {
   Trophy,
   Zap,
   Crown,
+  Hash,
+  Lightbulb,
+  AlertTriangle,
+  Info,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -141,7 +145,7 @@ const CopyButton = ({ code }: { code: string }) => {
       onClick={handleCopy}
       variant="ghost"
       size="sm"
-      className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm border border-sky-300 text-sky-700 hover:text-sky-800 hover:bg-white hover:border-sky-400 px-3 py-2 text-xs rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
+      className="absolute top-3 right-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-sky-300 dark:border-sky-600 text-sky-700 dark:text-sky-300 hover:text-sky-800 dark:hover:text-sky-200 hover:bg-white dark:hover:bg-gray-700 hover:border-sky-400 dark:hover:border-sky-500 px-3 py-2 text-xs rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
     >
       {copied ? (
         <Check className="w-3 h-3 mr-1" />
@@ -218,54 +222,96 @@ export function ArticleContent({
     return fixedContent;
   }
 
+  // Enhanced filtering for TOC - exclude code blocks and comments
+  const validHeadings = headings.filter(({ text, level }) => {
+    const cleanText = text.trim();
+
+    // Exclude code blocks and bash comments
+    const isCodeBlock =
+      cleanText.startsWith("```") ||
+      cleanText.includes("```bash") ||
+      cleanText.includes("```") ||
+      (cleanText.startsWith("#") &&
+        (cleanText.includes("လက်ရှိ") ||
+          cleanText.includes("User") ||
+          cleanText.includes("remote") ||
+          cleanText.includes("File") ||
+          cleanText.includes("Wget") ||
+          cleanText.includes("Example Output:"))) ||
+      cleanText.includes("whoami") ||
+      cleanText.includes("id") ||
+      cleanText.includes("su -") ||
+      cleanText.includes("ssh") ||
+      cleanText.includes("curl") ||
+      cleanText.includes("wget") ||
+      cleanText.startsWith("echo $SHELL") ||
+      cleanText.match(/^[#`\s]*$/); // Empty or only special chars
+
+    return !isCodeBlock && cleanText.length > 0 && level >= 1 && level <= 6;
+  });
+
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
       {/* Main Article Content */}
-      <article className="lg:col-span-3 bg-white rounded-3xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
+      <article className="lg:col-span-3 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
         {/* Article Header */}
-        <div className="mb-8 md:mb-10">
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-black mb-6 md:mb-8 leading-tight tracking-tight bg-gradient-to-br from-sky-900 to-blue-900 bg-clip-text">
+        <div className="mb-10 md:mb-12">
+          {/* Meta Information */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <Link href={`/categories/${slugify(categoryName)}`}>
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all duration-300 hover:scale-105">
+                <Folder className="w-4 h-4" />
+                {categoryName}
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-3 text-sm">
+              <div className="flex items-center gap-1 text-black dark:text-white">
+                <CalendarDays className="w-3 h-3" />
+                <span>
+                  {new Date(article.published_at).toLocaleDateString()}
+                </span>
+              </div>
+              <div className="w-1 h-1 bg-black/30 dark:bg-gray-600 rounded-full"></div>
+              <div className="flex items-center gap-1 text-black dark:text-white">
+                <Eye className="w-3 h-3" />
+                <span>
+                  <CountUp
+                    end={article.read_count || 0}
+                    duration={2}
+                    separator=","
+                  />{" "}
+                  views
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black dark:text-white mb-6 leading-tight tracking-tight">
             {article.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6 md:mb-8">
-            {/* Date */}
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 hover:shadow-sm rounded-xl backdrop-blur-sm shadow-sm transition-all duration-300">
-              <CalendarDays className="w-4 h-4 text-gray-700" />
-              <span className="text-sm text-gray-700 font-medium">
-                {new Date(article.published_at).toLocaleDateString()}
-              </span>
-            </div>
-
-            {/* Category */}
-            <div className="flex items-center gap-2">
-              <Link href={`/categories/${slugify(categoryName)}`}>
-                <span className="flex items-center hover:shadow-sm gap-2 text-sky-600 px-3 md:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm">
-                  <Folder className="w-4 h-4 text-sky-600" />
-                  {categoryName}
-                </span>
-              </Link>
-            </div>
-
-            {/* Tags */}
-            <div className="flex items-center gap-2 flex-wrap">
+          {/* Tags */}
+          {tagNames.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5">
               {tagNames.map((tag, index) => (
                 <Link
                   href={`/articles?tag=${slugify(tag)}`}
                   key={index}
-                  className="flex items-center gap-2 text-orange-600 px-3 md:px-4 py-2 rounded-xl text-sm font-medium hover:shadow-md transition-all duration-300 shadow-sm"
+                  className="inline-flex items-center gap-1 px-2 py-1 text-black dark:text-white text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
-                  <TagIcon className="w-4 h-4 text-orange-600" />
+                  <TagIcon className="w-4 h-4 text-orange" />
                   {tag}
                 </Link>
               ))}
             </div>
-          </div>
+          )}
         </div>
 
         {/* Cover Image */}
         {article.cover_image && (
-          <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500">
+          <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-xl hover:shadow-2xl transition-all duration-500">
             <img
               src={article.cover_image || "/placeholder.svg"}
               alt={article.title}
@@ -275,17 +321,18 @@ export function ArticleContent({
         )}
 
         {/* Article Content */}
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-lg max-w-none dark:prose-invert">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
+              // Headers
               h1: ({ children, ...props }) => {
                 const id = slugify(flattenChildren(children));
                 return (
                   <h1
                     id={id}
-                    className="text-2xl md:text-3xl font-bold text-gray-900 mt-10 mb-6 pb-3 border-b-2 border-sky-100"
+                    className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mt-10 mb-6 pb-3 border-b-2 border-sky-100 dark:border-sky-900"
                     {...props}
                   >
                     {children}
@@ -297,7 +344,7 @@ export function ArticleContent({
                 return (
                   <h2
                     id={id}
-                    className="text-xl md:text-2xl font-semibold text-gray-900 mt-8 mb-4 pb-2 border-l-4 border-sky-500 pl-4 bg-gradient-to-r from-sky-50 to-transparent rounded-r-lg"
+                    className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-6 pb-2 border-l-4 border-sky-500 dark:border-sky-400 pl-4 bg-gradient-to-r from-sky-50 dark:from-sky-900/20 to-transparent rounded-r-lg"
                     {...props}
                   >
                     {children}
@@ -309,25 +356,41 @@ export function ArticleContent({
                 return (
                   <h3
                     id={id}
-                    className="text-lg md:text-xl font-semibold text-gray-800 mt-6 mb-3 pl-3 border-l-2 border-sky-300"
+                    className="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200 mt-8 mb-4 pl-4 border-l-4 border-sky-400 dark:border-sky-500 bg-gradient-to-r from-sky-50 dark:from-sky-900/10 to-transparent rounded-r-lg py-2"
                     {...props}
                   >
                     {children}
                   </h3>
                 );
               },
+              h4: ({ children, ...props }) => {
+                const id = slugify(flattenChildren(children));
+                return (
+                  <h4
+                    id={id}
+                    className="text-base md:text-lg font-semibold text-gray-800 dark:text-gray-200 mt-6 mb-3 pl-4 border-l-2 border-sky-300 dark:border-sky-600 bg-gradient-to-r from-sky-50/50 dark:from-sky-900/5 to-transparent rounded-r-lg py-1"
+                    {...props}
+                  >
+                    {children}
+                  </h4>
+                );
+              },
+
+              // Paragraph
               p: ({ children, ...props }) => (
                 <p
-                  className="mb-6 text-base leading-relaxed text-gray-700"
+                  className="mb-6 text-base leading-relaxed text-gray-700 dark:text-gray-300"
                   {...props}
                 >
                   {children}
                 </p>
               ),
+
+              // Links
               a: ({ href, children, ...props }) => (
                 <a
                   href={href}
-                  className="text-sky-600 hover:text-sky-700 hover:underline decoration-2 underline-offset-2 break-words text-base md:text-lg transition-all duration-200 font-medium"
+                  className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 hover:underline decoration-2 underline-offset-2 break-words text-base md:text-lg transition-all duration-200 font-medium"
                   target="_blank"
                   rel="noopener noreferrer"
                   {...props}
@@ -335,9 +398,11 @@ export function ArticleContent({
                   {children}
                 </a>
               ),
+
+              // Lists
               ul: ({ children, ...props }) => (
                 <ul
-                  className="mb-6 list-none space-y-3 pl-4 text-sm md:text-base"
+                  className="mb-6 list-disc space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base"
                   {...props}
                 >
                   {children}
@@ -345,127 +410,265 @@ export function ArticleContent({
               ),
               ol: ({ children, ...props }) => (
                 <ol
-                  className="mb-6 list-decimal space-y-3 pl-6 text-gray-700 text-sm md:text-base"
+                  className="mb-6 list-decimal space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base"
                   {...props}
                 >
                   {children}
                 </ol>
               ),
-              li: ({ children, ...props }) => {
-                const childrenArray = Array.isArray(children)
-                  ? children
-                  : [children];
+              li: ({ children, ...props }) => (
+                <li
+                  className="mb-2 text-gray-700 dark:text-gray-300 leading-relaxed"
+                  {...props}
+                >
+                  {children}
+                </li>
+              ),
 
-                return (
-                  <li
-                    className="flex items-start text-base text-gray-700 leading-relaxed gap-3"
-                    {...props}
-                  >
-                    <span className="inline-block w-2 h-2 rounded-full bg-sky-500 mt-2 flex-shrink-0 shadow-sm" />
-                    <span className="flex-1">
-                      {childrenArray.map((child, i) => {
-                        if (typeof child === "string") {
-                          const parts = child.split(/(\*\*.*?\*\*)/g);
-                          return (
-                            <span key={i}>
-                              {parts.map((part, j) => {
-                                if (
-                                  part.startsWith("**") &&
-                                  part.endsWith("**")
-                                ) {
-                                  return (
-                                    <strong
-                                      key={j}
-                                      className="font-semibold text-gray-900"
-                                    >
-                                      {part.slice(2, -2)}
-                                    </strong>
-                                  );
-                                }
-                                return part;
-                              })}
-                            </span>
-                          );
-                        }
-                        return child;
-                      })}
-                    </span>
-                  </li>
-                );
-              },
               code: ({ inline, className = "", children, ...props }: any) => {
                 if (inline) {
                   return (
                     <code
-                      className="bg-sky-100 text-sky-700 rounded-lg px-2 py-1 text-base font-mono border border-sky-200 shadow-sm"
+                      className="bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 rounded-lg px-2 py-1 text-base font-mono border border-sky-200 dark:border-sky-700 shadow-sm"
                       {...props}
                     >
                       {children}
                     </code>
                   );
                 }
+
                 const match = /language-(\w+)/.exec(className || "");
                 const language = match?.[1]?.toLowerCase() || "";
-                const codeString = flattenChildren(children);
-                const lines = codeString
-                  .split("\n")
-                  .filter((line) => line.trim() !== "");
-                const isShellLike = language === "bash" || language === "shell";
+
+                // Enhanced code string extraction
+                const extractCodeString = (children: any): string => {
+                  if (typeof children === "string") return children;
+                  if (Array.isArray(children)) {
+                    return children
+                      .map((child) => extractCodeString(child))
+                      .join("");
+                  }
+                  if (children?.props?.children) {
+                    return extractCodeString(children.props.children);
+                  }
+                  return String(children);
+                };
+
+                const codeString = extractCodeString(children).replace(
+                  /\n$/,
+                  ""
+                );
+                const lines = codeString.split("\n");
+
+                // Language-specific configurations
+                const isShellLike = ["bash", "shell", "sh", "zsh"].includes(
+                  language
+                );
+                const isPython = language === "python";
+                const isJavaScript = [
+                  "javascript",
+                  "js",
+                  "typescript",
+                  "ts",
+                ].includes(language);
+                const isTerraform = ["hcl", "terraform"].includes(language);
+                const isYaml = ["yaml", "yml"].includes(language);
+                const isConfig = ["toml", "json", "config"].includes(language);
+
+                // Check for shell prompt in first line
                 const startsWithDollar =
-                  isShellLike && lines[0]?.trim().startsWith("$");
+                  isShellLike && lines[0]?.trim().match(/^(\$|#|>)/);
+                const promptChar =
+                  lines[0]?.trim().match(/^(\$|#|>)/)?.[1] || "$";
+
+                // Show copy button for all supported languages
                 const showCopyButton = [
-                  "yaml",
                   "bash",
                   "shell",
+                  "sh",
+                  "zsh",
+                  "python",
+                  "py",
+                  "javascript",
+                  "js",
+                  "typescript",
+                  "ts",
                   "hcl",
+                  "terraform",
+                  "yaml",
+                  "yml",
+                  "toml",
+                  "json",
+                  "html",
+                  "css",
+                  "dockerfile",
+                  "sql",
+                  "ruby",
+                  "go",
+                  "rust",
                 ].includes(language);
+
+                // Get language display name
+                const getLanguageName = (lang: string): string => {
+                  const langMap: { [key: string]: string } = {
+                    js: "JavaScript",
+                    ts: "TypeScript",
+                    py: "Python",
+                    yml: "YAML",
+                    hcl: "HCL",
+                    tf: "Terraform",
+                    sh: "Shell",
+                    zsh: "Z Shell",
+                  };
+                  return (
+                    langMap[lang] ||
+                    lang.charAt(0).toUpperCase() + lang.slice(1)
+                  );
+                };
+
                 return (
-                  <div
-                    className="relative mb-8 rounded-2xl bg-gradient-to-br from-sky-50 to-white text-gray-700 font-mono text-sm shadow-lg border border-sky-200 hover:shadow-xl transition-all duration-300 overflow-hidden"
-                    {...props}
-                  >
+                  <div className="relative mb-8 rounded-2xl bg-gradient-to-br from-sky-50 dark:from-gray-800 to-white dark:to-gray-900 text-gray-700 dark:text-gray-300 font-mono text-sm shadow-lg border border-sky-200 dark:border-gray-600 hover:shadow-xl transition-all duration-300 overflow-hidden">
                     {language && (
-                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-t-2xl px-4 py-2 text-xs font-semibold">
-                        {language.toUpperCase()}
+                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-700 dark:to-blue-700 text-white rounded-t-2xl px-4 py-2 text-xs font-semibold flex justify-between items-center">
+                        <span>{getLanguageName(language)}</span>
+                        <span className="text-sky-200 dark:text-sky-300 text-xs font-normal">
+                          {lines.length} line{lines.length !== 1 ? "s" : ""}
+                        </span>
                       </div>
                     )}
                     {showCopyButton && <CopyButton code={codeString} />}
                     <pre
-                      className={`whitespace-pre-wrap p-6 overflow-x-auto rounded-2xl ${
+                      className={`p-6 overflow-x-auto rounded-2xl ${
                         language ? "pt-12" : "pt-6"
                       }`}
                     >
-                      {lines.map((line, idx) => (
-                        <div
-                          key={idx}
-                          className="flex hover:bg-sky-50/50 rounded-lg px-2 -mx-2 transition-colors"
-                        >
-                          {idx === 0 && startsWithDollar && (
-                            <span className="text-sky-600 font-bold select-none mr-2">
-                              $
-                            </span>
-                          )}
-                          <span className="flex-1">
-                            {idx === 0 && startsWithDollar
-                              ? line.slice(1).trimStart()
-                              : line}
-                          </span>
-                        </div>
-                      ))}
+                      <code className="font-mono text-sm block">
+                        {lines.map((line, idx) => {
+                          const hasPrompt = idx === 0 && startsWithDollar;
+                          const isEmptyLine = line.trim() === "";
+
+                          return (
+                            <div
+                              key={idx}
+                              className={`hover:bg-sky-50 dark:hover:bg-gray-700/50 rounded-lg px-2 -mx-2 transition-colors ${
+                                isEmptyLine ? "min-h-[1.2em]" : ""
+                              }`}
+                            >
+                              {hasPrompt && (
+                                <span className="text-sky-600 dark:text-sky-400 font-bold select-none mr-2">
+                                  {promptChar}
+                                </span>
+                              )}
+                              <span
+                                className={
+                                  isEmptyLine ? "inline-block min-w-[1px]" : ""
+                                }
+                              >
+                                {hasPrompt
+                                  ? line.slice(promptChar.length).trimStart()
+                                  : line}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </code>
                     </pre>
                   </div>
                 );
               },
-              blockquote: ({ ...props }) => (
+
+              // Replace the entire blockquote component with this:
+              blockquote: ({ children, ...props }) => (
                 <blockquote
-                  className="border-l-4 border-sky-500 pl-6 pr-4 py-4 italic text-gray-700 my-6 text-sm md:text-base bg-gradient-to-r from-sky-50 to-blue-50 rounded-r-2xl shadow-sm"
+                  className="border-l-4 border-sky-500 dark:border-sky-400 pl-6 pr-4 py-4 italic text-gray-700 dark:text-gray-300 my-6 text-sm md:text-base bg-gradient-to-r from-sky-50 dark:from-sky-900/20 to-blue-50 dark:to-blue-900/20 rounded-r-2xl shadow-sm"
+                  {...props}
+                >
+                  {children}
+                </blockquote>
+              ),
+
+              // Emphasis
+              em: ({ children, ...props }) => (
+                <em
+                  className="italic text-gray-800 dark:text-gray-200"
+                  {...props}
+                >
+                  {children}
+                </em>
+              ),
+
+              // Strong
+              strong: ({ children, ...props }) => (
+                <strong
+                  className="font-semibold text-gray-900 dark:text-white"
+                  {...props}
+                >
+                  {children}
+                </strong>
+              ),
+
+              // Tables
+              table: ({ children, ...props }) => (
+                <div className="overflow-x-auto my-8 rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm">
+                  <table
+                    className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 bg-white dark:bg-gray-800"
+                    {...props}
+                  >
+                    {children}
+                  </table>
+                </div>
+              ),
+              thead: ({ children, ...props }) => (
+                <thead className="bg-gray-50 dark:bg-gray-700" {...props}>
+                  {children}
+                </thead>
+              ),
+              tbody: ({ children, ...props }) => (
+                <tbody
+                  className="divide-y divide-gray-200 dark:divide-gray-600 bg-white dark:bg-gray-800"
+                  {...props}
+                >
+                  {children}
+                </tbody>
+              ),
+              tr: ({ children, ...props }) => (
+                <tr
+                  className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  {...props}
+                >
+                  {children}
+                </tr>
+              ),
+              th: ({ children, ...props }) => (
+                <th
+                  className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider border-b border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700"
+                  {...props}
+                >
+                  {children}
+                </th>
+              ),
+              td: ({ children, ...props }) => (
+                <td
+                  className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
+                  {...props}
+                >
+                  {children}
+                </td>
+              ),
+
+              // Horizontal rule
+              hr: ({ ...props }) => (
+                <hr
+                  className="my-8 border-gray-300 dark:border-gray-600"
                   {...props}
                 />
               ),
+
+              // Images
               img: ({ ...props }) => (
                 <img
                   {...props}
-                  className="my-8 max-w-full rounded-2xl shadow-lg mx-auto border border-sky-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                  className="my-8 max-w-full rounded-2xl shadow-lg mx-auto border border-sky-100 dark:border-gray-600 hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                   alt={props.alt || "Article image"}
                 />
               ),
@@ -480,7 +683,7 @@ export function ArticleContent({
           <CommentsReactions
             articleSlug={article.slug}
             currentUser={{
-              isAuthenticated: true, // You'll need to pass your auth state here
+              isAuthenticated: true,
               authorSlug: author?.slug,
             }}
           />
@@ -493,7 +696,7 @@ export function ArticleContent({
           transition={{ duration: 0.6 }}
           className="relative mb-12 mt-16"
         >
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
+          <div className="bg-gradient-to-br from-white dark:from-gray-800 to-slate-50 dark:to-gray-900 rounded-3xl border border-slate-200 dark:border-gray-700 p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
               {/* Author Avatar Container */}
               <div className="group relative">
@@ -503,7 +706,7 @@ export function ArticleContent({
                       <img
                         src={author?.avatar || "/placeholder.svg"}
                         alt={author?.name || "Author"}
-                        className="w-full h-full rounded-2xl object-cover border-4 border-white"
+                        className="w-full h-full rounded-2xl object-cover border-4 border-white dark:border-gray-800"
                         loading="lazy"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
@@ -532,7 +735,7 @@ export function ArticleContent({
                   Author
                 </div>
 
-                <h3 className="font-bold text-slate-900 leading-tight mb-2 group-hover:text-sky-600 transition-colors duration-300">
+                <h3 className="font-bold text-slate-900 dark:text-white leading-tight mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-300">
                   Written By
                 </h3>
 
@@ -540,12 +743,12 @@ export function ArticleContent({
                   href={`/authors/${authorSlug}`}
                   className="group block mb-3"
                 >
-                  <p className="text-xl text-sky-700 font-semibold mb-4">
+                  <p className="text-xl text-sky-700 dark:text-sky-400 font-semibold mb-4">
                     {author?.name}
                   </p>
                 </Link>
 
-                <p className="text-slate-700 leading-relaxed mb-6 max-w-2xl text-base">
+                <p className="text-slate-700 dark:text-gray-300 leading-relaxed mb-6 max-w-2xl text-base">
                   {author?.bio}
                 </p>
 
@@ -566,15 +769,15 @@ export function ArticleContent({
           {prevArticle && (
             <Link
               href={`/articles/${prevArticle.slug}`}
-              className="group flex items-center gap-3 text-sky-600 hover:text-sky-700 transition-all duration-300 flex-1 min-w-0"
+              className="group flex items-center gap-3 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-all duration-300 flex-1 min-w-0"
             >
               <div className="flex items-center gap-2">
                 <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-600 font-medium uppercase tracking-wide">
+                  <span className="text-xs text-gray-600 dark:text-gray-400 font-medium uppercase tracking-wide">
                     Previous
                   </span>
-                  <span className="text-sm font-medium line-clamp-1 group-hover:text-sky-700 transition-colors">
+                  <span className="text-sm font-medium line-clamp-1 group-hover:text-sky-700 dark:group-hover:text-sky-300 transition-colors">
                     {prevArticle.title}
                   </span>
                 </div>
@@ -585,15 +788,15 @@ export function ArticleContent({
           {nextArticle && (
             <Link
               href={`/articles/${nextArticle.slug}`}
-              className="group flex items-center gap-3 text-sky-600 hover:text-sky-700 transition-all duration-300 flex-1 min-w-0 justify-end text-right"
+              className="group flex items-center gap-3 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-all duration-300 flex-1 min-w-0 justify-end text-right"
             >
               <div className="flex items-center gap-2 flex-row-reverse">
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 <div className="flex flex-col items-end">
-                  <span className="text-xs text-gray-600 font-medium uppercase tracking-wide">
+                  <span className="text-xs text-gray-600 dark:text-gray-400 font-medium uppercase tracking-wide">
                     Next
                   </span>
-                  <span className="text-sm font-medium line-clamp-1 group-hover:text-sky-700 transition-colors">
+                  <span className="text-sm font-medium line-clamp-1 group-hover:text-sky-700 dark:group-hover:text-sky-300 transition-colors">
                     {nextArticle.title}
                   </span>
                 </div>
@@ -606,71 +809,44 @@ export function ArticleContent({
       {/* Sidebar */}
       <aside className="lg:col-span-1 space-y-6">
         {/* Table of Contents */}
-        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <ListOrdered className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-base font-semibold text-black dark:text-white">
                 Table of Contents
               </h3>
             </div>
-            <nav className="space-y-2">
-              {headings.map(({ id, text, level }) => (
+            <nav className="space-y-1">
+              {validHeadings.map(({ id, text, level }) => (
                 <a
                   key={id}
                   href={`#${id}`}
-                  className={`block py-2 px-3 rounded-xl hover:bg-sky-50 transition-all duration-200 text-sm group ${
+                  className={`block py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-2 ${
                     level === 1
-                      ? "text-sky-700 font-semibold border-l-2 border-sky-500"
+                      ? "border-blue-500 font-semibold text-black dark:text-white"
                       : level === 2
-                      ? "text-gray-800 font-medium border-l-2 border-gray-300"
-                      : "text-gray-700 font-normal border-l-2 border-gray-300"
+                      ? "border-black-100 dark:border-gray-600 text-black dark:text-gray-300 ml-4"
+                      : "border-black-100 dark:border-gray-700 text-black dark:text-gray-400 ml-8 text-sm"
                   }`}
-                  style={{
-                    marginLeft: `${(level - 1) * 12}px`,
-                  }}
                 >
-                  <span className="group-hover:translate-x-1 transition-transform duration-200 block line-clamp-1">
-                    {text}
-                  </span>
+                  {text}
                 </a>
               ))}
             </nav>
           </CardContent>
         </Card>
 
-        {/* Article Stats */}
-        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
-          <CardContent className="p-5">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <CountUp
-                  end={article.read_count || 0}
-                  duration={2}
-                  separator=","
-                  className="text-2xl font-bold text-gray-900 block leading-tight"
-                />
-                <p className="text-sm text-black-600 font-medium">
-                  Article Reads
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Recent Articles */}
-        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <FileText className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-base font-semibold text-black dark:text-white">
                 Recent Articles
               </h3>
             </div>
@@ -686,9 +862,9 @@ export function ArticleContent({
                     key={article.id}
                     className="block group"
                   >
-                    <div className="bg-white rounded-xl p-3 border border-gray-200 shadow-sm hover:shadow-md hover:border-sky-300 transition-all duration-300">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-600 shadow-sm hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600 transition-all duration-300">
                       {/* Cover Image */}
-                      <div className="mb-3 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                      <div className="mb-3 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600 shadow-sm">
                         <img
                           src={coverImage}
                           alt={article.title}
@@ -698,28 +874,28 @@ export function ArticleContent({
 
                       {/* Content */}
                       <div className="space-y-2">
-                        <h4 className="font-semibold text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight">
+                        <h4 className="font-semibold text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2 text-sm leading-tight">
                           {article.title}
                         </h4>
 
-                        <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">
+                        <p className="text-xs text-black/70 dark:text-gray-400 leading-relaxed line-clamp-2">
                           {articleExcerpt}
                         </p>
 
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
                           <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white shadow-sm">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white dark:border-gray-800 shadow-sm">
                               <img
                                 src={itemAuthor?.avatar || "/placeholder.svg"}
                                 alt={itemAuthor?.name}
                                 className="w-full h-full object-cover"
                               />
                             </div>
-                            <span className="text-xs font-medium text-gray-700">
+                            <span className="text-xs font-medium text-black/80 dark:text-gray-300">
                               {itemAuthor?.name || "Unknown"}
                             </span>
                           </div>
-                          <div className="flex items-center gap-1 text-xs text-gray-600 font-medium">
+                          <div className="flex items-center gap-1 text-xs text-black/70 dark:text-gray-400 font-medium">
                             <Eye className="w-3 h-3" />
                             <CountUp
                               end={article.read_count || 0}
@@ -738,13 +914,13 @@ export function ArticleContent({
         </Card>
 
         {/* Featured Authors */}
-        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Star className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-base font-semibold text-black dark:text-white">
                 Featured Authors
               </h3>
             </div>
@@ -758,9 +934,9 @@ export function ArticleContent({
                     key={author.id}
                     className="block group"
                   >
-                    <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 transition-all duration-300">
+                    <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 dark:hover:bg-gray-800 transition-all duration-300">
                       {/* Author Avatar */}
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white shadow-sm flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white dark:border-gray-800 shadow-sm flex-shrink-0">
                         <img
                           src={author.avatar || "/placeholder.svg"}
                           alt={author.name}
@@ -774,10 +950,10 @@ export function ArticleContent({
 
                       {/* Author Info */}
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-1 text-base">
+                        <h4 className="font-semibold text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-1 text-base">
                           {author.name}
                         </h4>
-                        <p className="text-xs text-gray-600 line-clamp-1">
+                        <p className="text-xs text-black/70 dark:text-gray-400 line-clamp-1">
                           {author.job_title}
                         </p>
                       </div>
@@ -788,120 +964,14 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Categories */}
-        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
-          <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Folder className="w-4 h-4 text-white" />
-              </div>
-              <h3 className="text-base font-bold text-gray-900">Categories</h3>
-            </div>
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              {categories.slice(0, 4).map((category) => {
-                const getCategoryIcon = (categoryName: string) => {
-                  const name = categoryName.toLowerCase();
-                  if (
-                    name.includes("devops") ||
-                    name.includes("docker") ||
-                    name.includes("kubernetes")
-                  )
-                    return <Container className="w-5 h-5 text-white" />;
-                  if (
-                    name.includes("cloud") ||
-                    name.includes("aws") ||
-                    name.includes("azure")
-                  )
-                    return <Cloud className="w-5 h-5 text-white" />;
-                  if (name.includes("automation") || name.includes("ci/cd"))
-                    return <GitBranch className="w-5 h-5 text-white" />;
-                  if (name.includes("terraform") || name.includes("iac"))
-                    return <Code className="w-5 h-5 text-white" />;
-                  if (name.includes("security") || name.includes("devsecops"))
-                    return <Zap className="w-5 h-5 text-white" />;
-                  if (
-                    name.includes("monitoring") ||
-                    name.includes("observability")
-                  )
-                    return <Code className="w-5 h-5 text-white" />;
-                  if (name.includes("linux") || name.includes("ubuntu"))
-                    return <Code className="w-5 h-5 text-white" />;
-                  if (name.includes("python") || name.includes("scripting"))
-                    return <Code className="w-5 h-5 text-white" />;
-                  return <Folder className="w-5 h-5 text-white" />;
-                };
-
-                const getCategoryColor = (categoryName: string) => {
-                  const name = categoryName.toLowerCase();
-                  if (name.includes("devops"))
-                    return "from-orange-500 to-red-500";
-                  if (name.includes("cloud")) return "from-sky-500 to-blue-500";
-                  if (name.includes("automation"))
-                    return "from-emerald-500 to-green-500";
-                  if (name.includes("terraform"))
-                    return "from-purple-500 to-indigo-500";
-                  if (name.includes("security"))
-                    return "from-rose-500 to-pink-500";
-                  if (name.includes("monitoring"))
-                    return "from-amber-500 to-yellow-500";
-                  return "from-gray-500 to-gray-600";
-                };
-
-                return (
-                  <Link
-                    href={`/categories/${category.slug}`}
-                    key={category.id}
-                    className="block group"
-                  >
-                    <div className="text-center p-2 rounded-xl border border-gray-200 hover:border-sky-300 hover:shadow-md transition-all duration-300 bg-white group-hover:bg-sky-50">
-                      {/* Circular Icon */}
-                      <div
-                        className={`w-10 h-10 rounded-full bg-gradient-to-br ${getCategoryColor(
-                          category.name
-                        )} flex items-center justify-center shadow-md mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        {getCategoryIcon(category.name)}
-                      </div>
-
-                      {/* Category Name */}
-                      <h4 className="font-semibold text-gray-900 group-hover:text-sky-700 transition-colors text-xs leading-tight mb-1 line-clamp-2">
-                        {category.name}
-                      </h4>
-
-                      {/* Article Count */}
-                      {category.post_count && (
-                        <div className="flex items-center justify-center gap-1">
-                          <div className="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
-                          <span className="text-xs text-gray-600 font-medium">
-                            {category.post_count}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* See All Button */}
-            <Link
-              href="/categories"
-              className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group/seeall transform hover:scale-[1.02] text-sm"
-            >
-              See All Categories
-              <ChevronRight className="w-3 h-3 group-hover/seeall:translate-x-1 transition-transform" />
-            </Link>
-          </CardContent>
-        </Card>
-
         {/* Popular Articles */}
-        <Card className="border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white">
+        <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100">
+            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <TrendingUp className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-base font-semibold text-black dark:text-white">
                 Popular Reads
               </h3>
             </div>
@@ -915,13 +985,13 @@ export function ArticleContent({
                     key={article.id}
                     className="block group"
                   >
-                    <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-sky-50 transition-all duration-300">
+                    <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-sky-50 dark:hover:bg-gray-800 transition-all duration-300">
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-2 text-sm leading-tight mb-1">
+                        <h4 className="font-medium text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2 text-sm leading-tight mb-1">
                           {article.title}
                         </h4>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-xs text-gray-600"></div>
+                          <div className="flex items-center gap-1 text-xs text-black/70 dark:text-gray-400"></div>
                         </div>
                       </div>
                     </div>
