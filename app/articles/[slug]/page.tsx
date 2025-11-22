@@ -1,9 +1,11 @@
-import { notFound } from "next/navigation";
+"use client";
+import React, { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Head from "next/head";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import type { Metadata } from "next";
 import { ArticleContent } from "@/components/article-content";
+import { Moon, Sun, Monitor } from "lucide-react";
 
 interface Article {
   id: number;
@@ -36,10 +38,9 @@ interface Tag {
 interface Category {
   id: number;
   name: string;
-  slug: string; // Add this line
+  slug: string;
 }
 
-export const dynamic = "force-dynamic";
 const SITE_URL = "https://www.learndevopsnow-mm.blog";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -95,105 +96,149 @@ function extractHeadings(
     .filter(Boolean) as { text: string; level: number; id: string }[];
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
+export default function ArticlePage() {
+  const params = useParams();
+  const router = useRouter();
+  const slug = params.slug as string;
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
-      cache: "no-store",
-    });
-    if (!res.ok) throw new Error("Not found");
+  const [article, setArticle] = useState<Article | null>(null);
+  const [author, setAuthor] = useState<Author | null>(null);
+  const [allArticles, setAllArticles] = useState<Article[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("light");
 
-    const article = await res.json();
+  useEffect(() => {
+    setMounted(true);
+    // Load saved theme or detect system preference
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | "system" | null;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      setTheme("dark");
+      document.documentElement.classList.add("dark");
+    } else if (savedTheme === "system") {
+      setTheme("system");
+      if (prefersDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } else {
+      setTheme("light");
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
 
-    const cleanDescription =
-      article.content
-        ?.replace(/[#_*>\[\]()`]/g, "")
-        .slice(0, 160)
-        .trim() + "..." || "Learn DevOps tutorials and labs for Myanmar developers";
+  const setThemeMode = (newTheme: "light" | "dark" | "system") => {
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else if (newTheme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+  };
 
-    const title = article.title || "Learn DevOps Now - Myanmar";
+  useEffect(() => {
+    if (slug) {
+      fetchArticleData();
+    }
+  }, [slug]);
 
-    let image = article.cover_image || "/og-image.jpg";
+  const fetchArticleData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-    return {
-      title: `${title} | Learn DevOps Now - Myanmar`,
-      description: cleanDescription,
-      openGraph: {
-        title: title,
-        description: cleanDescription,
-        type: "article",
-        url: `https://www.learndevopsnow-mm.blog/articles/${slug}`,
-        images: [{ 
-          url: image.startsWith('http') ? image : `https://www.learndevopsnow-mm.blog${image.startsWith('/') ? '' : '/'}${image}`,
-          width: 1200, 
-          height: 630, 
-          alt: title 
-        }],
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: title,
-        description: cleanDescription,
-        images: [image.startsWith('http') ? image : `https://www.learndevopsnow-mm.blog${image.startsWith('/') ? '' : '/'}${image}`],
-      },
-    };
-  } catch {
-    return {
-      title: "Article not found | Learn DevOps Now - Myanmar",
-      description: "This article does not exist.",
-    };
-  }
-}
+      // Fetch article
+      const articleRes = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
+        cache: "no-store",
+      });
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+      if (!articleRes.ok) {
+        throw new Error("Article not found");
+      }
 
-  if (!slug) notFound();
+      const articleData: Article = await articleRes.json();
+      setArticle(articleData);
 
-  const res = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
-    cache: "no-store",
-  });
+      // Fetch all related data in parallel
+      const [
+        authorData,
+        articlesData,
+        tagsData,
+        categoriesData,
+        authorsData,
+      ] = await Promise.all([
+        fetchAuthor(articleData.author),
+        fetchJSON<Article>(`${API_BASE_URL}/articles/`),
+        fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
+        fetchJSON<Category>(`${API_BASE_URL}/categories/`),
+        fetchJSON<Author>(`${API_BASE_URL}/authors/`),
+      ]);
 
-  if (!res.ok) {
+      setAuthor(authorData);
+      setAllArticles(articlesData);
+      setTags(tagsData);
+      setCategories(categoriesData);
+      setAuthors(authorsData);
+
+    } catch (err) {
+      console.error("Error fetching article data:", err);
+      setError("Article not found or failed to load.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
     return (
-      <div className="p-8 text-center text-red-600">
-        <p>Article not found or failed to load.</p>
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading article...</p>
+        </div>
       </div>
     );
   }
 
-  const article: Article = await res.json();
+  if (error || !article) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 dark:text-red-400 text-lg">{error || "Article not found"}</p>
+          <button
+            onClick={() => router.push("/")}
+            className="mt-4 px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors"
+          >
+            Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-  const [author, allArticles, tags, categories, authors] = await Promise.all([
-    fetchAuthor(article.author),
-    fetchJSON<Article>(`${API_BASE_URL}/articles/`),
-    fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
-    fetchJSON<Category>(`${API_BASE_URL}/categories/`),
-    fetchJSON<Author>(`${API_BASE_URL}/authors/`),
-  ]);
-
-  // Prepare combined metadata strings here for <Head>
+  // Prepare metadata
   const cleanDescription =
     article.content
       ?.replace(/[#_*>\[\]()`]/g, "")
       .slice(0, 150)
       .trim() || "Learn DevOps Now - Myanmar";
 
-  const combinedTitle = `${article.title} - ${cleanDescription}`;
-
-  let image =
-  article.cover_image ||
-  "/og-image.jpg"; // ← NEW DOMAIN (use relative path)
-
+  let image = article.cover_image || "/og-image.jpg";
   if (image && !image.startsWith("http")) {
     image = `https://www.learndevopsnow-mm.blog${
       image.startsWith("/") ? "" : "/"
@@ -220,53 +265,85 @@ export default async function ArticlePage({
     .map((id) => tags.find((t) => t.id === id)?.name)
     .filter(Boolean) as string[];
 
-return (
-  <>
-    <Head>
-      <title>{`${article.title} | Learn DevOps Now - Myanmar`}</title>
-      <meta name="description" content={cleanDescription} />
+  return (
+    <>
+      <Head>
+        <title>{`${article.title} | Learn DevOps Now - Myanmar`}</title>
+        <meta name="description" content={cleanDescription} />
 
-      {/* Open Graph */}
-      <meta property="og:title" content={article.title} />
-      <meta property="og:description" content={cleanDescription} />
-      <meta property="og:image" content={image} />
-      <meta
-        property="og:url"
-        content={`https://www.learndevopsnow-mm.blog/articles/${slug}`}
-      />
-      <meta property="og:type" content="article" />
-
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={article.title} />
-      <meta name="twitter:description" content={cleanDescription} />
-      <meta name="twitter:image" content={image} />
-    </Head>
-
-    {/* REST OF YOUR EXISTING CODE STAYS EXACTLY THE SAME */}
-    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
-      <MinimalHeader />
-      <div className="md:-mt-1 -mt-19">
-        <ArticleContent
-          article={article}
-          author={author}
-          headings={headings}
-          prevArticle={prevArticle}
-          nextArticle={nextArticle}
-          recentArticles={recentArticles}
-          sameCategoryArticles={sameCategoryArticles}
-          publishDate={publishDate}
-          categoryName={categoryName}
-          tagNames={tagNames}
-          authors={authors}
-          categories={categories}
-          readCount={article.read_count || 0}
+        {/* Open Graph */}
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={cleanDescription} />
+        <meta property="og:image" content={image} />
+        <meta
+          property="og:url"
+          content={`https://www.learndevopsnow-mm.blog/articles/${slug}`}
         />
+        <meta property="og:type" content="article" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={cleanDescription} />
+        <meta name="twitter:image" content={image} />
+      </Head>
+
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
+        {/* Compact Theme Toggle - Bottom Right Corner */}
+        <div className="fixed bottom-6 right-6 z-50">
+          <div className="flex flex-col items-center space-y-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl p-3 shadow-2xl border border-gray-200/50 dark:border-gray-700/50">
+            {/* Dark Button */}
+            <button
+              onClick={() => setThemeMode("dark")}
+              className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-110 ${
+                theme === "dark" 
+                  ? "bg-purple-500 text-white shadow-lg shadow-purple-500/50" 
+                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300"
+              }`}
+              title="Dark Theme"
+            >
+              <Moon className="h-5 w-5" />
+            </button>
+                        
+            {/* Light Button */}
+            <button
+              onClick={() => setThemeMode("light")}
+              className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-110 ${
+                theme === "light" 
+                  ? "bg-amber-500 text-white shadow-lg shadow-amber-500/50" 
+                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300"
+              }`}
+              title="Light Theme"
+            >
+              <Sun className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <MinimalHeader />
+        
+        <div className="md:-mt-1 -mt-19">
+          <ArticleContent
+            article={article}
+            author={author}
+            headings={headings}
+            prevArticle={prevArticle}
+            nextArticle={nextArticle}
+            recentArticles={recentArticles}
+            sameCategoryArticles={sameCategoryArticles}
+            publishDate={publishDate}
+            categoryName={categoryName}
+            tagNames={tagNames}
+            authors={authors}
+            categories={categories}
+            readCount={article.read_count || 0}
+          />
+        </div>
+        
+        <div className="md:-mt-2 -mt-5">
+          <MinimalFooter />
+        </div>
       </div>
-      <div className="md:-mt-2 -mt-5">
-        <MinimalFooter />
-      </div>
-    </div>
-  </>
-);
+    </>
+  );
 }
