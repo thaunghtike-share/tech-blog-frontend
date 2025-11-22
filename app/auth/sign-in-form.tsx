@@ -235,15 +235,15 @@ export default function SignInForm({
       </div>
 
       <div className="flex items-center my-4">
-        <div className="flex-grow border-t border-gray-300"></div>
-        <span className="mx-4 text-gray-500 text-sm">OR</span>
-        <div className="flex-grow border-t border-gray-300"></div>
+        <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
+        <span className="mx-4 text-gray-500 dark:text-gray-400 text-sm">OR</span>
+        <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
       </div>
 
       {/* Username/Password Form */}
       <form onSubmit={handleFormSubmit} className="space-y-4">
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">
+          <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
             Username or Email
           </label>
           <input
@@ -252,12 +252,12 @@ export default function SignInForm({
             value={formData.username}
             onChange={handleInputChange}
             required
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Enter your username or email"
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">
+          <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
             Password
           </label>
           <input
@@ -266,7 +266,7 @@ export default function SignInForm({
             value={formData.password}
             onChange={handleInputChange}
             required
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300"
+            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Enter your password"
           />
 
@@ -274,7 +274,7 @@ export default function SignInForm({
           <div className="flex justify-between items-center mt-2">
             {/* Password Hint */}
             {showHint && passwordHint && (
-              <div className="text-xs text-blue-600">
+              <div className="text-xs text-blue-600 dark:text-blue-400">
                 <span className="font-medium">Hint:</span> "{passwordHint}"
               </div>
             )}
@@ -283,7 +283,7 @@ export default function SignInForm({
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="text-sky-600 hover:text-sky-700 font-medium text-sm"
+              className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium text-sm"
             >
               Forgot Password?
             </button>
@@ -300,13 +300,13 @@ export default function SignInForm({
       </form>
 
       {/* Sign Up Link */}
-      <div className="text-center pt-4 border-t border-gray-200">
-        <p className="text-gray-600 text-sm">
+      <div className="text-center pt-4 border-t border-gray-200 dark:border-gray-600">
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
           Don't have an account?{" "}
           <button
             type="button"
             onClick={switchToSignUp}
-            className="text-sky-600 hover:text-sky-700 font-medium"
+            className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium"
           >
             Sign Up
           </button>
@@ -314,8 +314,8 @@ export default function SignInForm({
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm">
-          <div className="text-red-700 mb-2">{error}</div>
+        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm">
+          <div className="text-red-700 dark:text-red-400 mb-2">{error}</div>
         </div>
       )}
     </div>

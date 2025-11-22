@@ -39,12 +39,12 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
 
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
             {activeTab === "signup" ? "Join Our Community" : "Welcome Back"}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             {activeTab === "signup" 
               ? "Create an account to share your knowledge" 
               : "Sign in to your account to continue"}
@@ -52,13 +52,13 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-gray-200 mb-6">
+        <div className="flex border-b border-gray-200 dark:border-gray-600 mb-6">
           <button
             onClick={() => setActiveTab("signin")}
             className={`flex-1 py-3 font-medium text-sm ${
               activeTab === "signin"
-                ? "text-sky-600 border-b-2 border-sky-600"
-                : "text-gray-500 hover:text-gray-700"
+                ? "text-sky-600 dark:text-sky-400 border-b-2 border-sky-600 dark:border-sky-400"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
             }`}
           >
             Sign In
@@ -67,8 +67,8 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
             onClick={() => setActiveTab("signup")}
             className={`flex-1 py-3 font-medium text-sm ${
               activeTab === "signup"
-                ? "text-sky-600 border-b-2 border-sky-600"
-                : "text-gray-500 hover:text-gray-700"
+                ? "text-sky-600 dark:text-sky-400 border-b-2 border-sky-600 dark:border-sky-400"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
             }`}
           >
             Sign Up
@@ -78,8 +78,8 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
         {/* Show loading if Google script isn't ready */}
         {!googleScriptLoaded && (
           <div className="text-center py-4">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600 mx-auto mb-2"></div>
-            <p className="text-gray-600 text-sm">Loading authentication...</p>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600 dark:border-sky-400 mx-auto mb-2"></div>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">Loading authentication...</p>
           </div>
         )}
 
