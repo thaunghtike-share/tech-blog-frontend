@@ -114,15 +114,15 @@ export default function CategoriesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white/95">
+      <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-square bg-gray-200 rounded-2xl mb-4" />
-                <div className="h-6 w-3/4 bg-gray-200 rounded mb-3" />
-                <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+                <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-2xl mb-4" />
+                <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded mb-3" />
+                <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2" />
               </div>
             ))}
           </div>
@@ -134,14 +134,14 @@ export default function CategoriesPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white/95">
+      <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 text-center">
-          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-8 max-w-2xl mx-auto">
-            <p className="text-gray-900 text-lg font-medium mb-2">
+          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-200 dark:border-yellow-700 rounded-2xl p-8 max-w-2xl mx-auto">
+            <p className="text-gray-900 dark:text-white text-lg font-medium mb-2">
               Error loading categories
             </p>
-            <p className="text-gray-600">{error}</p>
+            <p className="text-gray-600 dark:text-gray-400">{error}</p>
           </div>
         </div>
         <MinimalFooter />
@@ -150,7 +150,7 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
       <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8 md:py-12">
         {/* Header Section */}
@@ -174,12 +174,12 @@ export default function CategoriesPage() {
               transition={{ delay: 0.1 }}
               className="flex items-center gap-4 mb-6"
             >
-              <div className="w-16 h-16 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2">
-                <Folder className="w-8 h-8 text-sky-600" />
+              <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center p-2">
+                <Folder className="w-8 h-8 text-sky-600 dark:text-sky-400" />
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
                 Explore by
-                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                   Categories
                 </span>
               </h2>
@@ -189,7 +189,7 @@ export default function CategoriesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-black leading-relaxed"
+              className="text-lg text-black dark:text-gray-300 leading-relaxed"
             >
               Browse our comprehensive collection of DevOps articles organized
               by technology stacks, tools, and specialized topics to find
@@ -215,7 +215,7 @@ export default function CategoriesPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Link href={`/categories/${category.slug}`}>
-                  <Card className="group h-full border border-gray-200 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white overflow-hidden">
+                  <Card className="group h-full border border-gray-200 dark:border-gray-700 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white dark:bg-gray-800 overflow-hidden">
                     <CardContent className="p-6 h-full flex flex-col">
                       {/* Icon and Count */}
                       <div className="flex items-center justify-between mb-6">
@@ -225,8 +225,8 @@ export default function CategoriesPage() {
                           <Icon className="w-6 h-6 text-white" />
                         </div>
                         <div className="text-right">
-                          <div className="flex items-center gap-1 text-sm text-gray-600">
-                            <span className="font-semibold text-gray-900 text-lg">
+                          <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+                            <span className="font-semibold text-gray-900 dark:text-white text-lg">
                               {category.post_count}
                             </span>
                             <span>articles</span>
@@ -235,12 +235,12 @@ export default function CategoriesPage() {
                       </div>
 
                       {/* Category Name */}
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-sky-600 transition-colors duration-300 line-clamp-2">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-300 line-clamp-2">
                         {category.name}
                       </h3>
 
                       {/* Description */}
-                      <p className="text-gray-700 leading-relaxed mb-6 flex-grow text-sm">
+                      <p className="text-gray-700 dark:text-gray-400 leading-relaxed mb-6 flex-grow text-sm">
                         Explore {category.post_count} article
                         {category.post_count !== 1 ? "s" : ""} covering{" "}
                         {category.name.toLowerCase()} concepts, best practices,
@@ -248,11 +248,11 @@ export default function CategoriesPage() {
                       </p>
 
                       {/* CTA */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span className="text-sky-600 font-semibold text-sm group-hover:text-sky-700 transition-colors">
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <span className="text-sky-600 dark:text-sky-400 font-semibold text-sm group-hover:text-sky-700 dark:group-hover:text-sky-300 transition-colors">
                           Browse Articles
                         </span>
-                        <ChevronRight className="w-4 h-4 text-sky-600 group-hover:translate-x-1 transition-transform duration-300" />
+                        <ChevronRight className="w-4 h-4 text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
                     </CardContent>
                   </Card>

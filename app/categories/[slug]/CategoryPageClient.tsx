@@ -282,17 +282,17 @@ export default function CategoryPageClient({ slug }: Props) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="max-w-6xl mx-auto px-4 py-20">
           <div className="text-center">
             <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
               <Shield className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-black mb-4">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
               Category Not Found
             </h1>
-            <p className="text-lg text-black mb-8 max-w-md mx-auto">{error}</p>
+            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">{error}</p>
             <Link
               href="/categories"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 shadow-lg"
@@ -309,18 +309,18 @@ export default function CategoryPageClient({ slug }: Props) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="animate-pulse space-y-12">
             {/* Category Skeleton */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-gray-700 p-8">
               <div className="flex items-center gap-8">
-                <div className="w-24 h-24 bg-slate-200 rounded-2xl"></div>
+                <div className="w-24 h-24 bg-slate-200 dark:bg-gray-700 rounded-2xl"></div>
                 <div className="space-y-4 flex-1">
-                  <div className="h-8 bg-slate-200 rounded-full w-64"></div>
-                  <div className="h-6 bg-slate-200 rounded-full w-48"></div>
-                  <div className="h-4 bg-slate-200 rounded-full w-36"></div>
+                  <div className="h-8 bg-slate-200 dark:bg-gray-700 rounded-full w-64"></div>
+                  <div className="h-6 bg-slate-200 dark:bg-gray-700 rounded-full w-48"></div>
+                  <div className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full w-36"></div>
                 </div>
               </div>
             </div>
@@ -329,12 +329,12 @@ export default function CategoryPageClient({ slug }: Props) {
               {[...Array(8)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-xl border border-slate-200 p-6"
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-700 p-6"
                 >
-                  <div className="h-48 bg-slate-200 rounded-lg mb-4"></div>
+                  <div className="h-48 bg-slate-200 dark:bg-gray-700 rounded-lg mb-4"></div>
                   <div className="space-y-3">
-                    <div className="h-4 bg-slate-200 rounded-full w-3/4"></div>
-                    <div className="h-4 bg-slate-200 rounded-full w-1/2"></div>
+                    <div className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full w-3/4"></div>
+                    <div className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full w-1/2"></div>
                   </div>
                 </div>
               ))}
@@ -352,7 +352,7 @@ export default function CategoryPageClient({ slug }: Props) {
     : "from-slate-500 to-slate-600";
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-hidden transition-colors duration-300">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
@@ -367,11 +367,11 @@ export default function CategoryPageClient({ slug }: Props) {
           <div className="mb-12">
             <div className="flex items-center gap-4 mb-6">
               <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-              <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
+              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
                 Category
               </span>
             </div>
-            <h1 className="text-6xl md:text-7xl font-light text-black mb-6 tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
               {category?.name}
             </h1>
           </div>
@@ -381,7 +381,7 @@ export default function CategoryPageClient({ slug }: Props) {
             {/* Icon Section */}
             <div className="flex-shrink-0">
               <div className="relative">
-                <div className="w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                <div className="w-28 h-28 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
                   <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
                     <CategoryIcon className="w-12 h-12 text-white" />
                   </div>
@@ -392,7 +392,7 @@ export default function CategoryPageClient({ slug }: Props) {
             {/* Content Section */}
             <div className="flex-1">
               {/* Description */}
-              <p className="text-lg text-black leading-relaxed mb-8 max-w-2xl">
+              <p className="text-lg text-black dark:text-gray-300 leading-relaxed mb-8 max-w-2xl">
                 Explore all articles in the {category?.name} category. Stay
                 updated with the latest insights, tutorials, and best practices.
               </p>
@@ -402,7 +402,7 @@ export default function CategoryPageClient({ slug }: Props) {
                 <span className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-medium rounded-full shadow-sm">
                   {totalArticles} Related Articles
                 </span>
-                <span className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full shadow-sm">
+                <span className="px-4 py-2 bg-black dark:bg-gray-700 text-white dark:text-gray-300 text-sm font-medium rounded-full shadow-sm">
                   {totalAuthors} Related Authors
                 </span>
               </div>
@@ -412,33 +412,33 @@ export default function CategoryPageClient({ slug }: Props) {
           {/* Stats - Premium Design */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">
+              <div className="text-5xl font-light text-black dark:text-white">
                 {totalArticles}
               </div>
-              <div className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
+              <div className="text-sm text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider">
                 Articles
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">
+              <div className="text-5xl font-light text-black dark:text-white">
                 {totalViews.toLocaleString()}
               </div>
-              <div className="text-sm text-green-600 font-semibold uppercase tracking-wider">
+              <div className="text-sm text-green-600 dark:text-green-400 font-semibold uppercase tracking-wider">
                 Total Views
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">{avgViews}</div>
-              <div className="text-sm text-purple-600 font-semibold uppercase tracking-wider">
+              <div className="text-5xl font-light text-black dark:text-white">{avgViews}</div>
+              <div className="text-sm text-purple-600 dark:text-purple-400 font-semibold uppercase tracking-wider">
                 Avg Views
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">
+              <div className="text-5xl font-light text-black dark:text-white">
                 {avgReadTime}m
               </div>
-              <div className="text-sm text-orange-600 font-semibold uppercase tracking-wider">
-                Read Time
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-semibold uppercase tracking-wider">
+                Avg Read Time
               </div>
             </div>
           </div>
@@ -449,21 +449,21 @@ export default function CategoryPageClient({ slug }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-2xl overflow-hidden mb-16"
+          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700/60 shadow-2xl overflow-hidden mb-16"
         >
-          <div className="px-8 py-6 border-b border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
+          <div className="px-8 py-6 border-b border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
+                <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
                   Latest Articles
                 </h2>
-                <p className="text-slate-600 font-medium">
+                <p className="text-slate-600 dark:text-gray-400 font-medium">
                   {totalArticles} articles published •{" "}
                   {totalViews.toLocaleString()} total reads
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <div className="text-sm text-slate-500 font-medium">
+                <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">
                   Page {currentPage} of {totalPages}
                 </div>
               </div>
@@ -475,17 +475,17 @@ export default function CategoryPageClient({ slug }: Props) {
               <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
                 <FileText className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-4">
+              <h3 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
                 No Articles Yet
               </h3>
-              <p className="text-slate-600 mb-8 text-lg font-medium max-w-md mx-auto">
+              <p className="text-slate-600 dark:text-gray-400 mb-8 text-lg font-medium max-w-md mx-auto">
                 Stay tuned! We're preparing amazing {category?.name} content for
                 you.
               </p>
             </div>
           ) : (
             <>
-              <div className="divide-y divide-slate-200/50">
+              <div className="divide-y divide-slate-200/50 dark:divide-gray-700/50">
                 {paginatedArticles.map((article, index) => {
                   // Use excerpt if available, otherwise strip markdown from content and truncate
                   const previewText =
@@ -503,11 +503,11 @@ export default function CategoryPageClient({ slug }: Props) {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-8 hover:bg-white/50 transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                      className="p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
                     >
                       <div className="flex flex-col lg:flex-row gap-8 items-start">
                         {/* Article Cover */}
-                        <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
+                        <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
                           <img
                             src={coverImage}
                             alt={article.title}
@@ -546,22 +546,22 @@ export default function CategoryPageClient({ slug }: Props) {
                         {/* Article Info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-wrap items-center gap-4 mb-3">
-                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                              <Calendar className="w-4 h-4 text-slate-500" />
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <Calendar className="w-4 h-4 text-slate-500 dark:text-gray-500" />
                               {formatDate(article.published_at)}
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                              <Clock className="w-4 h-4 text-slate-500" />
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <Clock className="w-4 h-4 text-slate-500 dark:text-gray-500" />
                               {readTime} min read
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                              <Eye className="w-4 h-4 text-sky-600" />
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <Eye className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                               {article.read_count?.toLocaleString() || "0"}{" "}
                               views
                             </span>
                           </div>
 
-                          <h3 className="text-2xl font-bold text-slate-800 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
                             <Link href={`/articles/${article.slug}`}>
                               {article.title}
                             </Link>
@@ -569,13 +569,13 @@ export default function CategoryPageClient({ slug }: Props) {
 
                           {/* Article Excerpt/Content Preview */}
                           <div className="mb-4">
-                            <p className="text-slate-600 text-lg leading-relaxed line-clamp-3 font-medium">
+                            <p className="text-slate-600 dark:text-gray-400 text-lg leading-relaxed line-clamp-3 font-medium">
                               {previewText}
                             </p>
 
                             {/* Show content length indicator */}
                             {article.content && (
-                              <div className="mt-2 flex items-center gap-2 text-sm text-slate-500">
+                              <div className="mt-2 flex items-center gap-2 text-sm text-slate-500 dark:text-gray-500">
                                 <BookOpen className="w-4 h-4" />
                                 <span>
                                   {article.content
@@ -594,12 +594,12 @@ export default function CategoryPageClient({ slug }: Props) {
                           {/* Author Info */}
                           {author && (
                             <div className="flex items-center gap-3 mb-4">
-                              <div className="flex items-center gap-2 text-slate-700 font-medium">
+                              <div className="flex items-center gap-2 text-slate-700 dark:text-gray-300 font-medium">
                                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 p-0.5">
                                   <img
                                     src={author.avatar || "/placeholder.svg"}
                                     alt={author.name}
-                                    className="w-full h-full rounded-full object-cover border border-white"
+                                    className="w-full h-full rounded-full object-cover border border-white dark:border-gray-800"
                                     onError={(e) => {
                                       (e.target as HTMLImageElement).src =
                                         "/placeholder.svg";
@@ -608,7 +608,7 @@ export default function CategoryPageClient({ slug }: Props) {
                                 </div>
                                 <Link
                                   href={`/authors/${author.slug}`}
-                                  className="hover:text-sky-600 transition-colors text-sm"
+                                  className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors text-sm"
                                 >
                                   {author.name}
                                 </Link>
@@ -635,9 +635,9 @@ export default function CategoryPageClient({ slug }: Props) {
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="px-8 py-6 border-t border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
+                <div className="px-8 py-6 border-t border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-slate-600 font-medium">
+                    <div className="text-sm text-slate-600 dark:text-gray-400 font-medium">
                       Showing {paginatedArticles.length} of {totalArticles}{" "}
                       articles
                     </div>
@@ -647,7 +647,7 @@ export default function CategoryPageClient({ slug }: Props) {
                           setCurrentPage((prev) => Math.max(1, prev - 1))
                         }
                         disabled={currentPage === 1}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Previous
@@ -674,7 +674,7 @@ export default function CategoryPageClient({ slug }: Props) {
                                 className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all shadow-sm ${
                                   currentPage === pageNum
                                     ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
-                                    : "border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-50 backdrop-blur-sm"
+                                    : "border border-slate-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 backdrop-blur-sm"
                                 }`}
                               >
                                 {pageNum}
@@ -691,7 +691,7 @@ export default function CategoryPageClient({ slug }: Props) {
                           )
                         }
                         disabled={currentPage === totalPages}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
                       >
                         Next
                         <ChevronRight className="w-4 h-4" />

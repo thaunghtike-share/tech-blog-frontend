@@ -201,17 +201,17 @@ export default function AuthorDetailPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="max-w-6xl mx-auto px-4 py-20">
           <div className="text-center">
             <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
               <Star className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-black mb-4">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
               Author Not Found
             </h1>
-            <p className="text-lg text-black mb-8 max-w-md mx-auto">{error}</p>
+            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">{error}</p>
             <Link
               href="/articles"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 shadow-lg"
@@ -228,26 +228,26 @@ export default function AuthorDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="animate-pulse space-y-12">
             {/* Author Skeleton */}
             <div className="flex items-center gap-8">
-              <div className="w-24 h-24 bg-gray-200 rounded-full shadow-lg"></div>
+              <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full shadow-lg"></div>
               <div className="space-y-4 flex-1">
-                <div className="h-8 bg-gray-200 rounded-full w-64"></div>
-                <div className="h-6 bg-gray-200 rounded-full w-48"></div>
-                <div className="h-4 bg-gray-200 rounded-full w-36"></div>
+                <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-full w-64"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-48"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-36"></div>
               </div>
             </div>
             {/* Stats Skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="text-center">
-                  <div className="w-16 h-16 bg-gray-200 rounded-2xl mx-auto mb-4"></div>
-                  <div className="h-6 bg-gray-200 rounded-full w-3/4 mx-auto mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded-full w-1/2 mx-auto"></div>
+                  <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-2xl mx-auto mb-4"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 mx-auto mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-1/2 mx-auto"></div>
                 </div>
               ))}
             </div>
@@ -259,7 +259,7 @@ export default function AuthorDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
@@ -269,11 +269,11 @@ export default function AuthorDetailPage() {
           <div className="mb-16">
             <div className="flex items-center gap-4 mb-6">
               <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-              <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
+              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
                 Featured Author
               </span>
             </div>
-            <h1 className="text-6xl md:text-7xl font-light text-black mb-6 tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
               {author?.name}
             </h1>
           </div>
@@ -283,7 +283,7 @@ export default function AuthorDetailPage() {
             {/* Avatar Section */}
             <div className="flex-shrink-0">
               <div className="relative">
-                <div className="w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                <div className="w-28 h-28 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
                   <img
                     src={author?.avatar || "/placeholder.svg"}
                     alt={author?.name || "Author"}
@@ -293,7 +293,7 @@ export default function AuthorDetailPage() {
                 {author?.linkedin && (
                   <a
                     href={author.linkedin}
-                    className="absolute -bottom-2 -right-2 bg-blue-600 p-2 rounded-full hover:scale-110 transition-transform border-2 border-white"
+                    className="absolute -bottom-2 -right-2 bg-blue-600 p-2 rounded-full hover:scale-110 transition-transform border-2 border-white dark:border-gray-800"
                   >
                     <Linkedin className="w-4 h-4 text-white" />
                   </a>
@@ -304,12 +304,12 @@ export default function AuthorDetailPage() {
             {/* Content Section */}
             <div className="flex-1">
               {/* Title & Company */}
-              <p className="text-xl text-blue-600 font-medium mb-6">
+              <p className="text-xl text-blue-600 dark:text-blue-400 font-medium mb-6">
                 {author?.job_title} at {author?.company}
               </p>
 
               {/* Bio */}
-              <p className="text-lg text-black leading-relaxed mb-8 max-w-2xl">
+              <p className="text-lg text-black dark:text-gray-300 leading-relaxed mb-8 max-w-2xl">
                 {author?.bio}
               </p>
 
@@ -318,7 +318,7 @@ export default function AuthorDetailPage() {
                 <span className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-medium rounded-full shadow-sm">
                   {authorTier.name} Author
                 </span>
-                <span className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full shadow-sm">
+                <span className="px-4 py-2 bg-black dark:bg-gray-700 text-white dark:text-gray-300 text-sm font-medium rounded-full shadow-sm">
                   Verified Author
                 </span>
               </div>
@@ -328,58 +328,58 @@ export default function AuthorDetailPage() {
           {/* Stats - Enhanced Positioning */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">
+              <div className="text-5xl font-light text-black dark:text-white">
                 {totalArticles}
               </div>
-              <div className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
+              <div className="text-sm text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider">
                 Articles
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">
+              <div className="text-5xl font-light text-black dark:text-white">
                 {totalViews.toLocaleString()}
               </div>
-              <div className="text-sm text-green-600 font-semibold uppercase tracking-wider">
+              <div className="text-sm text-green-600 dark:text-green-400 font-semibold uppercase tracking-wider">
                 Total Views
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">{avgViews}</div>
-              <div className="text-sm text-purple-600 font-semibold uppercase tracking-wider">
+              <div className="text-5xl font-light text-black dark:text-white">{avgViews}</div>
+              <div className="text-sm text-purple-600 dark:text-purple-400 font-semibold uppercase tracking-wider">
                 Avg Views
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black">
+              <div className="text-5xl font-light text-black dark:text-white">
                 {avgReadTime}m
               </div>
-              <div className="text-sm text-orange-600 font-semibold uppercase tracking-wider">
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-semibold uppercase tracking-wider">
                 Read Time
               </div>
             </div>
           </div>
         </section>
 
-        {/* Articles Section - Keeping your original design exactly as it was */}
+        {/* Articles Section - Updated for Dark Mode */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-2xl overflow-hidden mb-16"
+          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700/60 shadow-2xl overflow-hidden mb-16"
         >
-          <div className="px-8 py-6 border-b border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
+          <div className="px-8 py-6 border-b border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
+                <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
                   Latest Articles
                 </h2>
-                <p className="text-slate-600 font-medium">
+                <p className="text-slate-600 dark:text-gray-400 font-medium">
                   {totalArticles} articles published •{" "}
                   {totalViews.toLocaleString()} total reads
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <div className="text-sm text-slate-500 font-medium">
+                <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">
                   Page {currentPage} of {totalPages}
                 </div>
               </div>
@@ -391,16 +391,16 @@ export default function AuthorDetailPage() {
               <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
                 <FileText className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-4">
+              <h3 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
                 No Articles Yet
               </h3>
-              <p className="text-slate-600 mb-8 text-lg font-medium max-w-md mx-auto">
+              <p className="text-slate-600 dark:text-gray-400 mb-8 text-lg font-medium max-w-md mx-auto">
                 Stay tuned! {author?.name} is preparing amazing content for you.
               </p>
             </div>
           ) : (
             <>
-              <div className="divide-y divide-slate-200/50">
+              <div className="divide-y divide-slate-200/50 dark:divide-gray-700/50">
                 {paginatedArticles.map((article, index) => {
                   const previewText =
                     article.excerpt?.trim() ||
@@ -416,11 +416,11 @@ export default function AuthorDetailPage() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-8 hover:bg-white/50 transition-all duration-300 group border-b border-slate-100 last:border-b-0"
+                      className="p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
                     >
                       <div className="flex flex-col lg:flex-row gap-8 items-start">
                         {/* Article Cover */}
-                        <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
+                        <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
                           <img
                             src={coverImage}
                             alt={article.title}
@@ -443,7 +443,7 @@ export default function AuthorDetailPage() {
                           />
                           <div className="absolute top-3 left-3">
                             {article.category && (
-                              <span className="inline-flex items-center gap-1.5 bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-xs font-semibold">
+                              <span className="inline-flex items-center gap-1.5 bg-black/70 dark:bg-gray-800/90 backdrop-blur-sm text-white dark:text-gray-200 px-3 py-1.5 rounded-xl text-xs font-semibold">
                                 <Folder className="w-3 h-3" />
                                 {article.category.name}
                               </span>
@@ -454,28 +454,28 @@ export default function AuthorDetailPage() {
                         {/* Article Info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-wrap items-center gap-4 mb-3">
-                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                              <Calendar className="w-4 h-4 text-slate-500" />
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <Calendar className="w-4 h-4 text-slate-500 dark:text-gray-500" />
                               {formatDate(article.published_at)}
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                              <Clock className="w-4 h-4 text-slate-500" />
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <Clock className="w-4 h-4 text-slate-500 dark:text-gray-500" />
                               {readTime} min read
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 font-medium text-sm">
-                              <Eye className="w-4 h-4 text-sky-600" />
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <Eye className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                               {article.read_count?.toLocaleString()} views
                             </span>
                           </div>
 
-                          <h3 className="text-2xl font-bold text-slate-800 mb-3 line-clamp-2 group-hover:text-sky-700 transition-colors">
+                          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
                             <Link href={`/articles/${article.slug}`}>
                               {article.title}
                             </Link>
                           </h3>
 
                           {article.excerpt && (
-                            <p className="text-slate-600 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
+                            <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
                               {article.excerpt}
                             </p>
                           )}
@@ -486,14 +486,14 @@ export default function AuthorDetailPage() {
                               {article.tags.slice(0, 4).map((tag) => (
                                 <span
                                   key={tag.id}
-                                  className="inline-flex items-center gap-1.5 bg-slate-100/80 text-slate-700 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50"
+                                  className="inline-flex items-center gap-1.5 bg-slate-100/80 dark:bg-gray-700/80 text-slate-700 dark:text-gray-300 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50 dark:border-gray-600/50"
                                 >
                                   <TagIcon className="w-3.5 h-3.5" />
                                   {tag.name}
                                 </span>
                               ))}
                               {article.tags.length > 4 && (
-                                <span className="inline-flex items-center bg-slate-100/80 text-slate-600 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50">
+                                <span className="inline-flex items-center bg-slate-100/80 dark:bg-gray-700/80 text-slate-600 dark:text-gray-400 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50 dark:border-gray-600/50">
                                   +{article.tags.length - 4} more
                                 </span>
                               )}
@@ -519,9 +519,9 @@ export default function AuthorDetailPage() {
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="px-8 py-6 border-t border-slate-200/50 bg-gradient-to-r from-white to-slate-50/50">
+                <div className="px-8 py-6 border-t border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-slate-600 font-medium">
+                    <div className="text-sm text-slate-600 dark:text-gray-400 font-medium">
                       Showing {paginatedArticles.length} of {totalArticles}{" "}
                       articles
                     </div>
@@ -531,7 +531,7 @@ export default function AuthorDetailPage() {
                           setCurrentPage((prev) => Math.max(1, prev - 1))
                         }
                         disabled={currentPage === 1}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Previous
@@ -558,7 +558,7 @@ export default function AuthorDetailPage() {
                                 className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all shadow-sm ${
                                   currentPage === pageNum
                                     ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
-                                    : "border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-50 backdrop-blur-sm"
+                                    : "border border-slate-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 backdrop-blur-sm"
                                 }`}
                               >
                                 {pageNum}
@@ -575,7 +575,7 @@ export default function AuthorDetailPage() {
                           )
                         }
                         disabled={currentPage === totalPages}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
                       >
                         Next
                         <ChevronRight className="w-4 h-4" />
