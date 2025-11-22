@@ -455,24 +455,24 @@ export function TopUdemyCourses() {
 
   if (loading) {
     return (
-      <section ref={sectionRef} className="w-full bg-white/95 py-20">
+      <section ref={sectionRef} className="w-full bg-white/95 dark:bg-[#0A0A0A] py-20 transition-colors duration-300">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mb-16">
-            <div className="h-1 w-24 bg-gray-200 rounded-full mb-6 animate-pulse" />
-            <div className="h-12 w-96 bg-gray-200 rounded mb-4 animate-pulse" />
-            <div className="h-6 w-full max-w-2xl bg-gray-200 rounded animate-pulse" />
+            <div className="h-1 w-24 bg-gray-200 dark:bg-gray-700 rounded-full mb-6 animate-pulse" />
+            <div className="h-12 w-96 bg-gray-200 dark:bg-gray-700 rounded mb-4 animate-pulse" />
+            <div className="h-6 w-full max-w-2xl bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-video bg-gray-200 rounded-2xl mb-4" />
-                <div className="h-6 w-3/4 bg-gray-200 rounded mb-3" />
-                <div className="h-4 w-full bg-gray-200 rounded mb-2" />
-                <div className="h-4 w-5/6 bg-gray-200 rounded mb-4" />
+                <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-2xl mb-4" />
+                <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded mb-3" />
+                <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded mb-4" />
                 <div className="flex justify-between items-center">
-                  <div className="h-4 w-24 bg-gray-200 rounded" />
-                  <div className="h-4 w-16 bg-gray-200 rounded" />
+                  <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded" />
                 </div>
               </div>
             ))}
@@ -485,18 +485,18 @@ export function TopUdemyCourses() {
   return (
     <>
       {/* KodeKloud Section - Left Aligned */}
-      <section className="w-full bg-white/95 py-16 lg:py-20">
+      <section className="w-full bg-white/95 dark:bg-[#0A0A0A] py-16 lg:py-20 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           {/* Header - Left Aligned */}
           <div className="max-w-3xl mb-16">
             <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-gray-100 mb-6 leading-tight">
               Start Your Journey with
-              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                 KodeKloud
               </span>
             </h2>
-            <p className="text-xl text-slate-700 leading-relaxed">
+            <p className="text-xl text-slate-700 dark:text-gray-300 leading-relaxed">
               The leading platform for DevOps, Cloud, and Infrastructure
               learning. Join engineers from Fortune 500 companies.
             </p>
@@ -505,37 +505,37 @@ export function TopUdemyCourses() {
           {/* Simple Feature Points */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="text-center">
-              <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Award className="w-8 h-8 text-sky-600" />
+              <div className="w-16 h-16 bg-sky-100 dark:bg-sky-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Award className="w-8 h-8 text-sky-600 dark:text-sky-400" />
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-gray-100 mb-4">
                 Industry Courses
               </h3>
-              <p className="text-slate-700 leading-relaxed">
+              <p className="text-slate-700 dark:text-gray-300 leading-relaxed">
                 Docker, Kubernetes, AWS, Terraform with real-world projects.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Users className="w-8 h-8 text-sky-600" />
+              <div className="w-16 h-16 bg-sky-100 dark:bg-sky-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Users className="w-8 h-8 text-sky-600 dark:text-sky-400" />
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-gray-100 mb-4">
                 Expert Instructors
               </h3>
-              <p className="text-slate-700 leading-relaxed">
+              <p className="text-slate-700 dark:text-gray-300 leading-relaxed">
                 Learn from industry leaders like Mumshad Mannambeth.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Gift className="w-8 h-8 text-sky-600" />
+              <div className="w-16 h-16 bg-sky-100 dark:bg-sky-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Gift className="w-8 h-8 text-sky-600 dark:text-sky-400" />
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-gray-100 mb-4">
                 Free Access
               </h3>
-              <p className="text-slate-700 leading-relaxed">
+              <p className="text-slate-700 dark:text-gray-300 leading-relaxed">
                 Start with free courses and hands-on labs.
               </p>
             </div>
@@ -548,11 +548,11 @@ export function TopUdemyCourses() {
             transition={{ delay: 0.4 }}
             className="text-center"
           >
-            <div className="bg-gradient-to-r from-sky-600 to-blue-600 rounded-2xl p-8 text-white shadow-xl mb-6">
+            <div className="bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-500 dark:to-blue-500 rounded-2xl p-8 text-white shadow-xl mb-6">
               <h3 className="text-2xl font-bold mb-4">
                 Ready to Start Your DevOps Journey?
               </h3>
-              <p className="text-sky-100 text-lg mb-6 max-w-2xl mx-auto">
+              <p className="text-sky-100 dark:text-sky-200 text-lg mb-6 max-w-2xl mx-auto">
                 Join thousands of successful engineers who transformed their
                 careers with KodeKloud's proven learning platform.
               </p>
@@ -577,7 +577,7 @@ export function TopUdemyCourses() {
                 </a>
               </div>
             </div>
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
               Trusted by engineers at Google, Amazon, Microsoft, and thousands
               of other companies worldwide.
             </p>
@@ -588,7 +588,7 @@ export function TopUdemyCourses() {
       {/* Udemy Section - Right Aligned Title */}
       <section
         ref={sectionRef}
-        className="relative w-full bg-white/95 py-10 overflow-hidden"
+        className="relative w-full bg-white/95 dark:bg-[#0A0A0A] py-10 overflow-hidden transition-colors duration-300"
       >
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section - Right Aligned */}
@@ -612,13 +612,13 @@ export function TopUdemyCourses() {
                 transition={{ delay: 0.1 }}
                 className="flex items-center gap-4 mb-6 justify-end"
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
                   Master DevOps with
-                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                     Udemy Courses
                   </span>
                 </h2>
-                <div className="w-16 h-16 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2">
+                <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center p-2">
                   <img
                     src="/udemy.webp"
                     alt="Udemy"
@@ -631,13 +631,13 @@ export function TopUdemyCourses() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-black leading-relaxed"
+                className="text-lg text-black dark:text-gray-300 leading-relaxed"
               >
                 Curated collection of online courses designed to help you master
                 essential DevOps tools, practices, and methodologies for modern
                 software development
                 {usingFallback && (
-                  <span className="block text-sm mt-2 text-yellow-600">
+                  <span className="block text-sm mt-2 text-yellow-600 dark:text-yellow-400">
                     • Showing demo data (API unavailable)
                   </span>
                 )}
@@ -652,20 +652,20 @@ export function TopUdemyCourses() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-12"
             >
-              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-6">
+              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-200 dark:border-yellow-700 rounded-2xl p-6">
                 <div className="flex items-center gap-4">
-                  <AlertTriangle className="w-6 h-6 text-yellow-600 flex-shrink-0" />
+                  <AlertTriangle className="w-6 h-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
                   <div className="flex-1">
-                    <p className="text-gray-900 mb-1 font-medium text-sm">
+                    <p className="text-gray-900 dark:text-gray-100 mb-1 font-medium text-sm">
                       Unable to load live data
                     </p>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">
                       {error} - Showing demo courses instead.
                     </p>
                   </div>
                   <button
                     onClick={retryFetch}
-                    className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-xl transition-all hover:bg-yellow-600 text-sm font-medium shadow-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-yellow-500 dark:bg-yellow-600 text-white rounded-xl transition-all hover:bg-yellow-600 dark:hover:bg-yellow-700 text-sm font-medium shadow-sm"
                   >
                     <RefreshCw className="w-4 h-4" />
                     Retry
@@ -678,13 +678,13 @@ export function TopUdemyCourses() {
           {/* Courses Grid with Pagination */}
           {courses.length === 0 ? (
             <div className="text-center py-20">
-              <div className="inline-flex items-center justify-center bg-gray-100 rounded-full p-8 mb-6 border-2 border-gray-200">
-                <BookOpen className="w-12 h-12 text-gray-400" />
+              <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-full p-8 mb-6 border-2 border-gray-200 dark:border-gray-700">
+                <BookOpen className="w-12 h-12 text-gray-400 dark:text-gray-500" />
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 No courses available
               </h3>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 dark:text-gray-400 text-lg">
                 Check back later for featured courses
               </p>
             </div>
@@ -708,7 +708,7 @@ export function TopUdemyCourses() {
                         rel="noopener noreferrer"
                         className="block"
                       >
-                        <div className="relative aspect-video bg-gray-100 overflow-hidden rounded-2xl border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-xl transition-all duration-300">
+                        <div className="relative aspect-video bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-700 group-hover:border-gray-300 dark:group-hover:border-gray-600 group-hover:shadow-xl transition-all duration-300">
                           {course.cover_image ? (
                             <img
                               src={course.cover_image || "/placeholder.svg"}
@@ -717,7 +717,7 @@ export function TopUdemyCourses() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <BookOpen className="w-16 h-16 text-gray-300" />
+                              <BookOpen className="w-16 h-16 text-gray-300 dark:text-gray-600" />
                             </div>
                           )}
                         </div>
@@ -730,21 +730,21 @@ export function TopUdemyCourses() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <h3 className="font-bold text-sky-600 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
+                        <h3 className="font-bold text-sky-600 dark:text-sky-400 line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-300 transition-colors duration-200 text-base leading-snug">
                           {course.title}
                         </h3>
                       </a>
 
                       <div className="flex items-center justify-between py-3 text-sm">
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <User className="w-4 h-4 text-gray-400" />
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                          <User className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                           <span className="font-medium truncate">
                             {course.author}
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Users className="w-4 h-4 text-gray-400" />
+                        <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                          <Users className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                           <span>{course.students}</span>
                         </div>
                       </div>
@@ -753,11 +753,11 @@ export function TopUdemyCourses() {
                         <div className="flex items-center gap-2">
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium text-gray-900 text-sm">
+                            <span className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                               {course.rating.toFixed(1)}
                             </span>
                           </div>
-                          <span className="text-gray-600 text-sm">rating</span>
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">rating</span>
                         </div>
                       )}
                     </div>
@@ -772,14 +772,14 @@ export function TopUdemyCourses() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={prevPageUdemy}
-                    className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                    className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-2 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-md"
                     aria-label="Previous page"
                   >
-                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                    <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </motion.button>
 
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-600 font-medium">
+                    <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                       Page {currentPageUdemy + 1} of {totalPagesUdemy}
                     </span>
                     <div className="flex space-x-2">
@@ -789,8 +789,8 @@ export function TopUdemyCourses() {
                           onClick={() => setCurrentPageUdemy(i)}
                           className={`w-2 h-2 rounded-full transition-all ${
                             i === currentPageUdemy
-                              ? "bg-sky-600 scale-125"
-                              : "bg-gray-300 hover:bg-gray-400"
+                              ? "bg-sky-600 dark:bg-sky-400 scale-125"
+                              : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                           }`}
                           aria-label={`Go to page ${i + 1}`}
                         />
@@ -802,10 +802,10 @@ export function TopUdemyCourses() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={nextPageUdemy}
-                    className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                    className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-2 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-md"
                     aria-label="Next page"
                   >
-                    <ChevronRight className="w-5 h-5 text-gray-700" />
+                    <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </motion.button>
                 </div>
               )}
@@ -820,16 +820,16 @@ export function TopUdemyCourses() {
             className="flex items-center justify-center gap-3 mb-8"
           >
             <Lightbulb className="w-5 h-5 text-yellow-500" />
-            <span className="text-gray-600 text-sm font-medium">
+            <span className="text-gray-600 dark:text-gray-400 text-sm font-medium">
               Use the navigation above to explore more courses
             </span>
-            <ArrowRight className="w-4 h-4 text-gray-400" />
+            <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
           </motion.div>
         </div>
       </section>
 
       {/* Great Learning Section */}
-      <section className="relative w-full bg-white py-17 overflow-hidden">
+      <section className="relative w-full bg-white dark:bg-[#0A0A0A] py-17 overflow-hidden transition-colors duration-300">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header Section */}
           <motion.div
@@ -852,16 +852,16 @@ export function TopUdemyCourses() {
                 transition={{ delay: 0.1 }}
                 className="flex items-center gap-4 mb-6"
               >
-                <div className="w-16 h-16 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2">
+                <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center p-2">
                   <img
                     src="/greatlearning.png"
                     alt="Great Learning"
                     className="w-12 h-12 object-contain"
                   />
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
                   Master DevOps with
-                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                     Great Learning
                   </span>
                 </h2>
@@ -871,7 +871,7 @@ export function TopUdemyCourses() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-black leading-relaxed"
+                className="text-lg text-black dark:text-gray-300 leading-relaxed"
               >
                 Free comprehensive courses from Great Learning Academy covering
                 Linux, AWS, Docker, Git, and CI/CD pipelines to boost your
@@ -900,7 +900,7 @@ export function TopUdemyCourses() {
                       rel="noopener noreferrer"
                       className="block"
                     >
-                      <div className="relative aspect-video bg-gray-100 overflow-hidden rounded-2xl border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-xl transition-all duration-300">
+                      <div className="relative aspect-video bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-700 group-hover:border-gray-300 dark:group-hover:border-gray-600 group-hover:shadow-xl transition-all duration-300">
                         {course.cover_image ? (
                           <img
                             src={course.cover_image || "/placeholder.svg"}
@@ -909,7 +909,7 @@ export function TopUdemyCourses() {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <BookOpen className="w-16 h-16 text-gray-300" />
+                            <BookOpen className="w-16 h-16 text-gray-300 dark:text-gray-600" />
                           </div>
                         )}
                       </div>
@@ -922,21 +922,21 @@ export function TopUdemyCourses() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <h3 className="font-bold text-sky-600 line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug">
+                      <h3 className="font-bold text-sky-600 dark:text-sky-400 line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-300 transition-colors duration-200 text-base leading-snug">
                         {course.title}
                       </h3>
                     </a>
 
                     <div className="flex items-center justify-between py-3 text-sm">
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <User className="w-4 h-4 text-gray-400" />
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <User className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                         <span className="font-medium truncate">
                           {course.author}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1.5 text-gray-600">
-                        <Users className="w-4 h-4 text-gray-400" />
+                      <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                        <Users className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                         <span>{course.students}</span>
                       </div>
                     </div>
@@ -945,11 +945,11 @@ export function TopUdemyCourses() {
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1">
                           <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span className="font-medium text-gray-900 text-sm">
+                          <span className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                             {course.rating.toFixed(1)}
                           </span>
                         </div>
-                        <span className="text-gray-600 text-sm">rating</span>
+                        <span className="text-gray-600 dark:text-gray-400 text-sm">rating</span>
                       </div>
                     )}
                   </div>
@@ -964,14 +964,14 @@ export function TopUdemyCourses() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={prevPageGL}
-                  className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                  className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-2 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-md"
                   aria-label="Previous page"
                 >
-                  <ChevronLeft className="w-5 h-5 text-gray-700" />
+                  <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                 </motion.button>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-600 font-medium">
+                  <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                     Page {currentPageGL + 1} of {totalPagesGL}
                   </span>
                   <div className="flex space-x-2">
@@ -981,8 +981,8 @@ export function TopUdemyCourses() {
                         onClick={() => setCurrentPageGL(i)}
                         className={`w-2 h-2 rounded-full transition-all ${
                           i === currentPageGL
-                            ? "bg-sky-600 scale-125"
-                            : "bg-gray-300 hover:bg-gray-400"
+                            ? "bg-sky-600 dark:bg-sky-400 scale-125"
+                            : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                         }`}
                         aria-label={`Go to page ${i + 1}`}
                       />
@@ -994,10 +994,10 @@ export function TopUdemyCourses() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={nextPageGL}
-                  className="bg-white border-2 border-gray-200 p-2 rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all shadow-md"
+                  className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-2 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-md"
                   aria-label="Next page"
                 >
-                  <ChevronRight className="w-5 h-5 text-gray-700" />
+                  <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                 </motion.button>
               </div>
             )}

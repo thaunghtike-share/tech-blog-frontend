@@ -560,7 +560,7 @@ const learningPaths = {
     learningPath: [
       { title: "Kubernetes", icon: "☸️" },
       { title: "Terraform", icon: "🏗️" },
-      { title: "GitOps", icon: "🔄" }, // Added GitOps
+      { title: "GitOps", icon: "🔄" },
       { title: "Monitoring", icon: "📊" },
       { title: "Vault", icon: "🛡️" },
     ],
@@ -651,7 +651,7 @@ export default function LearnDevOpsOnUtube() {
   // Don't render until client-side to avoid hydration issues
   if (!isClient) {
     return (
-      <div className="min-h-screen bg-white/75">
+      <div className="min-h-screen bg-white/75 dark:bg-[#0A0A0A]">
         <MinimalHeader />
         <div className="pt-20 flex items-center justify-center">
           <div className="animate-pulse">Loading...</div>
@@ -661,7 +661,7 @@ export default function LearnDevOpsOnUtube() {
   }
 
   return (
-    <div className="min-h-screen bg-white/75 overflow-x-hidden">
+    <div className="min-h-screen bg-white/75 dark:bg-[#0A0A0A] overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
       <main className="relative z-10 pt-12">
@@ -673,14 +673,14 @@ export default function LearnDevOpsOnUtube() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex-1"
               >
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
                   Master DevOps with
-                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                     YouTube Courses
                   </span>
                 </h1>
 
-                <p className="text-lg text-gray-600 mb-6 leading-relaxed max-w-2xl">
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed max-w-2xl">
                   Curated learning paths from fundamentals to advanced
                   production skills. Follow structured roadmaps with the best
                   YouTube content.
@@ -698,12 +698,12 @@ export default function LearnDevOpsOnUtube() {
                     placeholder="Search courses by topic, technology, or channel..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent shadow-lg"
+                    className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400 focus:border-transparent shadow-lg transition-colors duration-300"
                   />
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-2xl"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-2xl"
                     >
                       ×
                     </button>
@@ -717,14 +717,14 @@ export default function LearnDevOpsOnUtube() {
                 transition={{ delay: 0.3 }}
                 className="lg:w-96 flex-shrink-0"
               >
-                <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
+                <div className="bg-gradient-to-br from-red-600 to-red-700 dark:from-red-700 dark:to-red-800 rounded-2xl p-6 text-white shadow-xl">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <div className="p-2 bg-white/20 dark:bg-white/30 rounded-lg backdrop-blur-sm">
                       <Youtube className="w-6 h-6" />
                     </div>
                     <div>
                       <h3 className="font-bold text-lg">My DevOps Channel</h3>
-                      <p className="text-red-100 text-sm">
+                      <p className="text-red-100 dark:text-red-200 text-sm">
                         Learn DevOps Now - Thaung Htike Oo
                       </p>
                     </div>
@@ -798,16 +798,16 @@ export default function LearnDevOpsOnUtube() {
                             <IconComponent className="w-6 h-6" />
                           </div>
                           <div>
-                            <h2 className="text-3xl font-bold text-gray-900">
+                            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                               {path.title}
                             </h2>
-                            <span className="text-sm font-medium text-sky-600 mt-1 block">
+                            <span className="text-sm font-medium text-sky-600 dark:text-sky-400 mt-1 block">
                               {difficulty} Level • {playlists.length} courses
                             </span>
                           </div>
                         </div>
 
-                        <p className="text-gray-600 text-base leading-relaxed mb-6">
+                        <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed mb-6">
                           {path.description}
                         </p>
 
@@ -816,7 +816,7 @@ export default function LearnDevOpsOnUtube() {
                             isLeft ? "" : "items-end"
                           }`}
                         >
-                          <span className="text-sm font-semibold text-sky-600 uppercase tracking-wide">
+                          <span className="text-sm font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wide">
                             Recommended Learning Path
                           </span>
                           <div className="flex items-center gap-2 flex-wrap">
@@ -826,10 +826,10 @@ export default function LearnDevOpsOnUtube() {
                                 className="flex items-center gap-2"
                               >
                                 <div
-                                  className={`flex items-center gap-2 bg-white border-2 ${config.borderColor} rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
+                                  className={`flex items-center gap-2 bg-white dark:bg-gray-800 border-2 ${config.borderColor} dark:border-gray-700 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow`}
                                 >
                                   <span className="text-lg">{step.icon}</span>
-                                  <span className="text-sm font-semibold text-gray-700">
+                                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
                                     {step.title
                                       .split(" ")
                                       .slice(0, 2)
@@ -837,7 +837,7 @@ export default function LearnDevOpsOnUtube() {
                                   </span>
                                 </div>
                                 {index < path.learningPath.length - 1 && (
-                                  <ArrowRight className="w-4 h-4 text-gray-400" />
+                                  <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                                 )}
                               </div>
                             ))}
@@ -864,7 +864,7 @@ export default function LearnDevOpsOnUtube() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-16"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
                 Found {filteredPlaylists.length} courses
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -894,14 +894,14 @@ export default function LearnDevOpsOnUtube() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-20"
             >
-              <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              <Search className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 No courses found
               </h3>
-              <p className="text-gray-600 mb-6">Try different keywords</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Try different keywords</p>
               <button
                 onClick={() => setSearchQuery("")}
-                className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+                className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-500 dark:to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
               >
                 Clear Search
               </button>
@@ -960,20 +960,20 @@ function HorizontalScrollSection({
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -left-6 top-1/3 -translate-y-1/2 z-20 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-3 rounded-full shadow-xl hover:scale-110 transition-all"
           aria-label="Scroll left"
         >
-          <ChevronLeft className="w-5 h-5 text-gray-700" />
+          <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
         </button>
       )}
 
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white border-2 border-gray-200 p-3 rounded-full shadow-xl hover:bg-white hover:scale-110 transition-all"
+          className="absolute -right-6 top-1/3 -translate-y-1/2 z-20 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-3 rounded-full shadow-xl hover:scale-110 transition-all"
           aria-label="Scroll right"
         >
-          <ChevronRight className="w-5 h-5 text-gray-700" />
+          <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
         </button>
       )}
 
@@ -1062,7 +1062,7 @@ function PlaylistCard({
             </div>
 
             {playlist.is_burmese && (
-              <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-lg">
+              <div className="absolute top-3 right-3 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-lg">
                 <span className="text-sm font-semibold">🇲🇲</span>
               </div>
             )}
@@ -1080,7 +1080,7 @@ function PlaylistCard({
               e.preventDefault();
               toggleComplete(playlist.id);
             }}
-            className="absolute top-3 right-3 z-10 bg-white/95 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-110 transition-transform border-2 border-gray-300"
+            className="absolute top-3 right-3 z-10 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-110 transition-transform border-2 border-gray-300 dark:border-gray-600"
             aria-label={isCompleted ? "Mark as incomplete" : "Mark as complete"}
           >
             {isCompleted ? (
@@ -1099,8 +1099,10 @@ function PlaylistCard({
           rel="noopener noreferrer"
         >
           <h3
-            className={`font-bold line-clamp-2 group-hover:text-sky-600 transition-colors duration-200 text-base leading-snug ${
-              isCompleted ? "text-gray-500 line-through" : "text-gray-900"
+            className={`font-bold line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-200 text-base leading-snug ${
+              isCompleted 
+                ? "text-gray-500 dark:text-gray-500 line-through" 
+                : "text-gray-900 dark:text-gray-100"
             }`}
           >
             {index}. {playlist.title}
@@ -1108,13 +1110,13 @@ function PlaylistCard({
         </a>
 
         <div className="flex items-center justify-between py-3">
-          <div className="flex items-center gap-2 text-gray-600">
-            <Users className="w-4 h-4 text-gray-400" />
+          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+            <Users className="w-4 h-4 text-gray-400 dark:text-gray-500" />
             <span className="text-sm font-medium">{playlist.channel}</span>
           </div>
 
           {isCompleted && (
-            <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full flex items-center gap-1">
+            <span className="text-xs font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-full flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" />
               Completed
             </span>
