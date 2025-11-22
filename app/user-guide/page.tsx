@@ -82,7 +82,7 @@ export default function DocsPage() {
   )?.content;
 
   return (
-    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
@@ -90,14 +90,14 @@ export default function DocsPage() {
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-blue-600"></div>
-            <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
+            <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
               User Guide
             </span>
           </div>
-          <h1 className="text-6xl md:text-7xl font-light text-black mb-6 tracking-tight">
+          <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
             Learn DevOps Now - Myanmar
           </h1>
-          <p className="text-lg text-black leading-relaxed max-w-3xl">
+          <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
             Complete guide to using our DevOps learning platform. Master tools,
             share knowledge, and grow your career.
           </p>
@@ -107,21 +107,21 @@ export default function DocsPage() {
           {/* Sidebar Navigation */}
           <div className="lg:w-80 flex-shrink-0">
             <div className="sticky top-24">
-              <nav className="space-y-2 bg-white rounded-2xl border border-gray-200 p-6">
+              <nav className="space-y-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
                 {sections.map((section) => (
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl text-left transition-all ${
                       activeSection === section.id
-                        ? "bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200"
-                        : "text-black hover:bg-gray-50"
+                        ? "bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700"
+                        : "text-black dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                     }`}
                   >
                     <section.icon className="w-5 h-5 flex-shrink-0" />
                     <span className="font-medium">{section.title}</span>
                     {activeSection === section.id && (
-                      <ChevronRight className="w-4 h-4 ml-auto text-blue-600" />
+                      <ChevronRight className="w-4 h-4 ml-auto text-blue-600 dark:text-blue-400" />
                     )}
                   </button>
                 ))}
@@ -131,7 +131,7 @@ export default function DocsPage() {
 
           {/* Main Content */}
           <div className="flex-1 min-w-0">
-            <div className="bg-white rounded-2xl border border-gray-200">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
               <div className="p-8">{activeContent}</div>
             </div>
           </div>
@@ -148,10 +148,10 @@ function OverviewSection() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="text-4xl font-light text-black mb-6 tracking-tight">
+        <h2 className="text-4xl font-light text-black dark:text-white mb-6 tracking-tight">
           Platform Overview
         </h2>
-        <p className="text-lg text-black leading-relaxed max-w-3xl">
+        <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
           Learn DevOps Now - Burmese is a comprehensive learning platform
           designed specifically for developers and students in Myanmar. We
           provide structured learning paths, hands-on practice environments, and
@@ -160,52 +160,52 @@ function OverviewSection() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
             <Rocket className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-2xl font-light text-black mb-4">Learn DevOps</h3>
-          <p className="text-black leading-relaxed">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-4">Learn DevOps</h3>
+          <p className="text-black dark:text-gray-300 leading-relaxed">
             Follow our structured learning path from basic Linux commands to
             advanced cloud technologies. All resources are curated for Burmese
             learners.
           </p>
         </div>
 
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6">
             <Edit3 className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-2xl font-light text-black mb-4">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-4">
             Share Knowledge
           </h3>
-          <p className="text-black leading-relaxed">
+          <p className="text-black dark:text-gray-300 leading-relaxed">
             Write articles and tutorials to help other learners. Build your
             reputation as a DevOps expert while reinforcing your own learning.
           </p>
         </div>
 
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
             <Users className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-2xl font-light text-black mb-4">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-4">
             Join Community
           </h3>
-          <p className="text-black leading-relaxed">
+          <p className="text-black dark:text-gray-300 leading-relaxed">
             Connect with other DevOps learners, ask questions, and learn from
             industry experts. Build your professional network.
           </p>
         </div>
 
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6">
             <Code className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-2xl font-light text-black mb-4">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-4">
             Practice Skills
           </h3>
-          <p className="text-black leading-relaxed">
+          <p className="text-black dark:text-gray-300 leading-relaxed">
             Use our free DevOps playgrounds to practice tools like Docker and
             Kubernetes in safe, browser-based environments.
           </p>
@@ -219,29 +219,29 @@ function GettingStartedSection() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="text-4xl font-light text-black mb-6 tracking-tight">
+        <h2 className="text-4xl font-light text-black dark:text-white mb-6 tracking-tight">
           Getting Started
         </h2>
-        <p className="text-lg text-black leading-relaxed max-w-3xl">
+        <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
           Begin your DevOps journey with these simple steps. Explore resources
           immediately or create an account to unlock all features.
         </p>
       </div>
 
       <div className="space-y-8">
-        <div className="flex items-start gap-8 p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="flex items-start gap-8 p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
             <span className="text-white text-lg font-bold">1</span>
           </div>
           <div>
-            <h3 className="text-2xl font-light text-black mb-4">
+            <h3 className="text-2xl font-light text-black dark:text-white mb-4">
               Explore Learning Resources
             </h3>
-            <p className="text-black leading-relaxed mb-4">
+            <p className="text-black dark:text-gray-300 leading-relaxed mb-4">
               Start learning immediately without creating an account. Access all
               our curated resources:
             </p>
-            <ul className="text-black space-y-3">
+            <ul className="text-black dark:text-gray-300 space-y-3">
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <span>Follow the DevOps roadmap</span>
@@ -266,34 +266,34 @@ function GettingStartedSection() {
           </div>
         </div>
 
-        <div className="flex items-start gap-8 p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="flex items-start gap-8 p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
             <span className="text-white text-lg font-bold">2</span>
           </div>
           <div>
-            <h3 className="text-2xl font-light text-black mb-4">
+            <h3 className="text-2xl font-light text-black dark:text-white mb-4">
               Create Your Account
             </h3>
-            <p className="text-black leading-relaxed mb-6">
+            <p className="text-black dark:text-gray-300 leading-relaxed mb-6">
               Click the <span className="font-semibold">"Write Article"</span>{" "}
               button in the header to sign up with Google or email.
             </p>
             <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-6 bg-white rounded-xl border border-gray-200">
+              <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold">G</span>
                 </div>
-                <p className="font-semibold text-black">Google Sign Up</p>
-                <p className="text-black text-sm mt-2">
+                <p className="font-semibold text-black dark:text-white">Google Sign Up</p>
+                <p className="text-black dark:text-gray-300 text-sm mt-2">
                   Quick one-click registration
                 </p>
               </div>
-              <div className="text-center p-6 bg-white rounded-xl border border-gray-200">
+              <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold">@</span>
                 </div>
-                <p className="font-semibold text-black">Sign Up</p>
-                <p className="text-black text-sm mt-2">
+                <p className="font-semibold text-black dark:text-white">Sign Up</p>
+                <p className="text-black dark:text-gray-300 text-sm mt-2">
                   Traditional registration
                 </p>
               </div>
@@ -301,18 +301,18 @@ function GettingStartedSection() {
           </div>
         </div>
 
-        <div className="flex items-start gap-8 p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="flex items-start gap-8 p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
             <span className="text-white text-lg font-bold">3</span>
           </div>
           <div>
-            <h3 className="text-2xl font-light text-black mb-4">
+            <h3 className="text-2xl font-light text-black dark:text-white mb-4">
               Complete Your Profile
             </h3>
-            <p className="text-black leading-relaxed mb-4">
+            <p className="text-black dark:text-gray-300 leading-relaxed mb-4">
               Build your author identity by completing your profile information:
             </p>
-            <ul className="text-black space-y-3">
+            <ul className="text-black dark:text-gray-300 space-y-3">
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 <span>Display name and professional bio</span>
@@ -341,10 +341,10 @@ function LearningSection() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="text-4xl font-light text-black mb-6 tracking-tight">
+        <h2 className="text-4xl font-light text-black dark:text-white mb-6 tracking-tight">
           Learning Resources
         </h2>
-        <p className="text-lg text-black leading-relaxed max-w-3xl">
+        <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
           Access multiple learning formats designed for different learning
           styles. All resources are carefully curated and organized in logical
           progression.
@@ -353,88 +353,88 @@ function LearningSection() {
 
       <div className="space-y-8">
         {/* DevOps Roadmap */}
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-6 mb-6">
             <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
               <Map className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-light text-black">DevOps Roadmap</h3>
-              <p className="text-black">
+              <h3 className="text-2xl font-light text-black dark:text-white">DevOps Roadmap</h3>
+              <p className="text-black dark:text-gray-300">
                 Structured learning path from beginner to advanced
               </p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Foundation Topics
               </h4>
               <div className="space-y-3">
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">1</span>
                   </div>
-                  <span className="text-black font-medium">
+                  <span className="text-black dark:text-white font-medium">
                     Linux Fundamentals
                   </span>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">2</span>
                   </div>
-                  <span className="text-black font-medium">
+                  <span className="text-black dark:text-white font-medium">
                     Networking Basics
                   </span>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">3</span>
                   </div>
-                  <span className="text-black font-medium">
+                  <span className="text-black dark:text-white font-medium">
                     Git & Version Control
                   </span>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">4</span>
                   </div>
-                  <span className="text-black font-medium">
+                  <span className="text-black dark:text-white font-medium">
                     Docker Essentials
                   </span>
                 </div>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-black mb-4">Advanced Topics</h4>
+              <h4 className="font-semibold text-black dark:text-white mb-4">Advanced Topics</h4>
               <div className="space-y-3">
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">5</span>
                   </div>
-                  <span className="text-black font-medium">
+                  <span className="text-black dark:text-white font-medium">
                     Cloud Platforms
                   </span>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">6</span>
                   </div>
-                  <span className="text-black font-medium">
+                  <span className="text-black dark:text-white font-medium">
                     CI/CD Pipelines
                   </span>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">7</span>
                   </div>
-                  <span className="text-black font-medium">Kubernetes</span>
+                  <span className="text-black dark:text-white font-medium">Kubernetes</span>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">8</span>
                   </div>
-                  <span className="text-black font-medium">GitOps</span>
+                  <span className="text-black dark:text-white font-medium">GitOps</span>
                 </div>
               </div>
             </div>
@@ -442,23 +442,23 @@ function LearningSection() {
         </div>
 
         {/* YouTube Courses */}
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-6 mb-6">
             <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center">
               <Video className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-light text-black">
+              <h3 className="text-2xl font-light text-black dark:text-white">
                 YouTube Courses
               </h3>
-              <p className="text-black">
+              <p className="text-black dark:text-gray-300">
                 Learn from top creators with comprehensive playlists for every
                 skill level
               </p>
             </div>
           </div>
           <div className="mb-8">
-            <p className="text-black leading-relaxed">
+            <p className="text-black dark:text-gray-300 leading-relaxed">
               Learn DevOps systematically starting with Linux and networking
               fundamentals, then progress to Docker, Git, and CI/CD pipelines,
               and finally master advanced topics like Kubernetes, Terraform, and
@@ -469,10 +469,10 @@ function LearningSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Featured Creators
               </h4>
-              <ul className="text-black space-y-3">
+              <ul className="text-black dark:text-gray-300 space-y-3">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                   <span>TechWorld with Nana - Clear DevOps explanations</span>
@@ -494,10 +494,10 @@ function LearningSection() {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Learning Benefits
               </h4>
-              <ul className="text-black space-y-3">
+              <ul className="text-black dark:text-gray-300 space-y-3">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                   <span>Free access to expert content</span>
@@ -520,21 +520,21 @@ function LearningSection() {
         </div>
 
         {/* Free Courses Section */}
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-6 mb-6">
             <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
               <GraduationCap className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-light text-black">Free Courses</h3>
-              <p className="text-black">
+              <h3 className="text-2xl font-light text-black dark:text-white">Free Courses</h3>
+              <p className="text-black dark:text-gray-300">
                 Get started with free DevOps courses from KodeKloud, Udemy, and
                 Great Learning
               </p>
             </div>
           </div>
 
-          <div className="text-black leading-relaxed">
+          <div className="text-black dark:text-gray-300 leading-relaxed">
             <p>
               Access free hands-on labs from KodeKloud for Docker and
               Kubernetes, practical DevOps courses on Udemy covering Git and
@@ -545,16 +545,16 @@ function LearningSection() {
         </div>
 
         {/* DevOps Playgrounds */}
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-6 mb-6">
             <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center">
               <Container className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-light text-black">
+              <h3 className="text-2xl font-light text-black dark:text-white">
                 DevOps Playgrounds
               </h3>
-              <p className="text-black">
+              <p className="text-black dark:text-gray-300">
                 Interactive environments to practice DevOps tools and
                 technologies
               </p>
@@ -562,94 +562,94 @@ function LearningSection() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Browser-Based Labs
               </h4>
               <div className="space-y-4">
-                <div className="p-4 rounded-xl border border-gray-200">
+                <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center">
                       <Zap className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-black dark:text-white">
                       Killer Coda
                     </span>
                   </div>
-                  <p className="text-black text-sm">
+                  <p className="text-black dark:text-gray-300 text-sm">
                     Interactive labs for Kubernetes, Docker, Linux with no
                     installation required
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-gray-200">
+                <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                       <Ship className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-black dark:text-white">
                       Play with Kubernetes
                     </span>
                   </div>
-                  <p className="text-black text-sm">
+                  <p className="text-black dark:text-gray-300 text-sm">
                     Fully functional Kubernetes playground for hands-on learning
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-gray-200">
+                <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center">
                       <Container className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-black dark:text-white">
                       Play with Docker
                     </span>
                   </div>
-                  <p className="text-black text-sm">
+                  <p className="text-black dark:text-gray-300 text-sm">
                     Master containerization with interactive Docker playground
                   </p>
                 </div>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Specialized Labs
               </h4>
               <div className="space-y-4">
-                <div className="p-4 rounded-xl border border-gray-200">
+                <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
                       <Layout className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-black dark:text-white">
                       Terraform Labs
                     </span>
                   </div>
-                  <p className="text-black text-sm">
+                  <p className="text-black dark:text-gray-300 text-sm">
                     Learn Infrastructure as Code with practical Terraform
                     exercises
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-gray-200">
+                <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                       <GitBranch className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-black dark:text-white">
                       GitHub Learning Lab
                     </span>
                   </div>
-                  <p className="text-black text-sm">
+                  <p className="text-black dark:text-gray-300 text-sm">
                     Interactive Git and GitHub tutorials with automated feedback
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-gray-200">
+                <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
                       <RefreshCcw className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-black dark:text-white">
                       Jenkins Labs
                     </span>
                   </div>
-                  <p className="text-black text-sm">
+                  <p className="text-black dark:text-gray-300 text-sm">
                     Build CI/CD pipelines with Jenkins practical examples
                   </p>
                 </div>
@@ -666,10 +666,10 @@ function WritingSection() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="text-4xl font-light text-black mb-6 tracking-tight">
+        <h2 className="text-4xl font-light text-black dark:text-white mb-6 tracking-tight">
           Writing Articles
         </h2>
-        <p className="text-lg text-black leading-relaxed max-w-3xl">
+        <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
           Share your DevOps knowledge and experiences with the community.
           Writing helps reinforce your learning and builds your professional
           reputation.
@@ -677,78 +677,78 @@ function WritingSection() {
       </div>
 
       <div className="space-y-8">
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
-          <h3 className="text-2xl font-light text-black mb-6">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-6">
             How to Write Articles
           </h3>
           <div className="space-y-6">
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-lg font-bold">1</span>
               </div>
               <div>
-                <p className="font-semibold text-black text-lg">
+                <p className="font-semibold text-black dark:text-white text-lg">
                   Go to Your Dashboard
                 </p>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Click your profile picture → Dashboard to access your author
                   workspace
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-lg font-bold">2</span>
               </div>
               <div>
-                <p className="font-semibold text-black text-lg">
+                <p className="font-semibold text-black dark:text-white text-lg">
                   Click Write New Article
                 </p>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Use the prominent button to start creating your content
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-lg font-bold">3</span>
               </div>
               <div>
-                <p className="font-semibold text-black text-lg">
+                <p className="font-semibold text-black dark:text-white text-lg">
                   Use Markdown Editor
                 </p>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Write with live preview, syntax highlighting, and easy
                   formatting
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-lg font-bold">4</span>
               </div>
               <div>
-                <p className="font-semibold text-black text-lg">
+                <p className="font-semibold text-black dark:text-white text-lg">
                   Add Article Details
                 </p>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Set title, category, tags, cover image, and publication date
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-lg font-bold">5</span>
               </div>
               <div>
-                <p className="font-semibold text-black text-lg">
+                <p className="font-semibold text-black dark:text-white text-lg">
                   Publish Your Article
                 </p>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Save as draft or publish immediately to share with the
                   community
                 </p>
@@ -758,11 +758,11 @@ function WritingSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="p-8 bg-white rounded-2xl border border-gray-200">
-            <h4 className="font-semibold text-black mb-4">
+          <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+            <h4 className="font-semibold text-black dark:text-white mb-4">
               Writing Best Practices
             </h4>
-            <ul className="text-black space-y-3">
+            <ul className="text-black dark:text-gray-300 space-y-3">
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 <span>Share personal learning experiences</span>
@@ -782,9 +782,9 @@ function WritingSection() {
             </ul>
           </div>
 
-          <div className="p-8 bg-white rounded-2xl border border-gray-200">
-            <h4 className="font-semibold text-black mb-4">What to Avoid</h4>
-            <ul className="text-black space-y-3">
+          <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+            <h4 className="font-semibold text-black dark:text-white mb-4">What to Avoid</h4>
+            <ul className="text-black dark:text-gray-300 space-y-3">
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 <span>Copying content from other sites</span>
@@ -813,63 +813,63 @@ function DashboardSection() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="text-4xl font-light text-black mb-6 tracking-tight">
+        <h2 className="text-4xl font-light text-black dark:text-white mb-6 tracking-tight">
           Admin Dashboard
         </h2>
-        <p className="text-lg text-black leading-relaxed max-w-3xl">
+        <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
           Your personal control center for managing articles, tracking
           performance, and growing your audience as an author.
         </p>
       </div>
 
       <div className="space-y-8">
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
-          <h3 className="text-2xl font-light text-black mb-6">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-6">
             Dashboard Features
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Content Management
               </h4>
-              <ul className="text-black space-y-3">
+              <ul className="text-black dark:text-gray-300 space-y-3">
                 <li className="flex items-center gap-3">
-                  <Plus className="w-5 h-5 text-blue-600" />
+                  <Plus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <span>Create new articles</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Edit3 className="w-5 h-5 text-blue-600" />
+                  <Edit3 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <span>Edit existing articles</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <FileText className="w-5 h-5 text-blue-600" />
+                  <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <span>View all published content</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <LayoutDashboard className="w-5 h-5 text-blue-600" />
+                  <LayoutDashboard className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <span>Quick access to writing tools</span>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Performance Analytics
               </h4>
-              <ul className="text-black space-y-3">
+              <ul className="text-black dark:text-gray-300 space-y-3">
                 <li className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-purple-600" />
+                  <Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   <span>Track article views and reads</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <ArrowRight className="w-5 h-5 text-purple-600" />
+                  <ArrowRight className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   <span>Monitor reader engagement</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Crown className="w-5 h-5 text-purple-600" />
+                  <Crown className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   <span>View author ranking</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <BookOpen className="w-5 h-5 text-purple-600" />
+                  <BookOpen className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   <span>Analyze content performance</span>
                 </li>
               </ul>
@@ -885,70 +885,70 @@ function AccountSection() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="text-4xl font-light text-black mb-6 tracking-tight">
+        <h2 className="text-4xl font-light text-black dark:text-white mb-6 tracking-tight">
           Account & Profile
         </h2>
-        <p className="text-lg text-black leading-relaxed max-w-3xl">
+        <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
           Manage your account settings, author profile, and access different
           platform features through the user dropdown menu.
         </p>
       </div>
 
       <div className="space-y-8">
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
-          <h3 className="text-2xl font-light text-black mb-6">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-6">
             User Dropdown Menu
           </h3>
-          <p className="text-black mb-6">
+          <p className="text-black dark:text-gray-300 mb-6">
             Click your profile picture in the top right corner to access these
             important options:
           </p>
 
           <div className="space-y-4">
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
-              <Crown className="w-8 h-8 text-blue-600" />
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+              <Crown className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               <div>
-                <h4 className="font-semibold text-black text-lg">
+                <h4 className="font-semibold text-black dark:text-white text-lg">
                   Public Profile View
                 </h4>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   See how other users view your profile and published articles
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
-              <LayoutDashboard className="w-8 h-8 text-green-600" />
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+              <LayoutDashboard className="w-8 h-8 text-green-600 dark:text-green-400" />
               <div>
-                <h4 className="font-semibold text-black text-lg">
+                <h4 className="font-semibold text-black dark:text-white text-lg">
                   Admin Dashboard
                 </h4>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Access your personal dashboard to manage articles and
                   analytics
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
-              <Settings className="w-8 h-8 text-purple-600" />
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+              <Settings className="w-8 h-8 text-purple-600 dark:text-purple-400" />
               <div>
-                <h4 className="font-semibold text-black text-lg">
+                <h4 className="font-semibold text-black dark:text-white text-lg">
                   Edit Your Profile
                 </h4>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Update your author information, bio, and profile picture
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 p-6 bg-white rounded-xl border border-gray-200">
-              <Trash2 className="w-8 h-8 text-red-600" />
+            <div className="flex items-center gap-6 p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+              <Trash2 className="w-8 h-8 text-red-600 dark:text-red-400" />
               <div>
-                <h4 className="font-semibold text-black text-lg">
+                <h4 className="font-semibold text-black dark:text-white text-lg">
                   Delete Account
                 </h4>
-                <p className="text-black">
+                <p className="text-black dark:text-gray-300">
                   Permanently delete your account and all associated data
                 </p>
               </div>
@@ -956,16 +956,16 @@ function AccountSection() {
           </div>
         </div>
 
-        <div className="p-8 bg-white rounded-2xl border border-gray-200">
-          <h3 className="text-2xl font-light text-black mb-6">
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+          <h3 className="text-2xl font-light text-black dark:text-white mb-6">
             Account Management
           </h3>
           <div className="space-y-6">
             <div>
-              <h4 className="font-semibold text-black mb-4">
+              <h4 className="font-semibold text-black dark:text-white mb-4">
                 Profile Information
               </h4>
-              <ul className="text-black space-y-3">
+              <ul className="text-black dark:text-gray-300 space-y-3">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   <span>Display Name - How you appear to other users</span>
@@ -992,12 +992,12 @@ function AccountSection() {
             </div>
 
             <div>
-              <div className="p-4 rounded-xl border border-gray-200">
-                <p className="text-black mb-3">
+              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-600">
+                <p className="text-black dark:text-gray-300 mb-3">
                   <strong>Warning:</strong> Deleting your account is permanent
                   and cannot be undone.
                 </p>
-                <ul className="text-black space-y-2 text-sm">
+                <ul className="text-black dark:text-gray-300 space-y-2 text-sm">
                   <li>• All your published articles will be removed</li>
                   <li>• Your author profile will be deleted</li>
                   <li>• All comments and interactions will be removed</li>

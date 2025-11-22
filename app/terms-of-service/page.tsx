@@ -60,7 +60,7 @@ export default function TermsOfService() {
   ];
 
   return (
-    <div className="min-h-screen bg-white/95 relative overflow-hidden">
+    <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-hidden transition-colors duration-300">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
@@ -72,21 +72,21 @@ export default function TermsOfService() {
         >
           {/* Background Elements */}
           <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 left-0 w-72 h-72 bg-sky-100 rounded-full blur-3xl opacity-30"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
+            <div className="absolute top-0 left-0 w-72 h-72 bg-sky-100 dark:bg-sky-900/20 rounded-full blur-3xl opacity-30"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl opacity-20"></div>
           </div>
 
           <div className="max-w-4xl">
             {/* Header - Moved to left side like your example */}
             <div className="max-w-3xl mb-16">
               <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
-              <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 leading-tight">
                 Terms of Service
-                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                   Clear & Fair
                 </span>
               </h2>
-              <p className="text-lg text-black leading-relaxed">
+              <p className="text-lg text-black dark:text-gray-300 leading-relaxed">
                 Simple guidelines to ensure our DevOps community remains
                 productive, respectful, and focused on learning and sharing
                 knowledge.
@@ -94,9 +94,9 @@ export default function TermsOfService() {
             </div>
 
             {/* Last Updated */}
-            <div className="inline-flex items-center gap-3 bg-white border border-sky-200 rounded-2xl px-6 py-3 shadow-sm">
+            <div className="inline-flex items-center gap-3 bg-white dark:bg-gray-800 border border-sky-200 dark:border-gray-700 rounded-2xl px-6 py-3 shadow-sm">
               <div className="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></div>
-              <span className="text-black font-medium">
+              <span className="text-black dark:text-gray-300 font-medium">
                 Effective:{" "}
                 {new Date().toLocaleDateString("en-US", {
                   month: "long",
@@ -116,10 +116,10 @@ export default function TermsOfService() {
           className="mb-20"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
               Key Guidelines
             </h2>
-            <p className="text-lg text-black max-w-2xl mx-auto">
+            <p className="text-lg text-black dark:text-gray-400 max-w-2xl mx-auto">
               Simple rules that keep our community productive and respectful
             </p>
           </div>
@@ -133,14 +133,14 @@ export default function TermsOfService() {
                 transition={{ delay: index * 0.1 }}
                 className="group"
               >
-                <div className="bg-white rounded-3xl border border-sky-200 p-8 shadow-lg hover:shadow-xl transition-all duration-500 h-full">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl border border-sky-200 dark:border-gray-700 p-8 shadow-lg hover:shadow-xl transition-all duration-500 h-full">
                   <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <section.icon className="w-7 h-7 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-3">
+                  <h3 className="text-xl font-bold text-black dark:text-white mb-3">
                     {section.title}
                   </h3>
-                  <p className="text-black leading-relaxed text-sm">
+                  <p className="text-black dark:text-gray-400 leading-relaxed text-sm">
                     {section.description}
                   </p>
                 </div>
@@ -164,8 +164,8 @@ export default function TermsOfService() {
                   <CheckCircle className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-black">Your Rights</h2>
-                  <p className="text-black">What you can do on our platform</p>
+                  <h2 className="text-3xl font-bold text-black dark:text-white">Your Rights</h2>
+                  <p className="text-black dark:text-gray-400">What you can do on our platform</p>
                 </div>
               </div>
 
@@ -173,10 +173,10 @@ export default function TermsOfService() {
                 {userRights.map((right, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-sky-50 border border-sky-200"
+                    className="flex items-start gap-4 p-4 rounded-2xl bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-700"
                   >
-                    <CheckCircle className="w-5 h-5 text-sky-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-black font-medium">{right}</span>
+                    <CheckCircle className="w-5 h-5 text-sky-600 dark:text-sky-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-black dark:text-gray-300 font-medium">{right}</span>
                   </div>
                 ))}
               </div>
@@ -189,10 +189,10 @@ export default function TermsOfService() {
                   <AlertTriangle className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-black">
+                  <h2 className="text-3xl font-bold text-black dark:text-white">
                     Prohibited Content
                   </h2>
-                  <p className="text-black">
+                  <p className="text-black dark:text-gray-400">
                     What we don't allow on our platform
                   </p>
                 </div>
@@ -202,10 +202,10 @@ export default function TermsOfService() {
                 {prohibitedContent.map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-orange-50 border border-orange-200"
+                    className="flex items-start gap-4 p-4 rounded-2xl bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700"
                   >
-                    <AlertTriangle className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-black font-medium">{item}</span>
+                    <AlertTriangle className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-black dark:text-gray-300 font-medium">{item}</span>
                   </div>
                 ))}
               </div>
@@ -220,20 +220,20 @@ export default function TermsOfService() {
           transition={{ delay: 0.3 }}
           className="mb-20"
         >
-          <div className="bg-white rounded-3xl p-12 border border-sky-200 shadow-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl p-12 border border-sky-200 dark:border-gray-700 shadow-lg">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-black mb-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-12 text-center">
                 Detailed Terms
               </h2>
 
               <div className="space-y-12">
                 {/* Account Terms */}
                 <div>
-                  <h3 className="text-2xl font-bold text-black mb-6 flex items-center gap-3">
-                    <Users className="w-6 h-6 text-sky-600" />
+                  <h3 className="text-2xl font-bold text-black dark:text-white mb-6 flex items-center gap-3">
+                    <Users className="w-6 h-6 text-sky-600 dark:text-sky-400" />
                     1. Account Terms
                   </h3>
-                  <div className="space-y-4 text-black">
+                  <div className="space-y-4 text-black dark:text-gray-300">
                     <p>
                       <strong>Author Accounts:</strong> You must be at least 18
                       years old to create an author account. You're responsible
@@ -255,11 +255,11 @@ export default function TermsOfService() {
 
                 {/* Content Guidelines */}
                 <div>
-                  <h3 className="text-2xl font-bold text-black mb-6 flex items-center gap-3">
-                    <BookOpen className="w-6 h-6 text-sky-600" />
+                  <h3 className="text-2xl font-bold text-black dark:text-white mb-6 flex items-center gap-3">
+                    <BookOpen className="w-6 h-6 text-sky-600 dark:text-sky-400" />
                     2. Content Guidelines
                   </h3>
-                  <div className="space-y-4 text-black">
+                  <div className="space-y-4 text-black dark:text-gray-300">
                     <p>
                       <strong>Original Content:</strong> You must own or have
                       permission to publish all content you submit. Plagiarism
@@ -281,11 +281,11 @@ export default function TermsOfService() {
 
                 {/* Intellectual Property */}
                 <div>
-                  <h3 className="text-2xl font-bold text-black mb-6 flex items-center gap-3">
-                    <Copyright className="w-6 h-6 text-sky-600" />
+                  <h3 className="text-2xl font-bold text-black dark:text-white mb-6 flex items-center gap-3">
+                    <Copyright className="w-6 h-6 text-sky-600 dark:text-sky-400" />
                     3. Intellectual Property
                   </h3>
-                  <div className="space-y-4 text-black">
+                  <div className="space-y-4 text-black dark:text-gray-300">
                     <p>
                       <strong>Your Content:</strong> You retain ownership of the
                       content you publish. By publishing, you grant
@@ -308,11 +308,11 @@ export default function TermsOfService() {
 
                 {/* Disclaimer */}
                 <div>
-                  <h3 className="text-2xl font-bold text-black mb-6 flex items-center gap-3">
-                    <Shield className="w-6 h-6 text-sky-600" />
+                  <h3 className="text-2xl font-bold text-black dark:text-white mb-6 flex items-center gap-3">
+                    <Shield className="w-6 h-6 text-sky-600 dark:text-sky-400" />
                     4. Disclaimer & Liability
                   </h3>
-                  <div className="space-y-4 text-black">
+                  <div className="space-y-4 text-black dark:text-gray-300">
                     <p>
                       <strong>Educational Purpose:</strong> All content is
                       provided for educational purposes. Always test code and
@@ -343,13 +343,13 @@ export default function TermsOfService() {
           transition={{ delay: 0.4 }}
           className="text-center"
         >
-          <div className="bg-gradient-to-r from-sky-600 to-blue-600 rounded-3xl p-12 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-700 dark:to-blue-700 rounded-3xl p-12 text-white relative overflow-hidden">
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Questions About Our Terms?
               </h2>
-              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-blue-100 dark:text-blue-200 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                 We're committed to maintaining a productive learning environment
                 for the DevOps community. If you have questions about these
                 terms, please reach out.

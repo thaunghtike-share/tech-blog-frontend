@@ -273,17 +273,17 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Personal Info & Summary */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-0 shadow-2xl rounded-3xl">
+            <Card className="border-0 shadow-2xl rounded-3xl dark:bg-gray-800">
               <CardContent className="p-8">
                 <div className="text-center mb-6">
-                  <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                  <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg">
                     <Image
                       src={personalInfo.avatar || "/tho.jpg"}
                       alt={personalInfo.name}
@@ -292,29 +292,29 @@ export default function AboutPage() {
                       className="rounded-full"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold text-black mb-1">
+                  <h3 className="text-2xl font-bold text-black dark:text-white mb-1">
                     {personalInfo.name}
                   </h3>
-                  <p className="text-blue-600 font-semibold text-base">
+                  <p className="text-blue-600 dark:text-blue-400 font-semibold text-base">
                     {personalInfo.title}
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-black">
+                <div className="space-y-3 text-sm text-black dark:text-gray-300">
                   <div className="flex items-center">
-                    <MapPin className="h-4 w-4 mr-3 text-blue-500" />
+                    <MapPin className="h-4 w-4 mr-3 text-blue-500 dark:text-blue-400" />
                     {personalInfo.location}
                   </div>
                   <div className="flex items-center">
-                    <Mail className="h-4 w-4 mr-3 text-blue-500" />
+                    <Mail className="h-4 w-4 mr-3 text-blue-500 dark:text-blue-400" />
                     {personalInfo.email}
                   </div>
                   <div className="flex items-center">
-                    <Phone className="h-4 w-4 mr-3 text-blue-500" />
+                    <Phone className="h-4 w-4 mr-3 text-blue-500 dark:text-blue-400" />
                     {personalInfo.phone}
                   </div>
                 </div>
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <p className="text-black leading-relaxed text-sm">
+                <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <p className="text-black dark:text-gray-300 leading-relaxed text-sm">
                     {personalInfo.summary}
                   </p>
                 </div>
@@ -335,7 +335,7 @@ export default function AboutPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold transition-all duration-300 bg-transparent text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
+                    className="w-full sm:w-auto border-2 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-400 dark:hover:border-blue-500 font-semibold transition-all duration-300 bg-transparent text-sm py-2 px-3 sm:text-base sm:py-3 sm:px-4"
                     onClick={() =>
                       window.open(personalInfo.linkedinUrl, "_blank")
                     }
@@ -348,10 +348,10 @@ export default function AboutPage() {
             </Card>
 
             {/* Technical Skills */}
-            <Card className="border-0 shadow-lg rounded-3xl">
+            <Card className="border-0 shadow-lg rounded-3xl dark:bg-gray-800">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-black">
-                  <Code className="h-6 w-6 mr-3 text-blue-600" />
+                <CardTitle className="flex items-center text-xl font-bold text-black dark:text-white">
+                  <Code className="h-6 w-6 mr-3 text-blue-600 dark:text-blue-400" />
                   Technical Skills
                 </CardTitle>
               </CardHeader>
@@ -359,7 +359,7 @@ export default function AboutPage() {
                 <div className="space-y-5">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
-                      <h4 className="text-base font-semibold text-black mb-2">
+                      <h4 className="text-base font-semibold text-black dark:text-white mb-2">
                         {category}
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -367,7 +367,7 @@ export default function AboutPage() {
                           <Badge
                             key={skill}
                             variant="secondary"
-                            className="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium border-0"
+                            className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full font-medium border-0"
                           >
                             {skill}
                           </Badge>
@@ -380,28 +380,28 @@ export default function AboutPage() {
             </Card>
 
             {/* Freelance Earnings */}
-            <Card className="border-0 shadow-lg rounded-3xl">
+            <Card className="border-0 shadow-lg rounded-3xl dark:bg-gray-800">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-black">
-                  <Briefcase className="h-6 w-6 mr-3 text-green-600" />
+                <CardTitle className="flex items-center text-xl font-bold text-black dark:text-white">
+                  <Briefcase className="h-6 w-6 mr-3 text-green-600 dark:text-green-400" />
                   Freelance Earnings (Upwork)
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 pt-0 space-y-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-black font-medium">
+                  <p className="text-sm text-black dark:text-gray-300 font-medium">
                     Total Earnings
                   </p>
-                  <Badge className="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full border-0">
+                  <Badge className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm font-semibold px-3 py-1 rounded-full border-0">
                     $17,000+
                   </Badge>
                 </div>
-                <p className="text-sm text-black leading-relaxed">
+                <p className="text-sm text-black dark:text-gray-300 leading-relaxed">
                   Worked long-term as a Kubernetes Engineer providing reliable
                   support and infrastructure automation to global clients.
                 </p>
                 
-                <div className="mt-4 rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+                <div className="mt-4 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-lg">
                   <Image
                     src="/earnings.png"
                     alt="Upwork Earnings"
@@ -414,7 +414,7 @@ export default function AboutPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="w-full border-2 border-green-300 text-green-700 hover:bg-green-50 hover:border-green-400 font-semibold transition-all duration-300 bg-transparent"
+                  className="w-full border-2 border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/30 hover:border-green-400 dark:hover:border-green-500 font-semibold transition-all duration-300 bg-transparent"
                   onClick={() =>
                     window.open(
                       "https://www.upwork.com/freelancers/~01e9f0a7b2e737ac90",
@@ -437,10 +437,10 @@ export default function AboutPage() {
                   <Briefcase className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-black">
+                  <h2 className="text-2xl font-bold text-black dark:text-white">
                     Work Experience
                   </h2>
-                  <p className="text-black">
+                  <p className="text-black dark:text-gray-300">
                     5+ years of DevOps excellence
                   </p>
                 </div>
@@ -450,19 +450,19 @@ export default function AboutPage() {
                 {workExperience.map((job, index) => (
                   <Card
                     key={index}
-                    className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
+                    className="border-0 shadow-lg rounded-3xl dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
                   >
                     <CardContent className="p-8">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
                         <div>
-                          <h4 className="text-xl font-bold text-black mb-2">
+                          <h4 className="text-xl font-bold text-black dark:text-white mb-2">
                             {job.position}
                           </h4>
-                          <p className="text-blue-700 font-semibold text-lg mb-2">
+                          <p className="text-blue-700 dark:text-blue-400 font-semibold text-lg mb-2">
                             {job.company}
                           </p>
                         </div>
-                        <div className="text-right text-black">
+                        <div className="text-right text-black dark:text-gray-300">
                           <div className="flex items-center justify-end mb-1">
                             <Calendar className="h-4 w-4 mr-2" />
                             {job.duration}
@@ -477,7 +477,7 @@ export default function AboutPage() {
                         {job.responsibilities.map((responsibility, idx) => (
                           <li
                             key={idx}
-                            className="text-black text-sm leading-relaxed"
+                            className="text-black dark:text-gray-300 text-sm leading-relaxed"
                           >
                             {responsibility}
                           </li>
@@ -488,7 +488,7 @@ export default function AboutPage() {
                           <Badge
                             key={tech}
                             variant="outline"
-                            className="text-xs bg-indigo-100 text-indigo-800 border-0 px-3 py-1 rounded-full font-medium"
+                            className="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 border-0 px-3 py-1 rounded-full font-medium"
                           >
                             {tech}
                           </Badge>
@@ -507,10 +507,10 @@ export default function AboutPage() {
                   <Server className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-black">
+                  <h2 className="text-2xl font-bold text-black dark:text-white">
                     Key Projects
                   </h2>
-                  <p className="text-black">
+                  <p className="text-black dark:text-gray-300">
                     Successful implementations and migrations
                   </p>
                 </div>
@@ -520,13 +520,13 @@ export default function AboutPage() {
                 {projects.map((project, index) => (
                   <Card
                     key={index}
-                    className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
+                    className="border-0 shadow-lg rounded-3xl dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
                   >
                     <CardContent className="p-8">
-                      <h4 className="text-xl font-bold text-black mb-4">
+                      <h4 className="text-xl font-bold text-black dark:text-white mb-4">
                         {project.name}
                       </h4>
-                      <p className="text-black mb-4 text-sm leading-relaxed">
+                      <p className="text-black dark:text-gray-300 mb-4 text-sm leading-relaxed">
                         {project.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mb-4">
@@ -534,14 +534,14 @@ export default function AboutPage() {
                           <Badge
                             key={tech}
                             variant="secondary"
-                            className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium border-0"
+                            className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1 rounded-full font-medium border-0"
                           >
                             {tech}
                           </Badge>
                         ))}
                       </div>
-                      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 border border-blue-200">
-                        <p className="text-black text-sm font-semibold">
+                      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-2xl p-4 border border-blue-200 dark:border-blue-700">
+                        <p className="text-black dark:text-gray-300 text-sm font-semibold">
                           Impact: {project.impact}
                         </p>
                       </div>
@@ -560,7 +560,7 @@ export default function AboutPage() {
                     <GraduationCap className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-black">
+                    <h3 className="text-2xl font-bold text-black dark:text-white">
                       Education
                     </h3>
                   </div>
@@ -570,20 +570,20 @@ export default function AboutPage() {
                   {education.map((edu, index) => (
                     <Card
                       key={index}
-                      className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
+                      className="border-0 shadow-lg rounded-3xl dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
                     >
                       <CardContent className="p-6">
-                        <h4 className="text-lg font-bold text-black mb-2">
+                        <h4 className="text-lg font-bold text-black dark:text-white mb-2">
                           {edu.degree}
                         </h4>
-                        <p className="text-green-700 font-semibold text-base mb-2">
+                        <p className="text-green-700 dark:text-green-400 font-semibold text-base mb-2">
                           {edu.institution}
                         </p>
-                        <div className="flex items-center text-sm text-black mb-2">
+                        <div className="flex items-center text-sm text-black dark:text-gray-300 mb-2">
                           <Calendar className="h-4 w-4 mr-2" />
                           {edu.duration}
                         </div>
-                        <p className="text-black text-sm leading-relaxed">
+                        <p className="text-black dark:text-gray-300 text-sm leading-relaxed">
                           {edu.details}
                         </p>
                       </CardContent>
@@ -599,7 +599,7 @@ export default function AboutPage() {
                     <Award className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-black">
+                    <h3 className="text-2xl font-bold text-black dark:text-white">
                       Certifications
                     </h3>
                   </div>
@@ -609,20 +609,20 @@ export default function AboutPage() {
                   {certifications.map((cert, index) => (
                     <Card
                       key={index}
-                      className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300"
+                      className="border-0 shadow-lg rounded-3xl dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
                     >
                       <CardContent className="p-6">
-                        <h4 className="font-bold text-black mb-2 text-base">
+                        <h4 className="font-bold text-black dark:text-white mb-2 text-base">
                           {cert.name}
                         </h4>
-                        <p className="text-orange-700 font-semibold text-sm mb-2">
+                        <p className="text-orange-700 dark:text-orange-400 font-semibold text-sm mb-2">
                           {cert.issuer}
                         </p>
-                        <div className="flex items-center justify-between text-sm text-black mb-2">
+                        <div className="flex items-center justify-between text-sm text-black dark:text-gray-300 mb-2">
                           <span>Issued: {cert.year}</span>
                           <span>Valid until: {cert.validUntil}</span>
                         </div>
-                        <p className="text-sm text-black font-mono">
+                        <p className="text-sm text-black dark:text-gray-300 font-mono">
                           {cert.credentialId}
                         </p>
                       </CardContent>

@@ -272,7 +272,7 @@ export default function FAQPage() {
   const currentFAQ = filteredFaqs[currentIndex];
 
   return (
-    <div className="min-h-screen bg-white/95 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -289,10 +289,10 @@ export default function FAQPage() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight"
+              className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 leading-tight"
             >
               Frequently Asked
-              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                 Questions
               </span>
             </motion.h1>
@@ -301,7 +301,7 @@ export default function FAQPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-lg text-black-700 leading-relaxed"
+              className="text-lg text-black-700 dark:text-gray-300 leading-relaxed"
             >
               Get answers to common questions about DevOps, career paths, cloud
               technologies, and our services. Real-world experience, practical
@@ -322,15 +322,15 @@ export default function FAQPage() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <Card className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300">
+                <Card className="border-0 shadow-lg rounded-3xl dark:bg-gray-800 hover:shadow-xl transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="w-12 h-12 bg-gradient-to-r from-sky-500 to-blue-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <div className="text-2xl font-bold text-black-700 mb-1">
+                    <div className="text-2xl font-bold text-black-700 dark:text-white mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-black-600 text-sm font-medium">
+                    <div className="text-black-600 dark:text-gray-400 text-sm font-medium">
                       {stat.label}
                     </div>
                   </CardContent>
@@ -344,10 +344,10 @@ export default function FAQPage() {
           {/* Left Column - Search & Categories */}
           <div className="lg:col-span-1 space-y-6">
             {/* Categories Card */}
-            <Card className="border-0 shadow-lg rounded-3xl">
+            <Card className="border-0 shadow-lg rounded-3xl dark:bg-gray-800">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-black-700">
-                  <Filter className="h-6 w-6 mr-3 text-sky-600" />
+                <CardTitle className="flex items-center text-xl font-bold text-black-700 dark:text-white">
+                  <Filter className="h-6 w-6 mr-3 text-sky-600 dark:text-sky-400" />
                   Categories
                 </CardTitle>
               </CardHeader>
@@ -362,7 +362,7 @@ export default function FAQPage() {
                         className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${
                           selectedCategory === category.id
                             ? "bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-lg"
-                            : "bg-gray-50 text-black-700 hover:bg-gray-100 border border-gray-200"
+                            : "bg-gray-50 dark:bg-gray-700 text-black-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600"
                         }`}
                       >
                         <div className="flex items-center">
@@ -374,7 +374,7 @@ export default function FAQPage() {
                           className={`${
                             selectedCategory === category.id
                               ? "bg-white/20 text-white border-0"
-                              : "bg-blue-100 text-blue-800 border-0"
+                              : "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border-0"
                           }`}
                         >
                           {category.count}
@@ -387,9 +387,9 @@ export default function FAQPage() {
             </Card>
 
             {/* Quick Actions Card */}
-            <Card className="border-0 shadow-lg rounded-3xl">
+            <Card className="border-0 shadow-lg rounded-3xl dark:bg-gray-800">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center text-xl font-bold text-black-700">
+                <CardTitle className="flex items-center text-xl font-bold text-black-700 dark:text-white">
                   <Zap className="h-6 w-6 mr-3 text-amber-500" />
                   Quick Actions
                 </CardTitle>
@@ -429,10 +429,10 @@ export default function FAQPage() {
                   <MessageCircleQuestion className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-black-700">
+                  <h2 className="text-2xl font-bold text-black-700 dark:text-white">
                     Featured Questions
                   </h2>
-                  <p className="text-black-600">
+                  <p className="text-black-600 dark:text-gray-400">
                     Browse through important questions ({filteredFaqs.length}{" "}
                     found)
                   </p>
@@ -441,7 +441,7 @@ export default function FAQPage() {
 
               {/* Carousel Card */}
               {filteredFaqs.length > 0 ? (
-                <Card className="border-0 shadow-xl rounded-3xl relative">
+                <Card className="border-0 shadow-xl rounded-3xl dark:bg-gray-800 relative">
                   <CardContent className="p-8">
                     {/* Navigation Buttons */}
                     <div className="absolute -left-6 top-1/2 -translate-y-1/2 z-20">
@@ -449,7 +449,7 @@ export default function FAQPage() {
                         onClick={prevFAQ}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        className="flex items-center justify-center w-12 h-12 bg-white text-sky-600 rounded-full shadow-lg border border-gray-300 hover:border-sky-400 transition-all"
+                        className="flex items-center justify-center w-12 h-12 bg-white dark:bg-gray-700 text-sky-600 dark:text-sky-400 rounded-full shadow-lg border border-gray-300 dark:border-gray-600 hover:border-sky-400 transition-all"
                       >
                         <ChevronLeft className="w-6 h-6" />
                       </motion.button>
@@ -460,7 +460,7 @@ export default function FAQPage() {
                         onClick={nextFAQ}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        className="flex items-center justify-center w-12 h-12 bg-white text-sky-600 rounded-full shadow-lg border border-gray-300 hover:border-sky-400 transition-all"
+                        className="flex items-center justify-center w-12 h-12 bg-white dark:bg-gray-700 text-sky-600 dark:text-sky-400 rounded-full shadow-lg border border-gray-300 dark:border-gray-600 hover:border-sky-400 transition-all"
                       >
                         <ChevronRight className="w-6 h-6" />
                       </motion.button>
@@ -476,12 +476,12 @@ export default function FAQPage() {
                         className="text-center px-4"
                       >
                         {/* Category Badge */}
-                        <Badge className="bg-sky-100 text-sky-800 border-0 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                        <Badge className="bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 border-0 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                           {currentFAQ.category.toUpperCase()}
                         </Badge>
 
                         {/* Question */}
-                        <h3 className="text-2xl font-bold text-black-700 mb-6 leading-tight">
+                        <h3 className="text-2xl font-bold text-black-700 dark:text-white mb-6 leading-tight">
                           {currentFAQ.question}
                         </h3>
 
@@ -490,13 +490,13 @@ export default function FAQPage() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2, duration: 0.5 }}
-                          className="text-black-700 text-lg leading-relaxed text-left"
+                          className="text-black-700 dark:text-gray-300 text-lg leading-relaxed text-left"
                         >
                           {currentFAQ.answer}
                         </motion.div>
 
                         {/* Popularity Indicator */}
-                        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-black-500">
+                        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-black-500 dark:text-gray-400">
                           <Sparkles className="w-4 h-4 text-amber-500" />
                           {currentFAQ.popularity}% of users found this helpful
                         </div>
@@ -505,13 +505,13 @@ export default function FAQPage() {
                   </CardContent>
                 </Card>
               ) : (
-                <Card className="border-0 shadow-xl rounded-3xl">
+                <Card className="border-0 shadow-xl rounded-3xl dark:bg-gray-800">
                   <CardContent className="p-12 text-center">
-                    <MessageCircleQuestion className="w-16 h-16 text-black-300 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-black-700 mb-2">
+                    <MessageCircleQuestion className="w-16 h-16 text-black-300 dark:text-gray-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-black-700 dark:text-white mb-2">
                       No questions found
                     </h3>
-                    <p className="text-black-600">
+                    <p className="text-black-600 dark:text-gray-400">
                       Try adjusting your search or filter criteria
                     </p>
                   </CardContent>
@@ -530,7 +530,7 @@ export default function FAQPage() {
                       className={`w-3 h-3 rounded-full transition-all ${
                         index === currentIndex
                           ? "bg-gradient-to-r from-sky-500 to-blue-500 shadow-lg"
-                          : "bg-gray-300 hover:bg-gray-400"
+                          : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                       }`}
                     />
                   ))}
@@ -542,10 +542,10 @@ export default function FAQPage() {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-black-700">
+                  <h2 className="text-2xl font-bold text-black-700 dark:text-white">
                     All Questions
                   </h2>
-                  <p className="text-black-600">
+                  <p className="text-black-600 dark:text-gray-400">
                     {filteredFaqs.length} questions in{" "}
                     {selectedCategory === "all"
                       ? "all categories"
@@ -556,7 +556,7 @@ export default function FAQPage() {
                 </div>
                 <Badge
                   variant="outline"
-                  className="bg-blue-50 text-blue-700 border-blue-200"
+                  className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700"
                 >
                   {filteredFaqs.length} results
                 </Badge>
@@ -570,30 +570,30 @@ export default function FAQPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="border-0 shadow-lg rounded-3xl hover:shadow-xl transition-all duration-300">
+                    <Card className="border-0 shadow-lg rounded-3xl dark:bg-gray-800 transition-all duration-300">
                       <CardContent className="p-6">
                         <button
                           onClick={() => toggleExpand(faq.id)}
-                          className="w-full text-left flex items-start justify-between hover:bg-gray-50 rounded-2xl transition-all"
+                          className="w-full text-left flex items-start justify-between hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl transition-all"
                         >
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-2">
-                              <Badge className="bg-sky-100 text-sky-800 border-0 text-xs">
+                              <Badge className="bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 border-0 text-xs">
                                 {faq.category}
                               </Badge>
-                              <div className="flex items-center gap-1 text-xs text-black-500">
+                              <div className="flex items-center gap-1 text-xs text-black-500 dark:text-gray-400">
                                 <Sparkles className="w-3 h-3 text-amber-500" />
                                 {faq.popularity}%
                               </div>
                             </div>
-                            <h4 className="font-semibold text-black-700 text-lg leading-tight pr-8">
+                            <h4 className="font-semibold text-black-700 dark:text-white text-lg leading-tight pr-8">
                               {faq.question}
                             </h4>
                           </div>
                           {expandedItems.includes(faq.id) ? (
-                            <Minus className="w-5 h-5 text-sky-600 flex-shrink-0 mt-1" />
+                            <Minus className="w-5 h-5 text-sky-600 dark:text-sky-400 flex-shrink-0 mt-1" />
                           ) : (
-                            <Plus className="w-5 h-5 text-sky-600 flex-shrink-0 mt-1" />
+                            <Plus className="w-5 h-5 text-sky-600 dark:text-sky-400 flex-shrink-0 mt-1" />
                           )}
                         </button>
 
@@ -604,9 +604,9 @@ export default function FAQPage() {
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.3 }}
-                              className="pt-4 border-t border-gray-200 mt-4"
+                              className="pt-4 border-t border-gray-200 dark:border-gray-700 mt-4"
                             >
-                              <p className="text-black-700 leading-relaxed">
+                              <p className="text-black-700 dark:text-gray-300 leading-relaxed">
                                 {faq.answer}
                               </p>
                             </motion.div>
