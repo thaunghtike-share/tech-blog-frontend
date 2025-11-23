@@ -1,11 +1,10 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Head from "next/head";
-import { MinimalHeader } from "@/components/minimal-header";
-import { MinimalFooter } from "@/components/minimal-footer";
-import { ArticleContent } from "@/components/article-content";
-import { Moon, Sun, Monitor } from "lucide-react";
+// Remove this line: "use client"
+import React from 'react';
+import { notFound } from 'next/navigation';
+import Head from 'next/head';
+import { MinimalHeader } from '@/components/minimal-header';
+import { MinimalFooter } from '@/components/minimal-footer';
+import { ArticleContent } from '@/components/article-content';
 
 interface Article {
   id: number;
@@ -41,12 +40,12 @@ interface Category {
   slug: string;
 }
 
-const SITE_URL = "https://www.learndevopsnow-mm.blog";
+const SITE_URL = 'https://www.learndevopsnow-mm.blog';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, { cache: 'no-store' });
     const data = await res.json();
     return Array.isArray(data) ? data : data.results || [];
   } catch {
@@ -57,7 +56,7 @@ async function fetchJSON<T>(url: string): Promise<T[]> {
 async function fetchAuthor(id: number): Promise<Author | null> {
   try {
     const res = await fetch(`${API_BASE_URL}/authors/${id}`, {
-      cache: "no-store",
+      cache: 'no-store'
     });
     if (!res.ok) return null;
     const author: Author = await res.json();
@@ -75,7 +74,7 @@ function extractHeadings(
 ): { text: string; level: number; id: string }[] {
   const idCounts: Record<string, number> = {};
   return markdown
-    .split("\n")
+    .split('\n')
     .map((line) => {
       const match = line.match(/^(#{1,6})\s+(.*)/);
       if (!match) return null;
@@ -83,8 +82,8 @@ function extractHeadings(
       const level = hashes.length;
       let baseId = rawText
         .toLowerCase()
-        .replace(/[^\w]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+        .replace(/[^\w]+/g, '-')
+        .replace(/^-+|-+$/g, '');
       if (idCounts[baseId]) {
         idCounts[baseId] += 1;
         baseId = `${baseId}-${idCounts[baseId]}`;
@@ -96,223 +95,144 @@ function extractHeadings(
     .filter(Boolean) as { text: string; level: number; id: string }[];
 }
 
-export default function ArticlePage() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params.slug as string;
+export default async function ArticlePage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  const [article, setArticle] = useState<Article | null>(null);
-  const [author, setAuthor] = useState<Author | null>(null);
-  const [allArticles, setAllArticles] = useState<Article[]>([]);
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [authors, setAuthors] = useState<Author[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("light");
+  try {
+    // Fetch article
+    const articleRes = await fetch(`${API_BASE_URL}/articles/${slug}/`);
 
-  useEffect(() => {
-    setMounted(true);
-    // Load saved theme or detect system preference
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | "system" | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-    } else if (savedTheme === "system") {
-      setTheme("system");
-      if (prefersDark) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    } else {
-      setTheme("light");
-      document.documentElement.classList.remove("dark");
+    if (!articleRes.ok) {
+      notFound();
     }
-  }, []);
 
-  const setThemeMode = (newTheme: "light" | "dark" | "system") => {
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else if (newTheme === "light") {
-      document.documentElement.classList.remove("dark");
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (prefersDark) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    }
-  };
+    const article: Article = await articleRes.json();
 
-  useEffect(() => {
-    if (slug) {
-      fetchArticleData();
-    }
-  }, [slug]);
+    // Fetch all related data in parallel
+    const [author, allArticles, tags, categories, authors] = await Promise.all([
+      fetchAuthor(article.author),
+      fetchJSON<Article>(`${API_BASE_URL}/articles/`),
+      fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
+      fetchJSON<Category>(`${API_BASE_URL}/categories/`),
+      fetchJSON<Author>(`${API_BASE_URL}/authors/`)
+    ]);
 
-  const fetchArticleData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Fetch article
-      const articleRes = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
-        cache: "no-store",
-      });
-
-      if (!articleRes.ok) {
-        throw new Error("Article not found");
-      }
-
-      const articleData: Article = await articleRes.json();
-      setArticle(articleData);
-
-      // Fetch all related data in parallel
-      const [
-        authorData,
-        articlesData,
-        tagsData,
-        categoriesData,
-        authorsData,
-      ] = await Promise.all([
-        fetchAuthor(articleData.author),
-        fetchJSON<Article>(`${API_BASE_URL}/articles/`),
-        fetchJSON<Tag>(`${API_BASE_URL}/tags/`),
-        fetchJSON<Category>(`${API_BASE_URL}/categories/`),
-        fetchJSON<Author>(`${API_BASE_URL}/authors/`),
-      ]);
-
-      setAuthor(authorData);
-      setAllArticles(articlesData);
-      setTags(tagsData);
-      setCategories(categoriesData);
-      setAuthors(authorsData);
-
-    } catch (err) {
-      console.error("Error fetching article data:", err);
-      setError("Article not found or failed to load.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading article...</p>
-        </div>
-      </div>
+    const headings = extractHeadings(article.content);
+    const sorted = allArticles.sort(
+      (a, b) =>
+        new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
     );
-  }
+    const currentIndex = sorted.findIndex((a) => a.id === article.id);
+    const prevArticle = sorted[currentIndex + 1] || null;
+    const nextArticle = sorted[currentIndex - 1] || null;
+    const recentArticles = sorted
+      .filter((a) => a.id !== article.id)
+      .slice(0, 5);
+    const sameCategoryArticles = sorted
+      .filter((a) => a.category === article.category && a.id !== article.id)
+      .slice(0, 5);
 
-  if (error || !article) {
+    const publishDate = new Date(article.published_at).toLocaleDateString();
+    const categoryName =
+      categories.find((c) => c.id === article.category)?.name || 'General';
+    const tagNames = article.tags
+      .map((id) => tags.find((t) => t.id === id)?.name)
+      .filter(Boolean) as string[];
+
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 dark:text-red-400 text-lg">{error || "Article not found"}</p>
-          <button
-            onClick={() => router.push("/")}
-            className="mt-4 px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors"
-          >
-            Back to Home
-          </button>
+      <>
+        <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
+          <MinimalHeader />
+
+          <div className="md:-mt-1 -mt-19">
+            <ArticleContent
+              article={article}
+              author={author}
+              headings={headings}
+              prevArticle={prevArticle}
+              nextArticle={nextArticle}
+              recentArticles={recentArticles}
+              sameCategoryArticles={sameCategoryArticles}
+              publishDate={publishDate}
+              categoryName={categoryName}
+              tagNames={tagNames}
+              authors={authors}
+              categories={categories}
+              readCount={article.read_count || 0}
+            />
+          </div>
+
+          <div className="md:-mt-2 -mt-5">
+            <MinimalFooter />
+          </div>
         </div>
-      </div>
+      </>
     );
+  } catch (error) {
+    console.error('Error fetching article data:', error);
+    notFound();
   }
+}
 
-  // Prepare metadata
-  const cleanDescription =
-    article.content
-      ?.replace(/[#_*>\[\]()`]/g, "")
-      .slice(0, 150)
-      .trim() || "Learn DevOps Now - Myanmar";
+// Generate metadata for better SEO
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  let image = article.cover_image || "/og-image.jpg";
-  if (image && !image.startsWith("http")) {
-    image = `https://www.learndevopsnow-mm.blog${
-      image.startsWith("/") ? "" : "/"
-    }${image}`;
+  try {
+    const articleRes = await fetch(`${API_BASE_URL}/articles/${slug}/`);
+
+    if (!articleRes.ok) {
+      return {
+        title: 'Article Not Found | Learn DevOps Now - Myanmar'
+      };
+    }
+
+    const article: Article = await articleRes.json();
+
+    const cleanDescription =
+      article.content
+        ?.replace(/[#_*>\[\]()`]/g, '')
+        .slice(0, 150)
+        .trim() || 'Learn DevOps Now - Myanmar';
+
+    let image = article.cover_image || '/og-image.jpg';
+    if (image && !image.startsWith('http')) {
+      image = `${SITE_URL}${image.startsWith('/') ? '' : '/'}${image}`;
+    }
+
+    return {
+      title: `${article.title} | Learn DevOps Now - Myanmar`,
+      description: cleanDescription,
+      openGraph: {
+        title: article.title,
+        description: cleanDescription,
+        images: [image],
+        url: `${SITE_URL}/articles/${slug}`,
+        type: 'article',
+        publishedTime: article.published_at
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: article.title,
+        description: cleanDescription,
+        images: [image]
+      },
+      alternates: {
+        canonical: `${SITE_URL}/articles/${slug}`
+      }
+    };
+  } catch (error) {
+    return {
+      title: 'Learn DevOps Now - Myanmar',
+      description: 'Learn DevOps Now - Myanmar Blog'
+    };
   }
-
-  const headings = extractHeadings(article.content);
-  const sorted = allArticles.sort(
-    (a, b) =>
-      new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
-  );
-  const currentIndex = sorted.findIndex((a) => a.id === article.id);
-  const prevArticle = sorted[currentIndex + 1] || null;
-  const nextArticle = sorted[currentIndex - 1] || null;
-  const recentArticles = sorted.filter((a) => a.id !== article.id).slice(0, 5);
-  const sameCategoryArticles = sorted
-    .filter((a) => a.category === article.category && a.id !== article.id)
-    .slice(0, 5);
-
-  const publishDate = new Date(article.published_at).toLocaleDateString();
-  const categoryName =
-    categories.find((c) => c.id === article.category)?.name || "General";
-  const tagNames = article.tags
-    .map((id) => tags.find((t) => t.id === id)?.name)
-    .filter(Boolean) as string[];
-
-  return (
-    <>
-      <Head>
-        <title>{`${article.title} | Learn DevOps Now - Myanmar`}</title>
-        <meta name="description" content={cleanDescription} />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={cleanDescription} />
-        <meta property="og:image" content={image} />
-        <meta
-          property="og:url"
-          content={`https://www.learndevopsnow-mm.blog/articles/${slug}`}
-        />
-        <meta property="og:type" content="article" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={cleanDescription} />
-        <meta name="twitter:image" content={image} />
-      </Head>
-
-      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
-        <MinimalHeader />
-        
-        <div className="md:-mt-1 -mt-19">
-          <ArticleContent
-            article={article}
-            author={author}
-            headings={headings}
-            prevArticle={prevArticle}
-            nextArticle={nextArticle}
-            recentArticles={recentArticles}
-            sameCategoryArticles={sameCategoryArticles}
-            publishDate={publishDate}
-            categoryName={categoryName}
-            tagNames={tagNames}
-            authors={authors}
-            categories={categories}
-            readCount={article.read_count || 0}
-          />
-        </div>
-        
-        <div className="md:-mt-2 -mt-5">
-          <MinimalFooter />
-        </div>
-      </div>
-    </>
-  );
 }
