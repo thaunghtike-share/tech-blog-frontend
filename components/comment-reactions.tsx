@@ -151,8 +151,8 @@ const ReactionButton = ({
         {/* ALWAYS SHOW COUNT, EVEN IF ZERO */}
         <span
           className={`text-xs px-2 py-1 rounded-full font-semibold min-w-[20px] text-center ${
-            isActive 
-              ? "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300" 
+            isActive
+              ? "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300"
               : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
           }`}
         >
@@ -392,7 +392,9 @@ export function CommentsReactions({
               <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100">Delete Comment</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                Delete Comment
+              </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 This action cannot be undone
               </p>
@@ -508,12 +510,10 @@ export function CommentsReactions({
 
   // PROPER OWNERSHIP CHECK - FIXED
   const isCommentOwner = (comment: Comment) => {
-    // For now, show edit/delete for all authenticated users to test
-    // In production, you should check comment.author_id === user.id
-    return isAuthenticated;
+    return isAuthenticated && comment.author_id === user?.id;
   };
 
-  // Comment component - FIXED delete button
+  // Comment component - UPDATED with better edit button placement
   const CommentItem = ({
     comment,
     depth = 0,
@@ -522,27 +522,9 @@ export function CommentsReactions({
     depth?: number;
   }) => {
     const [showReplies, setShowReplies] = useState(true);
-    const [showMenu, setShowMenu] = useState(false);
     const [localEditContent, setLocalEditContent] = useState(comment.content);
-    const menuRef = useRef<HTMLDivElement>(null);
 
     const userOwnsComment = isCommentOwner(comment);
-
-    // Close menu when clicking outside - FIXED
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (
-          menuRef.current &&
-          !menuRef.current.contains(event.target as Node)
-        ) {
-          setShowMenu(false);
-        }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
 
     // Reset edit content when editing starts
     useEffect(() => {
@@ -570,7 +552,9 @@ export function CommentsReactions({
     return (
       <div
         className={`mb-4 ${
-          depth > 0 ? "ml-8 border-l-2 border-gray-100 dark:border-gray-600 pl-4" : ""
+          depth > 0
+            ? "ml-8 border-l-2 border-gray-100 dark:border-gray-600 pl-4"
+            : ""
         }`}
       >
         <div className="flex items-start gap-3">
@@ -623,35 +607,6 @@ export function CommentsReactions({
                   year: "numeric",
                 })}
               </span>
-              {/* Comment Menu - SIMPLIFIED WORKING VERSION */}
-              {userOwnsComment && (
-                <div className="relative" ref={menuRef}>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowMenu(!showMenu);
-                    }}
-                    className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                  >
-                    <MoreHorizontal className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  </button>
-
-                  {showMenu && (
-                    <div className="absolute right-2 top-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-xl z-10 w-32 overflow-hidden">
-                      <button
-                        onClick={() => {
-                          setEditingComment(comment.id);
-                          setShowMenu(false);
-                        }}
-                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                      >
-                        <Edit className="w-4 h-4" />
-                        Edit
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
 
             {/* Edit Form */}
@@ -666,9 +621,10 @@ export function CommentsReactions({
                 />
                 <div className="flex gap-2">
                   <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => updateComment(comment.id, localEditContent)}
-                    className="text-xs rounded-lg"
+                    className="text-xs rounded-lg dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                   >
                     Save Changes
                   </Button>
@@ -692,7 +648,7 @@ export function CommentsReactions({
             )}
 
             {/* Comment Actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
               {/* Reply button */}
               {isAuthenticated ? (
                 <button
@@ -712,6 +668,17 @@ export function CommentsReactions({
                 >
                   <Reply className="w-3 h-3" />
                   Reply
+                </button>
+              )}
+
+              {/* Edit Button - CLEAN VISIBLE BUTTON */}
+              {userOwnsComment && editingComment !== comment.id && (
+                <button
+                  onClick={() => setEditingComment(comment.id)}
+                  className="text-xs text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors flex items-center gap-1"
+                >
+                  <Edit className="w-3 h-3" />
+                  Edit
                 </button>
               )}
 
