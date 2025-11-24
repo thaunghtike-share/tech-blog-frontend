@@ -1,0 +1,185 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/app/auth/hooks/use-auth";
+import { MinimalHeader } from "@/components/minimal-header";
+import { MinimalFooter } from "@/components/minimal-footer";
+import StatsCards from "./components/stats-cards";
+import AuthorsList from "./components/authors-list";
+import RecentArticles from "./components/recent-articles";
+import ImpersonationBanner from "./components/inpersonation-banner";
+import { Crown, AlertTriangle, Loader } from "lucide-react";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
+interface PlatformStats {
+  total_authors: number;
+  total_articles: number;
+  total_comments: number;
+  total_views: number;
+}
+
+interface Author {
+  id: number;
+  name: string;
+  slug: string;
+  avatar: string;
+  articles_count: number;
+  featured: boolean;
+  job_title: string;
+  company: string;
+}
+
+interface Article {
+  id: number;
+  title: string;
+  slug: string;
+  published_at: string;
+  read_count: number;
+  author_name: string;
+  cover_image?: string;
+  excerpt?: string;
+}
+
+export default function SuperUserDashboard() {
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const [stats, setStats] = useState<PlatformStats | null>(null);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const isSuperUser = user?.is_super_user;
+
+  useEffect(() => {
+    if (!isAuthenticated || isLoading || !isSuperUser) return;
+
+    const fetchSuperData = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("token");
+
+        const [statsRes, authorsRes, articlesRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/super/stats/`, {
+            headers: { Authorization: `Token ${token}` }
+          }),
+          fetch(`${API_BASE_URL}/super/authors/`, {
+            headers: { Authorization: `Token ${token}` }
+          }),
+          fetch(`${API_BASE_URL}/super/articles/`, {
+            headers: { Authorization: `Token ${token}` }
+          })
+        ]);
+
+        if (!statsRes.ok || !authorsRes.ok || !articlesRes.ok) {
+          throw new Error("Failed to fetch super user data");
+        }
+
+        const [statsData, authorsData, articlesData] = await Promise.all([
+          statsRes.json(),
+          authorsRes.json(),
+          articlesRes.json()
+        ]);
+
+        setStats(statsData.platform_stats);
+        setAuthors(authorsData);
+        setArticles(articlesData);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSuperData();
+  }, [isAuthenticated, isLoading, isSuperUser]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A]">
+        <MinimalHeader />
+        <main className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <Loader className="w-8 h-8 animate-spin mx-auto mb-4 text-sky-600" />
+              <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+            </div>
+          </div>
+        </main>
+        <MinimalFooter />
+      </div>
+    );
+  }
+
+  if (!isSuperUser) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A]">
+        <MinimalHeader />
+        <main className="max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center py-20">
+            <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-8">
+              <AlertTriangle className="w-12 h-12 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
+              Access Denied
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+              Super user access required
+            </p>
+          </div>
+        </main>
+        <MinimalFooter />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden">
+      <MinimalHeader />
+      
+      <ImpersonationBanner />
+
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center">
+              <Crown className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-black dark:text-white">
+                Super User Dashboard
+              </h1>
+            </div>
+          </div>
+        </div>
+
+        {error && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mb-6">
+            <p className="text-red-700 dark:text-red-400">{error}</p>
+          </div>
+        )}
+
+        {loading ? (
+          <div className="flex items-center justify-center min-h-[400px]">
+            <Loader className="w-8 h-8 animate-spin text-sky-600" />
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Stats Cards */}
+            {stats && <StatsCards stats={stats} />}
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Authors List */}
+              <AuthorsList authors={authors} />
+
+              {/* Recent Articles */}
+              <RecentArticles articles={articles} />
+            </div>
+          </div>
+        )}
+      </main>
+
+      <MinimalFooter />
+    </div>
+  );
+}
