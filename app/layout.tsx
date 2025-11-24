@@ -13,6 +13,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// FIXED: Use absolute URLs for OG image
+const SITE_URL = 'https://www.learndevopsnow-mm.blog';
+
 export const metadata: Metadata = {
   title: {
     default: "Learn DevOps Now - Myanmar | Free DevOps Tutorials & Labs",
@@ -43,7 +46,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Learn DevOps Now - Myanmar" }],
   creator: "Learn DevOps Now - Myanmar",
   publisher: "Learn DevOps Now - Myanmar",
-  metadataBase: new URL("https://www.learndevopsnow-mm.blog"),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
   },
@@ -67,13 +70,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.learndevopsnow-mm.blog",
+    url: SITE_URL, // No trailing slash
     siteName: "Learn DevOps Now - Myanmar",
     title: "Learn DevOps Now - Myanmar | Free DevOps Tutorials & Labs",
     description: "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: `${SITE_URL}/og-image.jpg`, // FIXED: Absolute URL
         width: 1200,
         height: 630,
         alt: "Learn DevOps Now - Myanmar - Free DevOps Tutorials and Labs for Myanmar Developers",
@@ -84,7 +87,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Learn DevOps Now - Myanmar | Free DevOps Tutorials & Labs",
     description: "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students.",
-    images: ["/og-image.jpg"],
+    images: [`${SITE_URL}/og-image.jpg`], // FIXED: Absolute URL
     creator: "@learndevopsnowmm",
   },
 };
@@ -110,8 +113,8 @@ export default function RootLayout({
               "@type": "EducationalOrganization",
               "name": "Learn DevOps Now - Myanmar",
               "description": "Free DevOps tutorials, tools, and hands-on labs specifically for Myanmar developers and students",
-              "url": "https://www.learndevopsnow-mm.blog",
-              "logo": "https://www.learndevopsnow-mm.blog/logo.png",
+              "url": SITE_URL,
+              "logo": `${SITE_URL}/logo.png`,
               "sameAs": [],
               "contactPoint": {
                 "@type": "ContactPoint",

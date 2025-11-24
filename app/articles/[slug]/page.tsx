@@ -43,6 +43,10 @@ interface Category {
 const SITE_URL = 'https://www.learndevopsnow-mm.blog';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
+// Add this to force dynamic rendering and ensure generateMetadata runs
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 async function fetchJSON<T>(url: string): Promise<T[]> {
   try {
     const res = await fetch(url, { cache: 'no-store' });
@@ -187,7 +191,9 @@ export async function generateMetadata({
   const { slug } = await params;
 
   try {
-    const articleRes = await fetch(`${API_BASE_URL}/articles/${slug}/`);
+    const articleRes = await fetch(`${API_BASE_URL}/articles/${slug}/`, {
+      cache: 'no-store'
+    });
 
     if (!articleRes.ok) {
       return {
@@ -200,13 +206,36 @@ export async function generateMetadata({
     const cleanDescription =
       article.content
         ?.replace(/[#_*>\[\]()`]/g, '')
-        .slice(0, 150)
-        .trim() || 'Learn DevOps Now - Myanmar';
+        .replace(/\n/g, ' ')
+        .slice(0, 160)
+        .trim() + '...' || 'Learn DevOps Now - Myanmar';
 
-    let image = article.cover_image || '/og-image.jpg';
-    if (image && !image.startsWith('http')) {
-      image = `${SITE_URL}${image.startsWith('/') ? '' : '/'}${image}`;
+    // FIXED: Better image URL handling for GitHub raw URLs
+    let imageUrl = `${SITE_URL}/og-image.jpg`; // Default fallback
+    
+    if (article.cover_image) {
+      if (article.cover_image.startsWith('http')) {
+        // It's already a full URL (GitHub raw URL)
+        imageUrl = article.cover_image;
+        
+        // Ensure it's using https
+        if (imageUrl.startsWith('http://')) {
+          imageUrl = imageUrl.replace('http://', 'https://');
+        }
+      } else {
+        // It's a local path, make it absolute
+        imageUrl = `${SITE_URL}${article.cover_image.startsWith('/') ? '' : '/'}${article.cover_image}`;
+      }
     }
+
+    const articleUrl = `${SITE_URL}/articles/${slug}`;
+
+    // Debug logging
+    console.log('🔍 Article Metadata Debug:');
+    console.log('Title:', article.title);
+    console.log('Cover Image from DB:', article.cover_image);
+    console.log('Processed Image URL:', imageUrl);
+    console.log('Article URL:', articleUrl);
 
     return {
       title: `${article.title} | Learn DevOps Now - Myanmar`,
@@ -214,22 +243,33 @@ export async function generateMetadata({
       openGraph: {
         title: article.title,
         description: cleanDescription,
-        images: [image],
-        url: `${SITE_URL}/articles/${slug}`,
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: article.title,
+          }
+        ],
+        url: articleUrl, // CRITICAL: This must be the article URL, not site root
         type: 'article',
-        publishedTime: article.published_at
+        publishedTime: article.published_at,
+        siteName: 'Learn DevOps Now - Myanmar',
+        locale: 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
         title: article.title,
         description: cleanDescription,
-        images: [image]
+        images: [imageUrl],
+        creator: '@learndevopsnowmm',
       },
       alternates: {
-        canonical: `${SITE_URL}/articles/${slug}`
+        canonical: articleUrl
       }
     };
   } catch (error) {
+    console.error('Error generating metadata:', error);
     return {
       title: 'Learn DevOps Now - Myanmar',
       description: 'Learn DevOps Now - Myanmar Blog'
