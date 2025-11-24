@@ -4,9 +4,9 @@ import { useAuth } from "@/app/auth/hooks/use-auth";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
 import StatsCards from "./components/stats-cards";
-import AuthorsList from "./components/authors-list";
+import UserManagement from "./components/user-management";
 import RecentArticles from "./components/recent-articles";
-import ImpersonationBanner from "./components/inpersonation-banner";
+import ImpersonationBanner from "./components/impersonation-banner";
 import { Crown, AlertTriangle, Loader } from "lucide-react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
@@ -16,17 +16,6 @@ interface PlatformStats {
   total_articles: number;
   total_comments: number;
   total_views: number;
-}
-
-interface Author {
-  id: number;
-  name: string;
-  slug: string;
-  avatar: string;
-  articles_count: number;
-  featured: boolean;
-  job_title: string;
-  company: string;
 }
 
 interface Article {
@@ -43,7 +32,6 @@ interface Article {
 export default function SuperUserDashboard() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const [stats, setStats] = useState<PlatformStats | null>(null);
-  const [authors, setAuthors] = useState<Author[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,11 +46,8 @@ export default function SuperUserDashboard() {
         setLoading(true);
         const token = localStorage.getItem("token");
 
-        const [statsRes, authorsRes, articlesRes] = await Promise.all([
+        const [statsRes, articlesRes] = await Promise.all([
           fetch(`${API_BASE_URL}/super/stats/`, {
-            headers: { Authorization: `Token ${token}` }
-          }),
-          fetch(`${API_BASE_URL}/super/authors/`, {
             headers: { Authorization: `Token ${token}` }
           }),
           fetch(`${API_BASE_URL}/super/articles/`, {
@@ -70,18 +55,16 @@ export default function SuperUserDashboard() {
           })
         ]);
 
-        if (!statsRes.ok || !authorsRes.ok || !articlesRes.ok) {
+        if (!statsRes.ok || !articlesRes.ok) {
           throw new Error("Failed to fetch super user data");
         }
 
-        const [statsData, authorsData, articlesData] = await Promise.all([
+        const [statsData, articlesData] = await Promise.all([
           statsRes.json(),
-          authorsRes.json(),
           articlesRes.json()
         ]);
 
         setStats(statsData.platform_stats);
-        setAuthors(authorsData);
         setArticles(articlesData);
       } catch (err) {
         setError((err as Error).message);
@@ -169,8 +152,8 @@ export default function SuperUserDashboard() {
             {stats && <StatsCards stats={stats} />}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Authors List */}
-              <AuthorsList authors={authors} />
+              {/* Combined User Management */}
+              <UserManagement />
 
               {/* Recent Articles */}
               <RecentArticles articles={articles} />
