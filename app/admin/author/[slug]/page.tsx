@@ -114,7 +114,9 @@ function DeleteConfirmationModal({
             <AlertTriangle className="w-5 h-5 text-slate-600 dark:text-gray-300" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Delete Article</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+              Delete Article
+            </h3>
             <p className="text-slate-500 dark:text-gray-400 text-sm">
               This action cannot be undone
             </p>
@@ -196,12 +198,12 @@ export default function AuthorAdminDashboard() {
   // Check ban status
   const checkBanStatus = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) return;
 
       const endpoints = [
         `${API_BASE_URL}/ban-details/`,
-        `${API_BASE_URL}/api/ban-details/`
+        `${API_BASE_URL}/api/ban-details/`,
       ];
 
       let response = null;
@@ -225,7 +227,7 @@ export default function AuthorAdminDashboard() {
         }
       }
     } catch (error) {
-      console.error('Error checking ban status:', error);
+      console.error("Error checking ban status:", error);
     }
   };
 
@@ -505,7 +507,7 @@ export default function AuthorAdminDashboard() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
-      
+
       {/* Ban Notification */}
       <BanNotification />
 
@@ -630,13 +632,24 @@ export default function AuthorAdminDashboard() {
                         Account Banned
                       </h3>
                       <p className="text-red-700 dark:text-red-300 mb-3">
-                        {banDetails.reason || "Your account has been suspended due to violations of our community guidelines."}
+                        {banDetails.reason ||
+                          "Your account has been suspended due to violations of our community guidelines."}
                       </p>
                       <div className="text-sm text-red-600 dark:text-red-400 space-y-1">
-                        <p><strong>Banned on:</strong> {new Date(banDetails.banned_at).toLocaleDateString()}</p>
-                        <p><strong>Banned by:</strong> {banDetails.banned_by}</p>
+                        <p>
+                          <strong>Banned on:</strong>{" "}
+                          {new Date(banDetails.banned_at).toLocaleDateString()}
+                        </p>
+                        <p>
+                          <strong>Banned by:</strong> {banDetails.banned_by}
+                        </p>
                         {banDetails.is_temporary && banDetails.banned_until && (
-                          <p><strong>Ban expires:</strong> {new Date(banDetails.banned_until).toLocaleDateString()}</p>
+                          <p>
+                            <strong>Ban expires:</strong>{" "}
+                            {new Date(
+                              banDetails.banned_until
+                            ).toLocaleDateString()}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -676,7 +689,7 @@ export default function AuthorAdminDashboard() {
                     {author?.bio}
                   </p>
 
-                  {/* Action Buttons */}
+                  {/* Action Buttons - All Three Together */}
                   <div className="flex flex-wrap gap-4">
                     <ProtectedAction action="create new articles">
                       <motion.div
@@ -692,6 +705,7 @@ export default function AuthorAdminDashboard() {
                         </Link>
                       </motion.div>
                     </ProtectedAction>
+
                     <Link
                       href={`/authors/${author?.slug}`}
                       className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md"
@@ -699,6 +713,22 @@ export default function AuthorAdminDashboard() {
                       View Public Profile
                       <ArrowRight className="w-4 h-4" />
                     </Link>
+
+                    {/* Superuser Dashboard Button - Only for superusers */}
+                    {user?.is_super_user && (
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Link
+                          href="/admin/superuser"
+                          className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md border-2 border-purple-400/30"
+                        >
+                          <Crown className="w-5 h-5" />
+                          Superuser Dashboard
+                        </Link>
+                      </motion.div>
+                    )}
                   </div>
                 </div>
               </div>
