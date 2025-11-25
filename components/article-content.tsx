@@ -397,7 +397,7 @@ export function ArticleContent({
 
               ul: ({ children, ...props }) => (
                 <ul
-                  className="mb-6 list-disc space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base"
+                  className="mb-6 space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base list-disc marker:text-sky-600 dark:marker:text-sky-400"
                   {...props}
                 >
                   {children}
@@ -405,7 +405,7 @@ export function ArticleContent({
               ),
               ol: ({ children, ...props }) => (
                 <ol
-                  className="mb-6 list-decimal space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base"
+                  className="mb-6 space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base list-decimal marker:text-sky-600 dark:marker:text-sky-400 marker:font-semibold"
                   {...props}
                 >
                   {children}
@@ -413,7 +413,7 @@ export function ArticleContent({
               ),
               li: ({ children, ...props }) => (
                 <li
-                  className="mb-2 text-gray-700 dark:text-gray-300 leading-relaxed"
+                  className="mb-2 text-gray-700 dark:text-gray-300 leading-relaxed pl-2"
                   {...props}
                 >
                   {children}
