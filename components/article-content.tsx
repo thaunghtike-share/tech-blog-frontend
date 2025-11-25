@@ -183,7 +183,7 @@ export function ArticleContent({
 }: ArticleContentProps) {
   const articleUrl = typeof window !== "undefined" ? window.location.href : "";
   const [topReadArticles, setTopReadArticles] = useState<Article[]>([]);
-  
+
   const effectiveAuthor = author || {
     id: article.author,
     name: article.author_name,
@@ -195,7 +195,8 @@ export function ArticleContent({
     company: article.author_company,
   };
 
-  const authorSlug = effectiveAuthor?.slug || slugify(effectiveAuthor?.name || "unknown");
+  const authorSlug =
+    effectiveAuthor?.slug || slugify(effectiveAuthor?.name || "unknown");
 
   useEffect(() => {
     const incrementReadCount = async () => {
@@ -244,26 +245,15 @@ export function ArticleContent({
   const validHeadings = headings.filter(({ text, level }) => {
     const cleanText = text.trim();
 
-    const isCodeBlock =
-      cleanText.startsWith("```") ||
-      cleanText.includes("```bash") ||
-      cleanText.includes("```") ||
-      (cleanText.startsWith("#") &&
-        (cleanText.includes("လက်ရှိ") ||
-          cleanText.includes("User") ||
-          cleanText.includes("remote") ||
-          cleanText.includes("File") ||
-          cleanText.includes("Wget") ||
-          cleanText.includes("Example Output:"))) ||
-      cleanText.includes("whoami") ||
-      cleanText.includes("id") ||
-      cleanText.includes("su -") ||
-      cleanText.includes("curl") ||
-      cleanText.includes("wget") ||
-      cleanText.startsWith("echo $SHELL") ||
-      cleanText.match(/^[#`\s]*$/);
+    // Instead of blacklisting, look for legitimate heading patterns
+    const isValidHeading =
+      cleanText.length > 0 &&
+      level >= 1 &&
+      level <= 6 &&
+      !cleanText.startsWith("```") && // Basic code block exclusion
+      !cleanText.match(/^[#`\s]*$/); // Only special chars
 
-    return !isCodeBlock && cleanText.length > 0 && level >= 1 && level <= 6;
+    return isValidHeading;
   });
 
   return (
@@ -700,7 +690,8 @@ export function ArticleContent({
                         className="w-full h-full rounded-2xl object-cover border-4 border-white dark:border-gray-800"
                         loading="lazy"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/placeholder.svg";
+                          (e.target as HTMLImageElement).src =
+                            "/placeholder.svg";
                         }}
                       />
                     </div>
@@ -922,7 +913,8 @@ export function ArticleContent({
                           alt={author.name}
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/placeholder.svg";
+                            (e.target as HTMLImageElement).src =
+                              "/placeholder.svg";
                           }}
                         />
                       </div>
