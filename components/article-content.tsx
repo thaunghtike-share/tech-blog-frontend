@@ -19,6 +19,7 @@ import {
   ChevronRight,
   Container,
   GitBranch,
+  PlusCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { CommentsReactions } from "./comment-reactions";
@@ -828,7 +829,7 @@ export function ArticleContent({
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <FileText className="w-4 h-4 text-white" />
+                <PlusCircle className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-black dark:text-white">
                 Recent Articles
