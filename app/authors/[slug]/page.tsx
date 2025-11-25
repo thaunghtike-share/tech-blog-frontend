@@ -25,6 +25,10 @@ import {
   Zap,
   Target,
   Sparkles,
+  MessageSquare, // ADDED: For comments
+  Heart, // ADDED: For reactions
+  ThumbsUp, // ADDED: For reactions
+  Lightbulb, // ADDED: For reactions
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -51,6 +55,13 @@ interface Article {
     name: string;
     slug: string;
   }[];
+  comment_count?: number; // ADDED
+  reactions_summary?: { // ADDED
+    like?: number;
+    love?: number;
+    celebrate?: number;
+    insightful?: number;
+  };
 }
 
 interface Author {
@@ -82,7 +93,70 @@ export default function AuthorDetailPage() {
         const data = await res.json();
 
         if (data.articles) {
-          data.articles = data.articles.sort(
+          // 🔥 ENHANCED: Fetch comments and reactions for each article
+          const articlesWithEngagement = await Promise.all(
+            data.articles.map(async (article: Article) => {
+              try {
+                // Fetch comments
+                const commentsRes = await fetch(
+                  `${API_BASE_URL}/articles/${article.slug}/comments/`
+                );
+                
+                // Fetch reactions
+                const reactionsRes = await fetch(
+                  `${API_BASE_URL}/articles/${article.slug}/reactions/`
+                );
+
+                let comment_count = 0;
+                let reactions_summary = {
+                  like: 0,
+                  love: 0,
+                  celebrate: 0,
+                  insightful: 0
+                };
+
+                if (commentsRes.ok) {
+                  const commentsData = await commentsRes.json();
+                  // Count all comments (including replies)
+                  comment_count = commentsData.reduce((total: number, comment: any) => {
+                    return total + 1 + (comment.replies?.length || 0);
+                  }, 0);
+                }
+
+                if (reactionsRes.ok) {
+                  const reactionsData = await reactionsRes.json();
+                  reactions_summary = {
+                    like: reactionsData.summary?.like || 0,
+                    love: reactionsData.summary?.love || 0,
+                    celebrate: reactionsData.summary?.celebrate || 0,
+                    insightful: reactionsData.summary?.insightful || 0
+                  };
+                }
+                
+                return {
+                  ...article,
+                  comment_count,
+                  reactions_summary,
+                };
+              } catch (error) {
+                console.error(`Failed to fetch engagement for article ${article.slug}:`, error);
+              }
+              
+              // Fallback if fetch fails
+              return {
+                ...article,
+                comment_count: 0,
+                reactions_summary: {
+                  like: 0,
+                  love: 0,
+                  celebrate: 0,
+                  insightful: 0
+                },
+              };
+            })
+          );
+
+          data.articles = articlesWithEngagement.sort(
             (a: Article, b: Article) =>
               new Date(b.published_at).getTime() -
               new Date(a.published_at).getTime()
@@ -108,6 +182,18 @@ export default function AuthorDetailPage() {
     ) || 0;
   const avgViews =
     totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
+
+  // 🔥 NEW: Calculate total comments and reactions
+  const totalComments = author?.articles?.reduce(
+    (sum, article) => sum + (article.comment_count || 0),
+    0
+  ) || 0;
+
+  const totalReactions = author?.articles?.reduce((sum, article) => {
+    const reactions = article.reactions_summary || {};
+    return sum + (reactions.like || 0) + (reactions.love || 0) + 
+           (reactions.celebrate || 0) + (reactions.insightful || 0);
+  }, 0);
 
   // Calculate average read time across all articles
   const calculateReadTime = (content?: string) => {
@@ -326,6 +412,7 @@ export default function AuthorDetailPage() {
           </div>
 
           {/* Stats - Enhanced Positioning */}
+          {/* 🔥 UPDATED: Replaced Avg Views with Comments & Reactions */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
             <div className="space-y-3">
               <div className="text-5xl font-light text-black dark:text-white">
@@ -343,18 +430,21 @@ export default function AuthorDetailPage() {
                 Total Views
               </div>
             </div>
+            {/* 🔥 REPLACED: Avg Views with Comments */}
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black dark:text-white">{avgViews}</div>
-              <div className="text-sm text-purple-600 dark:text-purple-400 font-semibold uppercase tracking-wider">
-                Avg Views
+              <div className="text-5xl font-light text-black dark:text-white">
+                {totalComments}
+              </div>
+              <div className="text-sm text-pink-600 dark:text-pink-400 font-semibold uppercase tracking-wider">
+                Total Comments
               </div>
             </div>
             <div className="space-y-3">
               <div className="text-5xl font-light text-black dark:text-white">
-                {avgReadTime}m
+                {totalReactions}
               </div>
-              <div className="text-sm text-orange-600 dark:text-orange-400 font-semibold uppercase tracking-wider">
-                Read Time
+              <div className="text-sm text-amber-600 dark:text-amber-400 font-semibold uppercase tracking-wider">
+                Total Reactions
               </div>
             </div>
           </div>
@@ -375,7 +465,9 @@ export default function AuthorDetailPage() {
                 </h2>
                 <p className="text-slate-600 dark:text-gray-400 font-medium">
                   {totalArticles} articles published •{" "}
-                  {totalViews.toLocaleString()} total reads
+                  {totalViews.toLocaleString()} total reads •{" "}
+                  {totalComments} total comments •{" "}
+                  {totalReactions} total reactions
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -409,6 +501,7 @@ export default function AuthorDetailPage() {
 
                   const coverImage = getCoverImage(article);
                   const readTime = calculateReadTime(article.content);
+                  const reactions = article.reactions_summary || {};
 
                   return (
                     <motion.div
@@ -466,6 +559,11 @@ export default function AuthorDetailPage() {
                               <Eye className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                               {article.read_count?.toLocaleString()} views
                             </span>
+                            {/* 🔥 NEW: Comment count */}
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <MessageSquare className="w-4 h-4 text-pink-600 dark:text-pink-400" />
+                              {article.comment_count || 0} comments
+                            </span>
                           </div>
 
                           <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
@@ -473,6 +571,34 @@ export default function AuthorDetailPage() {
                               {article.title}
                             </Link>
                           </h3>
+
+                          {/* 🔥 NEW: Reactions for each article */}
+                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                            {(reactions.like ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium">
+                                <ThumbsUp className="w-4 h-4" />
+                                {reactions.like}
+                              </span>
+                            )}
+                            {(reactions.love ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-red-500 dark:text-red-400 font-medium">
+                                <Heart className="w-4 h-4" />
+                                {reactions.love}
+                              </span>
+                            )}
+                            {(reactions.celebrate ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+                                <Sparkles className="w-4 h-4" />
+                                {reactions.celebrate}
+                              </span>
+                            )}
+                            {(reactions.insightful ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-green-600 dark:text-green-400 font-medium">
+                                <Lightbulb className="w-4 h-4" />
+                                {reactions.insightful}
+                              </span>
+                            )}
+                          </div>
 
                           {article.excerpt && (
                             <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">

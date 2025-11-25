@@ -21,6 +21,11 @@ import {
   Clock,
   BookOpen,
   FileText,
+  MessageSquare,
+  Heart,
+  ThumbsUp,
+  Sparkles,
+  Lightbulb, // ADDED: For reactions icons
 } from "lucide-react";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
@@ -46,6 +51,14 @@ interface Article {
   author: number;
   read_count?: number;
   cover_image?: string;
+  comment_count?: number;
+  reactions_summary?: {
+    // ADDED: For reactions
+    like?: number;
+    love?: number;
+    celebrate?: number;
+    insightful?: number;
+  };
 }
 
 interface Author {
@@ -160,13 +173,78 @@ export default function CategoryPageClient({ slug }: Props) {
           ? articlesData
           : articlesData.results || [];
 
-        // Add read time to articles
-        const articlesWithReadTime = articlesList.map((article: Article) => ({
-          ...article,
-          read_time: calculateReadTime(article.content),
-        }));
+        // 🔥 ENHANCED: Fetch comment counts AND reactions for each article
+        const articlesWithEngagement = await Promise.all(
+          articlesList.map(async (article: Article) => {
+            try {
+              // Fetch comments
+              const commentsRes = await fetch(
+                `${API_BASE_URL}/articles/${article.slug}/comments/`
+              );
 
-        setArticles(articlesWithReadTime);
+              // 🔥 NEW: Fetch reactions
+              const reactionsRes = await fetch(
+                `${API_BASE_URL}/articles/${article.slug}/reactions/`
+              );
+
+              let comment_count = 0;
+              let reactions_summary = {
+                like: 0,
+                love: 0,
+                celebrate: 0,
+                insightful: 0,
+              };
+
+              if (commentsRes.ok) {
+                const commentsData = await commentsRes.json();
+                // Count all comments (including replies)
+                comment_count = commentsData.reduce(
+                  (total: number, comment: any) => {
+                    return total + 1 + (comment.replies?.length || 0);
+                  },
+                  0
+                );
+              }
+
+              if (reactionsRes.ok) {
+                const reactionsData = await reactionsRes.json();
+                reactions_summary = {
+                  like: reactionsData.summary?.like || 0,
+                  love: reactionsData.summary?.love || 0,
+                  celebrate: reactionsData.summary?.celebrate || 0,
+                  insightful: reactionsData.summary?.insightful || 0,
+                };
+              }
+
+              return {
+                ...article,
+                comment_count,
+                reactions_summary,
+                read_time: calculateReadTime(article.content),
+              };
+            } catch (error) {
+              console.error(
+                `Failed to fetch engagement for article ${article.slug}:`,
+                error
+              );
+            }
+
+            // Fallback if fetch fails
+            return {
+              ...article,
+              comment_count: 0,
+              reactions_summary: {
+                like: 0,
+                love: 0,
+                celebrate: 0,
+                insightful: 0,
+              },
+              read_time: calculateReadTime(article.content),
+            };
+          })
+        );
+
+        setArticles(articlesWithEngagement);
 
         // Fetch authors
         const authorsRes = await fetch(`${API_BASE_URL}/authors/`);
@@ -261,6 +339,24 @@ export default function CategoryPageClient({ slug }: Props) {
   const avgViews =
     totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
 
+  // Calculate total comments
+  const totalComments = articles.reduce(
+    (sum, article) => sum + (article.comment_count || 0),
+    0
+  );
+
+  // 🔥 NEW: Calculate total reactions
+  const totalReactions = articles.reduce((sum, article) => {
+    const reactions = article.reactions_summary || {};
+    return (
+      sum +
+      (reactions.like || 0) +
+      (reactions.love || 0) +
+      (reactions.celebrate || 0) +
+      (reactions.insightful || 0)
+    );
+  }, 0);
+
   // Get unique authors in this category
   const uniqueAuthors = new Set(articles.map((article) => article.author));
   const totalAuthors = uniqueAuthors.size;
@@ -292,7 +388,9 @@ export default function CategoryPageClient({ slug }: Props) {
             <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
               Category Not Found
             </h1>
-            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">{error}</p>
+            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">
+              {error}
+            </p>
             <Link
               href="/categories"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 shadow-lg"
@@ -410,9 +508,10 @@ export default function CategoryPageClient({ slug }: Props) {
           </div>
 
           {/* Stats - Premium Design */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
+          {/* 🔥 UPDATED: Added comments AND reactions stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-6 gap-8 max-w-6xl mx-auto text-center py-12">
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black dark:text-white">
+              <div className="text-4xl font-light text-black dark:text-white">
                 {totalArticles}
               </div>
               <div className="text-sm text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider">
@@ -420,7 +519,7 @@ export default function CategoryPageClient({ slug }: Props) {
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black dark:text-white">
+              <div className="text-4xl font-light text-black dark:text-white">
                 {totalViews.toLocaleString()}
               </div>
               <div className="text-sm text-green-600 dark:text-green-400 font-semibold uppercase tracking-wider">
@@ -428,17 +527,29 @@ export default function CategoryPageClient({ slug }: Props) {
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-5xl font-light text-black dark:text-white">{avgViews}</div>
-              <div className="text-sm text-purple-600 dark:text-purple-400 font-semibold uppercase tracking-wider">
-                Avg Views
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="text-5xl font-light text-black dark:text-white">
+              <div className="text-4xl font-light text-black dark:text-white">
                 {avgReadTime}m
               </div>
               <div className="text-sm text-orange-600 dark:text-orange-400 font-semibold uppercase tracking-wider">
                 Avg Read Time
+              </div>
+            </div>
+            {/* Comments Stat */}
+            <div className="space-y-3">
+              <div className="text-4xl font-light text-black dark:text-white">
+                {totalComments}
+              </div>
+              <div className="text-sm text-pink-600 dark:text-pink-400 font-semibold uppercase tracking-wider">
+                Total Comments
+              </div>
+            </div>
+            {/* 🔥 NEW: Reactions Stat */}
+            <div className="space-y-3">
+              <div className="text-4xl font-light text-black dark:text-white">
+                {totalReactions}
+              </div>
+              <div className="text-sm text-amber-600 dark:text-amber-400 font-semibold uppercase tracking-wider">
+                Total Reactions
               </div>
             </div>
           </div>
@@ -459,7 +570,9 @@ export default function CategoryPageClient({ slug }: Props) {
                 </h2>
                 <p className="text-slate-600 dark:text-gray-400 font-medium">
                   {totalArticles} articles published •{" "}
-                  {totalViews.toLocaleString()} total reads
+                  {totalViews.toLocaleString()} total reads • {totalComments}{" "}
+                  total comments • {totalReactions} total reactions{" "}
+                  {/* 🔥 ADDED: Reactions count */}
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -496,6 +609,7 @@ export default function CategoryPageClient({ slug }: Props) {
                   const author = getAuthor(article.author);
                   const coverImage = getCoverImage(article);
                   const readTime = calculateReadTime(article.content);
+                  const reactions = article.reactions_summary || {};
 
                   return (
                     <motion.div
@@ -559,6 +673,11 @@ export default function CategoryPageClient({ slug }: Props) {
                               {article.read_count?.toLocaleString() || "0"}{" "}
                               views
                             </span>
+                            {/* Comment count for each article */}
+                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
+                              <MessageSquare className="w-4 h-4 text-pink-600 dark:text-pink-400" />
+                              {article.comment_count || 0} comments
+                            </span>
                           </div>
 
                           <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
@@ -566,6 +685,46 @@ export default function CategoryPageClient({ slug }: Props) {
                               {article.title}
                             </Link>
                           </h3>
+                          {/* 🔥 NEW: Reactions for each article */}
+                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                            {(reactions.like ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium">
+                                <ThumbsUp className="w-4 h-4" />
+                                {reactions.like}
+                              </span>
+                            )}
+                            {(reactions.love ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-red-500 dark:text-red-400 font-medium">
+                                <Heart className="w-4 h-4" />
+                                {reactions.love}
+                              </span>
+                            )}
+                            {(reactions.celebrate ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+                                <Sparkles className="w-4 h-4" />
+                                {reactions.celebrate}
+                              </span>
+                            )}
+                            {(reactions.insightful ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 text-sm text-green-600 dark:text-green-400 font-medium">
+                                <Lightbulb className="w-4 h-4" />
+                                {reactions.insightful}
+                              </span>
+                            )}
+                            {/* Show total reactions if there are any */}
+                            {Object.values(reactions).some(
+                              (count) => count > 0
+                            ) && (
+                              <span className="inline-flex items-center gap-1 text-sm text-amber-600 dark:text-amber-400 font-medium">
+                                Total:{" "}
+                                {Object.values(reactions).reduce(
+                                  (a, b) => a + b,
+                                  0
+                                )}{" "}
+                                reactions
+                              </span>
+                            )}
+                          </div>
 
                           {/* Article Excerpt/Content Preview */}
                           <div className="mb-4">
