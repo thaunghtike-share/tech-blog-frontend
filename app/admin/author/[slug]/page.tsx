@@ -30,8 +30,12 @@ import {
   Zap,
   Target,
   BookOpen,
+  ShieldOff,
+  Ban,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import BanNotification from "@/components/BanNotification";
+import ProtectedAction from "@/components/ProtectedAction";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -66,6 +70,21 @@ interface Author {
   company: string;
   linkedin?: string;
   articles: Article[];
+  is_banned?: boolean;
+}
+
+interface BanStatus {
+  is_banned: boolean;
+  banned_reason?: string;
+}
+
+interface BanDetails {
+  is_banned: boolean;
+  reason: string;
+  banned_at: string;
+  banned_by: string;
+  banned_until?: string;
+  is_temporary: boolean;
 }
 
 function DeleteConfirmationModal({
@@ -152,6 +171,7 @@ export default function AuthorAdminDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [banDetails, setBanDetails] = useState<BanDetails | null>(null);
   const articlesPerPage = 8;
 
   // Delete confirmation modal state
@@ -171,6 +191,42 @@ export default function AuthorAdminDashboard() {
     const wordsPerMinute = 200;
     const words = content.split(/\s+/).length;
     return Math.max(1, Math.ceil(words / wordsPerMinute));
+  };
+
+  // Check ban status
+  const checkBanStatus = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const endpoints = [
+        `${API_BASE_URL}/ban-details/`,
+        `${API_BASE_URL}/api/ban-details/`
+      ];
+
+      let response = null;
+      for (const endpoint of endpoints) {
+        try {
+          response = await fetch(endpoint, {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          });
+          if (response.ok) break;
+        } catch (error) {
+          console.warn(`Failed to fetch from ${endpoint}:`, error);
+        }
+      }
+
+      if (response && response.ok) {
+        const data: BanDetails = await response.json();
+        if (data.is_banned) {
+          setBanDetails(data);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking ban status:', error);
+    }
   };
 
   // 🔐 AUTHENTICATION CHECK - Show modal if not authenticated
@@ -241,6 +297,9 @@ export default function AuthorAdminDashboard() {
           ...data,
           articles: articlesWithReadTime,
         });
+
+        // Check ban status after loading author data
+        await checkBanStatus();
       } catch (err) {
         console.error("Error fetching author data:", err);
         setError((err as Error).message);
@@ -446,6 +505,9 @@ export default function AuthorAdminDashboard() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
+      
+      {/* Ban Notification */}
+      <BanNotification />
 
       {/* Login Modal Overlay */}
       {showLoginModal && (
@@ -556,6 +618,32 @@ export default function AuthorAdminDashboard() {
                 </h1>
               </div>
 
+              {/* Ban Warning Banner */}
+              {banDetails && (
+                <div className="mb-8 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <Ban className="w-6 h-6 text-red-600 dark:text-red-400 mt-1" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">
+                        Account Banned
+                      </h3>
+                      <p className="text-red-700 dark:text-red-300 mb-3">
+                        {banDetails.reason || "Your account has been suspended due to violations of our community guidelines."}
+                      </p>
+                      <div className="text-sm text-red-600 dark:text-red-400 space-y-1">
+                        <p><strong>Banned on:</strong> {new Date(banDetails.banned_at).toLocaleDateString()}</p>
+                        <p><strong>Banned by:</strong> {banDetails.banned_by}</p>
+                        {banDetails.is_temporary && banDetails.banned_until && (
+                          <p><strong>Ban expires:</strong> {new Date(banDetails.banned_until).toLocaleDateString()}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Author Profile */}
               <div className="flex flex-col lg:flex-row items-start gap-12 mb-16">
                 {/* Avatar Section */}
@@ -590,18 +678,20 @@ export default function AuthorAdminDashboard() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-4">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Link
-                        href="/admin/new-article"
-                        className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg"
+                    <ProtectedAction action="create new articles">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                       >
-                        <Plus className="w-5 h-5" />
-                        Write New Article
-                      </Link>
-                    </motion.div>
+                        <Link
+                          href="/admin/new-article"
+                          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg"
+                        >
+                          <Plus className="w-5 h-5" />
+                          Write New Article
+                        </Link>
+                      </motion.div>
+                    </ProtectedAction>
                     <Link
                       href={`/authors/${author?.slug}`}
                       className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md"
@@ -687,13 +777,15 @@ export default function AuthorAdminDashboard() {
                   <p className="text-slate-600 dark:text-gray-400 mb-8 text-lg font-medium max-w-md mx-auto">
                     Create your first article and start building your audience.
                   </p>
-                  <Link
-                    href="/admin/new-article"
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 shadow-lg"
-                  >
-                    <Plus className="w-5 h-5" />
-                    Create Your First Article
-                  </Link>
+                  <ProtectedAction action="create new articles">
+                    <Link
+                      href="/admin/new-article"
+                      className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 shadow-lg"
+                    >
+                      <Plus className="w-5 h-5" />
+                      Create Your First Article
+                    </Link>
+                  </ProtectedAction>
                 </div>
               ) : (
                 <>
@@ -792,20 +884,24 @@ export default function AuthorAdminDashboard() {
                                 <Eye className="w-4 h-4" />
                                 View
                               </Link>
-                              <Link
-                                href={`/admin/edit-article/${article.slug}`}
-                                className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
-                              >
-                                <Edit className="w-4 h-4" />
-                                Edit
-                              </Link>
-                              <button
-                                onClick={() => openDeleteModal(article)}
-                                className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                                Delete
-                              </button>
+                              <ProtectedAction action="edit articles">
+                                <Link
+                                  href={`/admin/edit-article/${article.slug}`}
+                                  className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
+                                >
+                                  <Edit className="w-4 h-4" />
+                                  Edit
+                                </Link>
+                              </ProtectedAction>
+                              <ProtectedAction action="delete articles">
+                                <button
+                                  onClick={() => openDeleteModal(article)}
+                                  className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                  Delete
+                                </button>
+                              </ProtectedAction>
                             </div>
                           </div>
                         </motion.div>

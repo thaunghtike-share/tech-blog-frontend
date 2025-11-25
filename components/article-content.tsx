@@ -65,6 +65,12 @@ interface Article {
   author_name?: string;
   category_name?: string;
   read_count?: number;
+  author_slug?: string;
+  author_avatar?: string;
+  author_bio?: string;
+  author_linkedin?: string;
+  author_job_title?: string;
+  author_company?: string;
 }
 
 interface Author {
@@ -176,7 +182,19 @@ export function ArticleContent({
 }: ArticleContentProps) {
   const articleUrl = typeof window !== "undefined" ? window.location.href : "";
   const [topReadArticles, setTopReadArticles] = useState<Article[]>([]);
-  const authorSlug = author?.slug || slugify(author?.name || "unknown");
+  
+  const effectiveAuthor = author || {
+    id: article.author,
+    name: article.author_name,
+    slug: article.author_slug,
+    avatar: article.author_avatar,
+    bio: article.author_bio,
+    linkedin: article.author_linkedin,
+    job_title: article.author_job_title,
+    company: article.author_company,
+  };
+
+  const authorSlug = effectiveAuthor?.slug || slugify(effectiveAuthor?.name || "unknown");
 
   useEffect(() => {
     const incrementReadCount = async () => {
@@ -222,11 +240,9 @@ export function ArticleContent({
     return fixedContent;
   }
 
-  // Enhanced filtering for TOC - exclude code blocks and comments
   const validHeadings = headings.filter(({ text, level }) => {
     const cleanText = text.trim();
 
-    // Exclude code blocks and bash comments
     const isCodeBlock =
       cleanText.startsWith("```") ||
       cleanText.includes("```bash") ||
@@ -245,18 +261,15 @@ export function ArticleContent({
       cleanText.includes("curl") ||
       cleanText.includes("wget") ||
       cleanText.startsWith("echo $SHELL") ||
-      cleanText.match(/^[#`\s]*$/); // Empty or only special chars
+      cleanText.match(/^[#`\s]*$/);
 
     return !isCodeBlock && cleanText.length > 0 && level >= 1 && level <= 6;
   });
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-      {/* Main Article Content */}
       <article className="lg:col-span-3 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
-        {/* Article Header */}
         <div className="mb-10 md:mb-12">
-          {/* Meta Information */}
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <Link href={`/categories/${slugify(categoryName)}`}>
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all duration-300 hover:scale-105">
@@ -287,12 +300,10 @@ export function ArticleContent({
             </div>
           </div>
 
-          {/* Title */}
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black dark:text-white mb-6 leading-tight tracking-tight">
             {article.title}
           </h1>
 
-          {/* Tags */}
           {tagNames.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               {tagNames.map((tag, index) => (
@@ -309,7 +320,6 @@ export function ArticleContent({
           )}
         </div>
 
-        {/* Cover Image */}
         {article.cover_image && (
           <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-xl hover:shadow-2xl transition-all duration-500">
             <img
@@ -320,13 +330,11 @@ export function ArticleContent({
           </div>
         )}
 
-        {/* Article Content */}
         <div className="prose prose-lg max-w-none dark:prose-invert">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
-              // Headers
               h1: ({ children, ...props }) => {
                 const id = slugify(flattenChildren(children));
                 return (
@@ -376,7 +384,6 @@ export function ArticleContent({
                 );
               },
 
-              // Paragraph
               p: ({ children, ...props }) => (
                 <p
                   className="mb-6 text-base leading-relaxed text-gray-700 dark:text-gray-300"
@@ -386,7 +393,6 @@ export function ArticleContent({
                 </p>
               ),
 
-              // Links
               a: ({ href, children, ...props }) => (
                 <a
                   href={href}
@@ -399,7 +405,6 @@ export function ArticleContent({
                 </a>
               ),
 
-              // Lists
               ul: ({ children, ...props }) => (
                 <ul
                   className="mb-6 list-disc space-y-3 pl-6 text-gray-700 dark:text-gray-300 text-base"
@@ -440,7 +445,6 @@ export function ArticleContent({
                 const match = /language-(\w+)/.exec(className || "");
                 const language = match?.[1]?.toLowerCase() || "";
 
-                // Enhanced code string extraction
                 const extractCodeString = (children: any): string => {
                   if (typeof children === "string") return children;
                   if (Array.isArray(children)) {
@@ -460,7 +464,6 @@ export function ArticleContent({
                 );
                 const lines = codeString.split("\n");
 
-                // Language-specific configurations
                 const isShellLike = ["bash", "shell", "sh", "zsh"].includes(
                   language
                 );
@@ -475,13 +478,11 @@ export function ArticleContent({
                 const isYaml = ["yaml", "yml"].includes(language);
                 const isConfig = ["toml", "json", "config"].includes(language);
 
-                // Check for shell prompt in first line
                 const startsWithDollar =
                   isShellLike && lines[0]?.trim().match(/^(\$|#|>)/);
                 const promptChar =
                   lines[0]?.trim().match(/^(\$|#|>)/)?.[1] || "$";
 
-                // Show copy button for all supported languages
                 const showCopyButton = [
                   "bash",
                   "shell",
@@ -508,7 +509,6 @@ export function ArticleContent({
                   "rust",
                 ].includes(language);
 
-                // Get language display name
                 const getLanguageName = (lang: string): string => {
                   const langMap: { [key: string]: string } = {
                     js: "JavaScript",
@@ -577,7 +577,6 @@ export function ArticleContent({
                 );
               },
 
-              // Replace the entire blockquote component with this:
               blockquote: ({ children, ...props }) => (
                 <blockquote
                   className="border-l-4 border-sky-500 dark:border-sky-400 pl-6 pr-4 py-4 italic text-gray-700 dark:text-gray-300 my-6 text-sm md:text-base bg-gradient-to-r from-sky-50 dark:from-sky-900/20 to-blue-50 dark:to-blue-900/20 rounded-r-2xl shadow-sm"
@@ -587,7 +586,6 @@ export function ArticleContent({
                 </blockquote>
               ),
 
-              // Emphasis
               em: ({ children, ...props }) => (
                 <em
                   className="italic text-gray-800 dark:text-gray-200"
@@ -597,7 +595,6 @@ export function ArticleContent({
                 </em>
               ),
 
-              // Strong
               strong: ({ children, ...props }) => (
                 <strong
                   className="font-semibold text-gray-900 dark:text-white"
@@ -607,7 +604,6 @@ export function ArticleContent({
                 </strong>
               ),
 
-              // Tables
               table: ({ children, ...props }) => (
                 <div className="overflow-x-auto my-8 rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm">
                   <table
@@ -656,7 +652,6 @@ export function ArticleContent({
                 </td>
               ),
 
-              // Horizontal rule
               hr: ({ ...props }) => (
                 <hr
                   className="my-8 border-gray-300 dark:border-gray-600"
@@ -664,7 +659,6 @@ export function ArticleContent({
                 />
               ),
 
-              // Images
               img: ({ ...props }) => (
                 <img
                   {...props}
@@ -678,18 +672,16 @@ export function ArticleContent({
           </ReactMarkdown>
         </div>
 
-        {/* Comments & Reactions */}
         <div className="mt-12">
           <CommentsReactions
             articleSlug={article.slug}
             currentUser={{
               isAuthenticated: true,
-              authorSlug: author?.slug,
+              authorSlug: effectiveAuthor?.slug,
             }}
           />
         </div>
 
-        {/* Updated Author Section */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -698,27 +690,25 @@ export function ArticleContent({
         >
           <div className="bg-gradient-to-br from-white dark:from-gray-800 to-slate-50 dark:to-gray-900 rounded-3xl border border-slate-200 dark:border-gray-700 p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
-              {/* Author Avatar Container */}
               <div className="group relative">
                 <Link href={`/authors/${authorSlug}`} className="block">
                   <div className="relative">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1.5 shadow-2xl group-hover:scale-105 transition-transform duration-300">
                       <img
-                        src={author?.avatar || "/placeholder.svg"}
-                        alt={author?.name || "Author"}
+                        src={effectiveAuthor?.avatar || "/placeholder.svg"}
+                        alt={effectiveAuthor?.name || "Author"}
                         className="w-full h-full rounded-2xl object-cover border-4 border-white dark:border-gray-800"
                         loading="lazy"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            "/placeholder.svg";
+                          (e.target as HTMLImageElement).src = "/placeholder.svg";
                         }}
                       />
                     </div>
                   </div>
                 </Link>
-                {author?.linkedin && (
+                {effectiveAuthor?.linkedin && (
                   <a
-                    href={author.linkedin}
+                    href={effectiveAuthor.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2.5 rounded-xl shadow-2xl transition-all duration-300 hover:scale-110"
@@ -728,14 +718,13 @@ export function ArticleContent({
                 )}
               </div>
 
-              {/* Author Info */}
               <div className="flex-1 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-5 py-2.5 rounded-2xl text-sm font-semibold mb-3 shadow-lg">
                   <Crown className="w-4 h-4" />
                   Author
                 </div>
 
-                <h3 className="font-bold text-slate-900 dark:text-white leading-tight mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-300">
+                <h3 className="font-bold text-slate-900 dark:text-white leading-tight mb-2">
                   Written By
                 </h3>
 
@@ -743,16 +732,15 @@ export function ArticleContent({
                   href={`/authors/${authorSlug}`}
                   className="group block mb-3"
                 >
-                  <p className="text-xl text-sky-700 dark:text-sky-400 font-semibold mb-4">
-                    {author?.name}
+                  <p className="text-xl text-sky-700 dark:text-sky-400 font-semibold mb-4 group-hover:text-sky-800 dark:group-hover:text-sky-300 transition-colors">
+                    {effectiveAuthor?.name || "Unknown Author"}
                   </p>
                 </Link>
 
                 <p className="text-slate-700 dark:text-gray-300 leading-relaxed mb-6 max-w-2xl text-base">
-                  {author?.bio}
+                  {effectiveAuthor?.bio || "No bio available."}
                 </p>
 
-                {/* View Profile Button */}
                 <Link href={`/authors/${authorSlug}`}>
                   <Button className="group bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                     View Author Profile
@@ -764,7 +752,6 @@ export function ArticleContent({
           </div>
         </motion.section>
 
-        {/* Navigation */}
         <div className="mt-12 flex items-center justify-between gap-4">
           {prevArticle && (
             <Link
@@ -806,9 +793,7 @@ export function ArticleContent({
         </div>
       </article>
 
-      {/* Sidebar */}
       <aside className="lg:col-span-1 space-y-6">
-        {/* Table of Contents */}
         <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
@@ -839,7 +824,6 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Recent Articles */}
         <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
@@ -863,7 +847,6 @@ export function ArticleContent({
                     className="block group"
                   >
                     <div className="bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-600 shadow-sm hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600 transition-all duration-300">
-                      {/* Cover Image */}
                       <div className="mb-3 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600 shadow-sm">
                         <img
                           src={coverImage}
@@ -872,7 +855,6 @@ export function ArticleContent({
                         />
                       </div>
 
-                      {/* Content */}
                       <div className="space-y-2">
                         <h4 className="font-semibold text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2 text-sm leading-tight">
                           {article.title}
@@ -913,7 +895,6 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Featured Authors */}
         <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
@@ -935,20 +916,17 @@ export function ArticleContent({
                     className="block group"
                   >
                     <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 dark:hover:bg-gray-800 transition-all duration-300">
-                      {/* Author Avatar */}
                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white dark:border-gray-800 shadow-sm flex-shrink-0">
                         <img
                           src={author.avatar || "/placeholder.svg"}
                           alt={author.name}
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src =
-                              "/placeholder.svg";
+                            (e.target as HTMLImageElement).src = "/placeholder.svg";
                           }}
                         />
                       </div>
 
-                      {/* Author Info */}
                       <div className="flex-1 min-w-0">
                         <h4 className="font-semibold text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-1 text-base">
                           {author.name}
@@ -964,7 +942,6 @@ export function ArticleContent({
           </CardContent>
         </Card>
 
-        {/* Popular Articles */}
         <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
