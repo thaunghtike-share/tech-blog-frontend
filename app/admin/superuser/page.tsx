@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/app/auth/hooks/use-auth";
 import { MinimalHeader } from "@/components/minimal-header";
 import { MinimalFooter } from "@/components/minimal-footer";
-import StatsCards from "./components/stats-cards";
 import UserManagement from "./components/user-management";
-import RecentArticles from "./components/recent-articles";
+import ArticleManagement from "./components/article-management";
 import ImpersonationBanner from "./components/impersonation-banner";
 import { Crown, AlertTriangle, Loader } from "lucide-react";
 
@@ -48,11 +47,11 @@ export default function SuperUserDashboard() {
 
         const [statsRes, articlesRes] = await Promise.all([
           fetch(`${API_BASE_URL}/super/stats/`, {
-            headers: { Authorization: `Token ${token}` }
+            headers: { Authorization: `Token ${token}` },
           }),
           fetch(`${API_BASE_URL}/super/articles/`, {
-            headers: { Authorization: `Token ${token}` }
-          })
+            headers: { Authorization: `Token ${token}` },
+          }),
         ]);
 
         if (!statsRes.ok || !articlesRes.ok) {
@@ -61,7 +60,7 @@ export default function SuperUserDashboard() {
 
         const [statsData, articlesData] = await Promise.all([
           statsRes.json(),
-          articlesRes.json()
+          articlesRes.json(),
         ]);
 
         setStats(statsData.platform_stats);
@@ -115,21 +114,20 @@ export default function SuperUserDashboard() {
     );
   }
 
-return (
+  return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden">
       <MinimalHeader />
-      
+
       <ImpersonationBanner />
 
       <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
         {/* Header */}
         <div className="w-full mb-16">
-          {/* Simple Header */}
           <div className="mb-12">
             <div className="flex items-center gap-4 mb-6">
               <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
               <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
-                  WELCOME BACK
+                WELCOME BACK
               </span>
             </div>
             <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
@@ -150,12 +148,16 @@ return (
           </div>
         ) : (
           <div className="space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Combined User Management */}
-              <UserManagement />
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
+              {/* User Management */}
+              <div className="lg:col-span-1">
+                <UserManagement />
+              </div>
 
-              {/* Recent Articles */}
-              <RecentArticles articles={articles} />
+              {/* Article Management - NEW */}
+              <div className="lg:col-span-2">
+                <ArticleManagement />
+              </div>
             </div>
           </div>
         )}
