@@ -298,7 +298,9 @@ export function MinimalHeader() {
             <p className="text-base font-medium text-gray-900 dark:text-gray-100 truncate">
               Hello, {user?.username}!
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{user?.email}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+              {user?.email}
+            </p>
           </div>
 
           <Link
@@ -587,6 +589,12 @@ export function MinimalHeader() {
                       className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
                     >
                       Explore DevOps Playgrounds
+                    </Link>
+                    <Link
+                      href="/100-days-cloud-challenge"
+                      className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
+                    >
+                      Explore 100 Days of Cloud
                     </Link>
                   </div>
                 )}

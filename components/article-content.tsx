@@ -258,7 +258,6 @@ export function ArticleContent({
       cleanText.includes("whoami") ||
       cleanText.includes("id") ||
       cleanText.includes("su -") ||
-      cleanText.includes("ssh") ||
       cleanText.includes("curl") ||
       cleanText.includes("wget") ||
       cleanText.startsWith("echo $SHELL") ||
