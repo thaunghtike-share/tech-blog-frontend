@@ -115,24 +115,26 @@ export default function SuperUserDashboard() {
     );
   }
 
-  return (
+return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden">
       <MinimalHeader />
       
       <ImpersonationBanner />
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center">
-              <Crown className="w-6 h-6 text-white" />
+        <div className="w-full mb-16">
+          {/* Simple Header */}
+          <div className="mb-12">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+              <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
+                  WELCOME BACK
+              </span>
             </div>
-            <div>
-              <h1 className="text-4xl font-bold text-black dark:text-white">
-                Super User Dashboard
-              </h1>
-            </div>
+            <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
+              Super User Dashboard
+            </h1>
           </div>
         </div>
 
@@ -148,9 +150,6 @@ export default function SuperUserDashboard() {
           </div>
         ) : (
           <div className="space-y-8">
-            {/* Stats Cards */}
-            {stats && <StatsCards stats={stats} />}
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Combined User Management */}
               <UserManagement />
