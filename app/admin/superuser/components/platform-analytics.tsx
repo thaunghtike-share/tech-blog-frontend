@@ -189,9 +189,6 @@ export default function PlatformAnalytics() {
                   {actualCompletedCount}
                 </div>
                 <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Completed Profiles</p>
-                <p className="text-xs text-blue-600/70 dark:text-blue-400/70 mt-1">
-                  of {totalNewAuthors} new authors
-                </p>
               </div>
               
               <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border border-orange-200 dark:border-orange-700/30 shadow-sm">
