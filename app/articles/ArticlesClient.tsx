@@ -192,6 +192,40 @@ export default function ArticlesClient() {
     }
   };
 
+  // Loading state
+  if (authorsLoading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300 relative overflow-x-hidden">
+        <MinimalHeader />
+        <main className="max-w-7xl mx-auto px-4 py-20">
+          {/* Simple Elegant Loading */}
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            {/* Animated Logo Container */}
+            <div className="relative">
+              {/* Outer Ring Animation */}
+              <div className="w-32 h-32 rounded-full border-4 border-blue-200/50 dark:border-blue-800/30 animate-spin">
+                {/* Logo Container */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-200/50 dark:border-blue-800/30 border-t-blue-500 dark:border-t-blue-400 animate-spin">
+                    <img
+                      src="/logo.png"
+                      alt="KodeKloud"
+                      className="w-16 h-16 object-contain animate-pulse"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/placeholder.svg";
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <MinimalFooter />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <div className="relative z-10">
@@ -215,27 +249,8 @@ export default function ArticlesClient() {
               </p>
             </div>
 
-            {/* Authors Grid - rest remains exactly the same */}
-            {authorsLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex-shrink-0"></div>
-                      <div className="flex-1 space-y-2">
-                        <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-                        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : authors.length > 0 ? (
+            {/* Authors Grid */}
+            {authors.length > 0 ? (
               <div className="space-y-12">
                 {authors.map((author) => (
                   <div
@@ -312,18 +327,7 @@ export default function ArticlesClient() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-900/20 dark:to-blue-900/20 rounded-2xl border border-sky-100 dark:border-sky-800">
-                <div className="inline-flex items-center justify-center bg-white dark:bg-gray-800 rounded-full p-6 mb-6 shadow-lg">
-                  <Users className="w-12 h-12 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">
-                  Expert Authors Coming Soon
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto text-lg">
-                  We're bringing industry experts to share their DevOps knowledge
-                  and real-world experiences with you.
-                </p>
-              </div>
+              <div className=""></div>
             )}
           </section>
 
@@ -359,7 +363,6 @@ export default function ArticlesClient() {
         }
         .animate-float {
           animation: float 20s ease-in-out infinite;
-        }
       `}</style>
     </div>
   );

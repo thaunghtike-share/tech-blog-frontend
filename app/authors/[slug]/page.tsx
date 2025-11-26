@@ -56,7 +56,8 @@ interface Article {
     slug: string;
   }[];
   comment_count?: number; // ADDED
-  reactions_summary?: { // ADDED
+  reactions_summary?: {
+    // ADDED
     like?: number;
     love?: number;
     celebrate?: number;
@@ -101,7 +102,7 @@ export default function AuthorDetailPage() {
                 const commentsRes = await fetch(
                   `${API_BASE_URL}/articles/${article.slug}/comments/`
                 );
-                
+
                 // Fetch reactions
                 const reactionsRes = await fetch(
                   `${API_BASE_URL}/articles/${article.slug}/reactions/`
@@ -112,15 +113,18 @@ export default function AuthorDetailPage() {
                   like: 0,
                   love: 0,
                   celebrate: 0,
-                  insightful: 0
+                  insightful: 0,
                 };
 
                 if (commentsRes.ok) {
                   const commentsData = await commentsRes.json();
                   // Count all comments (including replies)
-                  comment_count = commentsData.reduce((total: number, comment: any) => {
-                    return total + 1 + (comment.replies?.length || 0);
-                  }, 0);
+                  comment_count = commentsData.reduce(
+                    (total: number, comment: any) => {
+                      return total + 1 + (comment.replies?.length || 0);
+                    },
+                    0
+                  );
                 }
 
                 if (reactionsRes.ok) {
@@ -129,19 +133,22 @@ export default function AuthorDetailPage() {
                     like: reactionsData.summary?.like || 0,
                     love: reactionsData.summary?.love || 0,
                     celebrate: reactionsData.summary?.celebrate || 0,
-                    insightful: reactionsData.summary?.insightful || 0
+                    insightful: reactionsData.summary?.insightful || 0,
                   };
                 }
-                
+
                 return {
                   ...article,
                   comment_count,
                   reactions_summary,
                 };
               } catch (error) {
-                console.error(`Failed to fetch engagement for article ${article.slug}:`, error);
+                console.error(
+                  `Failed to fetch engagement for article ${article.slug}:`,
+                  error
+                );
               }
-              
+
               // Fallback if fetch fails
               return {
                 ...article,
@@ -150,7 +157,7 @@ export default function AuthorDetailPage() {
                   like: 0,
                   love: 0,
                   celebrate: 0,
-                  insightful: 0
+                  insightful: 0,
                 },
               };
             })
@@ -184,15 +191,21 @@ export default function AuthorDetailPage() {
     totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
 
   // 🔥 NEW: Calculate total comments and reactions
-  const totalComments = author?.articles?.reduce(
-    (sum, article) => sum + (article.comment_count || 0),
-    0
-  ) || 0;
+  const totalComments =
+    author?.articles?.reduce(
+      (sum, article) => sum + (article.comment_count || 0),
+      0
+    ) || 0;
 
   const totalReactions = author?.articles?.reduce((sum, article) => {
     const reactions = article.reactions_summary || {};
-    return sum + (reactions.like || 0) + (reactions.love || 0) + 
-           (reactions.celebrate || 0) + (reactions.insightful || 0);
+    return (
+      sum +
+      (reactions.like || 0) +
+      (reactions.love || 0) +
+      (reactions.celebrate || 0) +
+      (reactions.insightful || 0)
+    );
   }, 0);
 
   // Calculate average read time across all articles
@@ -297,7 +310,9 @@ export default function AuthorDetailPage() {
             <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
               Author Not Found
             </h1>
-            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">{error}</p>
+            <p className="text-lg text-black dark:text-gray-300 mb-8 max-w-md mx-auto">
+              {error}
+            </p>
             <Link
               href="/articles"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 shadow-lg"
@@ -312,30 +327,32 @@ export default function AuthorDetailPage() {
     );
   }
 
+  // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300 relative overflow-x-hidden">
         <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-12">
-          <div className="animate-pulse space-y-12">
-            {/* Author Skeleton */}
-            <div className="flex items-center gap-8">
-              <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full shadow-lg"></div>
-              <div className="space-y-4 flex-1">
-                <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-full w-64"></div>
-                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-48"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-36"></div>
-              </div>
-            </div>
-            {/* Stats Skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="text-center">
-                  <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-2xl mx-auto mb-4"></div>
-                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 mx-auto mb-2"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-1/2 mx-auto"></div>
+        <main className="max-w-7xl mx-auto px-4 py-20">
+          {/* Simple Elegant Loading */}
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            {/* Animated Logo Container */}
+            <div className="relative">
+              {/* Outer Ring Animation */}
+              <div className="w-32 h-32 rounded-full border-4 border-blue-200/50 dark:border-blue-800/30 animate-spin">
+                {/* Logo Container */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-200/50 dark:border-blue-800/30 border-t-blue-500 dark:border-t-blue-400 animate-spin">
+                    <img
+                      src="/logo.png"
+                      alt="KodeKloud"
+                      className="w-16 h-16 object-contain animate-pulse"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/placeholder.svg";
+                      }}
+                    />
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </main>
@@ -465,9 +482,8 @@ export default function AuthorDetailPage() {
                 </h2>
                 <p className="text-slate-600 dark:text-gray-400 font-medium">
                   {totalArticles} articles published •{" "}
-                  {totalViews.toLocaleString()} total reads •{" "}
-                  {totalComments} total comments •{" "}
-                  {totalReactions} total reactions
+                  {totalViews.toLocaleString()} total reads • {totalComments}{" "}
+                  total comments • {totalReactions} total reactions
                 </p>
               </div>
               <div className="flex items-center gap-3">

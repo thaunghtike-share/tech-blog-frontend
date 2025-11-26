@@ -85,7 +85,10 @@ export function MinimalBlogList({
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsTagDropdownOpen(false);
       }
     };
@@ -108,25 +111,40 @@ export function MinimalBlogList({
 
         url += params.toString();
 
-        const [articlesResponse, authorsResponse, tagsResponse, categoriesResponse] = await Promise.all([
+        const [
+          articlesResponse,
+          authorsResponse,
+          tagsResponse,
+          categoriesResponse,
+        ] = await Promise.all([
           fetch(url),
           fetch(`${API_BASE_URL}/authors/`),
           fetch(`${API_BASE_URL}/tags/`),
-          fetch(`${API_BASE_URL}/categories/`)
+          fetch(`${API_BASE_URL}/categories/`),
         ]);
 
-        const [articlesData, authorsData, tagsData, categoriesData] = await Promise.all([
-          articlesResponse.json(),
-          authorsResponse.json(),
-          tagsResponse.json(),
-          categoriesResponse.json()
-        ]);
+        const [articlesData, authorsData, tagsData, categoriesData] =
+          await Promise.all([
+            articlesResponse.json(),
+            authorsResponse.json(),
+            tagsResponse.json(),
+            categoriesResponse.json(),
+          ]);
 
-        setArticles(Array.isArray(articlesData) ? articlesData : articlesData.results || []);
-        setAuthors(Array.isArray(authorsData) ? authorsData : authorsData.results || []);
+        setArticles(
+          Array.isArray(articlesData)
+            ? articlesData
+            : articlesData.results || []
+        );
+        setAuthors(
+          Array.isArray(authorsData) ? authorsData : authorsData.results || []
+        );
         setTags(Array.isArray(tagsData) ? tagsData : tagsData.results || []);
-        setCategories(Array.isArray(categoriesData) ? categoriesData : categoriesData.results || []);
-
+        setCategories(
+          Array.isArray(categoriesData)
+            ? categoriesData
+            : categoriesData.results || []
+        );
       } catch (err: any) {
         console.error("Error fetching data:", err);
         setError(err.message || "Failed to fetch data");
@@ -172,7 +190,7 @@ export function MinimalBlogList({
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
-    
+
     if (localSearch) {
       params.set("search", localSearch);
     }
@@ -196,44 +214,18 @@ export function MinimalBlogList({
   };
 
   // Get selected tag name for dropdown display
-  const selectedTagName = filterTagSlug 
-    ? tags.find(tag => tag.slug === filterTagSlug)?.name 
+  const selectedTagName = filterTagSlug
+    ? tags.find((tag) => tag.slug === filterTagSlug)?.name
     : null;
-
-  if (loading) {
-    return (
-      <div className="w-full">
-        {/* Header Skeleton */}
-        <div className="mb-12">
-          <div className="h-1 w-20 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full mb-6"></div>
-          <div className="animate-pulse">
-            <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-xl mb-4 max-w-md"></div>
-            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2 max-w-2xl"></div>
-            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded max-w-xl"></div>
-          </div>
-        </div>
-
-        {/* Skeleton Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="animate-pulse">
-              <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-xl mb-4"></div>
-              <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
       <div className="w-full text-center py-12">
         <div className="bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800 rounded-2xl p-8">
           <AlertTriangle className="w-16 h-16 text-sky-600 dark:text-sky-400 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-sky-600 dark:text-sky-400 mb-2">Error Loading Articles</h3>
+          <h3 className="text-xl font-bold text-sky-600 dark:text-sky-400 mb-2">
+            Error Loading Articles
+          </h3>
           <p className="text-sky-600 dark:text-sky-400 mb-6">{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -258,8 +250,8 @@ export function MinimalBlogList({
           </span>
         </h1>
         <p className="text-lg text-black dark:text-gray-300 max-w-3xl leading-relaxed">
-          Explore comprehensive tutorials, best practices, and real-world DevOps scenarios. 
-          Master modern tools through practical, hands-on examples.
+          Explore comprehensive tutorials, best practices, and real-world DevOps
+          scenarios. Master modern tools through practical, hands-on examples.
         </p>
       </div>
 
@@ -295,8 +287,8 @@ export function MinimalBlogList({
               <button
                 onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
                 className={`flex items-center gap-2 px-4 py-3 rounded-lg border transition-all duration-200 ${
-                  filterTagSlug 
-                    ? "bg-sky-600 text-white border-sky-600 shadow-md" 
+                  filterTagSlug
+                    ? "bg-sky-600 text-white border-sky-600 shadow-md"
                     : "bg-white dark:bg-gray-800 text-black dark:text-gray-100 border-gray-300 dark:border-gray-700 hover:border-sky-400 dark:hover:border-sky-600 hover:shadow-sm"
                 }`}
               >
@@ -304,7 +296,11 @@ export function MinimalBlogList({
                 <span className="font-medium">
                   {selectedTagName || "Filter by Tag"}
                 </span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${isTagDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    isTagDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {filterTagSlug && (
@@ -322,13 +318,17 @@ export function MinimalBlogList({
             {isTagDropdownOpen && (
               <div className="absolute mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
                 <div className="p-3">
-                  <div className="text-sm font-semibold text-black dark:text-gray-100 mb-2">Select a tag:</div>
+                  <div className="text-sm font-semibold text-black dark:text-gray-100 mb-2">
+                    Select a tag:
+                  </div>
                   <div className="space-y-1">
                     {tags.map((tag) => (
                       <button
                         key={tag.id}
                         onClick={() => {
-                          setFilterTagSlug(tag.slug === filterTagSlug ? null : tag.slug);
+                          setFilterTagSlug(
+                            tag.slug === filterTagSlug ? null : tag.slug
+                          );
                           setIsTagDropdownOpen(false);
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
@@ -382,10 +382,10 @@ export function MinimalBlogList({
             {paginatedArticles.map((article) => {
               const author = getAuthor(article.author);
               const category = getCategoryById(article.category);
-              
+
               // Get article tags
               const articleTags = article.tags
-                .map(tagId => getTagById(tagId))
+                .map((tagId) => getTagById(tagId))
                 .filter(Boolean)
                 .slice(0, 3); // Show max 3 tags
 
@@ -395,8 +395,8 @@ export function MinimalBlogList({
                   className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-700 overflow-hidden hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow"
                 >
                   {/* Cover Image */}
-                  <Link 
-                    href={`/articles/${article.slug}`} 
+                  <Link
+                    href={`/articles/${article.slug}`}
                     className="block aspect-video overflow-hidden bg-gray-100 dark:bg-gray-700"
                   >
                     <img
@@ -445,7 +445,8 @@ export function MinimalBlogList({
                     {/* Excerpt */}
                     <div className="mb-4">
                       <p className="text-black dark:text-gray-300 line-clamp-2 leading-relaxed text-sm">
-                        {article.excerpt || truncate(stripMarkdown(article.content))}
+                        {article.excerpt ||
+                          truncate(stripMarkdown(article.content))}
                       </p>
                     </div>
 

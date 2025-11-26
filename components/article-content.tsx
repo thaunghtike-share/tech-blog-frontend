@@ -183,6 +183,15 @@ export function ArticleContent({
 }: ArticleContentProps) {
   const articleUrl = typeof window !== "undefined" ? window.location.href : "";
   const [topReadArticles, setTopReadArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Add loading state at the component level
+  useEffect(() => {
+    // Simulate loading or check if essential data is available
+    if (article && article.content) {
+      setIsLoading(false);
+    }
+  }, [article]);
 
   const effectiveAuthor = author || {
     id: article.author,

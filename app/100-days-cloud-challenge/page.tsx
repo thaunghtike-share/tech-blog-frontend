@@ -418,35 +418,29 @@ export default function HundredDaysCloudChallenge() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
+      <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300 relative overflow-x-hidden">
         <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-12">
-          <div className="animate-pulse space-y-12">
-            {/* Challenge Header Skeleton */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-gray-700 p-8">
-              <div className="flex items-center gap-8">
-                <div className="w-24 h-24 bg-slate-200 dark:bg-gray-700 rounded-2xl"></div>
-                <div className="space-y-4 flex-1">
-                  <div className="h-8 bg-slate-200 dark:bg-gray-700 rounded-full w-64"></div>
-                  <div className="h-6 bg-slate-200 dark:bg-gray-700 rounded-full w-48"></div>
-                  <div className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full w-36"></div>
-                </div>
-              </div>
-            </div>
-            {/* Articles Skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-700 p-6"
-                >
-                  <div className="h-48 bg-slate-200 dark:bg-gray-700 rounded-lg mb-4"></div>
-                  <div className="space-y-3">
-                    <div className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full w-3/4"></div>
-                    <div className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full w-1/2"></div>
+        <main className="max-w-7xl mx-auto px-4 py-20">
+          {/* Simple Elegant Loading */}
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            {/* Animated Logo Container */}
+            <div className="relative">
+              {/* Outer Ring Animation */}
+              <div className="w-32 h-32 rounded-full border-4 border-blue-200/50 dark:border-blue-800/30 animate-spin">
+                {/* Logo Container */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center p-2">
+                    <img
+                      src="/kodekloud.webp"
+                      alt="KodeKloud"
+                      className="w-16 h-16 object-contain animate-pulse"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/placeholder.svg";
+                      }}
+                    />
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </main>

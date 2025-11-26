@@ -163,8 +163,6 @@ const ReactionButton = ({
   );
 };
 
-// Replace your entire CommentsReactions component with this:
-
 export function CommentsReactions({
   articleSlug,
   currentUser,
