@@ -50,6 +50,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ShareButtons } from "./share-buttons";
 
 interface Article {
   id: number;
@@ -346,14 +347,14 @@ export function ArticleContent({
             components={{
               // Use separate component for inline code
               code: InlineCode,
-              
+
               // Block code component
               pre: ({ children, ...props }: any) => {
                 const child = React.Children.only(children) as any;
                 const codeProps = child?.props || {};
                 const className = codeProps.className || "";
                 const childrenContent = codeProps.children || "";
-                
+
                 const match = /language-(\w+)/.exec(className || "");
                 const language = match?.[1]?.toLowerCase() || "";
 
@@ -370,25 +371,61 @@ export function ArticleContent({
                   return String(children);
                 };
 
-                const codeString = extractCodeString(childrenContent).replace(/\n$/, "");
+                const codeString = extractCodeString(childrenContent).replace(
+                  /\n$/,
+                  ""
+                );
                 const lines = codeString.split("\n");
 
-                const isShellLike = ["bash", "shell", "sh", "zsh"].includes(language);
-                const startsWithDollar = isShellLike && lines[0]?.trim().match(/^(\$|#|>)/);
-                const promptChar = lines[0]?.trim().match(/^(\$|#|>)/)?.[1] || "$";
+                const isShellLike = ["bash", "shell", "sh", "zsh"].includes(
+                  language
+                );
+                const startsWithDollar =
+                  isShellLike && lines[0]?.trim().match(/^(\$|#|>)/);
+                const promptChar =
+                  lines[0]?.trim().match(/^(\$|#|>)/)?.[1] || "$";
 
                 const showCopyButton = [
-                  "bash", "shell", "sh", "zsh", "python", "py", "javascript", "js", 
-                  "typescript", "ts", "hcl", "terraform", "yaml", "yml", "toml", 
-                  "json", "html", "css", "dockerfile", "sql", "ruby", "go", "rust",
+                  "bash",
+                  "shell",
+                  "sh",
+                  "zsh",
+                  "python",
+                  "py",
+                  "javascript",
+                  "js",
+                  "typescript",
+                  "ts",
+                  "hcl",
+                  "terraform",
+                  "yaml",
+                  "yml",
+                  "toml",
+                  "json",
+                  "html",
+                  "css",
+                  "dockerfile",
+                  "sql",
+                  "ruby",
+                  "go",
+                  "rust",
                 ].includes(language);
 
                 const getLanguageName = (lang: string): string => {
                   const langMap: { [key: string]: string } = {
-                    js: "JavaScript", ts: "TypeScript", py: "Python", yml: "YAML",
-                    hcl: "HCL", tf: "Terraform", sh: "Shell", zsh: "Z Shell",
+                    js: "JavaScript",
+                    ts: "TypeScript",
+                    py: "Python",
+                    yml: "YAML",
+                    hcl: "HCL",
+                    tf: "Terraform",
+                    sh: "Shell",
+                    zsh: "Z Shell",
                   };
-                  return langMap[lang] || lang.charAt(0).toUpperCase() + lang.slice(1);
+                  return (
+                    langMap[lang] ||
+                    lang.charAt(0).toUpperCase() + lang.slice(1)
+                  );
                 };
 
                 return (
@@ -402,7 +439,11 @@ export function ArticleContent({
                       </div>
                     )}
                     {showCopyButton && <CopyButton code={codeString} />}
-                    <pre className={`p-6 overflow-x-auto rounded-2xl ${language ? "pt-12" : "pt-6"}`}>
+                    <pre
+                      className={`p-6 overflow-x-auto rounded-2xl ${
+                        language ? "pt-12" : "pt-6"
+                      }`}
+                    >
                       <code className="font-mono text-sm block">
                         {lines.map((line, idx) => {
                           const hasPrompt = idx === 0 && startsWithDollar;
@@ -420,8 +461,14 @@ export function ArticleContent({
                                   {promptChar}
                                 </span>
                               )}
-                              <span className={isEmptyLine ? "inline-block min-w-[1px]" : ""}>
-                                {hasPrompt ? line.slice(promptChar.length).trimStart() : line}
+                              <span
+                                className={
+                                  isEmptyLine ? "inline-block min-w-[1px]" : ""
+                                }
+                              >
+                                {hasPrompt
+                                  ? line.slice(promptChar.length).trimStart()
+                                  : line}
                               </span>
                             </div>
                           );
@@ -622,13 +669,22 @@ export function ArticleContent({
           </ReactMarkdown>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-12 mb-6">
           <CommentsReactions
             articleSlug={article.slug}
             currentUser={{
               isAuthenticated: true,
               authorSlug: effectiveAuthor?.slug,
             }}
+          />
+        </div>
+
+        {/* ADD SHARE BUTTONS HERE */}
+        <div className="mb-2">
+          <ShareButtons
+            articleId={article.id}
+            title={article.title}
+            url={typeof window !== "undefined" ? window.location.href : ""}
           />
         </div>
 
