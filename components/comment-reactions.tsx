@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/app/auth/hooks/use-auth";
+import Link from "next/link";
 import { toast } from "sonner";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
@@ -511,7 +512,7 @@ export function CommentsReactions({
     return isAuthenticated && comment.author_id === user?.id;
   };
 
-  // Comment component - UPDATED with better edit button placement
+  // Comment component - UPDATED with author profile links
   const CommentItem = ({
     comment,
     depth = 0,
@@ -547,6 +548,11 @@ export function CommentsReactions({
     const initial = comment.author_name?.charAt(0)?.toUpperCase() || "A";
     const avatarColor = getAvatarColor(comment.author_name || "Anonymous");
 
+    // Get author profile link - FIXED: Use author_slug if available
+    const authorProfileLink = comment.author_slug
+      ? `/authors/${comment.author_slug}`
+      : "#";
+
     return (
       <div
         className={`mb-4 ${
@@ -556,8 +562,9 @@ export function CommentsReactions({
         }`}
       >
         <div className="flex items-start gap-3">
-          {/* AVATAR - Shows actual avatar if available */}
-          <div
+          {/* AVATAR - Now clickable and links to author profile */}
+          <Link
+            href={authorProfileLink}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 shadow-sm overflow-hidden ${
               comment.author_avatar ? "bg-transparent" : avatarColor
             }`}
@@ -585,14 +592,18 @@ export function CommentsReactions({
             >
               {initial}
             </div>
-          </div>
+          </Link>
 
           {/* Comment Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
+              {/* Author name now clickable and links to author profile */}
+              <Link
+                href={authorProfileLink}
+                className="font-semibold text-gray-900 dark:text-gray-100 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
                 {comment.author_name || "Anonymous"}
-              </h4>
+              </Link>
               {comment.is_author && (
                 <span className="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs rounded-full font-medium">
                   Author
