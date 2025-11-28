@@ -166,6 +166,16 @@ const CopyButton = ({ code }: { code: string }) => {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
+// Separate component for inline code
+const InlineCode = ({ children, ...props }: any) => (
+  <code
+    className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded px-1.5 py-0.5 text-sm font-mono border border-gray-300 dark:border-gray-600"
+    {...props}
+  >
+    {children}
+  </code>
+);
+
 export function ArticleContent({
   article,
   author,
@@ -334,6 +344,94 @@ export function ArticleContent({
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
             components={{
+              // Use separate component for inline code
+              code: InlineCode,
+              
+              // Block code component
+              pre: ({ children, ...props }: any) => {
+                const child = React.Children.only(children) as any;
+                const codeProps = child?.props || {};
+                const className = codeProps.className || "";
+                const childrenContent = codeProps.children || "";
+                
+                const match = /language-(\w+)/.exec(className || "");
+                const language = match?.[1]?.toLowerCase() || "";
+
+                const extractCodeString = (children: any): string => {
+                  if (typeof children === "string") return children;
+                  if (Array.isArray(children)) {
+                    return children
+                      .map((child) => extractCodeString(child))
+                      .join("");
+                  }
+                  if (children?.props?.children) {
+                    return extractCodeString(children.props.children);
+                  }
+                  return String(children);
+                };
+
+                const codeString = extractCodeString(childrenContent).replace(/\n$/, "");
+                const lines = codeString.split("\n");
+
+                const isShellLike = ["bash", "shell", "sh", "zsh"].includes(language);
+                const startsWithDollar = isShellLike && lines[0]?.trim().match(/^(\$|#|>)/);
+                const promptChar = lines[0]?.trim().match(/^(\$|#|>)/)?.[1] || "$";
+
+                const showCopyButton = [
+                  "bash", "shell", "sh", "zsh", "python", "py", "javascript", "js", 
+                  "typescript", "ts", "hcl", "terraform", "yaml", "yml", "toml", 
+                  "json", "html", "css", "dockerfile", "sql", "ruby", "go", "rust",
+                ].includes(language);
+
+                const getLanguageName = (lang: string): string => {
+                  const langMap: { [key: string]: string } = {
+                    js: "JavaScript", ts: "TypeScript", py: "Python", yml: "YAML",
+                    hcl: "HCL", tf: "Terraform", sh: "Shell", zsh: "Z Shell",
+                  };
+                  return langMap[lang] || lang.charAt(0).toUpperCase() + lang.slice(1);
+                };
+
+                return (
+                  <div className="relative mb-8 rounded-2xl bg-gradient-to-br from-sky-50 dark:from-gray-800 to-white dark:to-gray-900 text-gray-700 dark:text-gray-300 font-mono text-sm shadow-lg border border-sky-200 dark:border-gray-600 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    {language && (
+                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-700 dark:to-blue-700 text-white rounded-t-2xl px-4 py-2 text-xs font-semibold flex justify-between items-center">
+                        <span>{getLanguageName(language)}</span>
+                        <span className="text-sky-200 dark:text-sky-300 text-xs font-normal">
+                          {lines.length} line{lines.length !== 1 ? "s" : ""}
+                        </span>
+                      </div>
+                    )}
+                    {showCopyButton && <CopyButton code={codeString} />}
+                    <pre className={`p-6 overflow-x-auto rounded-2xl ${language ? "pt-12" : "pt-6"}`}>
+                      <code className="font-mono text-sm block">
+                        {lines.map((line, idx) => {
+                          const hasPrompt = idx === 0 && startsWithDollar;
+                          const isEmptyLine = line.trim() === "";
+
+                          return (
+                            <div
+                              key={idx}
+                              className={`hover:bg-sky-50 dark:hover:bg-gray-700/50 rounded-lg px-2 -mx-2 transition-colors ${
+                                isEmptyLine ? "min-h-[1.2em]" : ""
+                              }`}
+                            >
+                              {hasPrompt && (
+                                <span className="text-sky-600 dark:text-sky-400 font-bold select-none mr-2">
+                                  {promptChar}
+                                </span>
+                              )}
+                              <span className={isEmptyLine ? "inline-block min-w-[1px]" : ""}>
+                                {hasPrompt ? line.slice(promptChar.length).trimStart() : line}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </code>
+                    </pre>
+                  </div>
+                );
+              },
+
               h1: ({ children, ...props }) => {
                 const id = slugify(flattenChildren(children));
                 return (
@@ -428,153 +526,6 @@ export function ArticleContent({
                   {children}
                 </li>
               ),
-
-              code: ({ inline, className = "", children, ...props }: any) => {
-                if (inline) {
-                  return (
-                    <code
-                      className="bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 rounded-lg px-2 py-1 text-base font-mono border border-sky-200 dark:border-sky-700 shadow-sm"
-                      {...props}
-                    >
-                      {children}
-                    </code>
-                  );
-                }
-
-                const match = /language-(\w+)/.exec(className || "");
-                const language = match?.[1]?.toLowerCase() || "";
-
-                const extractCodeString = (children: any): string => {
-                  if (typeof children === "string") return children;
-                  if (Array.isArray(children)) {
-                    return children
-                      .map((child) => extractCodeString(child))
-                      .join("");
-                  }
-                  if (children?.props?.children) {
-                    return extractCodeString(children.props.children);
-                  }
-                  return String(children);
-                };
-
-                const codeString = extractCodeString(children).replace(
-                  /\n$/,
-                  ""
-                );
-                const lines = codeString.split("\n");
-
-                const isShellLike = ["bash", "shell", "sh", "zsh"].includes(
-                  language
-                );
-                const isPython = language === "python";
-                const isJavaScript = [
-                  "javascript",
-                  "js",
-                  "typescript",
-                  "ts",
-                ].includes(language);
-                const isTerraform = ["hcl", "terraform"].includes(language);
-                const isYaml = ["yaml", "yml"].includes(language);
-                const isConfig = ["toml", "json", "config"].includes(language);
-
-                const startsWithDollar =
-                  isShellLike && lines[0]?.trim().match(/^(\$|#|>)/);
-                const promptChar =
-                  lines[0]?.trim().match(/^(\$|#|>)/)?.[1] || "$";
-
-                const showCopyButton = [
-                  "bash",
-                  "shell",
-                  "sh",
-                  "zsh",
-                  "python",
-                  "py",
-                  "javascript",
-                  "js",
-                  "typescript",
-                  "ts",
-                  "hcl",
-                  "terraform",
-                  "yaml",
-                  "yml",
-                  "toml",
-                  "json",
-                  "html",
-                  "css",
-                  "dockerfile",
-                  "sql",
-                  "ruby",
-                  "go",
-                  "rust",
-                ].includes(language);
-
-                const getLanguageName = (lang: string): string => {
-                  const langMap: { [key: string]: string } = {
-                    js: "JavaScript",
-                    ts: "TypeScript",
-                    py: "Python",
-                    yml: "YAML",
-                    hcl: "HCL",
-                    tf: "Terraform",
-                    sh: "Shell",
-                    zsh: "Z Shell",
-                  };
-                  return (
-                    langMap[lang] ||
-                    lang.charAt(0).toUpperCase() + lang.slice(1)
-                  );
-                };
-
-                return (
-                  <div className="relative mb-8 rounded-2xl bg-gradient-to-br from-sky-50 dark:from-gray-800 to-white dark:to-gray-900 text-gray-700 dark:text-gray-300 font-mono text-sm shadow-lg border border-sky-200 dark:border-gray-600 hover:shadow-xl transition-all duration-300 overflow-hidden">
-                    {language && (
-                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-700 dark:to-blue-700 text-white rounded-t-2xl px-4 py-2 text-xs font-semibold flex justify-between items-center">
-                        <span>{getLanguageName(language)}</span>
-                        <span className="text-sky-200 dark:text-sky-300 text-xs font-normal">
-                          {lines.length} line{lines.length !== 1 ? "s" : ""}
-                        </span>
-                      </div>
-                    )}
-                    {showCopyButton && <CopyButton code={codeString} />}
-                    <pre
-                      className={`p-6 overflow-x-auto rounded-2xl ${
-                        language ? "pt-12" : "pt-6"
-                      }`}
-                    >
-                      <code className="font-mono text-sm block">
-                        {lines.map((line, idx) => {
-                          const hasPrompt = idx === 0 && startsWithDollar;
-                          const isEmptyLine = line.trim() === "";
-
-                          return (
-                            <div
-                              key={idx}
-                              className={`hover:bg-sky-50 dark:hover:bg-gray-700/50 rounded-lg px-2 -mx-2 transition-colors ${
-                                isEmptyLine ? "min-h-[1.2em]" : ""
-                              }`}
-                            >
-                              {hasPrompt && (
-                                <span className="text-sky-600 dark:text-sky-400 font-bold select-none mr-2">
-                                  {promptChar}
-                                </span>
-                              )}
-                              <span
-                                className={
-                                  isEmptyLine ? "inline-block min-w-[1px]" : ""
-                                }
-                              >
-                                {hasPrompt
-                                  ? line.slice(promptChar.length).trimStart()
-                                  : line}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </code>
-                    </pre>
-                  </div>
-                );
-              },
 
               blockquote: ({ children, ...props }) => (
                 <blockquote
