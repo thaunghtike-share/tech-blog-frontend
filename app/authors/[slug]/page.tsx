@@ -586,7 +586,7 @@ export default function AuthorDetailPage() {
 
                           <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
                             <Link href={`/articles/${article.slug}`}>
-                              {article.title}
+                              {article.title.replace(/^#\s*/, "")}
                             </Link>
                           </h3>
 
@@ -620,7 +620,7 @@ export default function AuthorDetailPage() {
 
                           {article.excerpt && (
                             <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
-                              {article.excerpt}
+                              {article.excerpt.replace(/^#\s*/, "")}
                             </p>
                           )}
 
