@@ -543,18 +543,67 @@ export default function AuthorAdminDashboard() {
     return "/devops.webp";
   };
 
-  // Strip markdown for excerpt
+  // Strip markdown for excerpt - FIXED VERSION
   const stripMarkdown = (md?: string) => {
     if (!md) return "";
     let text = md;
+    
+    // Remove ALL markdown headers first (##, ###, etc.)
+    text = text.replace(/^#{1,6}\s+/gm, "");
+    
+    // Remove code blocks but keep content
+    text = text.replace(/```[\s\S]*?```/g, ""); // Remove multi-line code blocks completely
+    text = text.replace(/`([^`]*)`/g, "$1"); // Remove backticks but keep inline code content
+    
+    // Remove images
     text = text.replace(/!\[.*?\]\$\$.*?\$\$/g, "");
+    text = text.replace(/!\[.*?\]\(.*?\)/g, "");
+    
+    // Remove links but keep text
     text = text.replace(/\[(.*?)\]\\$\$.*?\\$\$/g, "$1");
-    text = text.replace(/[*_~`]/g, "");
-    text = text.replace(/^#+\s+/gm, "");
+    text = text.replace(/\[(.*?)\]\(.*?\)/g, "$1");
+    
+    // Remove remaining markdown formatting
+    text = text.replace(/[*_~>/\\-]/g, ""); // Remove all markdown symbols (except # which we handled above)
+    text = text.replace(/^\s*[-*+]\s+/gm, ""); // Remove list markers
+    text = text.replace(/^\s*\d+\.\s+/gm, ""); // Remove numbered lists
+    text = text.replace(/<[^>]+>/g, ""); // Remove HTML tags
+    
+    // Remove blockquotes
     text = text.replace(/^>\s+/gm, "");
-    text = text.replace(/^[-+*]\s+/gm, "");
-    text = text.replace(/<[^>]+>/g, "");
-    return text.trim();
+    
+    // Clean up extra whitespace and trim
+    text = text.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+    
+    return text;
+  };
+
+  // Smart excerpt generator that skips redundant headings
+  const getCleanExcerpt = (article: Article) => {
+    // If there's a custom excerpt, use it
+    if (article.excerpt?.trim()) {
+      return stripMarkdown(article.excerpt);
+    }
+    
+    // Otherwise, generate from content but skip the first heading if it's redundant
+    if (article.content) {
+      const content = article.content;
+      const lines = content.split('\n');
+      
+      // Skip the first line if it's a heading that's similar to the title
+      let startIndex = 0;
+      const firstLine = lines[0].trim();
+      if (lines.length > 1 && firstLine.startsWith('#') && 
+          stripMarkdown(firstLine).includes(stripMarkdown(article.title))) {
+        startIndex = 1;
+      }
+      
+      const contentWithoutFirstHeading = lines.slice(startIndex).join('\n');
+      const cleanContent = stripMarkdown(contentWithoutFirstHeading);
+      return truncate(cleanContent, 120) || "Read the full article to learn more...";
+    }
+    
+    return "Read the full article to learn more...";
   };
 
   const truncate = (str: string, max = 150) =>
@@ -909,11 +958,7 @@ export default function AuthorAdminDashboard() {
                 <>
                   <div className="divide-y divide-slate-200/50 dark:divide-gray-700">
                     {paginatedArticles.map((article, index) => {
-                      const previewText =
-                        article.excerpt?.trim() ||
-                        truncate(stripMarkdown(article.content), 120) ||
-                        "Read the full article to learn more...";
-
+                      const previewText = getCleanExcerpt(article);
                       const coverImage = getCoverImage(article);
                       const readTime = calculateReadTime(article.content);
                       const reactions = article.reactions_summary || {};
@@ -1000,11 +1045,10 @@ export default function AuthorAdminDashboard() {
                                 )}
                               </div>
 
-                              {article.excerpt && (
-                                <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
-                                  {article.excerpt}
-                                </p>
-                              )}
+                              {/* Clean excerpt display */}
+                              <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
+                                {previewText}
+                              </p>
 
                               {/* Tags */}
                               {article.tags && article.tags.length > 0 && (
