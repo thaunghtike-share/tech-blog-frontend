@@ -86,6 +86,7 @@ interface Author {
   articles?: Article[];
   featured?: boolean;
   company?: string;
+  articles_count?: number;
 }
 
 interface Tag {
@@ -906,7 +907,7 @@ export function ArticleContent({
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-br from-sky-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Star className="w-4 h-4 text-white" />
+                <TrendingUp className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-base font-semibold text-black dark:text-white">
                 Featured Authors
@@ -914,16 +915,19 @@ export function ArticleContent({
             </div>
             <div className="space-y-3">
               {authors
-                .filter((author) => author.featured)
-                .slice(0, 4)
-                .map((author) => (
+                .sort(
+                  (a, b) => (b.articles_count || 0) - (a.articles_count || 0)
+                )
+                .slice(0, 3)
+                .map((author, index) => (
                   <Link
                     href={`/authors/${author.slug}`}
                     key={author.id}
                     className="block group"
                   >
                     <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-sky-50 dark:hover:bg-gray-800 transition-all duration-300">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white dark:border-gray-800 shadow-sm flex-shrink-0">
+                      {/* Author Avatar */}
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden border border-white dark:border-gray-800 shadow-sm flex-shrink-0">
                         <img
                           src={author.avatar || "/placeholder.svg"}
                           alt={author.name}
@@ -935,13 +939,14 @@ export function ArticleContent({
                         />
                       </div>
 
+                      {/* Author Info */}
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-1 text-base">
+                        <h4 className="font-semibold text-black dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-1 text-sm">
                           {author.name}
                         </h4>
-                        <p className="text-xs text-black/70 dark:text-gray-400 line-clamp-1">
+                        <div className="flex items-center gap-2 text-xs text-black dark:text-gray-400">
                           {author.job_title}
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </Link>
