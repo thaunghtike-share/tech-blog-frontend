@@ -403,12 +403,14 @@ export default function AuthorDetailPage() {
                 )}
               </div>
             </div>
-
             {/* Content Section */}
             <div className="flex-1">
-              {/* Title & Company */}
+              {/* Title & Company - Updated to conditionally show "at" */}
               <p className="text-xl text-blue-600 dark:text-blue-400 font-medium mb-6">
-                {author?.job_title} at {author?.company}
+                {author?.job_title}
+                {author?.company &&
+                  author.company.trim() !== "" &&
+                  ` at ${author.company}`}
               </p>
 
               {/* Bio */}

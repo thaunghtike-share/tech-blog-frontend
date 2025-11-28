@@ -143,12 +143,11 @@ export default function ProfileForm() {
     setLoading(true);
     setError(null);
 
-    // Validate all required fields are filled
+    // Validate all required fields are filled (company is optional)
     if (
       !formData.name?.trim() ||
       !formData.bio?.trim() ||
       !formData.job_title?.trim() ||
-      !formData.company?.trim() ||
       !formData.linkedin?.trim() ||
       !formData.avatar?.trim() ||
       !formData.slug?.trim()
@@ -315,7 +314,6 @@ export default function ProfileForm() {
       formData.name?.trim() &&
       formData.bio?.trim() &&
       formData.job_title?.trim() &&
-      formData.company?.trim() &&
       formData.linkedin?.trim() &&
       formData.avatar?.trim() &&
       formData.slug?.trim();
@@ -468,9 +466,8 @@ export default function ProfileForm() {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    required
                     className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    placeholder="Company name"
+                    placeholder="Company name (optional)"
                   />
                 </div>
               </div>
