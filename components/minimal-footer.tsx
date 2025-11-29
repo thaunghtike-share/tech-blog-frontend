@@ -84,7 +84,7 @@ export function MinimalFooter() {
 
   return (
     <footer className="bg-white dark:bg-[#0A0A0A] relative z-10 transition-colors duration-300 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 py-16 md:ml-6">
+      <div className="px-6 md:px-11 relative z-10 py-16">
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
@@ -328,13 +328,13 @@ export function MinimalFooter() {
         <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
             {/* Copyright */}
-            <p className="text-gray-700 dark:text-gray-300 text-center lg:text-left font-medium">
+            <p className="text-gray-700 md:text-base text-sm dark:text-gray-300 text-center lg:text-left font-medium">
               &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
               reserved.
             </p>
 
             {/* Legal Links */}
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap md:text-base text-sm justify-center gap-6">
               {[
                 { href: "/privacy", label: "Privacy Policy" },
                 { href: "/terms-of-service", label: "Terms of Service" },

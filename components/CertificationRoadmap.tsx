@@ -306,7 +306,7 @@ export function CertificationRoadmap() {
   return (
     <section className="relative min-h-screen bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
       {/* Subtle background pattern */}
-      <div className="relative max-w-7xl mx-auto md:ml-6 py-3 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
+      <div className="px-4 md:px-11 font-open-sans">
         {/* Left Aligned Header */}
         <motion.div
           className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-8 md:mb-12"

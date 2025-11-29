@@ -651,7 +651,9 @@ export function YouTubePlaylists() {
   if (!isClient) {
     return (
       <section className="max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="animate-pulse dark:text-gray-300">Loading YouTube courses...</div>
+        <div className="animate-pulse dark:text-gray-300">
+          Loading YouTube courses...
+        </div>
       </section>
     );
   }
@@ -663,7 +665,7 @@ export function YouTubePlaylists() {
 
   return (
     <section className="relative min-h-screen bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
-      <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 md:ml-6">
+      <div className="py-8 md:py-12 px-4 md:px-11">
         {/* Header Section */}
         <div className="text-center mb-8 md:mb-12 relative">
           <motion.div
@@ -735,17 +737,17 @@ export function YouTubePlaylists() {
               className="py-14 lg:w-96 flex-shrink-0"
             >
               <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                      <Youtube className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg">My DevOps Channel</h3>
-                      <p className="text-red-100 text-sm">
-                        Learn DevOps Now - Thaung Htike Oo
-                      </p>
-                    </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <Youtube className="w-6 h-6" />
                   </div>
+                  <div>
+                    <h3 className="font-bold text-lg">My DevOps Channel</h3>
+                    <p className="text-red-100 text-sm">
+                      Learn DevOps Now - Thaung Htike Oo
+                    </p>
+                  </div>
+                </div>
 
                 <div className="aspect-video bg-black rounded-xl overflow-hidden mb-4 shadow-lg">
                   <iframe
@@ -771,7 +773,6 @@ export function YouTubePlaylists() {
             </motion.div>
           </motion.div>
         </div>
-
         {/* Content */}
         <div className="pb-8 md:pb-12">
           {!searchQuery ? (
@@ -912,7 +913,9 @@ export function YouTubePlaylists() {
               <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 No courses found
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">Try different keywords</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Try different keywords
+              </p>
               <button
                 onClick={() => setSearchQuery("")}
                 className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
@@ -1076,7 +1079,9 @@ function PlaylistCard({
 
             {playlist.is_burmese && (
               <div className="absolute top-3 right-3 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-lg">
-                <span className="text-sm font-semibold dark:text-gray-900">🇲🇲</span>
+                <span className="text-sm font-semibold dark:text-gray-900">
+                  🇲🇲
+                </span>
               </div>
             )}
 
@@ -1113,7 +1118,9 @@ function PlaylistCard({
         >
           <h3
             className={`font-bold line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-200 text-base leading-snug ${
-              isCompleted ? "text-gray-500 dark:text-gray-500 line-through" : "text-gray-900 dark:text-gray-100"
+              isCompleted
+                ? "text-gray-500 dark:text-gray-500 line-through"
+                : "text-gray-900 dark:text-gray-100"
             }`}
           >
             {index}. {playlist.title}

@@ -421,9 +421,9 @@ export function MinimalHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-white dark:bg-[#0A0A0A] backdrop-blur-sm">
-        {/* MOBILE HEADER - IMPROVED SEARCH DESIGN */}
+        {/* MOBILE HEADER - Updated to px-6 */}
         <div className="md:hidden">
-          <div className="flex items-center justify-between py-4 px-4 gap-3">
+          <div className="flex items-center justify-between py-4 px-6 gap-3">
             {/* Logo */}
             <Link
               href="/"
@@ -519,10 +519,10 @@ export function MinimalHeader() {
           </div>
         </div>
 
-        {/* DESKTOP HEADER - UPDATED WITH ARTICLES DROPDOWN */}
-        <div className="hidden md:flex items-center justify-between h-25 relative z-10">
+        {/* DESKTOP HEADER - Updated to use px-6 md:px-11 */}
+        <div className="hidden md:flex items-center justify-between h-25 relative z-10 px-6 md:px-11">
           {/* Logo Section */}
-          <Link href="/" className="flex items-center space-x-3 group md:ml-6">
+          <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="absolute -inset-3 bg-gradient-to-r from-blue-200 to-purple-200 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               <img
@@ -755,7 +755,7 @@ export function MinimalHeader() {
           </nav>
 
           {/* Right Section - Search + Auth */}
-          <div className="flex items-center mr-6 space-x-3">
+          <div className="flex items-center space-x-3">
             {/* Search */}
             <div className="relative w-64">
               <div className="relative group">

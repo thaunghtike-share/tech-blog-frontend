@@ -388,7 +388,7 @@ export function MinimalDevopsRoadmap() {
   return (
     <section className="relative bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6 md:mr-10">
+        <div className="px-4 md:px-11">
           {/* Header Section */}
           <motion.div
             className="mb-12 md:mb-16"

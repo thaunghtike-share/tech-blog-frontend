@@ -107,7 +107,7 @@ export function CareerPath() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 md:ml-6 md:mr-8">
+    <section className="py-16 px-4 md:px-11">
       {/* Header */}
       <motion.div
         className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-16"

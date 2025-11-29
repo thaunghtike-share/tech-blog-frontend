@@ -121,7 +121,7 @@ export function ProgrammingLanguagesRoadmap() {
 
   return (
     <section className="relative bg-white dark:bg-[#0A0A0A] py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6">
+      <div className="px-4 md:px-11">
         {/* Header Section */}
         <div className="mb-12 md:mb-16">
           <div className="max-w-3xl">

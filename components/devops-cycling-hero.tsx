@@ -117,7 +117,7 @@ const DevOpsCyclingHero = () => {
   return (
     <section className="relative bg-white overflow-hidden dark:bg-[#0A0A0A]/95">
       {/* Updated container with balanced left and right spacing */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6 md:mr-8">
+      <div className="relative px-4 md:px-11">
         <div className="flex flex-col lg:flex-row items-center justify-between md:py-10 gap-4 md:gap-8">
           {/* Left Content - Compact for mobile */}
           <motion.div
