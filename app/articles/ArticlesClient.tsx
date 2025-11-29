@@ -197,7 +197,7 @@ export default function ArticlesClient() {
     return (
       <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300 relative overflow-x-hidden">
         <MinimalHeader />
-        <main className="max-w-7xl mx-auto px-4 py-20">
+        <main className="px-6 md:px-11 py-20">
           {/* Simple Elegant Loading */}
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
             {/* Animated Logo Container */}
@@ -231,10 +231,10 @@ export default function ArticlesClient() {
       <div className="relative z-10">
         <MinimalHeader />
 
-        <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
+        <main className="px-6 md:px-11 md:py-10 relative z-10">
           <section className="w-full mb-20">
             {/* Header - Keeping your original text exactly as you had it */}
-            <div className="max-w-3xl mb-16">
+            <div className="max-w-3xl mb-11 md:mb-16">
               <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
               <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-6 leading-tight">
                 This Week's
