@@ -51,7 +51,9 @@ export function MinimalHeader() {
 
   // Mobile states
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeMobileDropdown, setActiveMobileDropdown] = useState<string | null>(null);
+  const [activeMobileDropdown, setActiveMobileDropdown] = useState<
+    string | null
+  >(null);
 
   // Desktop timeout refs
   const articlesTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -70,14 +72,18 @@ export function MinimalHeader() {
       if (resourcesTimeout.current) clearTimeout(resourcesTimeout.current);
       if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
       if (othersTimeout.current) clearTimeout(othersTimeout.current);
-      if (userDropdownTimeout.current) clearTimeout(userDropdownTimeout.current);
+      if (userDropdownTimeout.current)
+        clearTimeout(userDropdownTimeout.current);
     };
   }, []);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
         setIsMobileMenuOpen(false);
         setActiveMobileDropdown(null);
       }
@@ -115,7 +121,8 @@ export function MinimalHeader() {
         const res = await fetch(
           `${API_BASE_URL}/articles/?search=${encodeURIComponent(searchQuery)}`
         );
-        if (!res.ok) throw new Error(`Error fetching results: ${res.statusText}`);
+        if (!res.ok)
+          throw new Error(`Error fetching results: ${res.statusText}`);
         const data = await res.json();
         setSearchResults(Array.isArray(data.results) ? data.results : data);
       } catch {
@@ -125,7 +132,7 @@ export function MinimalHeader() {
         setLoading(false);
       }
     };
-    
+
     const delayDebounce = setTimeout(() => {
       fetchResults();
     }, 300);
@@ -183,13 +190,13 @@ export function MinimalHeader() {
 
   // Mobile dropdown toggle
   const toggleMobileDropdown = (dropdown: string) => {
-    setActiveMobileDropdown(activeMobileDropdown === dropdown ? null : dropdown);
+    setActiveMobileDropdown(
+      activeMobileDropdown === dropdown ? null : dropdown
+    );
   };
 
   // Mobile navigation items
-  const mobileNavItems = [
-    { href: "/", label: "Home", icon: Home },
-  ];
+  const mobileNavItems = [{ href: "/", label: "Home", icon: Home }];
 
   const mobileArticlesItems = [
     { href: "/articles", label: "All Articles" },
@@ -204,7 +211,10 @@ export function MinimalHeader() {
 
   const mobileServicesItems = [
     { href: "/services/cloud-migration", label: "Cloud Migration" },
-    { href: "/services/infrastructure-automation", label: "Infrastructure as Code" },
+    {
+      href: "/services/infrastructure-automation",
+      label: "Infrastructure as Code",
+    },
     { href: "/services/part-time-devops-support", label: "DevOps Support" },
   ];
 
@@ -235,7 +245,9 @@ export function MinimalHeader() {
         window.location.href = "/";
       } else {
         const errorData = await response.json();
-        alert(`Failed to delete account: ${errorData.error || "Unknown error"}`);
+        alert(
+          `Failed to delete account: ${errorData.error || "Unknown error"}`
+        );
         setShowDeleteConfirm(false);
       }
     } catch (error) {
@@ -446,7 +458,7 @@ export function MinimalHeader() {
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full text-sm pl-10 pr-8 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 text-black dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 font-medium h-11 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+                  className="w-full rounded-full text-xs md:text-sm pl-10 pr-8 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 text-black dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 font-medium h-11 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                   autoComplete="off"
                   spellCheck={false}
                 />
@@ -559,7 +571,8 @@ export function MinimalHeader() {
             >
               <button
                 className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
-                  pathname.includes("/articles") || pathname.includes("/100-days-cloud-challenge")
+                  pathname.includes("/articles") ||
+                  pathname.includes("/100-days-cloud-challenge")
                     ? "text-black dark:text-gray-100 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 shadow-md"
                     : "text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
@@ -588,6 +601,12 @@ export function MinimalHeader() {
                     className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium"
                   >
                     Explore 100 Days of Cloud
+                  </Link>
+                  <Link
+                    href="/categories"
+                    className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium"
+                  >
+                    Explore All Categories
                   </Link>
                 </div>
               )}
@@ -900,7 +919,7 @@ export function MinimalHeader() {
                     </p>
                   </div>
                 </div>
-                
+
                 {/* Write Article Button in Menu */}
                 <button
                   onClick={handleSignInClick}
@@ -963,7 +982,7 @@ export function MinimalHeader() {
                   }`}
                 />
               </button>
-              
+
               {activeMobileDropdown === "articles" && (
                 <div className="mt-2 ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
                   {mobileArticlesItems.map((item) => (
@@ -999,7 +1018,7 @@ export function MinimalHeader() {
                   }`}
                 />
               </button>
-              
+
               {activeMobileDropdown === "resources" && (
                 <div className="mt-2 ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
                   {mobileResourcesItems.map((item) => (
@@ -1035,7 +1054,7 @@ export function MinimalHeader() {
                   }`}
                 />
               </button>
-              
+
               {activeMobileDropdown === "services" && (
                 <div className="mt-2 ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
                   {mobileServicesItems.map((item) => (
@@ -1071,7 +1090,7 @@ export function MinimalHeader() {
                   }`}
                 />
               </button>
-              
+
               {activeMobileDropdown === "others" && (
                 <div className="mt-2 ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
                   {mobileOthersItems.map((item) => (
@@ -1116,17 +1135,20 @@ export function MinimalHeader() {
           body {
             -webkit-overflow-scrolling: touch;
           }
-          
-          button, a {
+
+          button,
+          a {
             min-height: 44px;
             min-width: 44px;
           }
-          
-          input, textarea, select {
+
+          input,
+          textarea,
+          select {
             font-size: 16px;
           }
         }
-        
+
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;
