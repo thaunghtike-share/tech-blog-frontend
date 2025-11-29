@@ -84,19 +84,19 @@ export function MinimalFooter() {
 
   return (
     <footer className="bg-white dark:bg-[#0A0A0A] relative z-10 transition-colors duration-300 overflow-hidden">
-      <div className="px-6 md:px-11 relative z-10 py-16">
+      <div className="px-6 md:px-11 relative z-10 py-12 md:py-16">
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
           {/* Brand Section */}
-          <div className="lg:col-span-2 space-y-6">
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed max-w-xl font-medium">
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
+            <p className="text-gray-700 dark:text-gray-300 text-sm md:text-lg leading-relaxed max-w-xl font-medium">
               Your go-to resource for mastering DevOps, cloud-native
               technologies, and automation. Practical guides, tutorials, and
               real-world projects.
             </p>
 
             {/* Social Media */}
-            <div className="flex space-x-4 pt-4">
+            <div className="flex space-x-3 md:space-x-4 pt-3 md:pt-4">
               {[
                 {
                   icon: Linkedin,
@@ -128,51 +128,51 @@ export function MinimalFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:scale-110 hover:shadow-lg ${social.color}`}
+                  className={`p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:scale-110 hover:shadow-lg ${social.color}`}
                 >
-                  <social.icon className="h-6 w-6" />
+                  <social.icon className="h-5 w-5 md:h-6 md:w-6" />
                 </a>
               ))}
             </div>
 
             {/* Subscribe Section */}
-            <div className="pt-6">
-              <div className="bg-white dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 border border-blue-100 dark:border-gray-700">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center">
-                  <Send className="h-5 w-5 mr-2 text-blue-500" />
+            <div className="pt-4 md:pt-6">
+              <div className="bg-white dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-900 rounded-xl md:rounded-2xl p-4 md:p-6 border border-blue-100 dark:border-gray-700">
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 md:mb-3 flex items-center">
+                  <Send className="h-4 w-4 md:h-5 md:w-5 mr-2 text-blue-500" />
                   Stay Updated
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                <p className="text-gray-600 dark:text-gray-300 mb-3 md:mb-4 text-xs md:text-sm">
                   Get the latest DevOps guides, tutorials, and project updates
                   delivered to your inbox.
                 </p>
 
                 {isSubscribed ? (
-                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 text-center">
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
                     <div className="flex items-center justify-center space-x-2 text-green-600 dark:text-green-400">
                       <Send className="h-4 w-4" />
-                      <span className="font-medium">
+                      <span className="font-medium text-sm md:text-base">
                         Thank you for subscribing!
                       </span>
                     </div>
-                    <p className="text-green-600 dark:text-green-400 text-sm mt-1">
+                    <p className="text-green-600 dark:text-green-400 text-xs md:text-sm mt-1">
                       You'll receive our next update.
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubscribe} className="space-y-3">
-                    <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-3 sm:space-y-0">
+                  <form onSubmit={handleSubscribe} className="space-y-2 md:space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 md:space-y-3 sm:space-y-0">
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
-                        className="flex-1 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 text-base sm:text-sm"
+                        className="flex-1 px-3 py-2 md:px-4 md:py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 text-sm"
                         required
                       />
                       <button
                         type="submit"
-                        className="px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium flex items-center justify-center space-x-2 text-base sm:text-sm"
+                        className="px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-lg md:rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium flex items-center justify-center space-x-2 text-sm"
                       >
                         <Send className="h-4 w-4" />
                         <span>Subscribe</span>
@@ -188,17 +188,17 @@ export function MinimalFooter() {
           </div>
 
           {/* Links Grid */}
-          <div className="grid grid-cols-2 gap-8 lg:col-span-2">
+          <div className="grid grid-cols-2 gap-6 md:gap-8 lg:col-span-2">
             {/* Quick Links & Resources */}
-            <div className="space-y-10">
+            <div className="space-y-6 md:space-y-10">
               <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-                  <Code className="h-5 w-5 mr-2 text-blue-500" />
+                <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 flex items-center">
+                  <Code className="h-4 w-4 md:h-5 md:w-5 mr-2 text-blue-500" />
                   <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     Quick Links
                   </span>
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2 md:space-y-3">
                   {[
                     { href: "/articles", label: "Articles" },
                     { href: "/categories", label: "Categories" },
@@ -208,7 +208,7 @@ export function MinimalFooter() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 flex items-center group font-medium"
+                        className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 flex items-center group font-medium text-sm md:text-base"
                       >
                         <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1" />
                         {link.label}
@@ -219,13 +219,13 @@ export function MinimalFooter() {
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-                  <Cloud className="h-5 w-5 mr-2 text-green-500" />
+                <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 flex items-center">
+                  <Cloud className="h-4 w-4 md:h-5 md:w-5 mr-2 text-green-500" />
                   <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     Resources
                   </span>
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2 md:space-y-3">
                   {[
                     {
                       href: "/learn-devops-on-youtube",
@@ -240,7 +240,7 @@ export function MinimalFooter() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 flex items-center group font-medium"
+                        className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 flex items-center group font-medium text-sm md:text-base"
                       >
                         <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1" />
                         {link.label}
@@ -252,15 +252,15 @@ export function MinimalFooter() {
             </div>
 
             {/* Services & Contact */}
-            <div className="space-y-8">
+            <div className="space-y-6 md:space-y-8">
               <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-                  <Server className="h-5 w-5 mr-2 text-orange-500" />
+                <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 flex items-center">
+                  <Server className="h-4 w-4 md:h-5 md:w-5 mr-2 text-orange-500" />
                   <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                     Services
                   </span>
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2 md:space-y-3">
                   {[
                     {
                       href: "/services/cloud-migration",
@@ -278,7 +278,7 @@ export function MinimalFooter() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-300 flex items-center group font-medium"
+                        className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-300 flex items-center group font-medium text-sm md:text-base"
                       >
                         <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1" />
                         {link.label}
@@ -289,33 +289,33 @@ export function MinimalFooter() {
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-                  <Mail className="h-5 w-5 mr-2 text-purple-500" />
+                <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 flex items-center">
+                  <Mail className="h-4 w-4 md:h-5 md:w-5 mr-2 text-purple-500" />
                   <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     Contact
                   </span>
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2 md:space-y-3">
                   <li>
                     <a
                       href="mailto:thaunghtikeoo.tho1234@gmail.com"
-                      className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 flex items-center group font-medium"
+                      className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 flex items-center group font-medium text-sm md:text-base"
                     >
-                      <Mail className="h-4 w-4 mr-3 text-purple-500" />
+                      <Mail className="h-4 w-4 mr-2 md:mr-3 text-purple-500" />
                       <span>Email Me</span>
                     </a>
                   </li>
                   <li>
                     <a
                       href="tel:+959952492359"
-                      className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 flex items-center group font-medium"
+                      className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 flex items-center group font-medium text-sm md:text-base"
                     >
-                      <Phone className="h-4 w-4 mr-3 text-green-500" />
+                      <Phone className="h-4 w-4 mr-2 md:mr-3 text-green-500" />
                       <span>+95 9952492359</span>
                     </a>
                   </li>
-                  <li className="text-gray-700 dark:text-gray-300 flex items-center font-medium">
-                    <MapPin className="h-4 w-4 mr-3 text-red-500" />
+                  <li className="text-gray-700 dark:text-gray-300 flex items-center font-medium text-sm md:text-base">
+                    <MapPin className="h-4 w-4 mr-2 md:mr-3 text-red-500" />
                     <span>Yangon, Myanmar</span>
                   </li>
                 </ul>
@@ -325,16 +325,16 @@ export function MinimalFooter() {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+        <div className="border-t border-gray-200 dark:border-gray-800 pt-6 md:pt-8">
+          <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 md:space-y-6 lg:space-y-0">
             {/* Copyright */}
-            <p className="text-gray-700 md:text-base text-sm dark:text-gray-300 text-center lg:text-left font-medium">
+            <p className="text-gray-700 text-xs md:text-sm dark:text-gray-300 text-center lg:text-left font-medium">
               &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
               reserved.
             </p>
 
             {/* Legal Links */}
-            <div className="flex flex-wrap md:text-base text-sm justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm">
               {[
                 { href: "/privacy", label: "Privacy Policy" },
                 { href: "/terms-of-service", label: "Terms of Service" },
@@ -351,7 +351,7 @@ export function MinimalFooter() {
             </div>
 
             {/* Theme Toggle */}
-            <div className="flex items-center gap-1 bg-white dark:bg-gray-800 rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-1 bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
               {[
                 { mode: "light", icon: Sun, label: "Light" },
                 { mode: "system", icon: Monitor, label: "System" },
@@ -362,14 +362,14 @@ export function MinimalFooter() {
                   onClick={() =>
                     setThemeMode(mode as "light" | "dark" | "system")
                   }
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 ${
+                  className={`flex items-center gap-1 md:gap-2 px-3 py-1 md:px-4 md:py-2 rounded-lg md:rounded-xl transition-all duration-200 ${
                     theme === mode
                       ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-lg"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
-                  <span className="text-sm font-medium">{label}</span>
+                  <Icon className="h-3 w-3 md:h-4 md:w-4" />
+                  <span className="text-xs md:text-sm font-medium">{label}</span>
                 </button>
               ))}
             </div>
