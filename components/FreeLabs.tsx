@@ -152,8 +152,7 @@ export function FreeLabs() {
       ref={sectionRef}
       className="relative min-h-screen bg-white/95 dark:bg-[#0A0A0A] overflow-hidden"
     >
-
-      <div className="relative w-full max-w-4xl mx-auto px-4 py-16 font-open-sans">
+      <div className="relative w-full max-w-4xl mx-auto px-4 py-11 md:py-8 font-open-sans">
         {/* Centered Header */}
         <motion.div
           className="text-center mb-12"
@@ -164,7 +163,7 @@ export function FreeLabs() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
+            className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
           >
             Practice DevOps with
             <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -197,54 +196,58 @@ export function FreeLabs() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={prevSlide}
-            className={`absolute -left-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all duration-300`}
+            className={`absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all duration-300`}
           >
-            <ChevronLeft className={`w-6 h-6 ${currentLab.iconColor}`} />
+            <ChevronLeft
+              className={`w-5 h-5 md:w-6 md:h-6 ${currentLab.iconColor}`}
+            />
           </motion.button>
 
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={nextSlide}
-            className={`absolute -right-16 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all duration-300`}
+            className={`absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-2xl border border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all duration-300`}
           >
-            <ChevronRight className={`w-6 h-6 ${currentLab.iconColor}`} />
+            <ChevronRight
+              className={`w-5 h-5 md:w-6 md:h-6 ${currentLab.iconColor}`}
+            />
           </motion.button>
 
           {/* Lab Card */}
-          <div className="relative h-96">
+          <div className="relative h-64 md:h-96">
             <div className="absolute inset-0">
               <div className="group relative h-full">
                 {/* Static background glow */}
                 <div
-                  className={`absolute -inset-4 ${currentLab.gradient} rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition duration-500`}
+                  className={`absolute -inset-2 md:-inset-4 ${currentLab.gradient} rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition duration-500`}
                 />
 
-                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-300 dark:border-gray-700 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 h-full flex flex-col">
+                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-300 dark:border-gray-700 rounded-3xl p-4 md:p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 h-full flex flex-col">
                   {/* Platform Badge */}
-                  <div className="flex justify-center mb-6">
+                  <div className="flex justify-center mb-4 md:mb-6">
                     <span
-                      className={`inline-flex items-center px-4 py-2 rounded-full ${currentLab.gradient} text-white font-semibold text-sm shadow-lg`}
+                      className={`inline-flex items-center px-3 py-1 md:px-4 md:py-2 rounded-full ${currentLab.gradient} text-white font-semibold text-xs md:text-sm shadow-lg`}
                     >
-                      <Star className="w-4 h-4 mr-2 fill-current" />
+                      <Star className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 fill-current" />
                       {currentLab.platform}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <div className="text-center mb-6">
-                    <h3 className="text-3xl font-bold text-black dark:text-gray-100">
+                  <div className="text-center mb-4 md:mb-6">
+                    <h3 className="text-xl md:text-3xl font-bold text-black dark:text-gray-100">
                       {currentLab.title}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-black dark:text-gray-300 text-lg leading-relaxed mb-8 flex-grow text-center px-4">
+                  <p className="text-black dark:text-gray-300 text-sm md:text-lg leading-relaxed mb-4 md:mb-8 flex-grow text-center px-2 md:px-4 line-clamp-3 md:line-clamp-none">
                     {currentLab.description}
                   </p>
 
                   {/* Difficulty and Launch Button */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 md:gap-4">
                     {/* Difficulty Badge */}
                     <div className="flex items-center gap-2 text-black dark:text-gray-300">
                       <div
@@ -253,7 +256,7 @@ export function FreeLabs() {
                           "bg"
                         )}`}
                       />
-                      <span className="text-sm font-medium">
+                      <span className="text-xs md:text-sm font-medium">
                         {currentLab.difficulty}
                       </span>
                     </div>
@@ -263,12 +266,12 @@ export function FreeLabs() {
                       href={currentLab.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center justify-center px-8 py-3 ${currentLab.gradient} text-white font-semibold rounded-xl transition-all duration-300 shadow-lg border border-white/20 group/btn`}
+                      className={`inline-flex items-center justify-center px-4 py-2 md:px-8 md:py-3 ${currentLab.gradient} text-white font-semibold rounded-xl transition-all duration-300 shadow-lg border border-white/20 group/btn text-sm md:text-base`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <Play className="w-4 h-4 mr-2" />
-                      Launch Playground
+                      <Play className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                      Launch
                       <motion.div
                         animate={{ x: [0, 4, 0] }}
                         transition={{
@@ -276,7 +279,7 @@ export function FreeLabs() {
                           repeat: Number.POSITIVE_INFINITY,
                         }}
                       >
-                        <ExternalLink className="w-4 h-4 ml-2" />
+                        <ExternalLink className="w-3 h-3 md:w-4 md:h-4 ml-1 md:ml-2" />
                       </motion.div>
                     </motion.a>
                   </div>
@@ -285,15 +288,15 @@ export function FreeLabs() {
             </div>
           </div>
 
-          {/* Progress Dots */}
-          <div className="flex justify-center mt-8 gap-3">
+          {/* Progress Dots - Simplified for mobile */}
+          <div className="flex justify-center mt-6 md:mt-8 gap-2 md:gap-3">
             {labs.map((lab, index) => (
               <motion.button
                 key={index}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-1.5 h-1.5 md:w-3 md:h-3 hidden md:block rounded-full transition-all duration-300 ${
                   index === currentSlide
                     ? `${lab.gradient} shadow-lg scale-125`
                     : "bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-500"
@@ -303,8 +306,10 @@ export function FreeLabs() {
           </div>
 
           {/* Slide Counter */}
-          <div className="text-center mt-4 text-black dark:text-gray-300 text-sm">
-            <span className="font-semibold text-black dark:text-gray-100">{currentSlide + 1}</span>{" "}
+          <div className="text-center mt-3 md:mt-4  hidden md:block text-black dark:text-gray-300 text-xs md:text-sm">
+            <span className="font-semibold text-black dark:text-gray-100">
+              {currentSlide + 1}
+            </span>{" "}
             / {labs.length}
           </div>
         </div>

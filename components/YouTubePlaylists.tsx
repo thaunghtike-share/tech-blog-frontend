@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   Circle,
   ExternalLink,
+  Zap,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -492,7 +493,7 @@ const difficultyConfig = {
     lightBg: "bg-emerald-50 dark:bg-emerald-900/20",
     textColor: "text-emerald-700 dark:text-emerald-300",
     borderColor: "border-emerald-200 dark:border-emerald-800",
-    icon: BookOpen,
+    icon: Zap,
     position: "left",
   },
   Intermediate: {
@@ -662,28 +663,26 @@ export function YouTubePlaylists() {
 
   return (
     <section className="relative min-h-screen bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
-      {/* Subtle background pattern */}
-
-      <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 font-open-sans">
+      <div className="relative max-w-7xl mx-auto py-8 md:py-12 px-4 sm:px-6 lg:px-8 md:ml-6">
         {/* Header Section */}
-        <div className="text-center mb-12 relative">
+        <div className="text-center mb-8 md:mb-12 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-12"
+            className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-8 md:mb-12"
           >
             {/* Left Content */}
             <div className="flex-1 text-left">
               <motion.div
-                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-4"
+                className="h-1 w-20 md:w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-4"
                 initial={{ width: 0 }}
-                animate={{ width: "6rem" }}
+                animate={{ width: "5rem" }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               />
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
+                className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
               >
                 Master DevOps with
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -692,10 +691,10 @@ export function YouTubePlaylists() {
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-lg text-black dark:text-gray-300 mb-6 leading-relaxed max-w-2xl"
+                className="text-base md:text-lg text-black dark:text-gray-300 mb-6 leading-relaxed max-w-2xl"
               >
                 Curated learning paths from fundamentals to advanced production
                 skills. Follow structured roadmaps with the best YouTube
@@ -704,7 +703,7 @@ export function YouTubePlaylists() {
 
               {/* Search Bar */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
                 className="relative max-w-2xl"
@@ -774,9 +773,9 @@ export function YouTubePlaylists() {
         </div>
 
         {/* Content */}
-        <div className="pb-12">
+        <div className="pb-8 md:pb-12">
           {!searchQuery ? (
-            <div className="space-y-20">
+            <div className="space-y-12 md:space-y-16">
               {difficulties.map((difficulty) => {
                 const playlists = playlistsByDifficulty[difficulty];
                 if (!playlists || playlists.length === 0) return null;
@@ -793,12 +792,12 @@ export function YouTubePlaylists() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="scroll-mt-20"
+                    className="scroll-mt-20 mb-5"
                   >
                     <div
                       className={`flex flex-col ${
                         isLeft ? "items-start" : "items-end"
-                      } mb-8`}
+                      } mb-6 md:mb-8`}
                     >
                       <div
                         className={`max-w-3xl ${
@@ -816,7 +815,7 @@ export function YouTubePlaylists() {
                             <DifficultyIcon className="w-6 h-6" />
                           </div>
                           <div>
-                            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
                               {path.title}
                             </h2>
                             <span className="text-sm font-medium text-sky-600 dark:text-sky-400 mt-1 block">
@@ -825,7 +824,7 @@ export function YouTubePlaylists() {
                           </div>
                         </div>
 
-                        <p className="text-black dark:text-gray-300 text-base leading-relaxed mb-6">
+                        <p className="text-black dark:text-gray-300 text-base leading-relaxed mb-4 md:mb-6">
                           {path.description}
                         </p>
 
@@ -879,9 +878,9 @@ export function YouTubePlaylists() {
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-16"
+              className="mb-12 md:mb-16"
             >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 md:mb-8">
                 Found {filteredPlaylists.length} courses
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -907,10 +906,10 @@ export function YouTubePlaylists() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center py-20"
+              className="text-center py-16 md:py-20"
             >
               <Search className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 No courses found
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">Try different keywords</p>

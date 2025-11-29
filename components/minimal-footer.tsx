@@ -56,7 +56,7 @@ export function MinimalFooter() {
   };
 
   return (
-    <footer className="bg-white/95 dark:bg-[#0A0A0A] py-16 md:py-20 relative z-10 transition-colors duration-300">
+    <footer className="bg-white/95 dark:bg-[#0A0A0A] md:py-20 relative z-10 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 md:ml-6">
         {/* Main grid with same spacing as header */}
         <div className="flex">
@@ -232,7 +232,7 @@ export function MinimalFooter() {
             </div>
 
             {/* Bottom section with same spacing */}
-            <div className="pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="pt-8 flex flex-col text-sm md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-gray-800 dark:text-gray-200 text-center md:text-left font-smmd:font-medium">
                 &copy; {new Date().getFullYear()} Learn DevOps Now. All rights
                 reserved.
@@ -262,7 +262,7 @@ export function MinimalFooter() {
             </div>
 
             {/* Dark Mode Toggle */}
-            <div className="flex justify-center mt-12">
+            <div className="flex justify-center mt-8 md:mt-12">
               <div className="flex items-center gap-0 rounded-lg">
                 <button
                   onClick={() => setThemeMode("light")}
