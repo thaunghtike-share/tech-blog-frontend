@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ldn-ui-v3-mobile
+  name: ldn-ui-v3
   namespace: learndevopsnow
   labels:
-    app: ldn-ui-v3-mobile
+    app: ldn-ui-v3
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ldn-ui-v3-mobile
+      app: ldn-ui-v3
   template:
     metadata:
       labels:
-        app: ldn-ui-v3-mobile
+        app: ldn-ui-v3
     spec:
       containers:
         - name: ldn-container
-          image: mahar.azurecr.io/ldn-ui-v3-mobile:latest
+          image: mahar.azurecr.io/ldn-ui-v3:latest
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
@@ -26,12 +26,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ldn-ui-v3-mobile
+  name: ldn-ui-v3
   namespace: learndevopsnow
 spec:
   type: ClusterIP
   selector:
-    app: ldn-ui-v3-mobile
+    app: ldn-ui-v3
   ports:
     - protocol: TCP
       port: 80
