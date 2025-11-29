@@ -1073,42 +1073,6 @@ export function MinimalHeader() {
                 </div>
               )}
             </div>
-
-            {/* Others Dropdown */}
-            <div className="mt-2 px-6">
-              <button
-                onClick={() => toggleMobileDropdown("others")}
-                className="flex items-center justify-between w-full px-4 py-4 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium text-lg"
-              >
-                <div className="flex items-center">
-                  <HelpCircle className="w-6 h-6 mr-3" />
-                  Others
-                </div>
-                <ChevronDown
-                  className={`w-5 h-5 transition-transform ${
-                    activeMobileDropdown === "others" ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {activeMobileDropdown === "others" && (
-                <div className="mt-2 ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
-                  {mobileOthersItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-3 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-lg transition-colors font-medium"
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
-                        setActiveMobileDropdown(null);
-                      }}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Menu Footer - Sign out for logged in users */}
