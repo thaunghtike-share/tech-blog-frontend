@@ -197,18 +197,14 @@ const roadmap: RoadmapStage[] = [
           "security",
         ],
         image: "aws.png",
-        officialLink: "https://aws.amazon.com/training/learn-about/cloud-practitioner/",
+        officialLink:
+          "https://aws.amazon.com/training/learn-about/cloud-practitioner/",
       },
       {
         title: "Virtualization",
         description:
           "Introduction to virtualization concepts using VMware or VirtualBox",
-        tags: [
-          "virtualbox",
-          "vmware",
-          "vsphere",
-          "hypervisor",
-        ],
+        tags: ["virtualbox", "vmware", "vsphere", "hypervisor"],
         image: "vmware.png",
         officialLink: "https://www.vmware.com",
       },
@@ -330,8 +326,8 @@ const stageConfig = {
     lightBg: "bg-sky-50",
     border: "border-sky-200",
     textColor: "text-sky-700",
-    tagBg: "bg-gray-100",
-    tagBorder: "border-gray-300",
+    tagBg: "bg-white",
+    tagBorder: "border-orange-300",
     tagText: "text-gray-700",
     tagHover: "hover:bg-gray-200",
     buttonBg: "bg-sky-600 hover:bg-sky-700",
@@ -343,8 +339,8 @@ const stageConfig = {
     lightBg: "bg-blue-50",
     border: "border-blue-200",
     textColor: "text-blue-700",
-    tagBg: "bg-gray-100",
-    tagBorder: "border-gray-300",
+    tagBg: "bg-white",
+    tagBorder: "border-orange-300",
     tagText: "text-gray-700",
     tagHover: "hover:bg-gray-200",
     buttonBg: "bg-blue-600 hover:bg-blue-700",
@@ -356,8 +352,8 @@ const stageConfig = {
     lightBg: "bg-green-50",
     border: "border-green-200",
     textColor: "text-green-700",
-    tagBg: "bg-gray-100",
-    tagBorder: "border-gray-300",
+    tagBg: "bg-white",
+    tagBorder: "border-orange-300",
     tagText: "text-gray-700",
     tagHover: "hover:bg-gray-200",
     buttonBg: "bg-green-600 hover:bg-green-700",
@@ -392,26 +388,26 @@ export function MinimalDevopsRoadmap() {
   return (
     <section className="relative bg-white/95 dark:bg-[#0A0A0A] overflow-hidden">
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6">
           {/* Header Section */}
           <motion.div
-            className="mb-16"
+            className="mb-12 md:mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="max-w-3xl">
               <motion.div
-                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"
+                className="h-1 w-20 md:w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-4 md:mb-6"
                 initial={{ width: 0 }}
-                animate={{ width: "6rem" }}
+                animate={{ width: "5rem" }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               />
 
               <motion.h2
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight"
+                className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 leading-tight"
               >
                 DevOps Roadmap with
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -420,10 +416,10 @@ export function MinimalDevopsRoadmap() {
               </motion.h2>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-black dark:text-gray-300 leading-relaxed"
+                className="text-base md:text-lg text-black dark:text-gray-300 leading-relaxed"
               >
                 Follow our comprehensive DevOps roadmap designed to take you
                 from complete beginner to advanced practitioner with hands-on
@@ -433,8 +429,8 @@ export function MinimalDevopsRoadmap() {
           </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-16 lg:gap-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-8 md:gap-16 lg:gap-20">
             {/* Left Side - Stage Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -442,28 +438,28 @@ export function MinimalDevopsRoadmap() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="w-full lg:w-2/5"
             >
-              <div className="space-y-8">
+              <div className="space-y-6 md:space-y-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentStage.key}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
+                    exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-6"
+                    className="space-y-4 md:space-y-6"
                   >
                     <div>
-                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 tracking-wider uppercase">
+                      <span className="text-xs font-mono text-black-500 dark:text-gray-400 tracking-wider uppercase hidden md:block">
                         Stage {currentStageIndex + 1} of {roadmap.length}
                       </span>
                       <h3
-                        className={`text-3xl md:text-4xl font-bold mt-2 tracking-tight bg-gradient-to-r ${currentConfig.gradient} bg-clip-text text-transparent`}
+                        className={`text-2xl md:text-4xl font-bold mt-1 md:mt-2 tracking-tight bg-gradient-to-r ${currentConfig.gradient} bg-clip-text text-transparent`}
                       >
                         {currentStage.label}
                       </h3>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3 md:space-y-4">
                       {currentStage.description.map((desc, index) => (
                         <p
                           key={index}
@@ -475,25 +471,25 @@ export function MinimalDevopsRoadmap() {
                     </div>
 
                     {/* Technology Logos with Links */}
-                    <div className="flex flex-wrap gap-4 pt-4">
+                    <div className="flex flex-wrap gap-3 md:gap-4 pt-3 md:pt-4">
                       {currentStage.items.map((item, index) => (
                         <motion.div
                           key={`logo-${index}`}
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.4 + index * 0.05 }}
-                          className="group flex flex-col items-center gap-2"
+                          className="group flex flex-col items-center gap-1 md:gap-2"
                         >
                           <a
                             href={item.officialLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-16 h-16 rounded-xl bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden group-hover:border-gray-400 dark:group-hover:border-gray-500 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110 cursor-pointer"
+                            className="w-12 h-12 md:w-16 md:h-16 rounded-lg md:rounded-xl bg-white dark:bg-white border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden group-hover:border-gray-400 dark:group-hover:border-gray-500 group-hover:shadow-md transition-all duration-300 group-hover:scale-105 cursor-pointer"
                           >
                             <img
                               src={`/${item.image}`}
                               alt={item.title}
-                              className="w-12 h-12 object-contain"
+                              className="w-8 h-8 md:w-12 md:h-12 object-contain"
                               onError={handleImageError}
                             />
                           </a>
@@ -501,7 +497,7 @@ export function MinimalDevopsRoadmap() {
                             href={item.officialLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-gray-700 dark:text-gray-300 text-center font-medium max-w-[70px] leading-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer"
+                            className="text-xs text-gray-700 dark:text-gray-300 text-center font-medium max-w-[60px] md:max-w-[70px] leading-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer"
                           >
                             {item.title}
                           </a>
@@ -510,18 +506,17 @@ export function MinimalDevopsRoadmap() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-
-                {/* Navigation */}
-                <div className="flex items-center gap-4 pt-4">
+                {/* Navigation - Better mobile design */}
+                <div className="flex items-center justify-between md:justify-start md:gap-4 pt-2 md:pt-4">
                   <button
                     onClick={prevStage}
-                    className="p-3 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-200 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow-md"
+                    className="p-2 md:p-3 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow-md"
                     aria-label="Previous stage"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
                   </button>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 md:gap-2">
                     {roadmap.map((stage, index) => (
                       <button
                         key={index}
@@ -532,14 +527,14 @@ export function MinimalDevopsRoadmap() {
                         aria-label={`Go to stage ${index + 1}`}
                       >
                         <div
-                          className={`h-2 rounded-full transition-all duration-300 ${
+                          className={`h-1.5 md:h-2 rounded-full transition-all duration-300 ${
                             index === currentStageIndex
-                              ? `w-10 bg-gradient-to-r ${
+                              ? `w-5 md:w-10 bg-gradient-to-r ${
                                   stageConfig[
                                     stage.key as keyof typeof stageConfig
                                   ].gradient
                                 }`
-                              : "w-2 bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
+                              : "w-1.5 md:w-2 bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
                           }`}
                         />
                       </button>
@@ -548,10 +543,10 @@ export function MinimalDevopsRoadmap() {
 
                   <button
                     onClick={nextStage}
-                    className="p-3 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-200 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow-md"
+                    className="p-2 md:p-3 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow-md"
                     aria-label="Next stage"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
                   </button>
                 </div>
 
@@ -564,38 +559,38 @@ export function MinimalDevopsRoadmap() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="w-full lg:w-3/5"
+              className="w-full lg:w-3/5 mt-6 md:mt-0"
             >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStage.key}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.5 }}
                   className="relative"
                 >
                   <div className="relative">
                     {/* Compact Timeline line */}
-                    <div className="absolute left-6 top-0 bottom-0 flex flex-col items-center">
+                    <div className="absolute left-4 md:left-6 top-0 bottom-0 flex flex-col items-center">
                       <div
                         className={`w-0.5 h-full bg-gradient-to-b ${currentConfig.gradient} rounded-full`}
                       />
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3 md:space-y-4">
                       {visibleItems.map((item, index) => (
                         <motion.div
                           key={`item-${item.title}`}
-                          initial={{ opacity: 0, x: 20 }}
+                          initial={{ opacity: 0, x: 15 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1, duration: 0.5 }}
-                          className="flex items-start gap-4 group relative"
+                          className="flex items-start gap-3 md:gap-4 group relative"
                         >
                           {/* Compact Number Bubble */}
                           <div className="flex-shrink-0 relative z-20">
                             <div
-                              className={`w-8 h-8 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-semibold text-sm shadow-md border-2 border-white dark:border-gray-900 group-hover:scale-110 transition-all duration-300`}
+                              className={`w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r ${currentConfig.gradient} flex items-center justify-center text-white font-semibold text-xs md:text-sm shadow-md border border-white dark:border-gray-900 group-hover:scale-105 transition-all duration-300`}
                             >
                               {index + 1}
                             </div>
@@ -603,26 +598,26 @@ export function MinimalDevopsRoadmap() {
 
                           {/* Compact Content Card */}
                           <div className="flex-1 min-w-0">
-                            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5 shadow-sm">
+                            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 md:p-4 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5 shadow-sm">
                               <a
                                 href={item.officialLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-base font-semibold text-sky-700 dark:text-sky-400 leading-tight mb-2 hover:text-sky-700 dark:hover:text-sky-300 transition-colors duration-200 cursor-pointer block"
+                                className="text-base font-semibold text-sky-700 dark:text-sky-400 leading-tight mb-1 md:mb-2 hover:text-sky-700 dark:hover:text-sky-300 transition-colors duration-200 cursor-pointer block"
                               >
                                 {item.title}
                               </a>
 
-                              <p className="text-sm text-black-700 dark:text-gray-300 leading-relaxed mb-3">
+                              <p className="text-sm text-black-700 dark:text-gray-300 leading-relaxed mb-2 md:mb-3">
                                 {item.description}
                               </p>
 
                               {/* Compact Tags */}
-                              <div className="flex flex-wrap gap-1.5">
+                              <div className="flex flex-wrap gap-1 md:gap-1.5">
                                 {item.tags.map((tag, tagIndex) => (
                                   <span
                                     key={tagIndex}
-                                    className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${currentConfig.tagBg} dark:bg-gray-700 border ${currentConfig.tagBorder} dark:border-gray-600 text-orange-600 dark:text-orange-400 transition-all duration-200 hover:scale-105 ${currentConfig.tagHover} dark:hover:bg-gray-600`}
+                                    className={`inline-flex items-center px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-xs font-medium ${currentConfig.tagBg} dark:bg-gray-700 border ${currentConfig.tagBorder} dark:border-gray-600 text-orange-600 dark:text-orange-400 transition-all duration-200 hover:scale-105 ${currentConfig.tagHover} dark:hover:bg-gray-600`}
                                   >
                                     {tag}
                                   </span>

@@ -150,11 +150,11 @@ export default function HomeClient() {
             <ProgrammingLanguagesRoadmap />
           </section>
 
-          <section id="youtube" className="bg-white dark:bg-[#0A0A0A]">
+          <section id="youtube" className="bg-white dark:bg-[#0A0A0A] -mt-10 md:-mt-25">
             <YouTubePlaylists />
           </section>
 
-          <section id="playgrounds" className="bg-white dark:bg-[#0A0A0A]">
+          <section id="playgrounds" className="bg-white dark:bg-[#0A0A0A] -mt-25">
             <FreeLabs />
           </section>
 

@@ -120,19 +120,19 @@ export function ProgrammingLanguagesRoadmap() {
   };
 
   return (
-    <section className="relative bg-white dark:bg-[#0A0A0A] py-16">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="relative bg-white dark:bg-[#0A0A0A] py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6">
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="mb-12 md:mb-16">
           <div className="max-w-3xl">
-            <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6" />
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
+            <div className="h-1 w-20 md:w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-4 md:mb-6" />
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 leading-tight">
               Start with Coding Before
               <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
                 Your DevOps Journey
               </span>
             </h2>
-            <p className="text-lg text-black-400 dark:text-gray-300 leading-relaxed">
+            <p className="text-base md:text-lg text-black-400 dark:text-gray-300 leading-relaxed">
               Before diving into DevOps tools and automation, it's important
               to have a solid understanding of programming. Coding skills help
               you write scripts, automate tasks, and understand how software
@@ -142,8 +142,8 @@ export function ProgrammingLanguagesRoadmap() {
         </div>
 
         {/* Circular Language Selector */}
-        <div className="relative mb-16">
-          <div className="flex justify-center items-center gap-8 flex-wrap">
+        <div className="relative mb-12 md:mb-16">
+          <div className="flex justify-center items-center gap-4 md:gap-8 flex-wrap">
             {programmingLanguages.map((language, index) => (
               <button
                 key={language.name}
@@ -153,7 +153,7 @@ export function ProgrammingLanguagesRoadmap() {
                 }`}
               >
                 <div
-                  className={`w-20 h-20 rounded-full p-4 border-4 transition-all duration-300 ${
+                  className={`w-16 h-16 md:w-20 md:h-20 rounded-full p-3 md:p-4 border-4 transition-all duration-300 ${
                     selectedLanguage === index
                       ? `border-transparent bg-gradient-to-r ${language.color} shadow-lg`
                       : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
@@ -167,7 +167,7 @@ export function ProgrammingLanguagesRoadmap() {
                   />
                 </div>
                 <span
-                  className={`mt-3 font-semibold transition-all duration-300 ${
+                  className={`mt-2 md:mt-3 text-sm md:text-base font-semibold transition-all duration-300 ${
                     selectedLanguage === index
                       ? `bg-gradient-to-r ${language.color} bg-clip-text text-transparent`
                       : 'text-gray-600 dark:text-gray-400'
@@ -176,7 +176,7 @@ export function ProgrammingLanguagesRoadmap() {
                   {language.name}
                 </span>
                 {selectedLanguage === index && (
-                  <div className={`absolute -bottom-2 w-2 h-2 rounded-full bg-gradient-to-r ${language.color}`} />
+                  <div className={`absolute -bottom-1 md:-bottom-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gradient-to-r ${language.color}`} />
                 )}
               </button>
             ))}
@@ -185,22 +185,22 @@ export function ProgrammingLanguagesRoadmap() {
 
         {/* Content Area - No Container Box */}
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
             {/* Left Column - Content */}
-            <div className="space-y-8">
+            <div className="space-y-6 md:space-y-8">
               {/* Language Header */}
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center">
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
                   <img
                     src={`/${currentLanguage.icon}`}
                     alt={currentLanguage.name}
-                    className="w-8 h-8 object-contain"
+                    className="w-6 h-6 md:w-8 md:h-8 object-contain"
                     onError={handleImageError}
                   />
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className={`text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-black-600 dark:text-gray-300`}>
+                  <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
+                    <h3 className={`text-xl md:text-3xl font-bold bg-gradient-to-r ${currentLanguage.color} bg-clip-text text-black-600 dark:text-gray-300`}>
                       {currentLanguage.name}
                     </h3>
                     <a
@@ -209,32 +209,32 @@ export function ProgrammingLanguagesRoadmap() {
                       rel="noopener noreferrer"
                       className="text-black-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                     >
-                      <ExternalLink className="w-5 h-5" />
+                      <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
                     </a>
                   </div>
-                  <p className="text-lg font-semibold text-black-500 dark:text-gray-400">
+                  <p className="text-base md:text-lg font-semibold text-black-500 dark:text-gray-400">
                     {currentLanguage.description}
                   </p>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="space-y-4">
-                <p className="text-black-600 dark:text-gray-300 leading-relaxed text-lg">
+              <div className="space-y-3 md:space-y-4">
+                <p className="text-black-600 dark:text-gray-300 leading-relaxed text-base md:text-lg">
                   {currentLanguage.fullDescription}
                 </p>
               </div>
 
               {/* Frameworks */}
-              <div className="space-y-4">
-                <h4 className="text-xl font-bold text-black-500 dark:text-gray-300">
+              <div className="space-y-3 md:space-y-4">
+                <h4 className="text-lg md:text-xl font-bold text-black-500 dark:text-gray-300">
                   Popular Frameworks & Tools
                 </h4>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 md:gap-3">
                   {currentLanguage.frameworks.map((framework, idx) => (
                     <span
                       key={idx}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium ${currentLanguage.tagColor} border-2 transition-all hover:scale-105 hover:shadow-md dark:border-gray-600`}
+                      className={`px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-medium ${currentLanguage.tagColor} border-2 transition-all hover:scale-105 hover:shadow-md dark:border-gray-600`}
                     >
                       {framework}
                     </span>
@@ -247,21 +247,21 @@ export function ProgrammingLanguagesRoadmap() {
                 href={currentLanguage.officialLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r ${currentLanguage.color} text-white font-semibold text-lg hover:shadow-xl transition-all hover:scale-105 shadow-lg`}
+                className={`inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl bg-gradient-to-r ${currentLanguage.color} text-white font-semibold text-base md:text-lg hover:shadow-xl transition-all hover:scale-105 shadow-lg`}
               >
                 Read Official Docs
-                <ExternalLink className="w-5 h-5" />
+                <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
               </a>
             </div>
 
-            {/* Right Column - Video (Using your EXACT working code) */}
-            <div className="space-y-6">
+            {/* Right Column - Video */}
+            <div className="space-y-4 md:space-y-6">
               <div className="transform transition-all duration-500 relative">
                 <div
                   className="cursor-pointer hover:scale-[1.02] transition-all duration-300"
                   onClick={handlePlayButtonClick}
                 >
-                  <div className="h-75 w-full rounded-xl overflow-hidden shadow-lg border border-gray-300 dark:border-gray-700 relative bg-gray-200 dark:bg-gray-800">
+                  <div className="h-48 md:h-75 w-full rounded-lg md:rounded-xl overflow-hidden shadow-lg border border-gray-300 dark:border-gray-700 relative bg-gray-200 dark:bg-gray-800">
                     <img
                       src={`https://img.youtube.com/vi/${currentLanguage.youtubeVideoId}/maxresdefault.jpg`}
                       alt={`${currentLanguage.name} Tutorial Preview`}
@@ -272,9 +272,9 @@ export function ProgrammingLanguagesRoadmap() {
                       }}
                     />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-20 h-13 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
+                      <div className="w-12 h-9 md:w-20 md:h-13 bg-red-600 rounded-lg md:rounded-2xl flex items-center justify-center shadow-lg hover:bg-red-700 transition-all hover:scale-110">
                         <svg
-                          className="w-10 h-10 text-white ml-1"
+                          className="w-6 h-6 md:w-10 md:h-10 text-white ml-0.5 md:ml-1"
                           viewBox="0 0 27 27"
                           fill="currentColor"
                         >
@@ -285,24 +285,24 @@ export function ProgrammingLanguagesRoadmap() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-black-600 dark:text-gray-400 text-center flex items-center justify-center gap-1">
+              <p className="text-xs md:text-sm text-black-600 dark:text-gray-400 text-center flex items-center justify-center gap-1">
                 💡 Click to watch full tutorial on YouTube
               </p>
             </div>
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mt-12 md:mt-16 pt-6 md:pt-8 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={prevLanguage}
-              className="flex items-center gap-3 px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-semibold transition-all hover:gap-4 group"
+              className="flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-semibold transition-all hover:gap-3 md:hover:gap-4 group"
             >
-              <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              Previous
+              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline">Previous</span>
             </button>
 
-            <div className="flex items-center gap-6">
-              <div className="flex gap-2">
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="flex gap-1.5 md:gap-2 hidden md:flex">
                 {programmingLanguages.map((_, index) => (
                   <button
                     key={index}
@@ -310,7 +310,7 @@ export function ProgrammingLanguagesRoadmap() {
                     className="group"
                   >
                     <div
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
                         index === currentIndex
                           ? `bg-gradient-to-r ${currentLanguage.color} scale-125`
                           : "bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
@@ -326,10 +326,10 @@ export function ProgrammingLanguagesRoadmap() {
 
             <button
               onClick={nextLanguage}
-              className="flex items-center gap-3 px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-semibold transition-all hover:gap-4 group"
+              className="flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-semibold transition-all hover:gap-3 md:hover:gap-4 group"
             >
-              Next
-              <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline">Next</span>
+              <ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
             </button>
           </div>
         </div>

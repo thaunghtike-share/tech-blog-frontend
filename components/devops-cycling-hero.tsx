@@ -116,28 +116,28 @@ const DevOpsCyclingHero = () => {
 
   return (
     <section className="relative bg-white overflow-hidden dark:bg-[#0A0A0A]/95">
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between py-7 gap-8">
-          {/* Left Content */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:ml-6">
+        <div className="flex flex-col lg:flex-row items-center justify-between md:py-10 gap-4 md:gap-8">
+          {/* Left Content - Compact for mobile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="w-full lg:w-1/2 space-y-6"
+            className="w-full lg:w-1/2 space-y-4"
           >
-            <div className="space-y-4 text-center lg:text-left">
+            <div className="space-y-3">
               <motion.div
-                className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mx-auto lg:mx-0"
+                className="h-1 w-20 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full"
                 initial={{ width: 0 }}
-                animate={{ width: "6rem" }}
+                animate={{ width: "5rem" }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               />
 
               <motion.h2
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight"
+                className="text-3xl sm:text-3xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight"
               >
                 Our Mission for
                 <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -146,10 +146,10 @@ const DevOpsCyclingHero = () => {
               </motion.h2>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
+                className="text-base sm:text-base md:text-lg text-black dark:text-gray-300 leading-relaxed max-w-xl"
               >
                 This website is for students and developers in Myanmar who want
                 to learn DevOps and boost their careers in modern software
@@ -157,17 +157,17 @@ const DevOpsCyclingHero = () => {
               </motion.p>
             </div>
 
-            {/* Image with floating animation - Increased size */}
+            {/* Image - Smaller on mobile */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative flex justify-center lg:justify-start"
+              className="relative flex"
             >
               <motion.div
-                className="relative w-full max-w-md"
+                className="relative w-full max-w-xs sm:max-w-md"
                 animate={{
-                  y: [0, -10, 0],
+                  y: [0, -5, 0],
                 }}
                 transition={{
                   duration: 4,
@@ -179,55 +179,55 @@ const DevOpsCyclingHero = () => {
                 <img
                   src="/new.png"
                   alt="DevOps Learning Platform"
-                  className="w-full h-auto object-contain drop-shadow-2xl"
+                  className="w-full h-auto object-contain drop-shadow-lg lg:drop-shadow-2xl"
                   onError={handleImageError}
                 />
               </motion.div>
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Cycling Slides - Positioned lower */}
+          {/* Right Content - Compact for mobile */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="w-full lg:w-1/2 mt-8"
+            className="hidden lg:block w-full lg:w-1/2 mt-1 md:mt-8"
           >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.5 }}
-                className="space-y-6"
+                className="space-y-3 md:space-y-6"
               >
-                <div className="space-y-4">
-                  {/* Topic indicator positioned lower */}
-                  <div className="inline-block mb-4">
-                    <span className="text-xs font-mono text-gray-500 dark:text-gray-400 tracking-wider uppercase">
+                <div className="space-y-2 md:space-y-4">
+                  {/* Topic indicator - Smaller */}
+                  <div className="inline-block mb-1 md:mb-4">
+                    <span className="text-xs font-mono text-black-500 dark:text-gray-400 tracking-wider uppercase">
                       Topic {currentSlide + 1} of {slides.length}
                     </span>
                   </div>
 
                   <h1
-                    className={`text-5xl md:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent`}
+                    className={`text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r ${currentSlideData.iconGradient} bg-clip-text text-transparent`}
                   >
                     {currentSlideData.title}
                   </h1>
 
-                  <p className="text-lg text-black dark:text-gray-300 leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-black dark:text-gray-300 leading-relaxed">
                     {currentSlideData.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-3">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 pt-1 md:pt-3">
                     {currentSlideData.tags.map((tag, index) => (
                       <motion.span
                         key={tag}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 + index * 0.05 }}
-                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-orange-500 dark:text-orange-400 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-xs font-medium bg-white dark:from-gray-800 dark:to-gray-900 border border-black-200 dark:border-gray-700 text-orange-500 dark:text-orange-400 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
                       >
                         {tag}
                       </motion.span>
@@ -235,8 +235,8 @@ const DevOpsCyclingHero = () => {
                   </div>
                 </div>
 
-                {/* Progress Indicators with gradient */}
-                <div className="flex items-center gap-2 pt-4">
+                {/* Progress Indicators - Clean and compact */}
+                <div className="flex items-center justify-center gap-1 sm:gap-2 pt-2 md:pt-4">
                   {slides.map((slide, index) => (
                     <button
                       key={index}
@@ -245,10 +245,10 @@ const DevOpsCyclingHero = () => {
                       aria-label={`Go to slide ${index + 1}`}
                     >
                       <div
-                        className={`h-2 rounded-full transition-all duration-300 ${
+                        className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full transition-all duration-300 ${
                           index === currentSlide
-                            ? `w-10 bg-gradient-to-r ${slide.iconGradient}`
-                            : "w-2 bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
+                            ? `scale-150 bg-gradient-to-r ${slide.iconGradient}`
+                            : "bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500"
                         }`}
                       />
                     </button>
