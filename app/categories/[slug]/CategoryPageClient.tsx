@@ -380,7 +380,7 @@ export default function CategoryPageClient({ slug }: Props) {
     return (
       <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
         <MinimalHeader />
-        <main className="max-w-6xl mx-auto px-4 py-20">
+        <main className="px-6 md:px-11 py-20">
           <div className="text-center">
             <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
               <Shield className="w-12 h-12 text-white" />
@@ -448,7 +448,7 @@ export default function CategoryPageClient({ slug }: Props) {
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-hidden transition-colors duration-300">
       <MinimalHeader />
 
-      <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
+      <main className="px-6 md:px-11 relative z-10">
         {/* Category Header - Premium Design */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
@@ -470,7 +470,7 @@ export default function CategoryPageClient({ slug }: Props) {
           </div>
 
           {/* Category Profile */}
-          <div className="flex flex-col lg:flex-row items-start gap-12 mb-16">
+          <div className="flex flex-col lg:flex-row items-start gap-12 md:mb-10">
             {/* Icon Section */}
             <div className="flex-shrink-0">
               <div className="relative">
@@ -555,7 +555,7 @@ export default function CategoryPageClient({ slug }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700/60 shadow-2xl overflow-hidden mb-16"
+          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700/60 shadow-2xl overflow-hidden mb-10"
         >
           <div className="px-8 py-6 border-b border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

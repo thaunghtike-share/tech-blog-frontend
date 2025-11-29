@@ -152,7 +152,7 @@ export default function CategoriesPage() {
   return (
     <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8 md:py-12">
+      <main className="px-6 md:px-11 md:py-8">
         {/* Header Section */}
         <motion.div
           className="mb-16 flex justify-start"
