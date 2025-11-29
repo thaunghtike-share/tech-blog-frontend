@@ -137,7 +137,7 @@ const ReactionButton = ({
   return (
     <button
       onClick={handleClick}
-      className={`group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 border-2 ${
+      className={`group flex items-center gap-2 px-3 py-2 md:px-4 md:py-3 rounded-xl transition-all duration-200 border-2 ${
         isActive
           ? `${getReactionColor(type)} font-semibold scale-105`
           : "text-gray-500 bg-white border-gray-200 hover:bg-gray-50 hover:scale-105 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700"
@@ -146,12 +146,14 @@ const ReactionButton = ({
       }`}
       title={!isAuthenticated ? "Please sign in to react" : ""}
     >
-      <Icon className="w-5 h-5" />
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">{getReactionName(type)}</span>
+      <Icon className="w-4 h-4 md:w-5 md:h-5" />
+      <div className="flex items-center gap-1 md:gap-2">
+        <span className="text-xs md:text-sm font-medium hidden xs:inline">
+          {getReactionName(type)}
+        </span>
         {/* ALWAYS SHOW COUNT, EVEN IF ZERO */}
         <span
-          className={`text-xs px-2 py-1 rounded-full font-semibold min-w-[20px] text-center ${
+          className={`text-xs px-1.5 py-0.5 md:px-2 md:py-1 rounded-full font-semibold min-w-[18px] md:min-w-[20px] text-center ${
             isActive
               ? "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300"
               : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
@@ -385,28 +387,28 @@ export function CommentsReactions({
     // Show confirmation toast immediately
     toast.custom(
       (t) => (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-600 max-w-sm w-full">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 shadow-xl border border-gray-200 dark:border-gray-600 max-w-sm w-full mx-4">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
-              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+              <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-red-600 dark:text-red-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm md:text-base">
                 Delete Comment
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                 This action cannot be undone
               </p>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3">
             <Button
               variant="outline"
               onClick={() => {
                 console.log("Delete cancelled");
                 toast.dismiss(t);
               }}
-              className="flex-1 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+              className="flex-1 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 text-xs md:text-sm"
             >
               Cancel
             </Button>
@@ -449,7 +451,7 @@ export function CommentsReactions({
                   toast.error("Failed to delete comment");
                 }
               }}
-              className="flex-1 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600"
+              className="flex-1 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 text-xs md:text-sm"
             >
               Delete
             </Button>
@@ -557,7 +559,7 @@ export function CommentsReactions({
       <div
         className={`mb-4 ${
           depth > 0
-            ? "ml-8 border-l-2 border-gray-100 dark:border-gray-600 pl-4"
+            ? "ml-4 md:ml-8 border-l-2 border-gray-100 dark:border-gray-600 pl-3 md:pl-4"
             : ""
         }`}
       >
@@ -565,7 +567,7 @@ export function CommentsReactions({
           {/* AVATAR - Now clickable and links to author profile */}
           <Link
             href={authorProfileLink}
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 shadow-sm overflow-hidden ${
+            className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white font-semibold text-xs md:text-sm flex-shrink-0 shadow-sm overflow-hidden ${
               comment.author_avatar ? "bg-transparent" : avatarColor
             }`}
           >
@@ -596,26 +598,28 @@ export function CommentsReactions({
 
           {/* Comment Content */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2 mb-1">
               {/* Author name now clickable and links to author profile */}
               <Link
                 href={authorProfileLink}
-                className="font-semibold text-gray-900 dark:text-gray-100 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="font-semibold text-gray-900 dark:text-gray-100 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1"
               >
                 {comment.author_name || "Anonymous"}
               </Link>
-              {comment.is_author && (
-                <span className="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs rounded-full font-medium">
-                  Author
+              <div className="flex items-center gap-2">
+                {comment.is_author && (
+                  <span className="px-1.5 py-0.5 md:px-2 md:py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs rounded-full font-medium">
+                    Author
+                  </span>
+                )}
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {new Date(comment.created_at).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
                 </span>
-              )}
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                {new Date(comment.created_at).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </span>
+              </div>
             </div>
 
             {/* Edit Form */}
@@ -657,7 +661,7 @@ export function CommentsReactions({
             )}
 
             {/* Comment Actions */}
-            <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-3 md:gap-4 flex-wrap">
               {/* Reply button */}
               {isAuthenticated ? (
                 <button
@@ -709,11 +713,11 @@ export function CommentsReactions({
 
             {/* Reply Form */}
             {replyTo === comment.id && isAuthenticated && (
-              <div className="mt-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-600">
+              <div className="mt-3 p-3 md:p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-600">
                 <Textarea
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
-                  className="mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="mb-2 md:mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                   rows={2}
                   placeholder="Write your reply..."
                 />
@@ -764,11 +768,11 @@ export function CommentsReactions({
   const displayedComments = showAllComments ? comments : comments.slice(0, 5);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Reactions Section */}
       <Card className="border border-gray-200 dark:border-gray-600 shadow-sm rounded-2xl dark:bg-gray-800">
-        <CardContent className="p-6">
-          <div className="flex flex-wrap justify-center gap-3">
+        <CardContent className="p-4 md:p-6">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3">
             <ReactionButton
               type="like"
               count={reactions.like}
@@ -809,8 +813,8 @@ export function CommentsReactions({
 
           {/* Current Reaction Status */}
           {isAuthenticated && userReactions.length > 0 && (
-            <div className="text-center mt-4 p-3 bg-blue-50 rounded-xl border border-blue-200 dark:bg-blue-900/20 dark:border-blue-700">
-              <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
+            <div className="text-center mt-3 md:mt-4 p-2 md:p-3 bg-blue-50 rounded-xl border border-blue-200 dark:bg-blue-900/20 dark:border-blue-700">
+              <p className="text-xs md:text-sm text-blue-700 dark:text-blue-300 font-medium">
                 You reacted with{" "}
                 <span className="font-semibold capitalize">
                   {userReactions[0]}
@@ -820,8 +824,8 @@ export function CommentsReactions({
           )}
 
           {!isAuthenticated && (
-            <div className="text-center mt-4">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-center mt-3 md:mt-4">
+              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium underline"
@@ -837,22 +841,22 @@ export function CommentsReactions({
 
       {/* Comments Section */}
       <Card className="border border-gray-200 dark:border-gray-600 shadow-sm rounded-2xl dark:bg-gray-800">
-        <CardContent className="p-6">
-          <h3 className="text-xl font-bold mb-6 dark:text-gray-100">
+        <CardContent className="p-4 md:p-6">
+          <h3 className="text-lg md:text-xl font-bold mb-4 md:mb-6 dark:text-gray-100">
             Comments ({comments.length})
           </h3>
 
           {/* Comment Form */}
           {isAuthenticated ? (
-            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
               <Textarea
                 placeholder="Share your thoughts..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-100"
+                className="mb-2 md:mb-3 text-sm rounded-xl resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-100"
                 rows={3}
               />
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div className="text-xs text-gray-500 dark:text-gray-400">
                   Commenting as{" "}
                   <span className="font-medium text-gray-700 dark:text-gray-300">
@@ -863,22 +867,22 @@ export function CommentsReactions({
                   onClick={() => submitComment(newComment)}
                   disabled={!newComment.trim() || loading}
                   size="sm"
-                  className="rounded-lg"
+                  className="rounded-lg w-full sm:w-auto text-xs md:text-sm"
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                   {loading ? "Posting..." : "Post Comment"}
                 </Button>
               </div>
             </div>
           ) : (
-            <div className="mb-6 p-6 text-center bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+            <div className="mb-4 md:mb-6 p-4 md:p-6 text-center bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Please sign in to leave a comment
               </p>
               <Button
                 onClick={() => setShowAuthModal(true)}
                 size="sm"
-                className="rounded-lg"
+                className="rounded-lg w-full sm:w-auto text-xs md:text-sm"
               >
                 Sign In to Comment
               </Button>
@@ -888,11 +892,11 @@ export function CommentsReactions({
           {/* Comments List */}
           <div className="space-y-4">
             {displayedComments.length === 0 ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Edit className="w-6 h-6 text-gray-400 dark:text-gray-500" />
+              <div className="text-center py-6 md:py-8">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
+                  <Edit className="w-5 h-5 md:w-6 md:h-6 text-gray-400 dark:text-gray-500" />
                 </div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
                   {isAuthenticated
                     ? "Be the first to share your thoughts!"
                     : "Sign in to be the first to comment!"}
@@ -906,20 +910,20 @@ export function CommentsReactions({
 
                 {/* Show More/Less Button - Only show if there are more than 5 comments */}
                 {comments.length > 5 && (
-                  <div className="flex justify-center pt-4">
+                  <div className="flex justify-center pt-3 md:pt-4">
                     <Button
                       variant="outline"
                       onClick={() => setShowAllComments(!showAllComments)}
-                      className="rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      className="rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 text-xs md:text-sm"
                     >
                       {showAllComments ? (
                         <>
-                          <ChevronUp className="w-4 h-4 mr-2" />
+                          <ChevronUp className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                           Show Less Comments
                         </>
                       ) : (
                         <>
-                          <ChevronDown className="w-4 h-4 mr-2" />
+                          <ChevronDown className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                           Show All {comments.length} Comments
                         </>
                       )}
@@ -935,26 +939,26 @@ export function CommentsReactions({
       {/* Modern Auth Modal */}
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full shadow-xl border border-gray-200 dark:border-gray-600">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 max-w-md w-full shadow-xl border border-gray-200 dark:border-gray-600 mx-4">
+            <div className="flex items-center justify-between mb-3 md:mb-4">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100">
                 Sign In Required
               </h3>
               <button
                 onClick={() => setShowAuthModal(false)}
                 className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <X className="w-4 h-4 md:w-5 md:h-5 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-4 md:mb-6">
               Please sign in to react to articles and leave comments.
             </p>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
               <Button
                 onClick={() => setShowAuthModal(false)}
                 variant="outline"
-                className="flex-1 rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="flex-1 rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm md:text-base"
               >
                 Close
               </Button>
@@ -963,7 +967,7 @@ export function CommentsReactions({
                   setShowAuthModal(false);
                   window.dispatchEvent(new CustomEvent("openAuthModal"));
                 }}
-                className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
+                className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-sm md:text-base"
               >
                 Sign In
               </Button>

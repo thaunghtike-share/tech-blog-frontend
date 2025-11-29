@@ -278,7 +278,7 @@ export function ArticleContent({
   });
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <main className="px-6 md:px-11 py-20 md:py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
       <article className="lg:col-span-3 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-500 p-6 md:p-8 lg:p-10">
         <div className="mb-10 md:mb-12">
           <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -330,7 +330,6 @@ export function ArticleContent({
             </div>
           )}
         </div>
-
         {article.cover_image && (
           <div className="mb-8 md:mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-xl hover:shadow-2xl transition-all duration-500">
             <img
@@ -340,7 +339,6 @@ export function ArticleContent({
             />
           </div>
         )}
-
         <div className="prose prose-lg max-w-none dark:prose-invert">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -669,7 +667,6 @@ export function ArticleContent({
             {fixMarkdownSpacing(article.content)}
           </ReactMarkdown>
         </div>
-
         <div className="mt-12 mb-6">
           <CommentsReactions
             articleSlug={article.slug}
@@ -679,9 +676,8 @@ export function ArticleContent({
             }}
           />
         </div>
-
         {/* ADD SHARE BUTTONS HERE */}
-        <div className="mb-2">
+        <div className="mb-2 hidden md:block">
           <ShareButtons
             articleId={article.id}
             title={article.title}
@@ -695,12 +691,12 @@ export function ArticleContent({
           transition={{ duration: 0.6 }}
           className="relative mb-12 mt-16"
         >
-          <div className="bg-gradient-to-br from-white dark:from-gray-800 to-slate-50 dark:to-gray-900 rounded-3xl border border-slate-200 dark:border-gray-700 p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+          <div className="bg-gradient-to-br from-white dark:from-gray-800 to-slate-50 dark:to-gray-900 rounded-3xl border border-slate-200 dark:border-gray-700 p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500">
+            <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-6">
               <div className="group relative">
                 <Link href={`/authors/${authorSlug}`} className="block">
                   <div className="relative">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1.5 shadow-2xl group-hover:scale-105 transition-transform duration-300">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-1.5 shadow-2xl group-hover:scale-105 transition-transform duration-300">
                       <img
                         src={effectiveAuthor?.avatar || "/placeholder.svg"}
                         alt={effectiveAuthor?.name || "Author"}
@@ -719,20 +715,20 @@ export function ArticleContent({
                     href={effectiveAuthor.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2.5 rounded-xl shadow-2xl transition-all duration-300 hover:scale-110"
+                    className="absolute -bottom-2 -right-2 bg-sky-600 hover:bg-sky-700 p-2 rounded-xl shadow-2xl transition-all duration-300 hover:scale-110"
                   >
-                    <Linkedin className="w-4 h-4 text-white" />
+                    <Linkedin className="w-3 h-3 md:w-4 md:h-4 text-white" />
                   </a>
                 )}
               </div>
 
-              <div className="flex-1 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-5 py-2.5 rounded-2xl text-sm font-semibold mb-3 shadow-lg">
-                  <Crown className="w-4 h-4" />
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-2xl text-sm font-semibold mb-3 shadow-lg">
+                  <Crown className="w-3 h-3 md:w-4 md:h-4" />
                   Author
                 </div>
 
-                <h3 className="font-bold text-slate-900 dark:text-white leading-tight mb-2">
+                <h3 className="font-bold text-slate-900 dark:text-white leading-tight mb-2 text-lg md:text-xl">
                   Written By
                 </h3>
 
@@ -740,19 +736,19 @@ export function ArticleContent({
                   href={`/authors/${authorSlug}`}
                   className="group block mb-3"
                 >
-                  <p className="text-xl text-sky-700 dark:text-sky-400 font-semibold mb-4 group-hover:text-sky-800 dark:group-hover:text-sky-300 transition-colors">
+                  <p className="text-lg md:text-xl text-sky-700 dark:text-sky-400 font-semibold mb-3 group-hover:text-sky-800 dark:group-hover:text-sky-300 transition-colors">
                     {effectiveAuthor?.name || "Unknown Author"}
                   </p>
                 </Link>
 
-                <p className="text-slate-700 dark:text-gray-300 leading-relaxed mb-6 max-w-2xl text-base">
+                <p className="text-slate-700 dark:text-gray-300 leading-relaxed mb-6 max-w-2xl text-sm md:text-base">
                   {effectiveAuthor?.bio || "No bio available."}
                 </p>
 
                 <Link href={`/authors/${authorSlug}`}>
-                  <Button className="group bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                  <Button className="group bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base">
                     View Author Profile
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </div>
@@ -801,7 +797,7 @@ export function ArticleContent({
         </div>
       </article>
 
-      <aside className="lg:col-span-1 space-y-6">
+      <aside className="lg:col-span-1 space-y-6 hidden md:block">
         <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl bg-white dark:bg-gray-900">
           <CardContent className="p-5">
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-sky-100 dark:border-gray-700">
