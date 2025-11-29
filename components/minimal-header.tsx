@@ -25,6 +25,7 @@ import {
   HelpCircle,
   Users,
   PenSquare,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -41,19 +42,21 @@ export function MinimalHeader() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Desktop dropdown states (YOUR ORIGINAL CODE)
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  // Desktop dropdown states
+  const [isArticlesOpen, setIsArticlesOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isOthersOpen, setIsOthersOpen] = useState(false);
 
-  // Mobile states (NEW MOBILE ONLY)
+  // Mobile states
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState<string | null>(null);
 
-  // Desktop timeout refs (YOUR ORIGINAL CODE)
-  const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
+  // Desktop timeout refs
+  const articlesTimeout = useRef<NodeJS.Timeout | null>(null);
   const resourcesTimeout = useRef<NodeJS.Timeout | null>(null);
+  const servicesTimeout = useRef<NodeJS.Timeout | null>(null);
   const userDropdownTimeout = useRef<NodeJS.Timeout | null>(null);
   const othersTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -63,15 +66,15 @@ export function MinimalHeader() {
   useEffect(() => {
     setMounted(true);
     return () => {
-      // Cleanup desktop timeouts (YOUR ORIGINAL CODE)
-      if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
+      if (articlesTimeout.current) clearTimeout(articlesTimeout.current);
       if (resourcesTimeout.current) clearTimeout(resourcesTimeout.current);
+      if (servicesTimeout.current) clearTimeout(servicesTimeout.current);
       if (othersTimeout.current) clearTimeout(othersTimeout.current);
       if (userDropdownTimeout.current) clearTimeout(userDropdownTimeout.current);
     };
   }, []);
 
-  // Close mobile menu when clicking outside (NEW MOBILE ONLY)
+  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
@@ -84,7 +87,7 @@ export function MinimalHeader() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle auth modal scroll (YOUR ORIGINAL CODE)
+  // Handle auth modal scroll
   useEffect(() => {
     if (showAuthModal) {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -98,7 +101,7 @@ export function MinimalHeader() {
     };
   }, [showAuthModal]);
 
-  // Search functionality (YOUR ORIGINAL CODE)
+  // Search functionality
   useEffect(() => {
     const fetchResults = async () => {
       if (searchQuery.trim().length < 2) {
@@ -156,7 +159,7 @@ export function MinimalHeader() {
     setShowAuthModal(false);
   };
 
-  // Desktop hover handlers (YOUR ORIGINAL CODE)
+  // Desktop hover handlers
   function handleMouseEnter(
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
     timeoutRef: React.MutableRefObject<NodeJS.Timeout | null>
@@ -178,22 +181,25 @@ export function MinimalHeader() {
     }, 200);
   }
 
-  // Mobile dropdown toggle (NEW MOBILE ONLY)
+  // Mobile dropdown toggle
   const toggleMobileDropdown = (dropdown: string) => {
     setActiveMobileDropdown(activeMobileDropdown === dropdown ? null : dropdown);
   };
 
-  // Mobile navigation items (NEW MOBILE ONLY)
+  // Mobile navigation items
   const mobileNavItems = [
     { href: "/", label: "Home", icon: Home },
-    { href: "/articles", label: "Articles", icon: FileText },
+  ];
+
+  const mobileArticlesItems = [
+    { href: "/articles", label: "All Articles" },
+    { href: "/100-days-cloud-challenge", label: "Explore 100 Days of Cloud" },
   ];
 
   const mobileResourcesItems = [
     { href: "/learn-devops-on-youtube", label: "Learn DevOps on YouTube" },
     { href: "/free-courses", label: "Learn Free Courses" },
     { href: "/devops-playgrounds", label: "Explore DevOps Playgrounds" },
-    { href: "/100-days-cloud-challenge", label: "100 Days of Cloud" },
   ];
 
   const mobileServicesItems = [
@@ -208,7 +214,7 @@ export function MinimalHeader() {
     { href: "/user-guide", label: "User Guide" },
   ];
 
-  // Delete account functionality (YOUR ORIGINAL CODE)
+  // Delete account functionality
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -241,7 +247,7 @@ export function MinimalHeader() {
     }
   };
 
-  // Delete Account Modal Component (YOUR ORIGINAL CODE)
+  // Delete Account Modal Component
   const DeleteAccountModal = () => {
     if (!showDeleteConfirm) return null;
 
@@ -320,7 +326,7 @@ export function MinimalHeader() {
     );
   };
 
-  // User Dropdown Component (YOUR ORIGINAL CODE - UNCHANGED)
+  // User Dropdown Component
   const UserDropdown = () => {
     const openDeleteConfirmation = () => {
       setIsUserDropdownOpen(false);
@@ -390,7 +396,7 @@ export function MinimalHeader() {
     );
   };
 
-  // Auth Modal Component (YOUR ORIGINAL CODE - UNCHANGED)
+  // Auth Modal Component
   const AuthModalOverlay = () => {
     if (!mounted || !showAuthModal) return null;
 
@@ -415,10 +421,10 @@ export function MinimalHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-white dark:bg-[#0A0A0A] backdrop-blur-sm">
-        {/* MOBILE HEADER - NEW IMPROVED DESIGN */}
+        {/* MOBILE HEADER - IMPROVED SEARCH DESIGN */}
         <div className="md:hidden">
-          <div className="flex items-center justify-between py-4 px-4 gap-4">
-            {/* Logo - Increased Size */}
+          <div className="flex items-center justify-between py-4 px-4 gap-3">
+            {/* Logo */}
             <Link
               href="/"
               className="flex items-center justify-start group flex-shrink-0"
@@ -427,27 +433,27 @@ export function MinimalHeader() {
               <img
                 src="/logo.png"
                 alt="Logo"
-                className="h-25 w-28 transition-transform group-hover:scale-105"
+                className="h-23 w-21 transition-transform group-hover:scale-105"
               />
             </Link>
 
-            {/* Search Bar - Centered */}
-            <div className="flex-1 relative max-w-[180px] mx-2">
+            {/* IMPROVED Search Bar - Better Width and Design */}
+            <div className="flex-1 relative max-w-[220px]">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400 w-4 h-4" />
                 <Input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full text-sm pl-10 pr-8 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 text-black dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 font-medium h-10"
+                  className="w-full rounded-full text-sm pl-10 pr-8 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 text-black dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 font-medium h-11 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                   autoComplete="off"
                   spellCheck={false}
                 />
                 {searchQuery && (
                   <button
                     onClick={handleClear}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-gray-200 w-5 h-5 flex items-center justify-center"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-gray-200 w-4 h-4 flex items-center justify-center"
                     aria-label="Clear"
                   >
                     <X className="w-3 h-3" />
@@ -455,14 +461,14 @@ export function MinimalHeader() {
                 )}
               </div>
 
-              {/* Search Results Dropdown */}
+              {/* Search Results Dropdown - Improved Design */}
               {searchQuery && searchResults.length > 0 && (
-                <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#0A0A0A] border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#0A0A0A] border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                   {searchResults.map((article) => (
                     <Link
                       key={article.id}
                       href={`/articles/${article.slug}`}
-                      className="block px-4 py-3 text-sm text-black dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 last:border-b-0 transition-all font-medium"
+                      className="block px-4 py-3 text-sm text-black dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 border-b border-gray-100 dark:border-gray-700 last:border-b-0 transition-all font-medium hover:text-blue-700 dark:hover:text-blue-300"
                       onClick={() => {
                         handleClear();
                         setIsMobileMenuOpen(false);
@@ -476,44 +482,44 @@ export function MinimalHeader() {
             </div>
 
             {/* Right Side - Avatar/Burger Menu */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {/* Show Avatar when logged in */}
               {!isLoading && isAuthenticated && (
                 <div className="relative">
                   <button
                     onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 hover:shadow-inner transition-all"
+                    className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 hover:shadow-inner transition-all"
                   >
                     {user?.avatar ? (
                       <img
                         src={user.avatar}
                         alt={user.username}
-                        className="w-10 h-10 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover"
                       />
                     ) : (
-                      <User className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                      <User className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                     )}
                   </button>
                   {isUserDropdownOpen && <UserDropdown />}
                 </div>
               )}
 
-              {/* Burger Menu - Always visible */}
+              {/* Burger Menu */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all flex-shrink-0 font-medium"
+                className="p-2 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex-shrink-0 font-medium dark:border-gray-700"
               >
                 {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 ) : (
-                  <Menu className="w-6 h-6" />
+                  <Menu className="w-5 h-5" />
                 )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* DESKTOP HEADER - YOUR ORIGINAL CODE COMPLETELY UNCHANGED */}
+        {/* DESKTOP HEADER - UPDATED WITH ARTICLES DROPDOWN */}
         <div className="hidden md:flex items-center justify-between h-25 relative z-10">
           {/* Logo Section */}
           <Link href="/" className="flex items-center space-x-3 group md:ml-6">
@@ -541,16 +547,51 @@ export function MinimalHeader() {
               <span className="relative z-10">Home</span>
             </Link>
 
-            <Link
-              href="/articles"
-              className={`px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
-                pathname.includes("/articles")
-                  ? "text-black dark:text-gray-100 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 shadow-md"
-                  : "text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
-              }`}
+            {/* Articles Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() =>
+                handleMouseEnter(setIsArticlesOpen, articlesTimeout)
+              }
+              onMouseLeave={() =>
+                handleMouseLeave(setIsArticlesOpen, articlesTimeout)
+              }
             >
-              <span className="relative z-10">Articles</span>
-            </Link>
+              <button
+                className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
+                  pathname.includes("/articles") || pathname.includes("/100-days-cloud-challenge")
+                    ? "text-black dark:text-gray-100 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 shadow-md"
+                    : "text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
+              >
+                <span className="relative z-10">Articles</span>
+                <ChevronDown className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:rotate-180" />
+              </button>
+              {isArticlesOpen && (
+                <div
+                  className="absolute top-full left-0 mt-3 w-64 bg-white dark:bg-[#0A0A0A]/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50 py-2"
+                  onMouseEnter={() =>
+                    handleMouseEnter(setIsArticlesOpen, articlesTimeout)
+                  }
+                  onMouseLeave={() =>
+                    handleMouseLeave(setIsArticlesOpen, articlesTimeout)
+                  }
+                >
+                  <Link
+                    href="/articles"
+                    className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
+                  >
+                    Read Articles
+                  </Link>
+                  <Link
+                    href="/100-days-cloud-challenge"
+                    className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium"
+                  >
+                    Explore 100 Days of Cloud
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* Resources Dropdown */}
             <div
@@ -566,7 +607,7 @@ export function MinimalHeader() {
                 className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-200 relative group font-medium ${
                   pathname.includes("/learn-devops-on-youtube") ||
                   pathname.includes("/free-courses") ||
-                  pathname.includes("/free-labs")
+                  pathname.includes("/devops-playgrounds")
                     ? "text-black dark:text-gray-100 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 shadow-md"
                     : "text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
@@ -598,15 +639,9 @@ export function MinimalHeader() {
                   </Link>
                   <Link
                     href="/devops-playgrounds"
-                    className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
+                    className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium"
                   >
                     Explore DevOps Playgrounds
-                  </Link>
-                  <Link
-                    href="/100-days-cloud-challenge"
-                    className="block px-4 py-3 text-black dark:text-gray-300 hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700 transition-all font-medium"
-                  >
-                    Explore 100 Days of Cloud
                   </Link>
                 </div>
               )}
@@ -720,7 +755,7 @@ export function MinimalHeader() {
           </nav>
 
           {/* Right Section - Search + Auth */}
-          <div className="flex items-center mr-8 space-x-3">
+          <div className="flex items-center mr-6 space-x-3">
             {/* Search */}
             <div className="relative w-64">
               <div className="relative group">
@@ -814,7 +849,7 @@ export function MinimalHeader() {
         </div>
       </header>
 
-      {/* MOBILE MENU COMPONENTS - NEW ADDITIONS */}
+      {/* MOBILE MENU COMPONENTS */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm md:hidden" />
       )}
@@ -912,14 +947,50 @@ export function MinimalHeader() {
               })}
             </div>
 
-            {/* Resources Dropdown */}
+            {/* Articles Dropdown */}
             <div className="mt-6 px-6">
+              <button
+                onClick={() => toggleMobileDropdown("articles")}
+                className="flex items-center justify-between w-full px-4 py-4 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium text-lg"
+              >
+                <div className="flex items-center">
+                  <FileText className="w-6 h-6 mr-3" />
+                  Articles
+                </div>
+                <ChevronDown
+                  className={`w-5 h-5 transition-transform ${
+                    activeMobileDropdown === "articles" ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              
+              {activeMobileDropdown === "articles" && (
+                <div className="mt-2 ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
+                  {mobileArticlesItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block px-3 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-lg transition-colors font-medium"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setActiveMobileDropdown(null);
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Resources Dropdown */}
+            <div className="mt-2 px-6">
               <button
                 onClick={() => toggleMobileDropdown("resources")}
                 className="flex items-center justify-between w-full px-4 py-4 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium text-lg"
               >
                 <div className="flex items-center">
-                  <BookOpen className="w-6 h-6 mr-3" />
+                  <Zap className="w-6 h-6 mr-3" />
                   Resources
                 </div>
                 <ChevronDown

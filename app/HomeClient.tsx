@@ -171,7 +171,7 @@ export default function HomeClient() {
           </div>
         </main>
 
-        <div id="faqs" className="bg-white dark:bg-[#0A0A0A] -mt-10">
+        <div id="faqs" className="bg-white dark:bg-[#0A0A0A] -mt-12">
           <MinimalFooter />
         </div>
       </div>

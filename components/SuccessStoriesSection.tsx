@@ -153,7 +153,7 @@ export function SuccessStoriesSection() {
 
           {/* Testimonials Container */}
           <div className="relative">
-            {/* Desktop Navigation Arrows - Above testimonials */}
+            {/* Desktop Navigation Arrows - Above testimonials (unchanged) */}
             <div className="hidden sm:flex justify-end mb-6 gap-3">
               <motion.button
                 onClick={scrollLeft}
@@ -170,26 +170,6 @@ export function SuccessStoriesSection() {
                 className="w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md"
               >
                 <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-sky-600 dark:text-sky-400" />
-              </motion.button>
-            </div>
-
-            {/* Mobile Navigation - Below header, above testimonials */}
-            <div className="sm:hidden flex justify-center mb-6 gap-4">
-              <motion.button
-                onClick={scrollLeft}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-sm hover:shadow-md"
-              >
-                <ChevronLeft className="w-5 h-5 text-sky-600 dark:text-sky-400" />
-              </motion.button>
-              <motion.button
-                onClick={scrollRight}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-sm hover:shadow-md"
-              >
-                <ChevronRight className="w-5 h-5 text-sky-600 dark:text-sky-400" />
               </motion.button>
             </div>
 
@@ -246,6 +226,26 @@ export function SuccessStoriesSection() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Mobile Navigation - Moved UNDER testimonials */}
+            <div className="sm:hidden flex justify-center mt-6 gap-4">
+              <motion.button
+                onClick={scrollLeft}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-sm hover:shadow-md"
+              >
+                <ChevronLeft className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+              </motion.button>
+              <motion.button
+                onClick={scrollRight}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-sm hover:shadow-md"
+              >
+                <ChevronRight className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+              </motion.button>
             </div>
           </div>
 
