@@ -318,8 +318,10 @@ export function TopUdemyCourses() {
   const [currentPageUdemy, setCurrentPageUdemy] = useState(0);
   const [currentPageGL, setCurrentPageGL] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRefUdemy = useRef<HTMLDivElement>(null);
+  const scrollContainerRefGL = useRef<HTMLDivElement>(null);
 
-  // Courses per page - 3 per row, 2 rows = 6 courses per page
+  // Courses per page - 3 per row, 2 rows = 6 courses per page for desktop
   const COURSES_PER_PAGE = 6;
 
   useEffect(() => {
@@ -437,6 +439,31 @@ export function TopUdemyCourses() {
     setCurrentPageGL((prev) => (prev - 1 + totalPagesGL) % totalPagesGL);
   };
 
+  // Mobile scroll handlers
+  const handleScrollUdemy = () => {
+    if (scrollContainerRefUdemy.current && window.innerWidth < 768) {
+      const container = scrollContainerRefUdemy.current;
+      const scrollLeft = container.scrollLeft;
+      const containerWidth = container.clientWidth;
+      const scrollWidth = container.scrollWidth;
+      const courseWidth = containerWidth * 0.85; // 85% of container width for each course
+      const newPage = Math.round(scrollLeft / courseWidth);
+      setCurrentPageUdemy(Math.min(newPage, courses.length - 1));
+    }
+  };
+
+  const handleScrollGL = () => {
+    if (scrollContainerRefGL.current && window.innerWidth < 768) {
+      const container = scrollContainerRefGL.current;
+      const scrollLeft = container.scrollLeft;
+      const containerWidth = container.clientWidth;
+      const scrollWidth = container.scrollWidth;
+      const courseWidth = containerWidth * 0.85; // 85% of container width for each course
+      const newPage = Math.round(scrollLeft / courseWidth);
+      setCurrentPageGL(Math.min(newPage, greatLearningCourses.length - 1));
+    }
+  };
+
   const retryFetch = () => {
     setError(null);
     setLoading(true);
@@ -486,7 +513,7 @@ export function TopUdemyCourses() {
     <>
       {/* KodeKloud Section - Left Aligned */}
       <section className="w-full bg-white/95 dark:bg-[#0A0A0A] py-16 lg:py-20 transition-colors duration-300">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="px-6 md:px-11">
           {/* Header - Left Aligned */}
           <div className="max-w-3xl mb-16">
             <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
@@ -690,8 +717,8 @@ export function TopUdemyCourses() {
             </div>
           ) : (
             <div className="relative">
-              {/* 2x3 Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {/* Desktop: 2x3 Grid Layout */}
+              <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {currentCoursesUdemy.map((course, index) => (
                   <motion.div
                     key={course.id}
@@ -765,9 +792,112 @@ export function TopUdemyCourses() {
                 ))}
               </div>
 
-              {/* Pagination Controls - Centered with arrows */}
+              {/* Mobile: Horizontal Scroll Layout */}
+              <div className="md:hidden">
+                <div 
+                  ref={scrollContainerRefUdemy}
+                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide space-x-4 pb-4 -mx-6 px-6"
+                  onScroll={handleScrollUdemy}
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                  {courses.map((course, index) => (
+                    <motion.div
+                      key={course.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex-shrink-0 w-[85vw] snap-start"
+                    >
+                      <div className="block group h-full bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div className="relative">
+                          <a
+                            href={course.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block"
+                          >
+                            <div className="relative aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-600 group-hover:border-gray-300 dark:group-hover:border-gray-500 transition-all duration-300">
+                              {course.cover_image ? (
+                                <img
+                                  src={course.cover_image || "/placeholder.svg"}
+                                  alt={course.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <BookOpen className="w-12 h-12 text-gray-300 dark:text-gray-500" />
+                                </div>
+                              )}
+                            </div>
+                          </a>
+                        </div>
+
+                        <div className="mt-4 space-y-3">
+                          <a
+                            href={course.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <h3 className="font-bold text-sky-600 dark:text-sky-400 line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-300 transition-colors duration-200 text-base leading-snug">
+                              {course.title}
+                            </h3>
+                          </a>
+
+                          <div className="flex items-center justify-between py-2 text-sm">
+                            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                              <User className="w-3 h-3 text-gray-400 dark:text-gray-500" />
+                              <span className="font-medium truncate text-xs">
+                                {course.author}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                              <Users className="w-3 h-3 text-gray-400 dark:text-gray-500" />
+                              <span className="text-xs">{course.students}</span>
+                            </div>
+                          </div>
+
+                          {course.rating && (
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-1">
+                                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                                <span className="font-medium text-gray-900 dark:text-gray-100 text-xs">
+                                  {course.rating.toFixed(1)}
+                                </span>
+                              </div>
+                              <span className="text-gray-600 dark:text-gray-400 text-xs">rating</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Mobile Indicator */}
+                <div className="flex justify-center items-center gap-3 mt-6 px-6">
+                  <div className="flex space-x-2">
+                    {courses.map((_, i) => (
+                      <div
+                        key={i}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          i === currentPageUdemy
+                            ? "bg-sky-600 dark:bg-sky-400 scale-125"
+                            : "bg-gray-300 dark:bg-gray-600"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 font-medium ml-2">
+                    {currentPageUdemy + 1} / {courses.length}
+                  </span>
+                </div>
+              </div>
+
+              {/* Desktop Pagination Controls */}
               {totalPagesUdemy > 1 && (
-                <div className="flex items-center justify-center gap-4 mb-5 mt-8">
+                <div className="hidden md:flex items-center justify-center gap-4 mb-5 mt-8">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -811,20 +941,6 @@ export function TopUdemyCourses() {
               )}
             </div>
           )}
-
-          {/* Hint Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center justify-center gap-3 mb-8"
-          >
-            <Lightbulb className="w-5 h-5 text-yellow-500" />
-            <span className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-              Use the navigation above to explore more courses
-            </span>
-            <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-          </motion.div>
         </div>
       </section>
 
@@ -882,8 +998,8 @@ export function TopUdemyCourses() {
 
           {/* Great Learning Courses Grid with Pagination */}
           <div className="relative">
-            {/* 2x3 Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Desktop: 2x3 Grid Layout */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {currentCoursesGL.map((course, index) => (
                 <motion.div
                   key={course.id}
@@ -957,9 +1073,112 @@ export function TopUdemyCourses() {
               ))}
             </div>
 
-            {/* Pagination Controls - Centered with arrows */}
+            {/* Mobile: Horizontal Scroll Layout */}
+            <div className="md:hidden">
+              <div 
+                ref={scrollContainerRefGL}
+                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide space-x-4 pb-4 -mx-6 px-6"
+                onScroll={handleScrollGL}
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {greatLearningCourses.map((course, index) => (
+                  <motion.div
+                    key={course.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex-shrink-0 w-[85vw] snap-start"
+                  >
+                    <div className="block group h-full bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                      <div className="relative">
+                        <a
+                          href={course.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block"
+                        >
+                          <div className="relative aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-600 group-hover:border-gray-300 dark:group-hover:border-gray-500 transition-all duration-300">
+                            {course.cover_image ? (
+                              <img
+                                src={course.cover_image || "/placeholder.svg"}
+                                alt={course.title}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <BookOpen className="w-12 h-12 text-gray-300 dark:text-gray-500" />
+                              </div>
+                            )}
+                          </div>
+                        </a>
+                      </div>
+
+                      <div className="mt-4 space-y-3">
+                        <a
+                          href={course.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <h3 className="font-bold text-sky-600 dark:text-sky-400 line-clamp-2 group-hover:text-sky-600 dark:group-hover:text-sky-300 transition-colors duration-200 text-base leading-snug">
+                            {course.title}
+                          </h3>
+                        </a>
+
+                        <div className="flex items-center justify-between py-2 text-sm">
+                          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                            <User className="w-3 h-3 text-gray-400 dark:text-gray-500" />
+                            <span className="font-medium truncate text-xs">
+                              {course.author}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                            <Users className="w-3 h-3 text-gray-400 dark:text-gray-500" />
+                            <span className="text-xs">{course.students}</span>
+                          </div>
+                        </div>
+
+                        {course.rating && (
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1">
+                              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                              <span className="font-medium text-gray-900 dark:text-gray-100 text-xs">
+                                {course.rating.toFixed(1)}
+                              </span>
+                            </div>
+                            <span className="text-gray-600 dark:text-gray-400 text-xs">rating</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Mobile Indicator */}
+              <div className="flex justify-center items-center gap-3 mt-6 px-6">
+                <div className="flex space-x-2">
+                  {greatLearningCourses.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        i === currentPageGL
+                          ? "bg-sky-600 dark:bg-sky-400 scale-125"
+                          : "bg-gray-300 dark:bg-gray-600"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-xs text-gray-600 dark:text-gray-400 font-medium ml-2">
+                  {currentPageGL + 1} / {greatLearningCourses.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop Pagination Controls */}
             {totalPagesGL > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-8">
+              <div className="hidden md:flex items-center justify-center gap-4 mt-8">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
