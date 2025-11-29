@@ -453,32 +453,32 @@ export default function HundredDaysCloudChallenge() {
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-hidden transition-colors duration-300">
       <MinimalHeader />
 
-      <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
+      <main className="px-4 sm:px-6 md:px-11 md:py-10 pb-8 relative z-10">
         {/* Challenge Header - Premium Design */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full mb-16"
+          className="w-full mb-12 md:mb-16"
         >
           {/* Simple Header */}
-          <div className="mb-12">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
+          <div className="mb-8 md:mb-12">
+            <div className="flex items-center gap-4 mb-4 md:mb-6">
+              <div className="h-px w-12 md:w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+              <span className="text-xs md:text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
                 Kodekloud's Cloud Challenge
               </span>
             </div>
 
-            <div className="flex flex-col lg:flex-row items-start gap-8 mb-8">
+            <div className="flex flex-col lg:flex-row items-start gap-6 md:gap-8 mb-6 md:mb-8">
               {/* KodeKloud Logo */}
               <div className="flex-shrink-0">
-                <div className="w-28 h-28 rounded-2xl border-4 border-white dark:border-gray-800 shadow-2xl overflow-hidden bg-white p-1">
+                <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl border-4 border-white dark:border-gray-800 shadow-2xl overflow-hidden bg-white p-1">
                   <div className="w-full h-full rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
                     <img
                       src="/kodekloud.webp"
                       alt="KodeKloud"
-                      className="w-20 h-20 object-contain"
+                      className="w-16 h-16 md:w-20 md:h-20 object-contain"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = "/placeholder.svg";
                       }}
@@ -489,10 +489,10 @@ export default function HundredDaysCloudChallenge() {
 
               {/* Title and Description */}
               <div className="flex-1">
-                <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
+                <h1 className="text-3xl md:text-6xl font-light text-black dark:text-white mb-4 md:mb-6 tracking-tight">
                   100 Days of Cloud Challenge
                 </h1>
-                <p className="text-xl text-black dark:text-gray-300 leading-relaxed mb-8 max-w-3xl">
+                <p className="text-base md:text-xl text-black dark:text-gray-300 leading-relaxed max-w-3xl">
                   Master cloud technologies with KodeKloud's structured learning
                   path. One concept per day, hands-on labs, and real-world
                   projects to transform your cloud skills in 100 days.
@@ -501,43 +501,43 @@ export default function HundredDaysCloudChallenge() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto py-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12 max-w-4xl mx-auto md:py-10">
             {/* Article Count */}
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-light text-black dark:text-white mb-1">
+              <div className="text-2xl md:text-4xl font-light text-black dark:text-white mb-1">
                 {totalArticles}
               </div>
-              <div className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400">
+              <div className="text-xs md:text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400">
                 Articles
               </div>
             </div>
 
             {/* Total Views */}
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-light text-black dark:text-white mb-1">
+              <div className="text-2xl md:text-4xl font-light text-black dark:text-white mb-1">
                 {totalViews.toLocaleString()}
               </div>
-              <div className="text-sm font-semibold uppercase tracking-wide text-green-600 dark:text-green-400">
+              <div className="text-xs md:text-sm font-semibold uppercase tracking-wide text-green-600 dark:text-green-400">
                 Total Views
               </div>
             </div>
 
             {/* Total Comments */}
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-light text-black dark:text-white mb-1">
+              <div className="text-2xl md:text-4xl font-light text-black dark:text-white mb-1">
                 {totalComments}
               </div>
-              <div className="text-sm font-semibold uppercase tracking-wide text-pink-600 dark:text-pink-400">
+              <div className="text-xs md:text-sm font-semibold uppercase tracking-wide text-pink-600 dark:text-pink-400">
                 Total Comments
               </div>
             </div>
 
             {/* Total Reactions */}
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-light text-black dark:text-white mb-1">
+              <div className="text-2xl md:text-4xl font-light text-black dark:text-white mb-1">
                 {totalReactions}
               </div>
-              <div className="text-sm font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400">
+              <div className="text-xs md:text-sm font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400">
                 Total Reactions
               </div>
             </div>
@@ -549,20 +549,20 @@ export default function HundredDaysCloudChallenge() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700/60 shadow-2xl overflow-hidden mb-16"
+          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl md:rounded-3xl border border-slate-200/60 dark:border-gray-700/60 shadow-2xl overflow-hidden"
         >
-          <div className="px-8 py-6 border-b border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="px-4 md:px-8 py-4 md:py-6 border-b border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 md:gap-4">
               <div>
-                <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
-                  Latest Articles
+                <h2 className="text-xl md:text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1 md:mb-2">
+                  Challenge Days
                 </h2>
-                <p className="text-slate-600 dark:text-gray-400 font-medium">
-                  {totalArticles} articles published
+                <p className="text-xs md:text-base text-slate-600 dark:text-gray-400 font-medium">
+                  {totalArticles} days published • {totalViews.toLocaleString()} total reads
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">
+              <div className="flex items-center gap-2">
+                <div className="text-xs md:text-sm text-slate-500 dark:text-gray-500 font-medium">
                   Page {currentPage} of {totalPages}
                 </div>
               </div>
@@ -570,14 +570,14 @@ export default function HundredDaysCloudChallenge() {
           </div>
 
           {articles.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                <FileText className="w-10 h-10 text-white" />
+            <div className="text-center py-12 md:py-20">
+              <div className="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl md:rounded-3xl flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl">
+                <FileText className="w-6 h-6 md:w-10 md:h-10 text-white" />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
+              <h3 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3 md:mb-4">
                 Challenge Starting Soon!
               </h3>
-              <p className="text-slate-600 dark:text-gray-400 mb-8 text-lg font-medium max-w-md mx-auto">
+              <p className="text-sm md:text-lg text-slate-600 dark:text-gray-400 mb-6 md:mb-8 font-medium max-w-md mx-auto px-4">
                 The 100 Days of Cloud Challenge is being prepared. Check back
                 soon for the first day!
               </p>
@@ -607,89 +607,87 @@ export default function HundredDaysCloudChallenge() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
+                      className="p-4 md:p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
                     >
-                      <div className="flex flex-col lg:flex-row gap-8 items-start">
-                        {/* Day Badge and Cover */}
-                        <div className="flex-shrink-0 flex flex-col items-center gap-4">
-                          {/* KodeKloud Cover Image */}
-                          <div className="w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600/50 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                            <img
-                              src={coverImage}
-                              alt={`Day ${dayNumber}`}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          </div>
+                      <div className="flex flex-col gap-4 md:gap-8 md:flex-row items-start">
+                        {/* Article Cover - Mobile Optimized */}
+                        <div className="flex-shrink-0 w-full md:w-32 h-24 md:h-32 rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600/50 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
+                          <img
+                            src={coverImage}
+                            alt={`Day ${dayNumber}`}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
                         </div>
 
-                        {/* Article Info */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex flex-wrap items-center gap-4 mb-3">
-                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                              <Calendar className="w-4 h-4 text-slate-500 dark:text-gray-500" />
+                        {/* Article Info - Mobile Optimized */}
+                        <div className="flex-1 min-w-0 w-full">
+                          {/* Article Metadata - Stacked on Mobile */}
+                          <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-2 md:mb-3">
+                            <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                              <Calendar className="w-3 h-3 md:w-4 md:h-4 text-slate-500 dark:text-gray-500" />
                               {formatDate(article.published_at)}
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                              <Clock className="w-4 h-4 text-slate-500 dark:text-gray-500" />
+                            <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                              <Clock className="w-3 h-3 md:w-4 md:h-4 text-slate-500 dark:text-gray-500" />
                               {readTime} min read
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                              <Eye className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                              {article.read_count?.toLocaleString() || "0"}{" "}
-                              views
+                            <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                              <Eye className="w-3 h-3 md:w-4 md:h-4 text-blue-600 dark:text-blue-400" />
+                              {article.read_count?.toLocaleString() || "0"} views
                             </span>
-                            <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                              <MessageSquare className="w-4 h-4 text-pink-600 dark:text-pink-400" />
-                              {article.comment_count || 0} comments
+                            <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                              <MessageSquare className="w-3 h-3 md:w-4 md:h-4 text-pink-600 dark:text-pink-400" />
+                              {article.comment_count || 0}
                             </span>
                           </div>
 
-                          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
+                          {/* Article Title */}
+                          <h3 className="text-lg md:text-2xl font-bold text-slate-800 dark:text-white mb-2 md:mb-3 line-clamp-2 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
                             <Link href={`/articles/${article.slug}`}>
                               {article.title}
                             </Link>
                           </h3>
 
-                          {/* Reactions */}
-                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                          {/* Reactions - Mobile Optimized */}
+                          <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-3 md:mb-4">
                             {(reactions.like ?? 0) > 0 && (
-                              <span className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium">
-                                <ThumbsUp className="w-4 h-4" />
+                              <span className="inline-flex items-center gap-1 text-xs md:text-sm text-blue-600 dark:text-blue-400 font-medium">
+                                <ThumbsUp className="w-3 h-3 md:w-4 md:h-4" />
                                 {reactions.like}
                               </span>
                             )}
                             {(reactions.love ?? 0) > 0 && (
-                              <span className="inline-flex items-center gap-1 text-sm text-red-500 dark:text-red-400 font-medium">
-                                <Heart className="w-4 h-4" />
+                              <span className="inline-flex items-center gap-1 text-xs md:text-sm text-red-500 dark:text-red-400 font-medium">
+                                <Heart className="w-3 h-3 md:w-4 md:h-4" />
                                 {reactions.love}
                               </span>
                             )}
                             {(reactions.celebrate ?? 0) > 0 && (
-                              <span className="inline-flex items-center gap-1 text-sm text-yellow-600 dark:text-yellow-400 font-medium">
-                                <Sparkles className="w-4 h-4" />
+                              <span className="inline-flex items-center gap-1 text-xs md:text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+                                <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
                                 {reactions.celebrate}
                               </span>
                             )}
                             {(reactions.insightful ?? 0) > 0 && (
-                              <span className="inline-flex items-center gap-1 text-sm text-green-600 dark:text-green-400 font-medium">
-                                <Lightbulb className="w-4 h-4" />
+                              <span className="inline-flex items-center gap-1 text-xs md:text-sm text-green-600 dark:text-green-400 font-medium">
+                                <Lightbulb className="w-3 h-3 md:w-4 md:h-4" />
                                 {reactions.insightful}
                               </span>
                             )}
                           </div>
 
                           {/* Article Excerpt/Content Preview */}
-                          <div className="mb-4">
-                            <p className="text-slate-600 dark:text-gray-400 text-lg leading-relaxed line-clamp-3 font-medium">
+                          <div className="mb-3 md:mb-4">
+                            <p className="text-slate-600 dark:text-gray-400 text-sm md:text-lg leading-relaxed line-clamp-2 md:line-clamp-3 font-medium">
                               {previewText}
                             </p>
                           </div>
 
                           {/* Author Info */}
                           {author && (
-                            <div className="flex items-center gap-3 mb-4">
-                              <div className="flex items-center gap-2 text-slate-700 dark:text-gray-300 font-medium">
-                                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5">
+                            <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                              <div className="flex items-center gap-1 md:gap-2 text-slate-700 dark:text-gray-300 font-medium">
+                                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5">
                                   <img
                                     src={author.avatar || "/placeholder.svg"}
                                     alt={author.name}
@@ -702,7 +700,7 @@ export default function HundredDaysCloudChallenge() {
                                 </div>
                                 <Link
                                   href={`/authors/${author.slug}`}
-                                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-xs md:text-sm"
                                 >
                                   {author.name}
                                 </Link>
@@ -711,14 +709,14 @@ export default function HundredDaysCloudChallenge() {
                           )}
                         </div>
 
-                        {/* Read More Button */}
-                        <div className="flex items-center">
+                        {/* Read More Button - Mobile Optimized */}
+                        <div className="flex items-center w-full md:w-auto justify-end md:justify-start">
                           <Link
                             href={`/articles/${article.slug}`}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105 group/btn"
+                            className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg md:rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105 group/btn text-sm md:text-base w-full md:w-auto justify-center"
                           >
-                            Read Article
-                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                            Read More
+                            <ArrowRight className="w-3 h-3 md:w-4 md:h-4 group-hover/btn:translate-x-1 transition-transform" />
                           </Link>
                         </div>
                       </div>
@@ -727,44 +725,47 @@ export default function HundredDaysCloudChallenge() {
                 })}
               </div>
 
-              {/* Pagination Controls */}
+              {/* Pagination Controls - Mobile Optimized */}
               {totalPages > 1 && (
-                <div className="px-8 py-6 border-t border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-slate-600 dark:text-gray-400 font-medium">
+                <div className="px-4 py-4 md:px-8 md:py-6 border-t border-slate-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="text-xs md:text-sm text-slate-600 dark:text-gray-400 font-medium text-center sm:text-left">
                       Showing {paginatedArticles.length} of {totalArticles} days
                     </div>
-                    <div className="flex items-center gap-2">
+                    
+                    {/* Mobile: Simple Previous/Next */}
+                    <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
                       <button
                         onClick={() =>
                           setCurrentPage((prev) => Math.max(1, prev - 1))
                         }
                         disabled={currentPage === 1}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
+                        className="flex items-center gap-1 px-3 py-2 md:px-4 md:py-2 rounded-lg md:rounded-xl border border-slate-300 dark:border-gray-600 text-xs md:text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300 flex-1 sm:flex-none justify-center"
                       >
-                        <ChevronLeft className="w-4 h-4" />
-                        Previous
+                        <ChevronLeft className="w-3 h-3 md:w-4 md:h-4" />
+                        <span className="hidden xs:inline">Previous</span>
                       </button>
 
-                      <div className="flex items-center gap-1">
+                      {/* Page Numbers - Hidden on very small screens */}
+                      <div className="hidden xs:flex items-center gap-1">
                         {Array.from(
-                          { length: Math.min(5, totalPages) },
+                          { length: Math.min(3, totalPages) },
                           (_, i) => {
                             let pageNum;
-                            if (totalPages <= 5) {
+                            if (totalPages <= 3) {
                               pageNum = i + 1;
-                            } else if (currentPage <= 3) {
+                            } else if (currentPage <= 2) {
                               pageNum = i + 1;
-                            } else if (currentPage >= totalPages - 2) {
-                              pageNum = totalPages - 4 + i;
+                            } else if (currentPage >= totalPages - 1) {
+                              pageNum = totalPages - 2 + i;
                             } else {
-                              pageNum = currentPage - 2 + i;
+                              pageNum = currentPage - 1 + i;
                             }
                             return (
                               <button
                                 key={pageNum}
                                 onClick={() => setCurrentPage(pageNum)}
-                                className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all shadow-sm ${
+                                className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl text-xs md:text-sm font-medium transition-all shadow-sm ${
                                   currentPage === pageNum
                                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
                                     : "border border-slate-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 backdrop-blur-sm"
@@ -784,11 +785,16 @@ export default function HundredDaysCloudChallenge() {
                           )
                         }
                         disabled={currentPage === totalPages}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
+                        className="flex items-center gap-1 px-3 py-2 md:px-4 md:py-2 rounded-lg md:rounded-xl border border-slate-300 dark:border-gray-600 text-xs md:text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300 flex-1 sm:flex-none justify-center"
                       >
-                        Next
-                        <ChevronRight className="w-4 h-4" />
+                        <span className="hidden xs:inline">Next</span>
+                        <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
                       </button>
+                    </div>
+
+                    {/* Mobile Page Indicator - Only show on very small screens */}
+                    <div className="xs:hidden text-xs text-slate-500 dark:text-gray-500 font-medium text-center">
+                      Page {currentPage} of {totalPages}
                     </div>
                   </div>
                 </div>

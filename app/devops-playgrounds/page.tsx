@@ -184,24 +184,24 @@ export default function DevOpsPlaygroundsPage() {
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
-      <main className="pt-10">
+      <main className="py-1 md:py-8">
         {/* Hero Section */}
-        <section className="">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="mb-8 md:mb-12">
+          <div className="px-6 md:px-11">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <div className="max-w-4xl">
-                <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-6"></div>
-                <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 leading-tight">
+                <div className="h-1 w-24 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full mb-4"></div>
+                <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 leading-tight">
                   DevOps Playgrounds
                   <span className="block bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
                     Practice in Real Environments
                   </span>
                 </h1>
-                <p className="text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
+                <p className="text-base md:text-lg text-black dark:text-gray-300 leading-relaxed max-w-3xl">
                   Free interactive playgrounds to practice DevOps skills. No setup required - 
                   learn by doing in professional environments with guided exercises.
                 </p>
@@ -211,9 +211,9 @@ export default function DevOpsPlaygroundsPage() {
         </section>
 
         {/* Playgrounds Section */}
-        <section className="py-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-12">
+        <section className="pb-8">
+          <div className="px-6 md:px-11">
+            <div className="space-y-6 md:space-y-8">
               {staticLabs.map((lab, index) => (
                 <motion.div
                   key={lab.id}
@@ -222,28 +222,28 @@ export default function DevOpsPlaygroundsPage() {
                   transition={{ delay: index * 0.1 }}
                   className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 hover:shadow-lg dark:hover:shadow-xl"
                 >
-                  <div className="p-8">
-                    <div className="flex flex-col lg:flex-row gap-8">
+                  <div className="p-6 md:p-8">
+                    <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
                       {/* Left Content */}
                       <div className="flex-1">
                         {/* Header */}
-                        <div className="flex items-start gap-4 mb-6">
+                        <div className="flex items-start gap-4 mb-4">
                           <div className={`p-3 rounded-2xl ${lab.gradient} text-white`}>
                             <lab.icon className="w-6 h-6" />
                           </div>
                           <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
+                            <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white mb-2">
                               {lab.title}
                             </h2>
-                            <div className="flex flex-wrap items-center gap-3 mb-4">
-                              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${lab.gradient} text-white`}>
+                            <div className="flex flex-wrap items-center gap-2 mb-3">
+                              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${lab.gradient} text-white`}>
                                 <Star className="w-3 h-3 mr-1" />
                                 {lab.platform}
                               </span>
-                              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-300">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-300">
                                 {lab.category}
                               </span>
-                              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-300">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-300">
                                 <Clock className="w-3 h-3 mr-1" />
                                 {lab.duration}
                               </span>
@@ -252,26 +252,26 @@ export default function DevOpsPlaygroundsPage() {
                         </div>
 
                         {/* Description */}
-                        <p className="text-black dark:text-gray-300 text-lg leading-relaxed mb-6">
+                        <p className="text-black dark:text-gray-300 text-base leading-relaxed mb-4">
                           {lab.description}
                         </p>
 
                         {/* Platform Explanation */}
-                        <div className="mb-6">
-                          <h3 className="text-sm font-semibold text-black dark:text-gray-400 mb-3 uppercase tracking-wide">What you get:</h3>
-                          <p className="text-black dark:text-gray-300 leading-relaxed">
+                        <div className="mb-4">
+                          <h3 className="text-xs font-semibold text-black dark:text-gray-400 mb-2 uppercase tracking-wide">What you get:</h3>
+                          <p className="text-black dark:text-gray-300 leading-relaxed text-sm">
                             {lab.platformExplanation}
                           </p>
                         </div>
 
                         {/* Available Playgrounds */}
-                        <div className="mb-6">
-                          <h3 className="text-sm font-semibold text-black dark:text-gray-400 mb-3 uppercase tracking-wide">Available Labs:</h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="mb-4">
+                          <h3 className="text-xs font-semibold text-black dark:text-gray-400 mb-2 uppercase tracking-wide">Available Labs:</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                             {lab.playgrounds.map((playground, pIndex) => (
                               <div key={pIndex} className="flex items-center gap-2 text-black dark:text-gray-300">
                                 <div className={`w-1.5 h-1.5 rounded-full ${lab.iconColor.replace('text', 'bg')}`}></div>
-                                <span className="text-sm">{playground}</span>
+                                <span className="text-xs md:text-sm">{playground}</span>
                               </div>
                             ))}
                           </div>
@@ -279,21 +279,21 @@ export default function DevOpsPlaygroundsPage() {
                       </div>
 
                       {/* Right Side - Action */}
-                      <div className="lg:w-64 flex-shrink-0">
-                        <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                      <div className="lg:w-56 flex-shrink-0">
+                        <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 border border-gray-200 dark:border-gray-600">
                           <motion.a
                             href={lab.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`w-full inline-flex items-center justify-center px-6 py-3 ${lab.gradient} text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg mb-4`}
+                            className={`w-full inline-flex items-center justify-center px-4 py-2 ${lab.gradient} text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg mb-3 text-sm`}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <Play className="w-4 h-4 mr-2" />
+                            <Play className="w-3 h-3 mr-1" />
                             Launch
-                            <ExternalLink className="w-4 h-4 ml-2" />
+                            <ExternalLink className="w-3 h-3 ml-1" />
                           </motion.a>
-                          <div className="text-center text-sm text-black dark:text-gray-400">
+                          <div className="text-center text-xs text-black dark:text-gray-400">
                             Free access • No registration required
                           </div>
                         </div>

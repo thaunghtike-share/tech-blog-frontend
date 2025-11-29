@@ -150,28 +150,28 @@ export default function HomeClient() {
             <ProgrammingLanguagesRoadmap />
           </section>
 
-          <section id="youtube" className="bg-white dark:bg-[#0A0A0A]">
+          <section id="youtube" className="bg-white dark:bg-[#0A0A0A] -mt-10 md:-mt-10">
             <YouTubePlaylists />
           </section>
 
-          <section id="playgrounds" className="bg-white dark:bg-[#0A0A0A]">
+          <section id="playgrounds" className="bg-white dark:bg-[#0A0A0A] md:-mt-18 hidden md:block">
             <FreeLabs />
           </section>
 
-          <div id="cert" className="bg-white dark:bg-[#0A0A0A]">
+          <div id="cert" className="bg-white dark:bg-[#0A0A0A] -mt-18 md:-mt-18">
             <CertificationRoadmap />
           </div>
 
-          <section id="career" className="bg-white dark:bg-[#0A0A0A]">
+          <section id="career" className="bg-white dark:bg-[#0A0A0A] -mt-14 hidden md:block">
             <CareerPath />
           </section>
 
-          <div className="bg-white dark:bg-[#0A0A0A]">
+          <div className="bg-white dark:bg-[#0A0A0A] -mt-17 md:-mt-12">
             <SuccessStoriesSection />
           </div>
         </main>
 
-        <div id="faqs" className="bg-white dark:bg-[#0A0A0A]">
+        <div id="faqs" className="bg-white dark:bg-[#0A0A0A] -mt-12">
           <MinimalFooter />
         </div>
       </div>

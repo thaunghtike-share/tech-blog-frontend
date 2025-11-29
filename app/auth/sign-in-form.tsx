@@ -24,7 +24,7 @@ export default function SignInForm({
   const googleInitialized = useRef(false);
   const googleButtonRef = useRef<HTMLDivElement>(null);
 
-  // Initialize Google Sign-In
+  // Initialize Google Sign-In (unchanged)
   useEffect(() => {
     const initializeGoogleSignIn = () => {
       if (googleInitialized.current) return;
@@ -48,7 +48,7 @@ export default function SignInForm({
             {
               theme: "outline",
               size: "large",
-              width: "380",
+              width: "380", // This will auto-adjust on mobile
               text: "signin_with",
               shape: "pill",
             }
@@ -103,7 +103,6 @@ export default function SignInForm({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    // Hide hint when user starts typing again
     if (showHint) {
       setShowHint(false);
       setPasswordHint("");
@@ -135,10 +134,9 @@ export default function SignInForm({
       const data = await res.json();
       const authToken = data.token;
 
-      // ✅ FIXED: Include all required User properties
       login(authToken, {
-        id: data.user?.id || data.author?.id || 0, // Add ID (provide default)
-        slug: data.author?.slug || "", // Add slug
+        id: data.user?.id || data.author?.id || 0,
+        slug: data.author?.slug || "",
         username: data.user?.username || formData.username,
         email: data.user?.email || "",
         avatar: data.author?.avatar,
@@ -198,10 +196,9 @@ export default function SignInForm({
 
       const authToken = data.token;
 
-      // ✅ FIXED: Include all required User properties
       login(authToken, {
-        id: data.user?.id || data.author?.id || 0, // Add ID (provide default)
-        slug: data.author?.slug || "", // Add slug
+        id: data.user?.id || data.author?.id || 0,
+        slug: data.author?.slug || "",
         username: data.user?.username || data.user?.first_name || "User",
         email: data.user?.email || "",
         avatar: data.author?.avatar || data.user?.avatar,
@@ -228,22 +225,27 @@ export default function SignInForm({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Google Sign In */}
+    <div className="space-y-4 sm:space-y-6"> {/* Reduced spacing on mobile */}
+      {/* Google Sign In - improved mobile container */}
       <div className="space-y-3">
-        <div ref={googleButtonRef} className="flex justify-center"></div>
+        <div 
+          ref={googleButtonRef} 
+          className="flex justify-center google-signin-container"
+          style={{ minHeight: '44px' }} // Better touch target
+        ></div>
       </div>
 
-      <div className="flex items-center my-4">
+      {/* Divider - adjusted spacing */}
+      <div className="flex items-center my-3 sm:my-4">
         <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
-        <span className="mx-4 text-gray-500 dark:text-gray-400 text-sm">OR</span>
+        <span className="mx-3 sm:mx-4 text-gray-500 dark:text-gray-400 text-xs sm:text-sm">OR</span>
         <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
       </div>
 
-      {/* Username/Password Form */}
-      <form onSubmit={handleFormSubmit} className="space-y-4">
+      {/* Username/Password Form - improved mobile spacing */}
+      <form onSubmit={handleFormSubmit} className="space-y-3 sm:space-y-4">
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block mb-1 sm:mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
             Username or Email
           </label>
           <input
@@ -252,12 +254,12 @@ export default function SignInForm({
             value={formData.username}
             onChange={handleInputChange}
             required
-            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Enter your username or email"
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block mb-1 sm:mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
             Password
           </label>
           <input
@@ -266,24 +268,23 @@ export default function SignInForm({
             value={formData.password}
             onChange={handleInputChange}
             required
-            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Enter your password"
           />
 
-          {/* ✅ PASSWORD HINT AND FORGOT PASSWORD IN ONE LINE */}
-          <div className="flex justify-between items-center mt-2">
-            {/* Password Hint */}
+          {/* Password Hint and Forgot Password - improved mobile layout */}
+          <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-1 xs:gap-0 mt-1 sm:mt-2">
+            {/* Password Hint - full width on very small screens */}
             {showHint && passwordHint && (
-              <div className="text-xs text-blue-600 dark:text-blue-400">
+              <div className="text-xs text-blue-600 dark:text-blue-400 xs:flex-1">
                 <span className="font-medium">Hint:</span> "{passwordHint}"
               </div>
             )}
-
-            {/* Forgot Password - pushes to right */}
+            {/* Forgot Password */}
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium text-sm"
+              className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium text-xs sm:text-sm text-right xs:text-left"
             >
               Forgot Password?
             </button>
@@ -293,20 +294,20 @@ export default function SignInForm({
         <button
           type="submit"
           disabled={formLoading}
-          className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-2.5 sm:py-3 rounded-xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
         >
           {formLoading ? "Signing in..." : "Sign In"}
         </button>
       </form>
 
-      {/* Sign Up Link */}
-      <div className="text-center pt-4 border-t border-gray-200 dark:border-gray-600">
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
+      {/* Sign Up Link - adjusted padding and text size */}
+      <div className="text-center pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-600">
+        <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
           Don't have an account?{" "}
           <button
             type="button"
             onClick={switchToSignUp}
-            className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium"
+            className="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium text-xs sm:text-sm"
           >
             Sign Up
           </button>
@@ -314,7 +315,7 @@ export default function SignInForm({
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm">
+        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-xs sm:text-sm">
           <div className="text-red-700 dark:text-red-400 mb-2">{error}</div>
         </div>
       )}

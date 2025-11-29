@@ -8,10 +8,10 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ onSuccess }: AuthModalProps) {
-  const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin"); // Changed to signin first
+  const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
-  // Load Google Identity Services script
+  // Load Google Identity Services script (unchanged)
   useEffect(() => {
     const loadGoogleScript = () => {
       if (document.querySelector('script[src*="accounts.google.com/gsi/client"]')) {
@@ -29,7 +29,7 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
       };
       script.onerror = () => {
         console.error("Failed to load Google Sign-In script");
-        setGoogleScriptLoaded(true); // Still allow form-based auth
+        setGoogleScriptLoaded(true);
       };
       document.body.appendChild(script);
     };
@@ -38,24 +38,27 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+    <div className="max-w-md mx-auto px-4 sm:px-6"> {/* Added horizontal padding */}
+      {/* Reduced padding on mobile, increased shadow for better depth */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl sm:shadow-lg p-6 sm:p-8">
+        
+        {/* Text sizing improvements for mobile */}
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
             {activeTab === "signup" ? "Join Our Community" : "Welcome Back"}
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
             {activeTab === "signup" 
               ? "Create an account to share your knowledge" 
               : "Sign in to your account to continue"}
           </p>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex border-b border-gray-200 dark:border-gray-600 mb-6">
+        {/* Tab Navigation - improved mobile sizing */}
+        <div className="flex border-b border-gray-200 dark:border-gray-600 mb-4 sm:mb-6">
           <button
             onClick={() => setActiveTab("signin")}
-            className={`flex-1 py-3 font-medium text-sm ${
+            className={`flex-1 py-2 sm:py-3 font-medium text-xs sm:text-sm ${
               activeTab === "signin"
                 ? "text-sky-600 dark:text-sky-400 border-b-2 border-sky-600 dark:border-sky-400"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
@@ -65,7 +68,7 @@ export default function AuthModal({ onSuccess }: AuthModalProps) {
           </button>
           <button
             onClick={() => setActiveTab("signup")}
-            className={`flex-1 py-3 font-medium text-sm ${
+            className={`flex-1 py-2 sm:py-3 font-medium text-xs sm:text-sm ${
               activeTab === "signup"
                 ? "text-sky-600 dark:text-sky-400 border-b-2 border-sky-600 dark:border-sky-400"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
