@@ -88,7 +88,7 @@ export default function DocsPage() {
     <div className="min-h-screen bg-white/95 dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
-      <main className="px-4 py-6 md:px-11 md:py-8">
+      <main className="px-4 md:px-11 md:py-8">
         {/* Header */}
         <div className="mb-8 md:mb-12">
           <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">

@@ -952,7 +952,7 @@ export function CommentsReactions({
               </button>
             </div>
             <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-4 md:mb-6">
-              Please sign in to react to articles and leave comments.
+              Please sign in via write article button in header to react to articles and leave comments.
             </p>
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
               <Button
@@ -961,15 +961,6 @@ export function CommentsReactions({
                 className="flex-1 rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm md:text-base"
               >
                 Close
-              </Button>
-              <Button
-                onClick={() => {
-                  setShowAuthModal(false);
-                  window.dispatchEvent(new CustomEvent("openAuthModal"));
-                }}
-                className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-sm md:text-base"
-              >
-                Sign In
               </Button>
             </div>
           </div>
