@@ -32,10 +32,10 @@ import {
   BookOpen,
   ShieldOff,
   Ban,
-  MessageSquare, // ADDED: For comments
-  Heart, // ADDED: For reactions
-  ThumbsUp, // ADDED: For reactions
-  Lightbulb, // ADDED: For reactions
+  MessageSquare,
+  Heart,
+  ThumbsUp,
+  Lightbulb,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import BanNotification from "@/components/BanNotification";
@@ -62,8 +62,8 @@ interface Article {
     name: string;
     slug: string;
   }[];
-  comment_count?: number; // ADDED
-  reactions_summary?: { // ADDED
+  comment_count?: number;
+  reactions_summary?: {
     like?: number;
     love?: number;
     celebrate?: number;
@@ -187,7 +187,6 @@ export default function AuthorAdminDashboard() {
   const [banDetails, setBanDetails] = useState<BanDetails | null>(null);
   const articlesPerPage = 8;
 
-  // Delete confirmation modal state
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
     article: Article | null;
@@ -198,7 +197,6 @@ export default function AuthorAdminDashboard() {
     isLoading: false,
   });
 
-  // Calculate read time function
   const calculateReadTime = (content?: string) => {
     if (!content) return 5;
     const wordsPerMinute = 200;
@@ -206,7 +204,6 @@ export default function AuthorAdminDashboard() {
     return Math.max(1, Math.ceil(words / wordsPerMinute));
   };
 
-  // Check ban status
   const checkBanStatus = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -242,7 +239,6 @@ export default function AuthorAdminDashboard() {
     }
   };
 
-  // 🔐 AUTHENTICATION CHECK - Show modal if not authenticated
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       setShowLoginModal(true);
@@ -253,7 +249,6 @@ export default function AuthorAdminDashboard() {
 
   useEffect(() => {
     async function fetchAuthorData() {
-      // 🔐 Check authentication before making API call
       if (!isAuthenticated || isLoading) return;
 
       try {
@@ -294,17 +289,14 @@ export default function AuthorAdminDashboard() {
           return;
         }
 
-        // 🔥 ENHANCED: Fetch comments and reactions for each article
         if (data.articles) {
           const articlesWithEngagement = await Promise.all(
             data.articles.map(async (article: Article) => {
               try {
-                // Fetch comments
                 const commentsRes = await fetch(
                   `${API_BASE_URL}/articles/${article.slug}/comments/`
                 );
                 
-                // Fetch reactions
                 const reactionsRes = await fetch(
                   `${API_BASE_URL}/articles/${article.slug}/reactions/`
                 );
@@ -319,7 +311,6 @@ export default function AuthorAdminDashboard() {
 
                 if (commentsRes.ok) {
                   const commentsData = await commentsRes.json();
-                  // Count all comments (including replies)
                   comment_count = commentsData.reduce((total: number, comment: any) => {
                     return total + 1 + (comment.replies?.length || 0);
                   }, 0);
@@ -345,7 +336,6 @@ export default function AuthorAdminDashboard() {
                 console.error(`Failed to fetch engagement for article ${article.slug}:`, error);
               }
               
-              // Fallback if fetch fails
               return {
                 ...article,
                 comment_count: 0,
@@ -372,7 +362,6 @@ export default function AuthorAdminDashboard() {
           articles: data.articles || [],
         });
 
-        // Check ban status after loading author data
         await checkBanStatus();
       } catch (err) {
         console.error("Error fetching author data:", err);
@@ -387,7 +376,6 @@ export default function AuthorAdminDashboard() {
     }
   }, [slug, isAuthenticated, isLoading, router]);
 
-  // Delete Article Function
   const handleDeleteArticle = async (articleSlug: string) => {
     setDeleteModal((prev) => ({ ...prev, isLoading: true }));
 
@@ -437,7 +425,6 @@ export default function AuthorAdminDashboard() {
     }
   };
 
-  // Open delete confirmation modal
   const openDeleteModal = (article: Article) => {
     setDeleteModal({
       isOpen: true,
@@ -446,7 +433,6 @@ export default function AuthorAdminDashboard() {
     });
   };
 
-  // Close delete confirmation modal
   const closeDeleteModal = () => {
     if (!deleteModal.isLoading) {
       setDeleteModal({
@@ -467,7 +453,6 @@ export default function AuthorAdminDashboard() {
     setShowLoginModal(false);
   };
 
-  // Calculate stats
   const totalArticles = author?.articles?.length || 0;
   const totalViews =
     author?.articles?.reduce(
@@ -477,7 +462,6 @@ export default function AuthorAdminDashboard() {
   const avgViews =
     totalArticles > 0 ? Math.round(totalViews / totalArticles) : 0;
 
-  // 🔥 NEW: Calculate total comments and reactions
   const totalComments = author?.articles?.reduce(
     (sum, article) => sum + (article.comment_count || 0),
     0
@@ -497,7 +481,6 @@ export default function AuthorAdminDashboard() {
   const avgReadTime =
     totalArticles > 0 ? Math.round(totalReadTime / totalArticles) : 0;
 
-  // Get author performance tier (same as author detail page)
   const getAuthorTier = () => {
     if (totalViews > 100000)
       return {
@@ -543,54 +526,36 @@ export default function AuthorAdminDashboard() {
     return "/devops.webp";
   };
 
-  // Strip markdown for excerpt - FIXED VERSION
   const stripMarkdown = (md?: string) => {
     if (!md) return "";
     let text = md;
     
-    // Remove ALL markdown headers first (##, ###, etc.)
     text = text.replace(/^#{1,6}\s+/gm, "");
-    
-    // Remove code blocks but keep content
-    text = text.replace(/```[\s\S]*?```/g, ""); // Remove multi-line code blocks completely
-    text = text.replace(/`([^`]*)`/g, "$1"); // Remove backticks but keep inline code content
-    
-    // Remove images
+    text = text.replace(/```[\s\S]*?```/g, "");
+    text = text.replace(/`([^`]*)`/g, "$1");
     text = text.replace(/!\[.*?\]\$\$.*?\$\$/g, "");
     text = text.replace(/!\[.*?\]\(.*?\)/g, "");
-    
-    // Remove links but keep text
     text = text.replace(/\[(.*?)\]\\$\$.*?\\$\$/g, "$1");
     text = text.replace(/\[(.*?)\]\(.*?\)/g, "$1");
-    
-    // Remove remaining markdown formatting
-    text = text.replace(/[*_~>/\\-]/g, ""); // Remove all markdown symbols (except # which we handled above)
-    text = text.replace(/^\s*[-*+]\s+/gm, ""); // Remove list markers
-    text = text.replace(/^\s*\d+\.\s+/gm, ""); // Remove numbered lists
-    text = text.replace(/<[^>]+>/g, ""); // Remove HTML tags
-    
-    // Remove blockquotes
+    text = text.replace(/[*_~>/\\-]/g, "");
+    text = text.replace(/^\s*[-*+]\s+/gm, "");
+    text = text.replace(/^\s*\d+\.\s+/gm, "");
+    text = text.replace(/<[^>]+>/g, "");
     text = text.replace(/^>\s+/gm, "");
-    
-    // Clean up extra whitespace and trim
     text = text.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
     
     return text;
   };
 
-  // Smart excerpt generator that skips redundant headings
   const getCleanExcerpt = (article: Article) => {
-    // If there's a custom excerpt, use it
     if (article.excerpt?.trim()) {
       return stripMarkdown(article.excerpt);
     }
     
-    // Otherwise, generate from content but skip the first heading if it's redundant
     if (article.content) {
       const content = article.content;
       const lines = content.split('\n');
       
-      // Skip the first line if it's a heading that's similar to the title
       let startIndex = 0;
       const firstLine = lines[0].trim();
       if (lines.length > 1 && firstLine.startsWith('#') && 
@@ -609,7 +574,6 @@ export default function AuthorAdminDashboard() {
   const truncate = (str: string, max = 150) =>
     str.length <= max ? str : str.slice(0, max) + "...";
 
-  // Pagination logic
   const totalPages = Math.ceil(totalArticles / articlesPerPage);
   const paginatedArticles =
     author?.articles?.slice(
@@ -617,7 +581,6 @@ export default function AuthorAdminDashboard() {
       currentPage * articlesPerPage
     ) || [];
 
-  // 🔐 Show loading while checking authentication
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white dark:bg-[#0A0A0A] transition-colors duration-300">
@@ -641,10 +604,8 @@ export default function AuthorAdminDashboard() {
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] relative overflow-x-hidden transition-colors duration-300">
       <MinimalHeader />
 
-      {/* Ban Notification */}
       <BanNotification />
 
-      {/* Login Modal Overlay */}
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="relative max-w-md w-full">
@@ -659,7 +620,6 @@ export default function AuthorAdminDashboard() {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={deleteModal.isOpen}
         onClose={closeDeleteModal}
@@ -668,8 +628,7 @@ export default function AuthorAdminDashboard() {
         isLoading={deleteModal.isLoading}
       />
 
-      <main className="max-w-7xl mx-auto px-4 pt-8 pb-16 relative z-10">
-        {/* Show error message if not authenticated */}
+      <main className="px-6 md:px-11 md:py-8 relative z-10">
         {!isAuthenticated && (
           <div className="text-center py-20">
             <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
@@ -690,7 +649,6 @@ export default function AuthorAdminDashboard() {
           </div>
         )}
 
-        {/* Show loading while fetching data */}
         {isAuthenticated && loading && (
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
@@ -702,7 +660,6 @@ export default function AuthorAdminDashboard() {
           </div>
         )}
 
-        {/* Show error if data fetch fails */}
         {isAuthenticated && error && !loading && (
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
@@ -735,40 +692,37 @@ export default function AuthorAdminDashboard() {
           </div>
         )}
 
-        {/* Show dashboard content only if authenticated and data loaded */}
         {isAuthenticated && author && !loading && !error && (
           <>
-            {/* Author Header - Premium Design */}
-            <section className="w-full mb-16">
-              {/* Simple Header */}
-              <div className="mb-12">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-px w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-                  <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
+            {/* MOBILE OPTIMIZED HEADER SECTION */}
+            <section className="w-full mb-12 md:mb-16">
+              <div className="mb-8 md:mb-12">
+                <div className="flex items-center gap-4 mb-4 md:mb-6">
+                  <div className="h-px w-12 md:w-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                  <span className="text-xs md:text-sm font-semibold text-blue-600 uppercase tracking-wide">
                     Author Dashboard
                   </span>
                 </div>
-                <h1 className="text-6xl md:text-7xl font-light text-black dark:text-white mb-6 tracking-tight">
+                <h1 className="text-3xl md:text-7xl font-light text-black dark:text-white mb-4 md:mb-6 tracking-tight">
                   Welcome back, {author?.name}
                 </h1>
               </div>
 
-              {/* Ban Warning Banner */}
               {banDetails && (
-                <div className="mb-8 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
-                  <div className="flex items-start gap-4">
+                <div className="mb-6 p-4 md:p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
+                  <div className="flex items-start gap-3 md:gap-4">
                     <div className="flex-shrink-0">
-                      <Ban className="w-6 h-6 text-red-600 dark:text-red-400 mt-1" />
+                      <Ban className="w-5 h-5 md:w-6 md:h-6 text-red-600 dark:text-red-400 mt-0.5 md:mt-1" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">
+                      <h3 className="text-base md:text-lg font-semibold text-red-800 dark:text-red-200 mb-1 md:mb-2">
                         Account Banned
                       </h3>
-                      <p className="text-red-700 dark:text-red-300 mb-3">
+                      <p className="text-red-700 dark:text-red-300 text-sm md:text-base mb-2 md:mb-3">
                         {banDetails.reason ||
                           "Your account has been suspended due to violations of our community guidelines."}
                       </p>
-                      <div className="text-sm text-red-600 dark:text-red-400 space-y-1">
+                      <div className="text-xs md:text-sm text-red-600 dark:text-red-400 space-y-1">
                         <p>
                           <strong>Banned on:</strong>{" "}
                           {new Date(banDetails.banned_at).toLocaleDateString()}
@@ -790,40 +744,34 @@ export default function AuthorAdminDashboard() {
                 </div>
               )}
 
-              {/* Author Profile */}
-              <div className="flex flex-col lg:flex-row items-start gap-12 mb-16">
-                {/* Avatar Section */}
+              <div className="flex flex-col lg:flex-row items-start gap-6 md:gap-12 mb-12 md:mb-16">
                 <div className="flex-shrink-0">
                   <div className="relative">
-                    <div className="w-28 h-28 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-1">
                       <img
                         src={author?.avatar || "/placeholder.svg"}
                         alt={author?.name}
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-600 p-3 rounded-full shadow-2xl border-2 border-white dark:border-gray-800">
-                      <Crown className="w-4 h-4 text-white" />
+                    <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-gradient-to-r from-amber-500 to-orange-600 p-2 md:p-3 rounded-full shadow-2xl border-2 border-white dark:border-gray-800">
+                      <Crown className="w-3 h-3 md:w-4 md:h-4 text-white" />
                     </div>
                   </div>
                 </div>
 
-                {/* Content Section */}
                 <div className="flex-1">
-                  {/* Title & Company - Only show if both are set */}
                   {author?.job_title && author?.company && (
-                    <p className="text-xl text-blue-600 font-medium mb-6">
+                    <p className="text-base md:text-xl text-blue-600 font-medium mb-4 md:mb-6">
                       {author.job_title} at {author.company}
                     </p>
                   )}
 
-                  {/* Bio */}
-                  <p className="text-lg text-black dark:text-gray-300 leading-relaxed mb-8 max-w-2xl">
+                  <p className="text-base md:text-lg text-black dark:text-gray-300 leading-relaxed mb-6 md:mb-8 max-w-2xl">
                     {author?.bio}
                   </p>
 
-                  {/* Action Buttons - All Three Together */}
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">
                     <ProtectedAction action="create new articles">
                       <motion.div
                         whileHover={{ scale: 1.05 }}
@@ -831,9 +779,9 @@ export default function AuthorAdminDashboard() {
                       >
                         <Link
                           href="/admin/new-article"
-                          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg"
+                          className="inline-flex items-center gap-2 md:gap-3 px-4 py-3 md:px-8 md:py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl md:rounded-2xl font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg text-sm md:text-base w-full sm:w-auto justify-center"
                         >
-                          <Plus className="w-5 h-5" />
+                          <Plus className="w-4 h-4 md:w-5 md:h-5" />
                           Write New Article
                         </Link>
                       </motion.div>
@@ -841,13 +789,12 @@ export default function AuthorAdminDashboard() {
 
                     <Link
                       href={`/authors/${author?.slug}`}
-                      className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md"
+                      className="inline-flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-lg md:rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md text-sm md:text-base w-full sm:w-auto justify-center"
                     >
                       View Public Profile
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
                     </Link>
 
-                    {/* Superuser Dashboard Button - Only for superusers */}
                     {user?.is_super_user && (
                       <motion.div
                         whileHover={{ scale: 1.05 }}
@@ -855,9 +802,9 @@ export default function AuthorAdminDashboard() {
                       >
                         <Link
                           href="/admin/superuser"
-                          className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md border-2 border-purple-400/30"
+                          className="inline-flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg md:rounded-xl font-semibold hover:shadow-xl transition-all duration-300 shadow-md border-2 border-purple-400/30 text-sm md:text-base w-full sm:w-auto justify-center"
                         >
-                          <Crown className="w-5 h-5" />
+                          <Crown className="w-4 h-4 md:w-5 md:h-5" />
                           Superuser Dashboard
                         </Link>
                       </motion.div>
@@ -866,67 +813,62 @@ export default function AuthorAdminDashboard() {
                 </div>
               </div>
 
-              {/* Stats - Premium Design */}
-              {/* 🔥 UPDATED: Replaced Avg Views with Comments & Reactions */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 max-w-4xl mx-auto text-center py-12">
-                <div className="space-y-3">
-                  <div className="text-5xl font-light text-black dark:text-white">
+              {/* MOBILE OPTIMIZED STATS */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-12 max-w-4xl mx-auto text-center py-8 md:py-12">
+                <div className="space-y-2 md:space-y-3">
+                  <div className="text-2xl md:text-5xl font-light text-black dark:text-white">
                     {totalArticles}
                   </div>
-                  <div className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-blue-600 font-semibold uppercase tracking-wider">
                     Articles
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="text-5xl font-light text-black dark:text-white">
+                <div className="space-y-2 md:space-y-3">
+                  <div className="text-2xl md:text-5xl font-light text-black dark:text-white">
                     {totalViews.toLocaleString()}
                   </div>
-                  <div className="text-sm text-green-600 font-semibold uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-green-600 font-semibold uppercase tracking-wider">
                     Total Views
                   </div>
                 </div>
-                {/* 🔥 REPLACED: Avg Views with Comments */}
-                <div className="space-y-3">
-                  <div className="text-5xl font-light text-black dark:text-white">
+                <div className="space-y-2 md:space-y-3">
+                  <div className="text-2xl md:text-5xl font-light text-black dark:text-white">
                     {totalComments}
                   </div>
-                  <div className="text-sm text-pink-600 font-semibold uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-pink-600 font-semibold uppercase tracking-wider">
                     Total Comments
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="text-5xl font-light text-black dark:text-white">
+                <div className="space-y-2 md:space-y-3">
+                  <div className="text-2xl md:text-5xl font-light text-black dark:text-white">
                     {totalReactions}
                   </div>
-                  <div className="text-sm text-amber-600 font-semibold uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-amber-600 font-semibold uppercase tracking-wider">
                     Total Reactions
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Articles Section - Premium Design */}
+            {/* MOBILE OPTIMIZED ARTICLES SECTION */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-gray-700 shadow-2xl overflow-hidden mb-16"
+              className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl md:rounded-3xl border border-slate-200/60 dark:border-gray-700 shadow-2xl overflow-hidden mb-12 md:mb-16"
             >
-              <div className="px-8 py-6 border-b border-slate-200/50 dark:border-gray-700 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="px-4 md:px-8 py-4 md:py-6 border-b border-slate-200/50 dark:border-gray-700 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 md:gap-4">
                   <div>
-                    <h2 className="text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
+                    <h2 className="text-xl md:text-3xl font-bold bg-gradient-to-br from-slate-800 to-slate-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1 md:mb-2">
                       Your Articles
                     </h2>
-                    <p className="text-slate-600 dark:text-gray-400 font-medium">
-                      {totalArticles} articles published •{" "}
-                      {totalViews.toLocaleString()} total reads •{" "}
-                      {totalComments} total comments •{" "}
-                      {totalReactions} total reactions
+                    <p className="text-xs md:text-base text-slate-600 dark:text-gray-400 font-medium">
+                      {totalArticles} articles • {totalViews.toLocaleString()} reads
                     </p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">
+                  <div className="flex items-center gap-2">
+                    <div className="text-xs md:text-sm text-slate-500 dark:text-gray-500 font-medium">
                       Page {currentPage} of {totalPages}
                     </div>
                   </div>
@@ -934,22 +876,22 @@ export default function AuthorAdminDashboard() {
               </div>
 
               {author?.articles && author.articles.length === 0 ? (
-                <div className="text-center py-20">
-                  <div className="w-24 h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                    <FileText className="w-10 h-10 text-white" />
+                <div className="text-center py-12 md:py-20">
+                  <div className="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl md:rounded-3xl flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl">
+                    <FileText className="w-6 h-6 md:w-10 md:h-10 text-white" />
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
+                  <h3 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3 md:mb-4">
                     Ready to Share Your Knowledge?
                   </h3>
-                  <p className="text-slate-600 dark:text-gray-400 mb-8 text-lg font-medium max-w-md mx-auto">
+                  <p className="text-sm md:text-lg text-slate-600 dark:text-gray-400 mb-6 md:mb-8 font-medium max-w-md mx-auto px-4">
                     Create your first article and start building your audience.
                   </p>
                   <ProtectedAction action="create new articles">
                     <Link
                       href="/admin/new-article"
-                      className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 shadow-lg"
+                      className="inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl md:rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 shadow-lg text-sm md:text-base"
                     >
-                      <Plus className="w-5 h-5" />
+                      <Plus className="w-4 h-4 md:w-5 md:h-5" />
                       Create Your First Article
                     </Link>
                   </ProtectedAction>
@@ -969,132 +911,128 @@ export default function AuthorAdminDashboard() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          className="p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
+                          className="p-4 md:p-8 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 group border-b border-slate-100 dark:border-gray-700 last:border-b-0"
                         >
-                          <div className="flex flex-col lg:flex-row gap-8 items-start">
-                            {/* Article Cover */}
-                            <div className="flex-shrink-0 w-32 h-32 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
+                          <div className="flex flex-col gap-4 md:gap-8 md:flex-row items-start">
+                            {/* MOBILE OPTIMIZED COVER */}
+                            <div className="flex-shrink-0 w-full md:w-32 h-24 md:h-32 rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/50 dark:border-gray-600 shadow-lg group-hover:shadow-xl transition-all duration-300 relative">
                               <img
                                 src={coverImage}
                                 alt={article.title}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                               />
-                              <div className="absolute top-3 left-3">
+                              <div className="absolute top-2 left-2 md:top-3 md:left-3">
                                 {article.category && (
-                                  <span className="inline-flex items-center gap-1.5 bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-xs font-semibold">
-                                    <Folder className="w-3 h-3" />
+                                  <span className="inline-flex items-center gap-1 bg-black/70 backdrop-blur-sm text-white px-2 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl text-xs font-semibold">
+                                    <Folder className="w-2.5 h-2.5 md:w-3 md:h-3" />
                                     {article.category.name}
                                   </span>
                                 )}
                               </div>
                             </div>
 
-                            {/* Article Info */}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-wrap items-center gap-4 mb-3">
-                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                                  <Calendar className="w-4 h-4 text-slate-500 dark:text-gray-500" />
+                            {/* MOBILE OPTIMIZED CONTENT */}
+                            <div className="flex-1 min-w-0 w-full">
+                              <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-2 md:mb-3">
+                                <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                                  <Calendar className="w-3 h-3 md:w-4 md:h-4 text-slate-500 dark:text-gray-500" />
                                   {formatDate(article.published_at)}
                                 </span>
-                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                                  <Clock className="w-4 h-4 text-slate-500 dark:text-gray-500" />
+                                <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                                  <Clock className="w-3 h-3 md:w-4 md:h-4 text-slate-500 dark:text-gray-500" />
                                   {readTime} min read
                                 </span>
-                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                                  <Eye className="w-4 h-4 text-sky-600" />
+                                <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                                  <Eye className="w-3 h-3 md:w-4 md:h-4 text-sky-600" />
                                   {article.read_count?.toLocaleString()} views
                                 </span>
-                                {/* 🔥 NEW: Comment count */}
-                                <span className="inline-flex items-center gap-2 text-slate-600 dark:text-gray-400 font-medium text-sm">
-                                  <MessageSquare className="w-4 h-4 text-pink-600 dark:text-pink-400" />
-                                  {article.comment_count || 0} comments
+                                <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-gray-400 font-medium text-xs md:text-sm">
+                                  <MessageSquare className="w-3 h-3 md:w-4 md:h-4 text-pink-600 dark:text-pink-400" />
+                                  {article.comment_count || 0}
                                 </span>
                               </div>
 
-                              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
+                              <h3 className="text-lg md:text-2xl font-bold text-slate-800 dark:text-white mb-2 md:mb-3 line-clamp-2 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">
                                 <Link href={`/articles/${article.slug}`}>
                                   {article.title}
                                 </Link>
                               </h3>
 
-                              {/* 🔥 NEW: Reactions for each article */}
-                              <div className="flex flex-wrap items-center gap-4 mb-4">
+                              <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-3 md:mb-4">
                                 {(reactions.like ?? 0) > 0 && (
-                                  <span className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium">
-                                    <ThumbsUp className="w-4 h-4" />
+                                  <span className="inline-flex items-center gap-1 text-xs md:text-sm text-blue-600 dark:text-blue-400 font-medium">
+                                    <ThumbsUp className="w-3 h-3 md:w-4 md:h-4" />
                                     {reactions.like}
                                   </span>
                                 )}
                                 {(reactions.love ?? 0) > 0 && (
-                                  <span className="inline-flex items-center gap-1 text-sm text-red-500 dark:text-red-400 font-medium">
-                                    <Heart className="w-4 h-4" />
+                                  <span className="inline-flex items-center gap-1 text-xs md:text-sm text-red-500 dark:text-red-400 font-medium">
+                                    <Heart className="w-3 h-3 md:w-4 md:h-4" />
                                     {reactions.love}
                                   </span>
                                 )}
                                 {(reactions.celebrate ?? 0) > 0 && (
-                                  <span className="inline-flex items-center gap-1 text-sm text-yellow-600 dark:text-yellow-400 font-medium">
-                                    <Sparkles className="w-4 h-4" />
+                                  <span className="inline-flex items-center gap-1 text-xs md:text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+                                    <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
                                     {reactions.celebrate}
                                   </span>
                                 )}
                                 {(reactions.insightful ?? 0) > 0 && (
-                                  <span className="inline-flex items-center gap-1 text-sm text-green-600 dark:text-green-400 font-medium">
-                                    <Lightbulb className="w-4 h-4" />
+                                  <span className="inline-flex items-center gap-1 text-xs md:text-sm text-green-600 dark:text-green-400 font-medium">
+                                    <Lightbulb className="w-3 h-3 md:w-4 md:h-4" />
                                     {reactions.insightful}
                                   </span>
                                 )}
                               </div>
 
-                              {/* Clean excerpt display */}
-                              <p className="text-slate-600 dark:text-gray-400 text-lg line-clamp-2 mb-4 font-medium leading-relaxed">
+                              <p className="text-slate-600 dark:text-gray-400 text-sm md:text-lg line-clamp-2 mb-3 md:mb-4 font-medium leading-relaxed">
                                 {previewText}
                               </p>
 
-                              {/* Tags */}
                               {article.tags && article.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                  {article.tags.slice(0, 4).map((tag) => (
+                                <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-0">
+                                  {article.tags.slice(0, 3).map((tag) => (
                                     <span
                                       key={tag.id}
-                                      className="inline-flex items-center gap-1.5 bg-slate-100/80 dark:bg-gray-700 text-slate-700 dark:text-gray-300 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50 dark:border-gray-600"
+                                      className="inline-flex items-center gap-1 bg-slate-100/80 dark:bg-gray-700 text-slate-700 dark:text-gray-300 px-2 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl text-xs font-medium border border-slate-200/50 dark:border-gray-600"
                                     >
-                                      <TagIcon className="w-3.5 h-3.5" />
+                                      <TagIcon className="w-2.5 h-2.5 md:w-3.5 md:h-3.5" />
                                       {tag.name}
                                     </span>
                                   ))}
-                                  {article.tags.length > 4 && (
-                                    <span className="inline-flex items-center bg-slate-100/80 dark:bg-gray-700 text-slate-600 dark:text-gray-400 px-3 py-1.5 rounded-xl text-sm font-medium border border-slate-200/50 dark:border-gray-600">
-                                      +{article.tags.length - 4} more
+                                  {article.tags.length > 3 && (
+                                    <span className="inline-flex items-center bg-slate-100/80 dark:bg-gray-700 text-slate-600 dark:text-gray-400 px-2 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl text-xs font-medium border border-slate-200/50 dark:border-gray-600">
+                                      +{article.tags.length - 3} more
                                     </span>
                                   )}
                                 </div>
                               )}
                             </div>
 
-                            {/* Action Buttons */}
-                            <div className="flex items-center gap-3">
+                            {/* MOBILE OPTIMIZED ACTION BUTTONS */}
+                            <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto justify-end md:justify-start">
                               <Link
                                 href={`/articles/${article.slug}`}
-                                className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
+                                className="inline-flex items-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-3 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-lg md:rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105 text-xs md:text-sm w-full md:w-auto justify-center"
                               >
-                                <Eye className="w-4 h-4" />
+                                <Eye className="w-3 h-3 md:w-4 md:h-4" />
                                 View
                               </Link>
                               <ProtectedAction action="edit articles">
                                 <Link
                                   href={`/admin/edit-article/${article.slug}`}
-                                  className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
+                                  className="inline-flex items-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-lg md:rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105 text-xs md:text-sm w-full md:w-auto justify-center"
                                 >
-                                  <Edit className="w-4 h-4" />
+                                  <Edit className="w-3 h-3 md:w-4 md:h-4" />
                                   Edit
                                 </Link>
                               </ProtectedAction>
                               <ProtectedAction action="delete articles">
                                 <button
                                   onClick={() => openDeleteModal(article)}
-                                  className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105"
+                                  className="inline-flex items-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-lg md:rounded-xl hover:shadow-lg transition-all duration-300 font-semibold shadow-md hover:scale-105 text-xs md:text-sm w-full md:w-auto justify-center"
                                 >
-                                  <Trash2 className="w-4 h-4" />
+                                  <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
                                   Delete
                                 </button>
                               </ProtectedAction>
@@ -1105,45 +1043,46 @@ export default function AuthorAdminDashboard() {
                     })}
                   </div>
 
-                  {/* Pagination Controls */}
+                  {/* MOBILE OPTIMIZED PAGINATION */}
                   {totalPages > 1 && (
-                    <div className="px-8 py-6 border-t border-slate-200/50 dark:border-gray-700 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm text-slate-600 dark:text-gray-400 font-medium">
+                    <div className="px-4 md:px-8 py-4 md:py-6 border-t border-slate-200/50 dark:border-gray-700 bg-gradient-to-r from-white to-slate-50/50 dark:from-gray-800 dark:to-gray-700/50">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="text-xs md:text-sm text-slate-600 dark:text-gray-400 font-medium text-center sm:text-left">
                           Showing {paginatedArticles.length} of {totalArticles}{" "}
                           articles
                         </div>
-                        <div className="flex items-center gap-2">
+                        
+                        <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
                           <button
                             onClick={() =>
                               setCurrentPage((prev) => Math.max(1, prev - 1))
                             }
                             disabled={currentPage === 1}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
+                            className="flex items-center gap-1 px-3 py-2 md:px-4 md:py-2 rounded-lg md:rounded-xl border border-slate-300 dark:border-gray-600 text-xs md:text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300 flex-1 sm:flex-none justify-center"
                           >
-                            <ChevronLeft className="w-4 h-4" />
-                            Previous
+                            <ChevronLeft className="w-3 h-3 md:w-4 md:h-4" />
+                            <span className="hidden xs:inline">Previous</span>
                           </button>
 
-                          <div className="flex items-center gap-1">
+                          <div className="hidden xs:flex items-center gap-1">
                             {Array.from(
-                              { length: Math.min(5, totalPages) },
+                              { length: Math.min(3, totalPages) },
                               (_, i) => {
                                 let pageNum;
-                                if (totalPages <= 5) {
+                                if (totalPages <= 3) {
                                   pageNum = i + 1;
-                                } else if (currentPage <= 3) {
+                                } else if (currentPage <= 2) {
                                   pageNum = i + 1;
-                                } else if (currentPage >= totalPages - 2) {
-                                  pageNum = totalPages - 4 + i;
+                                } else if (currentPage >= totalPages - 1) {
+                                  pageNum = totalPages - 2 + i;
                                 } else {
-                                  pageNum = currentPage - 2 + i;
+                                  pageNum = currentPage - 1 + i;
                                 }
                                 return (
                                   <button
                                     key={pageNum}
                                     onClick={() => setCurrentPage(pageNum)}
-                                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-all shadow-sm ${
+                                    className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl text-xs md:text-sm font-medium transition-all shadow-sm ${
                                       currentPage === pageNum
                                         ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md"
                                         : "border border-slate-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 backdrop-blur-sm"
@@ -1163,11 +1102,15 @@ export default function AuthorAdminDashboard() {
                               )
                             }
                             disabled={currentPage === totalPages}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300"
+                            className="flex items-center gap-1 px-3 py-2 md:px-4 md:py-2 rounded-lg md:rounded-xl border border-slate-300 dark:border-gray-600 text-xs md:text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-gray-700 transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm hover:shadow-md text-slate-700 dark:text-gray-300 flex-1 sm:flex-none justify-center"
                           >
-                            Next
-                            <ChevronRight className="w-4 h-4" />
+                            <span className="hidden xs:inline">Next</span>
+                            <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
                           </button>
+                        </div>
+
+                        <div className="xs:hidden text-xs text-slate-500 dark:text-gray-500 font-medium text-center">
+                          Page {currentPage} of {totalPages}
                         </div>
                       </div>
                     </div>

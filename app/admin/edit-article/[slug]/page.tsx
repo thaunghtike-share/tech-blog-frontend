@@ -477,10 +477,10 @@ export default function EditArticlePage() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors duration-300 ${fullscreen ? "overflow-hidden" : ""}`}>
+    <div className={`min-h-screen flex flex-col bg-white dark:bg-[#0A0A0A] transition-colors relative overflow-x-hidden duration-300 ${fullscreen ? "overflow-hidden" : ""}`}>
       {!fullscreen && <MinimalHeader />}
 
-      <main className={`${fullscreen ? "fixed inset-0 z-50 bg-white dark:bg-[#0A0A0A]" : "flex-grow max-w-7xl mx-auto px-4 py-10 w-full"}`}>
+      <main className={`${fullscreen ? "fixed inset-0 z-50 bg-white dark:bg-[#0A0A0A]" : "flex-grow px-6 md:px-11 md:py-10 w-full"}`}>
         <div className={`${fullscreen ? "h-full" : "bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg p-8"}`}>
           {!fullscreen && (
             <div className="flex justify-between items-center mb-6">
