@@ -728,49 +728,6 @@ export function YouTubePlaylists() {
                 )}
               </motion.div>
             </div>
-
-            {/* Right Content - Your Channel */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="py-14 lg:w-96 flex-shrink-0"
-            >
-              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white shadow-xl">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                    <Youtube className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg">My DevOps Channel</h3>
-                    <p className="text-red-100 text-sm">
-                      Learn DevOps Now - Thaung Htike Oo
-                    </p>
-                  </div>
-                </div>
-
-                <div className="aspect-video bg-black rounded-xl overflow-hidden mb-4 shadow-lg">
-                  <iframe
-                    src="https://www.youtube.com/embed/kvBQ0-TDB38"
-                    title="Learn DevOps Now with Tho - Channel Preview"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-
-                <a
-                  href="https://www.youtube.com/@learndevopsnowbytho"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-white text-red-600 hover:bg-gray-100 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 hover:scale-105"
-                >
-                  <Youtube className="w-5 h-5" />
-                  Subscribe to My Channel
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
         {/* Content */}
